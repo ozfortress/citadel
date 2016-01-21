@@ -46,5 +46,8 @@ group :development do
   # Development scripts
   gem 'capistrano', '~> 3.1'
   gem 'capistrano-rails', '~> 1.1'
+
+  # Keep codebase clean
+  gem 'rubocop', '~> 0.36.0', require: false
 end
 
