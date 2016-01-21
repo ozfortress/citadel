@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  root 'pages#home'
+
+  get 'pages/home'
 
   # This line mounts Forem's routes at /forums by default.
   # This means, any requests to the /forums URL of your application will go to Forem::ForumsController#index.
