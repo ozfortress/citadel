@@ -34,6 +34,9 @@ group :development, :test do
 
   # Use rspec for tests
   gem 'rspec-rails', '~> 3.0'
+
+  # Use for validation testing
+  gem 'shoulda-matchers'
 end
 
 group :development do
