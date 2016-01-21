@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.5'
-# Use sqlite3 for now
-gem 'sqlite3'
+# Use postgres
+gem 'pg'
 # SASS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Compress JavaScript assets
