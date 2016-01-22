@@ -22,7 +22,12 @@
             %li= link_to('Mediacentral', :pages_home)
         .navbar-right
           %ul.nav.navbar-nav
-            %li.btn= image_tag 'steam/login.png'
+            - if user_signed_in?
+
+            - else
+              %li
+                = link_to(image_tag('steam/login.png'), user_omniauth_authorize_path(:steam))
+
 
     .container
       = yield
