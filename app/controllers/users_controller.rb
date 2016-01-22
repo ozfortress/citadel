@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       p "SUCCESS"
       sign_in_and_redirect user
     else
-      redirect_to pages_home_url
+      redirect_to(:back)
     end
   end
 
@@ -22,10 +22,22 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def edit
+    @user = User.find(params[:id])
+
+    redirect_to user_url(@user) unless can_edit?
+  end
+
+  def update
+    @user = User.find(params[:id])
+
+    return unless can_edit?
+    @user.update(user_params)
+    p @user
+    redirect_to(:back)
+  end
+
   def logout
-    p session['devise.steam_data']
-    session.delete('devise')
-    p session['devise.steam_data']
     reset_session
     redirect_to(:back)
   end
@@ -34,5 +46,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name)
+  end
+
+  def can_edit?
+    @user == current_user
   end
 end
