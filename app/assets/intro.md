@@ -37,6 +37,8 @@ I currently have a lot of time on my hands and am willing to put the work in to
 get this working. But that can only happen with support from the community. If
 this isn't something we can agree we want, then it won't happen.
 
+~/dev/zero aka Ben
+
 ----
 
 To show off some of the current styling, I've copied some stuff off ozfortress
