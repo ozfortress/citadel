@@ -23,8 +23,6 @@ gem 'cancancan', '~> 1.10'
 gem 'devise'
 # Use haml for templating
 gem 'haml-rails', '~> 0.9'
-# Forums
-gem 'forem', github: 'radar/forem', branch: 'rails4'
 # Forum Pages
 gem 'will_paginate', '3.0.5'
 # Forum formatting
