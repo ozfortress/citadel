@@ -20,10 +20,16 @@
             %li= link_to('Warzone', :pages_home)
             %li= link_to('Maps', :pages_home)
             %li= link_to('Mediacentral', :pages_home)
+            %li= link_to('Users', :pages_users)
         .navbar-right
           %ul.nav.navbar-nav
             - if user_signed_in?
-
+              %li
+                %a.dropdown-toggle{data: {toggle: 'dropdown'}}
+                  = current_user.name
+                  %span.caret
+                %ul.dropdown-menu
+                  %li= link_to("Profile", user_path(current_user))
             - else
               %li
                 = link_to(image_tag('steam/login.png'), user_omniauth_authorize_path(:steam))

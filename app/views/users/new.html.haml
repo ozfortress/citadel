@@ -1,4 +1,8 @@
-%h1 Users#new
-%p Find me in app/views/users/new.html.haml
+= form_for @user do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
 
-= session["devise.steam_data"]
+
+  = f.submit 'Register', class: 'btn btn-default'
+  = link_to 'Cancel', :pages_home, class: 'btn btn-default'

@@ -1,13 +1,14 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def steam
-    auth = request.env["omniauth.auth"]
+    auth = request.env['omniauth.auth']
 
-    session["devise.steam_data"] = request.env["omniauth.auth"]
+    auth_session = auth.except('extra').except('info')
+    session['devise.steam_data'] = auth_session
 
     user = User.find_by(:steam_id => auth.uid)
 
     if user.nil?
-      redirect_to users_new_url
+      redirect_to new_user_path(name: auth.info.nickname)
     else
       sign_in_and_redirect user
     end
