@@ -2,7 +2,7 @@ class CreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
       t.string   :name
-      t.integer  :steam_id
+      t.integer  :steam_id, :limit => 8
 
       # Devise
       ## Rememberable
