@@ -22,6 +22,14 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def logout
+    p session['devise.steam_data']
+    session.delete('devise')
+    p session['devise.steam_data']
+    reset_session
+    redirect_to(:back)
+  end
+
   private
 
   def user_params

@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   get 'pages/users'
 
+  get 'users/logout', to: 'users#logout', as: 'logout_user'
   resources :users
+
   root 'pages#home'
 
   get 'pages/home'
