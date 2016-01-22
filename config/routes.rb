@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'users/new'
+  get 'pages/users'
 
   resources :users
   root 'pages#home'
@@ -11,9 +11,9 @@ Rails.application.routes.draw do
   # If you would like to change where this extension is mounted, simply change the :at option to something different.
   #
   # We ask that you don't use the :as option here, as Forem relies on it being the default of "forem"
-  mount Forem::Engine, :at => '/forums'
-
+  # mount Forem::Engine, :at => '/forums'
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
