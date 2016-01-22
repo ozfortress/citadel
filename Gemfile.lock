@@ -97,6 +97,8 @@ GEM
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.6.0)
+    factory_girl (4.5.0)
+      activesupport (>= 3.0.0)
     friendly_id (5.0.5)
       activerecord (>= 4.0.0)
     gemoji (2.1.0)
@@ -268,6 +270,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.1)
   coffee-rails (~> 4.1.0)
   devise
+  factory_girl
   forem!
   haml-rails (~> 0.9)
   jquery-rails

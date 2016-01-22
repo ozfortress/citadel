@@ -37,6 +37,9 @@ group :development, :test do
 
   # Use for validation testing
   gem 'shoulda-matchers'
+
+  # Easy database manipulation
+  gem 'factory_girl'
 end
 
 group :development do
