@@ -27,6 +27,8 @@ gem "haml-rails", "~> 0.9"
 gem 'forem', :github => "radar/forem", :branch => "rails4"
 # Forum Pages
 gem 'will_paginate', '3.0.5'
+# Forum formatting
+gem 'redcarpet'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
