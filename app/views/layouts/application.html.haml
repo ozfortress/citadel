@@ -13,6 +13,10 @@
 
     %nav#navbar.navbar.navbar-ozf.affix-top{role: 'navigation', data: {spy: 'affix', 'offset-top' => 106}}
       .container
+        %button.navbar-toggle.collapsed.navbar-left{type: 'button', data: {toggle: 'collapse', target: '#navbar-collapse'}}
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
         #navbar-collapse.collapse.navbar-collapse.navbar-left
           %ul.nav.navbar-nav
             %li.active= link_to('Home', :pages_home)
