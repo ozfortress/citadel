@@ -1,4 +1,4 @@
-require 'shoulda_helper'
+require 'support/shoulda'
 
 describe User do
   it { should validate_presence_of(:name) }
