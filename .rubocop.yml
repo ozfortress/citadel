@@ -1,0 +1,10 @@
+Rails:
+  Enabled: true
+Metrics:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+
+AllCops:
+  Excludes:
+    - db/schema.rb

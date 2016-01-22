@@ -11,7 +11,6 @@ class UsersController < ApplicationController
     user.steam_id = steam_data['uid']
 
     if user.save
-      p "SUCCESS"
       sign_in_and_redirect user
     else
       redirect_to(:back)
@@ -31,9 +30,8 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
 
-    return unless can_edit?
-    @user.update(user_params)
-    p @user
+    @user.update(user_params) if can_edit?
+
     redirect_to(:back)
   end
 

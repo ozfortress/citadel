@@ -22,9 +22,9 @@ gem 'cancancan', '~> 1.10'
 # Authentication
 gem 'devise'
 # Use haml for templating
-gem "haml-rails", "~> 0.9"
+gem 'haml-rails', '~> 0.9'
 # Forums
-gem 'forem', :github => "radar/forem", :branch => "rails4"
+gem 'forem', github: 'radar/forem', branch: 'rails4'
 # Forum Pages
 gem 'will_paginate', '3.0.5'
 # Forum formatting
@@ -58,4 +58,3 @@ group :development do
   # Keep codebase clean
   gem 'rubocop', '~> 0.36.0', require: false
 end
-

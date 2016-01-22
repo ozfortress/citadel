@@ -8,9 +8,9 @@ describe 'routes for user login' do
 
     describe 'first login' do
       before do
-        OmniAuth.config.add_mock(:steam, {'uid' => '12345'})
-        Rails.application.env_config["omnauth.auth"] = OmniAuth.config.mock_auth[:steam]
-        p Rails.application.env_config["omniauth.auth"]
+        OmniAuth.config.add_mock(:steam, 'uid' => '12345')
+        Rails.application.env_config['omnauth.auth'] = OmniAuth.config.mock_auth[:steam]
+        p Rails.application.env_config['omniauth.auth']
       end
 
       pending it 'redirects to callback' do
