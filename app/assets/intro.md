@@ -1,4 +1,4 @@
-# New Ozfortress Website
+# New ozfortress Website
 
 This is an early prototype for a new [ozfortress.com](http://ozfortress.com)
 (if the community wants it)
