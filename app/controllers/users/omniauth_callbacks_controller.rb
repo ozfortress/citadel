@@ -1,7 +1,7 @@
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # Don't need to protect against forgery for omniauth logins
-    skip_before_filter :verify_authenticity_token
+    skip_before_action :verify_authenticity_token
 
     def steam
       auth = request.env['omniauth.auth']
