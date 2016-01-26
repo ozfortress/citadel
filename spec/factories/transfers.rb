@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :transfer do
-    user { create(:user) }
-    team { create(:team) }
+    user { User.first || create(:user) }
+    team { Team.first || create(:team) }
     is_joining? true
   end
 end

@@ -2,6 +2,6 @@ FactoryGirl.define do
   factory :team do
     name 'Immunity'
     description 'We beat everyone'
-    format { create(:format) }
+    format { Format.first || create(:format) }
   end
 end
