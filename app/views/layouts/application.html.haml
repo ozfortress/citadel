@@ -38,7 +38,7 @@
                   %li= link_to("Logout", logout_user_path)
             - else
               %li
-                = link_to(image_tag('steam/login.png'), user_omniauth_authorize_path(:steam))
+                = link_to(image_tag('steam/login.png'), user_omniauth_authorize_path(:steam), id: 'login')
 
 
     .container

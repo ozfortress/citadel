@@ -1,11 +1,11 @@
 OmniAuth.config.test_mode = true
 
 RSpec.configure do
-  def mock_auth_hash
-    OmniAuth.config.mock_auth[:steam] = {
+  def mock_auth_hash(options = {})
+    OmniAuth.config.mock_auth[:steam] = OmniAuth::AuthHash.new({
       'provider' => 'steam',
-      'uid' => '12345',
-      'info' => { 'nickname' => 'foobar' },
-    }
+      'uid'      => options[:steam_id] || '12345',
+      'info'     => {'nickname' => options[:name] || 'foobar' },
+    })
   end
 end
