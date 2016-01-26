@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160126123036) do
+ActiveRecord::Schema.define(version: 20160126154818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,21 @@ ActiveRecord::Schema.define(version: 20160126123036) do
   add_index "transfers", ["team_id"], name: "index_transfers_on_team_id", using: :btree
   add_index "transfers", ["user_id"], name: "index_transfers_on_user_id", using: :btree
 
+  create_table "user_edit_team", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "team_id"
+    t.integer "state"
+  end
+
+  add_index "user_edit_team", ["team_id"], name: "index_user_edit_team_on_team_id", using: :btree
+  add_index "user_edit_team", ["user_id"], name: "index_user_edit_team_on_user_id", using: :btree
+
+  create_table "user_edit_teams", force: :cascade do |t|
+    t.integer "user_id"
+  end
+
+  add_index "user_edit_teams", ["user_id"], name: "index_user_edit_teams_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "name",                                      null: false
     t.integer  "steam_id",            limit: 8,             null: false
@@ -100,4 +115,7 @@ ActiveRecord::Schema.define(version: 20160126123036) do
   add_foreign_key "teams", "formats"
   add_foreign_key "transfers", "teams"
   add_foreign_key "transfers", "users"
+  add_foreign_key "user_edit_team", "teams"
+  add_foreign_key "user_edit_team", "users"
+  add_foreign_key "user_edit_teams", "users"
 end
