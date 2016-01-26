@@ -1,5 +1,4 @@
 module ApplicationHelper
-
   def navbar_class(name)
     if navbar_active?(name)
       'active'
@@ -9,8 +8,6 @@ module ApplicationHelper
   end
 
   def navbar_active?(name)
-    p controller_name
-    p action_name
     case name
     when :home
       controller_name == 'pages' && action_name == 'home'
