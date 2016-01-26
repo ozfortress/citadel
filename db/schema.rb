@@ -11,13 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160126020551) do
+ActiveRecord::Schema.define(version: 20160126123036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "competitions", force: :cascade do |t|
+    t.integer  "format_id"
+    t.string   "name",        null: false
+    t.text     "description", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "competitions", ["format_id"], name: "index_competitions_on_format_id", using: :btree
+
+  create_table "divisions", force: :cascade do |t|
+    t.integer  "competition_id"
+    t.string   "name",           null: false
+    t.text     "description",    null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "divisions", ["competition_id"], name: "index_divisions_on_competition_id", using: :btree
+
   create_table "formats", force: :cascade do |t|
-    t.integer  "game_id",      null: false
+    t.integer  "game_id"
     t.string   "name",         null: false
     t.text     "description",  null: false
     t.integer  "player_count", null: false
@@ -25,6 +45,7 @@ ActiveRecord::Schema.define(version: 20160126020551) do
     t.datetime "updated_at",   null: false
   end
 
+  add_index "formats", ["game_id"], name: "index_formats_on_game_id", using: :btree
   add_index "formats", ["name"], name: "index_formats_on_name", unique: true, using: :btree
 
   create_table "games", force: :cascade do |t|
@@ -36,22 +57,26 @@ ActiveRecord::Schema.define(version: 20160126020551) do
   add_index "games", ["name"], name: "index_games_on_name", unique: true, using: :btree
 
   create_table "teams", force: :cascade do |t|
-    t.integer  "format_id",   null: false
+    t.integer  "format_id"
     t.string   "name",        null: false
     t.text     "description", null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
+  add_index "teams", ["format_id"], name: "index_teams_on_format_id", using: :btree
   add_index "teams", ["name"], name: "index_teams_on_name", unique: true, using: :btree
 
   create_table "transfers", force: :cascade do |t|
-    t.integer  "user_id",     null: false
-    t.integer  "team_id",     null: false
+    t.integer  "user_id"
+    t.integer  "team_id"
     t.boolean  "is_joining?", null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "transfers", ["team_id"], name: "index_transfers_on_team_id", using: :btree
+  add_index "transfers", ["user_id"], name: "index_transfers_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name",                                      null: false
@@ -69,4 +94,10 @@ ActiveRecord::Schema.define(version: 20160126020551) do
   add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
   add_index "users", ["steam_id"], name: "index_users_on_steam_id", unique: true, using: :btree
 
+  add_foreign_key "competitions", "formats"
+  add_foreign_key "divisions", "competitions"
+  add_foreign_key "formats", "games"
+  add_foreign_key "teams", "formats"
+  add_foreign_key "transfers", "teams"
+  add_foreign_key "transfers", "users"
 end

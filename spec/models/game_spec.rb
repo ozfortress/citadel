@@ -3,7 +3,7 @@ require 'support/shoulda'
 require 'support/factory_girl'
 
 describe Game do
-  before { create(:game) }
+  before { Game.first || create(:game) }
 
   it { should have_many(:formats) }
 
