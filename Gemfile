@@ -38,8 +38,11 @@ group :development, :test do
   # Use for validation testing
   gem 'shoulda-matchers'
 
+  # Clean db for tests
+  gem 'database_cleaner'
+
   # Easy database manipulation
-  gem 'factory_girl'
+  gem 'factory_girl_rails', '~> 4.0'
 end
 
 group :development do

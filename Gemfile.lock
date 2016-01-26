@@ -68,6 +68,7 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     concurrent-ruby (1.0.0)
+    database_cleaner (1.5.1)
     debug_inspector (0.0.2)
     devise (3.5.4)
       bcrypt (~> 3.0)
@@ -81,6 +82,9 @@ GEM
     execjs (2.6.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
+    factory_girl_rails (4.5.0)
+      factory_girl (~> 4.5.0)
+      railties (>= 3.0.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     haml (4.0.7)
@@ -241,8 +245,9 @@ DEPENDENCIES
   capistrano (~> 3.1)
   capistrano-rails (~> 1.1)
   coffee-rails (~> 4.1.0)
+  database_cleaner
   devise
-  factory_girl
+  factory_girl_rails (~> 4.0)
   haml-rails (~> 0.9)
   jquery-rails
   omniauth-steam
