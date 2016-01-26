@@ -43,6 +43,9 @@ group :development, :test do
 
   # Easy database manipulation
   gem 'factory_girl_rails', '~> 4.0'
+
+  # Web feature testing
+  gem 'capybara'
 end
 
 group :development do
