@@ -11,14 +11,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160121163042) do
+ActiveRecord::Schema.define(version: 20160126020551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "formats", force: :cascade do |t|
+    t.integer  "game_id",      null: false
+    t.string   "name",         null: false
+    t.text     "description",  null: false
+    t.integer  "player_count", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "formats", ["name"], name: "index_formats_on_name", unique: true, using: :btree
+
+  create_table "games", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "games", ["name"], name: "index_games_on_name", unique: true, using: :btree
+
+  create_table "teams", force: :cascade do |t|
+    t.integer  "format_id",   null: false
+    t.string   "name",        null: false
+    t.text     "description", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "teams", ["name"], name: "index_teams_on_name", unique: true, using: :btree
+
+  create_table "transfers", force: :cascade do |t|
+    t.integer  "user_id",     null: false
+    t.integer  "team_id",     null: false
+    t.boolean  "is_joining?", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "steam_id",            limit: 8
+    t.string   "name",                                      null: false
+    t.integer  "steam_id",            limit: 8,             null: false
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",                 default: 0, null: false
     t.datetime "current_sign_in_at"
