@@ -1,8 +1,0 @@
-%h1 Users
-
-%div
-  This is a temp-page that shows all registered users
-
-.list-group
-  - User.all.each do |user|
-    .list-group-item= link_to(user.name, user_path(user))
