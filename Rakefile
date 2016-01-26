@@ -4,3 +4,8 @@
 require File.expand_path('../config/application', __FILE__)
 
 Rails.application.load_tasks
+
+task :test do
+  sh 'rspec'
+  sh 'rubocop'
+end
