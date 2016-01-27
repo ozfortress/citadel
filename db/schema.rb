@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160126154818) do
+ActiveRecord::Schema.define(version: 20160127035718) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_user_edit_games", force: :cascade do |t|
+    t.integer "user_id"
+  end
+
+  add_index "action_user_edit_games", ["user_id"], name: "index_action_user_edit_games_on_user_id", using: :btree
 
   create_table "action_user_edit_team", force: :cascade do |t|
     t.integer "user_id"
@@ -106,6 +112,7 @@ ActiveRecord::Schema.define(version: 20160126154818) do
   add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
   add_index "users", ["steam_id"], name: "index_users_on_steam_id", unique: true, using: :btree
 
+  add_foreign_key "action_user_edit_games", "users"
   add_foreign_key "action_user_edit_team", "users"
   add_foreign_key "action_user_edit_teams", "users"
   add_foreign_key "competitions", "formats"

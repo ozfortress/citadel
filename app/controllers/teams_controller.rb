@@ -9,7 +9,7 @@ class TeamsController < ApplicationController
   def create
     @team = Team.new(team_params)
 
-    if @team.save!
+    if @team.save
       redirect_to team_path(@team)
     else
       render :new
@@ -28,6 +28,6 @@ class TeamsController < ApplicationController
   private
 
   def team_params
-    params.require(:team).permit(:name, :description)
+    params.require(:team).permit(:format_id, :name, :description)
   end
 end
