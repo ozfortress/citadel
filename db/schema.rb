@@ -24,8 +24,10 @@ ActiveRecord::Schema.define(version: 20160127035718) do
 
   create_table "action_user_edit_team", force: :cascade do |t|
     t.integer "user_id"
+    t.integer "team_id"
   end
 
+  add_index "action_user_edit_team", ["team_id"], name: "index_action_user_edit_team_on_team_id", using: :btree
   add_index "action_user_edit_team", ["user_id"], name: "index_action_user_edit_team_on_user_id", using: :btree
 
   create_table "action_user_edit_teams", force: :cascade do |t|
@@ -113,6 +115,7 @@ ActiveRecord::Schema.define(version: 20160127035718) do
   add_index "users", ["steam_id"], name: "index_users_on_steam_id", unique: true, using: :btree
 
   add_foreign_key "action_user_edit_games", "users"
+  add_foreign_key "action_user_edit_team", "teams"
   add_foreign_key "action_user_edit_team", "users"
   add_foreign_key "action_user_edit_teams", "users"
   add_foreign_key "competitions", "formats"

@@ -3,7 +3,7 @@ module Auth
     def add_action_auth(actor, action, subject)
       name = Auth.auth_name(actor, action, subject)
 
-      subject_singular = subject.to_s.singularize == subject
+      subject_singular = subject.to_s.singularize == subject.to_s
 
       create_table name do |t|
         t.belongs_to actor,   index: true, foreign_key: true
