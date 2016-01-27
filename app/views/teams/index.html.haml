@@ -6,5 +6,5 @@
 
 %ul.list-group
   - teams.each do |team|
-    %li.list-group-item
+    = link_to team_path(team), class: 'list-group-item' do
       = team.name
