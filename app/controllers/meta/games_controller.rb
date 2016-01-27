@@ -1,5 +1,5 @@
 module Meta
-  class GamesController < ApplicationController
+  class GamesController < MetaController
     def index
     end
 

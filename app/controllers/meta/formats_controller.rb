@@ -1,5 +1,5 @@
 module Meta
-  class FormatsController < ApplicationController
+  class FormatsController < MetaController
     def index
     end
 
