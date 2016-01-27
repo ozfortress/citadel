@@ -17,8 +17,6 @@ gem 'jquery-rails'
 gem 'turbolinks'
 # Steam Login
 gem 'omniauth-steam'
-# Authorization
-gem 'cancancan', '~> 1.10'
 # Authentication
 gem 'devise'
 # Use haml for templating
