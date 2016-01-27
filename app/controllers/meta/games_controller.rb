@@ -11,7 +11,7 @@ module Meta
       @game = Game.new(game_params)
 
       if @game.save
-        redirect_to meta_games_index_path
+        redirect_to meta_games_path
       else
         render :new
       end

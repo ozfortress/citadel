@@ -10,7 +10,7 @@ module Meta
     def create
       @format = Format.new(format_params)
 
-      if @format.save!
+      if @format.save
         redirect_to meta_formats_path
       else
         render :new
