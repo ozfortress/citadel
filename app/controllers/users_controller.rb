@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :require_login, only: [:logout]
+  before_action :require_user_permission, only: [:edit, :update]
+
   def new
     @user = User.new
     @user.name = params[:name]
@@ -57,7 +60,9 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :description)
   end
 
-  def can_edit?
-    @user == current_user
+  def require_user_permission
+    require_login
+    @user = User.find(params[:id])
+    redirect_to user_path(@user) unless current_user == @user
   end
 end
