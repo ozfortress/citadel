@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160127035718) do
+ActiveRecord::Schema.define(version: 20160127124728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,16 +99,17 @@ ActiveRecord::Schema.define(version: 20160127035718) do
   add_index "transfers", ["user_id"], name: "index_transfers_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",                                      null: false
-    t.integer  "steam_id",            limit: 8,             null: false
+    t.string   "name",                                       null: false
+    t.integer  "steam_id",            limit: 8,              null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                 default: 0, null: false
+    t.integer  "sign_in_count",                 default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.text     "description",                   default: "", null: false
   end
 
   add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree

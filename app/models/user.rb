@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
   validates :steam_id, presence: true, uniqueness: true,
                        numericality: { greater_than: 0 }
+  validates :description, presence: true, allow_blank: true
 
   validates_permission_to :edit, :team
   validates_permission_to :edit, :teams

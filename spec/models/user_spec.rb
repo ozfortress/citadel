@@ -14,6 +14,9 @@ describe User do
   it { should validate_uniqueness_of(:steam_id) }
   it { should validate_numericality_of(:steam_id).is_greater_than(0) }
 
+  it { should allow_value('').for(:description) }
+  it { should validate_length_of(:description).is_at_least(0) }
+
   describe 'Permissions' do
     describe 'Teams' do
       let(:team)       { create(:team, name: 'A') }
