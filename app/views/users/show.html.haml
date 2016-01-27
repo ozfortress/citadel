@@ -1,3 +1,7 @@
+- if can_edit?(@user)
+  =link_to edit_user_path(@user), class: 'btn btn-default pull-right', type: 'button' do
+    Settings
+    %span.glyphicon.glyphicon-cog
 
 %h2= "#{@user.name}'s Profile"
 
