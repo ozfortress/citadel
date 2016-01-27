@@ -15,6 +15,8 @@ module ApplicationHelper
       controller_name == 'teams'
     when :leagues
       controller_name == 'leagues'
+    when :meta
+      controller_name == 'meta'
     end
   end
 end

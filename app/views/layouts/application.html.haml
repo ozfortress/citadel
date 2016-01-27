@@ -25,6 +25,10 @@
               = link_to('Teams', :teams)
             %li{class: navbar_class(:leagues)}
               = link_to('Leagues', :leagues)
+            - if true # if has meta permission
+              %li.divider-vertical
+              %li{class: navbar_class(:meta)}
+                = link_to('Meta', :meta)
         .navbar-right
           %ul.nav.navbar-nav
             - if user_signed_in?

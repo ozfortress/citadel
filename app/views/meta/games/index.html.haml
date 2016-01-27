@@ -1,0 +1,10 @@
+=link_to new_meta_game_path, class: 'btn btn-default pull-right', type: 'button' do
+  Add Game
+  %span.glyphicon.glyphicon-plus
+
+%h1 Games
+
+%ul.list-group
+  - games.each do |game|
+    %li.list-group-item
+      = game.name

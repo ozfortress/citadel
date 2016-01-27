@@ -3,6 +3,12 @@ Rails.application.routes.draw do
 
   get 'pages/home'
 
+  get 'meta', to: 'meta#index'
+  namespace :meta do
+    resources :games
+    resources :formats
+  end
+
   resources :leagues
   resources :teams
 
