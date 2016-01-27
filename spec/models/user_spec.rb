@@ -53,5 +53,29 @@ describe User do
         expect(old_leader.can?(:edit, team)).to be(false)
       end
     end
+
+    describe 'Meta' do
+      let(:user)  { create(:user, name: 'A', steam_id: 1) }
+      let(:admin) { create(:user, name: 'B', steam_id: 2) }
+      let(:old)   { create(:user, name: 'C', steam_id: 3) }
+
+      before do
+        admin.grant(:edit, :games)
+        old.grant(:edit, :games)
+        old.revoke(:edit, :games)
+      end
+
+      it "shouldn't let normal users edit meta" do
+        expect(user.can?(:edit, :games)).to be(false)
+      end
+
+      it 'should let a admin edit meta' do
+        expect(admin.can?(:edit, :games)).to be(true)
+      end
+
+      it "shouldn't let an old admin edit meta" do
+        expect(old.can?(:edit, :games)).to be(false)
+      end
+    end
   end
 end
