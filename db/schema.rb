@@ -16,6 +16,18 @@ ActiveRecord::Schema.define(version: 20160126154818) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "action_user_edit_team", force: :cascade do |t|
+    t.integer "user_id"
+  end
+
+  add_index "action_user_edit_team", ["user_id"], name: "index_action_user_edit_team_on_user_id", using: :btree
+
+  create_table "action_user_edit_teams", force: :cascade do |t|
+    t.integer "user_id"
+  end
+
+  add_index "action_user_edit_teams", ["user_id"], name: "index_action_user_edit_teams_on_user_id", using: :btree
+
   create_table "competitions", force: :cascade do |t|
     t.integer  "format_id"
     t.string   "name",        null: false
@@ -78,21 +90,6 @@ ActiveRecord::Schema.define(version: 20160126154818) do
   add_index "transfers", ["team_id"], name: "index_transfers_on_team_id", using: :btree
   add_index "transfers", ["user_id"], name: "index_transfers_on_user_id", using: :btree
 
-  create_table "user_edit_team", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "team_id"
-    t.integer "state"
-  end
-
-  add_index "user_edit_team", ["team_id"], name: "index_user_edit_team_on_team_id", using: :btree
-  add_index "user_edit_team", ["user_id"], name: "index_user_edit_team_on_user_id", using: :btree
-
-  create_table "user_edit_teams", force: :cascade do |t|
-    t.integer "user_id"
-  end
-
-  add_index "user_edit_teams", ["user_id"], name: "index_user_edit_teams_on_user_id", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "name",                                      null: false
     t.integer  "steam_id",            limit: 8,             null: false
@@ -109,13 +106,12 @@ ActiveRecord::Schema.define(version: 20160126154818) do
   add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
   add_index "users", ["steam_id"], name: "index_users_on_steam_id", unique: true, using: :btree
 
+  add_foreign_key "action_user_edit_team", "users"
+  add_foreign_key "action_user_edit_teams", "users"
   add_foreign_key "competitions", "formats"
   add_foreign_key "divisions", "competitions"
   add_foreign_key "formats", "games"
   add_foreign_key "teams", "formats"
   add_foreign_key "transfers", "teams"
   add_foreign_key "transfers", "users"
-  add_foreign_key "user_edit_team", "teams"
-  add_foreign_key "user_edit_team", "users"
-  add_foreign_key "user_edit_teams", "users"
 end
