@@ -20,5 +20,7 @@ describe User do
 
     it { should validate_permission_to(:edit, :team) }
     it { should validate_permission_to(:edit, :teams) }
+
+    it { should validate_permission_to(:edit, :games) }
   end
 end
