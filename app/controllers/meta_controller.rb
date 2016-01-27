@@ -7,6 +7,6 @@ class MetaController < ApplicationController
   private
 
   def require_meta
-    redirect_to :back unless user_can_meta?
+    redirect_to root_path unless user_can_meta?
   end
 end
