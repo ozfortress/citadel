@@ -14,13 +14,13 @@ module Auth
       params = { self.class.name.underscore + '_id' => id }
       params.update(subject.class.name.underscore + '_id' => subject.id) if action_cls.has_subject
 
-      action_cls.create(params)
+      action_cls.create!(params)
     end
 
     def revoke(action, subject)
       permission = get_permission(action, subject)
 
-      permission.destroy unless permission.nil?
+      permission.destroy! unless permission.nil?
     end
 
     private
