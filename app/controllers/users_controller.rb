@@ -2,6 +2,9 @@ class UsersController < ApplicationController
   before_action :require_login, only: [:logout]
   before_action :require_user_permission, only: [:edit, :update]
 
+  def index
+  end
+
   def new
     @user = User.new
     @user.name = params[:name]
