@@ -13,8 +13,8 @@ module Shoulda
 
         def permission_exists?
           @actor.respond_to?(:permissions) &&
-          @actor.permissions.has_key?(@action) &&
-          @actor.permissions[@action].has_key?(@subject)
+            @actor.permissions.key?(@action) &&
+            @actor.permissions[@action].key?(@subject)
         end
 
         def matches?(actor)
