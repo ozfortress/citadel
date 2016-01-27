@@ -1,2 +1,11 @@
-%h1 Teams#new
-%p Find me in app/views/teams/new.html.haml
+= form_for @team do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :description
+    = f.text_area :description, class: 'form-control'
+
+  = f.submit 'Create Team', class: 'btn btn-default'
+  = link_to 'Cancel', :back, class: 'btn btn-default'

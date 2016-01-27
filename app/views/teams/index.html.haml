@@ -1,2 +1,10 @@
-%h1 Teams#index
-%p Find me in app/views/teams/index.html.haml
+=link_to new_team_path, class: 'btn btn-default pull-right', type: 'button' do
+  Start Team
+  %span.glyphicon.glyphicon-plus
+
+%h1 Teams
+
+%ul.list-group
+  - teams.each do |team|
+    %li.list-group-item
+      = team.name
