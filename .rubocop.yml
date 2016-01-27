@@ -8,5 +8,5 @@ Style/TrailingCommaInLiteral:
   Enabled: false
 
 AllCops:
-  Excludes:
+  Exclude:
     - db/schema.rb
