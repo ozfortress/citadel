@@ -16,7 +16,7 @@ module ApplicationHelper
     when :leagues
       controller_name == 'leagues'
     when :meta
-      controller_name == 'meta'
+      controller.is_a? MetaController
     end
   end
 
