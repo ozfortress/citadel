@@ -6,3 +6,8 @@
 
   = f.submit 'Register', class: 'btn btn-default'
   = link_to 'Cancel', :back, class: 'btn btn-default'
+
+- if @user.errors.any?
+  %ul
+    - @user.errors.full_messages.each do |msg|
+      %li= msg

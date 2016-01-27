@@ -17,3 +17,8 @@
 
   = f.submit 'Create', class: 'btn btn-default'
   = link_to 'Cancel', :back, class: 'btn btn-default'
+
+- if @format.errors.any?
+  %ul
+    - @format.errors.full_messages.each do |msg|
+      %li= msg
