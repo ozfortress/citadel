@@ -1,3 +1,8 @@
+- if can_edit_team?(@team)
+  =link_to edit_team_path(@team), class: 'btn btn-default pull-right', type: 'button' do
+    Settings
+    %span.glyphicon.glyphicon-cog
+
 %h1= @team.name
 
 .panel.panel-default

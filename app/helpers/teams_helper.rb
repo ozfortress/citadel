@@ -8,4 +8,9 @@ module TeamsHelper
   def teams
     Team.all
   end
+
+  def can_edit_team?(team)
+    user_signed_in? &&
+      (current_user.can?(:edit, @team) || current_user.can?(:edit, :teams))
+  end
 end

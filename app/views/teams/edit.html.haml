@@ -1,2 +1,11 @@
-%h1 Teams#edit
-%p Find me in app/views/teams/edit.html.haml
+= form_for @team, method: :patch do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :description
+    = f.text_area :description, class: 'form-control'
+
+  = f.submit 'Save', class: 'btn btn-default'
+  = link_to 'Cancel', team_path(@team), class: 'btn btn-default'
