@@ -19,4 +19,8 @@ module ApplicationHelper
       controller_name == 'meta'
     end
   end
+
+  def needs_meta?
+    user_signed_in? && current_user.can?(:edit, :games)
+  end
 end

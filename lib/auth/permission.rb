@@ -11,7 +11,7 @@ module Auth
     def grant(action, subject)
       action_cls = get_action_class(action, subject)
 
-      params = { self.class.name.underscore + '_id' => self.id }
+      params = { self.class.name.underscore + '_id' => id }
       params.update(subject.class.name.underscore + '_id' => subject.id) if action_cls.has_subject
 
       action_cls.create(params)
@@ -61,7 +61,7 @@ module Auth
             attr_accessor :has_subject
           end
           self.has_subject = subject.to_s.singularize == subject.to_s
-          belongs_to subject if self.has_subject
+          belongs_to subject if has_subject
         end
 
         @permissions ||= {}

@@ -7,8 +7,6 @@ class MetaController < ApplicationController
   private
 
   def require_meta
-    unless user_signed_in? && current_user.can?(:edit, :games)
-      redirect_to :back
-    end
+    redirect_to :back unless user_signed_in? && current_user.can?(:edit, :games)
   end
 end
