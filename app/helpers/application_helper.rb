@@ -20,10 +20,6 @@ module ApplicationHelper
     end
   end
 
-  def needs_meta?
-    user_signed_in? && current_user.can?(:edit, :games)
-  end
-
   def markdown(source)
     @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::Safe.new)
     raw @markdown.render(source)

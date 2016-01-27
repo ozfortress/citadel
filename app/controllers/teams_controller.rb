@@ -47,8 +47,13 @@ class TeamsController < ApplicationController
   end
 
   def require_team_permission
-    require_login
     @team = Team.find(params[:id])
-    redirect_to team_path(@team) unless current_user.can?(:edit, @team) || current_user.can?(:edit, :teams)
+    redirect_to team_path(@team) unless user_can_edit_team?
+  end
+
+  helper_method :user_can_edit_team?
+  def user_can_edit_team?
+    user_signed_in? &&
+      (current_user.can?(:edit, @team) || current_user.can?(:edit, :teams))
   end
 end

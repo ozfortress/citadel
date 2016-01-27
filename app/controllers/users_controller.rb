@@ -26,15 +26,11 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-
-    redirect_to user_url(@user) unless can_edit?
   end
 
   def update
     @user = User.find(params[:id])
-
-    @user.update(user_params) if can_edit?
-
+    @user.update(user_params)
     redirect_to(user_path(@user))
   end
 
@@ -61,8 +57,12 @@ class UsersController < ApplicationController
   end
 
   def require_user_permission
-    require_login
     @user = User.find(params[:id])
-    redirect_to user_path(@user) unless current_user == @user
+    redirect_to user_path(@user) unless user_can_edit_user?
+  end
+
+  helper_method :user_can_edit_user?
+  def user_can_edit_user?
+    user_signed_in? && current_user == @user
   end
 end

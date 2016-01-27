@@ -26,10 +26,11 @@
             %li{class: navbar_class(:leagues)}
               = link_to('Leagues', :leagues)
 
-            - if needs_meta?
+            - if user_can_meta?
               %li.divider-vertical
               %li{class: navbar_class(:meta)}
                 = link_to('Meta', :meta)
+              / DEBUG
               %li= button_to 'become weak', revoke_meta_path, method: :patch
 
             - elsif user_signed_in?

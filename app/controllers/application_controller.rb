@@ -8,4 +8,9 @@ class ApplicationController < ActionController::Base
   def require_login
     redirect_to :back unless user_signed_in?
   end
+
+  helper_method :user_can_meta?
+  def user_can_meta?
+    user_signed_in? && current_user.can?(:edit, :games)
+  end
 end
