@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   resources :leagues
   resources :teams
 
+  # Debug
+  patch 'users/grant_meta', to: 'users#grant_meta', as: 'grant_meta'
+  patch 'users/revoke_meta', to: 'users#revoke_meta', as: 'revoke_meta'
+
   get 'users/logout', to: 'users#logout', as: 'logout_user'
   resources :users
 
