@@ -32,7 +32,7 @@ class UsersController < ApplicationController
 
     @user.update(user_params) if can_edit?
 
-    redirect_to(:back)
+    redirect_to(user_path(@user))
   end
 
   def logout
