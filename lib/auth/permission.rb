@@ -17,6 +17,12 @@ module Auth
       action_cls.create(params)
     end
 
+    def revoke(action, subject)
+      permission = get_permission(action, subject)
+
+      permission.destroy unless permission.nil?
+    end
+
     private
 
     def get_action_class(action, subject)
