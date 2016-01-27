@@ -1,7 +1,6 @@
 require 'rails_helper'
 require 'support/shoulda'
 require 'support/factory_girl'
-require 'auth/spec'
 
 describe User do
   before { create(:user) }
@@ -16,11 +15,33 @@ describe User do
   it { should validate_numericality_of(:steam_id).is_greater_than(0) }
 
   describe 'Permissions' do
-    pending 'implement matcher'
+    describe 'Teams' do
+      let(:team)   { create(:team, name: 'A') }
+      let(:team2)  { create(:team, name: 'B') }
+      let(:user)   { create(:user, name: 'A', steam_id: 1) }
+      let(:leader) { create(:user, name: 'B', steam_id: 2) }
+      let(:admin)  { create(:user, name: 'C', steam_id: 3) }
 
-    it { should validate_permission_to(:edit, :team) }
-    it { should validate_permission_to(:edit, :teams) }
+      before do
+        leader.grant(:edit, team)
+        admin.grant(:edit, :teams)
+      end
 
-    it { should validate_permission_to(:edit, :games) }
+      it "shouldn't let normal users edit teams" do
+        expect(user.can?(:edit, team)).to be(false)
+      end
+
+      it 'should let a team leader edit his team' do
+        expect(leader.can?(:edit, team)).to be(true)
+      end
+
+      it "shouldn't let a team leader edit other teams" do
+        expect(leader.can?(:edit, team2)).to be(false)
+      end
+
+      it 'should let an admin edit any team' do
+        expect(admin.can?(:edit, :teams))
+      end
+    end
   end
 end
