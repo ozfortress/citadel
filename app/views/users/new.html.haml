@@ -1,7 +1,7 @@
 = form_for @user, method: :new do |f|
   .form-group
     = f.label :name
-    = f.text_field :name, class: 'form-control'
+    = f.text_field :name, rows: 10, class: 'form-control'
 
 
   = f.submit 'Register', class: 'btn btn-default'

@@ -13,7 +13,7 @@
 
   .form-group
     = f.label :description
-    = f.text_area :description, class: 'form-control'
+    = f.text_area :description, rows: 10, class: 'form-control'
 
   = f.submit 'Create', class: 'btn btn-default'
   = link_to 'Cancel', :back, class: 'btn btn-default'
