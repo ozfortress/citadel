@@ -2,8 +2,6 @@ require 'auth/migration_helper'
 
 module Auth
   module Model
-    extend ActiveSupport::Concern
-
     def self.included(base)
       base.send :include, InstanceMethods
       base.extend ClassMethods
