@@ -20,6 +20,6 @@
       %li.list-group-item
         = link_to user.name, user_path(user)
         .button-group.pull-right
-          = button_to revoke_team_path(@team, user_id: user.id), method: :patch, class: 'btn btn-default' do
+          = button_to revoke_team_path(@team, user_id: user.id), method: :patch, class: 'btn btn-danger' do
             Revoke
             %span.glyphicon.glyphicon-remove
