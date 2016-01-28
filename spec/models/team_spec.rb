@@ -6,6 +6,7 @@ describe Team do
   before { create(:team) }
 
   it { should belong_to(:format) }
+  it { should have_many(:team_invites) }
 
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }

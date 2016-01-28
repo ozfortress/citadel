@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   before_action :require_login, only: [:new, :create]
-  before_action :require_team_permission, only: [:edit, :update, :grant, :revoke]
+  before_action :require_team_permission, only: [:edit, :update, :grant, :revoke, :recruit, :invite]
 
   def index
   end
@@ -33,7 +33,19 @@ class TeamsController < ApplicationController
 
     @team.update(edit_team_params)
 
-    redirect_to(team_path(@team))
+    redirect_to team_path(@team)
+  end
+
+  def recruit
+    @team = Team.find(params[:id])
+  end
+
+  def invite
+    @team = Team.find(params[:id])
+    user = User.find(params[:user_id])
+
+    @team.invite(user) if !@team.invited?(user)
+    redirect_to edit_team_path(@team)
   end
 
   # Permissions

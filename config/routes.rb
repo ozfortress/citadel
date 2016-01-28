@@ -11,8 +11,10 @@ Rails.application.routes.draw do
 
   resources :leagues
 
-  patch 'teams/:id/grant', to: 'teams#grant', as: 'grant_team'
-  patch 'teams/:id/revoke', to: 'teams#revoke', as: 'revoke_team'
+  get   'teams/:id/recruit', to: 'teams#recruit', as: 'recruit_team'
+  patch 'teams/:id/invite',  to: 'teams#invite',  as: 'invite_team'
+  patch 'teams/:id/grant',   to: 'teams#grant',   as: 'grant_team'
+  patch 'teams/:id/revoke',  to: 'teams#revoke',  as: 'revoke_team'
   resources :teams
 
   # Debug

@@ -6,5 +6,13 @@
 %h1= @team.name
 
 .panel.panel-default
-  .panel-heading Description
+  .panel-heading Info
   .panel-body= markdown @team.description
+
+.panel.panel-default
+  .panel-heading Roster
+  .panel-body
+    - if user_can_edit_team?
+      = link_to recruit_team_path(@team), class: 'btn btn-default' do
+        Invite
+        %span.glyphicon.glyphicon-plus
