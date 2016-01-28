@@ -26,4 +26,8 @@ module ApplicationHelper
     @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::Safe.new)
     raw @markdown.render(source)
   end
+
+  def users
+    User.all
+  end
 end
