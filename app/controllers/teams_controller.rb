@@ -45,7 +45,7 @@ class TeamsController < ApplicationController
     user = User.find(params[:user_id])
 
     @team.invite(user) if !@team.invited?(user)
-    redirect_to edit_team_path(@team)
+    redirect_to team_path(@team)
   end
 
   # Permissions
