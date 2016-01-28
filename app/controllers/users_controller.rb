@@ -45,11 +45,13 @@ class UsersController < ApplicationController
   # Debug
   def grant_meta
     current_user.grant(:edit, :games)
+    current_user.grant(:edit, :teams)
     redirect_to(:back)
   end
 
   def revoke_meta
     current_user.revoke(:edit, :games)
+    current_user.revoke(:edit, :teams)
     redirect_to(:back)
   end
 
