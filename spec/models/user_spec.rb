@@ -6,6 +6,7 @@ describe User do
   before { create(:user) }
 
   it { should have_many(:team_invites) }
+  it { should have_many(:transfers) }
 
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }

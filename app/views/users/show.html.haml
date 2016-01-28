@@ -11,7 +11,26 @@
   .panel-heading Description
   .panel-body= markdown @user.description
 
-- if current_user?
+.panel.panel-default
+  .panel-heading Teams
+  %ul.list-group
+    - @user.teams.each do |team|
+      %li.list-group-item
+        = link_to team.name, team_path(team)
+
+.panel.panel-default
+  .panel-heading Transfers
+  %ul.list-group
+    - @user.transfers.each do |transfer|
+      %li.list-group-item
+        - if transfer.is_joining?
+          joined
+        - else
+          left
+        = link_to transfer.team.name, team_path(transfer.team)
+        = "on #{transfer.created_at.strftime('%c')}"
+
+- if current_user? && @user.team_invites.length > 0
   .panel.panel-default
     .panel-heading Team Invites
     .panel-body

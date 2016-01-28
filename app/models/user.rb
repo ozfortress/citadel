@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   include Auth::Model
 
   has_many :team_invites
+  has_many :transfers
 
   devise :rememberable, :timeoutable, :trackable,
          :omniauthable, omniauth_providers: [:steam]
@@ -20,5 +21,19 @@ class User < ActiveRecord::Base
 
   def steam_profile_url
     "http://steamcommunity.com/profiles/#{steam_id}"
+  end
+
+  def teams
+    # TODO: Maybe turn this into a big query?
+    teams = Set.new
+    transfers.each do |transfer|
+      if transfer.is_joining?
+        teams << transfer.team
+      else
+        teams.delete(transfer.team)
+      end
+    end
+
+    teams.to_a.sort! { |a, b| a.name.downcase <=> b.name.downcase }
   end
 end
