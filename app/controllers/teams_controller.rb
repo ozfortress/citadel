@@ -44,7 +44,7 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
     user = User.find(params[:user_id])
 
-    @team.invite(user) if !@team.invited?(user)
+    @team.invite(user) unless @team.invited?(user)
     redirect_to team_path(@team)
   end
 
