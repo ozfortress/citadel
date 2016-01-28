@@ -1,6 +1,1 @@
-%h1 Users
-
-%ul.list-group
-  - users.each do |user|
-    = link_to user_path(user), class: 'list-group-item' do
-      = user.name
+= render partial: 'users'
