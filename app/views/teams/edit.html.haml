@@ -1,11 +1,25 @@
-= form_for @team, method: :patch do |f|
-  .form-group
-    = f.label :name
-    = f.text_field :name, class: 'form-control'
+.panel.panel-default
+  .panel-heading Information
+  .panel-body
+    = form_for @team, method: :patch do |f|
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: 'form-control'
 
-  .form-group
-    = f.label :description
-    = f.text_area :description, rows: 10, class: 'form-control'
+      .form-group
+        = f.label :description
+        = f.text_area :description, rows: 10, class: 'form-control'
 
-  = f.submit 'Save', class: 'btn btn-default'
-  = link_to 'Cancel', team_path(@team), class: 'btn btn-default'
+      = f.submit 'Save', class: 'btn btn-default'
+      = link_to 'Cancel', team_path(@team), class: 'btn btn-default'
+
+.panel.panel-default
+  .panel-heading Permissions
+  %ul.list-group
+    - users_who_can_edit.each do |user|
+      %li.list-group-item
+        = link_to user.name, user_path(user)
+        .button-group.pull-right
+          = button_to revoke_team_path(@team, user_id: user.id), method: :patch, class: 'btn btn-default' do
+            Revoke
+            %span.glyphicon.glyphicon-remove
