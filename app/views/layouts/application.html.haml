@@ -21,6 +21,8 @@
           %ul.nav.navbar-nav
             %li{class: navbar_class(:home)}
               = link_to('Home', :pages_home)
+            %li{class: navbar_class(:recruitment)}
+              = link_to('Recruitment', :users)
             %li{class: navbar_class(:teams)}
               = link_to('Teams', :teams)
             %li{class: navbar_class(:leagues)}
@@ -34,6 +36,7 @@
               %li= button_to 'become weak', revoke_meta_path, method: :patch
 
             - elsif user_signed_in?
+              / DEBUG
               %li= button_to 'become GOD', grant_meta_path, method: :patch
 
         .navbar-right
