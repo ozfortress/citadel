@@ -11,8 +11,24 @@
 
 .panel.panel-default
   .panel-heading Roster
-  .panel-body
-    - if user_can_edit_team?
+  - if user_can_edit_team?
+    .panel-body
       = link_to recruit_team_path(@team), class: 'btn btn-default' do
         Invite
         %span.glyphicon.glyphicon-plus
+  %ul.list-group
+    - @team.roster.each do |user|
+      %li.list-group-item
+        = link_to user.name, user_path(user)
+
+.panel.panel-default
+  .panel-heading Transfers
+  %ul.list-group
+    - @team.transfers.each do |transfer|
+      %li.list-group-item
+        = link_to transfer.user.name, user_path(transfer.user)
+        - if transfer.is_joining?
+          joined the team
+        - else
+          left the team
+        = "on #{transfer.created_at.strftime('%c')}"
