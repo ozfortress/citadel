@@ -5,6 +5,8 @@ require 'support/factory_girl'
 describe User do
   before { create(:user) }
 
+  it { should have_many(:team_invites) }
+
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }
   it { should validate_length_of(:name).is_at_least(1) }

@@ -3,6 +3,8 @@ require 'auth'
 class User < ActiveRecord::Base
   include Auth::Model
 
+  has_many :team_invites
+
   devise :rememberable, :timeoutable, :trackable,
          :omniauthable, omniauth_providers: [:steam]
 

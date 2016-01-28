@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   patch 'teams/:id/revoke',  to: 'teams#revoke',  as: 'revoke_team'
   resources :teams
 
+  patch 'team_invites/:id/accept',  to: 'team_invites#accept',  as: 'accept_team_invite'
+  patch 'team_invites/:id/decline', to: 'team_invites#decline', as: 'decline_team_invite'
+
   # Debug
   patch 'users/grant_meta', to: 'users#grant_meta', as: 'grant_meta'
   patch 'users/revoke_meta', to: 'users#revoke_meta', as: 'revoke_meta'
