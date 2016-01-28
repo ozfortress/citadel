@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   before_action :require_login, only: [:new, :create]
-  before_action :require_team_permission, only: [:edit, :update]
+  before_action :require_team_permission, only: [:edit, :update, :grant, :revoke]
 
   def index
   end
@@ -34,6 +34,23 @@ class TeamsController < ApplicationController
     @team.update(edit_team_params)
 
     redirect_to(team_path(@team))
+  end
+
+  # Permissions
+  def grant
+    @team = Team.find(params[:id])
+    user = User.find(params[:user_id])
+
+    user.grant(:edit, @team)
+    redirect_to :back
+  end
+
+  def revoke
+    @team = Team.find(params[:id])
+    user = User.find(params[:user_id])
+
+    user.revoke(:edit, @team)
+    redirect_to :back
   end
 
   private

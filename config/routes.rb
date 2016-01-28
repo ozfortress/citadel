@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   end
 
   resources :leagues
+
+  patch 'teams/:id/grant', to: 'teams#grant', as: 'grant_team'
+  patch 'teams/:id/revoke', to: 'teams#revoke', as: 'revoke_team'
   resources :teams
 
   # Debug
