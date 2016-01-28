@@ -23,12 +23,14 @@ describe User do
       let(:team2)      { create(:team, name: 'B') }
       let(:user)       { create(:user, name: 'A', steam_id: 1) }
       let(:leader)     { create(:user, name: 'B', steam_id: 2) }
-      let(:admin)      { create(:user, name: 'C', steam_id: 3) }
-      let(:old_leader) { create(:user, name: 'D', steam_id: 4) }
+      let(:leader2)    { create(:user, name: 'C', steam_id: 3) }
+      let(:admin)      { create(:user, name: 'D', steam_id: 4) }
+      let(:old_leader) { create(:user, name: 'E', steam_id: 5) }
 
       before do
         old_leader.grant(:edit, team)
         leader.grant(:edit, team)
+        leader2.grant(:edit, team2)
         admin.grant(:edit, :teams)
         old_leader.revoke(:edit, team)
       end
@@ -51,6 +53,14 @@ describe User do
 
       it "shouldn't let an old leader edit the team" do
         expect(old_leader.can?(:edit, team)).to be(false)
+      end
+
+      it 'should list the right people with permissions' do
+        users = User.get_revokeable(:edit, team)
+        admins = User.get_revokeable(:edit, :teams)
+
+        expect(users).to eq([leader])
+        expect(admins).to eq([admin])
       end
     end
 
