@@ -14,6 +14,10 @@ class Team < ActiveRecord::Base
     !team_invites.find_by(user: user).nil?
   end
 
+  def add_player(user)
+    transfers.create!(user: user, is_joining?: true)
+  end
+
   def roster
     # TODO: Maybe turn this into a big query?
     players = Set.new

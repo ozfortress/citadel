@@ -3,7 +3,7 @@ class TeamInvite < ActiveRecord::Base
   belongs_to :team
 
   def accept
-    Transfer.create!(is_joining?: true, user: user, team: team)
+    team.add_player(user)
     destroy
   end
 

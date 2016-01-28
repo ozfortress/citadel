@@ -13,6 +13,7 @@ class TeamsController < ApplicationController
     @team = Team.new(new_team_params)
 
     if @team.save
+      @team.add_player(current_user)
       current_user.grant(:edit, @team)
       redirect_to team_path(@team)
     else
