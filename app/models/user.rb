@@ -19,6 +19,9 @@ class User < ActiveRecord::Base
 
   validates_permission_to :edit, :games
 
+  validates_permission_to :edit, :competition
+  validates_permission_to :edit, :competitions
+
   def steam_profile_url
     "http://steamcommunity.com/profiles/#{steam_id}"
   end

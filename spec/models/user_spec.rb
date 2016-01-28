@@ -90,5 +90,9 @@ describe User do
         expect(old.can?(:edit, :games)).to be(false)
       end
     end
+
+    describe 'Competition' do
+      pending
+    end
   end
 end
