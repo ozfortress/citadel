@@ -1,2 +1,25 @@
-%h1 Leagues#index
-%p Find me in app/views/leagues/index.html.haml
+%h1 Leagues
+
+- if games.length > 0
+  %ul.nav.nav-tabs
+    - games.each_with_index do |game, index|
+      - klass = ''
+      - if index == 0
+        - klass = 'active'
+      %li{class: klass}
+        %a{data: {toggle: 'tab'}, href: "##{game.name.parameterize}"}
+          = game.name
+
+.tab-content
+  - games.each_with_index do |game, index|
+    - klass = 'tab-pane fade'
+    - if index == 0
+      - klass += ' in active'
+
+    %div{id: game.name.parameterize, class: klass}
+      .list-group-item
+        - game.competitions do |competition|
+          %h4.list-group-item-heading
+            = competition.name
+          %p.list-group-item-text
+            = markdown competition.description
