@@ -33,6 +33,9 @@ group :development, :test do
   # Use rspec for tests
   gem 'rspec-rails', '~> 3.0'
 
+  # Test coverage
+  gem 'simplecov'
+
   # Use for validation testing
   gem 'shoulda-matchers'
 
