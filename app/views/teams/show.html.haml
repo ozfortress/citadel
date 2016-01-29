@@ -24,7 +24,7 @@
 .panel.panel-default
   .panel-heading Transfers
   %ul.list-group
-    - @team.transfers.each do |transfer|
+    - transfers.each do |transfer|
       %li.list-group-item
         = link_to transfer.user.name, user_path(transfer.user)
         - if transfer.is_joining?

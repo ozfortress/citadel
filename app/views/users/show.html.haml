@@ -21,7 +21,7 @@
 .panel.panel-default
   .panel-heading Transfers
   %ul.list-group
-    - @user.transfers.each do |transfer|
+    - transfers.each do |transfer|
       %li.list-group-item
         - if transfer.is_joining?
           joined
