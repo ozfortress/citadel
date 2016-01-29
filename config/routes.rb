@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   get   'teams/:id/recruit', to: 'teams#recruit', as: 'recruit_team'
   patch 'teams/:id/invite',  to: 'teams#invite',  as: 'invite_team'
+  patch 'teams/:id/leave',   to: 'teams#leave',   as: 'leave_team'
   patch 'teams/:id/grant',   to: 'teams#grant',   as: 'grant_team'
   patch 'teams/:id/revoke',  to: 'teams#revoke',  as: 'revoke_team'
   resources :teams

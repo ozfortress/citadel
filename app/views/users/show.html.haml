@@ -17,6 +17,10 @@
     - @user.teams.each do |team|
       %li.list-group-item
         = link_to team.name, team_path(team)
+        .button-group.pull-right
+          = button_to leave_team_path(team), method: :patch, class: 'btn btn-danger' do
+            Leave
+            %span.glyphicon.glyphicon-remove
 
 .panel.panel-default
   .panel-heading Transfers
