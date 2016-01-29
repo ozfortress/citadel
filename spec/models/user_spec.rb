@@ -3,7 +3,7 @@ require 'support/shoulda'
 require 'support/factory_girl'
 
 describe User do
-  before { create(:user) }
+  let!(:user) { create(:user) }
 
   it { should have_many(:team_invites) }
   it { should have_many(:transfers) }
@@ -19,6 +19,24 @@ describe User do
 
   it { should allow_value('').for(:description) }
   it { should validate_length_of(:description).is_at_least(0) }
+
+  it 'creates proper steam profile links' do
+    user = create(:user, name: 'Crock Facker', steam_id: '76561198037529561')
+
+    expect(user.steam_profile_url).to eq('http://steamcommunity.com/profiles/76561198037529561')
+  end
+
+  it 'has teams' do
+    team = create(:team, name: 'A')
+    team2 = create(:team, name: 'B')
+    team3 = create(:team, name: 'C')
+
+    team.add_player(user)
+    team2.add_player(user)
+    team2.remove_player(user)
+
+    expect(user.teams).to eq([team])
+  end
 
   describe 'Permissions' do
     describe 'Teams' do
