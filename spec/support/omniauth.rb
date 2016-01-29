@@ -8,4 +8,8 @@ RSpec.configure do
       'info'     => { 'nickname' => options[:name] || 'foobar' }
     )
   end
+
+  def mock_auth_fail
+    OmniAuth.config.mock_auth[:steam] = :invalid_credentials
+  end
 end

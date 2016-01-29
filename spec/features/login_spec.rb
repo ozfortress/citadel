@@ -20,4 +20,13 @@ feature 'User tries to login with steam' do
 
     expect(current_path).to eq('/')
   end
+
+  scenario 'when login fails' do
+    visit teams_path
+
+    mock_auth_fail
+    find('#login').click
+
+    expect(current_path).to eq(teams_path)
+  end
 end
