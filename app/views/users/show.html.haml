@@ -5,7 +5,8 @@
 
 %h2= "#{@user.name}'s Profile"
 
-%h3= link_to('Steam Profile', @user.steam_profile_url)
+%p= steam_id
+%p= link_to('Steam Profile', @user.steam_profile_url)
 
 .panel.panel-default
   .panel-heading Description
