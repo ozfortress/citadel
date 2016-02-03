@@ -12,6 +12,14 @@ module Auth
         !get_permission(action, subject).nil?
       end
 
+      def can_any?(action, subject)
+        action_cls = self.class.get_action_class(action, subject)
+
+        actor = self.class.name.underscore
+
+        action_cls.exists?(actor => self)
+      end
+
       def grant(action, subject)
         action_cls = self.class.get_action_class(action, subject)
 
