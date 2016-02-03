@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
   validates_permission_to :edit, :competition
   validates_permission_to :edit, :competitions
 
+  after_initialize :init
+
   def steam_profile_url
     "http://steamcommunity.com/profiles/#{steam_id}"
   end
@@ -38,5 +40,11 @@ class User < ActiveRecord::Base
     end
 
     teams.to_a.sort! { |a, b| a.name.downcase <=> b.name.downcase }
+  end
+
+  private
+
+  def init
+    remember_me = true if remember_me.nil?
   end
 end
