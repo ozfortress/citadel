@@ -1,0 +1,18 @@
+- if user_can_edit_league?
+  =link_to edit_league_path(@competition), class: 'btn btn-default pull-right', type: 'button' do
+    Manage
+    %span.glyphicon.glyphicon-cog
+
+%h1= @competition.name
+
+.panel.panel-default
+  .panel-heading Info
+  .panel-body= markdown @competition.description
+
+.panel.panel-default
+  .panel-heading Divisions
+  %ul.list-group
+    - @competition.divisions.each do |div|
+      %li.list-group-item
+        %h3= div.name
+        = markdown div.description

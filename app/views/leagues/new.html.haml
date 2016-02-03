@@ -1,0 +1,21 @@
+
+= form_for @competition, url: leagues_path(@competition) do |f|
+  .form-group
+    = f.label :format
+    = f.select :format_id, format_options
+
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :description
+    = f.text_area :description, rows: 10, class: 'form-control'
+
+  = f.submit 'Create', class: 'btn btn-default'
+  = link_to 'Cancel', :back, class: 'btn btn-default'
+
+- if @competition.errors.any?
+  %ul
+    - @competition.errors.full_messages.each do |msg|
+      %li= msg

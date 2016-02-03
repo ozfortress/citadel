@@ -1,0 +1,34 @@
+.panel.panel-default
+  .panel-heading Info
+  .panel-body
+    = form_for @competition, url: league_path(@competition), method: :patch do |f|
+      .form-group
+        = f.label :format
+        = f.select :format_id, format_options, {}, class: 'form-control'
+
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: 'form-control'
+
+      .form-group
+        = f.label :description
+        = f.text_area :description, rows: 10, class: 'form-control'
+
+      = f.submit 'Update', class: 'btn btn-default'
+      = link_to 'Cancel', :back, class: 'btn btn-default'
+
+    - if @competition.errors.any?
+      %ul
+        - @competition.errors.full_messages.each do |msg|
+          %li= msg
+
+.panel.panel-default
+  .panel-heading Divisions
+  .panel-body
+    = link_to new_league_division_path(@competition), class: 'btn btn-default' do
+      Create Division
+      %span.glyphicon.glyphicon-plus
+  %ul.list-group
+    - @competition.divisions.each do |div|
+      = link_to edit_league_division_path(@competition, div), class: 'list-group-item' do
+        = div.name

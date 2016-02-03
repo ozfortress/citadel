@@ -50,12 +50,14 @@ class UsersController < ApplicationController
   def grant_meta
     current_user.grant(:edit, :games)
     current_user.grant(:edit, :teams)
+    current_user.grant(:edit, :competitions)
     redirect_to(:back)
   end
 
   def revoke_meta
     current_user.revoke(:edit, :games)
     current_user.revoke(:edit, :teams)
+    current_user.revoke(:edit, :competitions)
     redirect_to(:back)
   end
 

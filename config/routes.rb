@@ -9,7 +9,9 @@ Rails.application.routes.draw do
     resources :formats
   end
 
-  resources :leagues
+  resources :leagues do
+    resources :divisions
+  end
 
   get   'teams/:id/recruit', to: 'teams#recruit', as: 'recruit_team'
   patch 'teams/:id/invite',  to: 'teams#invite',  as: 'invite_team'

@@ -17,9 +17,10 @@
       - klass += ' in active'
 
     %div{id: game.name.parameterize, class: klass}
-      .list-group-item
-        - game.competitions do |competition|
-          %h4.list-group-item-heading
-            = competition.name
-          %p.list-group-item-text
-            = markdown competition.description
+      %ul.list-group
+        - game.competitions.each do |competition|
+          = link_to league_path(competition), class: 'list-group-item' do
+            %h4.list-group-item-heading
+              = competition.name
+            %p.list-group-item-text
+              = markdown competition.description
