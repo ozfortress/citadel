@@ -32,3 +32,9 @@
     - @competition.divisions.each do |div|
       = link_to edit_league_division_path(@competition, div), class: 'list-group-item' do
         = div.name
+
+- if user_can_edit_leagues?
+  .panel.panel-danger
+    .panel-heading Danger Zone
+    .panel-body
+      = button_to 'Delete', league_path(@competition), method: :delete, class: 'btn btn-danger'

@@ -1,7 +1,7 @@
 class LeaguesController < ApplicationController
   include LeaguePermissions
 
-  before_action :require_user_leagues_permission, only: [:new, :create]
+  before_action :require_user_leagues_permission, only: [:new, :create, :destroy]
   before_action :require_user_league_permission, only: [:edit, :update]
 
   def index
@@ -34,6 +34,14 @@ class LeaguesController < ApplicationController
 
     if @competition.update(league_params)
       redirect_to league_path(@competition)
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    if Competition.destroy(params[:id])
+      redirect_to admin_path(@competition)
     else
       render :edit
     end

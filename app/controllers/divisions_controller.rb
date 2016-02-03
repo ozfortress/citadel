@@ -35,6 +35,16 @@ class DivisionsController < ApplicationController
     end
   end
 
+  def destroy
+    @competition = Competition.find(params[:league_id])
+
+    if @competition.divisions.destroy(params[:id])
+      redirect_to edit_league_path(@competition)
+    else
+      render :edit
+    end
+  end
+
   private
 
   def division_params
