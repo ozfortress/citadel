@@ -32,9 +32,11 @@ class TeamsController < ApplicationController
   def update
     @team = Team.find(params[:id])
 
-    @team.update(edit_team_params)
-
-    redirect_to team_path(@team)
+    if @team.update(edit_team_params)
+      redirect_to team_path(@team)
+    else
+      render :edit
+    end
   end
 
   def recruit
