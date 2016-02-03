@@ -1,0 +1,18 @@
+%h1= @competition.name
+
+= form_for @div, url: league_divisions_path(@competition, @div), method: :patch do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :description
+    = f.text_area :description, rows: 10, class: 'form-control'
+
+  = f.submit 'Update', class: 'btn btn-default'
+  = link_to 'Cancel', :back, class: 'btn btn-default'
+
+- if @div.errors.any?
+  %ul
+    - @div.errors.full_messages.each do |msg|
+      %li= msg
