@@ -27,21 +27,21 @@ describe TeamsController do
   describe 'POST #create' do
     it 'creates a team' do
       sign_in user
-      post :create, team: {format_id: format.id, name: 'A', description: 'B'}
+      post :create, team: { format_id: format.id, name: 'A', description: 'B' }
 
       team = Team.find_by(name: 'A')
       expect(team).to_not be_nil
       expect(team.format).to eq(format)
       expect(team.description).to eq('B')
       expect(team.on_roster?(user)).to be(true)
-      expect(user.can?(:edit, team)).to be (true)
+      expect(user.can?(:edit, team)).to be(true)
     end
 
     it 'handles duplicate teams' do
-      team = create(:team, name: 'A', format: format)
+      create(:team, name: 'A', format: format)
 
       sign_in user
-      post :create, team: {format_id: format.id, name: 'A', description: 'B'}
+      post :create, team: { format_id: format.id, name: 'A', description: 'B' }
 
       expect(response).to render_template(:new)
     end
@@ -75,7 +75,7 @@ describe TeamsController do
       user.grant(:edit, team)
 
       sign_in user
-      patch :update, id: team.id, team: {name: 'C', description: 'D'}
+      patch :update, id: team.id, team: { name: 'C', description: 'D' }
 
       team = Team.find(team.id)
       expect(team.name).to eq('C')
@@ -118,7 +118,7 @@ describe TeamsController do
       team.add_player(user)
 
       sign_in user
-      request.env["HTTP_REFERER"] = '/'
+      request.env['HTTP_REFERER'] = '/'
       patch :leave, id: team.id
 
       expect(team.on_roster?(user)).to be(false)
@@ -132,7 +132,7 @@ describe TeamsController do
       user.grant(:edit, team)
 
       sign_in user
-      request.env["HTTP_REFERER"] = '/'
+      request.env['HTTP_REFERER'] = '/'
       patch :leave, id: team.id, user_id: player.id
 
       expect(team.on_roster?(player)).to be(false)
@@ -147,7 +147,7 @@ describe TeamsController do
       admin.grant(:edit, :teams)
 
       sign_in admin
-      request.env["HTTP_REFERER"] = '/'
+      request.env['HTTP_REFERER'] = '/'
       patch :grant, id: team.id, user_id: user.id
 
       expect(user.can?(:edit, team)).to be(true)
@@ -163,7 +163,7 @@ describe TeamsController do
       user.grant(:edit, team)
 
       sign_in admin
-      request.env["HTTP_REFERER"] = '/'
+      request.env['HTTP_REFERER'] = '/'
       patch :revoke, id: team.id, user_id: user.id
 
       expect(user.can?(:edit, team)).to be(false)

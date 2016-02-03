@@ -1,8 +1,8 @@
 require 'steam_id'
 
 describe SteamId do
-  let(:textual) { "STEAM_0:1:38631916" }
-  let(:int64)   { 76561198037529561 }
+  let(:textual) { 'STEAM_0:1:38631916' }
+  let(:int64)   { 76_561_198_037_529_561 }
 
   it 'Converts from textual to int64 representation' do
     i = described_class.from_str(textual)

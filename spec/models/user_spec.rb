@@ -29,7 +29,7 @@ describe User do
   it 'has teams' do
     team = create(:team, name: 'A')
     team2 = create(:team, name: 'B')
-    team3 = create(:team, name: 'C')
+    create(:team, name: 'C')
 
     team.add_player(user)
     team2.add_player(user)

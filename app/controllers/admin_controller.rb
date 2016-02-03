@@ -5,7 +5,7 @@ class AdminController < ApplicationController
 
   def require_any_admin_permissions
     redirect_to root_path unless user_signed_in? &&
-      (current_user.can?(:edit, :games) ||
-        current_user.can?(:edit, :competitions))
+                                 (current_user.can?(:edit, :games) ||
+                                  current_user.can?(:edit, :competitions))
   end
 end

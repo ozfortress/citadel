@@ -27,7 +27,7 @@ describe UsersController do
     it 'creates a user' do
       session['devise.steam_data'] = mock_auth_hash
 
-      post :create, user: {name: 'A', description: 'B'}
+      post :create, user: { name: 'A', description: 'B' }
 
       user = User.find_by(name: 'A')
       expect(user).to_not be_nil
@@ -38,7 +38,7 @@ describe UsersController do
       user = create(:user, steam_id: 123)
       session['devise.steam_data'] = mock_auth_hash(steam_id: 456)
 
-      post :create, user: {name: user.name, description: 'B'}
+      post :create, user: { name: user.name, description: 'B' }
 
       expect(response).to render_template(:new)
     end
@@ -70,7 +70,7 @@ describe UsersController do
       user = create(:user, name: 'A', description: 'B')
 
       sign_in user
-      patch :update, id: user.id, user: {name: 'C', description: 'D'}
+      patch :update, id: user.id, user: { name: 'C', description: 'D' }
 
       user = User.find(user.id)
       expect(user).to_not be_nil
@@ -84,7 +84,7 @@ describe UsersController do
       user = create(:user, name: 'A', description: 'B')
 
       sign_in user
-      request.env["HTTP_REFERER"] = '/'
+      request.env['HTTP_REFERER'] = '/'
       patch :logout
 
       expect(session['devise']).to be_nil
