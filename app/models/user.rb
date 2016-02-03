@@ -45,6 +45,6 @@ class User < ActiveRecord::Base
   private
 
   def init
-    remember_me = true if remember_me.nil?
+    self.remember_me = true if remember_me.nil?
   end
 end
