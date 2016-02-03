@@ -1,8 +1,5 @@
-class MetaController < ApplicationController
+class MetaController < AdminController
   before_action :require_meta
-
-  def index
-  end
 
   private
 

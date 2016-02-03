@@ -30,8 +30,8 @@
 
             - if user_can_meta?
               %li.divider-vertical
-              %li{class: navbar_class(:meta)}
-                = link_to('Meta', :meta)
+              %li{class: navbar_class(:admin)}
+                = link_to('Admin', :admin)
               / DEBUG
               %li= button_to 'become weak', revoke_meta_path, method: :patch
 

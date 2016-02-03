@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'support/devise'
 
-describe MetaController do
+describe AdminController do
   describe 'GET #index' do
     it 'succeeds for authorized user' do
       user = create(:user)

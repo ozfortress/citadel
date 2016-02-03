@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
   get 'pages/home'
 
-  get 'meta', to: 'meta#index'
+  get 'admin', to: 'admin#index'
+
   namespace :meta do
     resources :games
     resources :formats

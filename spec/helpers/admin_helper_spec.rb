@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe MetaHelper do
+describe AdminHelper do
 end

@@ -17,8 +17,8 @@ module ApplicationHelper
       controller_name == 'teams'
     when :leagues
       controller_name == 'leagues'
-    when :meta
-      controller.is_a? MetaController
+    when :admin
+      controller.is_a? AdminController
     end
   end
 
@@ -29,5 +29,11 @@ module ApplicationHelper
 
   def users
     User.all
+  end
+
+  def format_options
+    Format.all.map do |format|
+      ["#{format.game.name}: #{format.name}", format.id]
+    end
   end
 end

@@ -1,0 +1,20 @@
+%h2 For all your admin needs
+
+- if current_user.can?(:edit, :competitions)
+  .panel.panel-default
+    .panel-heading Leagues
+    .panel-body
+      = link_to new_league_path, class: 'btn btn-default' do
+        Create New League
+        %span.glyphicon.glyphicon-plus
+    %ul.list-group
+      - competitions.each do |competition|
+        = link_to competition.name, league_path(competition), class: 'list-group-item'
+
+- if current_user.can?(:edit, :games)
+  .panel.panel-default
+    .panel-heading Meta
+    .panel-body
+      %ul.list-group
+        = link_to 'Games', meta_games_path, class: 'list-group-item'
+        = link_to 'Formats', meta_formats_path, class: 'list-group-item'
