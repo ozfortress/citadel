@@ -6,8 +6,7 @@ class User < ActiveRecord::Base
   has_many :team_invites
   has_many :transfers
 
-  devise :rememberable, :timeoutable, :trackable,
-         :omniauthable, omniauth_providers: [:steam]
+  devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:steam]
 
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
   validates :steam_id, presence: true, uniqueness: true,
