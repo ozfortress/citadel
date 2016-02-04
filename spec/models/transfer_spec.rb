@@ -7,4 +7,7 @@ describe Transfer do
 
   it { should belong_to(:team) }
   it { should belong_to(:user) }
+
+  it { should validate_presence_of(:team) }
+  it { should validate_presence_of(:user) }
 end

@@ -8,6 +8,8 @@ describe Format do
   it { should belong_to(:game) }
   it { should have_many(:competitions) }
 
+  it { should validate_presence_of(:game) }
+
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }
   it { should validate_length_of(:name).is_at_least(1) }

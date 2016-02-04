@@ -6,6 +6,8 @@ describe Competition do
   it { should belong_to(:format) }
   it { should have_many(:divisions) }
 
+  it { should validate_presence_of(:format) }
+
   it { should validate_presence_of(:name) }
   it { should validate_length_of(:name).is_at_least(1) }
   it { should validate_length_of(:name).is_at_most(64) }

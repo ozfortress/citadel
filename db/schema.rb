@@ -51,20 +51,22 @@ ActiveRecord::Schema.define(version: 20160204070316) do
   add_index "action_user_edit_teams", ["user_id"], name: "index_action_user_edit_teams_on_user_id", using: :btree
 
   create_table "competition_rosters", force: :cascade do |t|
-    t.integer  "team_id"
+    t.integer  "team_id",        null: false
+    t.integer  "competition_id", null: false
     t.integer  "division_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
+  add_index "competition_rosters", ["competition_id"], name: "index_competition_rosters_on_competition_id", using: :btree
   add_index "competition_rosters", ["division_id"], name: "index_competition_rosters_on_division_id", using: :btree
   add_index "competition_rosters", ["team_id"], name: "index_competition_rosters_on_team_id", using: :btree
 
   create_table "competition_transfers", force: :cascade do |t|
-    t.integer  "competition_roster_id"
-    t.integer  "user_id"
-    t.boolean  "is_joining"
-    t.boolean  "approved"
+    t.integer  "competition_roster_id", null: false
+    t.integer  "user_id",               null: false
+    t.boolean  "is_joining",            null: false
+    t.boolean  "approved",              null: false
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
   end
@@ -168,6 +170,7 @@ ActiveRecord::Schema.define(version: 20160204070316) do
   add_foreign_key "action_user_edit_team", "teams"
   add_foreign_key "action_user_edit_team", "users"
   add_foreign_key "action_user_edit_teams", "users"
+  add_foreign_key "competition_rosters", "competitions"
   add_foreign_key "competition_rosters", "divisions"
   add_foreign_key "competition_rosters", "teams"
   add_foreign_key "competition_transfers", "competition_rosters"

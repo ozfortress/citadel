@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :competition_roster do
     team
-    division
+    competition
   end
 end

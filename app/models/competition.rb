@@ -2,6 +2,7 @@ class Competition < ActiveRecord::Base
   belongs_to :format
   has_many   :divisions, dependent: :destroy
 
+  validates :format, presence: true
   validates :name, presence: true, length: { in: 1..64 }
   validates :description, presence: true
 
