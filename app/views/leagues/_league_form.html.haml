@@ -1,0 +1,29 @@
+.panel.panel-default
+  .panel-heading Info
+  .panel-body
+    .form-group
+      = f.label :format
+      = f.select :format_id, format_options, {}, class: 'form-control'
+
+    .form-group
+      = f.label :name
+      = f.text_field :name, class: 'form-control'
+
+    .form-group
+      = f.label :description
+      = f.text_area :description, rows: 10, class: 'form-control'
+
+.panel.panel-default
+  .panel-heading Divisions
+
+  %ul.list-group
+    = f.fields_for :divisions do |division_f|
+      = render 'division_fields', f: division_f
+    #divisions
+
+  .panel-body
+    %div
+      = link_to_add_association f, :divisions, class: 'btn btn-default pull-right', |
+                                'data-association-insertion-node' => '#divisions' do
+        %span.glyphicon.glyphicon-plus
+        Add Division

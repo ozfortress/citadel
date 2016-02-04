@@ -1,0 +1,35 @@
+%li.list-group-item.nested-fields
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :description
+    = f.text_area :description, rows: 3, class: 'form-control'
+
+  #division-teams-range.form-group
+    = f.label 'Teams'
+    .form-inline
+      .form-group
+        = f.label 'Minimum'
+        = f.number_field :min_players, in: 1..16
+      .form-group
+        = f.label 'Maximum'
+        = f.number_field :max_players, in: 1..16
+
+  #division-player-range.form-group
+    = f.label 'Players'
+    .form-inline
+      .form-group
+        = f.label 'Minimum'
+        = f.number_field :min_players, min: 1
+      .form-group
+        = f.label 'Maximum'
+        = f.number_field :max_players, min: 1
+
+  %hr
+
+  = link_to_remove_association f, class: 'btn btn-default' do
+    %span.glyphicon.glyphicon-trash
+    Delete
+

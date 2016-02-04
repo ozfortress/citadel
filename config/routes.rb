@@ -11,9 +11,7 @@ Rails.application.routes.draw do
   end
 
   patch 'leagues/:id/visibility', to: 'leagues#visibility', as: 'league_visibility'
-  resources :leagues do
-    resources :divisions
-  end
+  resources :leagues
 
   get   'teams/:id/recruit', to: 'teams#recruit', as: 'recruit_team'
   patch 'teams/:id/invite',  to: 'teams#invite',  as: 'invite_team'

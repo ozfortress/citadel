@@ -10,6 +10,7 @@ class LeaguesController < ApplicationController
 
   def new
     @competition = Competition.new
+    @competition.divisions.new
   end
 
   def create
@@ -62,7 +63,8 @@ class LeaguesController < ApplicationController
   private
 
   def league_params
-    params.require(:competition).permit(:name, :description, :format_id)
+    params.require(:competition).permit(:name, :description, :format_id,
+                                        divisions_attributes: [:id, :name, :description, :_destroy])
   end
 
   def league_visibility_params

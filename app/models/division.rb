@@ -2,7 +2,7 @@ class Division < ActiveRecord::Base
   belongs_to :competition
   has_many :competition_rosters
 
-  validates :competition, presence: true
+  validates :competition, presence: true, on: :update
   validates :name, presence: true, length: { in: 1..64 }
   validates :description, presence: true
   validates :min_teams, presence: true, numericality: { greater_than: 1 }
@@ -11,6 +11,8 @@ class Division < ActiveRecord::Base
   validates :min_players, presence: true, numericality: { greater_than: 0 }
   validates :max_players, presence: true, numericality: { greater_than: 0 }
   validate :validate_players_range
+
+  after_initialize :set_defaults
 
   private
 
@@ -26,5 +28,12 @@ class Division < ActiveRecord::Base
        min_players > max_players
       errors.add(:min_players, "can't be greater than maximum players")
     end
+  end
+
+  def set_defaults
+    self.min_teams = 4    if min_teams.nil?
+    self.max_teams = 16   if max_teams.nil?
+    self.min_players = 6  if min_players.nil?
+    self.max_players = 16 if max_players.nil?
   end
 end
