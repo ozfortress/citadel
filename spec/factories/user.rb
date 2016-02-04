@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
-    name     '/dev/zero'
-    steam_id 12_345
+    sequence(:name) { |n| "FOOBAR#{n}" }
+    sequence(:steam_id) { |n| n }
   end
 end

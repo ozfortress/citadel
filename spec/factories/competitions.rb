@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :competition do
-    name 'OWL 333'
+    sequence(:name) { |n| "OWL #{n}" }
     description "The owl that won't happen"
-    format { Format.first || create(:format) }
+    format
   end
 end

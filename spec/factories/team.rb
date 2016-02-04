@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :team do
-    name 'Immunity'
+    sequence(:name) { |n| "Immunity #{n}" }
     description 'We beat everyone'
   end
 end

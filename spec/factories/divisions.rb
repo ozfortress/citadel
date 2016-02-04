@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :division do
-    name 'Div 5'
+    sequence(:name) { |n| "Div #{n}" }
     description "We're not good yet"
-    competition { Competition.first || create(:competition) }
+    competition
   end
 end
