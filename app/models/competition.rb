@@ -5,6 +5,8 @@ class Competition < ActiveRecord::Base
   validates :format, presence: true
   validates :name, presence: true, length: { in: 1..64 }
   validates :description, presence: true
+  validates :signuppable, presence: true, inclusion: { in: [true, false] }
+  validates :roster_locked, presence: true, inclusion: { in: [true, false] }
 
   after_initialize :init
 

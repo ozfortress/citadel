@@ -4,4 +4,6 @@ class CompetitionTransfer < ActiveRecord::Base
 
   validates :user, presence: true
   validates :roster, presence: true
+  validates :is_joining, presence: true, inclusion: { in: [true, false] }
+  validates :approved, presence: true, inclusion: { in: [true, false] }
 end
