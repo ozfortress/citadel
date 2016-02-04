@@ -15,7 +15,7 @@ class DivisionsController < ApplicationController
     if @div.save
       redirect_to edit_league_path(@competition)
     else
-      render :create
+      render :new
     end
   end
 
