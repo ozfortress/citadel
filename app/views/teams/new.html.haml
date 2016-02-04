@@ -1,11 +1,5 @@
 = form_for @team do |f|
-  .form-group
-    = f.label :name
-    = f.text_field :name, class: 'form-control'
-
-  .form-group
-    = f.label :description
-    = f.text_area :description, rows: 10, class: 'form-control'
+  = render 'team_form', f: f
 
   = f.submit 'Create Team', class: 'btn btn-default'
   = link_to 'Cancel', :back, class: 'btn btn-default'

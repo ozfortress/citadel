@@ -2,16 +2,15 @@
   .panel-heading Information
   .panel-body
     = form_for @team, method: :patch do |f|
-      .form-group
-        = f.label :name
-        = f.text_field :name, class: 'form-control'
-
-      .form-group
-        = f.label :description
-        = f.text_area :description, rows: 10, class: 'form-control'
+      = render 'team_form', f: f
 
       = f.submit 'Save', class: 'btn btn-default'
       = link_to 'Cancel', team_path(@team), class: 'btn btn-default'
+
+    - if @team.errors.any?
+      %ul
+        - @team.errors.full_messages.each do |msg|
+          %li= msg
 
 - if users_who_can_edit.length > 0
   .panel.panel-default
