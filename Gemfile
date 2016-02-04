@@ -14,6 +14,8 @@ gem 'bootstrap-sass', '~> 3.3.6'
 # Bootstrap datetime picker
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
+# Nested Forms
+gem "cocoon"
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
