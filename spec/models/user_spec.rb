@@ -56,27 +56,27 @@ describe User do
         old_leader.revoke(:edit, team)
       end
 
-      it "shouldn't let normal users edit teams" do
+      it "doesn't let normal users edit teams" do
         expect(user.can?(:edit, team)).to be(false)
       end
 
-      it 'should let a team leader edit his team' do
+      it 'lets a team leader edit his team' do
         expect(leader.can?(:edit, team)).to be(true)
       end
 
-      it "shouldn't let a team leader edit other teams" do
+      it "doesn't let a team leader edit other teams" do
         expect(leader.can?(:edit, team2)).to be(false)
       end
 
-      it 'should let an admin edit any team' do
+      it 'lets an admin edit any team' do
         expect(admin.can?(:edit, :teams))
       end
 
-      it "shouldn't let an old leader edit the team" do
+      it "doesn't let an old leader edit the team" do
         expect(old_leader.can?(:edit, team)).to be(false)
       end
 
-      it 'should list the right people with permissions' do
+      it 'lists the right people with permissions' do
         users = User.get_revokeable(:edit, team)
         admins = User.get_revokeable(:edit, :teams)
 
