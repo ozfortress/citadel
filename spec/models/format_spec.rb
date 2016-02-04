@@ -18,6 +18,5 @@ describe Format do
   it { should validate_presence_of(:description) }
 
   it { should validate_presence_of(:player_count) }
-  it { should validate_numericality_of(:player_count).is_greater_than(0) }
-  it { should validate_numericality_of(:player_count).is_less_than_or_equal_to(16) }
+  it { should validate_inclusion_of(:player_count).in_range(0...16) }
 end

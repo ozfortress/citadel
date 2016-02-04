@@ -4,6 +4,15 @@ class CompetitionTransfer < ActiveRecord::Base
 
   validates :user, presence: true
   validates :roster, presence: true
-  validates :is_joining, presence: true, inclusion: { in: [true, false] }
-  validates :approved, presence: true, inclusion: { in: [true, false] }
+  validates :is_joining, inclusion: { in: [true, false] }
+  validates :approved, inclusion: { in: [true, false] }
+
+  after_initialize :set_defaults
+
+  private
+
+  def set_defaults
+    self.is_joining = true  if is_joining.nil?
+    self.approved   = false if approved.nil?
+  end
 end

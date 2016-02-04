@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204070316) do
+ActiveRecord::Schema.define(version: 20160204092852) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,24 +51,24 @@ ActiveRecord::Schema.define(version: 20160204070316) do
   add_index "action_user_edit_teams", ["user_id"], name: "index_action_user_edit_teams_on_user_id", using: :btree
 
   create_table "competition_rosters", force: :cascade do |t|
-    t.integer  "team_id",        null: false
-    t.integer  "competition_id", null: false
-    t.integer  "division_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.integer  "team_id",                     null: false
+    t.integer  "division_id",                 null: false
+    t.integer  "points",      default: 0,     null: false
+    t.boolean  "approved",    default: false, null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
-  add_index "competition_rosters", ["competition_id"], name: "index_competition_rosters_on_competition_id", using: :btree
   add_index "competition_rosters", ["division_id"], name: "index_competition_rosters_on_division_id", using: :btree
   add_index "competition_rosters", ["team_id"], name: "index_competition_rosters_on_team_id", using: :btree
 
   create_table "competition_transfers", force: :cascade do |t|
-    t.integer  "competition_roster_id", null: false
-    t.integer  "user_id",               null: false
-    t.boolean  "is_joining",            null: false
-    t.boolean  "approved",              null: false
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.integer  "competition_roster_id",                 null: false
+    t.integer  "user_id",                               null: false
+    t.boolean  "is_joining",                            null: false
+    t.boolean  "approved",              default: false, null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   add_index "competition_transfers", ["competition_roster_id"], name: "index_competition_transfers_on_competition_roster_id", using: :btree
@@ -76,11 +76,13 @@ ActiveRecord::Schema.define(version: 20160204070316) do
 
   create_table "competitions", force: :cascade do |t|
     t.integer  "format_id"
-    t.string   "name",        null: false
-    t.text     "description", null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.boolean  "private",     null: false
+    t.string   "name",                          null: false
+    t.text     "description",                   null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.boolean  "private",                       null: false
+    t.boolean  "signuppable",   default: false, null: false
+    t.boolean  "roster_locked", default: false, null: false
   end
 
   add_index "competitions", ["format_id"], name: "index_competitions_on_format_id", using: :btree
@@ -91,6 +93,10 @@ ActiveRecord::Schema.define(version: 20160204070316) do
     t.text     "description",    null: false
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "min_teams",      null: false
+    t.integer  "max_teams",      null: false
+    t.integer  "min_players",    null: false
+    t.integer  "max_players",    null: false
   end
 
   add_index "divisions", ["competition_id"], name: "index_divisions_on_competition_id", using: :btree
@@ -170,7 +176,6 @@ ActiveRecord::Schema.define(version: 20160204070316) do
   add_foreign_key "action_user_edit_team", "teams"
   add_foreign_key "action_user_edit_team", "users"
   add_foreign_key "action_user_edit_teams", "users"
-  add_foreign_key "competition_rosters", "competitions"
   add_foreign_key "competition_rosters", "divisions"
   add_foreign_key "competition_rosters", "teams"
   add_foreign_key "competition_transfers", "competition_rosters"

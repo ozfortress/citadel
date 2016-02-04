@@ -4,4 +4,5 @@ class Transfer < ActiveRecord::Base
 
   validates :team, presence: true
   validates :user, presence: true
+  validates :is_joining?, inclusion: { in: [true, false] }
 end

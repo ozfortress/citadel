@@ -1,6 +1,8 @@
 FactoryGirl.define do
   factory :competition_roster do
     team
-    competition
+    division
+    points 0
+    approved false
   end
 end

@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   validates_permission_to :edit, :competition
   validates_permission_to :edit, :competitions
 
-  after_initialize :init
+  after_initialize :set_defaults
 
   def steam_profile_url
     "http://steamcommunity.com/profiles/#{steam_id}"
@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
 
   private
 
-  def init
+  def set_defaults
     self.remember_me = true if remember_me.nil?
   end
 end

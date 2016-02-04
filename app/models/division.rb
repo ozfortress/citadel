@@ -15,13 +15,15 @@ class Division < ActiveRecord::Base
   private
 
   def validate_teams_range
-    if min_teams > max_teams
+    if min_teams.present? && max_teams.present? &&
+       min_teams > max_teams
       errors.add(:min_teams, "can't be greater than maximum teams")
     end
   end
 
   def validate_players_range
-    if min_players > max_players
+    if min_players.present? && max_players.present? &&
+       min_players > max_players
       errors.add(:min_players, "can't be greater than maximum players")
     end
   end
