@@ -12,10 +12,6 @@ class Competition < ActiveRecord::Base
     !private?
   end
 
-  def public=(value)
-    self.private = value
-  end
-
   private
 
   def init
