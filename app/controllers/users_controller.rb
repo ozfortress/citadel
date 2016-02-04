@@ -17,7 +17,8 @@ class UsersController < ApplicationController
     @user.steam_id = steam_data['uid']
 
     if @user.save
-      sign_in_and_redirect @user
+      sign_in @user
+      render :show
     else
       render :new
     end
