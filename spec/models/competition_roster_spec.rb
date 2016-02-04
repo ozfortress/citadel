@@ -5,5 +5,5 @@ describe CompetitionRoster do
 
   it { should belong_to(:team) }
   it { should belong_to(:division) }
-  it { should have_many(:competition_transfers) }
+  it { should have_many(:transfers).class_name('CompetitionTransfer') }
 end
