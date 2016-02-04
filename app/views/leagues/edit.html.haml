@@ -4,8 +4,8 @@
     All changes are visible to everyone.
   - else
     %string
-      Private
       %span.glyphicon.glyphicon-lock
+      Private
 
 = form_for @competition, url: leagues_path(@competition) do |f|
   = render 'league_form', f: f
@@ -24,7 +24,9 @@
   .panel.panel-danger
     .panel-heading Danger Zone
     .panel-body
-      = button_to 'Delete', league_path(@competition), method: :delete, class: 'btn btn-danger'
+      = button_to league_path(@competition), method: :delete, class: 'btn btn-danger' do
+        %span.glyphicon.glyphicon-trash
+        Delete
 
       - if @competition.private?
         = button_to 'Make Public', league_visibility_path(@competition, private: false), method: :patch, class: 'btn btn-warning'
