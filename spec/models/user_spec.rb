@@ -40,13 +40,13 @@ describe User do
 
   describe 'Permissions' do
     describe 'Teams' do
-      let(:team)       { create(:team, name: 'A') }
-      let(:team2)      { create(:team, name: 'B') }
-      let(:user)       { create(:user, name: 'A', steam_id: 1) }
-      let(:leader)     { create(:user, name: 'B', steam_id: 2) }
-      let(:leader2)    { create(:user, name: 'C', steam_id: 3) }
-      let(:admin)      { create(:user, name: 'D', steam_id: 4) }
-      let(:old_leader) { create(:user, name: 'E', steam_id: 5) }
+      let(:team)       { create(:team) }
+      let(:team2)      { create(:team) }
+      let(:user)       { create(:user) }
+      let(:leader)     { create(:user) }
+      let(:leader2)    { create(:user) }
+      let(:admin)      { create(:user) }
+      let(:old_leader) { create(:user) }
 
       before do
         old_leader.grant(:edit, team)
@@ -86,9 +86,9 @@ describe User do
     end
 
     describe 'Meta' do
-      let(:user)  { create(:user, name: 'A', steam_id: 1) }
-      let(:admin) { create(:user, name: 'B', steam_id: 2) }
-      let(:old)   { create(:user, name: 'C', steam_id: 3) }
+      let(:user)  { create(:user) }
+      let(:admin) { create(:user) }
+      let(:old)   { create(:user) }
 
       before do
         admin.grant(:edit, :games)

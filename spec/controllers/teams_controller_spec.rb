@@ -96,7 +96,7 @@ describe TeamsController do
   describe 'PATCH #invite' do
     it 'invites a player to a team' do
       team = create(:team)
-      invited = create(:user, name: 'A', steam_id: 3)
+      invited = create(:user)
       user.grant(:edit, team)
 
       sign_in user
@@ -125,7 +125,7 @@ describe TeamsController do
 
     it 'kicks a player from a team' do
       team = create(:team)
-      player = create(:user, name: 'A', steam_id: 3)
+      player = create(:user)
       team.add_player(player)
       user.grant(:edit, team)
 
@@ -141,7 +141,7 @@ describe TeamsController do
   describe 'PATCH #grant' do
     it 'grants team permission from admin' do
       team = create(:team)
-      admin = create(:user, name: 'A', steam_id: 3)
+      admin = create(:user)
       admin.grant(:edit, :teams)
 
       sign_in admin
@@ -156,7 +156,7 @@ describe TeamsController do
   describe 'PATCH #revoke' do
     it 'returns http success' do
       team = create(:team)
-      admin = create(:user, name: 'A', steam_id: 3)
+      admin = create(:user)
       admin.grant(:edit, :teams)
       user.grant(:edit, team)
 

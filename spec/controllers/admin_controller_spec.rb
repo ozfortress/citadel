@@ -3,8 +3,9 @@ require 'support/devise'
 
 describe AdminController do
   describe 'GET #index' do
+    let(:user) { create(:user) }
+
     it 'succeeds for authorized user' do
-      user = create(:user)
       user.grant(:edit, :games)
       sign_in user
 
@@ -14,7 +15,6 @@ describe AdminController do
     end
 
     it 'redirects to root for unauthorized user' do
-      user = create(:user)
       sign_in user
 
       get :index

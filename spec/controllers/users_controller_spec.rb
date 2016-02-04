@@ -81,7 +81,7 @@ describe UsersController do
 
   describe 'PATCH #logout' do
     it 'logs a user out' do
-      user = create(:user, name: 'A', description: 'B')
+      user = create(:user)
 
       sign_in user
       request.env['HTTP_REFERER'] = '/'
