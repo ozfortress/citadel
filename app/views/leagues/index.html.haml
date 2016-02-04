@@ -18,7 +18,7 @@
 
     %div{id: game.name.parameterize, class: klass}
       %ul.list-group
-        - game.competitions.each do |competition|
+        - game.public_competitions.each do |competition|
           = link_to league_path(competition), class: 'list-group-item' do
             %h4.list-group-item-heading
               = competition.name

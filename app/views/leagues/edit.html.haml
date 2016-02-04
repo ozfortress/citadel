@@ -1,3 +1,12 @@
+.alert.alert-warning
+  - if @competition.public?
+    %string Public
+    All changes are visible to everyone.
+  - else
+    %string
+      Private
+      %span.glyphicon.glyphicon-lock
+
 .panel.panel-default
   .panel-heading Info
   .panel-body
@@ -38,3 +47,8 @@
     .panel-heading Danger Zone
     .panel-body
       = button_to 'Delete', league_path(@competition), method: :delete, class: 'btn btn-danger'
+
+      - if @competition.private?
+        = button_to 'Make Public', league_visibility_path(@competition, private: false), method: :patch, class: 'btn btn-warning'
+      - else
+        = button_to 'Make Private', league_visibility_path(@competition, private: true), method: :patch, class: 'btn btn-danger'

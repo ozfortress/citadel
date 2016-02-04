@@ -4,4 +4,20 @@ class Competition < ActiveRecord::Base
 
   validates :name, presence: true, length: { in: 1..64 }
   validates :description, presence: true
+
+  after_initialize :init
+
+  def public?
+    !private?
+  end
+
+  def public=(value)
+    self.private = value
+  end
+
+  private
+
+  def init
+    self.private = true if self.private.nil?
+  end
 end

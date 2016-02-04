@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :formats
   end
 
+  patch 'leagues/:id/visibility', to: 'leagues#visibility', as: 'league_visibility'
   resources :leagues do
     resources :divisions
   end
