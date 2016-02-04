@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204063841) do
+ActiveRecord::Schema.define(version: 20160204070316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,28 @@ ActiveRecord::Schema.define(version: 20160204063841) do
   end
 
   add_index "action_user_edit_teams", ["user_id"], name: "index_action_user_edit_teams_on_user_id", using: :btree
+
+  create_table "competition_rosters", force: :cascade do |t|
+    t.integer  "team_id"
+    t.integer  "division_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "competition_rosters", ["division_id"], name: "index_competition_rosters_on_division_id", using: :btree
+  add_index "competition_rosters", ["team_id"], name: "index_competition_rosters_on_team_id", using: :btree
+
+  create_table "competition_transfers", force: :cascade do |t|
+    t.integer  "competition_roster_id"
+    t.integer  "user_id"
+    t.boolean  "is_joining"
+    t.boolean  "approved"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "competition_transfers", ["competition_roster_id"], name: "index_competition_transfers_on_competition_roster_id", using: :btree
+  add_index "competition_transfers", ["user_id"], name: "index_competition_transfers_on_user_id", using: :btree
 
   create_table "competitions", force: :cascade do |t|
     t.integer  "format_id"
@@ -146,6 +168,10 @@ ActiveRecord::Schema.define(version: 20160204063841) do
   add_foreign_key "action_user_edit_team", "teams"
   add_foreign_key "action_user_edit_team", "users"
   add_foreign_key "action_user_edit_teams", "users"
+  add_foreign_key "competition_rosters", "divisions"
+  add_foreign_key "competition_rosters", "teams"
+  add_foreign_key "competition_transfers", "competition_rosters"
+  add_foreign_key "competition_transfers", "users"
   add_foreign_key "competitions", "formats"
   add_foreign_key "divisions", "competitions"
   add_foreign_key "formats", "games"

@@ -1,6 +1,6 @@
 class Team < ActiveRecord::Base
-  has_many   :team_invites
-  has_many   :transfers
+  has_many :team_invites
+  has_many :transfers
 
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
   validates :description, presence: true, allow_blank: true
