@@ -47,6 +47,8 @@ GEM
     bootstrap-sass (3.3.6)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
+    bootstrap3-datetimepicker-rails (4.17.37)
+      momentjs-rails (>= 2.8.1)
     builder (3.2.2)
     byebug (8.2.1)
     capistrano (3.4.0)
@@ -120,6 +122,8 @@ GEM
     mime-types (2.99)
     mini_portile2 (2.0.0)
     minitest (5.8.3)
+    momentjs-rails (2.11.0)
+      railties (>= 3.1)
     multi_json (1.11.2)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -253,6 +257,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-sass (~> 3.3.6)
+  bootstrap3-datetimepicker-rails (~> 4.17.37)
   byebug
   capistrano (~> 3.1)
   capistrano-rails (~> 1.1)
@@ -263,6 +268,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.0)
   haml-rails (~> 0.9)
   jquery-rails
+  momentjs-rails (>= 2.9.0)
   omniauth-steam
   pg
   rails (= 4.2.5)
