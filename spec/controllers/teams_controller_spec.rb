@@ -4,7 +4,6 @@ require 'support/devise'
 
 describe TeamsController do
   let(:user) { create(:user) }
-  let(:format) { create(:format) }
 
   describe 'GET #index' do
     it 'returns http success' do
@@ -27,21 +26,20 @@ describe TeamsController do
   describe 'POST #create' do
     it 'creates a team' do
       sign_in user
-      post :create, team: { format_id: format.id, name: 'A', description: 'B' }
+      post :create, team: { name: 'A', description: 'B' }
 
       team = Team.find_by(name: 'A')
       expect(team).to_not be_nil
-      expect(team.format).to eq(format)
       expect(team.description).to eq('B')
       expect(team.on_roster?(user)).to be(true)
       expect(user.can?(:edit, team)).to be(true)
     end
 
     it 'handles duplicate teams' do
-      create(:team, name: 'A', format: format)
+      create(:team, name: 'A')
 
       sign_in user
-      post :create, team: { format_id: format.id, name: 'A', description: 'B' }
+      post :create, team: { name: 'A', description: 'B' }
 
       expect(response).to render_template(:new)
     end
@@ -49,7 +47,7 @@ describe TeamsController do
 
   describe 'GET #show' do
     it 'returns http success' do
-      team = create(:team, format: format)
+      team = create(:team)
 
       get :show, id: team.id
 
@@ -59,7 +57,7 @@ describe TeamsController do
 
   describe 'GET #edit' do
     it 'returns http success' do
-      team = create(:team, format: format)
+      team = create(:team)
       user.grant(:edit, team)
 
       sign_in user
@@ -71,7 +69,7 @@ describe TeamsController do
 
   describe 'PATCH #update' do
     it 'updates a team' do
-      team = create(:team, name: 'A', description: 'B', format: format)
+      team = create(:team, name: 'A', description: 'B')
       user.grant(:edit, team)
 
       sign_in user
@@ -85,7 +83,7 @@ describe TeamsController do
 
   describe 'GET #recruit' do
     it 'returns http success' do
-      team = create(:team, format: format)
+      team = create(:team)
       user.grant(:edit, team)
 
       sign_in user
@@ -97,7 +95,7 @@ describe TeamsController do
 
   describe 'PATCH #invite' do
     it 'invites a player to a team' do
-      team = create(:team, format: format)
+      team = create(:team)
       invited = create(:user, name: 'A', steam_id: 3)
       user.grant(:edit, team)
 
@@ -114,7 +112,7 @@ describe TeamsController do
 
   describe 'PATCH #leave' do
     it 'removes a player from a team' do
-      team = create(:team, format: format)
+      team = create(:team)
       team.add_player(user)
 
       sign_in user
@@ -126,7 +124,7 @@ describe TeamsController do
     end
 
     it 'kicks a player from a team' do
-      team = create(:team, format: format)
+      team = create(:team)
       player = create(:user, name: 'A', steam_id: 3)
       team.add_player(player)
       user.grant(:edit, team)
@@ -142,7 +140,7 @@ describe TeamsController do
 
   describe 'PATCH #grant' do
     it 'grants team permission from admin' do
-      team = create(:team, format: format)
+      team = create(:team)
       admin = create(:user, name: 'A', steam_id: 3)
       admin.grant(:edit, :teams)
 
@@ -157,7 +155,7 @@ describe TeamsController do
 
   describe 'PATCH #revoke' do
     it 'returns http success' do
-      team = create(:team, format: format)
+      team = create(:team)
       admin = create(:user, name: 'A', steam_id: 3)
       admin.grant(:edit, :teams)
       user.grant(:edit, team)

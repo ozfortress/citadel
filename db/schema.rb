@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204013601) do
+ActiveRecord::Schema.define(version: 20160204063841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,14 +102,12 @@ ActiveRecord::Schema.define(version: 20160204013601) do
   add_index "team_invites", ["user_id"], name: "index_team_invites_on_user_id", using: :btree
 
   create_table "teams", force: :cascade do |t|
-    t.integer  "format_id"
     t.string   "name",        null: false
     t.text     "description", null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
-  add_index "teams", ["format_id"], name: "index_teams_on_format_id", using: :btree
   add_index "teams", ["name"], name: "index_teams_on_name", unique: true, using: :btree
 
   create_table "transfers", force: :cascade do |t|
@@ -153,7 +151,6 @@ ActiveRecord::Schema.define(version: 20160204013601) do
   add_foreign_key "formats", "games"
   add_foreign_key "team_invites", "teams"
   add_foreign_key "team_invites", "users"
-  add_foreign_key "teams", "formats"
   add_foreign_key "transfers", "teams"
   add_foreign_key "transfers", "users"
 end

@@ -10,7 +10,7 @@ class TeamsController < ApplicationController
   end
 
   def create
-    @team = Team.new(new_team_params)
+    @team = Team.new(team_params)
 
     if @team.save
       @team.add_player(current_user)
@@ -32,7 +32,7 @@ class TeamsController < ApplicationController
   def update
     @team = Team.find(params[:id])
 
-    if @team.update(edit_team_params)
+    if @team.update(team_params)
       redirect_to team_path(@team)
     else
       render :edit
@@ -84,11 +84,7 @@ class TeamsController < ApplicationController
 
   private
 
-  def new_team_params
-    params.require(:team).permit(:format_id, :name, :description)
-  end
-
-  def edit_team_params
+  def team_params
     params.require(:team).permit(:name, :description)
   end
 

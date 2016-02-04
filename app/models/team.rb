@@ -1,5 +1,4 @@
 class Team < ActiveRecord::Base
-  belongs_to :format
   has_many   :team_invites
   has_many   :transfers
 

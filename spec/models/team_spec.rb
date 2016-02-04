@@ -5,7 +5,6 @@ require 'support/factory_girl'
 describe Team do
   before { create(:team) }
 
-  it { should belong_to(:format) }
   it { should have_many(:team_invites) }
   it { should have_many(:transfers) }
 
