@@ -18,6 +18,6 @@ class Competition < ActiveRecord::Base
   private
 
   def init
-    self.private = true if self.private.nil?
+    self.private = true if private.nil?
   end
 end
