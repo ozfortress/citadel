@@ -1,10 +1,5 @@
-= form_for @competition, url: leagues_path(@competition) do |f|
+= bootstrap_form_for @competition, url: leagues_path(@competition) do |f|
   = render 'league_form', f: f
 
   = f.submit 'Create', class: 'btn btn-default'
   = link_to 'Cancel', :back, class: 'btn btn-default'
-
-- if @competition.errors.any?
-  %ul
-    - @competition.errors.full_messages.each do |msg|
-      %li= msg

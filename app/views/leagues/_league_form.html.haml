@@ -1,17 +1,9 @@
 .panel.panel-default
   .panel-heading Info
   .panel-body
-    .form-group
-      = f.label :format
-      = f.select :format_id, format_options, {}, class: 'form-control'
-
-    .form-group
-      = f.label :name
-      = f.text_field :name, class: 'form-control'
-
-    .form-group
-      = f.label :description
-      = f.text_area :description, rows: 10, class: 'form-control'
+    = f.select :format_id, format_options, {}, class: 'form-control'
+    = f.text_field :name, class: 'form-control'
+    = f.text_area :description, rows: 10, class: 'form-control'
 
 .panel.panel-default
   .panel-heading Divisions

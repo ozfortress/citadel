@@ -1,10 +1,5 @@
-= form_for @team do |f|
+= bootstrap_form_for @team do |f|
   = render 'team_form', f: f
 
   = f.submit 'Create Team', class: 'btn btn-default'
   = link_to 'Cancel', :back, class: 'btn btn-default'
-
-- if @team.errors.any?
-  %ul
-    - @team.errors.full_messages.each do |msg|
-      %li= msg

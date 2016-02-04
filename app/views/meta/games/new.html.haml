@@ -1,12 +1,5 @@
-= form_for @game, url: {controller: 'meta/games', action: 'create'} do |f|
-  .form-group
-    = f.label :name
-    = f.text_field :name, class: 'form-control'
+= bootstrap_form_for @game, url: {controller: 'meta/games', action: 'create'} do |f|
+  = f.text_field :name, class: 'form-control'
 
   = f.submit 'Create', class: 'btn btn-default'
   = link_to 'Cancel', :back, class: 'btn btn-default'
-
-- if @game.errors.any?
-  %ul
-    - @game.errors.full_messages.each do |msg|
-      %li= msg

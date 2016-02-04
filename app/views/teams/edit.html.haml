@@ -1,16 +1,11 @@
 .panel.panel-default
   .panel-heading Information
   .panel-body
-    = form_for @team, method: :patch do |f|
+    = bootstrap_form_for @team, method: :patch do |f|
       = render 'team_form', f: f
 
       = f.submit 'Save', class: 'btn btn-default'
       = link_to 'Cancel', team_path(@team), class: 'btn btn-default'
-
-    - if @team.errors.any?
-      %ul
-        - @team.errors.full_messages.each do |msg|
-          %li= msg
 
 - if users_who_can_edit.length > 0
   .panel.panel-default

@@ -1,31 +1,18 @@
 %li.list-group-item.nested-fields
-  .form-group
-    = f.label :name
-    = f.text_field :name, class: 'form-control'
-
-  .form-group
-    = f.label :description
-    = f.text_area :description, rows: 3, class: 'form-control'
+  = f.text_field :name, class: 'form-control'
+  = f.text_area :description, rows: 3, class: 'form-control'
 
   #division-teams-range.form-group
-    = f.label 'Teams'
+    Teams
     .form-inline
-      .form-group
-        = f.label 'Minimum'
-        = f.number_field :min_players, in: 1..16
-      .form-group
-        = f.label 'Maximum'
-        = f.number_field :max_players, in: 1..16
+      = f.number_field :min_players, in: 1..16, label: 'Minimum'
+      = f.number_field :max_players, in: 1..16, label: 'Maximum'
 
   #division-player-range.form-group
-    = f.label 'Players'
+    Players
     .form-inline
-      .form-group
-        = f.label 'Minimum'
-        = f.number_field :min_players, min: 1
-      .form-group
-        = f.label 'Maximum'
-        = f.number_field :max_players, min: 1
+      = f.number_field :min_players, min: 1, label: 'Minimum'
+      = f.number_field :max_players, min: 1, label: 'Maximum'
 
   %hr
 

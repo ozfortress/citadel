@@ -1,24 +1,8 @@
-= form_for @format, url: {controller: 'meta/formats', action: 'create'} do |f|
-  .form-group
-    = f.label :game
-    = f.select :game_id, game_select, {}, class: 'form-control'
-
-  .form-group
-    = f.label :player_count
-    = f.select :player_count, 1..16, {}, class: 'form-control'
-
-  .form-group
-    = f.label :name
-    = f.text_field :name, class: 'form-control'
-
-  .form-group
-    = f.label :description
-    = f.text_area :description, rows: 10, class: 'form-control'
+= bootstrap_form_for @format, url: {controller: 'meta/formats', action: 'create'} do |f|
+  = f.select :game_id, game_select, {}, class: 'form-control'
+  = f.select :player_count, 1..16, {}, class: 'form-control'
+  = f.text_field :name, class: 'form-control'
+  = f.text_area :description, rows: 10, class: 'form-control'
 
   = f.submit 'Create', class: 'btn btn-default'
   = link_to 'Cancel', :back, class: 'btn btn-default'
-
-- if @format.errors.any?
-  %ul
-    - @format.errors.full_messages.each do |msg|
-      %li= msg

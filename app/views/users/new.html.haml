@@ -1,13 +1,5 @@
-= form_for @user, method: :new do |f|
-  .form-group
-    = f.label :name
-    = f.text_field :name, rows: 10, class: 'form-control'
-
+= bootstrap_form_for @user, method: :new do |f|
+  = render 'user_form', f: f
 
   = f.submit 'Register', class: 'btn btn-default'
   = link_to 'Cancel', :back, class: 'btn btn-default'
-
-- if @user.errors.any?
-  %ul
-    - @user.errors.full_messages.each do |msg|
-      %li= msg
