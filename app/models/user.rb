@@ -21,6 +21,9 @@ class User < ActiveRecord::Base
   validates_permission_to :edit, :competition
   validates_permission_to :edit, :competitions
 
+  validates_permission_to :manage_rosters, :competition
+  validates_permission_to :manage_rosters, :competitions
+
   after_initialize :set_defaults
 
   def steam_profile_url

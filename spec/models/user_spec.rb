@@ -112,5 +112,9 @@ describe User do
     describe 'Competition' do
       pending
     end
+
+    describe 'Competition Rosters' do
+      pending
+    end
   end
 end

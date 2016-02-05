@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205124102) do
+ActiveRecord::Schema.define(version: 20160205125414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,20 @@ ActiveRecord::Schema.define(version: 20160205124102) do
   end
 
   add_index "action_user_edit_teams", ["user_id"], name: "index_action_user_edit_teams_on_user_id", using: :btree
+
+  create_table "action_user_manage_rosters_competition", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "competition_id"
+  end
+
+  add_index "action_user_manage_rosters_competition", ["competition_id"], name: "index_action_user_manage_rosters_competition_on_competition_id", using: :btree
+  add_index "action_user_manage_rosters_competition", ["user_id"], name: "index_action_user_manage_rosters_competition_on_user_id", using: :btree
+
+  create_table "action_user_manage_rosters_competitions", force: :cascade do |t|
+    t.integer "user_id"
+  end
+
+  add_index "action_user_manage_rosters_competitions", ["user_id"], name: "index_action_user_manage_rosters_competitions_on_user_id", using: :btree
 
   create_table "competition_rosters", force: :cascade do |t|
     t.integer  "team_id",                     null: false
@@ -178,6 +192,9 @@ ActiveRecord::Schema.define(version: 20160205124102) do
   add_foreign_key "action_user_edit_team", "teams"
   add_foreign_key "action_user_edit_team", "users"
   add_foreign_key "action_user_edit_teams", "users"
+  add_foreign_key "action_user_manage_rosters_competition", "competitions"
+  add_foreign_key "action_user_manage_rosters_competition", "users"
+  add_foreign_key "action_user_manage_rosters_competitions", "users"
   add_foreign_key "competition_rosters", "divisions"
   add_foreign_key "competition_rosters", "teams"
   add_foreign_key "competition_transfers", "competition_rosters"
