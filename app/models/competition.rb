@@ -16,6 +16,14 @@ class Competition < ActiveRecord::Base
     !private?
   end
 
+  def free_roster?
+    signuppable? && !roster_locked?
+  end
+
+  def approved_roster?
+    !signuppable? && !roster_locked?
+  end
+
   private
 
   def set_defaults

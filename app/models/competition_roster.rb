@@ -12,6 +12,8 @@ class CompetitionRoster < ActiveRecord::Base
 
   after_initialize :set_defaults
 
+  delegate :company, :to => :employee, :allow_nil => true
+
   private
 
   def set_defaults

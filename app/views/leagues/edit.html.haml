@@ -1,11 +1,10 @@
 .alert.alert-warning
   - if @competition.public?
-    %string Public
+    %b Public
     All changes are visible to everyone.
   - else
-    %string
-      %span.glyphicon.glyphicon-lock
-      Private
+    %span.glyphicon.glyphicon-lock
+    Private
 
 = bootstrap_form_for @competition, url: leagues_path(@competition) do |f|
   = render 'league_form', f: f

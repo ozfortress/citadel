@@ -1,8 +1,7 @@
 - if @competition.private?
   .alert.alert-warning
-    %string
-      Private
-      %span.glyphicon.glyphicon-lock
+    %span.glyphicon.glyphicon-lock
+    Private
 
 - if user_can_edit_league?
   =link_to edit_league_path(@competition), class: 'btn btn-default pull-right', type: 'button' do
