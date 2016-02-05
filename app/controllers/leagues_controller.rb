@@ -4,6 +4,7 @@ class LeaguesController < ApplicationController
   before_action :require_user_leagues_permission, only: [:new, :create, :destroy]
   before_action :require_user_league_permission, only: [:edit, :update, :visibility]
   before_action :require_league_public_or_permission, only: [:show]
+  before_action :require_private, only: [:destroy]
 
   def index
   end
@@ -69,6 +70,11 @@ class LeaguesController < ApplicationController
 
   def league_visibility_params
     params.require(:private)
+  end
+
+  def require_private
+    @competition = Competition.find(params[:id])
+    redirect_to league_path(@competition) unless @competition.private?
   end
 
   def require_user_leagues_permission

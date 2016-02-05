@@ -16,7 +16,8 @@
 
   %hr
 
-  = link_to_remove_association f, class: 'btn btn-default' do
+  = link_to_remove_association f, class: 'btn btn-default', |
+      data: {confirm: 'Are you sure you want to delete this Division?'} do
     %span.glyphicon.glyphicon-trash
     Delete
 
