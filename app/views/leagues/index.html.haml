@@ -6,8 +6,8 @@
       - klass = ''
       - if index == 0
         - klass = 'active'
-      %li{class: klass}
-        %a{data: {toggle: 'tab'}, href: "##{game.name.parameterize}"}
+      %li{ class: klass }
+        %a{ data: { toggle: 'tab' }, href: "##{game.name.parameterize}" }
           = game.name
 
 .tab-content
@@ -16,7 +16,7 @@
     - if index == 0
       - klass += ' in active'
 
-    %div{id: game.name.parameterize, class: klass}
+    %div{ id: game.name.parameterize, class: klass }
       %ul.list-group
         - game.public_competitions.each do |competition|
           = link_to league_path(competition), class: 'list-group-item' do

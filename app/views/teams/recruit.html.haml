@@ -1,7 +1,8 @@
 %h1 Users
 
-= render :layout => 'users' do |user|
-  = button_to invite_team_path(@team, user_id: user.id), method: :patch, class: 'btn btn-primary', |
-                               disabled: @team.invited?(user) || @team.on_roster?(user) do
+= render layout: 'users' do |user|
+  = button_to invite_team_path(@team, user_id: user.id),
+              method: :patch, class: 'btn btn-primary',
+              disabled: @team.invited?(user) || @team.on_roster?(user) do
     Invite
     %span.glyphicon.glyphicon-plus

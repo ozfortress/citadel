@@ -1,9 +1,9 @@
 - if user_can_edit_user?
-  =link_to edit_user_path(@user), class: 'btn btn-default pull-right', type: 'button' do
+  = link_to edit_user_path(@user), class: 'btn btn-default pull-right', type: 'button' do
     Settings
     %span.glyphicon.glyphicon-cog
 
-%h2= "#{@user.name}'s Profile"
+%h2 `#{@user.name}'s Profile`
 
 %p= steam_id
 %p= link_to('Steam Profile', @user.steam_profile_url)
@@ -34,7 +34,7 @@
         - else
           left
         = link_to transfer.team.name, team_path(transfer.team)
-        = "on #{transfer.created_at.strftime('%c')}"
+        `on #{transfer.created_at.strftime('%c')}`
 
 - if current_user? && @user.team_invites.length > 0
   .panel.panel-default
@@ -45,10 +45,12 @@
           %li.list-group-item
             = invite.team.name
             .button-group.pull-right
-              = button_to decline_team_invite_path(invite), method: :patch, class: 'btn btn-danger' do
+              = button_to decline_team_invite_path(invite),
+                          method: :patch, class: 'btn btn-danger' do
                 Decline
                 %span.glyphicon.glyphicon-remove
             .button-group.pull-right
-              = button_to accept_team_invite_path(invite), method: :patch, class: 'btn btn-success' do
+              = button_to accept_team_invite_path(invite),
+                          method: :patch, class: 'btn btn-success' do
                 Accept
                 %span.glyphicon.glyphicon-ok

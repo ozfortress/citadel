@@ -1,5 +1,5 @@
 - if user_can_edit_team?
-  =link_to edit_team_path(@team), class: 'btn btn-default pull-right', type: 'button' do
+  = link_to edit_team_path(@team), class: 'btn btn-default pull-right', type: 'button' do
     Settings
     %span.glyphicon.glyphicon-cog
 
@@ -28,7 +28,8 @@
               %span.glyphicon.glyphicon-remove
         - elsif user_can_edit_team?
           .button-group.pull-right
-            = button_to leave_team_path(@team, user_id: user.id), method: :patch, class: 'btn btn-danger' do
+            = button_to leave_team_path(@team, user_id: user.id),
+                        method: :patch, class: 'btn btn-danger' do
               Kick
               %span.glyphicon.glyphicon-remove
 
@@ -42,4 +43,4 @@
           joined the team
         - else
           left the team
-        = "on #{transfer.created_at.strftime('%c')}"
+        `on #{transfer.created_at.strftime('%c')}`

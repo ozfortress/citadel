@@ -1,36 +1,43 @@
 !!!
 %html
   %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{ :content => 'text/html; charset=UTF-8', 'http-equiv' => 'Content-Type' }
     %title ozfortress
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    %header#banner.banner-ozf
+    %header.banner-ozf#banner
       .container
         %a= image_tag 'ozfortress_logo.png'
 
-    %nav#navbar.navbar.navbar-ozf.affix-top{role: 'navigation', data: {spy: 'affix', 'offset-top' => 106}}
+    %nav.navbar.navbar-ozf.affix-top#navbar{ role: 'navigation',
+                                             data: { spy: 'affix', 'offset-top' => 106 } }
       .container
-        %button.navbar-toggle.collapsed.navbar-left{type: 'button', data: {toggle: 'collapse', target: '#navbar-collapse'}}
+        %button.navbar-toggle.collapsed.navbar-left{ type: 'button',
+                                                     data: { toggle: 'collapse',
+                                                             target: '#navbar-collapse' } }
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
-        #navbar-collapse.collapse.navbar-collapse.navbar-left
+        .collapse.navbar-collapse.navbar-left#navbar-collapse
           %ul.nav.navbar-nav
-            %li{class: navbar_class(:home)}
+            %li{ class: navbar_class(:home) }
               = link_to('Home', :pages_home)
-            %li{class: navbar_class(:recruitment)}
+
+            %li{ class: navbar_class(:recruitment) }
               = link_to('Recruitment', :users)
-            %li{class: navbar_class(:teams)}
+
+            %li{ class: navbar_class(:teams) }
               = link_to('Teams', :teams)
-            %li{class: navbar_class(:leagues)}
+
+            %li{ class: navbar_class(:leagues) }
               = link_to('Leagues', :leagues)
 
             - if user_can_meta?
               %li.divider-vertical
-              %li{class: navbar_class(:admin)}
+
+              %li{ class: navbar_class(:admin) }
                 = link_to('Admin', :admin)
               / DEBUG
               %li= button_to 'become weak', revoke_meta_path, method: :patch
@@ -43,16 +50,18 @@
           %ul.nav.navbar-nav
             - if user_signed_in?
               %li
-                %a.dropdown-toggle{data: {toggle: 'dropdown'}}
+                %a.dropdown-toggle{ data: { toggle: 'dropdown' } }
                   = current_user.name
                   %span.caret
                 %ul.dropdown-menu
-                  %li= link_to("Profile", user_path(current_user))
-                  %li= link_to("Settings", edit_user_path(current_user))
-                  %li= link_to("Logout", logout_user_path)
+                  %li= link_to('Profile', user_path(current_user))
+                  %li= link_to('Settings', edit_user_path(current_user))
+                  %li= link_to('Logout', logout_user_path)
             - else
               %li
-                = link_to(image_tag('steam/login.png'), user_omniauth_authorize_path(:steam), id: 'login')
+                = link_to(image_tag('steam/login.png'),
+                          user_omniauth_authorize_path(:steam),
+                          id: 'login')
 
 
     .container

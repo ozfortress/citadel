@@ -19,12 +19,14 @@
     .panel-heading Danger Zone
     .panel-body
       - if @competition.private?
-        = button_to league_path(@competition), method: :delete, class: 'btn btn-danger', |
-                    data: {confirm: 'Are you sure you want to delete this League?'} do
+        = button_to league_path(@competition), method: :delete, class: 'btn btn-danger',
+                    data: { confirm: 'Are you sure you want to delete this League?' } do
           %span.glyphicon.glyphicon-trash
           Delete
 
       - if @competition.private?
-        = button_to 'Make Public', league_visibility_path(@competition, private: false), method: :patch, class: 'btn btn-warning'
+        = button_to 'Make Public', league_visibility_path(@competition, private: false),
+                    method: :patch, class: 'btn btn-warning'
       - else
-        = button_to 'Make Private', league_visibility_path(@competition, private: true), method: :patch, class: 'btn btn-danger'
+        = button_to 'Make Private', league_visibility_path(@competition, private: true),
+                    method: :patch, class: 'btn btn-danger'
