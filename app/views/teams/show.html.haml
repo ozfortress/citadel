@@ -44,3 +44,12 @@
         - else
           left the team
         on #{transfer.created_at.strftime('%c')}
+
+.panel.panel-default
+  .panel-heading Leagues
+  %ul.list-group
+    - @team.competition_rosters.each do |roster|
+      %li.list-group-item
+        Signed up for
+        = link_to roster.competition.name, league_path(roster.competition)
+        wanting to enter #{roster.division.name}

@@ -28,4 +28,16 @@ module Roster
 
     ps.to_a.sort! { |a, b| a.name.downcase <=> b.name.downcase }
   end
+
+  def player_ids
+    players.map(&:id)
+  end
+
+  def player_ids=(value)
+    value.each do |id|
+      next if id.blank?
+
+      transfers.new(user_id: id, is_joining: true)
+    end
+  end
 end

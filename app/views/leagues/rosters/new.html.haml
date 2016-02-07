@@ -1,0 +1,27 @@
+%h1= @competition.name
+
+- if @roster.team.nil?
+  %h4 Which team do you want to sign up with?
+
+  %ul.list-group
+    - current_user.which_can(:edit, :team).each do |team|
+      - next if team.entered?(@competition)
+      = link_to new_league_roster_path(@competition, team_id: team.id),
+                class: 'list-group-item' do
+        = team.name
+
+  = link_to 'Cancel', league_path(@competition), class: 'btn btn-default'
+
+- else
+  %h4
+    Sign up with #{@roster.team.name}
+
+  = bootstrap_form_for @roster,
+      url: league_rosters_path(@competition, team_id: @roster.team.id) do |f|
+    = f.text_field :name
+    = f.select :division_id, divisions_select, label: 'Desired Division'
+    = f.text_area :description, label: 'Tell us about your team', rows: 10
+    = f.collection_check_boxes :player_ids, @roster.team.players, :id, :name
+
+    = f.submit 'Sign up', class: 'btn btn-default'
+    = link_to 'Cancel', league_path(@competition), class: 'btn btn-default'

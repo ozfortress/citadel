@@ -36,4 +36,8 @@ module ApplicationHelper
       ["#{format.game.name}: #{format.name}", format.id]
     end
   end
+
+  def divisions_select
+    @competition.divisions.all.map(&:name)
+  end
 end

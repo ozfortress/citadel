@@ -44,6 +44,12 @@ class User < ActiveRecord::Base
     teams.to_a.sort! { |a, b| a.name.downcase <=> b.name.downcase }
   end
 
+  def entered?(comp)
+    CompetitionRoster.joins(:division)
+                     .where(divisions: { competition_id: comp.id })
+                     .any? { |r| r.on_roster?(self) }
+  end
+
   private
 
   def set_defaults

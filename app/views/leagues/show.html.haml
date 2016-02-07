@@ -21,3 +21,7 @@
       %li.list-group-item
         %h3= div.name
         = markdown div.description
+
+- if user_signed_in? && current_user.can_any?(:edit, :team) && @competition.signuppable?
+  = link_to 'Sign up', new_league_roster_path(@competition), class: 'btn btn-success pull-right',
+                       disabled: current_user.entered?(@competition)

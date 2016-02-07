@@ -3,6 +3,7 @@ class Team < ActiveRecord::Base
 
   has_many :team_invites
   has_many :transfers
+  has_many :competition_rosters
 
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
   validates :description, presence: true, allow_blank: true
@@ -12,6 +13,13 @@ class Team < ActiveRecord::Base
   end
 
   def invited?(user)
-    !team_invites.find_by(user: user).nil?
+    team_invites.exists?(user: user)
+  end
+
+  def entered?(comp)
+    CompetitionRoster.joins(:division)
+                     .where(divisions: { competition_id: comp.id })
+                     .where(team: self)
+                     .exists?
   end
 end

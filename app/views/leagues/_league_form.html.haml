@@ -6,6 +6,12 @@
     = f.text_area :description, rows: 10, class: 'form-control'
 
 .panel.panel-default
+  .panel-heading State
+  .panel-body
+    = f.check_box :signuppable
+    = f.check_box :roster_locked
+
+.panel.panel-default
   .panel-heading Divisions
 
   %ul.list-group
