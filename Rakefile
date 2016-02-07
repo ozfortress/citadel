@@ -11,4 +11,13 @@ RSpec::Core::RakeTask.new(:rspec)
 HamlLint::RakeTask.new
 RuboCop::RakeTask.new
 
-task test: %w(rspec rubocop haml_lint)
+task :rbp do
+  require 'rails_best_practices'
+
+  app_root = Rake.application.original_dir
+  analyzer = RailsBestPractices::Analyzer.new(app_root)
+  analyzer.analyze
+  analyzer.output
+end
+
+task test: %w(rspec rubocop haml_lint rbp)

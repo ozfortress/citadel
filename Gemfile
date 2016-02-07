@@ -58,6 +58,7 @@ group :development, :test do
   # Keep codebase clean
   gem 'rubocop', '~> 0.36.0', require: false
   gem 'haml_lint'
+  gem 'rails_best_practices'
 end
 
 group :development do
