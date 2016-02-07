@@ -17,7 +17,7 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 # Easy bootstrap forms
 gem 'bootstrap_form'
 # Nested Forms
-gem "cocoon"
+gem 'cocoon'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -54,6 +54,10 @@ group :development, :test do
 
   # Web feature testing
   gem 'capybara'
+
+  # Keep codebase clean
+  gem 'rubocop', '~> 0.36.0', require: false
+  gem 'haml_lint'
 end
 
 group :development do
@@ -66,7 +70,4 @@ group :development do
   # Development scripts
   gem 'capistrano', '~> 3.1'
   gem 'capistrano-rails', '~> 1.1'
-
-  # Keep codebase clean
-  gem 'rubocop', '~> 0.36.0', require: false
 end
