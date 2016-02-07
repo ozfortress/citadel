@@ -1,8 +1,8 @@
 class Division < ActiveRecord::Base
   belongs_to :competition
-  has_many :competition_rosters
+  has_many :rosters, class_name: 'CompetitionRoster'
 
-  validates :competition, presence: true, on: :update
+  validates :competition, presence: true
   validates :name, presence: true, length: { in: 1..64 }
   validates :description, presence: true
   validates :min_teams, presence: true, numericality: { greater_than: 1 }
