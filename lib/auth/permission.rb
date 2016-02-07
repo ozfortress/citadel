@@ -20,6 +20,18 @@ module Auth
         action_cls.exists?(actor => self)
       end
 
+      def which_can(action, subject)
+        action_cls = self.class.get_action_class(action, subject)
+
+        actor = self.class.name.underscore
+
+        subject_id = (subject.to_s + '_id').to_sym
+        # TODO: Optimisation
+        action_cls.where(actor => self).select(subject_id).map do |i|
+          subject.to_s.camelize.constantize.find(i.send(subject_id))
+        end
+      end
+
       def grant(action, subject)
         action_cls = self.class.get_action_class(action, subject)
 
