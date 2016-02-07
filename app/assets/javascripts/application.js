@@ -18,3 +18,10 @@
 //= require bootstrap-datetimepicker
 //= require cocoon
 //= require_tree .
+
+$(document).ready(function() {
+    // Disable disabled links
+    $('a[disabled=disabled]').click(function(event){
+        event.preventDefault();
+    });
+});
