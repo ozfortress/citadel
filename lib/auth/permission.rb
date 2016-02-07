@@ -80,23 +80,11 @@ module Auth
       def validates_permission_to(action, subject)
         actor = name.underscore.to_sym
 
-        table_name = Auth.auth_name(actor, action, subject)
-
-        klass = Class.new(ActiveRecord::Base) do
-          self.table_name = table_name
-          belongs_to actor
-
-          # Only permissions relating to singular objects have a subject
-          class << self
-            attr_accessor :has_subject
-          end
-          self.has_subject = subject.to_s.singularize == subject.to_s
-          belongs_to subject if has_subject
-        end
+        table = Auth.auth_name(actor, action, subject)
 
         @permissions ||= {}
         @permissions[action] ||= {}
-        @permissions[action][subject] = klass
+        @permissions[action][subject] = new_permission_model(table)
       end
 
       attr_reader :permissions
@@ -108,6 +96,22 @@ module Auth
         throw 'Unknown action or subject' if action_cls.nil?
 
         action_cls
+      end
+
+      private
+
+      def new_permission_model(table, actor, subject)
+        Class.new(ActiveRecord::Base) do
+          self.table = table
+          belongs_to actor
+
+          # Only permissions relating to singular objects have a subject
+          class << self
+            attr_accessor :has_subject
+          end
+          self.has_subject = subject.to_s.singularize == subject.to_s
+          belongs_to subject if has_subject
+        end
       end
     end
   end

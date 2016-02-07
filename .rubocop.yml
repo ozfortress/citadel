@@ -1,7 +1,9 @@
 Rails:
   Enabled: true
-Metrics:
-  Enabled: false
+Metrics/LineLength:
+  Max: 100
+Metrics/AbcSize:
+  Max: 20
 Style/Documentation:
   Enabled: false
 Style/TrailingCommaInLiteral:
@@ -9,4 +11,5 @@ Style/TrailingCommaInLiteral:
 
 AllCops:
   Exclude:
-    - db/schema.rb
+    - 'db/**/*'
+    - 'config/**/*'

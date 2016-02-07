@@ -46,7 +46,8 @@ module Leagues
     end
 
     def require_any_team_permission
-      redirect_to league_path(@competition) unless user_signed_in? && current_user.can_any?(:edit, :team)
+      redirect_to league_path(@competition) unless user_signed_in? &&
+                                                   current_user.can_any?(:edit, :team)
     end
   end
 end

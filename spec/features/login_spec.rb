@@ -5,7 +5,7 @@ feature 'User tries to login with steam' do
   scenario 'for the first time' do
     visit teams_path
 
-    mock_auth_hash(name: 'Kenneth')
+    OmniAuth.mock_auth_hash(name: 'Kenneth')
     find('#login').click
 
     expect(current_url).to eq(new_user_url(name: 'Kenneth'))
@@ -15,7 +15,7 @@ feature 'User tries to login with steam' do
     user = create(:user)
     visit teams_path
 
-    mock_auth_hash(name: user.name, steam_id: user.steam_id)
+    OmniAuth.mock_auth_hash(name: user.name, steam_id: user.steam_id)
     find('#login').click
 
     expect(current_path).to eq('/')
@@ -24,7 +24,7 @@ feature 'User tries to login with steam' do
   scenario 'when login fails' do
     visit teams_path
 
-    mock_auth_fail
+    OmniAuth.mock_auth_fail
     find('#login').click
 
     expect(current_path).to eq(teams_path)

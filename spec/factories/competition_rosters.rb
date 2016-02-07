@@ -12,8 +12,8 @@ FactoryGirl.define do
     end
 
     after(:build) do |roster, evaluator|
-      roster.transfers = build_list(:competition_transfer, evaluator.player_count, roster: roster, is_joining: true)
-      # p roster.transfers
+      roster.transfers = build_list(:competition_transfer, evaluator.player_count,
+                                    roster: roster, is_joining: true)
     end
   end
 end

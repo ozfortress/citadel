@@ -6,6 +6,7 @@ module LeaguePermissions
   end
 
   def user_can_edit_league?
-    user_signed_in? && (current_user.can?(:edit, @competition) || current_user.can?(:edit, :competitions))
+    user_signed_in? && (current_user.can?(:edit, @competition) ||
+                        current_user.can?(:edit, :competitions))
   end
 end

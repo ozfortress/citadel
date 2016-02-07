@@ -13,7 +13,7 @@ describe UsersController do
 
   describe 'GET #new' do
     it 'succeeds' do
-      mock_auth_hash
+      OmniAuth.mock_auth_hash
 
       get :new
 
@@ -25,7 +25,7 @@ describe UsersController do
 
   describe 'POST #create' do
     it 'creates a user' do
-      session['devise.steam_data'] = mock_auth_hash
+      session['devise.steam_data'] = OmniAuth.mock_auth_hash
 
       post :create, user: { name: 'A', description: 'B' }
 
@@ -36,7 +36,7 @@ describe UsersController do
 
     it 'handles existing users' do
       user = create(:user, steam_id: 123)
-      session['devise.steam_data'] = mock_auth_hash(steam_id: 456)
+      session['devise.steam_data'] = OmniAuth.mock_auth_hash(steam_id: 456)
 
       post :create, user: { name: user.name, description: 'B' }
 

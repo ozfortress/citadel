@@ -13,12 +13,10 @@ module ApplicationHelper
       controller_name == 'pages' && action_name == 'home'
     when :recruitment
       controller_name == 'users' && action_name == 'index'
-    when :teams
-      controller_name == 'teams'
-    when :leagues
-      controller_name == 'leagues'
     when :admin
       controller.is_a? AdminController
+    else
+      controller_name == name.to_s
     end
   end
 
