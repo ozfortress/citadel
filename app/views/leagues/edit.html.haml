@@ -6,7 +6,7 @@
     %span.glyphicon.glyphicon-lock
     Private
 
-= bootstrap_form_for @competition, url: leagues_path(@competition) do |f|
+= bootstrap_form_for @competition, url: league_path(@competition) do |f|
   = render 'league_form', f: f
 
   = f.submit 'Update', class: 'btn btn-default'
