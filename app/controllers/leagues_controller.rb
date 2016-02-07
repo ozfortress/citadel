@@ -64,8 +64,12 @@ class LeaguesController < ApplicationController
   private
 
   def league_params
-    params.require(:competition).permit(:name, :description, :format_id,
-                                        divisions_attributes: [:id, :name, :description, :_destroy])
+    params.require(:competition).permit(:name, :description, :format_id, :signuppable, :roster_lock,
+                                        divisions_attributes: [
+                                          :id, :name, :description,
+                                          :min_teams, :max_teams,
+                                          :min_players, :max_players,
+                                          :_destroy])
   end
 
   def league_visibility_params
