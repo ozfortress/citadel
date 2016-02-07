@@ -113,7 +113,7 @@ describe TeamsController do
   describe 'PATCH #leave' do
     it 'removes a player from a team' do
       team = create(:team)
-      team.add_player(user)
+      team.add_player!(user)
 
       sign_in user
       request.env['HTTP_REFERER'] = '/'
@@ -126,7 +126,7 @@ describe TeamsController do
     it 'kicks a player from a team' do
       team = create(:team)
       player = create(:user)
-      team.add_player(player)
+      team.add_player!(player)
       user.grant(:edit, team)
 
       sign_in user

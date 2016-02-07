@@ -6,7 +6,7 @@ class TeamInvite < ActiveRecord::Base
   validates :team, presence: true
 
   def accept
-    team.add_player(user)
+    team.add_player!(user)
     destroy
   end
 

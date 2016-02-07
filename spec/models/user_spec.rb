@@ -31,9 +31,9 @@ describe User do
     team2 = create(:team, name: 'B')
     create(:team, name: 'C')
 
-    team.add_player(user)
-    team2.add_player(user)
-    team2.remove_player(user)
+    team.add_player!(user)
+    team2.add_player!(user)
+    team2.remove_player!(user)
 
     expect(user.teams).to eq([team])
   end

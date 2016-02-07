@@ -1,12 +1,12 @@
 module Roster
   extend ActiveSupport::Concern
 
-  def add_player(user)
-    transfers.create!(user: user, is_joining?: true)
+  def add_player!(user)
+    transfers.create!(user: user, is_joining: true)
   end
 
-  def remove_player(user)
-    transfers.create!(user: user, is_joining?: false)
+  def remove_player!(user)
+    transfers.create!(user: user, is_joining: false)
   end
 
   def on_roster?(user)

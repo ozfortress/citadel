@@ -13,7 +13,7 @@ class TeamsController < ApplicationController
     @team = Team.new(team_params)
 
     if @team.save
-      @team.add_player(current_user)
+      @team.add_player!(current_user)
       current_user.grant(:edit, @team)
       redirect_to team_path(@team)
     else
@@ -61,7 +61,7 @@ class TeamsController < ApplicationController
       user = current_user
     end
 
-    @team.remove_player(user) if @team.on_roster?(user)
+    @team.remove_player!(user) if @team.on_roster?(user)
     redirect_to :back
   end
 
