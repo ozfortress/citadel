@@ -3,7 +3,7 @@
     Settings
     %span.glyphicon.glyphicon-cog
 
-%h2 `#{@user.name}'s Profile`
+%h2 #{@user.name}'s Profile
 
 %p= steam_id
 %p= link_to('Steam Profile', @user.steam_profile_url)
@@ -34,7 +34,7 @@
         - else
           left
         = link_to transfer.team.name, team_path(transfer.team)
-        `on #{transfer.created_at.strftime('%c')}`
+        on #{transfer.created_at.strftime('%c')}
 
 - if current_user? && @user.team_invites.length > 0
   .panel.panel-default
