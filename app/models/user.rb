@@ -50,6 +50,8 @@ class User < ActiveRecord::Base
                      .any? { |r| r.on_roster?(self) }
   end
 
+  alias_attribute :to_s, :name
+
   private
 
   def set_defaults

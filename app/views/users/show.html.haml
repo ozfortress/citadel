@@ -33,7 +33,7 @@
           joined
         - else
           left
-        = link_to transfer.team.name, team_path(transfer.team)
+        = link_to transfer.team, team_path(transfer.team)
         on #{transfer.created_at.strftime('%c')}
 
 - if current_user? && @user.team_invites.length > 0
@@ -43,7 +43,7 @@
       %ul.list-group
         - @user.team_invites.each do |invite|
           %li.list-group-item
-            = invite.team.name
+            = invite.team
             .button-group.pull-right
               = button_to decline_team_invite_path(invite),
                           method: :patch, class: 'btn btn-danger' do

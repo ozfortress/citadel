@@ -11,10 +11,8 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-
     steam_data = session['devise.steam_data']
-    @user.steam_id = steam_data['uid']
+    @user = User.new(user_params.update(steam_id: steam_data['uid']))
 
     if @user.save
       sign_in @user

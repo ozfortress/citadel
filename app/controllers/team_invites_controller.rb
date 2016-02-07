@@ -14,8 +14,7 @@ class TeamInvitesController < ApplicationController
   private
 
   def require_invited
-    @invite = TeamInvite.find(params[:id])
     redirect_to :root unless user_signed_in?
-    redirect_to user_path(current_user) unless current_user == @invite.user
+    @invite = current_user.team_invites.find(params[:id])
   end
 end

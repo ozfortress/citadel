@@ -84,7 +84,7 @@ module Auth
 
         @permissions ||= {}
         @permissions[action] ||= {}
-        @permissions[action][subject] = new_permission_model(table)
+        @permissions[action][subject] = new_permission_model(table, actor, subject)
       end
 
       attr_reader :permissions
@@ -102,7 +102,7 @@ module Auth
 
       def new_permission_model(table, actor, subject)
         Class.new(ActiveRecord::Base) do
-          self.table = table
+          self.table_name = table
           belongs_to actor
 
           # Only permissions relating to singular objects have a subject

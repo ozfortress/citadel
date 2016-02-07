@@ -31,7 +31,7 @@ module ApplicationHelper
 
   def format_options
     Format.all.map do |format|
-      ["#{format.game.name}: #{format.name}", format.id]
+      [format.to_s, format.id]
     end
   end
 

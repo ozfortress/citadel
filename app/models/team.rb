@@ -22,4 +22,6 @@ class Team < ActiveRecord::Base
                      .where(team: self)
                      .exists?
   end
+
+  alias_attribute :to_s, :name
 end

@@ -38,7 +38,7 @@
   %ul.list-group
     - transfers.each do |transfer|
       %li.list-group-item
-        = link_to transfer.user.name, user_path(transfer.user)
+        = link_to transfer.user, user_path(transfer.user)
         - if transfer.is_joining?
           joined the team
         - else

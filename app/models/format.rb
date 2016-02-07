@@ -6,4 +6,8 @@ class Format < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true, length: { in: 1..128 }
   validates :description, presence: true
   validates :player_count, presence: true, inclusion: 0...16
+
+  def to_s
+    "#{game.name}: #{name}"
+  end
 end
