@@ -9,7 +9,7 @@
 = bootstrap_form_for @competition, url: league_path(@competition) do |f|
   = render 'league_form', f: f
 
-  = f.submit 'Update', class: 'btn btn-default'
+  = f.submit 'Update'
   = link_to 'Cancel', :back, class: 'btn btn-default'
 
 %hr

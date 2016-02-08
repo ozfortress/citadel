@@ -4,7 +4,7 @@
     = bootstrap_form_for @team, method: :patch do |f|
       = render 'team_form', f: f
 
-      = f.submit 'Save', class: 'btn btn-default'
+      = f.submit 'Save'
       = link_to 'Cancel', team_path(@team), class: 'btn btn-default'
 
 - if users_who_can_edit.length > 0

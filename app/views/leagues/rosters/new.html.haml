@@ -23,5 +23,5 @@
     = f.text_area :description, label: 'Tell us about your team', rows: 10
     = f.collection_check_boxes :player_ids, @roster.team.players, :id, :name
 
-    = f.submit 'Sign up', class: 'btn btn-default'
+    = f.submit 'Sign up'
     = link_to 'Cancel', league_path(@competition), class: 'btn btn-default'

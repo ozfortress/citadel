@@ -1,5 +1,5 @@
 = bootstrap_form_for @user, method: :patch do |f|
   = render 'user_form', f: f
 
-  = f.submit 'Save', class: 'btn btn-default'
+  = f.submit 'Save'
   = link_to 'Cancel', user_path(@user), class: 'btn btn-default'
