@@ -46,6 +46,7 @@ class UsersController < ApplicationController
   end
 
   # Debug
+  # :nocov:
   def grant_meta
     current_user.grant(:edit, :games)
     current_user.grant(:edit, :teams)
@@ -59,6 +60,7 @@ class UsersController < ApplicationController
     current_user.revoke(:edit, :competitions)
     redirect_to(:back)
   end
+  # :nocov:
 
   private
 
