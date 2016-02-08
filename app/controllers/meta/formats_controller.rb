@@ -8,6 +8,7 @@ module Meta
     end
 
     def create
+      p params
       @format = Format.new(format_params)
 
       if @format.save
@@ -26,7 +27,7 @@ module Meta
     private
 
     def format_params
-      params.require(:format).permit(:game_id, :player_count, :name, :description)
+      params.require(:format_).permit(:game_id, :player_count, :name, :description)
     end
   end
 end

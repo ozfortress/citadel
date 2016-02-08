@@ -1,4 +1,4 @@
-= bootstrap_form_for @format, url: { controller: 'meta/formats', action: 'create' } do |f|
+= bootstrap_form_for @format, as: :format_, url: { controller: 'meta/formats', action: 'create' } do |f|
   = f.select :game_id, game_select, {}, class: 'form-control'
   = f.select :player_count, 1..16, {}, class: 'form-control'
   = f.text_field :name, class: 'form-control'
