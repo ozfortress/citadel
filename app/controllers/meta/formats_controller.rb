@@ -8,7 +8,6 @@ module Meta
     end
 
     def create
-      p params
       @format = Format.new(format_params)
 
       if @format.save

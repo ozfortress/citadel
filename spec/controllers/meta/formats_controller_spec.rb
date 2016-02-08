@@ -33,7 +33,7 @@ describe Meta::FormatsController do
       sign_in admin
 
       post :create, format_: { game_id: game.id, player_count: 3,
-                              name: 'Foo', description: 'Bar'}
+                               name: 'Foo', description: 'Bar' }
 
       format = Format.first
       expect(format.game).to eq(game)

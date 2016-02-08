@@ -97,7 +97,6 @@ describe LeaguesController do
     let(:comp) { create(:competition, private: true) }
 
     it 'returns http success' do
-
       sign_in admin
 
       patch :visibility, id: comp.id, private: false
