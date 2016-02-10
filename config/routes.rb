@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   get 'admin', to: 'admin#index'
 
   namespace :meta do
-    resources :games
-    resources :formats
+    resources :games, except: [:destroy]
+    resources :formats, except: [:destroy]
   end
 
   patch 'leagues/:id/visibility', to: 'leagues#visibility', as: 'league_visibility'
@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   patch 'teams/:id/leave',   to: 'teams#leave',   as: 'leave_team'
   patch 'teams/:id/grant',   to: 'teams#grant',   as: 'grant_team'
   patch 'teams/:id/revoke',  to: 'teams#revoke',  as: 'revoke_team'
-  resources :teams
+  resources :teams, except: [:destroy]
 
   patch 'team_invites/:id/accept',  to: 'team_invites#accept',  as: 'accept_team_invite'
   patch 'team_invites/:id/decline', to: 'team_invites#decline', as: 'decline_team_invite'
@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   patch 'users/revoke_meta', to: 'users#revoke_meta', as: 'revoke_meta'
 
   get 'users/logout', to: 'users#logout', as: 'logout_user'
-  resources :users
+  resources :users, except: [:destroy]
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 end
