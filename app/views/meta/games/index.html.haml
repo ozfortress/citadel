@@ -7,4 +7,4 @@
 %ul.list-group
   - games.each do |game|
     %li.list-group-item
-      = game.name
+      = link_to game.name, meta_game_path(game)

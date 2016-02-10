@@ -1,5 +1,5 @@
 = bootstrap_form_for @game, url: { controller: 'meta/games', action: 'create' } do |f|
-  = f.text_field :name
+  = render 'game_form', f: f
 
   = f.submit 'Create'
   = link_to 'Cancel', :back, class: 'btn btn-default'

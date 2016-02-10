@@ -1,5 +1,8 @@
 module Meta
   class FormatsController < MetaController
+    skip_before_action :require_any_admin_permissions, only: [:show]
+    skip_before_action :require_meta, only: [:show]
+
     def index
     end
 
@@ -11,17 +14,31 @@ module Meta
       @format = Format.new(format_params)
 
       if @format.save
-        redirect_to meta_formats_path
+        redirect_to meta_format_path(@format)
       else
         render :new
       end
     end
 
+    def show
+      @format = Format.find(params[:id])
+    end
+
     def edit
+      @format = Format.find(params[:id])
     end
 
     def update
+      @format = Format.find(params[:id])
+
+      if @format.update(format_params)
+        redirect_to meta_format_path(@format)
+      else
+        render :edit
+      end
     end
+
+    # TODO: Delete
 
     private
 

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Meta::FormatsController do
-  let(:game) { create(:game) }
+  let!(:game) { create(:game) }
   let(:admin) { create(:user) }
 
   before do
@@ -41,5 +41,49 @@ describe Meta::FormatsController do
       expect(format.name).to eq('Foo')
       expect(format.description).to eq('Bar')
     end
+
+    # TODO: Fail case
+  end
+
+  describe 'GET #show' do
+    let(:format) { create(:format, game: game) }
+
+    it 'succeeds' do
+      get :show, id: format.id
+
+      expect(response).to have_http_status(:success)
+    end
+  end
+
+  describe 'GET #edit' do
+    let(:format) { create(:format, game: game) }
+
+    it 'succeeds for authorized user' do
+      sign_in admin
+
+      get :edit, id: format.id
+
+      expect(response).to have_http_status(:success)
+    end
+  end
+
+  describe 'PATCH #update' do
+    let(:format) { create(:format, game: game) }
+    let!(:game2) { create(:game) }
+
+    it 'succeeds for authorized user' do
+      sign_in admin
+
+      patch :update, id: format.id, format_: { game_id: game2.id, player_count: 1,
+                                               name: 'A', description: 'B' }
+
+      format = Format.first
+      expect(format.game).to eq(game2)
+      expect(format.player_count).to eq(1)
+      expect(format.name).to eq('A')
+      expect(format.description).to eq('B')
+    end
+
+    # TODO: Fail case
   end
 end

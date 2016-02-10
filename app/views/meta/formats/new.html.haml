@@ -1,10 +1,6 @@
 = bootstrap_form_for @format, as: :format_,
                      url: { controller: 'meta/formats', action: 'create' } do |f|
-
-  = f.select :game_id, game_select
-  = f.select :player_count, 1..16
-  = f.text_field :name
-  = f.text_area :description, rows: 10
+  = render 'format_form', f: f
 
   = f.submit 'Create'
-  = link_to 'Cancel', :back, class: 'btn btn-default'
+  = link_to 'Cancel', meta_formats_path, class: 'btn btn-default'

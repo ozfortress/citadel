@@ -36,5 +36,44 @@ describe Meta::GamesController do
       game = Game.first
       expect(game.name).to eq('Bar')
     end
+
+    # TODO: Fail case
+  end
+
+  describe 'GET #show' do
+    let(:game) { create(:game) }
+
+    it 'succeeds' do
+      get :show, id: game.id
+
+      expect(response).to have_http_status(:success)
+    end
+  end
+
+  describe 'GET #edit' do
+    let(:game) { create(:game) }
+
+    it 'succeeds for authorized user' do
+      sign_in admin
+
+      get :edit, id: game.id
+
+      expect(response).to have_http_status(:success)
+    end
+  end
+
+  describe 'PATCH #update' do
+    let(:game) { create(:game) }
+
+    it 'succeeds for authorized user' do
+      sign_in admin
+
+      patch :update, id: game.id, game: { name: 'A' }
+
+      game = Game.first
+      expect(game.name).to eq('A')
+    end
+
+    # TODO: Fail case
   end
 end

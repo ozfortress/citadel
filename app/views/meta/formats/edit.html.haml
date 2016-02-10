@@ -1,0 +1,17 @@
+.panel.panel-default
+  .panel-heading Information
+  .panel-body
+    = bootstrap_form_for @format, as: :format_, method: :patch,
+                         url: { controller: 'meta/formats', action: 'update' } do |f|
+      = render 'format_form', f: f
+
+      = f.submit 'Update'
+      = link_to 'Cancel', meta_format_path(@format), class: 'btn btn-default'
+
+.panel.panel-danger
+  .panel-heading Danger Zone!
+  .panel-body
+    = button_to meta_format_path(@format), method: :delete, class: 'btn btn-danger',
+                data: { confirm: 'Are you sure you want to delete this Format?' } do
+      %span.glyphicon.glyphicon-trash
+      Delete
