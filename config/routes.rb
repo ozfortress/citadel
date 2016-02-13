@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   patch 'leagues/:id/visibility', to: 'leagues#visibility', as: 'league_visibility'
   resources :leagues do
-    resources :rosters, controller: 'leagues/rosters'
+    resources :rosters, controller: 'leagues/rosters', except: [:destroy]
   end
 
   get   'teams/:id/recruit', to: 'teams#recruit', as: 'recruit_team'
