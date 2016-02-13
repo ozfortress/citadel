@@ -2,6 +2,7 @@ class Competition < ActiveRecord::Base
   belongs_to :format
   has_many   :divisions, inverse_of: :competition, dependent: :destroy
   accepts_nested_attributes_for :divisions, allow_destroy: true
+  has_many :rosters, through: :divisions, class_name: 'CompetitionRoster'
 
   validates :format, presence: true
   validates :name, presence: true, length: { in: 1..64 }
@@ -14,14 +15,6 @@ class Competition < ActiveRecord::Base
 
   def public?
     !private?
-  end
-
-  def free_roster?
-    signuppable? && !roster_locked?
-  end
-
-  def approved_roster?
-    !signuppable? && !roster_locked?
   end
 
   private

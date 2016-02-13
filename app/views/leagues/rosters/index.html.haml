@@ -1,0 +1,9 @@
+.panel.panel-default
+  .panel-heading Rosters
+  %ul.list-group
+    - @competition.rosters.each do |roster|
+      %li.list-group-item
+        = link_to roster, league_roster_path(@competition, roster)
+        from team
+        = link_to roster.team, team_path(roster.team)
+

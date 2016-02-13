@@ -50,6 +50,13 @@
   %ul.list-group
     - @team.competition_rosters.each do |roster|
       %li.list-group-item
-        Signed up for
+        = link_to 'Signed up', league_roster_path(roster.competition, roster)
+        for
         = link_to roster.competition.name, league_path(roster.competition)
         wanting to enter #{roster.division.name}
+
+        - if user_can_edit_team?
+          .button-group.pull-right
+            = link_to edit_league_roster_path(roster.competition, roster), class: 'btn btn-default' do
+              Manage
+              %span.glyphicon.glyphicon-cog

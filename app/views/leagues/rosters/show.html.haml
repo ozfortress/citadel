@@ -1,0 +1,29 @@
+- if user_signed_in? && current_user.can?(:edit, @roster.team)
+  = link_to edit_league_roster_path(@competition, @roster), class: 'btn btn-default pull-right' do
+    Edit
+    %span.glyphicon.glyphicon-cog
+
+%h1= @roster.name
+%h4 Team: #{link_to @roster.team, team_path(@roster.team)}
+
+.panel.panel-default
+  .panel-heading Info
+  .panel-body= markdown @roster.description
+
+.panel.panel-default
+  .panel-heading Transfers
+  %ul.list-group
+    - @roster.transfers.each do |transfer|
+      %li.list-group-item
+        = link_to transfer.user, user_path(transfer.user)
+        - if transfer.is_joining?
+          joined the team
+        - else
+          left the team
+        on #{transfer.created_at.strftime('%c')}
+
+- if user_can_edit_league?
+  .panel.panel-default
+    .panel-heading Admin
+    .panel-body
+      Approve

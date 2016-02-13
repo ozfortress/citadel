@@ -18,6 +18,8 @@ class CompetitionRoster < ActiveRecord::Base
 
   after_initialize :set_defaults
 
+  alias_attribute :to_s, :name
+
   private
 
   def set_defaults

@@ -18,9 +18,7 @@
 
   = bootstrap_form_for @roster,
       url: league_rosters_path(@competition, team_id: @roster.team.id) do |f|
-    = f.text_field :name
-    = f.select :division_id, divisions_select, label: 'Desired Division'
-    = f.text_area :description, label: 'Tell us about your team', rows: 10
+    = render 'roster_form', f: f
     = f.collection_check_boxes :player_ids, @roster.team.players, :id, :name
 
     = f.submit 'Sign up'
