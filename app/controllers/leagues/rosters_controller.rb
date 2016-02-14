@@ -69,7 +69,8 @@ module Leagues
 
     def require_not_entered
       @competition = Competition.find(params[:league_id])
-      redirect_to league_path(@competition) if current_user.entered?(@competition)
+      redirect_to league_path(@competition) if user_signed_in? &&
+                                               current_user.entered?(@competition)
     end
 
     def require_any_team_permission
