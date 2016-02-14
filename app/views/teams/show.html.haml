@@ -57,6 +57,7 @@
 
         - if user_can_edit_team?
           .button-group.pull-right
-            = link_to edit_league_roster_path(roster.competition, roster), class: 'btn btn-default' do
+            = link_to edit_league_roster_path(roster.competition, roster),
+                      class: 'btn btn-default' do
               Manage
               %span.glyphicon.glyphicon-cog
