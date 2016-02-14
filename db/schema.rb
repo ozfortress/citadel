@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160207041723) do
+ActiveRecord::Schema.define(version: 20160213124910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,19 @@ ActiveRecord::Schema.define(version: 20160207041723) do
 
   add_index "action_user_manage_rosters_competitions", ["user_id"], name: "index_action_user_manage_rosters_competitions_on_user_id", using: :btree
 
+  create_table "competition_matches", force: :cascade do |t|
+    t.integer  "division_id"
+    t.integer  "home_team_id"
+    t.integer  "away_team_id"
+    t.integer  "status",       null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "competition_matches", ["away_team_id"], name: "index_competition_matches_on_away_team_id", using: :btree
+  add_index "competition_matches", ["division_id"], name: "index_competition_matches_on_division_id", using: :btree
+  add_index "competition_matches", ["home_team_id"], name: "index_competition_matches_on_home_team_id", using: :btree
+
   create_table "competition_rosters", force: :cascade do |t|
     t.integer  "team_id",                     null: false
     t.integer  "division_id",                 null: false
@@ -77,6 +90,18 @@ ActiveRecord::Schema.define(version: 20160207041723) do
 
   add_index "competition_rosters", ["division_id"], name: "index_competition_rosters_on_division_id", using: :btree
   add_index "competition_rosters", ["team_id"], name: "index_competition_rosters_on_team_id", using: :btree
+
+  create_table "competition_sets", force: :cascade do |t|
+    t.integer  "competition_match_id"
+    t.integer  "map_id"
+    t.integer  "home_team_score",      null: false
+    t.integer  "away_team_score",      null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "competition_sets", ["competition_match_id"], name: "index_competition_sets_on_competition_match_id", using: :btree
+  add_index "competition_sets", ["map_id"], name: "index_competition_sets_on_map_id", using: :btree
 
   create_table "competition_transfers", force: :cascade do |t|
     t.integer  "competition_roster_id",                 null: false
@@ -137,6 +162,16 @@ ActiveRecord::Schema.define(version: 20160207041723) do
 
   add_index "games", ["name"], name: "index_games_on_name", unique: true, using: :btree
 
+  create_table "maps", force: :cascade do |t|
+    t.integer  "game_id"
+    t.string   "name",        null: false
+    t.text     "description", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "maps", ["game_id"], name: "index_maps_on_game_id", using: :btree
+
   create_table "team_invites", force: :cascade do |t|
     t.integer  "team_id"
     t.integer  "user_id"
@@ -195,13 +230,19 @@ ActiveRecord::Schema.define(version: 20160207041723) do
   add_foreign_key "action_user_manage_rosters_competition", "competitions"
   add_foreign_key "action_user_manage_rosters_competition", "users"
   add_foreign_key "action_user_manage_rosters_competitions", "users"
+  add_foreign_key "competition_matches", "competition_rosters", column: "away_team_id"
+  add_foreign_key "competition_matches", "competition_rosters", column: "home_team_id"
+  add_foreign_key "competition_matches", "divisions"
   add_foreign_key "competition_rosters", "divisions"
   add_foreign_key "competition_rosters", "teams"
+  add_foreign_key "competition_sets", "competition_matches"
+  add_foreign_key "competition_sets", "maps"
   add_foreign_key "competition_transfers", "competition_rosters"
   add_foreign_key "competition_transfers", "users"
   add_foreign_key "competitions", "formats"
   add_foreign_key "divisions", "competitions"
   add_foreign_key "formats", "games"
+  add_foreign_key "maps", "games"
   add_foreign_key "team_invites", "teams"
   add_foreign_key "team_invites", "users"
   add_foreign_key "transfers", "teams"
