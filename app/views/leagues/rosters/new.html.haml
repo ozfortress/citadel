@@ -19,7 +19,7 @@
   = bootstrap_form_for @roster,
       url: league_rosters_path(@competition, team_id: @roster.team.id) do |f|
     = render 'roster_form', f: f
-    = f.collection_check_boxes :player_ids, @roster.team.players, :id, :name
+    = f.collection_check_boxes :player_ids, @roster.team.players, :id, :name, label: 'Players'
 
     = f.submit 'Sign up'
     = link_to 'Cancel', league_path(@competition), class: 'btn btn-default'

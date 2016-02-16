@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   namespace :meta do
     resources :games, except: [:destroy]
     resources :formats, except: [:destroy]
+    resources :maps, except: [:destroy]
   end
 
   patch 'leagues/:id/visibility', to: 'leagues#visibility', as: 'league_visibility'

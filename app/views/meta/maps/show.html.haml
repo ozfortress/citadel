@@ -1,0 +1,12 @@
+- if user_can_meta?
+  = link_to edit_meta_map_path(@map), class: 'btn btn-default pull-right', type: 'button' do
+    Edit
+    %span.glyphicon.glyphicon-cog
+
+%h1= link_to @map.game, meta_game_path(@map.game)
+%h2= @map.name
+
+.panel.panel-default
+  .panel-heading Information
+  .panel-body
+    = markdown @map.description

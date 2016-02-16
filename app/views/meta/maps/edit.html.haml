@@ -1,0 +1,17 @@
+.panel.panel-default
+  .panel-heading Information
+  .panel-body
+    = bootstrap_form_for @map, method: :patch,
+                         url: { controller: 'meta/maps', action: 'update' } do |f|
+      = render 'map_form', f: f
+
+      = f.submit 'Update'
+      = link_to 'Cancel', meta_map_path(@map), class: 'btn btn-default'
+
+.panel.panel-danger
+  .panel-heading Danger Zone!
+  .panel-body
+    = button_to meta_map_path(@map), method: :delete, class: 'btn btn-danger',
+                data: { confirm: 'Are you sure you want to delete this Map?' } do
+      %span.glyphicon.glyphicon-trash
+      Delete

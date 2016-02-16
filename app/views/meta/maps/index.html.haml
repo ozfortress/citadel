@@ -1,0 +1,15 @@
+= link_to new_meta_map_path, class: 'btn btn-default pull-right', type: 'button' do
+  Add Map
+  %span.glyphicon.glyphicon-plus
+
+%h1 Maps
+
+%ul.list-group
+  - maps.each do |map|
+    %li.list-group-item
+      = link_to map, meta_map_path(map)
+
+      .button-group.pull-right
+        = link_to edit_meta_map_path(map), class: 'btn btn-default' do
+          Edit
+          %span.glyphicon.glyphicon-cog
