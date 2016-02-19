@@ -3,7 +3,7 @@ require 'support/shoulda'
 require 'support/factory_girl'
 
 describe Format do
-  before { Format.first || create(:format) }
+  before { create(:format) }
 
   it { should belong_to(:game) }
   it { should have_many(:competitions) }
