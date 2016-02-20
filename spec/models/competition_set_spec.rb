@@ -7,7 +7,6 @@ describe CompetitionSet do
   it { should belong_to(:map) }
   it { should belong_to(:match).class_name('CompetitionMatch') }
 
-  it { should validate_presence_of(:map) }
   it { should validate_presence_of(:match) }
 
   it { should validate_presence_of(:home_team_score) }
