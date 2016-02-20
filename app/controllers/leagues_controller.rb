@@ -1,6 +1,10 @@
 class LeaguesController < ApplicationController
   include LeaguePermissions
 
+  before_action except: [:index, :new, :create] do
+    @competition = Competition.find(params[:id])
+  end
+
   before_action :require_user_leagues_permission, only: [:new, :create, :destroy]
   before_action :require_user_league_permission, only: [:edit, :update, :visibility]
   before_action :require_league_public_or_permission, only: [:show]
@@ -25,16 +29,12 @@ class LeaguesController < ApplicationController
   end
 
   def show
-    @competition = Competition.find(params[:id])
   end
 
   def edit
-    @competition = Competition.find(params[:id])
   end
 
   def update
-    @competition = Competition.find(params[:id])
-
     if @competition.update(league_params)
       redirect_to league_path(@competition)
     else
@@ -43,7 +43,6 @@ class LeaguesController < ApplicationController
   end
 
   def visibility
-    @competition = Competition.find(params[:id])
     @competition.private = league_visibility_params
 
     if @competition.save
@@ -54,7 +53,7 @@ class LeaguesController < ApplicationController
   end
 
   def destroy
-    if Competition.destroy(params[:id])
+    if @competition.destroy
       redirect_to admin_path(@competition)
     else
       render :edit
@@ -78,7 +77,6 @@ class LeaguesController < ApplicationController
   end
 
   def require_private
-    @competition = Competition.find(params[:id])
     redirect_to league_path(@competition) unless @competition.private?
   end
 
@@ -87,12 +85,10 @@ class LeaguesController < ApplicationController
   end
 
   def require_user_league_permission
-    @competition = Competition.find(params[:id])
     redirect_to league_path(@competition) unless user_can_edit_league?
   end
 
   def require_league_public_or_permission
-    @competition = Competition.find(params[:id])
     redirect_to leagues_path unless @competition.public? || user_can_edit_league?
   end
 end

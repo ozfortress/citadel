@@ -3,6 +3,8 @@ module Meta
     skip_before_action :require_any_admin_permissions, only: [:show]
     skip_before_action :require_meta, only: [:show]
 
+    before_action except: [:index, :new, :create] { @game = Game.find(params[:id]) }
+
     def index
     end
 
@@ -21,16 +23,12 @@ module Meta
     end
 
     def show
-      @game = Game.find(params[:id])
     end
 
     def edit
-      @game = Game.find(params[:id])
     end
 
     def update
-      @game = Game.find(params[:id])
-
       if @game.update(game_params)
         redirect_to meta_game_path(@game)
       else

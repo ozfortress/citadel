@@ -3,6 +3,8 @@ module Meta
     skip_before_action :require_any_admin_permissions, only: [:show]
     skip_before_action :require_meta, only: [:show]
 
+    before_action except: [:index, :new, :create] { @map = Map.find(params[:id]) }
+
     def index
     end
 
@@ -21,16 +23,12 @@ module Meta
     end
 
     def show
-      @map = Map.find(params[:id])
     end
 
     def edit
-      @map = Map.find(params[:id])
     end
 
     def update
-      @map = Map.find(params[:id])
-
       if @map.update(map_params)
         redirect_to meta_map_path(@map)
       else

@@ -3,6 +3,8 @@ module Meta
     skip_before_action :require_any_admin_permissions, only: [:show]
     skip_before_action :require_meta, only: [:show]
 
+    before_action except: [:index, :new, :create] { @format = Format.find(params[:id]) }
+
     def index
     end
 
@@ -21,16 +23,12 @@ module Meta
     end
 
     def show
-      @format = Format.find(params[:id])
     end
 
     def edit
-      @format = Format.find(params[:id])
     end
 
     def update
-      @format = Format.find(params[:id])
-
       if @format.update(format_params)
         redirect_to meta_format_path(@format)
       else

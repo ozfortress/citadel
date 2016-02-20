@@ -1,4 +1,6 @@
 class TeamsController < ApplicationController
+  before_action except: [:index, :new, :create] { @team = Team.find(params[:id]) }
+
   before_action :require_login, only: [:new, :create, :leave]
   before_action :require_team_permission, only: [:edit, :update, :grant, :revoke, :recruit, :invite]
 
@@ -22,16 +24,12 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team = Team.find(params[:id])
   end
 
   def edit
-    @team = Team.find(params[:id])
   end
 
   def update
-    @team = Team.find(params[:id])
-
     if @team.update(team_params)
       redirect_to team_path(@team)
     else
@@ -40,11 +38,9 @@ class TeamsController < ApplicationController
   end
 
   def recruit
-    @team = Team.find(params[:id])
   end
 
   def invite
-    @team = Team.find(params[:id])
     user = User.find(params[:user_id])
 
     @team.invite(user) unless @team.invited?(user) || @team.on_roster?(user)
@@ -52,8 +48,6 @@ class TeamsController < ApplicationController
   end
 
   def leave
-    @team = Team.find(params[:id])
-
     if params.key? :user_id
       require_team_permission
       user = User.find(params[:user_id])
@@ -67,7 +61,6 @@ class TeamsController < ApplicationController
 
   # Permissions
   def grant
-    @team = Team.find(params[:id])
     user = User.find(params[:user_id])
 
     user.grant(:edit, @team)
@@ -75,7 +68,6 @@ class TeamsController < ApplicationController
   end
 
   def revoke
-    @team = Team.find(params[:id])
     user = User.find(params[:user_id])
 
     user.revoke(:edit, @team)
@@ -89,7 +81,6 @@ class TeamsController < ApplicationController
   end
 
   def require_team_permission
-    @team = Team.find(params[:id])
     redirect_to team_path(@team) unless user_can_edit_team?
   end
 
