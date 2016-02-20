@@ -1,6 +1,7 @@
 class Division < ActiveRecord::Base
   belongs_to :competition
   has_many :rosters, class_name: 'CompetitionRoster'
+  has_many :matches, through: :rosters, class_name: 'CompetitionMatch'
 
   validates :competition, presence: true
   validates :name, presence: true, length: { in: 1..64 }
@@ -13,6 +14,8 @@ class Division < ActiveRecord::Base
   validate :validate_players_range
 
   after_initialize :set_defaults
+
+  alias_attribute :to_s, :name
 
   private
 

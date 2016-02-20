@@ -3,6 +3,7 @@ class Competition < ActiveRecord::Base
   has_many   :divisions, inverse_of: :competition, dependent: :destroy
   accepts_nested_attributes_for :divisions, allow_destroy: true
   has_many :rosters, through: :divisions, class_name: 'CompetitionRoster'
+  has_many :matches, through: :divisions, class_name: 'CompetitionMatch'
 
   validates :format, presence: true
   validates :name, presence: true, length: { in: 1..64 }
@@ -16,6 +17,8 @@ class Competition < ActiveRecord::Base
   def public?
     !private?
   end
+
+  alias_attribute :to_s, :name
 
   private
 

@@ -5,6 +5,7 @@ class CompetitionRoster < ActiveRecord::Base
   belongs_to :division
   delegate :competition, to: :division, allow_nil: true
   has_many :transfers, inverse_of: :roster, class_name: 'CompetitionTransfer'
+  has_many :matches, class_name: 'CompetitionMatch', foreign_key: 'home_team_id'
   accepts_nested_attributes_for :transfers
 
   validates :team,        presence: true, uniqueness: { scope: :division_id }
