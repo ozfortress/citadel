@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action except: [:index, :new, :create] { @user = User.find(params[:id]) }
+  before_action except: [:index, :new, :create, :logout,
+                         :grant_meta, :revoke_meta] { @user = User.find(params[:id]) }
 
   before_action :require_login, only: [:logout]
   before_action :require_user_permission, only: [:edit, :update]
