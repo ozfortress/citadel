@@ -14,11 +14,12 @@ To install ruby gems for this project, run:
 bundle install
 ```
 
-To configure secrets for development, use `secrets.local.yml`. Example at
-`secrets.local.yml.example`.
+To configure secrets for development, use `config/secrets.local.yml`. Example at
+`config/secrets.local.yml.example`.
 
 ## Tests
 
-This project uses `rspec` for tests and `rubocop` for linting.
+This project uses `rspec`, `rubocop`, `haml-lint` and `rails-best-practices` for
+testing and linting.
 
-Run `rake test` for both.
+Run `rake test` to run them all.
