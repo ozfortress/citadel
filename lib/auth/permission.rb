@@ -93,7 +93,7 @@ module Auth
         subject = subject.class.name.underscore.to_sym unless subject.class == Symbol
 
         action_cls = permissions[action][subject]
-        throw 'Unknown action or subject' if action_cls.nil?
+        throw "Unknown action or subject `#{action}##{subject}`" if action_cls.nil?
 
         action_cls
       end
