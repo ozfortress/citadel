@@ -65,7 +65,6 @@ ActiveRecord::Schema.define(version: 20160213124910) do
   add_index "action_user_manage_rosters_competitions", ["user_id"], name: "index_action_user_manage_rosters_competitions_on_user_id", using: :btree
 
   create_table "competition_matches", force: :cascade do |t|
-    t.integer  "division_id"
     t.integer  "home_team_id"
     t.integer  "away_team_id"
     t.integer  "status",       null: false
@@ -74,7 +73,6 @@ ActiveRecord::Schema.define(version: 20160213124910) do
   end
 
   add_index "competition_matches", ["away_team_id"], name: "index_competition_matches_on_away_team_id", using: :btree
-  add_index "competition_matches", ["division_id"], name: "index_competition_matches_on_division_id", using: :btree
   add_index "competition_matches", ["home_team_id"], name: "index_competition_matches_on_home_team_id", using: :btree
 
   create_table "competition_rosters", force: :cascade do |t|
@@ -232,7 +230,6 @@ ActiveRecord::Schema.define(version: 20160213124910) do
   add_foreign_key "action_user_manage_rosters_competitions", "users"
   add_foreign_key "competition_matches", "competition_rosters", column: "away_team_id"
   add_foreign_key "competition_matches", "competition_rosters", column: "home_team_id"
-  add_foreign_key "competition_matches", "divisions"
   add_foreign_key "competition_rosters", "divisions"
   add_foreign_key "competition_rosters", "teams"
   add_foreign_key "competition_sets", "competition_matches"
