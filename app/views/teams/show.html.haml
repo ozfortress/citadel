@@ -50,10 +50,9 @@
   %ul.list-group
     - @team.competition_rosters.each do |roster|
       %li.list-group-item
-        = link_to 'Signed up', league_roster_path(roster.competition, roster)
-        for
-        = link_to roster.competition.name, league_path(roster.competition)
-        wanting to enter #{roster.division.name}
+        = link_to roster.competition, league_path(roster.competition)
+        #{roster.division}: #{link_to roster, league_roster_path(roster.competition, roster)}.
+        Signed up on #{roster.created_at.strftime('%c')}.
 
         - if user_can_edit_team?
           .button-group.pull-right

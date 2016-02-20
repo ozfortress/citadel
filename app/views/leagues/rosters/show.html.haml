@@ -4,11 +4,21 @@
     %span.glyphicon.glyphicon-cog
 
 %h1= @roster.name
-%h4 Team: #{link_to @roster.team, team_path(@roster.team)}
+Team #{link_to @roster.team, team_path(@roster.team)}
+signed up on #{@roster.created_at.strftime('%c')}
+
+%p
 
 .panel.panel-default
   .panel-heading Info
   .panel-body= markdown @roster.description
+
+.panel.panel-default
+  .panel-heading Roster
+  %ul.list-group
+    - @roster.players.each do |user|
+      %li.list-group-item
+        = link_to user.name, user_path(user)
 
 .panel.panel-default
   .panel-heading Transfers

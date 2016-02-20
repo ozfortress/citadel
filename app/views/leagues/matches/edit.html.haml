@@ -1,0 +1,5 @@
+= bootstrap_form_for @match, url: league_match_path(@competition, @match) do |f|
+  = render 'match_form', f: f, div: @match.division
+
+  = f.submit 'Update'
+  = link_to 'Cancel', league_matches_path(@competition), class: 'btn btn-default'

@@ -1,0 +1,21 @@
+.panel.panel-default
+  .panel-heading Matches
+
+  .panel-body
+    = link_to new_league_match_path(@competition), class: 'btn btn-default pull-right' do
+      %span.glyphicon.glyphicon-plus
+      Create Match
+
+  %ul.list-group
+    - @competition.divisions.each do |div|
+      %li.list-group-item
+        %h3= div
+
+        .panel.panel-default
+          %ul.list-group
+            - div.matches.each do |match|
+              %li.list-group-item
+                = link_to league_match_path(@competition, match) do
+                  = match.home_team
+                  vs
+                  = match.away_team

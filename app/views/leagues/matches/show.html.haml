@@ -1,0 +1,25 @@
+- if user_can_edit_league?
+  = link_to edit_league_match_path(@competition, @match), class: 'btn btn-default pull-right' do
+    Edit
+    %span.glyphicon.glyphicon-cog
+
+%h1= @competition
+%h2
+  = @match.home_team
+  vs
+  = @match.away_team
+
+.table-responsive
+  %table.table
+    %thead
+      %tr
+        %th Home Team
+        %th Away Team
+      %tr
+        %th= link_to @match.home_team, league_roster_path(@competition, @match.home_team)
+        %th= link_to @match.away_team, league_roster_path(@competition, @match.away_team)
+    %tbody
+      - @match.home_team.players.zip(@match.away_team.players) do |home_player, away_player|
+        %tr
+          %th= link_to home_player, user_path(home_player) unless home_player.nil?
+          %th= link_to away_player, user_path(away_player) unless away_player.nil?

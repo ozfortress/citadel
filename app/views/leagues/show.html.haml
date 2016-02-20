@@ -22,9 +22,21 @@
         %h3= div.name
         = markdown div.description
 
-- if user_can_edit_league?
-  = link_to 'Signups', league_rosters_path(@competition), class: 'btn btn-default pull-right'
+        %h3 Teams
+        .panel.panel-default
+          %ul.list-group
+            - div.rosters.each do |roster|
+              %li.list-group-item= link_to roster, league_roster_path(@competition, roster)
 
-- if user_signed_in? && current_user.can_any?(:edit, :team) && @competition.signuppable?
-  = link_to 'Sign up', new_league_roster_path(@competition), class: 'btn btn-success pull-right',
-                       disabled: current_user.entered?(@competition)
+  - if user_signed_in? && current_user.can_any?(:edit, :team) && @competition.signuppable?
+    .panel-body
+      = link_to 'Sign up', new_league_roster_path(@competition),
+                           class: 'btn btn-success pull-right',
+                           disabled: current_user.entered?(@competition)
+
+- if user_can_edit_league?
+  .panel.panel-default
+    .panel-heading Admin
+    .panel-body
+      = link_to 'Signups', league_rosters_path(@competition), class: 'btn btn-default pull-right'
+      = link_to 'Matches', league_matches_path(@competition), class: 'btn btn-default pull-right'
