@@ -14,6 +14,7 @@ module Leagues
 
     def new
       @match = CompetitionMatch.new
+      @match.sets.new
     end
 
     def create
