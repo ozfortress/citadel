@@ -23,3 +23,19 @@
         %tr
           %th= link_to home_player, user_path(home_player) unless home_player.nil?
           %th= link_to away_player, user_path(away_player) unless away_player.nil?
+
+- if user_can_comms?
+  .panel.panel-default
+    .panel-heading Match Comms
+
+    %ul.list-group
+      - @match.comms.each do |comm|
+        %li.list-group-item
+          #{link_to comm.user, user_path(comm.user)}:
+          = markdown comm.content
+
+    .panel-body
+      = bootstrap_form_for @comm, url: league_match_comms_path(@competition, @match) do |f|
+        = f.text_area :content, hide_label: true, rows: 3
+
+        = f.submit 'Submit'

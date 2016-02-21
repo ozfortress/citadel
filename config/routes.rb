@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   patch 'leagues/:id/visibility', to: 'leagues#visibility', as: 'league_visibility'
   resources :leagues do
     resources :rosters, controller: 'leagues/rosters', except: [:destroy]
+    post 'matches/:id/comms', to: 'leagues/matches#comms', as: 'match_comms'
     resources :matches, controller: 'leagues/matches', except: [:destroy]
   end
 

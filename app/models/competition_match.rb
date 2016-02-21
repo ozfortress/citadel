@@ -3,6 +3,7 @@ class CompetitionMatch < ActiveRecord::Base
   belongs_to :away_team, class_name: 'CompetitionRoster'
   has_many :sets, inverse_of: :match, class_name: 'CompetitionSet'
   accepts_nested_attributes_for :sets
+  has_many :comms, class_name: 'CompetitionComm'
 
   validates :home_team, presence: true
   validates :away_team, presence: true
