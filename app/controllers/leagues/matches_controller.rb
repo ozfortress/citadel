@@ -1,6 +1,6 @@
 module Leagues
   class MatchesController < ApplicationController
-    include LeaguePermissions
+    include MatchPermissions
 
     before_action { @competition = Competition.find(params[:league_id]) }
     before_action except: [:index, :new, :create] do

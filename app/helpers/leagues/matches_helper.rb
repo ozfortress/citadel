@@ -1,6 +1,6 @@
 module Leagues
   module MatchesHelper
-    include LeaguePermissions
+    include MatchPermissions
 
     def teams_select(div)
       div.rosters.map do |roster|
