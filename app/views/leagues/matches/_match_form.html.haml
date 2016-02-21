@@ -2,6 +2,7 @@
 = f.select :away_team_id, teams_select(div), label: 'Away Team'
 
 .panel.panel-default
+  .panel-heading Sets
   %ul.list-group
     = f.fields_for :sets do |sets_f|
       = render 'set_fields', f: sets_f
