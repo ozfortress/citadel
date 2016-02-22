@@ -3,7 +3,7 @@ module Leagues
     include MatchPermissions
 
     def teams_select(div)
-      div.rosters.map do |roster|
+      div.rosters.where(approved: true).map do |roster|
         [roster.to_s, roster.id]
       end
     end

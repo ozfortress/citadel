@@ -8,11 +8,12 @@ class CompetitionMatch < ActiveRecord::Base
   validates :home_team, presence: true
   validates :away_team, presence: true
 
-  enum status: [:pending, :submitted, :confirmed]
+  enum status: [:pending, :submitted_by_home_team, :submitted_by_away_team, :confirmed]
   validates :status, presence: true
 
   validate :home_and_away_team_are_different
   validate :home_and_away_team_are_in_the_same_division
+  validate :teams_are_approved
 
   delegate :division, to: :home_team, allow_nil: true
   delegate :competition, to: :division, allow_nil: true
@@ -36,6 +37,16 @@ class CompetitionMatch < ActiveRecord::Base
 
     unless away_team.division == home_team.division
       errors.add(:away_team_id, 'must be in the same division as the home team')
+    end
+  end
+
+  def teams_are_approved
+    if home_team.present? && !home_team.approved?
+      errors.add(:home_team_id, 'must be approved')
+    end
+
+    if away_team.present? && !away_team.approved?
+      errors.add(:away_team_id, 'must be approved')
     end
   end
 
