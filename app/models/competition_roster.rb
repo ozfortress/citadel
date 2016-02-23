@@ -4,9 +4,15 @@ class CompetitionRoster < ActiveRecord::Base
   belongs_to :team
   belongs_to :division
   delegate :competition, to: :division, allow_nil: true
-  has_many :transfers, inverse_of: :roster, class_name: 'CompetitionTransfer'
-  has_many :matches, class_name: 'CompetitionMatch', foreign_key: 'home_team_id'
+  has_many :transfers, inverse_of: :roster, class_name: 'CompetitionTransfer',
+                       dependent: :destroy
   accepts_nested_attributes_for :transfers
+  has_many :home_team_matches, class_name: 'CompetitionMatch', foreign_key: 'home_team_id',
+                               dependent: :destroy
+  has_many :home_team_sets, through: :home_team_matches, source: :sets, class_name: 'CompetitionSet'
+  has_many :away_team_matches, class_name: 'CompetitionMatch', foreign_key: 'away_team_id',
+                               dependent: :destroy
+  has_many :away_team_sets, through: :away_team_matches, source: :sets, class_name: 'CompetitionSet'
 
   validates :team,        presence: true, uniqueness: { scope: :division_id }
   validates :division,    presence: true
