@@ -19,7 +19,11 @@
         %th= link_to @match.home_team, league_roster_path(@competition, @match.home_team)
         %th= link_to @match.away_team, league_roster_path(@competition, @match.away_team)
     %tbody
-      - @match.home_team.players.zip(@match.away_team.players) do |home_player, away_player|
+      - if @match.home_team.players.length > @match.away_team.players.length
+        - players = @match.home_team.players.zip(@match.away_team.players)
+      - else
+        - players = @match.away_team.players.zip(@match.home_team.players)
+      - players.each do |home_player, away_player|
         %tr
           %th= link_to home_player, user_path(home_player) unless home_player.nil?
           %th= link_to away_player, user_path(away_player) unless away_player.nil?
