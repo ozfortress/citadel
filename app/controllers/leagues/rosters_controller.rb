@@ -11,6 +11,7 @@ module Leagues
     before_action :require_signuppable, only: [:new, :create]
     before_action :require_any_team_permission, only: [:new, :create]
     before_action :require_user_league_permission, only: [:index]
+    before_action :require_not_approved, only: [:destroy]
 
     def index
     end
@@ -52,13 +53,37 @@ module Leagues
       end
     end
 
+    def review
+    end
+
+    def approve
+      if @roster.update(roster_approve_params.merge(approved: true))
+        redirect_to league_roster_path(@competition, @roster)
+      else
+        render :review
+      end
+    end
+
     def destroy
+      if @roster.destroy
+        redirect_to league_path(@competition)
+      else
+        render :show
+      end
     end
 
     private
 
     def roster_params
       params.require(:competition_roster).permit(:name, :description, :division_id, player_ids: [])
+    end
+
+    def roster_approve_params
+      params.require(:competition_roster).permit(:name, :division_id)
+    end
+
+    def require_not_approved
+      redirect_to league_roster_path(@competition, @roster) if @roster.approved?
     end
 
     def require_signuppable

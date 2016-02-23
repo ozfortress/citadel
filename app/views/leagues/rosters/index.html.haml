@@ -1,6 +1,11 @@
-.panel.panel-default
-  .panel-heading Rosters
-  %ul.list-group
-    - @competition.rosters.each do |roster|
-      %li.list-group-item
-        = link_to roster, league_roster_path(@competition, roster)
+%h1= @competition
+%h2 Sign ups
+
+- @competition.divisions.each do |div|
+  .panel.panel-default
+    .panel-heading #{div} Division
+    %ul.list-group
+      - div.rosters.each do |roster|
+        - bg = roster.approved? ? 'list-group-item-success' : 'list-group-item-warning'
+        %li{ class: "list-group-item #{bg}" }
+          = link_to roster, league_roster_path(@competition, roster)

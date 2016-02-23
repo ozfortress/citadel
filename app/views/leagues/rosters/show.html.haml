@@ -1,9 +1,16 @@
-- if user_signed_in? && current_user.can?(:edit, @roster.team)
+- unless @roster.approved
+  .alert.alert-warning
+    %span.glyphicon.glyphicon-warning-sign
+    Roster is awaiting approval
+
+- if user_can_edit_team?
   = link_to edit_league_roster_path(@competition, @roster), class: 'btn btn-default pull-right' do
     Edit
     %span.glyphicon.glyphicon-cog
 
-%h1= @roster.name
+%h1= link_to "#{@roster.division} Division", league_path(@competition)
+
+%h2= @roster.name
 Team #{link_to @roster.team, team_path(@roster.team)}
 signed up on #{@roster.created_at.strftime('%c')}
 
@@ -32,8 +39,12 @@ signed up on #{@roster.created_at.strftime('%c')}
           left the team
         on #{transfer.created_at.strftime('%c')}
 
-- if user_can_edit_league?
+- if user_can_edit_league? && !@roster.approved?
   .panel.panel-default
     .panel-heading Admin
     .panel-body
-      Approve
+      = link_to 'Approve', league_roster_review_path(@competition, @roster),
+                           class: 'btn btn-success'
+      = button_to 'Decline', league_roster_path(@competition, @roster),
+          method: :delete, class: 'btn btn-danger',
+          data: { confirm: "Are you sure you want to decline this team's sign up?" }
