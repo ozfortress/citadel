@@ -26,7 +26,36 @@ class CompetitionRoster < ActiveRecord::Base
 
   alias_attribute :to_s, :name
 
+  def matches
+    home_team_matches + away_team_matches
+  end
+
+  def win_count
+    match_outcome_count('>')
+  end
+
+  def draw_count
+    match_outcome_count('=')
+  end
+
+  def loss_count
+    match_outcome_count('<')
+  end
+
+  def score_s
+    "Wins: #{win_count} Draws: #{draw_count} Losses: #{loss_count}"
+  end
+
   private
+
+  def match_outcome_count(comparison)
+    (home_team_sets.where(competition_matches: { status: 3 })
+                  .where("home_team_score #{comparison} away_team_score")
+                  .count +
+     away_team_sets.where(competition_matches: { status: 3 })
+                   .where("away_team_score #{comparison} home_team_score")
+                   .count)
+  end
 
   def set_defaults
     self.approved = false if approved.nil?

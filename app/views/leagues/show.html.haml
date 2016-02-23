@@ -22,11 +22,15 @@
         %h3= div.name
         = markdown div.description
 
-        %h3 Teams
-        .panel.panel-default
-          %ul.list-group
-            - div.rosters.each do |roster|
-              %li.list-group-item= link_to roster, league_roster_path(@competition, roster)
+        - unless @competition.signuppable?
+          %h3 Teams
+          .panel.panel-default
+            %ul.list-group
+              - div.rosters.where(approved: true).each do |roster|
+                %li.list-group-item
+                  = link_to roster, league_roster_path(@competition, roster)
+                  .pull-right
+                    |#{roster.score_s}|
 
   - if user_signed_in? && current_user.can_any?(:edit, :team) && @competition.signuppable?
     .panel-body
