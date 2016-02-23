@@ -39,12 +39,6 @@
 
               %li{ class: navbar_class(:admin) }
                 = link_to('Admin', :admin)
-              / DEBUG
-              %li= button_to 'become weak', revoke_meta_path, method: :patch
-
-            - elsif user_signed_in?
-              / DEBUG
-              %li= button_to 'become GOD', grant_meta_path, method: :patch
 
         .navbar-right
           %ul.nav.navbar-nav

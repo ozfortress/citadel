@@ -34,8 +34,10 @@ Rails.application.routes.draw do
   patch 'team_invites/:id/decline', to: 'team_invites#decline', as: 'decline_team_invite'
 
   # Debug
-  patch 'users/grant_meta',  to: 'users#grant_meta',  as: 'grant_meta'
-  patch 'users/revoke_meta', to: 'users#revoke_meta', as: 'revoke_meta'
+  if Rails.env.development?
+    patch 'users/grant_meta',  to: 'users#grant_meta',  as: 'grant_meta'
+    patch 'users/revoke_meta', to: 'users#revoke_meta', as: 'revoke_meta'
+  end
 
   get 'users/logout', to: 'users#logout', as: 'logout_user'
   resources :users, except: [:destroy]
