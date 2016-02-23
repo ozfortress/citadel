@@ -36,6 +36,8 @@ module ApplicationHelper
   end
 
   def divisions_select
-    @competition.divisions.all.map(&:name)
+    @competition.divisions.all.map do |div|
+      [div.to_s, div.id]
+    end
   end
 end
