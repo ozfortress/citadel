@@ -4,7 +4,6 @@ class CreateCompetitionRosters < ActiveRecord::Migration
       t.belongs_to :team,     index: true, foreign_key: true, null: false
       t.belongs_to :division, index: true, foreign_key: true, null: false
 
-      t.integer :points,   null: false, default: 0
       t.boolean :approved, null: false, default: false
 
       t.timestamps null: false

@@ -13,7 +13,6 @@ class CompetitionRoster < ActiveRecord::Base
   validates :name,        presence: true, uniqueness: { scope: :division_id },
                           length: { in: 1..64 }
   validates :description, presence: true, allow_blank: true
-  validates :points,      presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :approved,    inclusion: { in: [true, false] }
   validate :player_count_limits
 
@@ -24,7 +23,6 @@ class CompetitionRoster < ActiveRecord::Base
   private
 
   def set_defaults
-    self.points   = 0     if points.nil?
     self.approved = false if approved.nil?
   end
 

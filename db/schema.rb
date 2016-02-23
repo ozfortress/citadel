@@ -89,7 +89,6 @@ ActiveRecord::Schema.define(version: 20160220083047) do
   create_table "competition_rosters", force: :cascade do |t|
     t.integer  "team_id",                     null: false
     t.integer  "division_id",                 null: false
-    t.integer  "points",      default: 0,     null: false
     t.boolean  "approved",    default: false, null: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false

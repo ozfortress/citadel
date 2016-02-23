@@ -4,8 +4,7 @@ FactoryGirl.define do
     division
     sequence(:name) { |n| "Immunity #{n}" }
     description 'We beat everyone'
-    points 0
-    approved false
+    approved true
 
     transient do
       player_count 6
