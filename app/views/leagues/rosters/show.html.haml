@@ -39,6 +39,12 @@ signed up on #{@roster.created_at.strftime('%c')}
           left the team
         on #{transfer.created_at.strftime('%c')}
 
+.panel.panel-default
+  .panel-heading Matches
+  %ul.list-group
+    - @roster.matches.each do |match|
+      = link_to match, league_match_path(@competition, match), class: 'list-group-item'
+
 - if user_can_edit_league? && !@roster.approved?
   .panel.panel-default
     .panel-heading Admin
