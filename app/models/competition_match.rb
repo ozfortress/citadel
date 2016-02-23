@@ -41,13 +41,8 @@ class CompetitionMatch < ActiveRecord::Base
   end
 
   def teams_are_approved
-    if home_team.present? && !home_team.approved?
-      errors.add(:home_team_id, 'must be approved')
-    end
-
-    if away_team.present? && !away_team.approved?
-      errors.add(:away_team_id, 'must be approved')
-    end
+    errors.add(:home_team_id, 'must be approved') if home_team.present? && !home_team.approved?
+    errors.add(:away_team_id, 'must be approved') if away_team.present? && !away_team.approved?
   end
 
   def set_defaults
