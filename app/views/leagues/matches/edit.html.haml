@@ -1,5 +1,16 @@
-= bootstrap_form_for @match, url: league_match_path(@competition, @match) do |f|
-  = render 'match_form', f: f, div: @match.division
+.panel.panel-default
+  .panel-heading Info
+  .panel-body
+    = bootstrap_form_for @match, url: league_match_path(@competition, @match) do |f|
+      = render 'match_form', f: f, div: @match.division
 
-  = f.submit 'Update'
-  = link_to 'Cancel', league_matches_path(@competition), class: 'btn btn-default'
+      = f.submit 'Update'
+      = link_to 'Cancel', league_match_path(@competition, @match), class: 'btn btn-default'
+
+.panel.panel-danger
+  .panel-heading Danger Zone
+  .panel-body
+    = button_to league_match_path(@competition, @match), method: :delete, class: 'btn btn-danger',
+                    data: { confirm: 'Are you sure you want to delete this Match?' } do
+      %span.glyphicon.glyphicon-trash
+      Delete

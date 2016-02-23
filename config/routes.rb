@@ -16,8 +16,11 @@ Rails.application.routes.draw do
     get   'rosters/:id/review',  to: 'leagues/rosters#review',  as: 'roster_review'
     patch 'rosters/:id/approve', to: 'leagues/rosters#approve', as: 'roster_approve'
     resources :rosters, controller: 'leagues/rosters'
-    post 'matches/:id/comms', to: 'leagues/matches#comms', as: 'match_comms'
-    resources :matches, controller: 'leagues/matches', except: [:destroy]
+
+    post 'matches/:id/comms',    to: 'leagues/matches#comms',   as: 'match_comms'
+    patch 'matches/:id/scores',  to: 'leagues/matches#scores',  as: 'match_scores'
+    patch 'matches/:id/confirm', to: 'leagues/matches#confirm', as: 'match_confirm'
+    resources :matches, controller: 'leagues/matches'
   end
 
   get   'teams/:id/recruit', to: 'teams#recruit', as: 'recruit_team'
@@ -31,7 +34,7 @@ Rails.application.routes.draw do
   patch 'team_invites/:id/decline', to: 'team_invites#decline', as: 'decline_team_invite'
 
   # Debug
-  patch 'users/grant_meta', to: 'users#grant_meta', as: 'grant_meta'
+  patch 'users/grant_meta',  to: 'users#grant_meta',  as: 'grant_meta'
   patch 'users/revoke_meta', to: 'users#revoke_meta', as: 'revoke_meta'
 
   get 'users/logout', to: 'users#logout', as: 'logout_user'

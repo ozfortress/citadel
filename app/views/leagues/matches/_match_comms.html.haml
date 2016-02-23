@@ -1,0 +1,14 @@
+.panel.panel-default
+  .panel-heading Match Comms
+
+  %ul.list-group
+    - match.comms.each do |comm|
+      %li.list-group-item
+        #{link_to comm.user, user_path(comm.user)}:
+        = markdown comm.content
+
+  .panel-body
+    = bootstrap_form_for comm, url: league_match_comms_path(competition, match) do |f|
+      = f.text_area :content, hide_label: true, rows: 3
+
+      = f.submit 'Submit'

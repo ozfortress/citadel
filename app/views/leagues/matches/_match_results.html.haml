@@ -1,0 +1,24 @@
+.panel.panel-default
+  .panel-heading Results
+
+  %ul.list-group
+    - match.sets.each do |set|
+      %li.list-group-item
+        = link_to set.map, meta_map_path(set.map)
+
+        .pull-right
+          - if set.home_team_score > set.away_team_score
+            = link_to match.home_team, league_roster_path(competition, match.home_team)
+            beat
+            = link_to match.away_team, league_roster_path(competition, match.away_team)
+            #{set.home_team_score} to #{set.away_team_score}
+          - elsif set.home_team_score < set.away_team_score
+            = link_to match.away_team, league_roster_path(competition, match.away_team)
+            beat
+            = link_to match.home_team, league_roster_path(competition, match.home_team)
+            #{set.away_team_score} to #{set.home_team_score}
+          - else
+            = link_to match.home_team, league_roster_path(competition, match.home_team)
+            tied with
+            = link_to match.away_team, league_roster_path(competition, match.away_team)
+            #{set.home_team_score} to #{set.away_team_score}

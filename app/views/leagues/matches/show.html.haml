@@ -24,18 +24,13 @@
           %th= link_to home_player, user_path(home_player) unless home_player.nil?
           %th= link_to away_player, user_path(away_player) unless away_player.nil?
 
-- if user_can_comms?
-  .panel.panel-default
-    .panel-heading Match Comms
 
-    %ul.list-group
-      - @match.comms.each do |comm|
-        %li.list-group-item
-          #{link_to comm.user, user_path(comm.user)}:
-          = markdown comm.content
+- if @match.status == 'confirmed' && !user_can_edit_league?
+  - if user_can_either_teams?
+    = render 'match_results', match: @match, competition: @competition
+- else
+  = render 'match_scores', match: @match, competition: @competition
 
-    .panel-body
-      = bootstrap_form_for @comm, url: league_match_comms_path(@competition, @match) do |f|
-        = f.text_area :content, hide_label: true, rows: 3
+- if user_can_either_teams?
+  = render 'match_comms', match: @match, competition: @competition, comm: @comm
 
-        = f.submit 'Submit'
