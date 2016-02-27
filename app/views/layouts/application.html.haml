@@ -9,7 +9,8 @@
   %body
     %header.banner-ozf#banner
       .container
-        %a= image_tag 'ozfortress_logo.png'
+        = link_to pages_home_path do
+          = image_tag 'ozfortress_logo.png'
 
     %nav.navbar.navbar-ozf.affix-top#navbar{ role: 'navigation',
                                              data: { spy: 'affix', 'offset-top' => 106 } }
