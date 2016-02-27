@@ -9,8 +9,8 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
-    @user.name = params[:name]
+    steam_data = session['devise.steam_data']
+    @user = User.new(name: params[:name], steam_id: steam_data['uid'])
   end
 
   def create

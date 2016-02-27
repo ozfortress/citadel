@@ -52,6 +52,10 @@ class User < ActiveRecord::Base
 
   alias_attribute :to_s, :name
 
+  def steam_id_nice
+    SteamId.to_str(steam_id)
+  end
+
   private
 
   def set_defaults
