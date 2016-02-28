@@ -5,8 +5,7 @@
 
 %h2 #{@user.name}'s Profile
 
-%p= steam_id
-%p= link_to('Steam Profile', @user.steam_profile_url)
+%p [#{link_to @user.steam_id_nice, @user.steam_profile_url, :target => '_blank'}]
 
 .panel.panel-default
   .panel-heading Description

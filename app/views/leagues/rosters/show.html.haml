@@ -25,14 +25,14 @@ signed up on #{@roster.created_at.strftime('%c')}
   %ul.list-group
     - @roster.players.each do |user|
       %li.list-group-item
-        = link_to user.name, user_path(user)
+        = user_listing(user)
 
 .panel.panel-default
   .panel-heading Transfers
   %ul.list-group
     - @roster.transfers.each do |transfer|
       %li.list-group-item
-        = link_to transfer.user, user_path(transfer.user)
+        = user_listing(transfer.user)
         - if transfer.is_joining?
           joined the team
         - else

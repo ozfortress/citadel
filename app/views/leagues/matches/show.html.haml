@@ -19,15 +19,12 @@
         %th= link_to @match.home_team, league_roster_path(@competition, @match.home_team)
         %th= link_to @match.away_team, league_roster_path(@competition, @match.away_team)
     %tbody
-      - if @match.home_team.players.length > @match.away_team.players.length
-        - players = @match.home_team.players.zip(@match.away_team.players)
-      - else
-        - players = @match.away_team.players.zip(@match.home_team.players)
-      - players.each do |home_player, away_player|
+      - home_players = @match.home_team.players
+      - away_players = @match.away_team.players
+      - [home_players.length, away_players].max.times do |i|
         %tr
-          %th= link_to home_player, user_path(home_player) unless home_player.nil?
-          %th= link_to away_player, user_path(away_player) unless away_player.nil?
-
+          %th= user_listing(home_players[i]) unless i < home_players.length
+          %th= user_listing(away_players[i]) unless i < away_players.length
 
 - if @match.status == 'confirmed' && !user_can_edit_league?
   - if user_can_either_teams?

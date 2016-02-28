@@ -40,4 +40,11 @@ module ApplicationHelper
       [div.to_s, div.id]
     end
   end
+
+  def user_listing(user = nil)
+    user ||= @user
+
+    link_to(user.name, user_path(user)) +
+      " [#{link_to user.steam_id_nice, user.steam_profile_url, :target => '_blank'}]".html_safe
+  end
 end
