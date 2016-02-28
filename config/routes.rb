@@ -35,8 +35,8 @@ Rails.application.routes.draw do
 
   # Debug
   if Rails.env.development?
-    patch 'users/grant_meta',  to: 'users#grant_meta',  as: 'grant_meta'
-    patch 'users/revoke_meta', to: 'users#revoke_meta', as: 'revoke_meta'
+    get 'users/grant_meta',  to: 'users#grant_meta',  as: 'grant_meta'
+    get 'users/revoke_meta', to: 'users#revoke_meta', as: 'revoke_meta'
   end
 
   get 'users/logout', to: 'users#logout', as: 'logout_user'
