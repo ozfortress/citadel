@@ -13,7 +13,7 @@ describe UsersController do
 
   describe 'GET #new' do
     it 'succeeds' do
-      OmniAuth.mock_auth_hash
+      session['devise.steam_data'] = OmniAuth.mock_auth_hash
 
       get :new
 
