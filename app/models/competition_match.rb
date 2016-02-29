@@ -2,7 +2,7 @@ class CompetitionMatch < ActiveRecord::Base
   belongs_to :home_team, class_name: 'CompetitionRoster'
   belongs_to :away_team, class_name: 'CompetitionRoster'
   has_many :sets, inverse_of: :match, class_name: 'CompetitionSet', dependent: :destroy
-  accepts_nested_attributes_for :sets
+  accepts_nested_attributes_for :sets, allow_destroy: true
   has_many :comms, class_name: 'CompetitionComm', dependent: :destroy
 
   validates :home_team, presence: true
