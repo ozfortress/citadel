@@ -21,10 +21,10 @@
     %tbody
       - home_players = @match.home_team.players
       - away_players = @match.away_team.players
-      - [home_players.length, away_players].max.times do |i|
+      - [home_players.length, away_players.length].max.times do |i|
         %tr
-          %th= user_listing(home_players[i]) unless i < home_players.length
-          %th= user_listing(away_players[i]) unless i < away_players.length
+          %th= user_listing(home_players[i]) if i < home_players.length
+          %th= user_listing(away_players[i]) if i < away_players.length
 
 - if @match.status == 'confirmed' && !user_can_edit_league?
   - if user_can_either_teams?
