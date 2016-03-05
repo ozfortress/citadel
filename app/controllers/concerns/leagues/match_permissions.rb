@@ -16,8 +16,7 @@ module Leagues
     end
 
     def can_confirm_score?
-      user_can_edit_league? ||
-        user_can_home_team? && @match.status == 'submitted_by_away_team' ||
+      user_can_home_team? && @match.status == 'submitted_by_away_team' ||
         user_can_away_team? && @match.status == 'submitted_by_home_team'
     end
   end

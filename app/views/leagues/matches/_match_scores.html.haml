@@ -9,23 +9,27 @@
     - when 'submitted_by_away_team'
       submitted by away team
 
-  .panel-body
-    = bootstrap_form_for match, url: league_match_scores_path(competition, match) do |f|
-      = f.fields_for :sets do |ff|
-        .form-group
-          .form-inline
-            = link_to ff.object.map, meta_map_path(ff.object.map)
-            \:
-            .form-group.pull-right
-              = ff.number_field :home_team_score
-              = ff.number_field :away_team_score
+  - if match.status == 'pending' || user_can_edit_league?
+    .panel-body
+      = bootstrap_form_for match, url: league_match_scores_path(competition, match) do |f|
+        = f.fields_for :sets do |ff|
+          .form-group
+            .form-inline
+              = link_to ff.object.map, meta_map_path(ff.object.map)
+              \:
+              .form-group.pull-right
+                = ff.number_field :home_team_score
+                = ff.number_field :away_team_score
 
-      - if user_can_edit_league?
-        = f.select :status, collection: CompetitionMatch.statuses.keys.map { |s| [s.humanize, s] }
+        - if user_can_edit_league?
+          = f.select :status, collection: CompetitionMatch.statuses.keys.map { |s| [s.humanize, s] }
 
-      = f.submit 'Submit Score'
+        - if user_can_edit_league?
+          = f.submit 'Update'
+        - else
+          = f.submit 'Submit Score'
 
-  - if match.status != 'pending' && !user_can_edit_league?
+  - if match.status != 'pending' && match.status != 'confirmed' #&& !user_can_edit_league?
     %ul.list-group
       - match.sets.each do |set|
         %li.list-group-item
@@ -34,6 +38,12 @@
 
     - if can_confirm_score?
       .panel-body
-        = button_to 'Confirm Score', league_match_confirm_path(competition, match),
-                                     class: 'btn btn-success', method: :patch
+        = button_to league_match_confirm_path(competition, match, confirm: true),
+                    class: 'btn btn-success', method: :patch do
+          Confirm Score
+
+        = button_to league_match_confirm_path(competition, match, confirm: false),
+                    class: 'btn btn-danger', method: :patch do
+          Challenge Score
+
 

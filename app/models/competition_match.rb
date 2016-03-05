@@ -24,6 +24,14 @@ class CompetitionMatch < ActiveRecord::Base
     "#{home_team.name} vs #{away_team.name}"
   end
 
+  def confirm_scores(confirm)
+    if confirm
+      update(status: :confirmed)
+    else
+      update(status: :pending)
+    end
+  end
+
   private
 
   def home_and_away_team_are_different

@@ -9,6 +9,7 @@ module Leagues
 
     before_action :require_user_league_permission, except: [:show, :comms, :scores, :confirm]
     before_action :require_user_either_teams, only: [:comms, :scores, :confirm]
+    before_action :require_user_can_report_scores, only: [:scores]
 
     def index
     end
@@ -63,7 +64,7 @@ module Leagues
 
     def confirm
       if can_confirm_score?
-        @match.update(status: :confirmed)
+        @match.confirm_scores(params[:confirm] == 'true')
         show
         render :show
       else
@@ -110,6 +111,14 @@ module Leagues
 
     def comm_params
       params.require(:competition_comm).permit(:content)
+    end
+
+    def require_user_can_report_scores
+      if !user_can_edit_league? &&
+         (user_can_home_team? && @match.status == 'submitted_by_home_team' ||
+          user_can_away_team? && @match.status == 'submitted_by_away_team')
+        redirect_to league_match_path(@competition, @match)
+      end
     end
 
     def require_user_league_permission

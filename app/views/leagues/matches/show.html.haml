@@ -27,9 +27,8 @@
           %th= user_listing(away_players[i]) if i < away_players.length
 
 - if @match.status == 'confirmed' && !user_can_edit_league?
-  - if user_can_either_teams?
-    = render 'match_results', match: @match, competition: @competition
-- else
+  = render 'match_results', match: @match, competition: @competition
+- elsif user_can_either_teams?
   = render 'match_scores', match: @match, competition: @competition
 
 - if user_can_either_teams?
