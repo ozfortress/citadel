@@ -1,4 +1,5 @@
 require 'auth'
+require 'steam_id'
 
 class User < ActiveRecord::Base
   include Auth::Model
