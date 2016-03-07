@@ -29,7 +29,7 @@
         - else
           = f.submit 'Submit Score'
 
-  - if match.status != 'pending' && match.status != 'confirmed' #&& !user_can_edit_league?
+  - if match.status != 'pending' && match.status != 'confirmed' # && !user_can_edit_league?
     %ul.list-group
       - match.sets.each do |set|
         %li.list-group-item
