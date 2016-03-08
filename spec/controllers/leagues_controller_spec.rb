@@ -35,7 +35,6 @@ describe LeaguesController do
                                    signuppable: true, roster_locked: false,
                                    divisions_attributes: [
                                      { name: 'PREM',
-                                       description: 'C',
                                        min_teams: 2,
                                        max_teams: 3,
                                        min_players: 1,
@@ -51,7 +50,6 @@ describe LeaguesController do
       expect(comp.divisions.size).to eq(1)
       div = comp.divisions.first
       expect(div.name).to eq('PREM')
-      expect(div.description).to eq('C')
       expect(div.min_teams).to eq(2)
       expect(div.max_teams).to eq(3)
       expect(div.min_players).to eq(1)

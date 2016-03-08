@@ -5,7 +5,6 @@ class Division < ActiveRecord::Base
 
   validates :competition, presence: true
   validates :name, presence: true, length: { in: 1..64 }
-  validates :description, presence: true
   validates :min_teams, presence: true, numericality: { greater_than: 1 }
   validates :max_teams, presence: true, numericality: { greater_than: 1 }
   validate :validate_teams_range
