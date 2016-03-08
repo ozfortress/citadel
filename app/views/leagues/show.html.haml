@@ -18,8 +18,8 @@
   .panel-heading Teams
   %ul.list-group
     - if @competition.signuppable?
-      %li.list-group-item
-        - @competition.rosters.each do |roster|
+      - @competition.rosters.each do |roster|
+        %li.list-group-item
           = link_to roster, league_roster_path(@competition, roster)
 
     - else
