@@ -1,4 +1,7 @@
 class Competition < ActiveRecord::Base
+  include RosterPlayers
+  transfers_table_name 'competition_transfers'
+
   belongs_to :format
   has_many   :divisions, inverse_of: :competition, dependent: :destroy
   accepts_nested_attributes_for :divisions, allow_destroy: true
