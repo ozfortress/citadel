@@ -7,7 +7,6 @@ module Leagues
       @roster = @competition.rosters.find(params[:id])
     end
 
-    before_action :require_not_entered, only: [:new, :create]
     before_action :require_signuppable, only: [:new, :create]
     before_action :require_any_team_permission, only: [:new, :create]
     before_action :require_user_league_permission, only: [:index]
@@ -88,11 +87,6 @@ module Leagues
 
     def require_signuppable
       redirect_to league_path(@competition) unless @competition.signuppable?
-    end
-
-    def require_not_entered
-      redirect_to league_path(@competition) if user_signed_in? &&
-                                               current_user.entered?(@competition)
     end
 
     def require_any_team_permission
