@@ -33,15 +33,18 @@
                 .pull-right
                   |#{roster.score_s}|
 
-  - user_signed_in?
-  .panel-body
+  - if user_signed_in?
     - if current_user.can_any?(:edit, :team) && @competition.signuppable?
-      = link_to 'Sign up', new_league_roster_path(@competition),
-                           class: 'btn btn-success pull-right'
+      .panel-body
+        = link_to 'Sign up', new_league_roster_path(@competition),
+                             class: 'btn btn-success pull-right'
+
     - elsif current_user.entered?(@competition)
-      - roster = current_user.entered_roster(@competition)
-      = link_to 'View My Team', league_roster_path(@competition, roster),
-                                class: 'btn btn-default pull-right'
+      - roster = @competition.roster_transfer(current_user).first.roster
+
+      .panel-body
+        = link_to 'View My Team', league_roster_path(@competition, roster),
+                                  class: 'btn btn-default pull-right'
 
 - if user_can_edit_league?
   .panel.panel-default
