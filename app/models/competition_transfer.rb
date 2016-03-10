@@ -8,6 +8,7 @@ class CompetitionTransfer < ActiveRecord::Base
   validates :roster, presence: true
   validates :is_joining, inclusion: { in: [true, false] }
   validates :approved, inclusion: { in: [true, false] }
+  validate :single_player_entry, on: :create
 
   after_initialize :set_defaults
 
@@ -16,5 +17,14 @@ class CompetitionTransfer < ActiveRecord::Base
   def set_defaults
     self.is_joining = true  if is_joining.nil?
     self.approved   = false if approved.nil?
+  end
+
+  def single_player_entry
+    return unless competition.present?
+
+    transfer = competition.players.find_by(user: user)
+    unless transfer.nil?
+      errors.add(:user_id, "is already entered in this league with #{transfer.roster}")
+    end
   end
 end
