@@ -41,7 +41,7 @@ describe Leagues::RostersController do
       expect(roster.name).to eq('A')
       expect(roster.description).to eq('B')
       expect(roster.team).to eq(team)
-      expect(roster.players).to eq([user])
+      expect(roster.player_users).to eq([user])
       expect(roster.division).to eq(div)
     end
 

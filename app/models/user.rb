@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
   end
 
   def entered?(comp)
-    !comp.roster_transfer(self).first.nil?
+    comp.roster_transfer(self).exists?
   end
 
   alias_attribute :to_s, :name

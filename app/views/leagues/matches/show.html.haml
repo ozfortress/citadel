@@ -19,8 +19,8 @@
         %th= link_to @match.home_team, league_roster_path(@competition, @match.home_team)
         %th= link_to @match.away_team, league_roster_path(@competition, @match.away_team)
     %tbody
-      - home_players = @match.home_team.players
-      - away_players = @match.away_team.players
+      - home_players = @match.home_team.player_users
+      - away_players = @match.away_team.player_users
       - [home_players.length, away_players.length].max.times do |i|
         %tr
           %th= user_listing(home_players[i]) if i < home_players.length
