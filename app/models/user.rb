@@ -46,13 +46,7 @@ class User < ActiveRecord::Base
   end
 
   def entered?(comp)
-    !entered_roster(comp).nil?
-  end
-
-  def entered_roster(comp)
-    CompetitionRoster.joins(:division)
-                     .where(divisions: { competition_id: comp.id })
-                     .find { |r| r.on_roster?(self) }
+    !comp.roster_transfer(self).first.nil?
   end
 
   alias_attribute :to_s, :name
