@@ -40,11 +40,12 @@ module Roster
   private
 
   def players_db
-    t = transfers.select(:id)
-                 .order(created_at: :desc)
-                 .limit(1)
+    t = transfers.select('DISTINCT ON(user_id) id')
+                 .order(:user_id, created_at: :desc)
+
     transfers.where(id: t, is_joining: true)
              .joins(:user)
+             .order('users.name')
              .includes(:user)
   end
 

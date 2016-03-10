@@ -15,4 +15,23 @@ describe Team do
 
   it { should allow_value('').for(:description) }
   it { should validate_length_of(:description).is_at_least(0) }
+
+  describe 'players' do
+    let(:team) { create(:team) }
+    let(:user1) { create(:user) }
+    let(:user2) { create(:user) }
+    let(:user3) { create(:user) }
+
+    it 'works for multiple users with multiple adds and removes' do
+      team.add_player!(user1)
+      team.add_player!(user2)
+      team.add_player!(user3)
+      team.remove_player!(user2)
+      team.remove_player!(user3)
+      team.add_player!(user2)
+
+      expect(team.transfers.size).to eq(6)
+      expect(team.player_users).to eq([user1, user2])
+    end
+  end
 end
