@@ -1,6 +1,6 @@
 class CompetitionTransfer < ActiveRecord::Base
   belongs_to :user
-  belongs_to :roster, foreign_key: 'competition_roster_id'
+  belongs_to :roster, foreign_key: 'competition_roster_id', class_name: 'CompetitionRoster'
 
   validates :user, presence: true
   validates :roster, presence: true
