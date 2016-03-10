@@ -19,7 +19,19 @@
   = bootstrap_form_for @roster,
       url: league_rosters_path(@competition, team_id: @roster.team.id) do |f|
     = render 'roster_form', f: f
+
+    / TODO: Combine collection check boxes and errors somehow
     = f.collection_check_boxes :player_ids, @roster.team.player_users, :id, :name, label: 'Players'
+
+    - unless @roster.valid?
+      .form-group.has-error
+        - @roster.transfers.each do |transfer|
+          - unless transfer.errors.empty?
+            %span.help-block
+              = transfer.user
+              has already signed up with the team
+              - roster = @competition.players.find_by(user: transfer.user).roster
+              = link_to roster, league_roster_path(@competition, roster)
 
     = f.submit 'Sign up'
     = link_to 'Cancel', league_path(@competition), class: 'btn btn-default'
