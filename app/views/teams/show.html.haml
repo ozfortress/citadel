@@ -40,7 +40,7 @@
   %ul.list-group
     - transfers.each do |transfer|
       %li.list-group-item
-        = user_listing(transfer.user)
+        = user_listing(transfer.user, titles: false)
         - if transfer.is_joining?
           joined the team
         - else

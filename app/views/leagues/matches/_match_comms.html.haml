@@ -4,7 +4,8 @@
   %ul.list-group
     - match.comms.each do |comm|
       %li.list-group-item
-        #{link_to comm.user, user_path(comm.user)}:
+        - roster = match.home_team.on_roster?(comm.user) ? match.home_team : match.away_team
+        = user_listing(comm.user, team: roster.team)
         = markdown comm.content
 
   .panel-body

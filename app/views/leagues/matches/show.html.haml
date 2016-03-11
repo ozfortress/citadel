@@ -23,8 +23,8 @@
       - away_players = @match.away_team.player_users
       - [home_players.length, away_players.length].max.times do |i|
         %tr
-          %th= user_listing(home_players[i]) if i < home_players.length
-          %th= user_listing(away_players[i]) if i < away_players.length
+          %th= user_listing(home_players[i], team: @match.home_team.team) if i < home_players.length
+          %th= user_listing(away_players[i], team: @match.away_team.team) if i < away_players.length
 
 - if @match.status == 'confirmed' && !user_can_edit_league?
   = render 'match_results', match: @match, competition: @competition

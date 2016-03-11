@@ -41,10 +41,24 @@ module ApplicationHelper
     end
   end
 
-  def user_listing(user = nil)
+  def user_listing(user = nil, options = {})
     user ||= @user
 
-    link_to(user.name, user_path(user)) +
-      " [#{link_to user.steam_id_nice, user.steam_profile_url, target: '_blank'}]".html_safe
+    html = link_to(user.name, user_path(user))
+    html += " [#{link_to user.steam_id_nice, user.steam_profile_url, target: '_blank'}]".html_safe
+
+    html += user_titles(user, options) unless options[:titles] == false
+
+    html
+  end
+
+  def user_titles(user = nil, options = {})
+    team ||= @team || options[:team]
+
+    titles = []
+    titles << 'leader' if team && user.can?(:edit, team)
+    titles << 'admin'  if user.admin?
+
+    " <sub>#{titles.join(', ')}</sub> ".html_safe
   end
 end

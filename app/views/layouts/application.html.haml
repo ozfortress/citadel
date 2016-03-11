@@ -36,7 +36,7 @@
               %li{ class: navbar_class(:leagues) }
                 = link_to('Leagues', :leagues)
 
-              - if current_user.admin?
+              - if user_signed_in? && current_user.admin?
                 %li.divider-vertical
 
                 %li{ class: navbar_class(:admin) }
