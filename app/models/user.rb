@@ -55,6 +55,13 @@ class User < ActiveRecord::Base
     SteamId.to_str(steam_id)
   end
 
+  def admin?
+    can?(:edit, :teams) ||
+      can?(:edit, :competitions) ||
+      can?(:edit, :games) ||
+      can?(:manage_rosters, :competitions)
+  end
+
   private
 
   def set_defaults
