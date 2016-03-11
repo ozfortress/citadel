@@ -5,7 +5,8 @@
     - match.comms.each do |comm|
       %li.list-group-item
         - roster = match.home_team.on_roster?(comm.user) ? match.home_team : match.away_team
-        = user_listing(comm.user, team: roster.team)
+        .panel.panel-default
+          .panel-heading= user_listing(comm.user, team: roster.team)
         = markdown comm.content
 
   .panel-body
