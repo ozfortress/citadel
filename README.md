@@ -1,6 +1,7 @@
 # Citadel
 
 [![Build Status](https://travis-ci.org/ozfortress/citadel.svg?branch=master)](https://travis-ci.org/ozfortress/citadel)
+[![Coverage Status](https://coveralls.io/repos/github/ozfortress/citadel/badge.svg?branch=master)](https://coveralls.io/github/ozfortress/citadel?branch=master)
 [![Code Climate](https://codeclimate.com/github/ozfortress/citadel/badges/gpa.svg)](https://codeclimate.com/github/ozfortress/citadel)
 [![Dependency Status](https://gemnasium.com/ozfortress/citadel.svg)](https://gemnasium.com/ozfortress/citadel)
 
