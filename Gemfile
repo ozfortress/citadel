@@ -59,6 +59,9 @@ group :development, :test do
   gem 'rubocop', '~> 0.36.0'
   gem 'haml_lint'
   gem 'rails_best_practices'
+
+  # Coveralls
+  gem 'coveralls', require: false
 end
 
 group :development do
