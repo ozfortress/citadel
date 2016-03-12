@@ -1,6 +1,6 @@
 # Citadel
 
-[![Build Status](https://travis-ci.org/ozfortress/citadel.png)](https://travis-ci.org/ozfortress/citadel)
+[![Build Status](https://travis-ci.org/ozfortress/citadel.svg?branch=master)](https://travis-ci.org/ozfortress/citadel)
 [![Code Climate](https://codeclimate.com/github/ozfortress/citadel/badges/gpa.svg)](https://codeclimate.com/github/ozfortress/citadel)
 
 ## Dependencies
