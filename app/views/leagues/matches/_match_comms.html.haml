@@ -6,7 +6,9 @@
       %li.list-group-item
         - roster = match.home_team.on_roster?(comm.user) ? match.home_team : match.away_team
         .panel.panel-default
-          .panel-heading= user_listing(comm.user, team: roster.team)
+          .panel-heading
+            = user_listing(comm.user, team: roster.team)
+            .pull-right= comm.created_at.strftime('%c')
         = markdown comm.content
 
   .panel-body
