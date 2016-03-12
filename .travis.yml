@@ -3,4 +3,4 @@ rvm: 2.2.0
 services: postgresql
 before_script:
   - cp config/database.yml.travis config/database.yml
-  - rake db:create, db:schema:load
+  - bundle exec rake db:create, db:schema:load
