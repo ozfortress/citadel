@@ -4,7 +4,6 @@
   %ul.list-group
     - match.comms.each do |comm|
       %li.list-group-item
-        - roster = nil
         - if match.home_team.on_roster?(comm.user)
           - roster = match.home_team
         - elsif match.away_team.on_roster?(comm.user)
@@ -15,7 +14,9 @@
             - if roster
               = link_to roster, league_roster_path(competition, roster)
               \:
-            = user_listing(comm.user, team: roster.team)
+
+            - team = roster.team if roster
+            = user_listing(comm.user, team: team)
             .pull-right= comm.created_at.strftime('%c')
         = markdown comm.content
 
