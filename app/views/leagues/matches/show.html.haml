@@ -3,11 +3,11 @@
     Edit
     %span.glyphicon.glyphicon-cog
 
-%h1= @competition
+%h1 #{link_to @competition, league_path(@competition)}: #{@match.home_team.division}
 %h2
-  = @match.home_team
+  = link_to @match.home_team, league_roster_path(@competition, @match.home_team)
   vs
-  = @match.away_team
+  = link_to @match.away_team, league_roster_path(@competition, @match.away_team)
 
 .table-responsive
   %table.table
