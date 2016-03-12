@@ -24,6 +24,7 @@ begin
   end
 
   task test: %w(rspec rubocop haml_lint rbp)
+  task default: [:rubocop, :haml_lint, :rbp]
 rescue LoadError
   puts "Test tasks not available (you're probably in a production environment)"
 end
