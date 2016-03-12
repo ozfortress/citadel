@@ -15,3 +15,4 @@ AllCops:
   Exclude:
     - 'db/**/*'
     - 'config/**/*'
+    - 'vendor/**/*'
