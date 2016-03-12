@@ -1,5 +1,7 @@
 # Citadel
 
+[![Build Status](https://travis-ci.org/ozfortress/citadel.png)](https://travis-ci.org/ozfortress/citadel)
+
 ## Dependencies
 
 You will need:
