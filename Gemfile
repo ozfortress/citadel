@@ -56,7 +56,7 @@ group :development, :test do
   gem 'capybara'
 
   # Keep codebase clean
-  gem 'rubocop', '~> 0.36.0', require: false
+  gem 'rubocop', '~> 0.36.0'
   gem 'haml_lint'
   gem 'rails_best_practices'
 end
