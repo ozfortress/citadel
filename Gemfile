@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.6'
 # Use postgres
 gem 'pg'
 # SASS for stylesheets
@@ -29,7 +29,7 @@ gem 'devise'
 # Use haml for templating
 gem 'haml-rails', '~> 0.9'
 # Forum Pages
-gem 'will_paginate', '3.0.5'
+gem 'will_paginate', '3.1.0'
 # Forum formatting
 gem 'redcarpet'
 
