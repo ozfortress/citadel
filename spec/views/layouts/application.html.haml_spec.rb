@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'support/devise'
-require 'support/shoulda'
 require 'support/factory_girl'
 
 describe 'layouts/application.html.haml' do
