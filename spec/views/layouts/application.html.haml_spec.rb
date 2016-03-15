@@ -5,12 +5,6 @@ require 'support/factory_girl'
 
 describe 'layouts/application.html.haml' do
   context 'when unauthenticated' do
-    before do
-      def view.user_can_meta?
-        false
-      end
-    end
-
     it 'displays steam login' do
       render
 
@@ -19,10 +13,30 @@ describe 'layouts/application.html.haml' do
   end
 
   context 'when authenticated' do
-    pending 'test'
+    let(:user) { create(:user) }
+
+    it 'displays username' do
+      sign_in(user)
+
+      render
+
+      expect(rendered).to include(user.name)
+    end
   end
 
   context 'when meta authorized' do
-    pending 'test'
+    let(:user) { create(:user) }
+
+    before do
+      user.grant(:edit, :games)
+    end
+
+    it 'displays admin link' do
+      sign_in(user)
+
+      render
+
+      expect(rendered).to include('Admin')
+    end
   end
 end
