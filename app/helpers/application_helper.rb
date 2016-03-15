@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include ApplicationPermissions
+
   def navbar_class(name)
     if navbar_active?(name)
       'active'
