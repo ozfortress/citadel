@@ -7,7 +7,7 @@ describe 'users/index.html.haml' do
   let!(:user2) { create(:user) }
 
   it 'shows all users' do
-    view.lookup_context.prefixes = %w[application]
+    view.lookup_context.prefixes = %w(application)
 
     render
 
