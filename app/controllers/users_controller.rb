@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include UsersPermissions
+
   before_action except: [:index, :new, :create, :logout,
                          :grant_meta, :revoke_meta] { @user = User.find(params[:id]) }
 
@@ -69,10 +71,5 @@ class UsersController < ApplicationController
 
   def require_user_permission
     redirect_to user_path(@user) unless user_can_edit_user?
-  end
-
-  helper_method :user_can_edit_user?
-  def user_can_edit_user?
-    user_signed_in? && current_user == @user
   end
 end
