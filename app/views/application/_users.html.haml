@@ -1,6 +1,6 @@
 %ul.list-group
-- users.each do |user|
-  %li.list-group-item
-    = link_to user.name, user_path(user)
-    .button-group.pull-right
-      = yield user
+  - users.each do |user|
+    %li.list-group-item
+      = link_to user.name, user_path(user)
+      .button-group.pull-right
+        = yield user
