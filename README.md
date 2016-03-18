@@ -21,6 +21,7 @@ You will need:
 * Bundler
 * Postgres (configured in `config/database.yml`)
 * Elasticsearch
+* ImageMagick
 
 To install all other ruby dependencies, run:
 
