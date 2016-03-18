@@ -3,9 +3,12 @@
     Settings
     %span.glyphicon.glyphicon-cog
 
-%h2 #{@user.name}'s Profile
+.clearfix
+  = image_tag @user.avatar.icon.url, class: 'pull-left thumbnail' if @user.avatar?
 
-%p [#{link_to @user.steam_id_nice, @user.steam_profile_url, target: '_blank'}]
+  %h2 #{@user.name}'s Profile
+
+  %p [#{link_to @user.steam_id_nice, @user.steam_profile_url, target: '_blank'}]
 
 .panel.panel-default
   .panel-heading Description

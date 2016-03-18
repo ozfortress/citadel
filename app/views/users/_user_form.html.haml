@@ -1,2 +1,11 @@
+- user = f.object
+
 = f.text_field :name
+
+.clearfix
+  = image_tag user.avatar.icon.url, class: 'pull-left thumbnail' if user.avatar?
+
+  = f.file_field :avatar
+  = f.hidden_field :avatar_cache
+
 = f.text_area :description, rows: 10

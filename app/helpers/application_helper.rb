@@ -46,9 +46,10 @@ module ApplicationHelper
   def user_listing(user = nil, options = {})
     user ||= @user
 
-    html = link_to(user.name, user_path(user))
+    html = ''.html_safe
+    html += image_tag(user.avatar.thumb.url) if user.avatar?
+    html += link_to(user.name, user_path(user))
     html += " [#{link_to user.steam_id_nice, user.steam_profile_url, target: '_blank'}]".html_safe
-
     html += user_titles(user, options) unless options[:titles] == false
 
     html

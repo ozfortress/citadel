@@ -31,6 +31,8 @@ class User < ActiveRecord::Base
 
   after_initialize :set_defaults
 
+  mount_uploader :avatar, AvatarUploader
+
   def steam_profile_url
     "http://steamcommunity.com/profiles/#{steam_id}"
   end
