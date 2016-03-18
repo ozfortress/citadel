@@ -8,7 +8,7 @@ describe 'users/index.html.haml' do
 
   it 'shows all users' do
     view.lookup_context.prefixes = %w(application)
-    assign(:users, User.all)
+    assign(:users, User.paginate(page: 1))
 
     render
 

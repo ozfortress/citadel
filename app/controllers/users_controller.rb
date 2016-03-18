@@ -13,6 +13,8 @@ class UsersController < ApplicationController
              else
                User.simple_search(params[:q]).records
              end
+
+    @users = @users.paginate(page: params[:page])
   end
 
   def new

@@ -4,3 +4,5 @@
 %h1 Users
 
 = render 'users', users: @users
+
+= will_paginate @users, renderer: BootstrapPagination::Rails
