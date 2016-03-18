@@ -5,6 +5,13 @@ class TeamsController < ApplicationController
   before_action :require_team_permission, only: [:edit, :update, :grant, :revoke, :recruit, :invite]
 
   def index
+    @teams = if params[:q].blank?
+               Team.all
+             else
+               Team.simple_search(params[:q]).records
+             end
+
+    @teams = @teams.paginate(page: params[:page])
   end
 
   def new

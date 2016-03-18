@@ -1,4 +1,8 @@
+require 'elasticsearch/model'
+
 class Team < ActiveRecord::Base
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
   include Roster
 
   has_many :team_invites
@@ -24,4 +28,8 @@ class Team < ActiveRecord::Base
   end
 
   alias_attribute :to_s, :name
+
+  def self.simple_search(q)
+    search(query: { simple_query_string: { query: q } })
+  end
 end

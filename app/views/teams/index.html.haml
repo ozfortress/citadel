@@ -1,11 +1,20 @@
-- if user_signed_in?
-  = link_to new_team_path, class: 'btn btn-default pull-right', type: 'button' do
-    Start Team
-    %span.glyphicon.glyphicon-plus
-
 %h1 Teams
 
-%ul.list-group
-  - teams.each do |team|
-    = link_to team_path(team), class: 'list-group-item' do
-      = team.name
+.row
+  .col-sm-3.col-md-3.pull-right
+    = render 'search'
+
+.panel.panel-default
+  - if user_signed_in?
+    .panel-body
+      = link_to new_team_path, class: 'btn btn-default pull-right', type: 'button' do
+        Start Team
+        %span.glyphicon.glyphicon-plus
+
+  %ul.list-group
+    - @teams.each do |team|
+      %li.list-group-item
+        = link_to team_path(team) do
+          = team.name
+
+= will_paginate @teams, renderer: BootstrapPagination::Rails
