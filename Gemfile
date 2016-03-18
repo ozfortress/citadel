@@ -32,6 +32,9 @@ gem 'haml-rails', '~> 0.9'
 gem 'will_paginate', '3.1.0'
 # Forum formatting
 gem 'redcarpet'
+# Search
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

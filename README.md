@@ -20,6 +20,7 @@ You will need:
 * Ruby 2.2
 * Bundler
 * Postgres (configured in `config/database.yml`)
+* Elasticsearch
 
 To install all other ruby dependencies, run:
 
