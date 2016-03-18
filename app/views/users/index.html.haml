@@ -3,6 +3,9 @@
 
 %h1 Users
 
-= render 'users', users: @users
+- if @users.size > 0
+  = render 'users', users: @users
+- else
+  No users found
 
 = will_paginate @users, renderer: BootstrapPagination::Rails
