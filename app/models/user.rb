@@ -1,7 +1,11 @@
+require 'elasticsearch/model'
+
 require 'auth'
 require 'steam_id'
 
 class User < ActiveRecord::Base
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
   include Auth::Model
 
   has_many :team_invites
@@ -60,6 +64,15 @@ class User < ActiveRecord::Base
       can?(:edit, :competitions) ||
       can?(:edit, :games) ||
       can?(:manage_rosters, :competitions)
+  end
+
+  def as_indexed_json(_ = {})
+    as_json(only: [:name, :steam_id],
+            methods: [:steam_id_nice])
+  end
+
+  def self.simple_search(q)
+    search(query: { simple_query_string: { query: q } })
   end
 
   private
