@@ -8,6 +8,11 @@ class UsersController < ApplicationController
   before_action :require_user_permission, only: [:edit, :update]
 
   def index
+    @users = if params[:q].blank?
+               User.all
+             else
+               User.simple_search(params[:q]).records
+             end
   end
 
   def new

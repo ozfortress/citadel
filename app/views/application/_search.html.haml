@@ -1,0 +1,7 @@
+/ Its easier to put the bootstrap in manually, than deal with bootstrap-form
+= form_for(request.fullpath, method: 'GET', class: 'navbar-form') do
+  .input-group
+    = text_field_tag(:q, params[:q], placeholder: 'Search', class: 'form-control')
+    .input-group-btn
+      = button_tag(type: 'submit', class: 'btn btn-default') do
+        %i.glyphicon.glyphicon-search
