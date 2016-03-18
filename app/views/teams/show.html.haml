@@ -3,7 +3,10 @@
     Settings
     %span.glyphicon.glyphicon-cog
 
-%h1= @team.name
+.clearfix
+  = image_tag @team.avatar.icon.url, class: 'pull-left thumbnail' if @team.avatar?
+
+  %h1= @team.name
 
 .panel.panel-default
   .panel-heading Info

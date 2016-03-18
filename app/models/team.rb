@@ -12,6 +12,8 @@ class Team < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
   validates :description, presence: true, allow_blank: true
 
+  mount_uploader :avatar, AvatarUploader
+
   def invite(user)
     team_invites.create(user: user)
   end
