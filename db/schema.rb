@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160318155311) do
+ActiveRecord::Schema.define(version: 20160324024744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -199,6 +199,17 @@ ActiveRecord::Schema.define(version: 20160318155311) do
 
   add_index "teams", ["name"], name: "index_teams_on_name", unique: true, using: :btree
 
+  create_table "titles", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "competition_id"
+    t.integer "competition_roster_id"
+    t.string  "name",                  null: false
+  end
+
+  add_index "titles", ["competition_id"], name: "index_titles_on_competition_id", using: :btree
+  add_index "titles", ["competition_roster_id"], name: "index_titles_on_competition_roster_id", using: :btree
+  add_index "titles", ["user_id"], name: "index_titles_on_user_id", using: :btree
+
   create_table "transfers", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "team_id"
@@ -255,6 +266,9 @@ ActiveRecord::Schema.define(version: 20160318155311) do
   add_foreign_key "maps", "games"
   add_foreign_key "team_invites", "teams"
   add_foreign_key "team_invites", "users"
+  add_foreign_key "titles", "competition_rosters"
+  add_foreign_key "titles", "competitions"
+  add_foreign_key "titles", "users"
   add_foreign_key "transfers", "teams"
   add_foreign_key "transfers", "users"
 end

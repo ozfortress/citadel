@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
 
   has_many :team_invites
   has_many :transfers
+  has_many :titles
 
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:steam]
 
