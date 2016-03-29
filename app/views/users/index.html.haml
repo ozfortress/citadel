@@ -8,6 +8,6 @@
   - if @users.size > 0
     = render 'users', users: @users
   - else
-    No users found
+    .panel-body No users found...
 
 = will_paginate @users, renderer: BootstrapPagination::Rails

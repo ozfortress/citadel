@@ -11,10 +11,13 @@
         Start Team
         %span.glyphicon.glyphicon-plus
 
-  %ul.list-group
-    - @teams.each do |team|
-      %li.list-group-item
-        = link_to team_path(team) do
-          = team.name
+  - if @teams.size > 0
+    %ul.list-group
+      - @teams.each do |team|
+        %li.list-group-item
+          = link_to team_path(team) do
+            = team.name
+  - else
+    .panel-body No teams found...
 
 = will_paginate @teams, renderer: BootstrapPagination::Rails
