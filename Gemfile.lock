@@ -59,9 +59,14 @@ GEM
     capistrano-bundler (1.1.4)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
+    capistrano-passenger (0.2.0)
+      capistrano (~> 3.0)
     capistrano-rails (1.1.6)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
+    capistrano-rvm (0.1.2)
+      capistrano (~> 3.0)
+      sshkit (~> 1.2)
     capybara (2.6.2)
       addressable
       mime-types (>= 1.16)
@@ -314,7 +319,10 @@ DEPENDENCIES
   bootstrap_form
   byebug
   capistrano (~> 3.1)
-  capistrano-rails (~> 1.1)
+  capistrano-bundler
+  capistrano-passenger
+  capistrano-rails
+  capistrano-rvm
   capybara
   carrierwave
   cocoon

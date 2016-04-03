@@ -80,5 +80,8 @@ group :development do
 
   # Development scripts
   gem 'capistrano', '~> 3.1'
-  gem 'capistrano-rails', '~> 1.1'
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-passenger'
 end
