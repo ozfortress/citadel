@@ -5,7 +5,7 @@ services:
   - elasticsearch
 before_script:
   - cp config/database.yml.travis config/database.yml
-  - bundle exec rake db:create db:schema:load
+  - bundle exec rake db:create db:schema:load db:seed
 notifications:
   slack:
     secure: WpXxnnGc1NOvwgN8Ccgc0+WNjLRy2MhUA6mU7bY0NmEBQjGFmrEgS5dtlzPJ+GosPE7SyxXNvepr6wQR0cIsy1i9DlJdHLIZs2iC5aPGQrR4YjEcmTwRdDzJe2GhkgwUeA7Fwt4bKsgj7cRTDDtnwP4J158b0E6scCGX37czCwK0Q2hJCqu7aVQp/6Kgu+NFQw/CqVL3iiCjsvr5+jdOZ1z2m1bmcKSbV/fY5h5JTTlvPnExmQ/gkcZ6U7HX2GFipnx0AeenDjsX51QQqHdYD+GkvvcQnhBvSlzxP+rZ7SIKimZZOsxEIwCK/XTrsXT4IiwLjioNLnjUsbfEQBW/Rna+p0ETsLMrV+G0MB1Wk26DNMYWHZ2HOE6eTPeltC3dzRSTLYUQFBPzhVWK+YO1YwmKjsbOSWy1Z7yYyTkTKELqBU1v1ZJldoxiPrbI1aZXNMeeJhRGMIo9jM00A4fkpLV7oPRamRoLuBQOO6gU5aLzrY5WtHKB3zYHbOSXur6gFAEKsolIbuxSWv7NSwA2AN6hLtne3Htqf4QZX4CxzFzYwjoYcjRtZca5eE92lw9ePBaLhmgjvbUUb8Wnb+XR/169VzoMquOibKll2mEUAVcqNr3stmN3hzdI7eER3D/NfZ7fNM2HGkWD36Bi5xrUaO2RrIh4xiluX+zovpe3uGc=
