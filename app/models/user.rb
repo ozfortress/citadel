@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
                        numericality: { greater_than: 0 }
   validates :description, presence: true, allow_blank: true
 
+  validates_permission_to :edit, :users
+
   validates_permission_to :edit, :team
   validates_permission_to :edit, :teams
 

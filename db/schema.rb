@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160324024744) do
+ActiveRecord::Schema.define(version: 20160404023212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,12 @@ ActiveRecord::Schema.define(version: 20160324024744) do
   end
 
   add_index "action_user_edit_teams", ["user_id"], name: "index_action_user_edit_teams_on_user_id", using: :btree
+
+  create_table "action_user_edit_users", force: :cascade do |t|
+    t.integer "user_id"
+  end
+
+  add_index "action_user_edit_users", ["user_id"], name: "index_action_user_edit_users_on_user_id", using: :btree
 
   create_table "action_user_manage_rosters_competition", force: :cascade do |t|
     t.integer "user_id"
@@ -221,6 +227,19 @@ ActiveRecord::Schema.define(version: 20160324024744) do
   add_index "transfers", ["team_id"], name: "index_transfers_on_team_id", using: :btree
   add_index "transfers", ["user_id"], name: "index_transfers_on_user_id", using: :btree
 
+  create_table "user_name_changes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "approved_by_id"
+    t.integer  "denied_by_id"
+    t.string   "name"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "user_name_changes", ["approved_by_id"], name: "index_user_name_changes_on_approved_by_id", using: :btree
+  add_index "user_name_changes", ["denied_by_id"], name: "index_user_name_changes_on_denied_by_id", using: :btree
+  add_index "user_name_changes", ["user_id"], name: "index_user_name_changes_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "name",                                       null: false
     t.integer  "steam_id",            limit: 8,              null: false
@@ -247,6 +266,7 @@ ActiveRecord::Schema.define(version: 20160324024744) do
   add_foreign_key "action_user_edit_team", "teams"
   add_foreign_key "action_user_edit_team", "users"
   add_foreign_key "action_user_edit_teams", "users"
+  add_foreign_key "action_user_edit_users", "users"
   add_foreign_key "action_user_manage_rosters_competition", "competitions"
   add_foreign_key "action_user_manage_rosters_competition", "users"
   add_foreign_key "action_user_manage_rosters_competitions", "users"
@@ -271,4 +291,7 @@ ActiveRecord::Schema.define(version: 20160324024744) do
   add_foreign_key "titles", "users"
   add_foreign_key "transfers", "teams"
   add_foreign_key "transfers", "users"
+  add_foreign_key "user_name_changes", "users"
+  add_foreign_key "user_name_changes", "users", column: "approved_by_id"
+  add_foreign_key "user_name_changes", "users", column: "denied_by_id"
 end
