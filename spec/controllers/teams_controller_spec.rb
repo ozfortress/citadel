@@ -6,15 +6,25 @@ describe TeamsController do
   let(:user) { create(:user) }
 
   describe 'GET #index' do
-    it 'returns http success' do
+    before do
+      create_list(:team, 50)
+    end
+
+    it 'succeeds' do
       get :index
+
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'succeeds with search' do
+      get :index, q: 'foo'
 
       expect(response).to have_http_status(:success)
     end
   end
 
   describe 'GET #new' do
-    it 'returns http success' do
+    it 'succeeds' do
       sign_in user
 
       get :new
@@ -46,7 +56,7 @@ describe TeamsController do
   end
 
   describe 'GET #show' do
-    it 'returns http success' do
+    it 'succeeds' do
       team = create(:team)
 
       get :show, id: team.id
@@ -56,7 +66,7 @@ describe TeamsController do
   end
 
   describe 'GET #edit' do
-    it 'returns http success' do
+    it 'succeeds' do
       team = create(:team)
       user.grant(:edit, team)
 
@@ -82,7 +92,7 @@ describe TeamsController do
   end
 
   describe 'GET #recruit' do
-    it 'returns http success' do
+    it 'succeeds' do
       team = create(:team)
       user.grant(:edit, team)
 
@@ -154,7 +164,7 @@ describe TeamsController do
   end
 
   describe 'PATCH #revoke' do
-    it 'returns http success' do
+    it 'succeeds' do
       team = create(:team)
       admin = create(:user)
       admin.grant(:edit, :teams)
