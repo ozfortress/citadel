@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :team_invites
   has_many :transfers
   has_many :titles
+  has_many :names, -> { order(created_at: :desc) }, class_name: 'UserNameChange'
 
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:steam]
 
@@ -76,6 +77,14 @@ class User < ActiveRecord::Base
 
   def self.simple_search(q)
     search(query: { simple_query_string: { query: q } })
+  end
+
+  def approved_names
+    names.where.not(approved_by: nil)
+  end
+
+  def aka
+    approved_names.where.not(name: name)
   end
 
   private
