@@ -2,8 +2,7 @@ class UsersController < ApplicationController
   include UsersPermissions
   include Searchable
 
-  before_action except: [:index, :new, :create, :logout,
-                         :grant_meta, :revoke_meta] { @user = User.find(params[:id]) }
+  before_action except: [:index, :new, :create, :logout] { @user = User.find(params[:id]) }
 
   before_action :require_login, only: [:logout]
   before_action :require_user_permission, only: [:edit, :update]
@@ -47,23 +46,6 @@ class UsersController < ApplicationController
     sign_out current_user
     redirect_to(:back)
   end
-
-  # Debug
-  # :nocov:
-  def grant_meta
-    current_user.grant(:edit, :games)
-    current_user.grant(:edit, :teams)
-    current_user.grant(:edit, :competitions)
-    redirect_to(:back)
-  end
-
-  def revoke_meta
-    current_user.revoke(:edit, :games)
-    current_user.revoke(:edit, :teams)
-    current_user.revoke(:edit, :competitions)
-    redirect_to(:back)
-  end
-  # :nocov:
 
   private
 
