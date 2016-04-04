@@ -1,17 +1,13 @@
 class TeamsController < ApplicationController
+  include Searchable
+
   before_action except: [:index, :new, :create] { @team = Team.find(params[:id]) }
 
   before_action :require_login, only: [:new, :create, :leave]
   before_action :require_team_permission, only: [:edit, :update, :grant, :revoke, :recruit, :invite]
 
   def index
-    @teams = if params[:q].blank?
-               Team.all
-             else
-               Team.simple_search(params[:q]).records
-             end
-
-    @teams = @teams.paginate(page: params[:page])
+    @teams = Team.search_all(params[:q]).paginate(page: params[:page])
   end
 
   def new

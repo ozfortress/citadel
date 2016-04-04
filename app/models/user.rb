@@ -4,6 +4,7 @@ require 'auth'
 require 'steam_id'
 
 class User < ActiveRecord::Base
+  include Searchable
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
   include Auth::Model

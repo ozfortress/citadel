@@ -1,6 +1,7 @@
 require 'elasticsearch/model'
 
 class Team < ActiveRecord::Base
+  include Searchable
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
   include Roster

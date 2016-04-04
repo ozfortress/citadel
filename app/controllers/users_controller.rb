@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   include UsersPermissions
+  include Searchable
 
   before_action except: [:index, :new, :create, :logout,
                          :grant_meta, :revoke_meta] { @user = User.find(params[:id]) }
@@ -8,13 +9,7 @@ class UsersController < ApplicationController
   before_action :require_user_permission, only: [:edit, :update]
 
   def index
-    @users = if params[:q].blank?
-               User.all
-             else
-               User.simple_search(params[:q]).records
-             end
-
-    @users = @users.paginate(page: params[:page])
+    @users = User.search_all(params[:q]).paginate(page: params[:page])
   end
 
   def new
