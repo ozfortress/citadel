@@ -41,6 +41,14 @@ module Auth
         action_cls.create!(params)
       end
 
+      def grant_all
+        self.class.permissions.each do |action, subject_hash|
+          subject_hash.each do |subject, cls|
+            grant(action, subject) unless cls.has_subject
+          end
+        end
+      end
+
       def revoke(action, subject)
         permission = get_permission(action, subject)
 
