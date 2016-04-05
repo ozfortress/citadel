@@ -7,6 +7,7 @@ describe 'users/edit.html.haml' do
 
   it 'shows form' do
     assign(:user, user)
+    assign(:name_change, user.names.new(name: user.name))
 
     render
   end

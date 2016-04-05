@@ -77,14 +77,13 @@ describe UsersController do
 
   describe 'PATCH #update' do
     it 'updates a user' do
-      user = create(:user, name: 'A', description: 'B')
+      user = create(:user, description: 'B')
 
       sign_in user
-      patch :update, id: user.id, user: { name: 'C', description: 'D' }
+      patch :update, id: user.id, user: { description: 'D' }
 
       user = User.find(user.id)
       expect(user).to_not be_nil
-      expect(user.name).to eq('C')
       expect(user.description).to eq('D')
     end
   end
