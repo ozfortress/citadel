@@ -29,14 +29,14 @@ class UserNameChange < ActiveRecord::Base
   private
 
   def unique_name
-    if user.present? && name.present? && user.name == name
-      errors.add(:name, "must be different to the current name")
+    if user.present? && name.present? && pending? && user.name == name
+      errors.add(:name, 'must be different to the current name')
     end
   end
 
   def only_one_request_per_user
     if user.present? && pending? && !user.pending_names.empty?
-      errors.add(:name, "a name request is already pending")
+      errors.add(:name, 'a name request is already pending')
     end
   end
 end

@@ -1,5 +1,6 @@
 .panel-body
-  = bootstrap_form_for @name_change, url: user_name_path(@user), method: :post, as: :name_change do |f|
+  = bootstrap_form_for @name_change, url: user_name_path(@user),
+                       method: :post, as: :name_change do |f|
     = f.text_field :name
 
     = f.submit 'Request Name Change'
