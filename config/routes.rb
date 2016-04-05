@@ -33,7 +33,10 @@ Rails.application.routes.draw do
   patch 'team_invites/:id/accept',  to: 'team_invites#accept',  as: 'accept_team_invite'
   patch 'team_invites/:id/decline', to: 'team_invites#decline', as: 'decline_team_invite'
 
-  get 'users/logout', to: 'users#logout', as: 'logout_user'
+  get   'users/logout',            to: 'users#logout',              as: 'logout_user'
+  get   'users/names',             to: 'users#names',               as: 'user_names'
+  post  'users/:id/name',          to: 'users#request_name_change', as: 'user_name'
+  patch 'users/:user_id/name/:id', to: 'users#handle_name_change',  as: 'handle_user_name'
   resources :users, except: [:destroy]
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }

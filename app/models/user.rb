@@ -82,6 +82,10 @@ class User < ActiveRecord::Base
     search(query: { simple_query_string: { query: q } })
   end
 
+  def pending_names
+    names.where(approved_by: nil, denied_by: nil)
+  end
+
   def approved_names
     names.where.not(approved_by: nil)
   end

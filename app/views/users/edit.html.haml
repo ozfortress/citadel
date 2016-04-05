@@ -1,5 +1,12 @@
-= bootstrap_form_for @user, method: :patch do |f|
-  = render 'user_form', f: f
+.panel-body
+  = bootstrap_form_for @name_change, url: user_name_path(@user), method: :post, as: :name_change do |f|
+    = f.text_field :name
 
-  = f.submit 'Save'
-  = link_to 'Cancel', user_path(@user), class: 'btn btn-default'
+    = f.submit 'Request Name Change'
+
+.panel-body
+  = bootstrap_form_for @user, method: :patch do |f|
+    = render 'user_form', f: f
+
+    = f.submit 'Save'
+    = link_to 'Cancel', user_path(@user), class: 'btn btn-default'

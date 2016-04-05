@@ -1,0 +1,19 @@
+%h1 User Name Change Requests
+
+%ul.list-group
+  - UserNameChange.pending.each do |name_change|
+    - user = name_change.user
+
+    %li.list-group-item
+      = link_to user.name, user_path(user)
+      wants to change their name to
+      = link_to name_change.name, user_path(user)
+
+      .button-group.pull-right
+        = button_to handle_user_name_path(user, name_change, approve: true),
+                    method: :patch, class: 'btn btn-success' do
+          Approve
+      .button-group.pull-right
+        = button_to handle_user_name_path(user, name_change, approve: false),
+                    method: :patch, class: 'btn btn-danger' do
+          Deny
