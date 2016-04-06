@@ -148,7 +148,7 @@ describe UsersController do
     it 'accepts name changes' do
       sign_in admin
 
-      patch :handle_name_change, user_id: user.id, id: name_change.id, approve: true
+      patch :handle_name_change, user_id: user.id, id: name_change.id, approve: 'true'
 
       usr = User.find(user.id)
       expect(usr.name).to eq('B')
@@ -159,7 +159,7 @@ describe UsersController do
     it 'denies name changes' do
       sign_in admin
 
-      patch :handle_name_change, user_id: user.id, id: name_change.id, approve: false
+      patch :handle_name_change, user_id: user.id, id: name_change.id, approve: 'false'
 
       expect(user.name).to eq('A')
       expect(user.pending_names.size).to eq(0)
