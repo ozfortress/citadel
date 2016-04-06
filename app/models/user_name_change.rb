@@ -17,13 +17,14 @@ class UserNameChange < ActiveRecord::Base
     all.where(approved_by: nil, denied_by: nil)
   end
 
-  def approve(user, approved)
+  def approve!(user, approved)
     if approved
       self.approved_by = user
-      self.user.name = name
+      self.user.update!(name: name)
     else
       self.denied_by = user
     end
+    save!
   end
 
   private

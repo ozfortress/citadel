@@ -62,8 +62,7 @@ class UsersController < ApplicationController
   def handle_name_change
     @user = User.find(params[:user_id])
     @name_change = @user.pending_names.find(params[:id])
-    @name_change.approve(@user, params[:approve])
-    @name_change.save!
+    @name_change.approve!(@user, params[:approve])
 
     render :names
   end
