@@ -6,7 +6,8 @@ class CompetitionRoster < ActiveRecord::Base
   belongs_to :division
   delegate :competition, to: :division, allow_nil: true
   has_many :transfers, -> { order(created_at: :desc) }, inverse_of: :roster,
-                       class_name: 'CompetitionTransfer', dependent: :destroy
+                                                        class_name: 'CompetitionTransfer',
+                                                        dependent: :destroy
   accepts_nested_attributes_for :transfers
   has_many :home_team_matches, class_name: 'CompetitionMatch', foreign_key: 'home_team_id',
                                dependent: :destroy
