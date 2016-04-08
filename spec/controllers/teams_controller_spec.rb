@@ -92,6 +92,8 @@ describe TeamsController do
   end
 
   describe 'GET #recruit' do
+    before { create_list(:user, 50) }
+
     it 'succeeds' do
       team = create(:team)
       user.grant(:edit, team)

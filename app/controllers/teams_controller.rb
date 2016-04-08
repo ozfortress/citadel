@@ -41,6 +41,7 @@ class TeamsController < ApplicationController
   end
 
   def recruit
+    @users = User.search_all(params[:q]).paginate(page: params[:page])
   end
 
   def invite

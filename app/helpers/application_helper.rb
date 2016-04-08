@@ -27,10 +27,6 @@ module ApplicationHelper
     raw @markdown.render(source)
   end
 
-  def users
-    User.all
-  end
-
   def format_options
     Format.all.map do |format|
       [format.to_s, format.id]
