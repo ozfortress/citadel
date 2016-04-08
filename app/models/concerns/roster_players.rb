@@ -32,11 +32,11 @@ module RosterPlayers
   def players_db
     tb_name = self.class.transfers_table_name
     t = transfers.select("DISTINCT ON(#{tb_name}.user_id) #{tb_name}.id")
-                 .order(:user_id, created_at: :desc)
+                 .reorder(:user_id, created_at: :desc)
 
     transfers.where(id: t, is_joining: true)
              .joins(:user)
-             .order('users.name')
+             .reorder('users.name')
              .includes(:user)
   end
 
