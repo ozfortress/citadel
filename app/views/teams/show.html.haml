@@ -41,7 +41,7 @@
 .panel.panel-default
   .panel-heading Transfers
   %ul.list-group
-    - transfers.each do |transfer|
+    - @team.transfers.each do |transfer|
       %li.list-group-item
         = user_listing(transfer.user, titles: false)
         - if transfer.is_joining?

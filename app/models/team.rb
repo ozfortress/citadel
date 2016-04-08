@@ -7,7 +7,7 @@ class Team < ActiveRecord::Base
   include Roster
 
   has_many :team_invites
-  has_many :transfers
+  has_many :transfers, -> { order(created_at: :desc) }
   has_many :competition_rosters
 
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
