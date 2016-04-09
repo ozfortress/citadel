@@ -11,7 +11,7 @@
   = render 'league_form', f: f
 
   = f.submit 'Update'
-  = link_to 'Cancel', :back, class: 'btn btn-default'
+  = link_to 'Cancel', league_path(@competition), class: 'btn btn-default'
 
 %hr
 
