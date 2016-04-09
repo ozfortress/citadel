@@ -69,7 +69,7 @@ class UsersController < ApplicationController
 
   def logout
     sign_out current_user
-    redirect_to(:back)
+    redirect_to_back
   end
 
   private

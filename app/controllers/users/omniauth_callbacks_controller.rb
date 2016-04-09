@@ -17,7 +17,7 @@ module Users
     end
 
     def failure
-      redirect_to :back
+      redirect_to_back
     end
   end
 end

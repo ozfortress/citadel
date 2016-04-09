@@ -60,7 +60,7 @@ class TeamsController < ApplicationController
     end
 
     @team.remove_player!(user) if @team.on_roster?(user)
-    redirect_to :back
+    redirect_to_back teams_path
   end
 
   # Permissions
@@ -68,14 +68,14 @@ class TeamsController < ApplicationController
     user = User.find(params[:user_id])
 
     user.grant(:edit, @team)
-    redirect_to :back
+    redirect_to_back team_path(@team)
   end
 
   def revoke
     user = User.find(params[:user_id])
 
     user.revoke(:edit, @team)
-    redirect_to :back
+    redirect_to_back team_path(@team)
   end
 
   private

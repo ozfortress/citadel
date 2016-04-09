@@ -8,6 +8,16 @@ class ApplicationController < ActionController::Base
   protected
 
   def require_login
-    redirect_to :back unless user_signed_in?
+    redirect_to_back unless user_signed_in?
+  end
+
+  private
+
+  def redirect_to_back(default = root_path)
+    if request.referer.present?
+      redirect_to :back
+    else
+      redirect_to default
+    end
   end
 end
