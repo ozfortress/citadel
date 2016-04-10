@@ -5,12 +5,12 @@
     = render 'search'
 
 .panel.panel-default
-  - if @users.size > 0
+  - if @users.empty?
+    .panel-body No users found...
+  - else
     %ul.list-group
       - @users.each do |user|
         %li.list-group-item
           = user_listing(user)
-  - else
-    .panel-body No users found...
 
 = will_paginate @users, renderer: BootstrapPagination::Rails
