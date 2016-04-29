@@ -22,7 +22,8 @@ class CompetitionRoster < ActiveRecord::Base
                           length: { in: 1..64 }
   validates :description, presence: true, allow_blank: true
   validates :approved,    inclusion: { in: [true, false] }
-  validate :player_count_limits
+  validate :player_count_minimums
+  validate :player_count_maximums
 
   after_initialize :set_defaults
 
@@ -63,15 +64,15 @@ class CompetitionRoster < ActiveRecord::Base
     self.approved = false if approved.nil?
   end
 
-  def player_count_limits
-    return unless competition.present?
-
-    player_count = players.size
-    if player_count < competition.min_players
+  def player_count_minimums
+    if competition.present? && players.size < competition.min_players
       errors.add(:player_ids, "must have at least #{competition.min_players} players")
     end
+  end
 
-    if player_count > competition.max_players
+  def player_count_maximums
+    if competition.present? && players.size > competition.max_players &&
+       competition.max_players > 0
       errors.add(:player_ids, "must have no more than #{competition.max_players} players")
     end
   end
