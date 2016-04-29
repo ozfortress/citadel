@@ -2,8 +2,6 @@ require 'elasticsearch/model'
 
 class Team < ActiveRecord::Base
   include Searchable
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
   include Roster
 
   has_many :team_invites
@@ -14,6 +12,8 @@ class Team < ActiveRecord::Base
   validates :description, presence: true, allow_blank: true
 
   mount_uploader :avatar, AvatarUploader
+
+  alias_attribute :to_s, :name
 
   def invite(user)
     team_invites.create(user: user)
@@ -28,11 +28,5 @@ class Team < ActiveRecord::Base
                      .where(divisions: { competition_id: comp.id })
                      .where(team: self)
                      .exists?
-  end
-
-  alias_attribute :to_s, :name
-
-  def self.simple_search(q)
-    search(query: { simple_query_string: { query: q } })
   end
 end

@@ -5,8 +5,6 @@ require 'steam_id'
 
 class User < ActiveRecord::Base
   include Searchable
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
   include Auth::Model
 
   has_many :team_invites
@@ -38,6 +36,8 @@ class User < ActiveRecord::Base
 
   mount_uploader :avatar, AvatarUploader
 
+  alias_attribute :to_s, :name
+
   def steam_profile_url
     "http://steamcommunity.com/profiles/#{steam_id}"
   end
@@ -60,8 +60,6 @@ class User < ActiveRecord::Base
     comp.roster_transfer(self).exists?
   end
 
-  alias_attribute :to_s, :name
-
   def steam_id_nice
     SteamId.to_str(steam_id)
   end
@@ -76,10 +74,6 @@ class User < ActiveRecord::Base
   def as_indexed_json(_ = {})
     as_json(only: [:name, :steam_id],
             methods: [:steam_id_nice])
-  end
-
-  def self.simple_search(q)
-    search(query: { simple_query_string: { query: q } })
   end
 
   def pending_names
