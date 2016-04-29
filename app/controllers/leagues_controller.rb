@@ -11,6 +11,8 @@ class LeaguesController < ApplicationController
   before_action :require_private, only: [:destroy]
 
   def index
+    @competitions = Competition.search_all(params[:q])
+                               .paginate(page: params[:page])
   end
 
   def new

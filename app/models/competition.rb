@@ -1,5 +1,9 @@
+require 'elasticsearch/model'
+
 class Competition < ActiveRecord::Base
+  include Searchable
   include RosterPlayers
+
   transfers_table_name 'competition_transfers'
 
   belongs_to :format
@@ -21,6 +25,8 @@ class Competition < ActiveRecord::Base
 
   after_initialize :set_defaults
 
+  alias_attribute :to_s, :name
+
   def public?
     !private?
   end
@@ -32,7 +38,9 @@ class Competition < ActiveRecord::Base
              .where(is_joining: true)
   end
 
-  alias_attribute :to_s, :name
+  def as_indexed_json(_ = {})
+    as_json(only: [:name, :description])
+  end
 
   private
 

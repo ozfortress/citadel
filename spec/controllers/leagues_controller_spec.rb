@@ -8,8 +8,18 @@ describe LeaguesController do
   end
 
   describe 'GET #index' do
-    it 'returns http success' do
+    before do
+      create_list(:competition, 50)
+    end
+
+    it 'succeeds' do
       get :index
+
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'succeeds with search' do
+      get :index, q: 'foo'
 
       expect(response).to have_http_status(:success)
     end

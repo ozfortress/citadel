@@ -1,8 +1,14 @@
 %h1 Leagues
 
+.row
+  .col-sm-3.col-md-3.pull-right
+    = render 'search'
+
 - if games.length > 0
   %ul.nav.nav-tabs
     - games.each_with_index do |game, index|
+      - next if game.public_competitions.empty?
+
       - klass = ''
       - if index == 0
         - klass = 'active'
@@ -12,15 +18,23 @@
 
 .tab-content
   - games.each_with_index do |game, index|
+    - next if game.public_competitions.empty?
+
     - klass = 'tab-pane fade'
     - if index == 0
       - klass += ' in active'
 
+    - competitions = game.public_competitions & @competitions
     %div{ id: game.name.parameterize, class: klass }
-      %ul.list-group
-        - game.public_competitions.each do |competition|
-          = link_to league_path(competition), class: 'list-group-item' do
-            %h4.list-group-item-heading
-              = competition.name
-            %p.list-group-item-text
-              = markdown competition.description
+      - if competitions.empty?
+        .panel-body No leagues found...
+      - else
+        %ul.list-group
+          - competitions.each do |competition|
+            = link_to league_path(competition), class: 'list-group-item' do
+              %h4.list-group-item-heading
+                = competition.name
+              %p.list-group-item-text
+                = markdown competition.description
+
+  = will_paginate @competitions, renderer: BootstrapPagination::Rails

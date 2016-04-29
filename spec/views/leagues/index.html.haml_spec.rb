@@ -8,6 +8,9 @@ describe 'leagues/index.html.haml' do
   let!(:comp2) { create(:competition, format: format, private: true) }
 
   it 'displays all leagues' do
+    view.lookup_context.prefixes = %w(application)
+    assign(:competitions, Competition.paginate(page: 1))
+
     render
 
     expect(rendered).to include(format.game.name)
