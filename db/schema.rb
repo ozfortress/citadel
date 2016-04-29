@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160404023212) do
+ActiveRecord::Schema.define(version: 20160429150708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,6 +138,8 @@ ActiveRecord::Schema.define(version: 20160404023212) do
     t.boolean  "private",                       null: false
     t.boolean  "signuppable",   default: false, null: false
     t.boolean  "roster_locked", default: false, null: false
+    t.integer  "min_players",   default: 6,     null: false
+    t.integer  "max_players",   default: 0,     null: false
   end
 
   add_index "competitions", ["format_id"], name: "index_competitions_on_format_id", using: :btree
@@ -147,10 +149,6 @@ ActiveRecord::Schema.define(version: 20160404023212) do
     t.string   "name",           null: false
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.integer  "min_teams",      null: false
-    t.integer  "max_teams",      null: false
-    t.integer  "min_players",    null: false
-    t.integer  "max_players",    null: false
   end
 
   add_index "divisions", ["competition_id"], name: "index_divisions_on_competition_id", using: :btree

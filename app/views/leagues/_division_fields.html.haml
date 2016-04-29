@@ -1,20 +1,6 @@
 %li.list-group-item.nested-fields
   = f.text_field :name
 
-  .form-group#division-teams-range
-    Teams
-    .form-inline
-      = f.number_field :min_players, in: 1..16, label: 'Minimum'
-      = f.number_field :max_players, in: 1..16, label: 'Maximum'
-
-  .form-group#division-player-range
-    Players
-    .form-inline
-      = f.number_field :min_players, min: 1, label: 'Minimum'
-      = f.number_field :max_players, min: 1, label: 'Maximum'
-
-  %hr
-
   = link_to_remove_association f, class: 'btn btn-default',
       data: { confirm: 'Are you sure you want to delete this Division?' } do
     %span.glyphicon.glyphicon-trash

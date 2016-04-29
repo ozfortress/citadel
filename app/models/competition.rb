@@ -15,6 +15,9 @@ class Competition < ActiveRecord::Base
   validates :private, inclusion: { in: [true, false] }
   validates :signuppable, inclusion: { in: [true, false] }
   validates :roster_locked, inclusion: { in: [true, false] }
+  validates :min_players, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :max_players, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validate :validate_players_range
 
   after_initialize :set_defaults
 
@@ -33,9 +36,19 @@ class Competition < ActiveRecord::Base
 
   private
 
+  def validate_players_range
+    if min_players.present? && max_players.present? &&
+       min_players > max_players
+      errors.add(:min_players, "can't be greater than maximum players")
+    end
+  end
+
   def set_defaults
     self.private = true if private.nil?
     self.signuppable = false if signuppable.nil?
     self.roster_locked = false if signuppable.nil?
+
+    self.min_players = 6  if min_players.nil?
+    self.max_players = 16 if max_players.nil?
   end
 end

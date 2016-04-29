@@ -33,12 +33,9 @@ describe LeaguesController do
 
       post :create, competition: { name: 'A', description: 'B', format_id: format.id,
                                    signuppable: true, roster_locked: false,
+                                   min_players: 1, max_players: 3,
                                    divisions_attributes: [
-                                     { name: 'PREM',
-                                       min_teams: 2,
-                                       max_teams: 3,
-                                       min_players: 1,
-                                       max_players: 3 },
+                                     { name: 'PREM' },
                                    ] }
 
       comp = Competition.first
@@ -47,13 +44,11 @@ describe LeaguesController do
       expect(comp.format).to eq(format)
       expect(comp.signuppable).to be(true)
       expect(comp.roster_locked).to be(false)
+      expect(comp.min_players).to eq(1)
+      expect(comp.max_players).to eq(3)
       expect(comp.divisions.size).to eq(1)
       div = comp.divisions.first
       expect(div.name).to eq('PREM')
-      expect(div.min_teams).to eq(2)
-      expect(div.max_teams).to eq(3)
-      expect(div.min_players).to eq(1)
-      expect(div.max_players).to eq(3)
     end
   end
 

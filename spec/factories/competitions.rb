@@ -6,5 +6,7 @@ FactoryGirl.define do
     c.private true
     signuppable false
     roster_locked false
+    min_players 5
+    max_players 12
   end
 end

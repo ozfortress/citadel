@@ -5,6 +5,12 @@
     = f.text_field :name
     = f.text_area :description, rows: 10
 
+    .form-group
+      Players
+      .form-inline
+        = f.number_field :min_players, min: 1, label: 'Minimum'
+        = f.number_field :max_players, min: 1, label: 'Maximum'
+
 .panel.panel-default
   .panel-heading State
   .panel-body

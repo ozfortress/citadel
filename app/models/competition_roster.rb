@@ -64,15 +64,15 @@ class CompetitionRoster < ActiveRecord::Base
   end
 
   def player_count_limits
-    return unless division.present?
+    return unless competition.present?
 
     player_count = players.size
-    if player_count < division.min_players
-      errors.add(:player_ids, "must have at least #{division.min_players} players")
+    if player_count < competition.min_players
+      errors.add(:player_ids, "must have at least #{competition.min_players} players")
     end
 
-    if player_count > division.max_players
-      errors.add(:player_ids, "must have no more than #{division.max_players} players")
+    if player_count > competition.max_players
+      errors.add(:player_ids, "must have no more than #{competition.max_players} players")
     end
   end
 end

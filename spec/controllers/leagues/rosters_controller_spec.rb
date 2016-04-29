@@ -5,8 +5,8 @@ require 'support/factory_girl'
 describe Leagues::RostersController do
   let(:user) { create(:user) }
   let(:team) { create(:team) }
-  let(:comp) { create(:competition, signuppable: true) }
-  let!(:div) { create(:division, competition: comp, min_players: 1) }
+  let(:comp) { create(:competition, signuppable: true, min_players: 1) }
+  let!(:div) { create(:division, competition: comp) }
 
   describe 'GET #new' do
     it 'succeeds for authorized user' do
@@ -82,7 +82,7 @@ describe Leagues::RostersController do
 
   describe 'PATCH #update' do
     let(:roster) { create(:competition_roster, division: div, team: team) }
-    let(:div2) { create(:division, competition: comp, min_players: 1) }
+    let(:div2) { create(:division, competition: comp) }
 
     it 'succeeds for authorized user' do
       user.grant(:edit, team)
