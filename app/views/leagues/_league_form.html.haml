@@ -11,7 +11,7 @@
     .form-group
       = f.number_field :min_players, min: 1, label: 'Minimum'
     .form-group
-      = f.number_field :max_players, min: 1, label: 'Maximum (0 for unlimited)'
+      = f.number_field :max_players, min: 0, label: 'Maximum (0 for unlimited)'
 
 .panel.panel-default
   .panel-heading State
