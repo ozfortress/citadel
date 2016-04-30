@@ -114,9 +114,8 @@ module Leagues
     end
 
     def require_user_can_report_scores
-      if !user_can_edit_league? &&
-         (user_can_home_team? && @match.status == 'submitted_by_home_team' ||
-          user_can_away_team? && @match.status == 'submitted_by_away_team')
+      if !user_can_edit_league? && (user_can_submit_team_score? ||
+                                    !@competition.matches_submittable)
         redirect_to league_match_path(@competition, @match)
       end
     end

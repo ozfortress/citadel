@@ -67,6 +67,7 @@ class LeaguesController < ApplicationController
   def league_params
     params.require(:competition).permit(:name, :description, :format_id,
                                         :signuppable, :roster_locked,
+                                        :matches_submittable,
                                         :min_players, :max_players,
                                         divisions_attributes: [
                                           :id, :name, :_destroy])

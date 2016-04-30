@@ -19,6 +19,7 @@ class Competition < ActiveRecord::Base
   validates :private, inclusion: { in: [true, false] }
   validates :signuppable, inclusion: { in: [true, false] }
   validates :roster_locked, inclusion: { in: [true, false] }
+  validates :matches_submittable, inclusion: { in: [true, false] }
   validates :min_players, presence: true, numericality: { greater_than: 0 }
   validates :max_players, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validate :validate_players_range
