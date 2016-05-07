@@ -6,7 +6,7 @@ class Team < ActiveRecord::Base
 
   has_many :team_invites
   has_many :transfers, -> { order(created_at: :desc) }
-  has_many :competition_rosters
+  has_many :rosters, class_name: 'CompetitionRoster'
 
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
   validates :description, presence: true, allow_blank: true
@@ -24,9 +24,8 @@ class Team < ActiveRecord::Base
   end
 
   def entered?(comp)
-    CompetitionRoster.joins(:division)
-                     .where(divisions: { competition_id: comp.id })
-                     .where(team: self)
-                     .exists?
+    rosters.joins(:division)
+           .where(divisions: { competition_id: comp.id })
+           .exists?
   end
 end

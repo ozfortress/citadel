@@ -53,7 +53,7 @@
 .panel.panel-default
   .panel-heading Leagues
   %ul.list-group
-    - @team.competition_rosters.each do |roster|
+    - @team.rosters.each do |roster|
       %li.list-group-item
         = link_to roster.competition, league_path(roster.competition)
         #{roster.division}: #{link_to roster, league_roster_path(roster.competition, roster)}.
