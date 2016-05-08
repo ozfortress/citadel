@@ -33,7 +33,7 @@
 .panel.panel-default
   .panel-heading Transfers
   %ul.list-group
-    - transfers.each do |transfer|
+    - @user.transfers.each do |transfer|
       %li.list-group-item
         - if transfer.is_joining?
           joined

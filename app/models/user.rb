@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   include Auth::Model
 
   has_many :team_invites
-  has_many :transfers
+  has_many :transfers, -> { order(created_at: :desc) }
   has_many :roster_transfers, class_name: 'CompetitionTransfer'
   has_many :titles
   has_many :names, -> { order(created_at: :desc) }, class_name: 'UserNameChange'
