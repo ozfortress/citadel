@@ -36,7 +36,7 @@
           = link_to set.map, meta_map_path(set.map)
           |#{set.home_team_score} : #{set.away_team_score}|
 
-    - if can_confirm_score?
+    - if user_can_confirm_score?
       .panel-body
         = button_to league_match_confirm_path(competition, match, confirm: true),
                     class: 'btn btn-success', method: :patch do
