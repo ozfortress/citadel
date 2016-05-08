@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
   end
 
   def teams
-    ids = player_transfers(transfers, 'team_id')
+    ids = player_transfers(transfers, :team_id)
     Team.distinct
         .joins(:transfers)
         .where(transfers: { id: ids, is_joining: true })
@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   end
 
   def rosters
-    ids = player_transfers(roster_transfers, 'competition_roster_id')
+    ids = player_transfers(roster_transfers, :competition_roster_id)
     CompetitionRoster.distinct
                      .joins(:transfers)
                      .where(competition_transfers: { id: ids, is_joining: true })

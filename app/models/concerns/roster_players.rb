@@ -28,7 +28,7 @@ module RosterPlayers
   private
 
   def players_db
-    transfers.where(id: player_transfers, is_joining: true)
+    transfers.where(id: player_transfers(transfers, :user_id), is_joining: true)
              .joins(:user)
              .reorder('users.name')
              .includes(:user)
