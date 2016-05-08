@@ -38,6 +38,8 @@ describe User do
     expect(user.teams).to eq([team])
   end
 
+  it 'has rosters'
+
   describe 'Permissions' do
     describe 'Teams' do
       let(:team)       { create(:team) }

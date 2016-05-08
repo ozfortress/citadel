@@ -1,6 +1,10 @@
 module RosterPlayers
   extend ActiveSupport::Concern
 
+  included do
+    include Transfers
+  end
+
   def on_roster?(user)
     players.where(user_id: user.id).exists?
   end
@@ -24,11 +28,7 @@ module RosterPlayers
   private
 
   def players_db
-    tb_name = transfers.instance_variable_get(:@association).aliased_table_name
-    t = transfers.select("DISTINCT ON(#{tb_name}.user_id) #{tb_name}.id")
-                 .reorder(:user_id, created_at: :desc)
-
-    transfers.where(id: t, is_joining: true)
+    transfers.where(id: player_transfers, is_joining: true)
              .joins(:user)
              .reorder('users.name')
              .includes(:user)

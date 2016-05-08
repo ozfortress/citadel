@@ -4,11 +4,13 @@ require 'auth'
 require 'steam_id'
 
 class User < ActiveRecord::Base
+  include Transfers
   include Searchable
   include Auth::Model
 
   has_many :team_invites
   has_many :transfers
+  has_many :roster_transfers, class_name: 'CompetitionTransfer'
   has_many :titles
   has_many :names, -> { order(created_at: :desc) }, class_name: 'UserNameChange'
 
@@ -43,17 +45,19 @@ class User < ActiveRecord::Base
   end
 
   def teams
-    # TODO: Maybe turn this into a big query?
-    teams = Set.new
-    transfers.each do |transfer|
-      if transfer.is_joining?
-        teams << transfer.team
-      else
-        teams.delete(transfer.team)
-      end
-    end
+    ids = player_transfers(transfers, 'team_id')
+    Team.distinct
+        .joins(:transfers)
+        .where(transfers: { id: ids, is_joining: true })
+        .order(:name)
+  end
 
-    teams.to_a.sort! { |a, b| a.name.downcase <=> b.name.downcase }
+  def rosters
+    ids = player_transfers(roster_transfers, 'competition_roster_id')
+    CompetitionRoster.distinct
+                     .joins(:transfers)
+                     .where(competition_transfers: { id: ids, is_joining: true })
+                     .order(:name)
   end
 
   def entered?(comp)
