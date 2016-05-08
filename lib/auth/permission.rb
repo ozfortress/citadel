@@ -115,9 +115,10 @@ module Auth
 
           # Only permissions relating to singular objects have a subject
           class << self
-            attr_accessor :has_subject
+            attr_reader :has_subject
           end
-          self.has_subject = subject.to_s.singularize == subject.to_s
+
+          @has_subject = subject.to_s.singularize == subject.to_s
           belongs_to subject if has_subject
         end
       end
