@@ -7,7 +7,7 @@ module Leagues
       @match = @competition.matches.find(params[:id])
     end
 
-    before_action :require_user_league_permission, except: [:show, :comms, :scores, :confirm]
+    before_action :require_user_league_permission, only: [:new, :create, :edit, :update, :destroy]
     before_action :require_user_either_teams, only: [:comms, :scores, :confirm]
     before_action :require_user_can_report_scores, only: [:scores]
 
@@ -58,12 +58,12 @@ module Leagues
       if @match.update(report_scores_params)
         redirect_to league_match_path(@competition, @match)
       else
-        render :scores
+        render :show
       end
     end
 
     def confirm
-      if can_confirm_score?
+      if user_can_confirm_score? || user_can_edit_league?
         @match.confirm_scores(params[:confirm] == 'true')
         show
         render :show
@@ -95,11 +95,11 @@ module Leagues
       attrs = params.require(:competition_match)
                     .permit(sets_attributes: [:id, :home_team_score, :away_team_score])
 
-      if user_can_home_team?
-        attrs.merge(status: :submitted_by_home_team)
-      else
-        attrs.merge(status: :submitted_by_away_team)
-      end
+      attrs[:status] = if user_can_home_team?
+                         :submitted_by_home_team
+                       else
+                         :submitted_by_away_team
+                       end
 
       attrs
     end
@@ -114,8 +114,8 @@ module Leagues
     end
 
     def require_user_can_report_scores
-      if !user_can_edit_league? && (user_can_submit_team_score? ||
-                                    !@competition.matches_submittable)
+      unless user_can_edit_league? || (user_can_submit_team_score? &&
+                                       @competition.matches_submittable)
         redirect_to league_match_path(@competition, @match)
       end
     end
