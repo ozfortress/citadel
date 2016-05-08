@@ -15,8 +15,8 @@ module Searchable
       end
     end
 
-    def simple_search(q)
-      search(query: { simple_query_string: { query: q } })
+    def simple_search(query)
+      search(query: { simple_query_string: { query: query } })
     end
   end
 end

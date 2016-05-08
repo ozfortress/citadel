@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   validates_permission_to :manage_rosters, :competition
   validates_permission_to :manage_rosters, :competitions
 
-  after_initialize :set_defaults
+  after_initialize :set_defaults, unless: :persisted?
 
   mount_uploader :avatar, AvatarUploader
 
@@ -95,6 +95,6 @@ class User < ActiveRecord::Base
   private
 
   def set_defaults
-    self.remember_me = true if remember_me.nil?
+    self.remember_me = true unless remember_me.present?
   end
 end

@@ -5,7 +5,7 @@ module Meta
     end
 
     def game_select
-      ::Game.all.collect { |g| [g.name, g.id] }
+      ::Game.all.collect { |game| [game.name, game.id] }
     end
   end
 end

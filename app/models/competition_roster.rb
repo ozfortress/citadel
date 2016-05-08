@@ -24,7 +24,7 @@ class CompetitionRoster < ActiveRecord::Base
   validate :player_count_minimums
   validate :player_count_maximums
 
-  after_initialize :set_defaults
+  after_initialize :set_defaults, unless: :persisted?
 
   alias_attribute :to_s, :name
 
@@ -60,19 +60,24 @@ class CompetitionRoster < ActiveRecord::Base
   end
 
   def set_defaults
-    self.approved = false if approved.nil?
+    self.approved = false unless approved.present?
   end
 
   def player_count_minimums
-    if competition.present? && players.size < competition.min_players
-      errors.add(:player_ids, "must have at least #{competition.min_players} players")
+    return unless competition.present?
+
+    min_players = competition.min_players
+    if players.size < min_players
+      errors.add(:player_ids, "must have at least #{min_players} players")
     end
   end
 
   def player_count_maximums
-    if competition.present? && players.size > competition.max_players &&
-       competition.max_players > 0
-      errors.add(:player_ids, "must have no more than #{competition.max_players} players")
+    return unless competition.present?
+
+    max_players = competition.max_players
+    if players.size > max_players && max_players > 0
+      errors.add(:player_ids, "must have no more than #{max_players} players")
     end
   end
 end

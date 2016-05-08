@@ -1,0 +1,48 @@
+IrresponsibleModule:
+  enabled: false
+
+TooManyStatements:
+  max_statements: 10
+
+# Kinda broken reek right now
+ControlParameter:
+  enabled: false
+
+# PremaDonna methods show intent when it comes to db operations
+"models":
+  PrimaDonnaMethod:
+    enabled: false
+
+# helpers are always utility functions
+"helpers":
+  UtilityFunction:
+    enabled: false
+  FeatureEnvy:
+    enabled: false
+
+# as are concerns
+"concerns":
+  UtilityFunction:
+    enabled: false
+  FeatureEnvy:
+    enabled: false
+
+# Migration helpers are like db code, but cleaner
+FeatureEnvy:
+  exclude:
+    - "MigrationHelper"
+UncommunicativeVariableName:
+  exclude:
+    - "MigrationHelper"
+
+# db code is messy
+exclude_paths:
+  - db
+
+#TODO
+DataClump:
+  exclude:
+    - "Auth::Model"
+TooManyMethods:
+  exclude:
+    - "Leagues::MatchesController"

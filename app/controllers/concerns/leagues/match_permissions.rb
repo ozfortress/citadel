@@ -16,8 +16,10 @@ module Leagues
     end
 
     def can_confirm_score?
-      user_can_home_team? && @match.status == 'submitted_by_away_team' ||
-        user_can_away_team? && @match.status == 'submitted_by_home_team'
+      status = @match.status
+
+      user_can_home_team? && status == 'submitted_by_away_team' ||
+        user_can_away_team? && status == 'submitted_by_home_team'
     end
   end
 end

@@ -8,11 +8,11 @@ module Users
 
       user = User.find_by(steam_id: auth.uid)
 
-      if user.nil?
+      if user
+        sign_in_and_redirect user
+      else
         session['devise.steam_data'] = auth.except('extra').except('info')
         redirect_to new_user_path(name: auth.info.nickname)
-      else
-        sign_in_and_redirect user
       end
     end
 

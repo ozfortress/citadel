@@ -10,7 +10,7 @@ class UserNameChange < ActiveRecord::Base
   validate :only_one_request_per_user, on: :create
 
   def pending?
-    approved_by.nil? && denied_by.nil?
+    !approved_by && !denied_by
   end
 
   def self.pending

@@ -6,7 +6,7 @@ class CompetitionSet < ActiveRecord::Base
   validates :home_team_score, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :away_team_score, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
-  after_initialize :set_defaults
+  after_initialize :set_defaults, unless: :persisted?
 
   private
 

@@ -18,18 +18,14 @@ class CompetitionMatch < ActiveRecord::Base
   delegate :division, to: :home_team, allow_nil: true
   delegate :competition, to: :division, allow_nil: true
 
-  after_initialize :set_defaults
+  after_initialize :set_defaults, unless: :persisted?
 
   def to_s
     "#{home_team.name} vs #{away_team.name}"
   end
 
   def confirm_scores(confirm)
-    if confirm
-      update(status: :confirmed)
-    else
-      update(status: :pending)
-    end
+    update(status: confirm ? :confirmed : :pending)
   end
 
   private

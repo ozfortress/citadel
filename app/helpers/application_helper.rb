@@ -28,15 +28,11 @@ module ApplicationHelper
   end
 
   def format_options
-    Format.all.map do |format|
-      [format.to_s, format.id]
-    end
+    Format.all.collect { |format| [format.to_s, format.id] }
   end
 
   def divisions_select
-    @competition.divisions.all.map do |div|
-      [div.to_s, div.id]
-    end
+    @competition.divisions.all.collect { |div| [div.to_s, div.id] }
   end
 
   def user_listing(user = nil, options = {})
