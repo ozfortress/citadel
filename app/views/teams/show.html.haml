@@ -50,18 +50,19 @@
           left the team
         on #{transfer.created_at.strftime('%c')}
 
-.panel.panel-default
-  .panel-heading Leagues
-  %ul.list-group
-    - @team.rosters.each do |roster|
-      %li.list-group-item
-        = link_to roster.competition, league_path(roster.competition)
-        #{roster.division}: #{link_to roster, league_roster_path(roster.competition, roster)}.
-        Signed up on #{roster.created_at.strftime('%c')}.
+- unless @team.rosters.empty?
+  .panel.panel-default
+    .panel-heading Leagues
+    %ul.list-group
+      - @team.rosters.each do |roster|
+        %li.list-group-item
+          = link_to roster.competition, league_path(roster.competition)
+          #{roster.division}: #{link_to roster, league_roster_path(roster.competition, roster)}.
+          Signed up on #{roster.created_at.strftime('%c')}.
 
-        - if user_can_edit_team?
-          .button-group.pull-right
-            = link_to edit_league_roster_path(roster.competition, roster),
-                      class: 'btn btn-default' do
-              Manage
-              %span.glyphicon.glyphicon-cog
+          - if user_can_edit_team?
+            .button-group.pull-right
+              = link_to edit_league_roster_path(roster.competition, roster),
+                        class: 'btn btn-default' do
+                Manage
+                %span.glyphicon.glyphicon-cog
