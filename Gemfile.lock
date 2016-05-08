@@ -43,6 +43,10 @@ GEM
     ast (2.2.0)
     autoprefixer-rails (6.3.6)
       execjs
+    axiom-types (0.1.1)
+      descendants_tracker (~> 0.0.4)
+      ice_nine (~> 0.11.0)
+      thread_safe (~> 0.3, >= 0.3.1)
     bcrypt (3.1.11)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -87,6 +91,10 @@ GEM
     cocoon (1.2.9)
     code_analyzer (0.4.5)
       sexp_processor
+    codeclimate-engine-rb (0.3.1)
+      virtus (~> 1.0)
+    coercible (1.0.0)
+      descendants_tracker (~> 0.0.1)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.1.x)
@@ -103,6 +111,8 @@ GEM
       tins (~> 1.6.0)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
+    descendants_tracker (0.0.4)
+      thread_safe (~> 0.3, >= 0.3.1)
     devise (4.0.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -124,6 +134,7 @@ GEM
     elasticsearch-transport (1.0.17)
       faraday
       multi_json
+    equalizer (0.0.11)
     erubis (2.7.0)
     execjs (2.6.0)
     factory_girl (4.7.0)
@@ -155,6 +166,7 @@ GEM
       nokogiri (~> 1.6.0)
       ruby_parser (~> 3.5)
     i18n (0.7.0)
+    ice_nine (0.11.2)
     jquery-rails (4.1.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -234,6 +246,10 @@ GEM
     rainbow (2.1.0)
     rake (11.1.2)
     redcarpet (3.3.4)
+    reek (4.0.2)
+      codeclimate-engine-rb (~> 0.3.1)
+      parser (~> 2.3, >= 2.3.0.6)
+      rainbow (~> 2.0)
     require_all (1.3.3)
     responders (2.1.2)
       railties (>= 4.2.0, < 5.1)
@@ -302,6 +318,11 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
+    virtus (1.0.5)
+      axiom-types (~> 0.1)
+      coercible (~> 1.0)
+      descendants_tracker (~> 0.0, >= 0.0.3)
+      equalizer (~> 0.0, >= 0.0.9)
     warden (1.2.6)
       rack (>= 1.0)
     web-console (2.3.0)
@@ -348,6 +369,7 @@ DEPENDENCIES
   rails (= 4.2.6)
   rails_best_practices
   redcarpet
+  reek
   rspec-rails (~> 3.0)
   rubocop (~> 0.36.0)
   sass-rails (~> 5.0)
