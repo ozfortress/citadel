@@ -1,6 +1,5 @@
 class CompetitionRoster < ActiveRecord::Base
   include Roster
-  transfers_table_name 'competition_transfers'
 
   belongs_to :team
   belongs_to :division

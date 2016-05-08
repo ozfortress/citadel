@@ -1,7 +1,9 @@
 module Roster
-  include RosterPlayers
-
   extend ActiveSupport::Concern
+
+  included do
+    include RosterPlayers
+  end
 
   def add_player!(user)
     transfers.create!(user: user, is_joining: true)
