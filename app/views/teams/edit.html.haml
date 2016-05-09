@@ -7,7 +7,7 @@
       = f.submit 'Save'
       = link_to 'Cancel', team_path(@team), class: 'btn btn-default'
 
-- if users_who_can_edit.length > 0
+- unless users_who_can_edit.empty?
   .panel.panel-default
     .panel-heading Permissions
     %ul.list-group
