@@ -7,5 +7,5 @@
     url: league_rosters_path(@competition, team_id: @roster.team.id) do |f|
   = render 'roster_form', f: f
 
-  = f.submit 'Sign up'
+  = f.submit 'Update'
   = link_to 'Cancel', league_roster_path(@competition, @roster), class: 'btn btn-default'
