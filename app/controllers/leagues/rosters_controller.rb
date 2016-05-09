@@ -9,8 +9,8 @@ module Leagues
 
     before_action :require_signuppable, only: [:new, :create]
     before_action :require_any_team_permission, only: [:new, :create]
-    before_action :require_user_league_permission, only: [:index]
-    before_action :require_not_approved, only: [:destroy]
+    before_action :require_user_league_permission, except: [:new, :create, :show, :destroy]
+    before_action :require_user_destroy_permission, only: [:destroy]
 
     def index
     end
@@ -81,10 +81,6 @@ module Leagues
       params.require(:competition_roster).permit(:name, :division_id)
     end
 
-    def require_not_approved
-      redirect_to league_roster_path(@competition, @roster) if @roster.approved?
-    end
-
     def require_signuppable
       redirect_to league_path(@competition) unless @competition.signuppable?
     end
@@ -96,6 +92,12 @@ module Leagues
 
     def require_user_league_permission
       redirect_to league_path(@competition) unless user_can_edit_league?
+    end
+
+    def require_user_destroy_permission
+      redirect_to league_path(@competition) unless user_can_edit_league? ||
+                                                   user_signed_in? &&
+                                                   current_user.can?(:edit, @roster.team)
     end
   end
 end
