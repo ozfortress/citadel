@@ -11,6 +11,7 @@ module Leagues
     before_action :require_any_team_permission, only: [:new, :create]
     before_action :require_user_league_permission, except: [:new, :create, :show, :destroy]
     before_action :require_user_destroy_permission, only: [:destroy]
+    before_action :require_roster_permission, only: [:create]
 
     def index
     end
@@ -98,6 +99,13 @@ module Leagues
       redirect_to league_path(@competition) unless user_can_edit_league? ||
                                                    user_signed_in? &&
                                                    current_user.can?(:edit, @roster.team)
+    end
+
+    def require_roster_permission
+      team = Team.find(params[:team_id])
+
+      redirect_to league_path(@competition) unless user_signed_in? &&
+                                                   current_user.can?(:edit, team)
     end
   end
 end

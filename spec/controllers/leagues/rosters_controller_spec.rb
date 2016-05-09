@@ -70,6 +70,16 @@ describe Leagues::RostersController do
       expect(response).to render_template(:new)
     end
 
+    it 'redirects for unauthorized user for team' do
+      team2 = create(:team)
+      user.grant(:edit, team2)
+      sign_in user
+
+      post :create, league_id: comp.id, team_id: team.id
+
+      expect(response).to redirect_to(league_path(comp.id))
+    end
+
     it 'redirects for unauthorized user' do
       sign_in user
 
