@@ -3,7 +3,11 @@ FactoryGirl.define do
     status :pending
 
     after(:build) do |match, _|
-      div = create(:division)
+      div = if match.home_team || match.away_team
+              (match.home_team || match.away_team).division
+            else
+              create(:division)
+            end
       match.home_team = create(:competition_roster, division: div) unless match.home_team
       match.away_team = create(:competition_roster, division: div) unless match.away_team
     end

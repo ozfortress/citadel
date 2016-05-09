@@ -42,6 +42,18 @@
         = link_to transfer.team, team_path(transfer.team)
         on #{transfer.created_at.strftime('%c')}
 
+- if current_user?
+  .panel.panel-default
+    .panel-heading Upcoming Matches
+    %ul.list-group
+      - @user.rosters.each do |roster|
+        - roster.upcoming_matches.each do |match|
+          %li.list-group-item
+            = link_to league_match_path(roster.competition, match) do
+              = match.home_team
+              vs
+              = match.away_team
+
 .panel.panel-default
   .panel-heading Leagues
   %ul.list-group
