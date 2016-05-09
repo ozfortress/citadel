@@ -29,7 +29,13 @@ class CompetitionRoster < ActiveRecord::Base
   alias_attribute :to_s, :name
 
   def matches
-    home_team_matches + away_team_matches
+    home_matches = home_team_matches.select(:id).to_sql
+    away_matches = away_team_matches.select(:id).to_sql
+    CompetitionMatch.where("id IN (#{home_matches}) OR id IN (#{away_matches})")
+  end
+
+  def upcoming_matches
+    matches.where.not(status: 'confirmed')
   end
 
   def win_count
