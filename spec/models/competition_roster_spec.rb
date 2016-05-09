@@ -49,4 +49,16 @@ describe CompetitionRoster do
       expect(build(:competition_roster, division: div, player_count: 20)).to be_valid
     end
   end
+
+  describe '#matches' do
+    it 'returns both home and away matches' do
+      roster = create(:competition_roster)
+      home_match = create(:competition_match, home_team: roster)
+      away_match = create(:competition_match, away_team: roster)
+
+      expect(roster.home_team_matches).to eq([home_match])
+      expect(roster.away_team_matches).to eq([away_match])
+      expect(roster.matches).to eq([home_match, away_match])
+    end
+  end
 end
