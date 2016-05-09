@@ -1,4 +1,6 @@
 require 'rails_helper'
+require 'support/devise'
+require 'support/factory_girl'
 
 describe LeaguesController do
   let(:admin) { create(:user) }
@@ -26,7 +28,7 @@ describe LeaguesController do
   end
 
   describe 'GET #new' do
-    it 'returns http success' do
+    it 'succeeds for authorized user' do
       sign_in admin
 
       get :new
@@ -38,7 +40,7 @@ describe LeaguesController do
   describe 'POST #create' do
     let(:format) { create(:format) }
 
-    it 'returns http success' do
+    it 'succeeds for authorized user' do
       sign_in admin
 
       post :create, competition: { name: 'A', description: 'B', format_id: format.id,
@@ -62,12 +64,35 @@ describe LeaguesController do
       div = comp.divisions.first
       expect(div.name).to eq('PREM')
     end
+
+    it 'fails for invalid data' do
+      sign_in admin
+
+      post :create, competition: { name: 'A', description: 'B', format_id: format.id,
+                                   signuppable: true, roster_locked: false,
+                                   matches_submittable: true,
+                                   min_players: 5, max_players: 3,
+                                   divisions_attributes: [
+                                     { name: 'PREM' },
+                                   ] }
+
+      expect(Competition.first).to be(nil)
+      expect(response).to render_template(:new)
+    end
+
+    it 'redirects for unauthorized user' do
+      sign_in create(:user)
+
+      post :create
+
+      expect(response).to redirect_to(leagues_path)
+    end
   end
 
   describe 'GET #show' do
     let!(:comp) { create(:competition, private: false) }
 
-    it 'returns http success' do
+    it 'succeeds for authorized user' do
       get :show, id: comp.id
 
       expect(response).to have_http_status(:success)
@@ -77,7 +102,7 @@ describe LeaguesController do
   describe 'GET #edit' do
     let(:comp) { create(:competition) }
 
-    it 'returns http success' do
+    it 'succeeds for authorized user' do
       sign_in admin
 
       get :edit, id: comp.id
@@ -87,21 +112,66 @@ describe LeaguesController do
   end
 
   describe 'PATCH #update' do
-    let(:comp) { create(:competition) }
+    let(:format) { create(:format) }
+    let(:format2) { create(:format) }
+    let(:comp) { create(:competition, format: format) }
 
-    it 'returns http success' do
+    it 'succeeds for authorized user' do
       sign_in admin
 
-      get :index
+      patch :update, id: comp.id,
+                     competition: { name: 'A', description: 'B', format_id: format2.id,
+                                    signuppable: true, roster_locked: false,
+                                    matches_submittable: true,
+                                    min_players: 1, max_players: 3,
+                                    divisions_attributes: [
+                                      { name: 'PREM' },
+                                    ] }
 
-      expect(response).to have_http_status(:success)
+      comp.reload
+      expect(comp.name).to eq('A')
+      expect(comp.description).to eq('B')
+      expect(comp.format).to eq(format2)
+      expect(comp.signuppable).to be(true)
+      expect(comp.roster_locked).to be(false)
+      expect(comp.matches_submittable).to be(true)
+      expect(comp.min_players).to eq(1)
+      expect(comp.max_players).to eq(3)
+      expect(comp.divisions.size).to eq(1)
+      div = comp.divisions.first
+      expect(div.name).to eq('PREM')
+    end
+
+    it 'fails for authorized user' do
+      sign_in admin
+
+      patch :update, id: comp.id,
+                     competition: { name: '', description: 'B', format_id: format.id,
+                                    signuppable: true, roster_locked: false,
+                                    matches_submittable: true,
+                                    min_players: 5, max_players: 3,
+                                    divisions_attributes: [
+                                      { name: 'PREM' },
+                                    ] }
+
+      comp.reload
+      expect(comp.name).not_to eq('')
+      expect(response).to render_template(:edit)
+    end
+
+    it 'redirects for unauthorized user' do
+      sign_in create(:user)
+
+      patch :update, id: comp.id
+
+      expect(response).to redirect_to(league_path(comp))
     end
   end
 
   describe 'PATCH #visibility' do
     let(:comp) { create(:competition, private: true) }
 
-    it 'returns http success' do
+    it 'succeeds for authorized user' do
       sign_in admin
 
       patch :visibility, id: comp.id, private: false
