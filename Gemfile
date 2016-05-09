@@ -45,7 +45,7 @@ group :development, :test do
   gem 'byebug'
 
   # Use rspec for tests
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails', '~> 3.4'
 
   # Test coverage
   gem 'simplecov'
