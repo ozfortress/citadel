@@ -31,7 +31,7 @@ module Auth
         subject_id = (subject_s + '_id').to_sym
         # TODO: Optimisation
         action_cls.where(actor => self).select(subject_id).map do |entry|
-          subject_s.constantize.find(entry.send(subject_id))
+          subject_s.camelize.constantize.find(entry.send(subject_id))
         end
       end
 
