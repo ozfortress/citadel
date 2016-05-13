@@ -53,6 +53,9 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+  # Include ActionView framework
+  config.include ActionView::TestCase::Behavior, file_path: %r{spec/presenters}
+
   # RSpec doesn't respect helper hierarchy
-  config.include ApplicationHelper, example_group: { file_path: %r{spec/views} }
+  config.include ApplicationHelper, file_path: %r{spec/views}
 end

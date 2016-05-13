@@ -1,6 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    action_presenter (1.1.6)
+      actionpack
+      named_accessors
     actionmailer (4.2.6)
       actionpack (= 4.2.6)
       actionview (= 4.2.6)
@@ -188,6 +191,7 @@ GEM
       railties (>= 3.1)
     multi_json (1.12.0)
     multipart-post (2.0.0)
+    named_accessors (1.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.1.1)
@@ -342,6 +346,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  action_presenter
   bootstrap-sass (~> 3.3.6)
   bootstrap3-datetimepicker-rails (~> 4.17.37)
   bootstrap_form
