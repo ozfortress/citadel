@@ -4,7 +4,7 @@
   .col-sm-3.col-md-3.pull-right
     = render 'search'
 
-- if games.empty?
+- unless games.empty?
   %ul.nav.nav-tabs
     - games.each_with_index do |game, index|
       - next if game.public_competitions.empty?
