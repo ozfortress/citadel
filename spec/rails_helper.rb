@@ -52,4 +52,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # RSpec doesn't respect helper hierarchy
+  config.include ApplicationHelper
 end
