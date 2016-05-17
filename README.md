@@ -5,7 +5,7 @@
 [![Code Climate](https://codeclimate.com/github/ozfortress/citadel/badges/gpa.svg)](https://codeclimate.com/github/ozfortress/citadel)
 [![Dependency Status](https://gemnasium.com/ozfortress/citadel.svg)](https://gemnasium.com/ozfortress/citadel)
 
-Web-based league system designed for games such as Team Fortress 2.
+Open Source, Web-based league system designed for games such as Team Fortress 2.
 
 ## Goals
 
