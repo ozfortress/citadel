@@ -7,12 +7,15 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    %header.banner-ozf#banner
-      .container
-        = link_to pages_home_path do
-          = image_tag 'ozfortress_logo.png'
+    %header.banner-citadel#banner
+      .banner-container-citadel
+        .banner-background-citadel
+          = image_tag 'background.png'
+        .banner-logo-citadel
+          = link_to pages_home_path do
+            = image_tag 'logo.png'
 
-    %nav.navbar.navbar-ozf.affix-top#navbar{ role: 'navigation',
+    %nav.navbar.navbar-citadel.affix-top#navbar{ role: 'navigation',
                                              data: { spy: 'affix', 'offset-top' => 106 } }
       .container
         .row
