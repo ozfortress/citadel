@@ -7,6 +7,7 @@ FactoryGirl.define do
     signuppable false
     roster_locked false
     matches_submittable false
+    transfers_require_approval true
     min_players 5
     max_players 12
   end
