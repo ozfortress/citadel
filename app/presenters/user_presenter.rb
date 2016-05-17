@@ -15,7 +15,7 @@ class UserPresenter < ActionPresenter::Base
     html += image_tag(user.avatar.thumb.url) if user.avatar?
     html += link
     html += " [#{steam_link}]".html_safe unless options[:steam] == false
-    html += titles(options) unless options[:titles] == false
+    html += "<sub>#{titles(options)}</sub>".html_safe unless options[:titles] == false
 
     html
   end
