@@ -5,12 +5,12 @@ default: &default
 
 development:
   <<: *default
-  database: ozf_dev
+  database: citadel_dev
 
 test:
   <<: *default
-  database: ozf_test
+  database: citadel_test
 
 production:
   <<: *default
-  database: ozf_prod
+  database: citadel_prod
