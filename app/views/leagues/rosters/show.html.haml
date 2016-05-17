@@ -23,16 +23,17 @@ signed up on #{@roster.created_at.strftime('%c')}
 .panel.panel-default
   .panel-heading Roster
   %ul.list-group
-    - @roster.player_users.each do |user|
+    - present_collection(@roster.player_users).each do |user|
       %li.list-group-item
-        = user_listing(user, team: @roster.team)
+        = user.listing team: @roster.team
 
 .panel.panel-default
   .panel-heading Transfers
   %ul.list-group
     - @roster.transfers.each do |transfer|
       %li.list-group-item
-        = user_listing(transfer.user, titles: false)
+        - present(transfer.user) do |user|
+          = user.listing titles: false
         - if transfer.is_joining?
           joined the team
         - else

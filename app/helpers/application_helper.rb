@@ -35,25 +35,10 @@ module ApplicationHelper
     @competition.divisions.all.collect { |div| [div.to_s, div.id] }
   end
 
-  def user_listing(user = nil, options = {})
-    user ||= @user
-
-    html = ''.html_safe
-    html += image_tag(user.avatar.thumb.url) if user.avatar?
-    html += link_to(user.name, user_path(user))
-    html += " [#{link_to user.steam_id_nice, user.steam_profile_url, target: '_blank'}]".html_safe
-    html += user_titles(user, options) unless options[:titles] == false
-
-    html
-  end
-
-  def user_titles(user = nil, options = {})
-    team ||= @team || options[:team]
-
-    titles = []
-    titles << 'leader' if team && user.can?(:edit, team)
-    titles << 'admin'  if user.admin?
-
-    " <sub>#{titles.join(', ')}</sub> ".html_safe
+  # The ActionPresenter #present_collection is broken
+  def present_collection(collection, &block)
+    collection.to_a.compact.map do |object|
+      present(object, &block)
+    end
   end
 end

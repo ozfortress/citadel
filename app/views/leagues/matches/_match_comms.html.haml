@@ -16,7 +16,8 @@
               \:
 
             - team = roster.team if roster
-            = user_listing(comm.user, team: team)
+            - present(comm.user) do |user|
+              = user.listing team: team
             .pull-right= comm.created_at.strftime('%c')
         = markdown comm.content
 

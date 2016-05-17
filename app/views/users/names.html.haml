@@ -2,12 +2,12 @@
 
 %ul.list-group
   - UserNameChange.pending.each do |name_change|
-    - user = name_change.user
+    - user = present(name_change.user)
 
     %li.list-group-item
-      = link_to user.name, user_path(user)
+      = user.link
       wants to change their name to
-      = link_to name_change.name, user_path(user)
+      = user.link name_change.name
 
       .button-group.pull-right
         = button_to handle_user_name_path(user, name_change, approve: true),
