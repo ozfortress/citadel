@@ -45,19 +45,12 @@ class User < ActiveRecord::Base
   end
 
   def teams
-    ids = player_transfers(transfers, :team_id)
-    Team.distinct
-        .joins(:transfers)
-        .where(transfers: { id: ids, is_joining: true })
-        .order(:name)
+    get_player_rosters(transfers, :team_id, Team, :transfers)
   end
 
   def rosters
-    ids = player_transfers(roster_transfers, :competition_roster_id)
-    CompetitionRoster.distinct
-                     .joins(:transfers)
-                     .where(competition_transfers: { id: ids, is_joining: true })
-                     .order(:name)
+    get_player_rosters(roster_transfers, :competition_roster_id,
+                       CompetitionRoster, :competition_transfers)
   end
 
   def entered?(comp)
@@ -93,6 +86,15 @@ class User < ActiveRecord::Base
   end
 
   private
+
+  def get_player_rosters(transfers, transfer_sort, rosters, rosters_sort)
+    # TODO: transfer_sort and rosters_sort can be inferred
+    ids = player_transfers(transfers, transfer_sort)
+    rosters.distinct
+           .joins(:transfers)
+           .where(rosters_sort => { id: ids, is_joining: true })
+           .order(:name)
+  end
 
   def set_defaults
     self.remember_me = true unless remember_me.present?
