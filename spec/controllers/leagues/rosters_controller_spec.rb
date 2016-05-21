@@ -132,7 +132,7 @@ describe Leagues::RostersController do
       roster.reload
       expect(roster.name).to eq('A')
       expect(roster.description).to eq('B')
-      expect(roster.division).to eq(div2)
+      expect(roster.division).to eq(div)
     end
 
     it 'fails with invalid data' do

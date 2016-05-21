@@ -5,6 +5,8 @@ require 'support/factory_girl'
 describe 'layouts/application.html.haml' do
   context 'when unauthenticated' do
     it 'displays steam login' do
+      view.lookup_context.prefixes = %w(application)
+
       render
 
       expect(rendered).to include('assets/steam/login')
@@ -15,6 +17,7 @@ describe 'layouts/application.html.haml' do
     let(:user) { create(:user) }
 
     it 'displays username' do
+      view.lookup_context.prefixes = %w(application)
       sign_in(user)
 
       render
@@ -31,6 +34,7 @@ describe 'layouts/application.html.haml' do
     end
 
     it 'displays admin link' do
+      view.lookup_context.prefixes = %w(application)
       sign_in(user)
 
       render
