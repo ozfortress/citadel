@@ -29,7 +29,7 @@ module Leagues
     end
 
     def create
-      @roster = @competition.divisions.first.rosters.new(roster_params)
+      @roster = @competition.divisions.first.rosters.new(new_roster_params)
       @roster.team = Team.find(params[:team_id])
 
       if @roster.save
@@ -74,8 +74,12 @@ module Leagues
 
     private
 
-    def roster_params
+    def new_roster_params
       params.require(:competition_roster).permit(:name, :description, :division_id, player_ids: [])
+    end
+
+    def roster_params
+      params.require(:competition_roster).permit(:name, :description)
     end
 
     def roster_approve_params
