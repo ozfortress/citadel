@@ -1,6 +1,10 @@
 class UserPresenter < ActionPresenter::Base
   presents :user
 
+  delegate :id, to: :user
+  delegate :name, to: :user
+  delegate :==, to: :user
+
   def link(label = nil)
     label ||= user.name
     link_to(label, user_path(user))
