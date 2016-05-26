@@ -8,7 +8,10 @@
     Edit
     %span.glyphicon.glyphicon-cog
 
-%h1 #{link_to @competition, league_path(@competition)}: #{@roster.division}
+%h1
+  = link_to @competition, league_path(@competition)
+  - unless @competition.signuppable?
+    \: #{@roster.division}
 
 %h2= @roster.name
 Team #{link_to @roster.team, team_path(@roster.team)}
