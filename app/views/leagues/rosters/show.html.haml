@@ -38,7 +38,7 @@ signed up on #{@roster.created_at.strftime('%c')}
 .panel.panel-default
   .panel-heading Transfers
   %ul.list-group
-    - @roster.transfers.each do |transfer|
+    - @roster.approved_transfers.each do |transfer|
       %li.list-group-item
         - present(transfer.user) do |user|
           = user.listing titles: false

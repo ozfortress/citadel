@@ -38,6 +38,10 @@ class CompetitionRoster < ActiveRecord::Base
     matches.where.not(status: 'confirmed')
   end
 
+  def approved_transfers
+    transfers.where(approved: true)
+  end
+
   def win_count
     match_outcome_count('>')
   end
