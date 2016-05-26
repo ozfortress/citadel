@@ -12,7 +12,7 @@
         .panel.panel-default
           .panel-heading
             - if roster
-              = link_to roster, league_roster_path(competition, roster)
+              = present(roster).link
               \:
 
             - team = roster.team if roster

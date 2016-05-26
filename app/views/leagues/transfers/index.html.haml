@@ -20,4 +20,4 @@
           wants to transfer to
         - else
           wants to transfer out of
-        = link_to transfer.roster, league_roster_path(@competition, transfer.roster)
+        = present(transfer.roster).link

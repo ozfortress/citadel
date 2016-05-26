@@ -1,4 +1,4 @@
-%h1 Manage Roster for #{link_to @roster, league_roster_path(@competition, @roster)}
+%h1 Manage Roster for #{present(@roster).link}
 - p @transfer.errors.inspect
 - if @transfer.errors[:user_id]
   - @transfer.errors[:user_id].each do |error|

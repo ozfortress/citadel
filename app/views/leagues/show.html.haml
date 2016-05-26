@@ -18,18 +18,18 @@
   .panel-heading Teams
   %ul.list-group
     - if @competition.signuppable?
-      - @competition.rosters.each do |roster|
+      - present_collection(@competition.rosters).each do |roster|
         %li.list-group-item
-          = link_to roster, league_roster_path(@competition, roster)
+          = roster.link
 
     - else
       - @competition.divisions.each do |div|
         %li.list-group-item
           %h3= div.name
           %ul.list-group
-            - div.rosters.where(approved: true).each do |roster|
+            - present_collection(div.approved_rosters).each do |roster|
               %li.list-group-item
-                = link_to roster, league_roster_path(@competition, roster)
+                = roster.link
                 .pull-right
                   |#{roster.score_s}|
 
@@ -40,11 +40,10 @@
                              class: 'btn btn-success pull-right'
 
     - elsif current_user.entered?(@competition)
-      - roster = @competition.roster_transfer(current_user).first.roster
+      - roster = present @competition.roster_transfer(current_user).first.roster
 
       .panel-body
-        = link_to 'View My Team', league_roster_path(@competition, roster),
-                                  class: 'btn btn-default pull-right'
+        = roster.link 'View My Team', class: 'btn btn-default pull-right'
 
 - if user_can_edit_league?
   .panel.panel-default

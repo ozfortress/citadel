@@ -57,9 +57,10 @@
     %ul.list-group
       - @team.rosters.each do |roster|
         %li.list-group-item
+          - roster_p = present roster
           = link_to roster.competition, league_path(roster.competition)
-          #{roster.division}: #{link_to roster, league_roster_path(roster.competition, roster)}.
-          Signed up on #{roster.created_at.strftime('%c')}.
+          #{roster.division}: #{roster_p.link}.
+          Signed up on #{roster_p.created_at_s}.
 
           - if user_can_edit_team?
             .button-group.pull-right

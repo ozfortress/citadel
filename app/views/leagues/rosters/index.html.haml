@@ -5,7 +5,7 @@
   .panel.panel-default
     .panel-heading #{div} Division
     %ul.list-group
-      - div.rosters.each do |roster|
+      - present_collection(div.rosters).each do |roster|
         - bg = roster.approved? ? 'list-group-item-success' : 'list-group-item-warning'
         %li{ class: "list-group-item #{bg}" }
-          = link_to roster, league_roster_path(@competition, roster)
+          = roster.link

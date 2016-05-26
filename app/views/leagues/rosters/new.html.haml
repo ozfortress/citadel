@@ -33,7 +33,7 @@
               = transfer.user
               has already signed up with the team
               - roster = @competition.players.find_by(user: transfer.user).roster
-              = link_to roster, league_roster_path(@competition, roster)
+              = present(roster).link
 
     = f.submit 'Sign up'
     = link_to 'Cancel', league_path(@competition), class: 'btn btn-default'
