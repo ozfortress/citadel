@@ -50,5 +50,8 @@
   .panel.panel-default
     .panel-heading Admin
     .panel-body
-      = link_to 'Signups', league_rosters_path(@competition), class: 'btn btn-default pull-right'
-      = link_to 'Matches', league_matches_path(@competition), class: 'btn btn-default pull-right'
+      - klass = 'btn btn-default pull-right'
+
+      = link_to 'Transfers', league_transfers_path(@competition), class: klass
+      = link_to 'Signups', league_rosters_path(@competition), class: klass
+      = link_to 'Matches', league_matches_path(@competition), class: klass
