@@ -11,11 +11,17 @@ Rails.application.routes.draw do
     resources :maps, except: [:destroy]
   end
 
+  # TODO: Use simplify routing with member and collection routes for resources
+
   patch 'leagues/:id/visibility', to: 'leagues#visibility', as: 'league_visibility'
   resources :leagues do
-    get   'rosters/:id/review',  to: 'leagues/rosters#review',  as: 'roster_review'
-    patch 'rosters/:id/approve', to: 'leagues/rosters#approve', as: 'roster_approve'
-    resources :rosters, controller: 'leagues/rosters'
+    resources :transfers, controller: 'leagues/transfers', only: [:index, :destroy, :update]
+
+    get   'rosters/:id/review',    to: 'leagues/rosters#review',    as: 'roster_review'
+    patch 'rosters/:id/approve',   to: 'leagues/rosters#approve',   as: 'roster_approve'
+    resources :rosters, controller: 'leagues/rosters' do
+      resource :transfers, controller: 'leagues/rosters/transfers', only: [:show, :create]
+    end
 
     post 'matches/:id/comms',    to: 'leagues/matches#comms',   as: 'match_comms'
     patch 'matches/:id/scores',  to: 'leagues/matches#scores',  as: 'match_scores'

@@ -24,7 +24,12 @@ signed up on #{@roster.created_at.strftime('%c')}
   .panel-body= markdown @roster.description
 
 .panel.panel-default
-  .panel-heading Roster
+  .panel-heading
+    Roster
+    - if user_can_edit_roster?
+      = link_to league_roster_transfers_path(@competition, @roster),
+                class: 'btn btn-default pull-right' do
+        Manage
   %ul.list-group
     - present_collection(@roster.player_users).each do |user|
       %li.list-group-item

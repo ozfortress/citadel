@@ -6,7 +6,7 @@ class LeaguesController < ApplicationController
   end
 
   before_action :require_user_leagues_permission, only: [:new, :create, :destroy]
-  before_action :require_user_league_permission, only: [:edit, :update, :visibility]
+  before_action :require_user_league_permission, only: [:edit, :update, :visibility, :transfers]
   before_action :require_league_public_or_permission, only: [:show]
   before_action :require_private, only: [:destroy]
 

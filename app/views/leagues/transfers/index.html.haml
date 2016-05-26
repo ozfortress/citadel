@@ -1,0 +1,23 @@
+%h1
+  = link_to @competition.name, league_path(@competition)
+  Transfers
+
+.panel.panel-default
+  .panel-heading On Roster
+  - if @competition.pending_transfers.empty?
+    .panel-body No pending transfers...
+
+  %ul.list-group
+    - @competition.pending_transfers.each do |transfer|
+      %li.list-group-item
+        = button_to 'Approve', league_transfer_path(@competition, transfer), method: :patch,
+                    class: 'pull-right btn btn-success'
+        = button_to 'Deny', league_transfer_path(@competition, transfer), method: :delete,
+                    class: 'pull-right btn btn-danger'
+
+        = present(transfer.user).link
+        - if transfer.is_joining?
+          wants to transfer to
+        - else
+          wants to transfer out of
+        = link_to transfer.roster, league_roster_path(@competition, transfer.roster)
