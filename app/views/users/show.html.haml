@@ -60,16 +60,12 @@
     - @user.rosters.each do |roster|
       - if roster.competition.public?
         %li.list-group-item
+          - league_link = link_to roster.competition, league_path(roster.competition)
+          - roster_link = link_to roster, league_roster_path(roster.competition, roster)
           - if roster.competition.signuppable?
-            signed up to
-            = link_to roster.competition, league_path(roster.competition)
-            with
-            = link_to roster, league_roster_path(roster.competition, roster)
+            signed up to #{league_link} with #{roster_link}
           - else
-            playing in
-            = link_to roster.competition, league_path(roster.competition)
-            with
-            = link_to roster, league_roster_path(roster.competition, roster)
+            playing in #{league_link} with #{roster_link}
 
 - if current_user? && !@user.team_invites.empty?
   .panel.panel-default
