@@ -26,8 +26,6 @@ class CompetitionRoster < ActiveRecord::Base
 
   after_initialize :set_defaults, unless: :persisted?
 
-  alias_attribute :to_s, :name
-
   def matches
     home_matches = home_team_matches.select(:id).to_sql
     away_matches = away_team_matches.select(:id).to_sql
@@ -64,10 +62,6 @@ class CompetitionRoster < ActiveRecord::Base
 
   def player_transfers(tfers = nil, unique_for = 'user_id')
     super.where(approved: true)
-  end
-
-  def score_s
-    "Wins: #{win_count} Draws: #{draw_count} Losses: #{loss_count}"
   end
 
   private

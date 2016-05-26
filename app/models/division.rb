@@ -7,4 +7,8 @@ class Division < ActiveRecord::Base
   validates :name, presence: true, length: { in: 1..64 }
 
   alias_attribute :to_s, :name
+
+  def approved_rosters
+    rosters.where(approved: true)
+  end
 end
