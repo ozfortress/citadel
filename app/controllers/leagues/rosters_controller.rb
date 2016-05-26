@@ -57,7 +57,7 @@ module Leagues
     end
 
     def approve
-      if @roster.update(roster_approve_params.merge(approved: true))
+      if @roster.update(approve_roster_params.merge(approved: true))
         redirect_to league_roster_path(@competition, @roster)
       else
         render :review
@@ -82,7 +82,7 @@ module Leagues
       params.require(:competition_roster).permit(:name, :description)
     end
 
-    def roster_approve_params
+    def approve_roster_params
       params.require(:competition_roster).permit(:name, :division_id)
     end
 

@@ -1,6 +1,7 @@
 require 'rails_helper'
 require 'support/devise'
 require 'support/omniauth'
+require 'support/factory_girl'
 
 describe UsersController do
   describe 'GET #index' do

@@ -59,7 +59,7 @@ signed up on #{@roster.created_at.strftime('%c')}
   .panel.panel-default
     .panel-heading Admin
     .panel-body
-      = link_to 'Approve', league_roster_review_path(@competition, @roster),
+      = link_to 'Approve', league_review_roster_path(@competition, @roster),
                            class: 'btn btn-success'
       = button_to 'Decline', league_roster_path(@competition, @roster),
           method: :delete, class: 'btn btn-danger',
