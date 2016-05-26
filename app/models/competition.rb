@@ -42,6 +42,14 @@ class Competition < ActiveRecord::Base
     as_json(only: [:name, :description])
   end
 
+  def pending_transfers
+    transfers.where(approved: false)
+  end
+
+  def pending_transfer?(user)
+    pending_transfers.where(user_id: user.id).exists?
+  end
+
   private
 
   def validate_players_range

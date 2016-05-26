@@ -8,6 +8,10 @@ describe Leagues::RostersController do
   let(:comp) { create(:competition, signuppable: true, min_players: 1) }
   let!(:div) { create(:division, competition: comp) }
 
+  before do
+    team.add_player!(user)
+  end
+
   describe 'GET #new' do
     it 'succeeds for authorized user' do
       user.grant(:edit, team)
@@ -52,6 +56,7 @@ describe Leagues::RostersController do
                                           division_id: div.id, player_ids: [user.id, ''] }
 
       roster = CompetitionRoster.first
+      expect(roster).to_not be(nil)
       expect(roster.name).to eq('A')
       expect(roster.description).to eq('B')
       expect(roster.team).to eq(team)

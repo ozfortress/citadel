@@ -16,7 +16,7 @@ FactoryGirl.define do
         roster.transfers = evaluator.transfers
       else
         roster.transfers = build_list(:competition_transfer, evaluator.player_count,
-                                      roster: roster, is_joining: true)
+                                      roster: roster, is_joining: true, approved: true)
       end
     end
   end

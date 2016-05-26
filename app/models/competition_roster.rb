@@ -50,6 +50,18 @@ class CompetitionRoster < ActiveRecord::Base
     match_outcome_count('<')
   end
 
+  def players_off_roster
+    team.players.where.not(user: players.map(&:user_id))
+  end
+
+  def users_off_roster
+    players_off_roster.map(&:user)
+  end
+
+  def player_transfers(tfers = nil, unique_for = 'user_id')
+    super.where(approved: true)
+  end
+
   def score_s
     "Wins: #{win_count} Draws: #{draw_count} Losses: #{loss_count}"
   end
