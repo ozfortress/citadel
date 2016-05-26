@@ -1,6 +1,6 @@
 module Leagues
   class RostersController < ApplicationController
-    include LeaguePermissions
+    include RosterPermissions
 
     before_action { @competition = Competition.find(params[:league_id]) }
     before_action except: [:index, :new, :create] do
@@ -100,16 +100,13 @@ module Leagues
     end
 
     def require_user_destroy_permission
-      redirect_to league_path(@competition) unless user_can_edit_league? ||
-                                                   user_signed_in? &&
-                                                   current_user.can?(:edit, @roster.team)
+      redirect_to league_path(@competition) unless user_can_edit_roster?
     end
 
     def require_roster_permission
       team = Team.find(params[:team_id])
 
-      redirect_to league_path(@competition) unless user_signed_in? &&
-                                                   current_user.can?(:edit, team)
+      redirect_to league_path(@competition) unless user_can_edit_roster?(team: team)
     end
   end
 end

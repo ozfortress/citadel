@@ -1,6 +1,6 @@
 module Leagues
   module RostersHelper
-    include LeaguePermissions
+    include RosterPermissions
 
     def user_can_edit_team?
       user_signed_in? &&
