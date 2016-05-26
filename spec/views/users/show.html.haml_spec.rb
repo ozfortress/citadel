@@ -7,7 +7,13 @@ describe 'users/show.html.haml' do
 
   before do
     create_list(:transfer, 2, user: user)
-    create_list(:competition_transfer, 2, user: user)
+
+    transfers = create_list(:competition_transfer, 2, user: user)
+    transfers.each do |transfer|
+      transfer.competition.update!(private: false)
+    end
+    transfers.first.competition.update!(signuppable: true)
+
     create(:competition_match, home_team: user.rosters.first)
     create_list(:team_invite, 2, user: user)
   end

@@ -64,7 +64,7 @@
             signed up to
             = link_to roster.competition, league_path(roster.competition)
             with
-            = link_to roster, league_roster_path(roster)
+            = link_to roster, league_roster_path(roster.competition, roster)
           - else
             playing in
             = link_to roster.competition, league_path(roster.competition)
