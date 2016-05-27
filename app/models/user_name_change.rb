@@ -1,4 +1,6 @@
 class UserNameChange < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
+
   belongs_to :user, autosave: true
   belongs_to :approved_by, class_name: 'User'
   belongs_to :denied_by, class_name: 'User'
@@ -8,6 +10,14 @@ class UserNameChange < ActiveRecord::Base
 
   validate :unique_name, on: :create
   validate :only_one_request_per_user, on: :create
+
+  after_update do
+    if approved_by
+      user.notify!("The request to change your name to '#{name}' was accepted!", user_path(user))
+    elsif denied_by
+      user.notify!("The request to change your name to '#{name}' was denied.", user_path(user))
+    end
+  end
 
   def pending?
     !approved_by && !denied_by
