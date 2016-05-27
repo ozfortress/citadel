@@ -17,6 +17,7 @@ describe 'admin/index.html.haml' do
 
       expect(rendered).to include('Leagues')
       expect(rendered).to_not include('Meta')
+      expect(rendered).to_not include('Name Changes')
     end
   end
 
@@ -34,6 +35,7 @@ describe 'admin/index.html.haml' do
 
       expect(rendered).to include('Meta')
       expect(rendered).to_not include('Leagues')
+      expect(rendered).to_not include('Name Changes')
     end
   end
 
@@ -49,7 +51,9 @@ describe 'admin/index.html.haml' do
 
       render
 
-      expect(rendered).to_not include('Name Changes')
+      expect(rendered).to include('Name Changes')
+      expect(rendered).to_not include('Leagues')
+      expect(rendered).to_not include('Meta')
     end
   end
 end
