@@ -46,9 +46,9 @@ Rails.application.routes.draw do
   patch 'team_invites/:id/decline', to: 'team_invites#decline', as: 'decline_team_invite'
 
   get   'users/logout',            to: 'users#logout',              as: 'logout_user'
+  get   'users/names',             to: 'users#names',               as: 'users_names'
   patch 'users/:user_id/name/:id', to: 'users#handle_name_change',  as: 'handle_user_name'
   resources :users, except: [:destroy] do
-    get  'names', on: :collection
     post 'name',  on: :member, to: 'users#request_name_change'
   end
 

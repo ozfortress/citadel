@@ -10,10 +10,10 @@
       = user.link name_change.name
 
       .button-group.pull-right
-        = button_to handle_user_name_path(user, name_change, approve: true),
+        = button_to handle_user_name_path(name_change.user, name_change, approve: true),
                     method: :patch, class: 'btn btn-success' do
           Approve
       .button-group.pull-right
-        = button_to handle_user_name_path(user, name_change, approve: false),
+        = button_to handle_user_name_path(name_change.user, name_change, approve: false),
                     method: :patch, class: 'btn btn-danger' do
           Deny

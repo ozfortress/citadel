@@ -36,4 +36,20 @@ describe 'admin/index.html.haml' do
       expect(rendered).to_not include('Leagues')
     end
   end
+
+  context 'when users authorized' do
+    let(:user) { create(:user) }
+
+    before do
+      user.grant(:edit, :users)
+    end
+
+    it 'displays name changes link' do
+      sign_in(user)
+
+      render
+
+      expect(rendered).to_not include('Name Changes')
+    end
+  end
 end
