@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160517035537) do
+ActiveRecord::Schema.define(version: 20160527073818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -185,6 +185,17 @@ ActiveRecord::Schema.define(version: 20160517035537) do
 
   add_index "maps", ["game_id"], name: "index_maps_on_game_id", using: :btree
 
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "user_id",                    null: false
+    t.boolean  "read",       default: false, null: false
+    t.string   "message",                    null: false
+    t.string   "link",                       null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
+
   create_table "team_invites", force: :cascade do |t|
     t.integer  "team_id"
     t.integer  "user_id"
@@ -284,6 +295,7 @@ ActiveRecord::Schema.define(version: 20160517035537) do
   add_foreign_key "divisions", "competitions"
   add_foreign_key "formats", "games"
   add_foreign_key "maps", "games"
+  add_foreign_key "notifications", "users"
   add_foreign_key "team_invites", "teams"
   add_foreign_key "team_invites", "users"
   add_foreign_key "titles", "competition_rosters"
