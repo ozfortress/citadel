@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :roster_transfers, class_name: 'CompetitionTransfer'
   has_many :titles
   has_many :names, -> { order(created_at: :desc) }, class_name: 'UserNameChange'
+  has_many :notifications, -> { order(created_at: :desc) }
 
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:steam]
 
@@ -83,6 +84,14 @@ class User < ActiveRecord::Base
 
   def aka
     approved_names.where.not(name: name)
+  end
+
+  def unread_notifications
+    notifications.where(read: false)
+  end
+
+  def notify!(message, link)
+    notifications.create!(message: message, link: link)
   end
 
   private

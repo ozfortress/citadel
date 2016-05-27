@@ -7,6 +7,7 @@ describe User do
 
   it { should have_many(:team_invites) }
   it { should have_many(:transfers) }
+  it { should have_many(:notifications) }
 
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }
@@ -40,7 +41,18 @@ describe User do
 
   it 'has rosters'
 
-  describe 'Permissions' do
+  it 'can be notified' do
+    user = create(:user)
+    expect(user.notifications).to eq([])
+
+    notification = user.notify!('foo', '/bar')
+
+    expect(notification).to be_persisted
+    expect(user.notifications).to eq([notification])
+    expect(user.unread_notifications).to eq([notification])
+  end
+
+  context 'Permissions' do
     describe 'Teams' do
       let(:team)       { create(:team) }
       let(:team2)      { create(:team) }
