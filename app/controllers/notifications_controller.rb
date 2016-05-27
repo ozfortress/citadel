@@ -1,6 +1,6 @@
 class NotificationsController < ApplicationController
+  before_action { redirect_to_back unless user_signed_in? }
   before_action { @notification = current_user.notifications.find(params[:id]) }
-  before_action :require_notification_belongs_to_user
 
   def read
     @notification.update!(read: true)
