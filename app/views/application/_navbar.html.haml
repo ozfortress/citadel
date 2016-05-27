@@ -1,0 +1,15 @@
+%li{ class: navbar_class(:home) }
+  = link_to('Home', :pages_home)
+
+%li{ class: navbar_class(:recruitment) }
+  = link_to('Recruitment', :users)
+
+%li{ class: navbar_class(:teams) }
+  = link_to('Teams', :teams)
+
+%li{ class: navbar_class(:leagues) }
+  = link_to('Leagues', :leagues)
+
+- if user_signed_in? && current_user.admin?
+  %li{ class: navbar_class(:admin) }
+    = link_to('Admin', :admin)

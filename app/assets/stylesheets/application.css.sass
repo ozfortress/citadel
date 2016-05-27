@@ -62,12 +62,6 @@ html
   .navbar-right
     float: right
 
-.divider-vertical
-  height: 50px
-  margin: 0 9px
-  border-left: 1px solid #F2F2F2
-  border-right: 1px solid #FFF
-
 textarea
   resize: vertical
 
@@ -80,3 +74,33 @@ li.list-group-item
 
 a#login
   padding-top: 11.8px
+
+.navbar-right-menu
+  right: 0
+  left: auto
+
+.navbar-header a.dropdown-toggle
+  // from navbar-nav
+  color: #9d9d9d
+  background-color: transparent
+
+.navbar-header > li > a:hover, .navbar-header > li > a:focus, .navbar-header .open > a
+  color: white
+  background-color: transparent !important
+
+#notifications
+  position: relative
+  padding-top: 10px
+  padding-bottom: auto
+
+#notifications-glyph
+  font-size: 1.8em
+
+#notifications-badge
+  position: absolute
+  top: 5px
+  right: 5px
+  background-color: #729AAD
+
+#notifications-dropdown
+  width: 200px
