@@ -16,6 +16,10 @@ describe 'layouts/application.html.haml' do
   context 'when authenticated' do
     let(:user) { create(:user) }
 
+    before do
+      create_list(:notification, 10, user: user)
+    end
+
     it 'displays username' do
       view.lookup_context.prefixes = %w(application)
       sign_in(user)
