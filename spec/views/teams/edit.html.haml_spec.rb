@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'support/devise'
 require 'support/factory_girl'
 
-describe 'teams/edit.html.haml' do
+describe 'teams/edit' do
   let(:team) { create(:team) }
 
   it 'shows form' do

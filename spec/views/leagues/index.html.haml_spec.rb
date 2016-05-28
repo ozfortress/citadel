@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'support/devise'
 require 'support/factory_girl'
 
-describe 'leagues/index.html.haml' do
+describe 'leagues/index' do
   let!(:format) { create(:format) }
   let!(:comp1) { create(:competition, format: format, private: false) }
   let!(:comp2) { create(:competition, format: format, private: true) }

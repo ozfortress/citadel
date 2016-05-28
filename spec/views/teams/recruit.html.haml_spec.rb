@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'support/devise'
 require 'support/factory_girl'
 
-describe 'teams/recruit.html.haml' do
+describe 'teams/recruit' do
   let(:team) { create(:team) }
   let!(:users) { create_list(:user, 4) }
 

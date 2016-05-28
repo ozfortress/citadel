@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'support/devise'
 require 'support/factory_girl'
 
-describe 'leagues/matches/new.html.haml' do
+describe 'leagues/matches/new' do
   let(:match) { build(:competition_match) }
 
   it 'displays form' do

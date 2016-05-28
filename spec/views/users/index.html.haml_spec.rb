@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'support/devise'
 require 'support/factory_girl'
 
-describe 'users/index.html.haml' do
+describe 'users/index' do
   let!(:user1) { create(:user) }
   let!(:user2) { create(:user) }
 

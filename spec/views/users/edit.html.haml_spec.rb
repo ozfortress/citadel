@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'support/devise'
 require 'support/factory_girl'
 
-describe 'users/edit.html.haml' do
+describe 'users/edit' do
   let!(:user) { create(:user) }
 
   it 'shows form' do

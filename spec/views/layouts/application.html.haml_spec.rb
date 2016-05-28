@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'support/devise'
 require 'support/factory_girl'
 
-describe 'layouts/application.html.haml' do
+describe 'layouts/application' do
   context 'when unauthenticated' do
     it 'displays steam login' do
       view.lookup_context.prefixes = %w(application)

@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'support/devise'
 require 'support/factory_girl'
 
-describe 'admin/index.html.haml' do
+describe 'admin/index' do
   context 'when competitions authorized' do
     let(:user) { create(:user) }
 

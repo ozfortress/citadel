@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'support/devise'
 require 'support/factory_girl'
 
-describe 'teams/show.html.haml' do
+describe 'teams/show' do
   let!(:team) { create(:team) }
   let!(:transfers_in) { create_list(:transfer, 5, team: team, is_joining: true) }
   let!(:transfers_out) { create_list(:transfer, 5, team: team, is_joining: false) }

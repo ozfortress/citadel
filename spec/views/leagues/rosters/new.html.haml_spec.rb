@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'support/devise'
 require 'support/factory_girl'
 
-describe 'leagues/rosters/new.html.haml' do
+describe 'leagues/rosters/new' do
   let(:team) { create(:team) }
   let(:team2) { create(:team) }
   let(:comp) { create(:competition) }
