@@ -3,10 +3,8 @@ require 'support/devise'
 require 'support/factory_girl'
 
 describe 'users/new.html.haml' do
-  let!(:user) { create(:user) }
-
   it 'shows form' do
-    assign(:user, user)
+    assign(:user, build(:user))
 
     render
   end

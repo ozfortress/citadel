@@ -17,7 +17,7 @@ describe 'leagues/rosters/new.html.haml' do
   it 'displays form' do
     sign_in captain
     assign(:competition, comp)
-    assign(:roster, CompetitionRoster.new)
+    assign(:roster, comp.rosters.new)
 
     render
   end
