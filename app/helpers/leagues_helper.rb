@@ -2,6 +2,6 @@ module LeaguesHelper
   include LeaguePermissions
 
   def games
-    Game.all
+    @games ||= Game.all.select { |game| !game.public_competitions.empty? }
   end
 end
