@@ -8,14 +8,14 @@ class TeamInvite < ActiveRecord::Base
   validates :team, presence: true
 
   after_create do
-    user.notify!("You have been invited to join #{team.name}.", user_path(user))
+    user.notify!("You have been invited to join the team'#{team.name}'.", user_path(user))
   end
 
   before_destroy do
     message = if team.on_roster?(user)
-                "#{user.name} has joined #{team.name}!"
+                "'#{user.name}' has joined the team '#{team.name}'!"
               else
-                "#{user.name} has declined the invitation to join #{team.name}."
+                "'#{user.name}' has declined the invitation to join '#{team.name}'."
               end
 
     User.get_revokeable(:edit, team).each do |captain|
