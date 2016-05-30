@@ -6,13 +6,11 @@ module Roster
   end
 
   def add_player!(user, options = {})
-    options.merge!(user: user, is_joining: true)
-    transfers.create!(options)
+    transfers.create!(options.merge(user: user, is_joining: true))
   end
 
   def remove_player!(user, options = {})
-    options.merge!(user: user, is_joining: false)
-    transfers.create!(options)
+    transfers.create!(options.merge(user: user, is_joining: false))
   end
 
   def player_ids=(value)

@@ -6,7 +6,7 @@
   %ul.list-group
     = f.fields_for :sets do |sets_f|
       = render 'set_fields', f: sets_f
-    %div{ id: "#{div.name}_sets"}
+    %div{ id: "#{div.name}_sets" }
 
   .panel-body
     = link_to_add_association f, :sets, class: 'btn btn-default pull-right',
