@@ -11,6 +11,10 @@ FactoryGirl.define do
 
     after(:build) do |transfer, evaluator|
       if evaluator.propagate_transfers
+        if !transfer.is_joining? && !transfer.roster.on_roster?(transfer.user)
+          create(:competition_transfer, roster: transfer.roster, user: transfer.user, approved: true)
+        end
+
         create(:transfer, team: transfer.roster.team, user: transfer.user,
                           is_joining: true)
       end
