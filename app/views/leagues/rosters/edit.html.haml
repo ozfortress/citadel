@@ -5,8 +5,9 @@
 
 = bootstrap_form_for @roster,
     url: league_roster_path(@competition, @roster) do |f|
-  = f.text_field :name
+
   - if user_can_edit_league?
+    = f.text_field :name
     = f.select :division_id, divisions_select, label: 'Division'
   = f.text_area :description, label: 'Tell us about your team', rows: 10
 

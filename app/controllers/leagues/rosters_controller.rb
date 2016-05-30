@@ -9,9 +9,9 @@ module Leagues
 
     before_action :require_signuppable, only: [:new, :create]
     before_action :require_any_team_permission, only: [:new, :create]
-    before_action :require_user_league_permission, except: [:new, :create, :show, :destroy]
-    before_action :require_user_destroy_permission, only: [:destroy]
-    before_action :require_roster_permission, only: [:create]
+    before_action :require_team_permission, only: [:create]
+    before_action :require_user_league_permission, only: [:index, :review, :approve]
+    before_action :require_roster_permission, only: [:edit, :update, :destroy]
 
     def index
     end
@@ -82,7 +82,7 @@ module Leagues
       if user_can_edit_league?
         params.require(:competition_roster).permit(:name, :description, :division_id)
       else
-        params.require(:competition_roster).permit(:name, :description)
+        params.require(:competition_roster).permit(:description)
       end
     end
 
@@ -103,14 +103,14 @@ module Leagues
       redirect_to league_path(@competition) unless user_can_edit_league?
     end
 
-    def require_user_destroy_permission
-      redirect_to league_path(@competition) unless user_can_edit_roster?
-    end
-
-    def require_roster_permission
+    def require_team_permission
       team = Team.find(params[:team_id])
 
       redirect_to league_path(@competition) unless user_can_edit_roster?(team: team)
+    end
+
+    def require_roster_permission
+      redirect_to league_path(@competition) unless user_can_edit_roster?
     end
   end
 end

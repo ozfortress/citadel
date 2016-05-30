@@ -124,10 +124,10 @@ describe Leagues::RostersController do
   end
 
   describe 'PATCH #update' do
-    let(:roster) { create(:competition_roster, division: div, team: team) }
+    let(:roster) { create(:competition_roster, name: 'B', division: div, team: team) }
     let(:div2) { create(:division, competition: comp) }
 
-    it 'succeeds for authorized user' do
+    it 'succeeds for authorized admin' do
       user.grant(:edit, comp)
       sign_in user
 
@@ -136,6 +136,19 @@ describe Leagues::RostersController do
 
       roster.reload
       expect(roster.name).to eq('A')
+      expect(roster.description).to eq('B')
+      expect(roster.division).to eq(div2)
+    end
+
+    it 'succeeds for authorized captain' do
+      user.grant(:edit, roster.team)
+      sign_in user
+
+      patch :update, league_id: comp.id, id: roster.id,
+                     competition_roster: { description: 'B' }
+
+      roster.reload
+      expect(roster.name).to eq('B')
       expect(roster.description).to eq('B')
       expect(roster.division).to eq(div)
     end
