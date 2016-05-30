@@ -84,8 +84,8 @@ describe CompetitionTransfer do
     user = create(:user)
     roster.team.add_player!(user)
 
-    expect(build(:competition_transfer, roster: roster, user: user,
-                                        is_joining: false)).to be_invalid
+    expect(build(:competition_transfer, propagate_transfers: false, roster: roster,
+                                        user: user, is_joining: false)).to be_invalid
   end
 
   it 'notifies player on creation for joining' do
@@ -95,18 +95,23 @@ describe CompetitionTransfer do
   end
 
   it 'notifies player on creation for leaving' do
-    roster = create(:competition_roster)
-    user = create(:user)
-    roster.team.add_player!(user)
-    roster.add_player!(user, approved: true)
-
-    transfer = create(:competition_transfer, roster: roster, user: user, is_joining: false)
+    transfer = create(:competition_transfer, is_joining: false)
 
     expect(transfer.user.notifications).to_not be_empty
   end
 
-  it 'notifies player on approval' do
+  it 'notifies player on approval for joining' do
     transfer = create(:competition_transfer)
+    user = transfer.user
+    user.notifications.destroy_all
+
+    transfer.update!(approved: true)
+
+    expect(user.notifications).to_not be_empty
+  end
+
+  it 'notifies player on approval for leaving' do
+    transfer = create(:competition_transfer, is_joining: false)
     user = transfer.user
     user.notifications.destroy_all
 
@@ -128,8 +133,18 @@ describe CompetitionTransfer do
     expect(cap2.notifications).to_not be_empty
   end
 
-  it 'notifies player on denial' do
+  it 'notifies player on denial for joining' do
     transfer = create(:competition_transfer)
+    user = transfer.user
+    user.notifications.destroy_all
+
+    transfer.destroy!
+
+    expect(user.notifications).to_not be_empty
+  end
+
+  it 'notifies player on denial for leaving' do
+    transfer = create(:competition_transfer, is_joining: false)
     user = transfer.user
     user.notifications.destroy_all
 
