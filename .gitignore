@@ -79,3 +79,7 @@ bower.json
 
 # CarrierWave
 public/uploads
+
+# letsencrypt
+/key
+/challenge

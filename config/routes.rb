@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount LetsencryptPlugin::Engine, at: '/'
+
   root 'pages#home'
 
   get 'pages/home'
