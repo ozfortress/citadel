@@ -1,4 +1,6 @@
 class CompetitionTransfer < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
+
   belongs_to :user
   belongs_to :roster, foreign_key: 'competition_roster_id', class_name: 'CompetitionRoster'
   delegate :division,    to: :roster,   allow_nil: true
@@ -13,6 +15,32 @@ class CompetitionTransfer < ActiveRecord::Base
   validate :within_roster_size, on: :create
 
   after_initialize :set_defaults, unless: :persisted?
+
+  after_create do
+    next unless is_joining?
+
+    if approved?
+      user.notify!("You have been entered in #{competition.name} with '#{roster.name}'.",
+                   league_roster_path(competition, roster))
+    else
+      user.notify!("It has been requested for you to transfer into '#{roster.name}' "\
+                   "for #{competition.name}.",
+                   league_roster_path(competition, roster))
+    end
+  end
+
+  after_create do
+    next if is_joining?
+
+    if approved?
+      user.notify!("You have been removed from '#{roster.name}' for #{competition.name}.",
+                   league_roster_path(competition, roster))
+    else
+      user.notify!("It has been requested for you to transfer out of '#{roster.name}' "\
+                   "for #{competition.name}.",
+                   league_roster_path(competition, roster))
+    end
+  end
 
   private
 

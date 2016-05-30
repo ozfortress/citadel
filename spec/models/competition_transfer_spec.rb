@@ -87,4 +87,16 @@ describe CompetitionTransfer do
     expect(build(:competition_transfer, roster: roster, user: user,
                                         is_joining: false)).to be_invalid
   end
+
+  it 'notifies player on creation for joining' do
+    transfer = create(:competition_transfer, is_joining: true)
+
+    expect(transfer.user.notifications).to_not be_empty
+  end
+
+  it 'notifies player on creation for leaving' do
+    transfer = create(:competition_transfer, is_joining: false)
+
+    expect(transfer.user.notifications).to_not be_empty
+  end
 end
