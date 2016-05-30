@@ -95,8 +95,59 @@ describe CompetitionTransfer do
   end
 
   it 'notifies player on creation for leaving' do
-    transfer = create(:competition_transfer, is_joining: false)
+    roster = create(:competition_roster)
+    user = create(:user)
+    roster.team.add_player!(user)
+    roster.add_player!(user, approved: true)
+
+    transfer = create(:competition_transfer, roster: roster, user: user, is_joining: false)
 
     expect(transfer.user.notifications).to_not be_empty
+  end
+
+  it 'notifies player on approval' do
+    transfer = create(:competition_transfer)
+    user = transfer.user
+    user.notifications.destroy_all
+
+    transfer.update!(approved: true)
+
+    expect(user.notifications).to_not be_empty
+  end
+
+  it 'notifies captains on approval' do
+    transfer = create(:competition_transfer)
+    cap1 = create(:user)
+    cap1.grant(:edit, transfer.team)
+    cap2 = create(:user)
+    cap2.grant(:edit, transfer.team)
+
+    transfer.update!(approved: true)
+
+    expect(cap1.notifications).to_not be_empty
+    expect(cap2.notifications).to_not be_empty
+  end
+
+  it 'notifies player on denial' do
+    transfer = create(:competition_transfer)
+    user = transfer.user
+    user.notifications.destroy_all
+
+    transfer.destroy!
+
+    expect(user.notifications).to_not be_empty
+  end
+
+  it 'notifies captains on denial' do
+    transfer = create(:competition_transfer)
+    cap1 = create(:user)
+    cap1.grant(:edit, transfer.team)
+    cap2 = create(:user)
+    cap2.grant(:edit, transfer.team)
+
+    transfer.destroy!
+
+    expect(cap1.notifications).to_not be_empty
+    expect(cap2.notifications).to_not be_empty
   end
 end

@@ -3,6 +3,7 @@ class CompetitionTransfer < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :roster, foreign_key: 'competition_roster_id', class_name: 'CompetitionRoster'
+  delegate :team,        to: :roster,   allow_nil: true
   delegate :division,    to: :roster,   allow_nil: true
   delegate :competition, to: :division, allow_nil: true
 
@@ -39,6 +40,46 @@ class CompetitionTransfer < ActiveRecord::Base
       user.notify!("It has been requested for you to transfer out of '#{roster.name}' "\
                    "for #{competition.name}.",
                    league_roster_path(competition, roster))
+    end
+  end
+
+  after_update do
+    next unless approved?
+
+    if is_joining?
+      user_msg = "The request to transfer into '#{roster.name}' for #{competition.name} "\
+                 'has been approved.'
+      capt_msg = "The request to transfer '#{user.name}' into '#{roster.name}' for "\
+                 "#{competition.name} has been approved."
+    else
+      user_msg = "The request to transfer out of '#{roster.name}' for #{competition.name} "\
+                 'has been approved.'
+      capt_msg = "The request to transfer '#{user.name}' out of '#{roster.name}' for "\
+                 "#{competition.name} has been approved."
+    end
+
+    user.notify!(user_msg, league_roster_path(competition, roster))
+    User.get_revokeable(:edit, team).each do |captain|
+      captain.notify!(capt_msg, user_path(user))
+    end
+  end
+
+  before_destroy do
+    if is_joining?
+      user_msg = "The request to transfer into '#{roster.name}' for #{competition.name} "\
+                 'has been denied.'
+      capt_msg = "The request to transfer '#{user.name}' into '#{roster.name}' for "\
+                 "#{competition.name} has been denied."
+    else
+      user_msg = "The request to transfer out of '#{roster.name}' for #{competition.name} "\
+                 'has been denied.'
+      capt_msg = "The request to transfer '#{user.name}' out of '#{roster.name}' for "\
+                 "#{competition.name} has been denied."
+    end
+
+    user.notify!(user_msg, league_roster_path(competition, roster))
+    User.get_revokeable(:edit, team).each do |captain|
+      captain.notify!(capt_msg, user_path(user))
     end
   end
 
