@@ -59,7 +59,8 @@ describe CompetitionRoster do
 
       expect(roster.home_team_matches).to eq([home_match])
       expect(roster.away_team_matches).to eq([away_match])
-      expect(roster.matches).to eq([home_match, away_match])
+      expect(roster.matches).to include(home_match)
+      expect(roster.matches).to include(away_match)
     end
   end
 end
