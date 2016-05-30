@@ -4,7 +4,7 @@ module Leagues
 
     def teams_select(div)
       div.rosters.where(approved: true).map do |roster|
-        [roster.to_s, roster.id]
+        [roster.name, roster.id]
       end
     end
 

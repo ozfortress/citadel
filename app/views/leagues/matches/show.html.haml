@@ -5,9 +5,9 @@
 
 %h1 #{link_to @competition, league_path(@competition)}: #{@match.home_team.division}
 %h2
-  = link_to @match.home_team, league_roster_path(@competition, @match.home_team)
+  = present(@match.home_team).link
   vs
-  = link_to @match.away_team, league_roster_path(@competition, @match.away_team)
+  = present(@match.away_team).link
 
 .table-responsive
   %table.table
@@ -16,8 +16,8 @@
         %th Home Team
         %th Away Team
       %tr
-        %th= link_to @match.home_team, league_roster_path(@competition, @match.home_team)
-        %th= link_to @match.away_team, league_roster_path(@competition, @match.away_team)
+        %th= present(@match.home_team).link
+        %th= present(@match.away_team).link
     %tbody
       - home_players = @match.home_team.player_users
       - away_players = @match.away_team.player_users

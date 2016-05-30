@@ -59,8 +59,8 @@ signed up on #{@roster.created_at.strftime('%c')}
   .panel.panel-default
     .panel-heading Admin
     .panel-body
-      = link_to 'Approve', league_review_roster_path(@competition, @roster),
-                           class: 'btn btn-success'
+      = link_to 'Approve', review_league_roster_path(@competition, @roster),
+                           class: 'btn btn-success pull-right'
       = button_to 'Decline', league_roster_path(@competition, @roster),
-          method: :delete, class: 'btn btn-danger',
+          method: :delete, class: 'btn btn-danger pull-right',
           data: { confirm: "Are you sure you want to decline this team's sign up?" }
