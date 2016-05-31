@@ -45,6 +45,7 @@ module Auth
         action_cls.create!(params)
       end
 
+      #:nocov:
       def grant_all
         subjects = self.class.permissions.values.sum
 
@@ -52,6 +53,7 @@ module Auth
           grant(action, subject) unless cls.has_subject
         end
       end
+      #:nocov:
 
       def revoke(action, subject)
         get_permission(action, subject).delete_all
