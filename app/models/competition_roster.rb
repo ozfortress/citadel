@@ -33,7 +33,7 @@ class CompetitionRoster < ActiveRecord::Base
   end
 
   def upcoming_matches
-    matches.where.not(status: 'confirmed')
+    matches.where(status: 'pending')
   end
 
   def approved_transfers
