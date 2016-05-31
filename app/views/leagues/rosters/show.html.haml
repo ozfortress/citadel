@@ -3,7 +3,7 @@
     %span.glyphicon.glyphicon-warning-sign
     Roster is awaiting approval
 
-- if user_can_edit_team?
+- if user_can_edit_roster?
   = link_to edit_league_roster_path(@competition, @roster), class: 'btn btn-default pull-right' do
     Edit
     %span.glyphicon.glyphicon-cog
