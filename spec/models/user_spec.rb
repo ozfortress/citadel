@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'support/carrierwave'
 require 'support/shoulda'
 require 'support/factory_girl'
 
@@ -50,6 +51,11 @@ describe User do
     expect(notification).to be_persisted
     expect(user.notifications).to eq([notification])
     expect(user.unread_notifications).to eq([notification])
+  end
+
+  it 'has avatar' do
+    image = File.open(Rails.root.join('spec/support/avatar.png'))
+    expect(build(:user, avatar: image)).to be_valid
   end
 
   context 'Permissions' do
