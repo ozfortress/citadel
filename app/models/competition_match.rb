@@ -20,10 +20,6 @@ class CompetitionMatch < ActiveRecord::Base
 
   after_initialize :set_defaults, unless: :persisted?
 
-  def to_s
-    "#{home_team.name} vs #{away_team.name}"
-  end
-
   def confirm_scores(confirm)
     update(status: confirm ? :confirmed : :pending)
   end
