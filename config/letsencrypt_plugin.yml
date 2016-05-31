@@ -1,5 +1,5 @@
 default: &default
-  endpoint: 'https://acme-staging.api.letsencrypt.org/'
+  endpoint: 'https://acme-v01.api.letsencrypt.org/'
   email: 'ben.schaaf@gmail.com'
   domain: 'demo.citadel.tv'
 
