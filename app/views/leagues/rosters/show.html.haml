@@ -51,9 +51,8 @@ signed up on #{@roster.created_at.strftime('%c')}
 .panel.panel-default
   .panel-heading Matches
   %ul.list-group
-    - @roster.matches.each do |match|
-      %li.list-group-item
-        = link_to match, league_match_path(@competition, match)
+    - present_collection(@roster.matches).each do |match|
+      %li.list-group-item= match.link
 
 - if user_can_edit_league? && !@roster.approved?
   .panel.panel-default

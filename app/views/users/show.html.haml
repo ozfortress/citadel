@@ -47,12 +47,9 @@
     .panel-heading Upcoming Matches
     %ul.list-group
       - @user.rosters.each do |roster|
-        - roster.upcoming_matches.each do |match|
+        - present_collection(roster.upcoming_matches).each do |match|
           %li.list-group-item
-            = link_to league_match_path(roster.competition, match) do
-              = match.home_team
-              vs
-              = match.away_team
+            = match.link
 
 .panel.panel-default
   .panel-heading Leagues
