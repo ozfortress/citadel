@@ -20,27 +20,27 @@ class CompetitionTransfer < ActiveRecord::Base
   after_create do
     next unless is_joining?
 
-    if approved?
-      user.notify!("You have been entered in #{competition.name} with '#{roster.name}'.",
-                   league_roster_path(competition, roster))
-    else
-      user.notify!("It has been requested for you to transfer into '#{roster.name}' "\
-                   "for #{competition.name}.",
-                   league_roster_path(competition, roster))
-    end
+    msg = if approved?
+            "You have been entered in #{competition.name} with '#{roster.name}'."
+          else
+            "It has been requested for you to transfer into '#{roster.name}' "\
+            "for #{competition.name}."
+          end
+
+    user.notify!(msg, league_roster_path(competition, roster))
   end
 
   after_create do
     next if is_joining?
 
-    if approved?
-      user.notify!("You have been removed from '#{roster.name}' for #{competition.name}.",
-                   league_roster_path(competition, roster))
-    else
-      user.notify!("It has been requested for you to transfer out of '#{roster.name}' "\
-                   "for #{competition.name}.",
-                   league_roster_path(competition, roster))
-    end
+    msg = if approved?
+            "You have been removed from '#{roster.name}' for #{competition.name}."
+          else
+            "It has been requested for you to transfer out of '#{roster.name}' "\
+            "for #{competition.name}."
+          end
+
+    user.notify!(msg, league_roster_path(competition, roster))
   end
 
   after_update do
@@ -86,9 +86,6 @@ class CompetitionTransfer < ActiveRecord::Base
   private
 
   def set_defaults
-    self.is_joining = true  if is_joining.nil?
-    self.approved   = false if approved.nil?
-
     if competition.present? && (!competition.transfers_require_approval? ||
                                 competition.signuppable?)
       self.approved = true

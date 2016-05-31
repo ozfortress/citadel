@@ -79,10 +79,12 @@ module Leagues
     end
 
     def roster_params
+      param = params.require(:competition_roster)
+
       if user_can_edit_league?
-        params.require(:competition_roster).permit(:name, :description, :division_id)
+        param.permit(:name, :description, :division_id)
       else
-        params.require(:competition_roster).permit(:description)
+        param.permit(:description)
       end
     end
 
