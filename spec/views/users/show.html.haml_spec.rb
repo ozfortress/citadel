@@ -8,7 +8,7 @@ describe 'users/show' do
   before do
     create_list(:transfer, 2, user: user)
 
-    transfers = create_list(:competition_transfer, 2, user: user)
+    transfers = create_list(:competition_transfer, 2, user: user, approved: true)
     transfers.each do |transfer|
       transfer.competition.update!(private: false)
     end
