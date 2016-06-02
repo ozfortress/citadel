@@ -138,6 +138,15 @@ describe UsersController do
 
       expect(user.pending_names.size).to eq(0)
     end
+
+    it 'fails if name change is already pending' do
+      create(:user_name_change, user: user, name: 'B')
+      sign_in user
+
+      post :request_name_change, id: user.id, name_change: { name: 'C' }
+
+      expect(user.pending_names.size).to eq(1)
+    end
   end
 
   describe 'PATCH #handle_name_change' do
