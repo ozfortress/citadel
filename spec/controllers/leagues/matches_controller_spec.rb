@@ -53,12 +53,28 @@ describe Leagues::MatchesController do
       expect(set.map).to eq(map)
     end
 
-    it 'fails with invalid data' do
+    it 'fails with same team' do
       user.grant(:edit, comp)
       sign_in user
 
       post :create, league_id: comp.id, competition_match: {
         home_team_id: team1.id, away_team_id: team1.id
+      }
+
+      expect(response).to render_template(:new)
+    end
+
+    it 'fails with teams across divisions' do
+      div2 = create(:division, competition: comp)
+      team2.update!(division: div2)
+      user.grant(:edit, comp)
+      sign_in user
+
+      post :create, league_id: comp.id, competition_match: {
+        home_team_id: team1.id, away_team_id: team2.id,
+        sets_attributes: [
+          { map_id: map.id }
+        ]
       }
 
       expect(response).to render_template(:new)
