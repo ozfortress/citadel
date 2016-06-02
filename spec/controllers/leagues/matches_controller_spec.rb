@@ -206,6 +206,19 @@ describe Leagues::MatchesController do
       expect(set.away_team_score).to eq(5)
     end
 
+    it 'succeeds for admin user ff' do
+      user.grant(:edit, comp)
+      sign_in user
+
+      patch :scores, league_id: comp.id, id: match.id, competition_match: {
+        forfeit_by: :home_team_forfeit,
+      }
+
+      match.reload
+      expect(match.status).to eq('confirmed')
+      expect(match.forfeit_by).to eq('home_team_forfeit')
+    end
+
     it 'succeeds for home team authorized user' do
       user.grant(:edit, team1.team)
       sign_in user
@@ -324,6 +337,33 @@ describe Leagues::MatchesController do
 
       match.reload
       expect(match.status).to eq('submitted_by_home_team')
+    end
+  end
+
+  describe 'PATCH #forfeit' do
+    let!(:match) { create(:competition_match, home_team: team1, away_team: team2) }
+    let!(:set) { create(:competition_set, match: match) }
+
+    it 'succeeds for home team authorized user' do
+      user.grant(:edit, team1.team)
+      sign_in user
+
+      patch :forfeit, league_id: comp.id, id: match.id
+
+      match.reload
+      expect(match.status).to eq('confirmed')
+      expect(match.forfeit_by).to eq('home_team_forfeit')
+    end
+
+    it 'succeeds for away team authorized user' do
+      user.grant(:edit, team2.team)
+      sign_in user
+
+      patch :forfeit, league_id: comp.id, id: match.id
+
+      match.reload
+      expect(match.status).to eq('confirmed')
+      expect(match.forfeit_by).to eq('away_team_forfeit')
     end
   end
 
