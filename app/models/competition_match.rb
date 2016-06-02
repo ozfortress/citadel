@@ -11,6 +11,9 @@ class CompetitionMatch < ActiveRecord::Base
   enum status: [:pending, :submitted_by_home_team, :submitted_by_away_team, :confirmed]
   validates :status, presence: true
 
+  enum forfeit_by: [:no_forfeit, :home_team_forfeit, :away_team_forfeit]
+  validates :forfeit_by, presence: true
+
   validate :home_and_away_team_are_different
   validate :home_and_away_team_are_in_the_same_division
   validate :teams_are_approved
@@ -20,8 +23,16 @@ class CompetitionMatch < ActiveRecord::Base
 
   after_initialize :set_defaults, unless: :persisted?
 
+  before_validation do
+    self.status = :confirmed unless forfeit_by == 'no_forfeit'
+  end
+
   def confirm_scores(confirm)
     update(status: confirm ? :confirmed : :pending)
+  end
+
+  def forfeit(is_home_team)
+    update(forfeit_by: (is_home_team ? :home_team_forfeit : :away_team_forfeit))
   end
 
   private

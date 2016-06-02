@@ -33,7 +33,7 @@ class CompetitionRoster < ActiveRecord::Base
   end
 
   def upcoming_matches
-    matches.where(status: 'pending')
+    matches.where(status: :pending)
   end
 
   def approved_transfers
@@ -67,12 +67,34 @@ class CompetitionRoster < ActiveRecord::Base
   private
 
   def match_outcome_count(comparison)
-    (home_team_sets.where(competition_matches: { status: 3 })
-                  .where("home_team_score #{comparison} away_team_score")
-                  .count +
-     away_team_sets.where(competition_matches: { status: 3 })
+    count = match_no_forfeit_outcome_count(comparison)
+    count += match_forfeit_outcome_count(true) if comparison == '>'
+    count += match_forfeit_outcome_count(false) if comparison == '<'
+    count
+  end
+
+  def match_no_forfeit_outcome_count(comparison)
+    no_forfeit = CompetitionMatch.forfeit_bies[:no_forfeit]
+
+    (home_team_sets.where(competition_matches: { status: :confirmed,
+                                                 forfeit_by: no_forfeit })
+                   .where("home_team_score #{comparison} away_team_score")
+                   .count +
+     away_team_sets.where(competition_matches: { status: :confirmed,
+                                                 forfeit_by: no_forfeit })
                    .where("away_team_score #{comparison} home_team_score")
                    .count)
+  end
+
+  def match_forfeit_outcome_count(win)
+    home_ff = CompetitionMatch.forfeit_bies[:away_team_forfeit]
+    away_ff = CompetitionMatch.forfeit_bies[:home_team_forfeit]
+    home_ff, away_ff = away_ff, home_ff unless win
+
+    (home_team_matches.where(forfeit_by: home_ff)
+                      .count +
+     away_team_matches.where(forfeit_by: away_ff)
+                      .count)
   end
 
   def set_defaults

@@ -9,9 +9,14 @@
         - away = present(match.away_team).link
 
         .pull-right
-          - if set.home_team_score > set.away_team_score
-            #{home} beat #{away}, #{set.home_team_score} to #{set.away_team_score}
-          - elsif set.home_team_score < set.away_team_score
-            #{away} beat #{home}, #{set.away_team_score} to #{set.home_team_score}
-          - else
-            #{home} tied with #{away}, #{set.home_team_score} to #{set.away_team_score}
+          - if match.no_forfeit?
+            - if set.home_team_score > set.away_team_score
+              #{home} beat #{away}, #{set.home_team_score} to #{set.away_team_score}
+            - elsif set.home_team_score < set.away_team_score
+              #{away} beat #{home}, #{set.away_team_score} to #{set.home_team_score}
+            - else
+              #{home} tied with #{away}, #{set.home_team_score} to #{set.away_team_score}
+          - if match.home_team_forfeit?
+            #{away} wins by default
+          - if match.away_team_forfeit?
+            #{home} wins by default

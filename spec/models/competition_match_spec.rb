@@ -10,4 +10,9 @@ describe CompetitionMatch do
 
   it { should validate_presence_of(:home_team) }
   it { should validate_presence_of(:away_team) }
+
+  it { should define_enum_for(:status).with([:pending, :submitted_by_home_team,
+                                             :submitted_by_away_team, :confirmed]) }
+
+  it { should define_enum_for(:forfeit_by).with([:no_forfeit, :home_team_forfeit, :away_team_forfeit]) }
 end

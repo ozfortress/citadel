@@ -9,7 +9,7 @@ module Leagues
 
     before_action :require_user_league_permission, only: [:new, :create, :edit, :update, :destroy]
     before_action :require_user_either_teams, only: [:comms, :scores, :confirm]
-    before_action :require_user_can_report_scores, only: [:scores]
+    before_action :require_user_can_report_scores, only: [:scores, :forfeit]
 
     def index
     end
@@ -72,6 +72,12 @@ module Leagues
       end
     end
 
+    def forfeit
+      @match.forfeit(user_can_home_team?)
+      show
+      render :show
+    end
+
     def destroy
       if @match.destroy
         redirect_to league_path(@competition)
@@ -85,7 +91,8 @@ module Leagues
     def report_scores_params
       if user_can_edit_league?
         params.require(:competition_match)
-              .permit(:status, sets_attributes: [:id, :home_team_score, :away_team_score])
+              .permit(:status, :forfeit_by, sets_attributes: [:id, :home_team_score,
+                                                              :away_team_score])
       elsif user_can_either_teams?
         report_scores_by_team_params
       end
@@ -114,10 +121,7 @@ module Leagues
     end
 
     def require_user_can_report_scores
-      unless user_can_edit_league? || (user_can_submit_team_score? &&
-                                       @competition.matches_submittable)
-        redirect_to league_match_path(@competition, @match)
-      end
+      redirect_to league_match_path(@competition, @match) unless user_can_submit_team_score?
     end
 
     def require_user_league_permission

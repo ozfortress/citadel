@@ -31,7 +31,9 @@ Rails.application.routes.draw do
     post  'matches/:id/comms',   to: 'leagues/matches#comms',   as: 'match_comms'
     patch 'matches/:id/scores',  to: 'leagues/matches#scores',  as: 'match_scores'
     patch 'matches/:id/confirm', to: 'leagues/matches#confirm', as: 'match_confirm'
-    resources :matches, controller: 'leagues/matches'
+    resources :matches, controller: 'leagues/matches' do
+      patch 'forfeit', on: :member
+    end
   end
 
   resources :teams, except: [:destroy] do
