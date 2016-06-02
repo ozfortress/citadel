@@ -21,8 +21,9 @@
             .pull-right= comm.created_at.strftime('%c')
         = markdown comm.content
 
-  .panel-body
-    = bootstrap_form_for comm, url: league_match_comms_path(competition, match) do |f|
-      = f.text_area :content, hide_label: true, rows: 3
+  - if user_can_either_teams?
+    .panel-body
+      = bootstrap_form_for comm, url: league_match_comms_path(competition, match) do |f|
+        = f.text_area :content, hide_label: true, rows: 3
 
-      = f.submit 'Submit'
+        = f.submit 'Submit'

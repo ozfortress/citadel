@@ -36,6 +36,4 @@
 - elsif user_can_either_teams?
   = render 'match_scores', match: @match, competition: @competition
 
-- if user_can_either_teams?
-  = render 'match_comms', match: @match, competition: @competition, comm: @comm
-
+= render 'match_comms', match: @match, competition: @competition, comm: @comm
