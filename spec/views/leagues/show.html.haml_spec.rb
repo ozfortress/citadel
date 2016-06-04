@@ -41,6 +41,7 @@ describe 'leagues/show' do
     let!(:div) { create(:division, competition: comp) }
     let!(:roster1) { create(:competition_roster, division: div, approved: false) }
     let!(:roster2) { create(:competition_roster, division: div, approved: true) }
+    let!(:roster3) { create(:competition_roster, division: div, disbanded: true) }
 
     it 'displays league details' do
       assign(:competition, comp)
@@ -51,6 +52,7 @@ describe 'leagues/show' do
       expect(rendered).to include(div.name)
       expect(rendered).to_not include(roster1.name)
       expect(rendered).to include(roster2.name)
+      expect(rendered).to include(roster3.name)
     end
   end
 end
