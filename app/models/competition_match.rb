@@ -17,6 +17,7 @@ class CompetitionMatch < ActiveRecord::Base
   validate :home_and_away_team_are_different
   validate :home_and_away_team_are_in_the_same_division
   validate :teams_are_approved
+  validate :rosters_not_disbanded, on: :create
 
   delegate :division, to: :home_team, allow_nil: true
   delegate :competition, to: :division, allow_nil: true
@@ -54,6 +55,13 @@ class CompetitionMatch < ActiveRecord::Base
   def teams_are_approved
     errors.add(:home_team_id, 'must be approved') if home_team.present? && !home_team.approved?
     errors.add(:away_team_id, 'must be approved') if away_team.present? && !away_team.approved?
+  end
+
+  def rosters_not_disbanded
+    errors.add(:home_team_id, 'is disbanded and cannot play') if home_team.present? &&
+                                                                 home_team.disbanded?
+    errors.add(:away_team_id, 'is disbanded and cannot play') if away_team.present? &&
+                                                                 away_team.disbanded?
   end
 
   def set_defaults
