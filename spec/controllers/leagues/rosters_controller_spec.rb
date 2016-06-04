@@ -113,13 +113,33 @@ describe Leagues::RostersController do
   describe 'GET #edit' do
     let(:roster) { create(:competition_roster, division: div, team: team) }
 
-    it 'succeeds for authorized user' do
+    it 'succeeds for authorized captain' do
+      user.grant(:edit, roster.team)
+      sign_in user
+
+      get :edit, league_id: comp.id, id: roster.id
+
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'succeeds for authorized admin' do
       user.grant(:edit, comp)
       sign_in user
 
       get :edit, league_id: comp.id, id: roster.id
 
       expect(response).to have_http_status(:success)
+    end
+
+    it 'redirects for authorized captain if team disbanded' do
+      user.grant(:edit, roster.team)
+      comp.update!(signuppable: false)
+      roster.disband
+      sign_in user
+
+      get :edit, league_id: comp.id, id: roster.id
+
+      expect(response).to redirect_to(league_roster_path(comp, roster))
     end
   end
 
@@ -153,6 +173,21 @@ describe Leagues::RostersController do
       expect(roster.division).to eq(div)
     end
 
+    it 'redirects for authorized captain if team disbanded' do
+      user.grant(:edit, roster.team)
+      comp.update!(signuppable: false)
+      roster.disband
+      sign_in user
+
+      patch :update, league_id: comp.id, id: roster.id,
+                     competition_roster: { description: 'B' }
+
+      roster.reload
+      expect(roster.name).to eq('B')
+      expect(roster.description).to_not eq('B')
+      expect(roster.division).to eq(div)
+    end
+
     it 'fails with invalid data' do
       user.grant(:edit, comp)
       sign_in user
@@ -170,13 +205,13 @@ describe Leagues::RostersController do
 
       patch :update, league_id: comp.id, id: roster.id
 
-      expect(response).to redirect_to(league_path(comp.id))
+      expect(response).to redirect_to(league_roster_path(comp.id, roster))
     end
 
     it 'redirects for unauthenticated user' do
       patch :update, league_id: comp.id, id: roster.id
 
-      expect(response).to redirect_to(league_path(comp.id))
+      expect(response).to redirect_to(league_roster_path(comp.id, roster))
     end
   end
 
@@ -255,6 +290,17 @@ describe Leagues::RostersController do
       delete :destroy, league_id: comp.id, id: roster.id
 
       expect(CompetitionRoster.exists?(roster.id)).to be(false)
+    end
+
+    it 'disbands roster for authorized team captain if not signuppable' do
+      user.grant(:edit, team)
+      comp.update!(signuppable: false)
+      sign_in user
+
+      delete :destroy, league_id: comp.id, id: roster.id
+
+      expect(CompetitionRoster.exists?(roster.id)).to be(true)
+      expect(roster.reload.disbanded?).to be(true)
     end
 
     it 'redirects for unauthorized user' do
