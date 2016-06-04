@@ -1,15 +1,32 @@
 %h1= @competition.name
 
 %h4
-  Edit sign up for #{@roster.team.name}
+  - if @competition.signuppable?
+    Edit sign up for #{@roster.team.name}
+  - else
+    Edit #{@roster.name}
 
-= bootstrap_form_for @roster,
-    url: league_roster_path(@competition, @roster) do |f|
+.panel.panel-default
+  .panel-heading Info
+  .panel-body
+    = bootstrap_form_for @roster,
+        url: league_roster_path(@competition, @roster) do |f|
 
-  - if user_can_edit_league?
-    = f.text_field :name
-    = f.select :division_id, divisions_select, label: 'Division'
-  = f.text_area :description, label: 'Tell us about your team', rows: 10
+      - if user_can_edit_league?
+        = f.text_field :name
+        = f.select :division_id, divisions_select, label: 'Division'
+        = f.check_box :disbanded
+      = f.text_area :description, label: 'Tell us about your team', rows: 10
 
-  = f.submit 'Update'
-  = link_to 'Cancel', league_roster_path(@competition, @roster), class: 'btn btn-default'
+      = f.submit 'Update'
+      = link_to 'Cancel', league_roster_path(@competition, @roster), class: 'btn btn-default'
+
+- unless user_can_edit_league?
+  .panel.panel-danger
+    .panel-heading Danger Zone
+    .panel-body
+      = button_to league_roster_path(@competition, @roster), method: :delete,
+                      class: 'btn btn-danger',
+                      data: { confirm: roster_destroy_confirm } do
+        %span.glyphicon.glyphicon-trash
+        = roster_destroy_label

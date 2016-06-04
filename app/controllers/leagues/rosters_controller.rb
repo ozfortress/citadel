@@ -65,10 +65,10 @@ module Leagues
     end
 
     def destroy
-      if @roster.destroy
+      if @roster.disband
         redirect_to league_path(@competition)
       else
-        render :show
+        render :edit
       end
     end
 
@@ -82,7 +82,7 @@ module Leagues
       param = params.require(:competition_roster)
 
       if user_can_edit_league?
-        param.permit(:name, :description, :division_id)
+        param.permit(:name, :description, :disbanded, :division_id)
       else
         param.permit(:description)
       end
@@ -112,7 +112,7 @@ module Leagues
     end
 
     def require_roster_permission
-      redirect_to league_path(@competition) unless user_can_edit_roster?
+      redirect_to league_roster_path(@competition, @roster) unless user_can_edit_roster?
     end
   end
 end

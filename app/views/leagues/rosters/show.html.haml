@@ -13,7 +13,10 @@
   - unless @competition.signuppable?
     \: #{@roster.division}
 
-%h2= @roster.name
+%h2
+  = @roster.name
+  - if @roster.disbanded?
+    %span.pull-right.label.label-danger Disbanded
 Team #{link_to @roster.team, team_path(@roster.team)}
 signed up on #{@roster.created_at.strftime('%c')}
 
