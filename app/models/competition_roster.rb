@@ -34,7 +34,8 @@ class CompetitionRoster < ActiveRecord::Base
   end
 
   def upcoming_matches
-    matches.where(status: :pending)
+    pending = CompetitionMatch.statuses[:pending]
+    matches.where(status: pending)
   end
 
   def approved_transfers
