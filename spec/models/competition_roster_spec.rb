@@ -63,4 +63,17 @@ describe CompetitionRoster do
       expect(roster.matches).to include(away_match)
     end
   end
+
+  describe '#disband' do
+    it 'forfeits all matches' do
+      roster = create(:competition_roster)
+      home_match = create(:competition_match, home_team: roster)
+      away_match = create(:competition_match, away_team: roster)
+
+      roster.disband
+
+      expect(home_match.reload.forfeit_by).to eq('home_team_forfeit')
+      expect(away_match.reload.forfeit_by).to eq('away_team_forfeit')
+    end
+  end
 end

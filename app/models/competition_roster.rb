@@ -21,6 +21,7 @@ class CompetitionRoster < ActiveRecord::Base
                           length: { in: 1..64 }
   validates :description, presence: true, allow_blank: true
   validates :approved,    inclusion: { in: [true, false] }
+  validates :disbanded,   inclusion: { in: [true, false] }
   validate :player_count_minimums
   validate :player_count_maximums
 
@@ -64,7 +65,28 @@ class CompetitionRoster < ActiveRecord::Base
     super.where(approved: true)
   end
 
+  def disband
+    return destroy if competition.signuppable?
+
+    transaction do
+      forfeit_all!
+      update!(disbanded: true)
+    end
+  end
+
   private
+
+  def forfeit_all!
+    no_forfeit = CompetitionMatch.forfeit_bies[:no_forfeit]
+    home_team_matches.where(forfeit_by: no_forfeit)
+                     .find_each do |match|
+      match.update!(forfeit_by: CompetitionMatch.forfeit_bies[:home_team_forfeit])
+    end
+    away_team_matches.where(forfeit_by: no_forfeit)
+                     .find_each do |match|
+      match.update!(forfeit_by: CompetitionMatch.forfeit_bies[:away_team_forfeit])
+    end
+  end
 
   def match_outcome_count(comparison)
     count = match_no_forfeit_outcome_count(comparison)
