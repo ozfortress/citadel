@@ -180,4 +180,27 @@ describe TeamsController do
       expect(user.can?(:edit, :teams)).to be(false)
     end
   end
+
+  describe 'DELETE #destroy' do
+    let(:team) { create(:team) }
+    let(:user) { create(:user) }
+
+    it 'succeeds for authorized user' do
+      user.grant(:edit, :teams)
+      sign_in user
+
+      delete :destroy, id: team.id
+
+      expect(Team.where(id: team.id)).to_not exist
+    end
+
+    it 'redirects for unauthorized captains' do
+      user.grant(:edit, team)
+      sign_in user
+
+      delete :destroy, id: team.id
+
+      expect(Team.where(id: team.id)).to exist
+    end
+  end
 end

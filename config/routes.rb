@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :teams, except: [:destroy] do
+  resources :teams do
     member do
       get   'recruit'
       patch 'invite'

@@ -19,3 +19,11 @@
                         method: :patch, class: 'btn btn-danger' do
               Revoke
               %span.glyphicon.glyphicon-remove
+
+- if user_can_edit_teams?
+  .panel.panel-danger
+    .panel-heading Danger Zone
+    .panel-body
+      = button_to team_path(@team), method: :destroy, class: 'btn btn-danger' do
+        %span.glyphicon.glyphicon-trash
+        Delete Team

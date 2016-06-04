@@ -3,7 +3,7 @@ require 'support/shoulda'
 require 'support/factory_girl'
 
 describe Team do
-  before { create(:team) }
+  let!(:team) { create(:team) }
 
   it { should have_many(:team_invites) }
   it { should have_many(:transfers) }
@@ -17,7 +17,6 @@ describe Team do
   it { should validate_length_of(:description).is_at_least(0) }
 
   describe 'players' do
-    let(:team) { create(:team) }
     let(:user1) { create(:user) }
     let(:user2) { create(:user) }
     let(:user3) { create(:user) }
@@ -32,6 +31,18 @@ describe Team do
 
       expect(team.transfers.size).to eq(6)
       expect(team.player_users).to eq([user1, user2])
+    end
+  end
+
+  describe '#destroy' do
+    it "can't be destroyed when the team has roster" do
+      create(:competition_roster, team: team)
+
+      expect(team.destroy).to eq(false)
+    end
+
+    it 'can be destroyed' do
+      expect(team.destroy).to_not be(nil)
     end
   end
 end

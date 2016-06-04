@@ -15,6 +15,8 @@ class Team < ActiveRecord::Base
 
   alias_attribute :to_s, :name
 
+  before_destroy :must_not_have_rosters, prepend: true
+
   def invite(user)
     team_invites.create(user: user)
   end
@@ -27,5 +29,15 @@ class Team < ActiveRecord::Base
     rosters.joins(:division)
            .where(divisions: { competition_id: comp.id })
            .exists?
+  end
+
+  private
+
+  def must_not_have_rosters
+    if rosters.exists?
+      errors.add(:id, 'can only destroy teams without any rosters')
+
+      return false
+    end
   end
 end
