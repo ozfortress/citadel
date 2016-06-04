@@ -14,4 +14,15 @@ class CompetitionMatchPresenter < ActionPresenter::Base
     label ||= to_s
     link_to(label, league_match_path(competition, competition_match), options, &block)
   end
+
+  def players
+    home_players = object.home_team.player_users
+    away_players = object.away_team.player_users
+    [home_players.length, away_players.length].max.times do |i|
+      home_player = present(home_players[i]) if i < home_players.length
+      away_player = present(away_players[i]) if i < away_players.length
+
+      yield(home_player, away_player)
+    end
+  end
 end
