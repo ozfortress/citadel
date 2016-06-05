@@ -18,7 +18,7 @@ module MatchSeeder
       end
 
       match_options = options.merge(home_team: home_team, away_team: away_team)
-      match_options[:sets] = match_options[:sets].map(&:dup)
+      match_options[:sets] = match_options[:sets].map(&:dup) if match_options.has_key? :sets
       CompetitionMatch.create!(match_options)
     end
   end
