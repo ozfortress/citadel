@@ -10,6 +10,7 @@ class UserNameChange < ActiveRecord::Base
 
   validate :unique_name, on: :create
   validate :only_one_request_per_user, on: :create
+  validate :name_not_already_used, on: :create
 
   after_update do
     if approved_by
@@ -48,6 +49,13 @@ class UserNameChange < ActiveRecord::Base
   def only_one_request_per_user
     if user.present? && pending? && !user.pending_names.empty?
       errors.add(:name, 'a name request is already pending')
+    end
+  end
+
+  def name_not_already_used
+    if name.present? && pending? && (User.where(name: name).exists? ||
+                                     UserNameChange.pending.where(name: name).exists?)
+      errors.add(:name, 'must be unique')
     end
   end
 end
