@@ -1,8 +1,8 @@
-require 'set'
-
 module MatchSeeder
   module RoundRobin
     extend self
+
+    include MatchSeeder::Common
 
     def seed_round_for(target, options = {})
       target.transaction do
@@ -16,12 +16,6 @@ module MatchSeeder
     end
 
     private
-
-    def get_roster_pool(target)
-      rosters = target.approved_rosters
-      rosters << nil if rosters.size.odd?
-      rosters
-    end
 
     def advance_rounds(rosters, round_no)
       wrap_size = rosters.size - 1
@@ -45,20 +39,6 @@ module MatchSeeder
       top_row.zip(bottom_row).map do |home_team, away_team|
         create_match_for(home_team, away_team, options)
       end
-    end
-
-    def create_match_for(home_team, away_team, options)
-      # Swap home and away team to spread out home/away matches
-      if home_team && away_team &&
-         (home_team.home_team_matches.size > home_team.away_team_matches.size ||
-          away_team.away_team_matches.size > away_team.home_team_matches.size) ||
-         !home_team
-        home_team, away_team = away_team, home_team
-      end
-
-      match_options = options.merge(home_team: home_team, away_team: away_team)
-
-      CompetitionMatch.create!(match_options)
     end
   end
 end

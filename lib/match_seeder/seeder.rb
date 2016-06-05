@@ -1,3 +1,4 @@
+require 'match_seeder/common'
 require 'match_seeder/swiss'
 require 'match_seeder/round_robin'
 
