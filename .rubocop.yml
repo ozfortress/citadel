@@ -10,6 +10,8 @@ Style/Documentation:
   Enabled: false
 Style/TrailingCommaInLiteral:
   Enabled: false
+Style/ModuleFunction:
+  Enabled: false
 
 AllCops:
   Exclude:
