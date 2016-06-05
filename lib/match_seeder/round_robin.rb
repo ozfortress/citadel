@@ -1,8 +1,8 @@
 module MatchSeeder
   module RoundRobin
-    extend self
-
     include MatchSeeder::Common
+
+    extend self
 
     def seed_round_for(target, options = {})
       target.transaction do

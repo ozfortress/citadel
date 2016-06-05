@@ -7,9 +7,10 @@ describe MatchSeeder::RoundRobin do
     before do
       @div = create(:division)
       @rosters = create_list(:competition_roster, 6, division: @div)
+      set = build(:competition_set)
 
       5.times do
-        described_class.seed_round_for(@div.reload)
+        described_class.seed_round_for(@div.reload, sets: [set])
       end
     end
 
@@ -30,9 +31,10 @@ describe MatchSeeder::RoundRobin do
     before do
       @div = create(:division)
       @rosters = create_list(:competition_roster, 5, division: @div)
+      set = build(:competition_set)
 
       5.times do
-        described_class.seed_round_for(@div.reload)
+        described_class.seed_round_for(@div.reload, sets: [set])
       end
     end
 

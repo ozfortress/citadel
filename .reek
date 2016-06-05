@@ -41,6 +41,8 @@ FeatureEnvy:
 UncommunicativeVariableName:
   exclude:
     - "MigrationHelper"
+  # Allow simple ones, usually used for #sort or alike
+  accept: [x, y, a, b]
 
 # db code is messy
 exclude_paths:
