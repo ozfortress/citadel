@@ -42,6 +42,13 @@ class CompetitionRoster < ActiveRecord::Base
     transfers.where(approved: true)
   end
 
+  def rosters_not_played
+    division.approved_rosters
+            .where.not(id: id)
+            .where.not(id: home_team_matches.select(:away_team_id))
+            .where.not(id: away_team_matches.select(:home_team_id))
+  end
+
   def win_count
     match_outcome_count('>')
   end
@@ -97,13 +104,14 @@ class CompetitionRoster < ActiveRecord::Base
   end
 
   def match_no_forfeit_outcome_count(comparison)
+    confirmed = CompetitionMatch.statuses[:confirmed]
     no_forfeit = CompetitionMatch.forfeit_bies[:no_forfeit]
 
-    (home_team_sets.where(competition_matches: { status: :confirmed,
+    (home_team_sets.where(competition_matches: { status: confirmed,
                                                  forfeit_by: no_forfeit })
                    .where("home_team_score #{comparison} away_team_score")
                    .count +
-     away_team_sets.where(competition_matches: { status: :confirmed,
+     away_team_sets.where(competition_matches: { status: confirmed,
                                                  forfeit_by: no_forfeit })
                    .where("away_team_score #{comparison} home_team_score")
                    .count)

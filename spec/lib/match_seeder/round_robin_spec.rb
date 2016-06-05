@@ -3,13 +3,6 @@ require 'support/factory_girl'
 require 'match_seeder/seeder'
 
 describe MatchSeeder::RoundRobin do
-  def rosters_not_played(roster)
-    @div.approved_rosters
-        .where.not(id: roster.id)
-        .where.not(id: roster.home_team_matches.select(:away_team_id))
-        .where.not(id: roster.away_team_matches.select(:home_team_id))
-  end
-
   context 'even number of teams' do
     before do
       @div = create(:division)
@@ -22,7 +15,7 @@ describe MatchSeeder::RoundRobin do
 
     it 'creates matches covering all teams' do
       @rosters.each do |roster|
-        expect(rosters_not_played(roster)).to be_empty
+        expect(roster.rosters_not_played).to be_empty
       end
     end
 
@@ -45,7 +38,7 @@ describe MatchSeeder::RoundRobin do
 
     it 'creates matches covering all teams' do
       @rosters.each do |roster|
-        expect(rosters_not_played(roster)).to be_empty
+        expect(roster.rosters_not_played).to be_empty
       end
     end
 
