@@ -18,7 +18,8 @@ describe CompetitionMatch do
 
   it do
     should define_enum_for(:forfeit_by).with([:no_forfeit, :home_team_forfeit,
-                                              :away_team_forfeit])
+                                              :away_team_forfeit, :mutual_forfeit,
+                                              :technical_forfeit])
   end
 
   it 'should confirm BYE matches' do

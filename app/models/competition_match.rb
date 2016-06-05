@@ -10,7 +10,8 @@ class CompetitionMatch < ActiveRecord::Base
   enum status: [:pending, :submitted_by_home_team, :submitted_by_away_team, :confirmed]
   validates :status, presence: true
 
-  enum forfeit_by: [:no_forfeit, :home_team_forfeit, :away_team_forfeit]
+  enum forfeit_by: [:no_forfeit, :home_team_forfeit, :away_team_forfeit,
+                    :mutual_forfeit, :technical_forfeit]
   validates :forfeit_by, presence: true
 
   validate :home_and_away_team_are_different
