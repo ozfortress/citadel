@@ -3,11 +3,5 @@ FactoryGirl.define do
     sequence(:name) { |n| "FOOBAR#{n}" }
     sequence(:steam_id) { |n| n }
     avatar nil
-
-    after(:create) do |user|
-      if user.names.empty?
-        create(:user_name_change, user: user, approved_by: user, name: user.name)
-      end
-    end
   end
 end
