@@ -1,5 +1,5 @@
-= f.select :home_team_id, teams_select(div), label: 'Home Team'
-= f.select :away_team_id, teams_select(div), label: 'Away Team'
+= f.select :home_team_id, teams_select(div), include_blank: false, label: 'Home Team'
+= f.select :away_team_id, teams_select(div), include_blank: 'BYE', label: 'Away Team'
 
 .panel.panel-default
   .panel-heading Sets

@@ -4,29 +4,27 @@
     %span.glyphicon.glyphicon-cog
 
 %h1 #{link_to @competition, league_path(@competition)}: #{@match.home_team.division}
-%h2
-  = present(@match.home_team).link
-  vs
-  = present(@match.away_team).link
+%h2= present(@match).title
 
-.table-responsive
-  %table.table
-    %thead
-      %tr
-        %th Home Team
-        %th Away Team
-      %tr
-        %th= present(@match.home_team).link
-        %th= present(@match.away_team).link
-    %tbody
-      - present(@match).players do |home_user, away_user|
+- unless @match.bye?
+  .table-responsive
+    %table.table
+      %thead
         %tr
-          %td= home_user.listing team: @match.home_team.team if home_user
-          %td= away_user.listing team: @match.away_team.team if away_user
+          %th Home Team
+          %th Away Team
+        %tr
+          %th= present(@match.home_team).link
+          %th= present(@match.away_team).link
+      %tbody
+        - present(@match).players do |home_user, away_user|
+          %tr
+            %td= home_user.listing team: @match.home_team.team if home_user
+            %td= away_user.listing team: @match.away_team.team if away_user
 
-- if @match.status == 'confirmed' && !user_can_edit_league?
-  = render 'match_results', match: @match, competition: @competition
-- elsif user_can_either_teams?
-  = render 'match_scores', match: @match, competition: @competition
+  - if @match.status == 'confirmed' && !user_can_edit_league?
+    = render 'match_results', match: @match, competition: @competition
+  - elsif user_can_either_teams?
+    = render 'match_scores', match: @match, competition: @competition
 
-= render 'match_comms', match: @match, competition: @competition, comm: @comm
+  = render 'match_comms', match: @match, competition: @competition, comm: @comm

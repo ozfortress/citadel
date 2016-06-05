@@ -10,6 +10,7 @@ module Leagues
     before_action :require_user_league_permission, only: [:new, :create, :edit, :update, :destroy]
     before_action :require_user_either_teams, only: [:comms, :scores, :confirm]
     before_action :require_user_can_report_scores, only: [:scores, :forfeit]
+    before_action :require_match_not_bye, only: [:comms, :scores, :confirm, :forfeit]
 
     def index
     end
@@ -130,6 +131,10 @@ module Leagues
 
     def require_user_either_teams
       redirect_to league_match_path(@competition, @match) unless user_can_either_teams?
+    end
+
+    def require_match_not_bye
+      redirect_to league_match_path(@competition, @match) if @match.bye?
     end
   end
 end

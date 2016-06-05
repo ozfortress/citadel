@@ -6,7 +6,6 @@ class CompetitionMatch < ActiveRecord::Base
   has_many :comms, class_name: 'CompetitionComm', dependent: :destroy
 
   validates :home_team, presence: true
-  validates :away_team, presence: true
 
   enum status: [:pending, :submitted_by_home_team, :submitted_by_away_team, :confirmed]
   validates :status, presence: true
@@ -34,6 +33,10 @@ class CompetitionMatch < ActiveRecord::Base
 
   def forfeit(is_home_team)
     update(forfeit_by: (is_home_team ? :home_team_forfeit : :away_team_forfeit))
+  end
+
+  def bye?
+    !away_team
   end
 
   private
@@ -65,6 +68,6 @@ class CompetitionMatch < ActiveRecord::Base
   end
 
   def set_defaults
-    self.status = :pending unless status.present?
+    self.status = bye? ? :confirmed : :pending unless status.present?
   end
 end
