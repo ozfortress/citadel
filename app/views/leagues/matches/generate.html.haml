@@ -13,7 +13,9 @@
         = f.hidden_field :division_id, value: div.id
         .form-group
           %label.control-label Generator
-          = select_tag :generate_kind, generation_select, name: 'competition_match[generate_kind]', include_blank: false, class: 'form-control'
+          = select_tag :generate_kind, generation_select, name: 'competition_match[generate_kind]',
+                                                          include_blank: false,
+                                                          class: 'form-control'
 
         = render 'match_form', f: f, div: div, no_team_fields: true
 
