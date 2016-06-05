@@ -7,7 +7,7 @@ FactoryGirl.define do
     approved true
 
     transient do
-      player_count 6
+      player_count 1
       transfers nil
     end
 
