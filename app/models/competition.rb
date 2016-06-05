@@ -72,7 +72,7 @@ class Competition < ActiveRecord::Base
 
   def set_defaults
     self.private = true        unless private.present?
-    self.signuppable = false   unless signuppable.present?
+    self.signuppable = true    unless signuppable.present?
     self.roster_locked = false unless roster_locked.present?
 
     self.min_players = 6  unless min_players.present?
