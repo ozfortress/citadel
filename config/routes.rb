@@ -32,6 +32,10 @@ Rails.application.routes.draw do
     patch 'matches/:id/scores',  to: 'leagues/matches#scores',  as: 'match_scores'
     patch 'matches/:id/confirm', to: 'leagues/matches#confirm', as: 'match_confirm'
     resources :matches, controller: 'leagues/matches' do
+      collection do
+        get 'generate'
+        post 'generate', action: 'create_round'
+      end
       patch 'forfeit', on: :member
     end
   end

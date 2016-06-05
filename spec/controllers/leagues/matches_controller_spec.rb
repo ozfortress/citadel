@@ -95,6 +95,35 @@ describe Leagues::MatchesController do
     end
   end
 
+  describe 'GET #generate' do
+    it 'succeeds for authorized user' do
+      user.grant(:edit, comp)
+      sign_in user
+
+      get :generate, league_id: comp.id
+
+      expect(response).to have_http_status(:success)
+    end
+  end
+
+  describe 'POST #create_round' do
+    it 'succeeds for authorized user' do
+      user.grant(:edit, comp)
+      sign_in user
+
+      post :create_round, league_id: comp.id, competition_match: {
+        generate_kind: :swiss,
+        division_id: div.id,
+        sets_attributes: [
+          { map_id: map.id }
+        ]
+      }
+
+      expect(comp.matches.size).to eq(1)
+      expect(comp.matches.first.sets.first.map).to eq(map)
+    end
+  end
+
   describe 'GET #show' do
     let!(:match) { create(:competition_match, home_team: team1, away_team: team2) }
 

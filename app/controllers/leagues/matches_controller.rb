@@ -3,11 +3,12 @@ module Leagues
     include MatchPermissions
 
     before_action { @competition = Competition.find(params[:league_id]) }
-    before_action except: [:index, :new, :create] do
+    before_action except: [:index, :new, :create, :generate, :create_round] do
       @match = @competition.matches.find(params[:id])
     end
 
-    before_action :require_user_league_permission, only: [:new, :create, :edit, :update, :destroy]
+    before_action :require_user_league_permission, only: [:new, :create, :generate, :create_round,
+                                                          :edit, :update, :destroy]
     before_action :require_user_either_teams, only: [:comms, :scores, :confirm]
     before_action :require_user_can_report_scores, only: [:scores, :forfeit]
     before_action :require_match_not_bye, only: [:comms, :scores, :confirm, :forfeit]
@@ -27,6 +28,24 @@ module Leagues
         redirect_to league_match_path(@competition, @match)
       else
         render :new
+      end
+    end
+
+    def generate
+      @match = CompetitionMatch.new
+      @match.sets.new
+      @kind = :swiss
+    end
+
+    def create_round
+      params = create_round_params
+      division = @competition.divisions.find(params.delete(:division_id))
+      @kind = params.delete(:generate_kind)
+      if division.seed_round_with(@kind, params)
+        redirect_to league_matches_path(@competition)
+      else
+        @match = CompetitionMatch.new(params)
+        render :generate
       end
     end
 
@@ -114,6 +133,11 @@ module Leagues
 
     def match_params
       params.require(:competition_match).permit(:home_team_id, :away_team_id,
+                                                sets_attributes: [:id, :_destroy, :map_id])
+    end
+
+    def create_round_params
+      params.require(:competition_match).permit(:division_id, :generate_kind,
                                                 sets_attributes: [:id, :_destroy, :map_id])
     end
 
