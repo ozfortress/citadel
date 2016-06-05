@@ -17,9 +17,9 @@ class CompetitionMatchPresenter < ActionPresenter::Base
 
   def title
     if bye?
-      present(home_team).link + " BYE"
+      present(home_team).link + ' BYE'
     else
-      present(home_team).link + " vs " + present(away_team).link
+      present(home_team).link + ' vs ' + present(away_team).link
     end
   end
 

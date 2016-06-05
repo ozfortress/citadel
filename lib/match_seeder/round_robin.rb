@@ -6,8 +6,7 @@ module MatchSeeder
 
     def seed_round_for(target, options = {})
       target.transaction do
-        rosters = target.approved_rosters
-        rosters << nil if rosters.size.odd?
+        rosters = get_roster_pool(target)
 
         round_no = target.matches.size / (rosters.size / 2)
 
@@ -17,6 +16,12 @@ module MatchSeeder
     end
 
     private
+
+    def get_roster_pool(target)
+      rosters = target.approved_rosters
+      rosters << nil if rosters.size.odd?
+      rosters
+    end
 
     def advance_rounds(rosters, round_no)
       wrap_size = rosters.size - 1
@@ -31,10 +36,11 @@ module MatchSeeder
     end
 
     def create_matches_for(rosters, options)
-      round_size = (rosters.size / 2)
+      rosters_size = rosters.size
+      round_size = (rosters_size / 2)
 
       top_row = rosters[0...round_size]
-      bottom_row = rosters[round_size...rosters.size].reverse
+      bottom_row = rosters[round_size...rosters_size].reverse
 
       top_row.zip(bottom_row).map do |home_team, away_team|
         create_match_for(home_team, away_team, options)
@@ -46,7 +52,7 @@ module MatchSeeder
       if home_team && away_team &&
          (home_team.home_team_matches.size > home_team.away_team_matches.size ||
           away_team.away_team_matches.size > away_team.home_team_matches.size) ||
-         home_team.nil?
+         !home_team
         home_team, away_team = away_team, home_team
       end
 

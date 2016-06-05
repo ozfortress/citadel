@@ -22,7 +22,7 @@ describe MatchSeeder::RoundRobin do
 
     it 'creates matches covering all teams' do
       @rosters.each do |roster|
-        expect(rosters_not_played roster).to be_empty
+        expect(rosters_not_played(roster)).to be_empty
       end
     end
 
@@ -45,7 +45,7 @@ describe MatchSeeder::RoundRobin do
 
     it 'creates matches covering all teams' do
       @rosters.each do |roster|
-        expect(rosters_not_played roster).to be_empty
+        expect(rosters_not_played(roster)).to be_empty
       end
     end
 
