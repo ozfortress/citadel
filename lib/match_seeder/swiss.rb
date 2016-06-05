@@ -44,13 +44,17 @@ module MatchSeeder
     end
 
     def create_matches_for(rosters, options)
+      matches = []
+
       while rosters.size > 1
         home_team = rosters.shift
         away_team = next_closest_roster(home_team, rosters)
         rosters.delete away_team
 
-        create_match_for(home_team, away_team, options)
+        matches << create_match_for(home_team, away_team, options)
       end
+
+      matches
     end
   end
 end
