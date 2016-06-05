@@ -27,13 +27,13 @@ describe MatchSeeder::Swiss do
 
   def finalize_matches
     @winners.each do |roster|
-      roster.upcoming_matches.each { |match| match.forfeit(match.home_team != roster) }
+      roster.matches.pending.each { |match| match.forfeit(match.home_team != roster) }
     end
     @losers.each do |roster|
-      roster.upcoming_matches.each { |match| match.forfeit(match.home_team == roster) }
+      roster.matches.pending.each { |match| match.forfeit(match.home_team == roster) }
     end
     @rosters.each do |roster|
-      roster.upcoming_matches.each { |match| match.update!(status: :confirmed) }
+      roster.matches.pending.each { |match| match.update!(status: :confirmed) }
     end
   end
 
@@ -66,8 +66,7 @@ describe MatchSeeder::Swiss do
       end
     end
 
-    it 'evenly spreads home and away team matches' do
-      pending
+    xit 'evenly spreads home and away team matches' do
       @rosters.each do |roster|
         expect(roster.home_team_matches.size).to be_within(2).of(roster.away_team_matches.size)
       end

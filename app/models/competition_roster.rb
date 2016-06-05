@@ -8,12 +8,20 @@ class CompetitionRoster < ActiveRecord::Base
                                                         class_name: 'CompetitionTransfer',
                                                         dependent: :destroy
   accepts_nested_attributes_for :transfers
+
   has_many :home_team_matches, class_name: 'CompetitionMatch', foreign_key: 'home_team_id',
                                dependent: :destroy
-  has_many :home_team_sets, through: :home_team_matches, source: :sets, class_name: 'CompetitionSet'
+  has_many :home_team_sets, through: :home_team_matches, source: :sets
+  has_many :not_forfeited_home_team_matches, -> { not_forfeited }, class_name: 'CompetitionMatch',
+                                                                   foreign_key: 'home_team_id'
+  has_many :not_forfeited_home_team_sets, through: :not_forfeited_home_team_matches, source: :sets
+
   has_many :away_team_matches, class_name: 'CompetitionMatch', foreign_key: 'away_team_id',
                                dependent: :destroy
-  has_many :away_team_sets, through: :away_team_matches, source: :sets, class_name: 'CompetitionSet'
+  has_many :away_team_sets, through: :away_team_matches, source: :sets
+  has_many :not_forfeited_away_team_matches, -> { not_forfeited }, class_name: 'CompetitionMatch',
+                                                                   foreign_key: 'away_team_id'
+  has_many :not_forfeited_away_team_sets, through: :not_forfeited_away_team_matches, source: :sets
 
   validates :team,        presence: true, uniqueness: { scope: :division_id }
   validates :division,    presence: true
@@ -28,14 +36,47 @@ class CompetitionRoster < ActiveRecord::Base
   after_initialize :set_defaults, unless: :persisted?
 
   def matches
-    home_matches = home_team_matches.select(:id).to_sql
-    away_matches = away_team_matches.select(:id).to_sql
-    CompetitionMatch.where("id IN (#{home_matches}) OR id IN (#{away_matches})")
+    table = CompetitionMatch.arel_table
+    CompetitionMatch.where(table[:home_team_id].eq(id).or(table[:away_team_id].eq(id)))
   end
 
-  def upcoming_matches
-    pending = CompetitionMatch.statuses[:pending]
-    matches.where(status: pending)
+  def not_forfeited_sets
+    CompetitionSet.where("id IN (#{not_forfeited_home_team_sets.select(:id).to_sql}) OR "\
+                         "id IN (#{not_forfeited_away_team_sets.select(:id).to_sql})")
+  end
+
+  def won_sets
+    (not_forfeited_home_team_sets.home_team_wins +
+     not_forfeited_away_team_sets.away_team_wins)
+  end
+
+  def drawn_sets
+    not_forfeited_sets.draws
+  end
+
+  def lost_sets
+    (not_forfeited_home_team_sets.away_team_wins +
+     not_forfeited_away_team_sets.home_team_wins)
+  end
+
+  def forfeit_won_matches
+    (away_team_matches.home_team_forfeited +
+     home_team_matches.away_team_forfeited +
+     matches.technically_forfeited)
+  end
+
+  def forfeit_lost_matches
+    (home_team_matches.home_team_forfeited +
+     away_team_matches.away_team_forfeited +
+     matches.mutually_forfeited)
+  end
+
+  def points
+    local_counts = [won_sets.size, drawn_sets.size, lost_sets.size, forfeit_won_matches.size,
+                    forfeit_lost_matches.size]
+    comp_counts = competition.point_multipliers
+
+    local_counts.zip(comp_counts).map { |x, y| x * y }.sum
   end
 
   def approved_transfers
@@ -47,18 +88,6 @@ class CompetitionRoster < ActiveRecord::Base
             .where.not(id: id)
             .where.not(id: home_team_matches.select(:away_team_id))
             .where.not(id: away_team_matches.select(:home_team_id))
-  end
-
-  def win_count
-    match_outcome_count('>')
-  end
-
-  def draw_count
-    match_outcome_count('=')
-  end
-
-  def loss_count
-    match_outcome_count('<')
   end
 
   def players_off_roster
@@ -94,38 +123,6 @@ class CompetitionRoster < ActiveRecord::Base
                      .find_each do |match|
       match.update!(forfeit_by: CompetitionMatch.forfeit_bies[:away_team_forfeit])
     end
-  end
-
-  def match_outcome_count(comparison)
-    count = match_no_forfeit_outcome_count(comparison)
-    count += match_forfeit_outcome_count(true) if comparison == '>'
-    count += match_forfeit_outcome_count(false) if comparison == '<'
-    count
-  end
-
-  def match_no_forfeit_outcome_count(comparison)
-    confirmed = CompetitionMatch.statuses[:confirmed]
-    no_forfeit = CompetitionMatch.forfeit_bies[:no_forfeit]
-
-    (home_team_sets.where(competition_matches: { status: confirmed,
-                                                 forfeit_by: no_forfeit })
-                   .where("home_team_score #{comparison} away_team_score")
-                   .count +
-     away_team_sets.where(competition_matches: { status: confirmed,
-                                                 forfeit_by: no_forfeit })
-                   .where("away_team_score #{comparison} home_team_score")
-                   .count)
-  end
-
-  def match_forfeit_outcome_count(win)
-    home_ff = CompetitionMatch.forfeit_bies[:away_team_forfeit]
-    away_ff = CompetitionMatch.forfeit_bies[:home_team_forfeit]
-    home_ff, away_ff = away_ff, home_ff unless win
-
-    (home_team_matches.where(forfeit_by: home_ff)
-                      .count +
-     away_team_matches.where(forfeit_by: away_ff)
-                      .count)
   end
 
   def set_defaults

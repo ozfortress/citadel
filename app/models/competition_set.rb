@@ -8,6 +8,16 @@ class CompetitionSet < ActiveRecord::Base
 
   after_initialize :set_defaults, unless: :persisted?
 
+  scope :home_team_wins, lambda {
+    where(arel_table[:home_team_score].gt(arel_table[:away_team_score]))
+  }
+
+  scope :away_team_wins, lambda {
+    where(arel_table[:away_team_score].gt(arel_table[:home_team_score]))
+  }
+
+  scope :draws, -> { where(arel_table[:away_team_score].eq(arel_table[:home_team_score])) }
+
   private
 
   def set_defaults

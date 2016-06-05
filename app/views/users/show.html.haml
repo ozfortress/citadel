@@ -47,7 +47,7 @@
     .panel-heading Upcoming Matches
     %ul.list-group
       - @user.rosters.each do |roster|
-        - present_collection(roster.upcoming_matches).each do |match|
+        - present_collection(roster.matches.pending).each do |match|
           %li.list-group-item
             = match.link
 

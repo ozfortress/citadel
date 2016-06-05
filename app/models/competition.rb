@@ -56,6 +56,11 @@ class Competition < ActiveRecord::Base
     pending_transfers.where(user_id: user.id).exists?
   end
 
+  def point_multipliers
+    [points_per_set_won, points_per_set_drawn, points_per_set_lost, points_per_match_forfeit_win,
+     points_per_match_forfeit_loss]
+  end
+
   private
 
   def validate_players_range

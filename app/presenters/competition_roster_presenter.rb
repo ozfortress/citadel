@@ -5,11 +5,9 @@ class CompetitionRosterPresenter < ActionPresenter::Base
   delegate :name, to: :competition_roster
   delegate :competition, to: :competition_roster
   delegate :division, to: :competition_roster
-  delegate :win_count, to: :competition_roster
-  delegate :draw_count, to: :competition_roster
-  delegate :loss_count, to: :competition_roster
   delegate :approved?, to: :competition_roster
   delegate :disbanded?, to: :competition_roster
+  delegate :points, to: :competition_roster
   delegate :==, to: :competition_roster
 
   def link(label = nil, options = {}, &block)
@@ -21,7 +19,7 @@ class CompetitionRosterPresenter < ActionPresenter::Base
     if disbanded?
       'Disbanded'
     else
-      "Wins: #{win_count} Draws: #{draw_count} Losses: #{loss_count}"
+      "Points: #{points}"
     end
   end
 

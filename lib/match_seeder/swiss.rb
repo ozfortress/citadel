@@ -21,10 +21,7 @@ module MatchSeeder
     def map_points(rosters)
       rosters.map do |roster|
         if roster
-          score = roster.win_count * 2
-          score += roster.draw_count
-
-          [roster, score]
+          [roster, roster.points]
         else
           [roster, 0]
         end

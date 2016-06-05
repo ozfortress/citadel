@@ -28,6 +28,12 @@ class CompetitionMatch < ActiveRecord::Base
     self.status = :confirmed unless forfeit_by == 'no_forfeit'
   end
 
+  scope :not_forfeited, -> { confirmed.no_forfeit }
+  scope :home_team_forfeited, -> { confirmed.home_team_forfeit }
+  scope :away_team_forfeited, -> { confirmed.away_team_forfeit }
+  scope :mutually_forfeited, -> { confirmed.mutual_forfeit }
+  scope :technically_forfeited, -> { confirmed.technical_forfeit }
+
   def confirm_scores(confirm)
     update(status: confirm ? :confirmed : :pending)
   end
