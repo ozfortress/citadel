@@ -48,9 +48,10 @@ describe LeaguesController do
                                    matches_submittable: true,
                                    transfers_require_approval: false,
                                    min_players: 1, max_players: 3,
-                                   divisions_attributes: [
-                                     { name: 'PREM' },
-                                   ] }
+                                   points_per_set_won: 3, points_per_set_drawn: 2,
+                                   points_per_set_lost: 1, points_per_match_forfeit_loss: 5,
+                                   points_per_match_forfeit_win: 6,
+                                   divisions_attributes: [{ name: 'PREM' }] }
 
       comp = Competition.first
       expect(comp.name).to eq('A')
@@ -62,6 +63,11 @@ describe LeaguesController do
       expect(comp.transfers_require_approval).to be(false)
       expect(comp.min_players).to eq(1)
       expect(comp.max_players).to eq(3)
+      expect(comp.points_per_set_won).to eq(3)
+      expect(comp.points_per_set_drawn).to eq(2)
+      expect(comp.points_per_set_lost).to eq(1)
+      expect(comp.points_per_match_forfeit_loss).to eq(5)
+      expect(comp.points_per_match_forfeit_win).to eq(6)
       expect(comp.divisions.size).to eq(1)
       div = comp.divisions.first
       expect(div.name).to eq('PREM')

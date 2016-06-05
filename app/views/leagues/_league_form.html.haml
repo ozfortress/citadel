@@ -22,6 +22,15 @@
     = f.check_box :transfers_require_approval
 
 .panel.panel-default
+  .panel-heading Points
+  .panel-body
+    = f.number_field :points_per_set_won
+    = f.number_field :points_per_set_drawn
+    = f.number_field :points_per_set_lost
+    = f.number_field :points_per_match_forfeit_loss, label: 'Points per match lost by forfeit'
+    = f.number_field :points_per_match_forfeit_win, label: 'Points per match won by forfeit'
+
+.panel.panel-default
   .panel-heading Divisions
 
   %ul.list-group
