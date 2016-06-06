@@ -67,8 +67,8 @@ class LeaguesController < ApplicationController
   def league_params
     params.require(:competition).permit(:name, :description, :format_id, :signuppable,
                                         :roster_locked, :matches_submittable,
-                                        :transfers_require_approval, :min_players,
-                                        :max_players, :points_per_set_won,
+                                        :transfers_require_approval, :allow_set_draws,
+                                        :min_players, :max_players, :points_per_set_won,
                                         :points_per_set_drawn, :points_per_set_lost,
                                         :points_per_match_forfeit_loss,
                                         :points_per_match_forfeit_win,

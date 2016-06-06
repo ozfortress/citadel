@@ -6,6 +6,11 @@ class CompetitionSet < ActiveRecord::Base
   validates :home_team_score, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :away_team_score, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
+  validate :can_draw
+
+  delegate :division, to: :match, allow_nil: true
+  delegate :competition, to: :match, allow_nil: true
+
   after_initialize :set_defaults, unless: :persisted?
 
   scope :home_team_wins, lambda {
@@ -23,5 +28,13 @@ class CompetitionSet < ActiveRecord::Base
   def set_defaults
     self.home_team_score = 0 unless home_team_score.present?
     self.away_team_score = 0 unless away_team_score.present?
+  end
+
+  def can_draw
+    return unless match.present?
+
+    if !match.pending? && !competition.allow_set_draws? && home_team_score == away_team_score
+      errors.add(:away_team_score, "cannot be tied")
+    end
   end
 end
