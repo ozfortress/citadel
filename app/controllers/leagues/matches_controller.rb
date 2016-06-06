@@ -78,6 +78,8 @@ module Leagues
       if @match.update(report_scores_params)
         redirect_to league_match_path(@competition, @match)
       else
+        @match.status = :pending
+        show
         render :show
       end
     end

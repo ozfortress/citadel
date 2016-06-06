@@ -20,19 +20,27 @@ describe CompetitionSet do
     match = build(:competition_match, status: :submitted_by_home_team)
     match.competition.allow_set_draws = false
 
-    expect(build(:competition_set, match: match, home_team_score: 2, away_team_score: 3)).to be_valid
-    expect(build(:competition_set, match: match, home_team_score: 3, away_team_score: 2)).to be_valid
-    expect(build(:competition_set, match: match, home_team_score: 2, away_team_score: 2)).to be_invalid
-    expect(build(:competition_set, match: match, home_team_score: 0, away_team_score: 0)).to be_invalid
+    expect(build(:competition_set, match: match, home_team_score: 2,
+                                   away_team_score: 3)).to be_valid
+    expect(build(:competition_set, match: match, home_team_score: 3,
+                                   away_team_score: 2)).to be_valid
+    expect(build(:competition_set, match: match, home_team_score: 2,
+                                   away_team_score: 2)).to be_invalid
+    expect(build(:competition_set, match: match, home_team_score: 0,
+                                   away_team_score: 0)).to be_invalid
   end
 
   it 'allows sets to draw when competition allows it' do
     match = build(:competition_match, status: :submitted_by_away_team)
     match.competition.allow_set_draws = true
 
-    expect(build(:competition_set, match: match, home_team_score: 2, away_team_score: 3)).to be_valid
-    expect(build(:competition_set, match: match, home_team_score: 3, away_team_score: 2)).to be_valid
-    expect(build(:competition_set, match: match, home_team_score: 2, away_team_score: 2)).to be_valid
-    expect(build(:competition_set, match: match, home_team_score: 0, away_team_score: 0)).to be_valid
+    expect(build(:competition_set, match: match, home_team_score: 2,
+                                   away_team_score: 3)).to be_valid
+    expect(build(:competition_set, match: match, home_team_score: 3,
+                                   away_team_score: 2)).to be_valid
+    expect(build(:competition_set, match: match, home_team_score: 2,
+                                   away_team_score: 2)).to be_valid
+    expect(build(:competition_set, match: match, home_team_score: 0,
+                                   away_team_score: 0)).to be_valid
   end
 end
