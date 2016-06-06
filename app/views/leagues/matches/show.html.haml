@@ -24,7 +24,7 @@
 
   - if @match.status == 'confirmed' && !user_can_edit_league?
     = render 'match_results', match: @match, competition: @competition
-  - elsif user_can_either_teams?
+  - elsif user_can_either_teams? && @competition.matches_submittable?
     = render 'match_scores', match: @match, competition: @competition
 
   = render 'match_comms', match: @match, competition: @competition, comm: @comm
