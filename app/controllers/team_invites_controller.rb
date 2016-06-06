@@ -3,12 +3,12 @@ class TeamInvitesController < ApplicationController
 
   def accept
     @invite.accept
-    redirect_to user_path(current_user)
+    redirect_to_back
   end
 
   def decline
     @invite.decline
-    redirect_to user_path(current_user)
+    redirect_to_back
   end
 
   private
