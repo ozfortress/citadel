@@ -70,6 +70,7 @@
       %ul.list-group
         - @user.team_invites.each do |invite|
           %li.list-group-item
+            You have been invited to join
             = link_to invite.team, team_path(invite.team)
             .button-group.pull-right
               = button_to decline_team_invite_path(invite),

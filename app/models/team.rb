@@ -21,6 +21,10 @@ class Team < ActiveRecord::Base
     team_invites.create(user: user)
   end
 
+  def invite_for(user)
+    team_invites.find_by(user: user)
+  end
+
   def invited?(user)
     team_invites.exists?(user: user)
   end
