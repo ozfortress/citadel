@@ -65,7 +65,7 @@ module Leagues
     end
 
     def comms
-      @comm = @match.comms.new(comm_params.merge(user: current_user))
+      @comm = CompetitionComm.new(comm_params.merge(user: current_user, match: @match))
 
       if @comm.save
         redirect_to league_match_path(@competition, @match)
