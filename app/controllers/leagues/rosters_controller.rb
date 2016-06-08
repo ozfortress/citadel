@@ -12,6 +12,7 @@ module Leagues
     before_action :require_team_permission, only: [:create]
     before_action :require_user_league_permission, only: [:index, :review, :approve]
     before_action :require_roster_permission, only: [:edit, :update, :destroy]
+    before_action :require_roster_disbandable, only: [:destroy]
 
     def index
     end
@@ -113,6 +114,10 @@ module Leagues
 
     def require_roster_permission
       redirect_to league_roster_path(@competition, @roster) unless user_can_edit_roster?
+    end
+
+    def require_roster_disbandable
+      redirect_to league_roster_path(@competition, @roster) unless user_can_disband_roster?
     end
   end
 end

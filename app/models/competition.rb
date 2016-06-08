@@ -14,12 +14,13 @@ class Competition < ActiveRecord::Base
   validates :format, presence: true
   validates :name, presence: true, length: { in: 1..64 }
   validates :description, presence: true
-  validates :private, inclusion: { in: [true, false] }
-  validates :signuppable, inclusion: { in: [true, false] }
-  validates :roster_locked, inclusion: { in: [true, false] }
-  validates :matches_submittable, inclusion: { in: [true, false] }
+  validates :private,                    inclusion: { in: [true, false] }
+  validates :signuppable,                inclusion: { in: [true, false] }
+  validates :roster_locked,              inclusion: { in: [true, false] }
+  validates :matches_submittable,        inclusion: { in: [true, false] }
   validates :transfers_require_approval, inclusion: { in: [true, false] }
-  validates :allow_set_draws, inclusion: { in: [true, false] }
+  validates :allow_set_draws,            inclusion: { in: [true, false] }
+  validates :allow_disbanding,           inclusion: { in: [true, false] }
   validates :min_players, presence: true, numericality: { greater_than: 0 }
   validates :max_players, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :points_per_set_won, presence: true, numericality: { only_integer: true }

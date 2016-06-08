@@ -292,7 +292,18 @@ describe Leagues::RostersController do
       expect(CompetitionRoster.exists?(roster.id)).to be(false)
     end
 
-    it 'disbands roster for authorized team captain if not signuppable' do
+    it 'disbands roster for authorized team captain if not signuppable and allowed' do
+      user.grant(:edit, team)
+      comp.update!(signuppable: false, allow_disbanding: true)
+      sign_in user
+
+      delete :destroy, league_id: comp.id, id: roster.id
+
+      expect(CompetitionRoster.exists?(roster.id)).to be(true)
+      expect(roster.reload.disbanded?).to be(true)
+    end
+
+    it 'fails disbanding roster for authorized team captain when not allowed' do
       user.grant(:edit, team)
       comp.update!(signuppable: false)
       sign_in user
@@ -300,7 +311,7 @@ describe Leagues::RostersController do
       delete :destroy, league_id: comp.id, id: roster.id
 
       expect(CompetitionRoster.exists?(roster.id)).to be(true)
-      expect(roster.reload.disbanded?).to be(true)
+      expect(roster.reload.disbanded?).to be(false)
     end
 
     it 'redirects for unauthorized user' do

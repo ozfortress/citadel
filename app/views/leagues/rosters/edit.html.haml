@@ -21,7 +21,7 @@
       = f.submit 'Update'
       = link_to 'Cancel', league_roster_path(@competition, @roster), class: 'btn btn-default'
 
-- unless user_can_edit_league?
+- if user_can_disband_roster? && !user_can_edit_league?
   .panel.panel-danger
     .panel-heading Danger Zone
     .panel-body
