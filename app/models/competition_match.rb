@@ -38,12 +38,24 @@ class CompetitionMatch < ActiveRecord::Base
   scope :technically_forfeited, -> { confirmed.technical_forfeit }
 
   after_create do
+    next unless away_team
+
     message = "You have an upcoming match: '#{home_team.name}' vs '#{away_team.name}'."
 
     home_team.player_users.each do |user|
       user.notify!(message, league_match_path(competition, self))
     end
     away_team.player_users.each do |user|
+      user.notify!(message, league_match_path(competition, self))
+    end
+  end
+
+  after_create do
+    next if away_team
+
+    message = "You have a match BYE for '#{home_team.name}'."
+
+    home_team.player_users.each do |user|
       user.notify!(message, league_match_path(competition, self))
     end
   end
