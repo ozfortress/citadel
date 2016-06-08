@@ -1,4 +1,6 @@
 class CompetitionMatch < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
+
   belongs_to :home_team, class_name: 'CompetitionRoster'
   belongs_to :away_team, class_name: 'CompetitionRoster'
   has_many :sets, inverse_of: :match, class_name: 'CompetitionSet', dependent: :destroy
@@ -34,6 +36,17 @@ class CompetitionMatch < ActiveRecord::Base
   scope :away_team_forfeited, -> { confirmed.away_team_forfeit }
   scope :mutually_forfeited, -> { confirmed.mutual_forfeit }
   scope :technically_forfeited, -> { confirmed.technical_forfeit }
+
+  after_create do
+    message = "You have an upcoming match: '#{home_team.name}' vs '#{away_team.name}'."
+
+    home_team.player_users.each do |user|
+      user.notify!(message, league_match_path(competition, self))
+    end
+    away_team.player_users.each do |user|
+      user.notify!(message, league_match_path(competition, self))
+    end
+  end
 
   def confirm_scores(confirm)
     update(status: confirm ? :confirmed : :pending)

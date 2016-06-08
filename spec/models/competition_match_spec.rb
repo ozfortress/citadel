@@ -27,4 +27,15 @@ describe CompetitionMatch do
 
     expect(CompetitionMatch.new(home_team: roster).status).to eq('confirmed')
   end
+
+  it 'should notify all players of upcoming matches' do
+    match = create(:competition_match)
+
+    match.home_team.player_users.each do |user|
+      expect(user.notifications).to_not be_empty
+    end
+    match.away_team.player_users.each do |user|
+      expect(user.notifications).to_not be_empty
+    end
+  end
 end
