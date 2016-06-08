@@ -35,7 +35,7 @@ describe CompetitionMatch do
     players = home_team.player_users + away_team.player_users
     players.each { |user| user.notifications.destroy_all }
 
-    match = create(:competition_match, home_team: home_team, away_team: away_team)
+    create(:competition_match, home_team: home_team, away_team: away_team)
 
     (home_team.player_users + away_team.player_users).each do |user|
       expect(user.notifications).to_not be_empty
@@ -46,7 +46,7 @@ describe CompetitionMatch do
     home_team = create(:competition_roster)
     home_team.player_users.each { |user| user.notifications.destroy_all }
 
-    match = create(:bye_match, home_team: home_team)
+    create(:bye_match, home_team: home_team)
 
     home_team.player_users.each do |user|
       expect(user.notifications).to_not be_empty
