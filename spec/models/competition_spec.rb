@@ -5,6 +5,7 @@ describe Competition do
 
   it { should belong_to(:format) }
   it { should have_many(:divisions) }
+  it { should have_many(:titles) }
 
   it { should validate_presence_of(:format) }
 

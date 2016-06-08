@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :team_invites
   has_many :transfers, -> { order(created_at: :desc) }
   has_many :roster_transfers, class_name: 'CompetitionTransfer'
-  has_many :titles
+  has_many :titles, -> { order(created_at: :desc) }
   has_many :names, -> { order(created_at: :desc) }, class_name: 'UserNameChange'
   has_many :notifications, -> { order(created_at: :desc) }
 

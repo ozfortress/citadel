@@ -14,6 +14,10 @@
     - unless @user.aka.empty?
       %i aka #{@user.aka.limit(5).map(&:name).join(', ')}
 
+.row
+  - present_collection(@user.titles).each do |title|
+    = title.icon
+
 .panel.panel-default
   .panel-heading Description
   .panel-body= markdown @user.description

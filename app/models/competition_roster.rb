@@ -23,6 +23,8 @@ class CompetitionRoster < ActiveRecord::Base
                                                                    foreign_key: 'away_team_id'
   has_many :not_forfeited_away_team_sets, through: :not_forfeited_away_team_matches, source: :sets
 
+  has_many :titles
+
   validates :team,        presence: true, uniqueness: { scope: :division_id }
   validates :division,    presence: true
   validates :name,        presence: true, uniqueness: { scope: :division_id },

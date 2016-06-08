@@ -24,4 +24,7 @@ $(function() {
     $('a[disabled=disabled]').click(function(event){
         event.preventDefault();
     });
+
+    // Enable all tooltips
+    $("[data-toggle='tooltip']").tooltip();
 });

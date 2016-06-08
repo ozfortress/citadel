@@ -16,6 +16,7 @@ describe 'users/show' do
 
     create(:competition_match, home_team: user.rosters.first)
     create_list(:team_invite, 2, user: user)
+    create_list(:title, 5, user: user)
   end
 
   it 'shows public user data' do

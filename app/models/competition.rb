@@ -10,6 +10,7 @@ class Competition < ActiveRecord::Base
   has_many :rosters,   through: :divisions, class_name: 'CompetitionRoster'
   has_many :transfers, through: :rosters,   class_name: 'CompetitionTransfer'
   has_many :matches,   through: :divisions, class_name: 'CompetitionMatch'
+  has_many :titles
 
   validates :format, presence: true
   validates :name, presence: true, length: { in: 1..64 }

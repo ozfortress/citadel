@@ -10,6 +10,7 @@ describe CompetitionRoster do
   it { should have_many(:transfers).class_name('CompetitionTransfer') }
   it { should have_many(:home_team_matches).class_name('CompetitionMatch') }
   it { should have_many(:away_team_matches).class_name('CompetitionMatch') }
+  it { should have_many(:titles) }
 
   it { should validate_presence_of(:team) }
   it { should validate_uniqueness_of(:team).scoped_to(:division_id) }
