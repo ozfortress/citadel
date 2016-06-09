@@ -20,14 +20,22 @@
     - if index == 0
       - klass += ' in active'
 
-    - competitions = game.competitions.running & @competitions
+    - competitions = @competitions.joins(:format).where(formats: { game_id: game.id })
     %div{ id: game.name.parameterize, class: klass }
       - if competitions.empty?
         .panel-body No leagues found...
       - else
         %ul.list-group
           - competitions.each do |competition|
-            = link_to league_path(competition), class: 'list-group-item' do
+            - if competition.hidden?
+              - next unless user_can_edit_leagues?
+              - klass = 'list-group-item-warning'
+            - elsif competition.running?
+              - klass = 'list-group-item-info'
+            - else
+              - klass = 'list-group-item-success'
+
+            = link_to league_path(competition), class: 'list-group-item ' + klass do
               %h4.list-group-item-heading
                 = competition.name
               %p.list-group-item-text
