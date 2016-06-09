@@ -14,8 +14,9 @@
     - unless @user.aka.empty?
       %i aka #{@user.aka.limit(5).map(&:name).join(', ')}
 
-.row
-  = present_collection(@user.titles).each(&:icon)
+.row= present_collection(@user.titles.for_roster).each(&:icon)
+.row= present_collection(@user.titles.for_competition).each(&:icon)
+.row= present_collection(@user.titles.general).each(&:icon)
 
 .panel.panel-default
   .panel-heading Description
