@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   # TODO: Use simplify routing with member and collection routes for resources
 
-  patch 'leagues/:id/visibility', to: 'leagues#visibility', as: 'league_visibility'
+  patch 'leagues/:id/status', to: 'leagues#status', as: 'league_status'
   resources :leagues do
     resources :transfers, controller: 'leagues/transfers', only: [:index, :destroy, :update]
 

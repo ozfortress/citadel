@@ -6,9 +6,9 @@ class LeaguesController < ApplicationController
   end
 
   before_action :require_user_leagues_permission, only: [:new, :create, :destroy]
-  before_action :require_user_league_permission, only: [:edit, :update, :visibility, :transfers]
-  before_action :require_league_public_or_permission, only: [:show]
-  before_action :require_private, only: [:destroy]
+  before_action :require_user_league_permission, only: [:edit, :update, :status, :transfers]
+  before_action :require_league_not_hidden_or_permission, only: [:show]
+  before_action :require_hidden, only: [:destroy]
 
   def index
     @competitions = Competition.search_all(params[:q])
@@ -45,10 +45,8 @@ class LeaguesController < ApplicationController
     end
   end
 
-  def visibility
-    @competition.status = league_visibility_params == 'true' ? 'hidden' : 'running'
-
-    if @competition.save
+  def status
+    if @competition.update(status: params.require(:status))
       redirect_to league_path(@competition)
     else
       render :edit
@@ -76,11 +74,7 @@ class LeaguesController < ApplicationController
                                         divisions_attributes: [:id, :name, :_destroy])
   end
 
-  def league_visibility_params
-    params.require(:private)
-  end
-
-  def require_private
+  def require_hidden
     redirect_to league_path(@competition) unless @competition.hidden?
   end
 
@@ -92,7 +86,7 @@ class LeaguesController < ApplicationController
     redirect_to league_path(@competition) unless user_can_edit_league?
   end
 
-  def require_league_public_or_permission
+  def require_league_not_hidden_or_permission
     redirect_to leagues_path unless !@competition.hidden? || user_can_edit_league?
   end
 end
