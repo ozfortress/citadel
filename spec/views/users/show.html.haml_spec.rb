@@ -10,7 +10,7 @@ describe 'users/show' do
 
     transfers = create_list(:competition_transfer, 2, user: user, approved: true)
     transfers.each do |transfer|
-      transfer.competition.update!(private: false)
+      transfer.competition.update!(status: :running)
     end
     transfers.first.competition.update!(signuppable: true)
 

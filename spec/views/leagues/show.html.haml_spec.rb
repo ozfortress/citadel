@@ -19,7 +19,7 @@ describe 'leagues/show' do
   end
 
   context 'public league with teams and signups open' do
-    let!(:comp) { create(:competition, private: false, signuppable: true) }
+    let!(:comp) { create(:competition, status: :hidden, signuppable: true) }
     let!(:div) { create(:division, competition: comp) }
     let!(:roster1) { create(:competition_roster, division: div, approved: false) }
     let!(:roster2) { create(:competition_roster, division: div, approved: true) }
@@ -37,7 +37,7 @@ describe 'leagues/show' do
   end
 
   context 'public league with teams and signups closed' do
-    let!(:comp) { create(:competition, private: false, signuppable: false) }
+    let!(:comp) { create(:competition, status: :hidden, signuppable: false) }
     let!(:div) { create(:division, competition: comp) }
     let!(:roster1) { create(:competition_roster, division: div, approved: false) }
     let!(:roster2) { create(:competition_roster, division: div, approved: true) }

@@ -15,8 +15,7 @@
       %i aka #{@user.aka.limit(5).map(&:name).join(', ')}
 
 .row
-  - present_collection(@user.titles).each do |title|
-    = title.icon
+  = present_collection(@user.titles).each(&:icon)
 
 .panel.panel-default
   .panel-heading Description
@@ -59,7 +58,7 @@
   .panel-heading Leagues
   %ul.list-group
     - present_collection(@user.rosters).each do |roster|
-      - if roster.competition.public?
+      - unless roster.competition.hidden?
         %li.list-group-item
           - league_link = link_to roster.competition, league_path(roster.competition)
           - if roster.competition.signuppable?

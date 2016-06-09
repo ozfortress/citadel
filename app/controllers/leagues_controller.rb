@@ -45,7 +45,7 @@ class LeaguesController < ApplicationController
   end
 
   def visibility
-    @competition.private = league_visibility_params
+    @competition.status = league_visibility_params == 'true' ? 'hidden' : 'running'
 
     if @competition.save
       redirect_to league_path(@competition)
@@ -80,7 +80,7 @@ class LeaguesController < ApplicationController
   end
 
   def require_private
-    redirect_to league_path(@competition) unless @competition.private?
+    redirect_to league_path(@competition) unless @competition.hidden?
   end
 
   def require_user_leagues_permission
@@ -92,6 +92,6 @@ class LeaguesController < ApplicationController
   end
 
   def require_league_public_or_permission
-    redirect_to leagues_path unless @competition.public? || user_can_edit_league?
+    redirect_to leagues_path unless !@competition.hidden? || user_can_edit_league?
   end
 end

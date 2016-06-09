@@ -1,5 +1,5 @@
 .alert.alert-warning
-  - if @competition.public?
+  - if !@competition.hidden?
     %span.glyphicon.glyphicon-warning-sign
     %b Public
     All changes are visible to everyone.
@@ -19,13 +19,13 @@
   .panel.panel-danger
     .panel-heading Danger Zone
     .panel-body
-      - if @competition.private?
+      - if @competition.hidden?
         = button_to league_path(@competition), method: :delete, class: 'btn btn-danger',
                     data: { confirm: 'Are you sure you want to delete this League?' } do
           %span.glyphicon.glyphicon-trash
           Delete
 
-      - if @competition.private?
+      - if @competition.hidden?
         = button_to 'Make Public', league_visibility_path(@competition, private: false),
                     method: :patch, class: 'btn btn-warning'
       - else

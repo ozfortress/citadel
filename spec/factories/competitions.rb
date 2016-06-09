@@ -1,9 +1,9 @@
 FactoryGirl.define do
-  factory :competition do |c|
+  factory :competition do
     sequence(:name) { |n| "OWL #{n}" }
     description "The owl that won't happen"
     format
-    c.private true
+    status :hidden
     signuppable false
     roster_locked false
     matches_submittable false

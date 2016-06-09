@@ -6,8 +6,4 @@ class Game < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true, length: { in: 1..128 }
 
   alias_attribute :to_s, :name
-
-  def public_competitions
-    competitions.where(private: false)
-  end
 end

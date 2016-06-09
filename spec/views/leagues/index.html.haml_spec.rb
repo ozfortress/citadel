@@ -4,8 +4,8 @@ require 'support/factory_girl'
 
 describe 'leagues/index' do
   let!(:format) { create(:format) }
-  let!(:comp1) { create(:competition, format: format, private: false) }
-  let!(:comp2) { create(:competition, format: format, private: true) }
+  let!(:comp1) { create(:competition, format: format, status: :running) }
+  let!(:comp2) { create(:competition, format: format, status: :hidden) }
 
   it 'displays all leagues' do
     view.lookup_context.prefixes = %w(application)

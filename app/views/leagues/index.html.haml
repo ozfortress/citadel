@@ -20,7 +20,7 @@
     - if index == 0
       - klass += ' in active'
 
-    - competitions = game.public_competitions & @competitions
+    - competitions = game.competitions.running & @competitions
     %div{ id: game.name.parameterize, class: klass }
       - if competitions.empty?
         .panel-body No leagues found...

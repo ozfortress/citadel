@@ -15,7 +15,7 @@ class Competition < ActiveRecord::Base
   validates :format, presence: true
   validates :name, presence: true, length: { in: 1..64 }
   validates :description, presence: true
-  validates :private,                    inclusion: { in: [true, false] }
+  enum status: [:hidden, :running, :completed]
   validates :signuppable,                inclusion: { in: [true, false] }
   validates :roster_locked,              inclusion: { in: [true, false] }
   validates :matches_submittable,        inclusion: { in: [true, false] }
@@ -35,10 +35,6 @@ class Competition < ActiveRecord::Base
   after_initialize :set_defaults, unless: :persisted?
 
   alias_attribute :to_s, :name
-
-  def public?
-    !private?
-  end
 
   def roster_transfer(user)
     transfers.where(user_id: user.id)
@@ -74,7 +70,7 @@ class Competition < ActiveRecord::Base
   end
 
   def set_defaults
-    self.private = true        unless private.present?
+    self.status = :private     unless status.present?
     self.signuppable = true    unless signuppable.present?
     self.roster_locked = false unless roster_locked.present?
 

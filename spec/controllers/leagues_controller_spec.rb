@@ -100,7 +100,7 @@ describe LeaguesController do
   end
 
   describe 'GET #show' do
-    let!(:comp) { create(:competition, private: false) }
+    let!(:comp) { create(:competition, status: :running) }
 
     it 'succeeds for authorized user' do
       get :show, id: comp.id
@@ -181,7 +181,7 @@ describe LeaguesController do
   end
 
   describe 'PATCH #visibility' do
-    let(:comp) { create(:competition, private: true) }
+    let(:comp) { create(:competition, status: :hidden) }
 
     it 'succeeds for authorized user' do
       sign_in admin
@@ -189,7 +189,7 @@ describe LeaguesController do
       patch :visibility, id: comp.id, private: false
 
       comp.reload
-      expect(comp.public?).to eq(true)
+      expect(comp.hidden?).to eq(false)
     end
   end
 
@@ -205,7 +205,7 @@ describe LeaguesController do
     end
 
     it 'fails for public competition' do
-      comp.private = false
+      comp.status = 'running'
       comp.save!
       sign_in admin
 

@@ -15,6 +15,8 @@ describe Competition do
 
   it { should validate_presence_of(:description) }
 
+  it { should define_enum_for(:status).with([:hidden, :running, :completed]) }
+
   it { should validate_presence_of(:min_players) }
   it { should validate_numericality_of(:min_players).is_greater_than(0) }
 
