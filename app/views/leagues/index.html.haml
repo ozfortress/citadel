@@ -36,6 +36,9 @@
               - klass = 'list-group-item-success'
 
             = link_to league_path(competition), class: 'list-group-item ' + klass do
+              .thumbnail.pull-right
+                Teams: #{competition.rosters.size}
+
               %h4.list-group-item-heading
                 = competition.name
               %p.list-group-item-text
