@@ -95,9 +95,9 @@ class CompetitionTransfer < ActiveRecord::Base
   def single_player_entry
     return unless competition.present? && is_joining
 
-    transfer = competition.players.where(user: user)
-    if transfer.exists?
-      errors.add(:user_id, "is already entered in this league with #{transfer.first.roster}")
+    transfers = competition.players.where(user: user)
+    if transfers.exists?
+      errors.add(:user_id, "is already entered in this league with #{transfers.first.roster.name}")
     end
   end
 
