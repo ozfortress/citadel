@@ -180,23 +180,23 @@ describe LeaguesController do
     end
   end
 
-  describe 'PATCH #visibility' do
+  describe 'PATCH #status' do
     let(:comp) { create(:competition, status: :hidden) }
 
     it 'succeeds for authorized user' do
       sign_in admin
 
-      patch :visibility, id: comp.id, private: false
+      patch :status, id: comp.id, status: 'running'
 
       comp.reload
-      expect(comp.hidden?).to eq(false)
+      expect(comp.status).to eq('running')
     end
   end
 
   describe 'DELETE #destroy' do
     let(:comp) { create(:competition) }
 
-    it 'succeeds for private competition' do
+    it 'succeeds for hidden competition' do
       sign_in admin
 
       delete :destroy, id: comp.id
