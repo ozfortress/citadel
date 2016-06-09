@@ -9,10 +9,10 @@
   %ul.list-group
     = f.fields_for :sets do |sets_f|
       = render 'set_fields', f: sets_f
-    %div{ id: "#{div.name}_sets" }
+    %div{ id: "#{div.id}_sets" }
 
   .panel-body
     = link_to_add_association f, :sets, class: 'btn btn-default pull-right',
-                              'data-association-insertion-node' => "##{div.name}_sets" do
+                              'data-association-insertion-node' => "##{div.id}_sets" do
       %span.glyphicon.glyphicon-plus
       Add Set
