@@ -5,8 +5,13 @@ class Competition < ActiveRecord::Base
   include RosterPlayers
 
   belongs_to :format
-  has_many   :divisions, inverse_of: :competition, dependent: :destroy
+
+  has_many :divisions, inverse_of: :competition, dependent: :destroy
   accepts_nested_attributes_for :divisions, allow_destroy: true
+  has_many :tiebreakers, inverse_of: :competition, dependent: :destroy,
+                         class_name: 'CompetitionTiebreaker'
+  accepts_nested_attributes_for :tiebreakers, allow_destroy: true
+
   has_many :rosters,   through: :divisions, class_name: 'CompetitionRoster'
   has_many :transfers, through: :rosters,   class_name: 'CompetitionTransfer'
   has_many :matches,   through: :divisions, class_name: 'CompetitionMatch'

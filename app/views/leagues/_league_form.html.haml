@@ -33,6 +33,20 @@
     = f.number_field :points_per_match_forfeit_win, label: 'Points per match won by forfeit'
 
 .panel.panel-default
+  .panel-heading Tiebreaking
+  %ul.list-group
+    = f.fields_for :tiebreakers do |tiebreaker_f|
+      = render 'tiebreaker_fields', f: tiebreaker_f
+    #tiebreakers
+
+  .panel-body
+    %div
+      = link_to_add_association f, :tiebreakers, class: 'btn btn-default pull-right',
+                                'data-association-insertion-node' => '#tiebreakers' do
+        %span.glyphicon.glyphicon-plus
+        Add Tiebreaker
+
+.panel.panel-default
   .panel-heading Divisions
 
   %ul.list-group

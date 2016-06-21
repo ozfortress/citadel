@@ -42,7 +42,8 @@ class CompetitionRoster < ActiveRecord::Base
   end
 
   def won_sets
-    not_forfeited_home_team_sets.home_team_wins
+    not_forfeited_home_team_sets
+      .home_team_wins
       .union(not_forfeited_away_team_sets.away_team_wins)
   end
 
@@ -53,28 +54,27 @@ class CompetitionRoster < ActiveRecord::Base
   end
 
   def lost_sets
-    not_forfeited_home_team_sets.away_team_wins
+    not_forfeited_home_team_sets
+      .away_team_wins
       .union(not_forfeited_away_team_sets.home_team_wins)
   end
 
   def forfeit_won_matches
-    away_team_matches.home_team_forfeited
+    away_team_matches
+      .home_team_forfeited
       .union(home_team_matches.away_team_forfeited)
       .union(matches.technically_forfeited)
   end
 
   def forfeit_lost_matches
-    home_team_matches.home_team_forfeited
+    home_team_matches
+      .home_team_forfeited
       .union(away_team_matches.away_team_forfeited)
       .union(matches.mutually_forfeited)
   end
 
   def points
-    local_counts = [won_sets.count, drawn_sets.count, lost_sets.count, forfeit_won_matches.count,
-                    forfeit_lost_matches.count]
-    comp_counts = competition.point_multipliers
-
-    local_counts.zip(comp_counts).map { |x, y| x * y }.sum
+    @points ||= calculate_points
   end
 
   def approved_transfers
@@ -110,10 +110,24 @@ class CompetitionRoster < ActiveRecord::Base
   end
 
   def sort_keys
-    [-points]
+    keys = [-points]
+
+    competition.tiebreakers.each do |tiebreaker|
+      keys << -tiebreaker.get_comparison(self)
+    end
+
+    keys
   end
 
   private
+
+  def calculate_points
+    local_counts = [won_sets.count, drawn_sets.count, lost_sets.count, forfeit_won_matches.count,
+                    forfeit_lost_matches.count]
+    comp_counts = competition.point_multipliers
+
+    local_counts.zip(comp_counts).map { |x, y| x * y }.sum
+  end
 
   def forfeit_all!
     no_forfeit = CompetitionMatch.forfeit_bies[:no_forfeit]

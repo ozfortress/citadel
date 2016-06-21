@@ -27,7 +27,7 @@
         %li.list-group-item
           %h3= div.name
           %ul.list-group
-            - rosters = div.approved_rosters.sort_by { |x| x.sort_keys }
+            - rosters = div.approved_rosters.sort_by(&:sort_keys)
             - present_collection(rosters).each do |roster|
               %li.list-group-item
                 = roster.link

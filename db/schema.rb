@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160608081632) do
+ActiveRecord::Schema.define(version: 20160621051614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,13 @@ ActiveRecord::Schema.define(version: 20160608081632) do
 
   add_index "competition_sets", ["competition_match_id"], name: "index_competition_sets_on_competition_match_id", using: :btree
   add_index "competition_sets", ["map_id"], name: "index_competition_sets_on_map_id", using: :btree
+
+  create_table "competition_tiebreakers", force: :cascade do |t|
+    t.integer "competition_id"
+    t.integer "kind",           null: false
+  end
+
+  add_index "competition_tiebreakers", ["competition_id"], name: "index_competition_tiebreakers_on_competition_id", using: :btree
 
   create_table "competition_transfers", force: :cascade do |t|
     t.integer  "competition_roster_id",                 null: false
@@ -301,6 +308,7 @@ ActiveRecord::Schema.define(version: 20160608081632) do
   add_foreign_key "competition_rosters", "teams"
   add_foreign_key "competition_sets", "competition_matches"
   add_foreign_key "competition_sets", "maps"
+  add_foreign_key "competition_tiebreakers", "competitions"
   add_foreign_key "competition_transfers", "competition_rosters"
   add_foreign_key "competition_transfers", "users"
   add_foreign_key "competitions", "formats"
