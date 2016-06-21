@@ -27,11 +27,12 @@
         %li.list-group-item
           %h3= div.name
           %ul.list-group
-            - present_collection(div.approved_rosters).each do |roster|
+            - rosters = div.approved_rosters.sort_by { |x| x.sort_keys }
+            - present_collection(rosters).each do |roster|
               %li.list-group-item
                 = roster.link
                 .pull-right
-                  |#{roster.score_s}|
+                  = roster.score_s
 
   - if user_signed_in?
     - if current_user.can_any?(:edit, :team) && @competition.signuppable?

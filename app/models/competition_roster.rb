@@ -109,6 +109,10 @@ class CompetitionRoster < ActiveRecord::Base
     end
   end
 
+  def sort_keys
+    [-points]
+  end
+
   private
 
   def forfeit_all!
