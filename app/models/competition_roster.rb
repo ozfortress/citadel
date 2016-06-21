@@ -38,44 +38,40 @@ class CompetitionRoster < ActiveRecord::Base
   after_initialize :set_defaults, unless: :persisted?
 
   def matches
-    table = CompetitionMatch.arel_table
-    CompetitionMatch.where(table[:home_team_id].eq(id).or(table[:away_team_id].eq(id)))
-  end
-
-  def not_forfeited_sets
-    CompetitionSet.where("id IN (#{not_forfeited_home_team_sets.select(:id).to_sql}) OR "\
-                         "id IN (#{not_forfeited_away_team_sets.select(:id).to_sql})")
+    home_team_matches.union(away_team_matches)
   end
 
   def won_sets
-    (not_forfeited_home_team_sets.home_team_wins +
-     not_forfeited_away_team_sets.away_team_wins)
+    not_forfeited_home_team_sets.home_team_wins
+      .union(not_forfeited_away_team_sets.away_team_wins)
   end
 
   def drawn_sets
-    not_forfeited_sets.draws
+    not_forfeited_home_team_sets
+      .union(not_forfeited_away_team_sets)
+      .draws
   end
 
   def lost_sets
-    (not_forfeited_home_team_sets.away_team_wins +
-     not_forfeited_away_team_sets.home_team_wins)
+    not_forfeited_home_team_sets.away_team_wins
+      .union(not_forfeited_away_team_sets.home_team_wins)
   end
 
   def forfeit_won_matches
-    (away_team_matches.home_team_forfeited +
-     home_team_matches.away_team_forfeited +
-     matches.technically_forfeited)
+    away_team_matches.home_team_forfeited
+      .union(home_team_matches.away_team_forfeited)
+      .union(matches.technically_forfeited)
   end
 
   def forfeit_lost_matches
-    (home_team_matches.home_team_forfeited +
-     away_team_matches.away_team_forfeited +
-     matches.mutually_forfeited)
+    home_team_matches.home_team_forfeited
+      .union(away_team_matches.away_team_forfeited)
+      .union(matches.mutually_forfeited)
   end
 
   def points
-    local_counts = [won_sets.size, drawn_sets.size, lost_sets.size, forfeit_won_matches.size,
-                    forfeit_lost_matches.size]
+    local_counts = [won_sets.count, drawn_sets.count, lost_sets.count, forfeit_won_matches.count,
+                    forfeit_lost_matches.count]
     comp_counts = competition.point_multipliers
 
     local_counts.zip(comp_counts).map { |x, y| x * y }.sum
