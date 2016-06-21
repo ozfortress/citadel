@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.6'
 # Use postgres
 gem 'pg'
+# Active Record extensions
+gem 'active_record_union', '~> 1.1.1'
 # SASS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Compress JavaScript assets
