@@ -28,5 +28,12 @@ module Leagues
         (user_can_home_team? || user_can_away_team?) &&
         @competition.matches_submittable)
     end
+
+    def user_can_comm?
+      !@match.bye? && user_signed_in? &&
+        (@match.home_team.on_roster?(current_user) ||
+         @match.away_team.on_roster?(current_user) ||
+         user_can_either_teams?)
+    end
   end
 end

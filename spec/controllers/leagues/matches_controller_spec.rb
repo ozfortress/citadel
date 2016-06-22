@@ -187,16 +187,16 @@ describe Leagues::MatchesController do
     end
   end
 
-  describe 'PATCH #comms' do
+  describe 'POST #comms' do
     let!(:match) { create(:competition_match, home_team: team1, away_team: team2) }
 
     it 'succeeds for authorized user' do
       user.grant(:edit, team1.team)
       sign_in user
 
-      patch :comms, league_id: comp.id, id: match.id, competition_comm: { content: 'A' }
+      post :comms, league_id: comp.id, id: match.id, competition_comm: { content: 'A' }
 
-      comm = CompetitionComm.first
+      comm = match.comms.first
       expect(comm).to_not be nil
       expect(comm.match).to eq(match)
       expect(comm.content).to eq('A')
@@ -206,10 +206,18 @@ describe Leagues::MatchesController do
       user.grant(:edit, team1.team)
       sign_in user
 
-      patch :comms, league_id: comp.id, id: match.id, competition_comm: { content: nil }
+      post :comms, league_id: comp.id, id: match.id, competition_comm: { content: nil }
 
-      expect(CompetitionComm.first).to be(nil)
+      expect(match.comms.first).to be(nil)
       expect(response).to render_template(:show)
+    end
+
+    it 'fails for unauthorized user' do
+      sign_in user
+
+      post :comms, league_id: comp.id, id: match.id, competition_comm: { content: 'A' }
+
+      expect(match.comms.first).to be(nil)
     end
   end
 
