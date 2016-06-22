@@ -29,7 +29,7 @@ signed up on #{@roster.created_at.strftime('%c')}
 .panel.panel-default
   .panel-heading
     Roster
-    - if user_can_edit_roster?
+    - if user_can_manage_transfers?
       = link_to league_roster_transfers_path(@competition, @roster),
                 class: 'btn btn-default pull-right' do
         Manage

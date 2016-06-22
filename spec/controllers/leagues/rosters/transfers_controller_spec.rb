@@ -33,6 +33,16 @@ describe Leagues::Rosters::TransfersController do
       expect(response).to have_http_status(:success)
     end
 
+    it 'redirects for authorized captain when rosters are locked' do
+      user.grant(:edit, roster.team)
+      roster.competition.update!(roster_locked: true)
+      sign_in user
+
+      get :show, league_id: roster.competition, roster_id: roster.id
+
+      expect(response).to redirect_to(league_roster_path(roster.competition, roster))
+    end
+
     it 'redirects for unauthorized user' do
       sign_in user
 
@@ -63,6 +73,18 @@ describe Leagues::Rosters::TransfersController do
                     competition_transfer: { user_id: bencher.id, is_joining: true }
 
       expect(roster.on_roster?(bencher)).to be(true)
+      expect(roster.competition.pending_transfer?(bencher)).to be(false)
+    end
+
+    it 'fails if rosters are locked' do
+      user.grant(:edit, roster.team)
+      roster.competition.update!(roster_locked: true)
+      sign_in user
+
+      post :create, league_id: roster.competition.id, roster_id: roster.id,
+                    competition_transfer: { user_id: bencher.id, is_joining: true }
+
+      expect(roster.on_roster?(bencher)).to be(false)
       expect(roster.competition.pending_transfer?(bencher)).to be(false)
     end
 

@@ -1,6 +1,7 @@
 module Leagues
   module RostersHelper
     include RosterPermissions
+    include TransferPermissions
 
     def roster_destroy_confirm
       if @competition.signuppable?

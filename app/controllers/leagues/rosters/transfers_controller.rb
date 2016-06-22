@@ -1,11 +1,11 @@
 module Leagues
   module Rosters
     class TransfersController < ApplicationController
-      include LeaguePermissions
+      include TransferPermissions
 
       before_action { @competition = Competition.find(params[:league_id]) }
       before_action { @roster = @competition.rosters.find(params[:roster_id]) }
-      before_action :require_roster_permission
+      before_action :require_transfer_permissions
 
       def show
         @transfer = @roster.transfers.new
@@ -24,11 +24,8 @@ module Leagues
         params.require(:competition_transfer).permit(:user_id, :is_joining)
       end
 
-      def require_roster_permission
-        unless user_signed_in? && (current_user.can?(:edit, @roster.team) ||
-                                   user_can_edit_league?)
-          redirect_to league_roster_path(@competition, @roster)
-        end
+      def require_transfer_permissions
+        redirect_to league_roster_path(@competition, @roster) unless user_can_manage_transfers?
       end
     end
   end
