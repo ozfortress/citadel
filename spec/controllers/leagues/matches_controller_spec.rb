@@ -37,7 +37,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, comp)
       sign_in user
 
-      post :create, league_id: comp.id, competition_match: {
+      post :create, league_id: comp.id, division_id: div.id, competition_match: {
         home_team_id: team1.id, away_team_id: team2.id,
         sets_attributes: [
           { map_id: map.id }
@@ -57,7 +57,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, comp)
       sign_in user
 
-      post :create, league_id: comp.id, competition_match: {
+      post :create, league_id: comp.id, division_id: div.id, competition_match: {
         home_team_id: team1.id, away_team_id: team1.id
       }
 
@@ -70,7 +70,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, comp)
       sign_in user
 
-      post :create, league_id: comp.id, competition_match: {
+      post :create, league_id: comp.id, division_id: div2.id, competition_match: {
         home_team_id: team1.id, away_team_id: team2.id,
         sets_attributes: [
           { map_id: map.id }

@@ -1,14 +1,19 @@
 %ul.nav.nav-tabs
-  - @competition.divisions.each_with_index do |div, i|
-    %li{ class: i == 0 ? 'active' : '' }
+  - @competition.divisions.each do |div|
+    - klass = div == @division ? 'active' : ''
+
+    %li{ class: klass }
       %a{ data: { toggle: 'tab' }, href: "##{div.to_s.parameterize}" }
         = div
 
 .tab-content
-  - @competition.divisions.each_with_index do |div, i|
-    %div{ id: div.to_s.parameterize,
-          class: 'tab-pane fade' + (i == 0 ? ' in active' : '') }
+  - @competition.divisions.each do |div|
+    - klass = div == @division ? ' in active' : ''
+
+    %div{ id: div.to_s.parameterize, class: 'tab-pane fade' + klass }
       = bootstrap_form_for @match, url: league_matches_path(@competition) do |f|
+        = hidden_field_tag :division_id, div.id
+
         = render 'match_form', f: f, div: div
 
         = f.submit 'Create'

@@ -20,10 +20,12 @@ module Leagues
     def new
       @match = CompetitionMatch.new
       @match.sets.new
+      @division = @competition.divisions.first
     end
 
     def create
       @match = CompetitionMatch.new(match_params)
+      @division = @competition.divisions.find(params[:division_id])
 
       if @match.save
         redirect_to league_match_path(@competition, @match)
@@ -35,14 +37,16 @@ module Leagues
     def generate
       @match = CompetitionMatch.new
       @match.sets.new
+      @division = @competition.divisions.first
       @kind = :swiss
     end
 
     def create_round
       params = create_round_params
-      division = @competition.divisions.find(params.delete(:division_id))
+      @division = @competition.divisions.find(params.delete(:division_id))
       @kind = params.delete(:generate_kind)
-      if division.seed_round_with(@kind, params)
+
+      if @division.seed_round_with(@kind, params)
         redirect_to league_matches_path(@competition)
       else
         @match = CompetitionMatch.new(params)
