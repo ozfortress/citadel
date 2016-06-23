@@ -1,5 +1,12 @@
 - unless @roster.approved?
   .alert.alert-warning
+    - if user_can_edit_league?
+      = link_to 'Approve', review_league_roster_path(@competition, @roster),
+                           class: 'btn btn-success pull-right'
+      = button_to 'Decline', league_roster_path(@competition, @roster),
+          method: :delete, class: 'btn btn-danger pull-right',
+          data: { confirm: "Are you sure you want to decline this team's sign up?" }
+
     %span.glyphicon.glyphicon-warning-sign
     Roster is awaiting approval
 
@@ -56,13 +63,3 @@ signed up on #{@roster.created_at.strftime('%c')}
   %ul.list-group
     - present_collection(@roster.matches).each do |match|
       %li.list-group-item= match.link
-
-- if user_can_edit_league? && !@roster.approved?
-  .panel.panel-default
-    .panel-heading Admin
-    .panel-body
-      = link_to 'Approve', review_league_roster_path(@competition, @roster),
-                           class: 'btn btn-success pull-right'
-      = button_to 'Decline', league_roster_path(@competition, @roster),
-          method: :delete, class: 'btn btn-danger pull-right',
-          data: { confirm: "Are you sure you want to decline this team's sign up?" }
