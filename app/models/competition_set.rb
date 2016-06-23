@@ -35,7 +35,7 @@ class CompetitionSet < ActiveRecord::Base
   end
 
   def can_draw
-    return unless match.present?
+    return unless match.present? && match.home_team
 
     if !match.pending? && !competition.allow_set_draws? && home_team_score == away_team_score
       errors.add(:away_team_score, 'cannot be tied')
