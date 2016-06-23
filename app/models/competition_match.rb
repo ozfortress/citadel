@@ -95,9 +95,9 @@ class CompetitionMatch < ActiveRecord::Base
 
   def rosters_not_disbanded
     errors.add(:home_team, 'is disbanded and cannot play') if home_team.present? &&
-                                                                 home_team.disbanded?
+                                                              home_team.disbanded?
     errors.add(:away_team, 'is disbanded and cannot play') if away_team.present? &&
-                                                                 away_team.disbanded?
+                                                              away_team.disbanded?
   end
 
   def set_defaults
