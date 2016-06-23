@@ -77,26 +77,26 @@ class CompetitionMatch < ActiveRecord::Base
   def home_and_away_team_are_different
     return unless home_team.present? && away_team.present?
 
-    errors.add(:away_team_id, 'must not be the same as the home team') if away_team == home_team
+    errors.add(:away_team, 'must not be the same as the home team') if away_team == home_team
   end
 
   def home_and_away_team_are_in_the_same_division
     return unless home_team.present? && away_team.present?
 
     unless away_team.division == home_team.division
-      errors.add(:away_team_id, 'must be in the same division as the home team')
+      errors.add(:away_team, 'must be in the same division as the home team')
     end
   end
 
   def teams_are_approved
-    errors.add(:home_team_id, 'must be approved') if home_team.present? && !home_team.approved?
-    errors.add(:away_team_id, 'must be approved') if away_team.present? && !away_team.approved?
+    errors.add(:home_team, 'must be approved') if home_team.present? && !home_team.approved?
+    errors.add(:away_team, 'must be approved') if away_team.present? && !away_team.approved?
   end
 
   def rosters_not_disbanded
-    errors.add(:home_team_id, 'is disbanded and cannot play') if home_team.present? &&
+    errors.add(:home_team, 'is disbanded and cannot play') if home_team.present? &&
                                                                  home_team.disbanded?
-    errors.add(:away_team_id, 'is disbanded and cannot play') if away_team.present? &&
+    errors.add(:away_team, 'is disbanded and cannot play') if away_team.present? &&
                                                                  away_team.disbanded?
   end
 
