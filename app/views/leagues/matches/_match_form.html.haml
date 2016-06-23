@@ -1,8 +1,14 @@
 - no_team_fields = false if local_assigns[:no_team_fields].nil?
 
 - unless no_team_fields
-  = f.select :home_team_id, teams_select(div), include_blank: false, label: 'Home Team'
-  = f.select :away_team_id, teams_select(div), include_blank: 'BYE', label: 'Away Team'
+  / TODO: Properly handle errors here.
+  / Currently there's a discreptency between using :home_team and :home_team_id
+  / :home_team displays errors properly, :home_team_id works with the controller
+  = f.collection_select :home_team_id, div.active_rosters, :id, :name, include_blank: false, label: 'Home Team'
+  = f.errors_on :home_team
+
+  = f.collection_select :away_team_id, div.active_rosters, :id, :name, include_blank: 'BYE', label: 'Away Team'
+  = f.errors_on :away_team
 
 .panel.panel-default
   .panel-heading Sets
