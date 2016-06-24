@@ -14,13 +14,16 @@
 
 .panel.panel-default
   .panel-heading Sets
-  %ul.list-group
-    = f.fields_for :sets do |sets_f|
-      = render 'set_fields', f: sets_f
-    %div{ id: "#{div.id}_sets" }
+  - if f.object.pending?
+    %ul.list-group
+      = f.fields_for :sets do |sets_f|
+        = render 'set_fields', f: sets_f
+      %div{ id: "#{div.id}_sets" }
 
-  .panel-body
-    = link_to_add_association f, :sets, class: 'btn btn-default pull-right',
-                              'data-association-insertion-node' => "##{div.id}_sets" do
-      %span.glyphicon.glyphicon-plus
-      Add Set
+    .panel-body
+      = link_to_add_association f, :sets, class: 'btn btn-default pull-right',
+                                'data-association-insertion-node' => "##{div.id}_sets" do
+        %span.glyphicon.glyphicon-plus
+        Add Set
+  - else
+    .panel-body Can't edit sets unless scores are pending
