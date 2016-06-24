@@ -87,7 +87,7 @@ class CompetitionTransfer < ActiveRecord::Base
 
   def set_defaults
     if competition.present? && (!competition.transfers_require_approval? ||
-                                competition.signuppable?)
+                                !roster.approved?)
       self.approved = true
     end
   end
