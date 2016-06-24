@@ -28,8 +28,9 @@
           %h3= div.name
           %ul.list-group
             - rosters = div.approved_rosters.sort_by(&:sort_keys)
-            - present_collection(rosters).each do |roster|
+            - present_collection(rosters).each_with_index do |roster, rank|
               %li.list-group-item
+                = "##{rank + 1}:" if @competition.completed?
                 = roster.link
                 .pull-right
                   = roster.score_s
