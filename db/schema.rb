@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160621051614) do
+ActiveRecord::Schema.define(version: 20160624052916) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20160621051614) do
     t.string   "name",                        null: false
     t.text     "description",                 null: false
     t.boolean  "disbanded",   default: false, null: false
+    t.integer  "ranking"
   end
 
   add_index "competition_rosters", ["division_id"], name: "index_competition_rosters_on_division_id", using: :btree

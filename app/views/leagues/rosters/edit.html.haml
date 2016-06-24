@@ -16,6 +16,7 @@
         = f.text_field :name
         = f.select :division_id, divisions_select, label: 'Division'
         = f.check_box :disbanded
+        = f.number_field :ranking
       = f.text_area :description, label: 'Tell us about your team', rows: 10
 
       = f.submit 'Update'

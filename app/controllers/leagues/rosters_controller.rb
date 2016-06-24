@@ -83,7 +83,7 @@ module Leagues
       param = params.require(:competition_roster)
 
       if user_can_edit_league?
-        param.permit(:name, :description, :disbanded, :division_id)
+        param.permit(:name, :description, :disbanded, :ranking, :division_id)
       else
         param.permit(:description)
       end

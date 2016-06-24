@@ -30,6 +30,7 @@ class CompetitionRoster < ActiveRecord::Base
   validates :name,        presence: true, uniqueness: { scope: :division_id },
                           length: { in: 1..64 }
   validates :description, presence: true, allow_blank: true
+  validates :ranking,     numericality: { greater_than: 0 }, :allow_nil => true
   validates :approved,    inclusion: { in: [true, false] }
   validates :disbanded,   inclusion: { in: [true, false] }
   validate :player_count_minimums
@@ -110,7 +111,7 @@ class CompetitionRoster < ActiveRecord::Base
   end
 
   def sort_keys
-    keys = [-points]
+    keys = [ranking || Float::INFINITY, -points]
 
     competition.tiebreakers.each do |tiebreaker|
       keys << -tiebreaker.get_comparison(self)

@@ -24,6 +24,9 @@ describe CompetitionRoster do
   it { should allow_value('').for(:description) }
   it { should validate_length_of(:description).is_at_least(0) }
 
+  it { should allow_value(nil).for(:ranking) }
+  it { should validate_numericality_of(:ranking).is_greater_than(0) }
+
   describe 'player count limits' do
     it 'validates minimum players' do
       comp = create(:competition, min_players: 1)
