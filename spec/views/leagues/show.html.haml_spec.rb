@@ -19,7 +19,7 @@ describe 'leagues/show' do
   end
 
   context 'public league with teams and signups open' do
-    let!(:comp) { create(:competition, status: :hidden, signuppable: true) }
+    let!(:comp) { create(:competition, status: :running, signuppable: true) }
     let!(:div) { create(:division, competition: comp) }
     let!(:roster1) { create(:competition_roster, division: div, approved: false) }
     let!(:roster2) { create(:competition_roster, division: div, approved: true) }
@@ -37,11 +37,17 @@ describe 'leagues/show' do
   end
 
   context 'public league with teams and signups closed' do
-    let!(:comp) { create(:competition, status: :hidden, signuppable: false) }
+    let!(:comp) { create(:competition, status: :running, signuppable: false) }
     let!(:div) { create(:division, competition: comp) }
     let!(:roster1) { create(:competition_roster, division: div, approved: false) }
     let!(:roster2) { create(:competition_roster, division: div, approved: true) }
     let!(:roster3) { create(:competition_roster, division: div, disbanded: true) }
+
+    before do
+      CompetitionTiebreaker.kinds.each do |_, kind|
+        create(:competition_tiebreaker, competition: comp, kind: kind)
+      end
+    end
 
     it 'displays league details' do
       assign(:competition, comp)
