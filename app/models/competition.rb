@@ -37,6 +37,8 @@ class Competition < ActiveRecord::Base
 
   validate :validate_players_range
 
+  scope :not_hidden, -> { where.not(status: Competition.statuses[:hidden]) }
+
   after_initialize :set_defaults, unless: :persisted?
 
   alias_attribute :to_s, :name
