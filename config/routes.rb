@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       end
 
       resource :transfers, controller: 'leagues/rosters/transfers', only: [:show, :create]
+      resource :comments, controller: 'leagues/rosters/comments', only: [:create]
     end
 
     post  'matches/:id/comms',   to: 'leagues/matches#comms',   as: 'match_comms'

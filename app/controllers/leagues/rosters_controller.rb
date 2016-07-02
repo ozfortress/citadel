@@ -41,6 +41,7 @@ module Leagues
     end
 
     def show
+      @comment = CompetitionRosterComment.new
     end
 
     def edit

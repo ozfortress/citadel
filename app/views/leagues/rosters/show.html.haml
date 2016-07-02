@@ -63,3 +63,19 @@ signed up on #{@roster.created_at.strftime('%c')}
   %ul.list-group
     - present_collection(@roster.matches).each do |match|
       %li.list-group-item= match.link
+
+- if user_can_edit_league?
+  .panel.panel-info
+    .panel-heading Admin Comments
+    %ul.list-group
+      - @roster.comments.each do |comment|
+        %li.list-group-item
+          .panel.panel-default
+            .panel-heading
+              = present(comment.user).listing
+              .pull-right= comment.created_at.strftime('%c')
+
+          = markdown comment.content
+
+    .panel-body
+      = render 'comment_form', competition: @competition, roster: @roster, comment: @comment
