@@ -24,6 +24,8 @@ class CompetitionRoster < ActiveRecord::Base
   has_many :not_forfeited_away_team_sets, through: :not_forfeited_away_team_matches, source: :sets
 
   has_many :titles
+  has_many :comments, class_name: 'CompetitionRosterComment', inverse_of: :roster,
+                      dependent: :destroy
 
   validates :team,        presence: true, uniqueness: { scope: :division_id }
   validates :division,    presence: true

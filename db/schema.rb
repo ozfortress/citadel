@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160624052916) do
+ActiveRecord::Schema.define(version: 20160627063629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,17 @@ ActiveRecord::Schema.define(version: 20160624052916) do
 
   add_index "competition_matches", ["away_team_id"], name: "index_competition_matches_on_away_team_id", using: :btree
   add_index "competition_matches", ["home_team_id"], name: "index_competition_matches_on_home_team_id", using: :btree
+
+  create_table "competition_roster_comments", force: :cascade do |t|
+    t.integer  "competition_roster_id", null: false
+    t.integer  "user_id"
+    t.text     "content",               null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "competition_roster_comments", ["competition_roster_id"], name: "index_competition_roster_comments_on_competition_roster_id", using: :btree
+  add_index "competition_roster_comments", ["user_id"], name: "index_competition_roster_comments_on_user_id", using: :btree
 
   create_table "competition_rosters", force: :cascade do |t|
     t.integer  "team_id",                     null: false
@@ -305,6 +316,8 @@ ActiveRecord::Schema.define(version: 20160624052916) do
   add_foreign_key "competition_match_comms", "users"
   add_foreign_key "competition_matches", "competition_rosters", column: "away_team_id"
   add_foreign_key "competition_matches", "competition_rosters", column: "home_team_id"
+  add_foreign_key "competition_roster_comments", "competition_rosters"
+  add_foreign_key "competition_roster_comments", "users"
   add_foreign_key "competition_rosters", "divisions"
   add_foreign_key "competition_rosters", "teams"
   add_foreign_key "competition_sets", "competition_matches"
