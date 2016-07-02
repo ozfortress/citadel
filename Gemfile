@@ -45,6 +45,9 @@ gem 'carrierwave'
 gem 'mini_magick'
 # SSL
 gem 'letsencrypt_plugin'
+# ACME (dependency of letsencrypt) decided to change their API on a minor version
+# So lock it to the latest working version until letsencrypt updates
+gem 'acme-client', '0.3.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
