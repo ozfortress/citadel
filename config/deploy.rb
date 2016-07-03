@@ -12,8 +12,6 @@ set :deploy_to, '/opt/citadel'
 
 set :rails_env, 'production'
 
-set :deploy_via, :copy
-
 # Default value for :format is :pretty
 # set :format, :pretty
 
