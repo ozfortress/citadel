@@ -5,7 +5,7 @@ set :application, 'citadel'
 set :repo_url, 'git@github.com:ozfortress/citadel.git'
 
 set :scm, :git
-set :branch, :master
+set :branch, :ozfortress
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/opt/citadel'
