@@ -99,7 +99,7 @@ class CompetitionRoster < ActiveRecord::Base
     players_off_roster.map(&:user)
   end
 
-  def player_transfers(tfers = nil, unique_for = 'user_id')
+  def player_transfers(*args)
     super.where(approved: true)
   end
 

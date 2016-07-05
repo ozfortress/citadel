@@ -67,6 +67,10 @@ class Competition < ActiveRecord::Base
      points_per_match_forfeit_loss]
   end
 
+  def player_transfers(*args)
+    super.where(approved: true)
+  end
+
   private
 
   def validate_players_range
