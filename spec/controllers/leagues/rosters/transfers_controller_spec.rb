@@ -11,7 +11,7 @@ describe Leagues::Rosters::TransfersController do
   before do
     roster.team.add_player!(bencher)
     roster.team.add_player!(player)
-    roster.add_player!(player)
+    roster.add_player!(player, approved: true)
   end
 
   describe 'GET #show' do
