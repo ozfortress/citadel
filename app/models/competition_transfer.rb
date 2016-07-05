@@ -11,7 +11,6 @@ class CompetitionTransfer < ActiveRecord::Base
   validates :roster, presence: true
   validates :is_joining, inclusion: { in: [true, false] }
   validates :approved, inclusion: { in: [true, false] }
-  validate :single_player_entry, on: :create
   validate :on_team, on: :create
   validate :within_roster_size, on: :create
 
@@ -83,21 +82,21 @@ class CompetitionTransfer < ActiveRecord::Base
     end
   end
 
-  private
+  before_update do
+    next unless approved? && is_joining
 
-  def set_defaults
-    if competition.present? && (!competition.transfers_require_approval? ||
-                                !roster.approved?)
-      self.approved = true
+    transfers = competition.players.where(user: user, approved: true)
+    if transfers.exists?
+      transfers.first.roster.remove_player!(user, approved: true)
     end
   end
 
-  def single_player_entry
-    return unless competition.present? && is_joining
+  private
 
-    transfers = competition.players.where(user: user)
-    if transfers.exists?
-      errors.add(:user_id, "is already entered in this league with #{transfers.first.roster.name}")
+  def set_defaults
+    if competition.present? && user.present? &&
+       (!competition.transfers_require_approval? || !roster.approved?)
+      self.approved = !is_joining? || !competition.on_roster?(user)
     end
   end
 
