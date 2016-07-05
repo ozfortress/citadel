@@ -15,9 +15,4 @@
         = button_to 'Deny', league_transfer_path(@competition, transfer), method: :delete,
                     class: 'pull-right btn btn-danger'
 
-        = present(transfer.user).link
-        - if transfer.is_joining?
-          wants to transfer to
-        - else
-          wants to transfer out of
-        = present(transfer.roster).link
+        = present(transfer.user).transfer_listing(@competition)

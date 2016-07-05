@@ -33,4 +33,31 @@ class UserPresenter < ActionPresenter::Base
 
     titles.join(', ')
   end
+
+  def transfer_listing(competition, options = {})
+    elements = [listing(options), roster_status(competition), transfer_status(competition)]
+    elements = elements.select { |e| !e.empty? }
+    elements.join(', ').html_safe
+  end
+
+  def roster_status(competition)
+    transfers = competition.players.where(user: user, approved: true)
+
+    if transfers.exists?
+      roster = transfers.first.roster
+      "on roster '#{present(roster).link}'".html_safe
+    else
+      ''
+    end
+  end
+
+  def transfer_status(competition)
+    transfers = competition.transfers.where(user: user, approved: false)
+
+    if transfers.exists?
+      present(transfers.first).transfer_message
+    else
+      ''
+    end
+  end
 end

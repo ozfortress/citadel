@@ -22,18 +22,9 @@
     = f.select :division_id, divisions_select, label: 'Desired Division'
     = f.text_area :description, label: 'Tell us about your team', rows: 10
 
-    / TODO: Combine collection check boxes and errors somehow
-    = f.collection_check_boxes :player_ids, @roster.team.player_users, :id, :name, label: 'Players'
-
-    - unless @roster.valid?
-      .form-group.has-error
-        - @roster.transfers.each do |transfer|
-          - unless transfer.errors.empty?
-            %span.help-block
-              = transfer.user
-              has already signed up with the team
-              - roster = @competition.players.find_by(user: transfer.user).roster
-              = present(roster).link
+    - users = present_collection(@roster.team.player_users)
+    - listings = users.map { |user| [user.id, user.transfer_listing(@competition)] }
+    = f.collection_check_boxes :player_ids, listings, :first, :last, label: 'Players'
 
     = f.submit 'Sign up'
     = link_to 'Cancel', league_path(@competition), class: 'btn btn-default'
