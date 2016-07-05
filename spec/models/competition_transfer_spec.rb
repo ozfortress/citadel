@@ -28,6 +28,13 @@ describe CompetitionTransfer do
       expect(build(:competition_transfer, propagate_transfers: false, roster: roster,
                                           user: user, is_joining: false)).to be_invalid
     end
+
+    it "doesn't allow more than one pending transfer per user" do
+      create(:competition_transfer, roster: roster, user: user, is_joining: true)
+
+      expect(build(:competition_transfer, roster: roster, user: user,
+                                          is_joining: true)).to be_invalid
+    end
   end
 
   context 'pending roster' do

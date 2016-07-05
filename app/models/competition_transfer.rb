@@ -13,6 +13,7 @@ class CompetitionTransfer < ActiveRecord::Base
   validates :approved, inclusion: { in: [true, false] }
   validate :on_team, on: :create
   validate :within_roster_size, on: :create
+  validate :pending_unique_for_user, on: :create
 
   after_initialize :set_defaults, unless: :persisted?
 
@@ -141,6 +142,13 @@ class CompetitionTransfer < ActiveRecord::Base
   def within_roster_size_for_leaving
     if roster.players.size == competition.min_players
       errors.add(:user_id, 'transferring out would make the roster too small')
+    end
+  end
+
+  def pending_unique_for_user
+    if competition.present? && user.present? && !approved? &&
+       competition.transfers.where(user: user, approved: false).exists?
+      errors.add(:user_id, 'is already pending a transfer')
     end
   end
 end
