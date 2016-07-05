@@ -1,7 +1,7 @@
 default: &default
   endpoint: 'https://acme-v01.api.letsencrypt.org/'
   email: 'ben.schaaf@gmail.com'
-  domain: 'demo.citadel.tv'
+  domain: 'warzone.ozfortress.com'
 
   # in Rails.root, path to private key
   private_key: 'key/keyfile.pem'
