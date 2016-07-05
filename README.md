@@ -1,4 +1,4 @@
-# Citadel
+# Citadel (ozfortress branch)
 
 [![Build Status](https://travis-ci.org/ozfortress/citadel.svg?branch=master)](https://travis-ci.org/ozfortress/citadel)
 [![Coverage Status](https://coveralls.io/repos/github/ozfortress/citadel/badge.svg?branch=master)](https://coveralls.io/github/ozfortress/citadel?branch=master)
@@ -45,3 +45,8 @@ rake
 # or
 rake test
 ```
+
+## License
+
+Everything added in this branch on top of the master branch does not fall under
+the MIT license of the project, including ozfortress IP.
