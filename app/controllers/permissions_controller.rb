@@ -41,6 +41,6 @@ class PermissionsController < ApplicationController
   end
 
   def ensure_valid_target
-    redirect_to_back if has_subject? && ![:team].include?(@subject)
+    redirect_to_back if subject? && ![:team].include?(@subject)
   end
 end

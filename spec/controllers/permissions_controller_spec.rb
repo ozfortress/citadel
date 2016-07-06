@@ -44,9 +44,9 @@ describe PermissionsController do
       team = create(:team)
       sign_in admin
 
-      expect {
+      expect do
         get :users, action_: :edit, subject: :array, target: team.id
-      }.to raise_error NoMethodError
+      end.to raise_error NoMethodError
     end
   end
 
