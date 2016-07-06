@@ -61,6 +61,14 @@ Rails.application.routes.draw do
     post 'name',  on: :member, to: 'users#request_name_change'
   end
 
+  resources :permissions, only: :index do
+    collection do
+      get :users
+      post :grant
+      delete :revoke
+    end
+  end
+
   # TODO: fix XSS vuln (wasn't able to style forms as links in navbar)
   get 'notifications/:id', to: 'notifications#read', as: 'read_notification'
 

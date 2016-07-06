@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160627063629) do
+ActiveRecord::Schema.define(version: 20160706004537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,12 @@ ActiveRecord::Schema.define(version: 20160627063629) do
   end
 
   add_index "action_user_edit_games", ["user_id"], name: "index_action_user_edit_games_on_user_id", using: :btree
+
+  create_table "action_user_edit_permissions", force: :cascade do |t|
+    t.integer "user_id"
+  end
+
+  add_index "action_user_edit_permissions", ["user_id"], name: "index_action_user_edit_permissions_on_user_id", using: :btree
 
   create_table "action_user_edit_team", force: :cascade do |t|
     t.integer "user_id"
@@ -305,6 +311,7 @@ ActiveRecord::Schema.define(version: 20160627063629) do
   add_foreign_key "action_user_edit_competition", "users"
   add_foreign_key "action_user_edit_competitions", "users"
   add_foreign_key "action_user_edit_games", "users"
+  add_foreign_key "action_user_edit_permissions", "users"
   add_foreign_key "action_user_edit_team", "teams"
   add_foreign_key "action_user_edit_team", "users"
   add_foreign_key "action_user_edit_teams", "users"

@@ -45,16 +45,6 @@ module Auth
         action_cls.create!(params)
       end
 
-      #:nocov:
-      def grant_all
-        subjects = self.class.permissions.values.sum
-
-        subjects.each do |subject, cls|
-          grant(action, subject) unless cls.has_subject
-        end
-      end
-      #:nocov:
-
       def revoke(action, subject)
         get_permission(action, subject).delete_all
       end
@@ -95,7 +85,7 @@ module Auth
 
         table = Auth.auth_name(actor, action, subject)
 
-        @permissions ||= Hash.new({})
+        @permissions ||= Hash.new { |hash, key| hash[key] = {} }
         @permissions[action].update(subject => new_permission_model(table, actor, subject))
       end
 

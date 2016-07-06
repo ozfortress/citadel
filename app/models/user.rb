@@ -35,6 +35,8 @@ class User < ActiveRecord::Base
   validates_permission_to :manage_rosters, :competition
   validates_permission_to :manage_rosters, :competitions
 
+  validates_permission_to :edit, :permissions
+
   after_initialize :set_defaults, unless: :persisted?
 
   mount_uploader :avatar, AvatarUploader

@@ -1,0 +1,29 @@
+%h1 Manage permission to #{@action.to_s.humanize} #{@subject.to_s.humanize}
+
+.row
+  .col-sm-3.col-md-3.pull-right
+    = render 'search'
+
+.panel.panel-default
+  - if @users.empty?
+    .panel-body No users found...
+  - else
+    %ul.list-group
+      - @users.each do |user|
+        %li.list-group-item
+          = present(user).listing
+
+          - url_params = params.merge(user_id: user.id)
+          - if user.can?(@action, @subject)
+            .button-group.pull-right
+              = button_to revoke_permissions_path(url_params), method: :delete,
+                                                              class: 'btn btn-danger' do
+                Revoke
+          - else
+            .button-group.pull-right
+              = button_to grant_permissions_path(url_params), method: :post,
+                                                              class: 'btn btn-success' do
+                Grant
+
+
+= will_paginate @users, renderer: BootstrapPagination::Rails
