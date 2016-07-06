@@ -5,8 +5,7 @@ class TeamsController < ApplicationController
   before_action except: [:index, :new, :create] { @team = Team.find(params[:id]) }
 
   before_action :require_login, only: [:new, :create, :leave]
-  before_action :require_team_permission, except: [:index, :new, :create, :show, :leave, :destroy]
-  before_action :require_team_admin_permission, only: [:destroy]
+  before_action :require_team_permission, except: [:index, :new, :create, :show, :leave]
 
   def index
     @teams = Team.search_all(params[:q]).paginate(page: params[:page])
@@ -67,7 +66,7 @@ class TeamsController < ApplicationController
 
   def destroy
     if @team.destroy
-      redirect_to team_path(@team)
+      redirect_to teams_path
     else
       render :edit
     end
@@ -81,9 +80,5 @@ class TeamsController < ApplicationController
 
   def require_team_permission
     redirect_to team_path(@team) unless user_can_edit_team?
-  end
-
-  def require_team_admin_permission
-    redirect_to team_path(@team) unless user_can_edit_teams?
   end
 end
