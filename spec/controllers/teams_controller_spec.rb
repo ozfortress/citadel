@@ -150,37 +150,6 @@ describe TeamsController do
     end
   end
 
-  describe 'PATCH #grant' do
-    it 'grants team permission from admin' do
-      team = create(:team)
-      admin = create(:user)
-      admin.grant(:edit, :teams)
-
-      sign_in admin
-      request.env['HTTP_REFERER'] = '/'
-      patch :grant, id: team.id, user_id: user.id
-
-      expect(user.can?(:edit, team)).to be(true)
-      expect(user.can?(:edit, :teams)).to be(false)
-    end
-  end
-
-  describe 'PATCH #revoke' do
-    it 'succeeds' do
-      team = create(:team)
-      admin = create(:user)
-      admin.grant(:edit, :teams)
-      user.grant(:edit, team)
-
-      sign_in admin
-      request.env['HTTP_REFERER'] = '/'
-      patch :revoke, id: team.id, user_id: user.id
-
-      expect(user.can?(:edit, team)).to be(false)
-      expect(user.can?(:edit, :teams)).to be(false)
-    end
-  end
-
   describe 'DELETE #destroy' do
     let(:team) { create(:team) }
     let(:user) { create(:user) }

@@ -1,7 +1,10 @@
 class PermissionsController < ApplicationController
+  include Permissions
+
   before_action except: :index do
     @action = params.require(:action_).to_sym
     @subject = params.require(:subject).to_sym
+    @target = params[:target]
   end
 
   before_action only: [:grant, :revoke] do
@@ -9,6 +12,7 @@ class PermissionsController < ApplicationController
   end
 
   before_action :require_login
+  before_action :ensure_valid_target, except: :index
   before_action :require_permission, except: :index
 
   def index
@@ -20,12 +24,12 @@ class PermissionsController < ApplicationController
   end
 
   def grant
-    @user.grant(@action, @subject)
+    @user.grant(@action, target)
     redirect_to_back
   end
 
   def revoke
-    @user.revoke(@action, @subject)
+    @user.revoke(@action, target)
     redirect_to_back
   end
 
@@ -33,6 +37,10 @@ class PermissionsController < ApplicationController
 
   def require_permission
     redirect_to_back unless current_user.can?(:edit, :permissions) ||
-                            current_user.can?(@action, @subject)
+                            current_user.can?(@action, target)
+  end
+
+  def ensure_valid_target
+    redirect_to_back if has_subject? && ![:team].include?(@subject)
   end
 end

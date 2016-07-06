@@ -68,7 +68,8 @@ class User < ActiveRecord::Base
     can?(:edit, :teams) ||
       can?(:edit, :competitions) ||
       can?(:edit, :games) ||
-      can?(:manage_rosters, :competitions)
+      can?(:manage_rosters, :competitions) ||
+      can?(:edit, :permissions)
   end
 
   def as_indexed_json(_ = {})
