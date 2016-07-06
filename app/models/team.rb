@@ -4,8 +4,8 @@ class Team < ActiveRecord::Base
   include Searchable
   include Roster
 
-  has_many :team_invites
-  has_many :transfers, -> { order(created_at: :desc) }
+  has_many :team_invites, dependent: :destroy
+  has_many :transfers, -> { order(created_at: :desc) }, dependent: :destroy
   has_many :rosters, class_name: 'CompetitionRoster'
 
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
