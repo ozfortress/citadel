@@ -95,7 +95,7 @@ module Auth
 
         table = Auth.auth_name(actor, action, subject)
 
-        @permissions ||= Hash.new({})
+        @permissions ||= Hash.new { |h, k| h[k] = Hash.new }
         @permissions[action].update(subject => new_permission_model(table, actor, subject))
       end
 
