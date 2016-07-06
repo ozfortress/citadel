@@ -41,7 +41,5 @@
 
               %h4.list-group-item-heading
                 = competition.name
-              %p.list-group-item-text
-                = markdown competition.description
 
   = will_paginate @competitions, renderer: BootstrapPagination::Rails
