@@ -153,6 +153,13 @@ describe TeamsController do
   describe 'DELETE #destroy' do
     let(:team) { create(:team) }
     let(:user) { create(:user) }
+    let(:invited) { create(:user) }
+
+    before do
+      team.add_player!(user)
+      invited.grant(:edit, team)
+      team.invite(invited)
+    end
 
     it 'succeeds for authorized user' do
       user.grant(:edit, :teams)
@@ -160,11 +167,19 @@ describe TeamsController do
 
       delete :destroy, id: team.id
 
-      expect(Team.where(id: team.id)).to_not exist
+      expect(Team.all).to be_empty
     end
 
-    it 'redirects for unauthorized captains' do
-      user.grant(:edit, team)
+    it 'succeeds for authorized captains' do
+      invited.grant(:edit, team)
+      sign_in invited
+
+      delete :destroy, id: team.id
+
+      expect(Team.all).to be_empty
+    end
+
+    it 'fails for unauthorized user' do
       sign_in user
 
       delete :destroy, id: team.id

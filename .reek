@@ -59,6 +59,9 @@ exclude_paths:
 DataClump:
   exclude:
     - "Auth::Model"
+UtilityFunction:
+  exclude:
+    - "Auth::Model"
 TooManyMethods:
   exclude:
     - "Leagues::MatchesController"

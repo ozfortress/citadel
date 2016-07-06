@@ -12,10 +12,11 @@
       Manage Permissions
       %span.glyphicon.glyphicon-cog
 
-- if user_can_edit_teams?
+- unless @team.rosters.exists?
   .panel.panel-danger
     .panel-heading Danger Zone
     .panel-body
-      = button_to team_path(@team), method: :destroy, class: 'btn btn-danger' do
+      = button_to team_path(@team), method: :delete, class: 'btn btn-danger',
+                  data: { confirm: 'Are you sure you want to delete this Team?' } do
         %span.glyphicon.glyphicon-trash
         Delete Team
