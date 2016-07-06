@@ -84,9 +84,12 @@ module Auth
         actor = name.underscore.to_sym
 
         table = Auth.auth_name(actor, action, subject)
+        model = new_permission_model(table, actor, subject)
 
         @permissions ||= Hash.new { |hash, key| hash[key] = {} }
-        @permissions[action].update(subject => new_permission_model(table, actor, subject))
+        @permissions[action].update(subject => model)
+        const_set(table.camelize, model)
+        assign_subject_relation(subject, model) if model.has_subject
       end
 
       attr_reader :permissions
@@ -118,6 +121,13 @@ module Auth
           @has_subject = subject_s.singularize == subject_s
           belongs_to subject if has_subject
         end
+      end
+
+      def assign_subject_relation(subject, model)
+        association_name = model.table_name.to_sym
+        subject_cls = subject.to_s.camelize.constantize
+
+        subject_cls.has_many association_name, class_name: model.name, dependent: :delete_all
       end
     end
   end
