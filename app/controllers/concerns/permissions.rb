@@ -2,14 +2,14 @@ module Permissions
   extend ActiveSupport::Concern
 
   def target
-    if has_subject?
+    if subject?
       @subject.to_s.camelize.constantize.find(@target)
     else
       @subject
     end
   end
 
-  def has_subject?
+  def subject?
     User.permissions[@action][@subject].has_subject
   end
 end
