@@ -1,0 +1,13 @@
+%h1 Select a permission to manage
+
+.panel.panel-default
+  %ul.list-group
+    - @permissions.keys.each do |action|
+      - @permissions[action].keys.each do |subject|
+        / TODO: Support object permissions
+        - next if @permissions[action][subject].has_subject
+
+        - if current_user.can?(action, subject) || current_user.can?(:edit, :permissions)
+          %li.list-group-item
+            = link_to users_permissions_path(action_: action.to_s, subject: subject.to_s) do
+              Permission to #{action.to_s.humanize} #{subject.to_s.humanize}
