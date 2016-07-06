@@ -30,6 +30,24 @@ describe PermissionsController do
 
       expect(response).to have_http_status(:success)
     end
+
+    it 'succeeds for authorized user with target' do
+      team = create(:team)
+      sign_in admin
+
+      get :users, action_: :edit, subject: :team, target: team.id
+
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'fails for authorized user with invalid target' do
+      team = create(:team)
+      sign_in admin
+
+      expect {
+        get :users, action_: :edit, subject: :array, target: team.id
+      }.to raise_error NoMethodError
+    end
   end
 
   describe 'POST #grant' do
@@ -39,6 +57,15 @@ describe PermissionsController do
       post :grant, action_: :edit, subject: :users, user_id: user.id
 
       expect(user.can?(:edit, :users)).to be(true)
+    end
+
+    it 'succeeds for authorized user with target' do
+      team = create(:team)
+      sign_in admin
+
+      post :grant, action_: :edit, subject: :team, target: team.id, user_id: user.id
+
+      expect(user.can?(:edit, team)).to be(true)
     end
   end
 
@@ -50,6 +77,16 @@ describe PermissionsController do
       delete :revoke, action_: :edit, subject: :users, user_id: user.id
 
       expect(user.can?(:edit, :users)).to be(false)
+    end
+
+    it 'succeeds for authorized user with target' do
+      team = create(:team)
+      user.grant(:edit, team)
+      sign_in admin
+
+      delete :revoke, action_: :edit, subject: :team, target: team.id, user_id: user.id
+
+      expect(user.can?(:edit, team)).to be(false)
     end
   end
 end

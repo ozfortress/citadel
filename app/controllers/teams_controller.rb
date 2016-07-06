@@ -65,21 +65,6 @@ class TeamsController < ApplicationController
     redirect_to_back teams_path
   end
 
-  # Permissions
-  def grant
-    user = User.find(params[:user_id])
-
-    user.grant(:edit, @team)
-    redirect_to_back team_path(@team)
-  end
-
-  def revoke
-    user = User.find(params[:user_id])
-
-    user.revoke(:edit, @team)
-    redirect_to_back team_path(@team)
-  end
-
   def destroy
     if @team.destroy
       redirect_to team_path(@team)

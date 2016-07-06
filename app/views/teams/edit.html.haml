@@ -7,18 +7,10 @@
       = f.submit 'Save'
       = link_to 'Cancel', team_path(@team), class: 'btn btn-default'
 
-- unless users_who_can_edit.empty?
-  .panel.panel-default
-    .panel-heading Permissions
-    %ul.list-group
-      - present_collection(users_who_can_edit).each do |user|
-        %li.list-group-item
-          = user.link
-          .button-group.pull-right
-            = button_to revoke_team_path(@team, user_id: user.id),
-                        method: :patch, class: 'btn btn-danger' do
-              Revoke
-              %span.glyphicon.glyphicon-remove
+    = link_to users_permissions_path(action_: :edit, subject: :team, target: @team.id),
+              class: 'pull-right btn btn-default' do
+      Manage Permissions
+      %span.glyphicon.glyphicon-cog
 
 - if user_can_edit_teams?
   .panel.panel-danger

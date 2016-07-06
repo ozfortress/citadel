@@ -1,4 +1,4 @@
-%h1 Manage permission to #{@action.to_s.humanize} #{@subject.to_s.humanize}
+%h1 Manage permission to #{@action.to_s} #{target}
 
 .row
   .col-sm-3.col-md-3.pull-right
@@ -14,7 +14,7 @@
           = present(user).listing
 
           - url_params = params.merge(user_id: user.id)
-          - if user.can?(@action, @subject)
+          - if user.can?(@action, target)
             .button-group.pull-right
               = button_to revoke_permissions_path(url_params), method: :delete,
                                                               class: 'btn btn-danger' do
