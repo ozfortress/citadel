@@ -7,6 +7,7 @@ describe Leagues::RostersController do
   let(:team) { create(:team) }
   let(:comp) { create(:competition, signuppable: true, min_players: 1) }
   let!(:div) { create(:division, competition: comp) }
+  let!(:div2) { create(:division, competition: comp) }
 
   before do
     team.add_player!(user)
@@ -53,7 +54,7 @@ describe Leagues::RostersController do
 
       post :create, league_id: comp.id, team_id: team.id,
                     competition_roster: { name: 'A', description: 'B',
-                                          division_id: div.id, player_ids: [user.id, ''] }
+                                          division_id: div2.id, player_ids: [user.id, ''] }
 
       roster = CompetitionRoster.first
       expect(roster).to_not be(nil)
@@ -61,7 +62,7 @@ describe Leagues::RostersController do
       expect(roster.description).to eq('B')
       expect(roster.team).to eq(team)
       expect(roster.player_users).to eq([user])
-      expect(roster.division).to eq(div)
+      expect(roster.division).to eq(div2)
     end
 
     it 'fails for too little players' do
@@ -145,7 +146,6 @@ describe Leagues::RostersController do
 
   describe 'PATCH #update' do
     let(:roster) { create(:competition_roster, name: 'B', division: div, team: team) }
-    let(:div2) { create(:division, competition: comp) }
 
     it 'succeeds for authorized admin' do
       user.grant(:edit, comp)
@@ -230,7 +230,6 @@ describe Leagues::RostersController do
 
   describe 'PATCH #approve' do
     let(:roster) { create(:competition_roster, division: div, team: team, approved: false) }
-    let(:div2) { create(:division, competition: comp) }
 
     it 'succeeds for authorized user' do
       user.grant(:edit, comp)

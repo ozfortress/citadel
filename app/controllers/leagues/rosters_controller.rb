@@ -30,7 +30,7 @@ module Leagues
     end
 
     def create
-      @roster = @competition.divisions.first.rosters.new(new_roster_params)
+      @roster = @competition.rosters.new(new_roster_params)
       @roster.team = Team.find(params[:team_id])
 
       if @roster.save
