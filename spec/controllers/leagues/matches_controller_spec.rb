@@ -381,6 +381,10 @@ describe Leagues::MatchesController do
     let!(:match) { create(:competition_match, home_team: team1, away_team: team2) }
     let!(:set) { create(:competition_set, match: match) }
 
+    before do
+      comp.update!(allow_set_draws: false)
+    end
+
     it 'succeeds for home team authorized user' do
       user.grant(:edit, team1.team)
       sign_in user
