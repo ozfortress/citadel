@@ -37,8 +37,6 @@ class User < ActiveRecord::Base
 
   validates_permission_to :edit, :permissions
 
-  after_initialize :set_defaults, unless: :persisted?
-
   mount_uploader :avatar, AvatarUploader
 
   alias_attribute :to_s, :name
@@ -97,6 +95,11 @@ class User < ActiveRecord::Base
     notifications.create!(message: message, link: link)
   end
 
+  # Always remember using devise rememberable
+  def remember_me
+    true
+  end
+
   private
 
   def get_player_rosters(transfers, transfer_sort, rosters, rosters_sort)
@@ -106,9 +109,5 @@ class User < ActiveRecord::Base
            .joins(:transfers)
            .where(rosters_sort => { id: ids, is_joining: true })
            .order(:name)
-  end
-
-  def set_defaults
-    self.remember_me = true unless remember_me.present?
   end
 end
