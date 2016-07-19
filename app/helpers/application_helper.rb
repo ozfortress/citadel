@@ -23,7 +23,10 @@ module ApplicationHelper
   end
 
   def markdown(source)
-    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::Safe.new)
+    @markdown_renderer = Redcarpet::Render::HTML.new(escape_html: true, hard_wrap: true)
+    @markdown ||= Redcarpet::Markdown.new(@markdown_renderer,
+                                          autolink: true, strikethrough: true,
+                                          underline: true)
     raw @markdown.render(source)
   end
 
