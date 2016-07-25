@@ -101,6 +101,6 @@ class CompetitionMatch < ActiveRecord::Base
   end
 
   def set_defaults
-    self.status = bye? ? :confirmed : :pending unless status.present?
+    self.status = (bye? && home_team) ? :confirmed : :pending unless status.present?
   end
 end

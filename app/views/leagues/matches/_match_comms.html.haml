@@ -2,7 +2,7 @@
   .panel-heading Match Comms
 
   %ul.list-group
-    - match.comms.each do |comm|
+    - match.comms.order(:created_at).each do |comm|
       %li.list-group-item
         - if match.home_team.on_roster?(comm.user)
           - roster = match.home_team
