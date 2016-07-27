@@ -66,6 +66,9 @@ GEM
       momentjs-rails (>= 2.8.1)
     bootstrap_form (2.4.0)
     builder (3.2.2)
+    bullet (5.2.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.10.0)
     byebug (9.0.5)
     capistrano (3.5.0)
       airbrussh (>= 1.0.0)
@@ -343,6 +346,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
+    uniform_notifier (1.10.0)
     url_safe_base64 (0.2.2)
     virtus (1.0.5)
       axiom-types (~> 0.1)
@@ -372,6 +376,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.6)
   bootstrap3-datetimepicker-rails (~> 4.17.37)
   bootstrap_form
+  bullet
   byebug
   capistrano (~> 3.1)
   capistrano-bundler
