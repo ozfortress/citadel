@@ -32,6 +32,7 @@ class LeaguesController < ApplicationController
   end
 
   def show
+    @divisions = @competition.divisions.includes(:rosters)
   end
 
   def edit
