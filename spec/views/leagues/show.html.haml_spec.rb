@@ -8,6 +8,7 @@ describe 'leagues/show' do
 
     it 'displays league details' do
       assign(:competition, comp)
+      assign(:divisions, comp.divisions.includes(:rosters))
 
       render
 
@@ -26,6 +27,7 @@ describe 'leagues/show' do
 
     it 'displays league details' do
       assign(:competition, comp)
+      assign(:divisions, comp.divisions.includes(:rosters))
 
       render
 
@@ -51,6 +53,7 @@ describe 'leagues/show' do
 
     it 'displays league details' do
       assign(:competition, comp)
+      assign(:divisions, comp.divisions.includes(:rosters))
 
       render
 

@@ -60,6 +60,9 @@ group :development, :test do
   # Test coverage
   gem 'simplecov'
 
+  # Profilers
+  gem 'bullet'
+
   # Use for validation testing
   gem 'shoulda-matchers'
 
