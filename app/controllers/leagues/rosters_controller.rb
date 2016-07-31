@@ -84,14 +84,14 @@ module Leagues
       param = params.require(:competition_roster)
 
       if user_can_edit_league?
-        param.permit(:name, :description, :disbanded, :ranking, :division_id)
+        param.permit(:name, :description, :disbanded, :ranking, :seeding, :division_id)
       else
         param.permit(:description)
       end
     end
 
     def approve_roster_params
-      params.require(:competition_roster).permit(:name, :division_id)
+      params.require(:competition_roster).permit(:name, :division_id, :seeding)
     end
 
     def require_signuppable

@@ -3,7 +3,7 @@ module MatchSeeder
     extend self
 
     def get_roster_pool(target)
-      rosters = target.approved_rosters
+      rosters = target.approved_rosters.order(:seeding, :created_at)
       rosters << nil if rosters.size.odd?
       rosters.to_a
     end
