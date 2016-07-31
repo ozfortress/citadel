@@ -152,12 +152,14 @@ describe Leagues::RostersController do
       sign_in user
 
       patch :update, league_id: comp.id, id: roster.id,
-                     competition_roster: { name: 'A', description: 'B', division_id: div2 }
+                     competition_roster: { name: 'A', description: 'B',
+                                           division_id: div2, seeding: 2 }
 
       roster.reload
       expect(roster.name).to eq('A')
       expect(roster.description).to eq('B')
       expect(roster.division).to eq(div2)
+      expect(roster.seeding).to eq(2)
     end
 
     it 'succeeds for authorized captain' do
@@ -236,11 +238,12 @@ describe Leagues::RostersController do
       sign_in user
 
       patch :approve, league_id: comp.id, id: roster.id,
-                      competition_roster: { name: 'A', division_id: div2.id }
+                      competition_roster: { name: 'A', division_id: div2.id, seeding: 2 }
 
       roster.reload
       expect(roster.name).to eq('A')
       expect(roster.division).to eq(div2)
+      expect(roster.seeding).to eq(2)
     end
 
     it 'fails with invalid name' do
