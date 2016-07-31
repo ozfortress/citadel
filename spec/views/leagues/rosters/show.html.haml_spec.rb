@@ -17,7 +17,6 @@ describe 'leagues/rosters/show' do
 
     render
 
-    #TODO: Check displayed data
+    # TODO: Check displayed data
   end
 end
-
