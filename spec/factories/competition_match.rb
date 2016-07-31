@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :competition_match do
     status :pending
+    round 1
 
     after(:build) do |match, _|
       div = if match.home_team || match.away_team
@@ -16,6 +17,7 @@ FactoryGirl.define do
   factory :bye_match, class: CompetitionMatch do
     status :pending
     away_team nil
+    round 1
 
     after(:build) do |match, _|
       div = if match.home_team

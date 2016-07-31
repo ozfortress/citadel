@@ -38,7 +38,7 @@ describe Leagues::MatchesController do
       sign_in user
 
       post :create, league_id: comp.id, division_id: div.id, competition_match: {
-        home_team_id: team1.id, away_team_id: team2.id,
+        home_team_id: team1.id, away_team_id: team2.id, round: 3,
         sets_attributes: [
           { map_id: map.id }
         ]
@@ -48,6 +48,7 @@ describe Leagues::MatchesController do
       expect(match).to_not be nil
       expect(match.home_team).to eq(team1)
       expect(match.away_team).to eq(team2)
+      expect(match.round).to eq(3)
       expect(match.sets.count).to eq(1)
       set = match.sets.first
       expect(set.map).to eq(map)
@@ -58,7 +59,7 @@ describe Leagues::MatchesController do
       sign_in user
 
       post :create, league_id: comp.id, division_id: div.id, competition_match: {
-        home_team_id: team1.id, away_team_id: team1.id
+        home_team_id: team1.id, away_team_id: team1.id,
       }
 
       expect(response).to render_template(:new)
@@ -112,15 +113,18 @@ describe Leagues::MatchesController do
       sign_in user
 
       post :create_round, league_id: comp.id, competition_match: {
-        generate_kind: :swiss,
-        division_id: div.id,
+        generate_kind: :swiss, division_id: div.id, round: 3,
         sets_attributes: [
           { map_id: map.id }
         ]
       }
 
       expect(comp.matches.size).to eq(1)
-      expect(comp.matches.first.sets.first.map).to eq(map)
+      comp.matches.each do |match|
+        expect(match.round).to eq(3)
+        expect(match.sets.size).to eq(1)
+        expect(match.sets.first.map).to eq(map)
+      end
     end
   end
 
@@ -158,7 +162,7 @@ describe Leagues::MatchesController do
       sign_in user
 
       patch :update, league_id: comp.id, id: match.id, competition_match: {
-        home_team_id: team3.id, away_team_id: team2.id,
+        home_team_id: team3.id, away_team_id: team2.id, round: 5,
         sets_attributes: [
           { id: set.id, _destroy: true, map_id: map.id },
           { map_id: map2.id },
@@ -169,6 +173,7 @@ describe Leagues::MatchesController do
       expect(match).to_not be(nil)
       expect(match.home_team).to eq(team3)
       expect(match.away_team).to eq(team2)
+      expect(match.round).to eq(5)
       set = match.sets.first
       expect(set.map).to eq(map2)
     end

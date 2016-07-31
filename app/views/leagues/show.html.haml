@@ -14,6 +14,26 @@
   .panel-heading Info
   .panel-body= markdown @competition.description
 
+- unless @competition.matches.empty?
+  .panel.panel-default
+    .panel-heading
+      - if user_signed_in?
+        Your Upcoming Matches
+      - else
+        Upcoming Matches for #{@divisions.first}
+
+      = link_to 'All Matches', league_matches_path(@competition),
+                class: 'btn btn-default pull-right'
+
+    %ul.list-group
+      - matches = @divisions.first.matches.pending
+      - if user_signed_in?
+        - matches = current_user.matches.pending
+
+      - present_collection(matches.pending).each do |match|
+        %li.list-group-item
+          = match.link
+
 .panel.panel-default
   .panel-heading Teams
   %ul.list-group

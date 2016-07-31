@@ -50,10 +50,9 @@
   .panel.panel-default
     .panel-heading Upcoming Matches
     %ul.list-group
-      - @user.rosters.each do |roster|
-        - present_collection(roster.matches.pending).each do |match|
-          %li.list-group-item
-            = match.link
+      - present_collection(@user.matches.pending).each do |match|
+        %li.list-group-item
+          = match.link
 
 .panel.panel-default
   .panel-heading Leagues

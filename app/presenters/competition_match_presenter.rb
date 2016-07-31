@@ -2,25 +2,18 @@ class CompetitionMatchPresenter < ActionPresenter::Base
   presents :competition_match
 
   delegate :id, to: :competition_match
+  delegate :round, to: :competition_match
   delegate :home_team, to: :competition_match
   delegate :away_team, to: :competition_match
   delegate :competition, to: :competition_match
   delegate :bye?, to: :competition_match
 
   def to_s
-    if bye?
-      "#{home_team.name} BYE"
-    else
-      "#{home_team.name} vs #{away_team.name}"
-    end
+    match_s(&:name)
   end
 
   def title
-    if bye?
-      present(home_team).link + ' BYE'
-    else
-      present(home_team).link + ' vs ' + present(away_team).link
-    end
+    match_s { |team| present(team).link }.html_safe
   end
 
   def link(label = nil, options = {}, &block)
@@ -36,6 +29,24 @@ class CompetitionMatchPresenter < ActionPresenter::Base
       away_player = present(away_players[i]) if i < away_players.length
 
       yield(home_player, away_player)
+    end
+  end
+
+  private
+
+  def match_s
+    round_s + if bye?
+                "#{yield home_team} BYE"
+              else
+                "#{yield home_team} vs #{yield away_team}"
+              end
+  end
+
+  def round_s
+    if round
+      "##{round} "
+    else
+      ''
     end
   end
 end
