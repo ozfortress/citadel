@@ -10,7 +10,7 @@
       Create Single Match
 
   %ul.list-group
-    - @competition.divisions.each do |div|
+    - @competition.divisions.includes(:matches).each do |div|
       %li.list-group-item
         %h3= div
 
