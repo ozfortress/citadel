@@ -12,6 +12,8 @@
                         include_blank: 'BYE', label: 'Away Team'
   = f.errors_on :away_team
 
+= f.number_field :round
+
 .panel.panel-default
   .panel-heading Sets
   - if f.object.pending?

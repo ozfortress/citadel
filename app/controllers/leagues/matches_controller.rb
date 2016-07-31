@@ -139,12 +139,12 @@ module Leagues
     end
 
     def match_params
-      params.require(:competition_match).permit(:home_team_id, :away_team_id,
+      params.require(:competition_match).permit(:home_team_id, :away_team_id, :round,
                                                 sets_attributes: [:id, :_destroy, :map_id])
     end
 
     def create_round_params
-      params.require(:competition_match).permit(:division_id, :generate_kind,
+      params.require(:competition_match).permit(:division_id, :generate_kind, :round,
                                                 sets_attributes: [:id, :_destroy, :map_id])
     end
 
