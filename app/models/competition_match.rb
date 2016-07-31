@@ -16,6 +16,7 @@ class CompetitionMatch < ActiveRecord::Base
   enum forfeit_by: [:no_forfeit, :home_team_forfeit, :away_team_forfeit,
                     :mutual_forfeit, :technical_forfeit]
   validates :forfeit_by, presence: true
+  validates :round, allow_nil: :true, numericality: { greater_than_or_equal_to: 0 }
 
   validate :home_and_away_team_are_different
   validate :home_and_away_team_are_in_the_same_division
