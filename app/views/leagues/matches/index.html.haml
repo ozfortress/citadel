@@ -1,13 +1,14 @@
 .panel.panel-default
   .panel-heading Matches
 
-  .panel-body
-    = link_to generate_league_matches_path(@competition), class: 'btn btn-default pull-right' do
-      %span.glyphicon.glyphicon-plus
-      Generate Round
-    = link_to new_league_match_path(@competition), class: 'btn btn-default pull-right' do
-      %span.glyphicon.glyphicon-plus
-      Create Single Match
+  - if user_can_edit_league?
+    .panel-body
+      = link_to generate_league_matches_path(@competition), class: 'btn btn-default pull-right' do
+        %span.glyphicon.glyphicon-plus
+        Generate Round
+      = link_to new_league_match_path(@competition), class: 'btn btn-default pull-right' do
+        %span.glyphicon.glyphicon-plus
+        Create Single Match
 
   %ul.list-group
     - @competition.divisions.includes(:matches).each do |div|
