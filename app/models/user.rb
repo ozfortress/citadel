@@ -54,6 +54,11 @@ class User < ActiveRecord::Base
                        CompetitionRoster, :competition_transfers)
   end
 
+  def matches
+    rosters_sql = rosters.select(:id).to_sql
+    CompetitionMatch.where("home_team_id IN (#{rosters_sql}) OR away_team_id IN (#{rosters_sql})")
+  end
+
   def entered?(comp)
     comp.roster_transfer(self).exists?
   end
@@ -105,8 +110,7 @@ class User < ActiveRecord::Base
   def get_player_rosters(transfers, transfer_sort, rosters, rosters_sort)
     # TODO: transfer_sort and rosters_sort can be inferred
     ids = player_transfers(transfers, transfer_sort)
-    rosters.distinct
-           .joins(:transfers)
+    rosters.joins(:transfers)
            .where(rosters_sort => { id: ids, is_joining: true })
            .order(:name)
   end
