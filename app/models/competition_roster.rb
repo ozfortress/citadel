@@ -114,6 +114,12 @@ class CompetitionRoster < ActiveRecord::Base
   end
 
   def sort_keys
+    @sort_keys ||= calculate_sort_keys
+  end
+
+  private
+
+  def calculate_sort_keys
     keys = [ranking || Float::INFINITY, -points]
 
     competition.tiebreakers.each do |tiebreaker|
@@ -122,8 +128,6 @@ class CompetitionRoster < ActiveRecord::Base
 
     keys
   end
-
-  private
 
   def calculate_points
     local_counts = [won_sets.count, drawn_sets.count, lost_sets.count, forfeit_won_matches.count,

@@ -15,4 +15,5 @@
         = button_to 'Deny', league_transfer_path(@competition, transfer), method: :delete,
                     class: 'pull-right btn btn-danger'
 
+        = transfer.created_at.strftime('%c')
         = present(transfer.user).transfer_listing(@competition)
