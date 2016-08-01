@@ -71,7 +71,7 @@
   .panel.panel-default
     .panel-heading Leagues
     %ul.list-group
-      - @team.rosters.each do |roster|
+      - @team.rosters.includes(division: :competition).each do |roster|
         %li.list-group-item
           - roster_p = present roster
           = link_to roster.competition, league_path(roster.competition)
@@ -82,5 +82,6 @@
     .panel-heading Upcoming Matches
     %ul.list-group
       - @team.rosters.each do |roster|
-        - present_collection(roster.matches.pending).each do |match|
+        - matches = roster.matches.pending.includes(:home_team, :away_team)
+        - present_collection(matches).each do |match|
           %li.list-group-item= match.link
