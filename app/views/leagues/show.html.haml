@@ -26,11 +26,11 @@
                 class: 'btn btn-default pull-right'
 
     %ul.list-group
-      - matches = @divisions.first.matches.pending
+      - matches = @divisions.first.matches
       - if user_signed_in?
-        - matches = current_user.matches.pending
+        - matches = current_user.matches
 
-      - present_collection(matches.pending).each do |match|
+      - present_collection(matches.pending.includes(:home_team, :away_team)).each do |match|
         %li.list-group-item
           = match.link
 
@@ -38,7 +38,8 @@
   .panel-heading Teams
   %ul.list-group
     - if @competition.signuppable?
-      - present_collection(@competition.rosters).each do |roster|
+      - rosters = @competition.rosters.includes(division: :competition)
+      - present_collection(rosters).each do |roster|
         %li.list-group-item
           = roster.link
 
