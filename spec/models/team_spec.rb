@@ -30,7 +30,8 @@ describe Team do
       team.add_player!(user2)
 
       expect(team.transfers.size).to eq(6)
-      expect(team.player_users).to eq([user1, user2])
+      expect(team.player_users).to include(user1)
+      expect(team.player_users).to include(user2)
     end
   end
 
