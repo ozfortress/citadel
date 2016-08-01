@@ -38,7 +38,8 @@
   .panel-heading Teams
   %ul.list-group
     - if @competition.signuppable?
-      - present_collection(@competition.rosters).each do |roster|
+      - rosters = @competition.rosters.includes(division: :competition)
+      - present_collection(rosters).each do |roster|
         %li.list-group-item
           = roster.link
 
