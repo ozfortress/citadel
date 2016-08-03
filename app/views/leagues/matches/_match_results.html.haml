@@ -2,7 +2,7 @@
   .panel-heading Results
 
   %ul.list-group
-    - match.sets.each do |set|
+    - match.sets.includes(:map).each do |set|
       %li.list-group-item
         = link_to set.map, meta_map_path(set.map)
         - home = present(match.home_team).link
