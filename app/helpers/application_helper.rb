@@ -26,7 +26,7 @@ module ApplicationHelper
     @markdown_renderer = Redcarpet::Render::HTML.new(escape_html: true, hard_wrap: true)
     @markdown ||= Redcarpet::Markdown.new(@markdown_renderer,
                                           autolink: true, strikethrough: true,
-                                          underline: true)
+                                          underline: true, no_intra_emphasis: true)
     raw @markdown.render(source)
   end
 
