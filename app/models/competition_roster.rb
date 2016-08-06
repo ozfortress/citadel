@@ -83,10 +83,7 @@ class CompetitionRoster < ActiveRecord::Base
             lost_sets_count:            lost_sets.count,
             forfeit_won_matches_count:  forfeit_won_matches.count,
             forfeit_lost_matches_count: forfeit_lost_matches.count)
-  end
-
-  def points
-    @points ||= calculate_points
+    update!(points: calculate_points)
   end
 
   def approved_transfers
