@@ -20,7 +20,7 @@ class CompetitionTiebreaker < ActiveRecord::Base
   end
 
   def get_set_wins_against_tied_rosters(roster)
-    tied_rosters = roster.division.approved_rosters.select { |r| r.points == roster.points }
+    tied_rosters = roster.division.approved_rosters.where(points: roster.points)
 
     tied_rosters.map { |r| get_set_wins_against_roster(roster, r) }.sum
   end
