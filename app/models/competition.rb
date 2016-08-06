@@ -75,9 +75,7 @@ class Competition < ActiveRecord::Base
   private
 
   def update_roster_match_counters
-    rosters.each do |roster|
-      roster.update_match_counters!
-    end
+    rosters.each(&:update_match_counters!)
   end
 
   def validate_players_range
