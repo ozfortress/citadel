@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160731105043) do
+ActiveRecord::Schema.define(version: 20160806122227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,16 +112,21 @@ ActiveRecord::Schema.define(version: 20160731105043) do
   add_index "competition_roster_comments", ["user_id"], name: "index_competition_roster_comments_on_user_id", using: :btree
 
   create_table "competition_rosters", force: :cascade do |t|
-    t.integer  "team_id",                     null: false
-    t.integer  "division_id",                 null: false
-    t.boolean  "approved",    default: false, null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.string   "name",                        null: false
-    t.text     "description",                 null: false
-    t.boolean  "disbanded",   default: false, null: false
+    t.integer  "team_id",                                    null: false
+    t.integer  "division_id",                                null: false
+    t.boolean  "approved",                   default: false, null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.string   "name",                                       null: false
+    t.text     "description",                                null: false
+    t.boolean  "disbanded",                  default: false, null: false
     t.integer  "ranking"
     t.integer  "seeding"
+    t.integer  "won_sets_count",             default: 0,     null: false
+    t.integer  "drawn_sets_count",           default: 0,     null: false
+    t.integer  "lost_sets_count",            default: 0,     null: false
+    t.integer  "forfeit_won_matches_count",  default: 0,     null: false
+    t.integer  "forfeit_lost_matches_count", default: 0,     null: false
   end
 
   add_index "competition_rosters", ["division_id"], name: "index_competition_rosters_on_division_id", using: :btree

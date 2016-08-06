@@ -40,6 +40,7 @@ class Competition < ActiveRecord::Base
   scope :not_hidden, -> { where.not(status: Competition.statuses[:hidden]) }
 
   after_initialize :set_defaults, unless: :persisted?
+  after_save :update_roster_match_counters
 
   alias_attribute :to_s, :name
 
@@ -72,6 +73,10 @@ class Competition < ActiveRecord::Base
   end
 
   private
+
+  def update_roster_match_counters
+    rosters.each(&:update_match_counters!)
+  end
 
   def validate_players_range
     if min_players.present? && max_players.present? &&

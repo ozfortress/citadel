@@ -11,7 +11,7 @@ class CompetitionTiebreaker < ActiveRecord::Base
   private
 
   def get_set_wins(roster)
-    roster.won_sets.size
+    roster.won_sets_count
   end
 
   def get_set_score_difference(roster)
@@ -30,10 +30,10 @@ class CompetitionTiebreaker < ActiveRecord::Base
                       .where(competition_matches: { home_team_id: other.id })
 
     roster.won_sets.joins(:match).where(competition_matches: { away_team_id: other.id })
-          .union(away_wins).size
+          .union(away_wins).count
   end
 
   def get_median_bucholz_score(roster)
-    roster.won_sets.size * 1.0 + roster.drawn_sets.size * 0.5
+    roster.won_sets_count * 1.0 + roster.drawn_sets_count * 0.5
   end
 end
