@@ -61,6 +61,9 @@ class CompetitionMatch < ActiveRecord::Base
     end
   end
 
+  after_save :update_team_match_counters
+  after_destroy :update_team_match_counters
+
   def confirm_scores(confirm)
     update(status: confirm ? :confirmed : :pending)
   end
@@ -74,6 +77,11 @@ class CompetitionMatch < ActiveRecord::Base
   end
 
   private
+
+  def update_team_match_counters
+    home_team.update_match_counters!
+    away_team.update_match_counters! if away_team
+  end
 
   def home_and_away_team_are_different
     return unless home_team.present? && away_team.present?

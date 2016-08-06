@@ -77,6 +77,14 @@ class CompetitionRoster < ActiveRecord::Base
       .union(matches.mutually_forfeited)
   end
 
+  def update_match_counters!
+    update!(won_sets_count:             won_sets.count,
+            drawn_sets_count:           drawn_sets.count,
+            lost_sets_count:            lost_sets.count,
+            forfeit_won_matches_count:  forfeit_won_matches.count,
+            forfeit_lost_matches_count: forfeit_lost_matches.count)
+  end
+
   def points
     @points ||= calculate_points
   end
@@ -130,8 +138,8 @@ class CompetitionRoster < ActiveRecord::Base
   end
 
   def calculate_points
-    local_counts = [won_sets.count, drawn_sets.count, lost_sets.count, forfeit_won_matches.count,
-                    forfeit_lost_matches.count]
+    local_counts = [won_sets_count, drawn_sets_count, lost_sets_count, forfeit_won_matches_count,
+                    forfeit_lost_matches_count]
     comp_counts = competition.point_multipliers
 
     local_counts.zip(comp_counts).map { |x, y| x * y }.sum
