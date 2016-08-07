@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160806140717) do
+ActiveRecord::Schema.define(version: 20160807013123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 20160806140717) do
     t.integer  "forfeit_won_matches_count",  default: 0,     null: false
     t.integer  "forfeit_lost_matches_count", default: 0,     null: false
     t.integer  "points",                     default: 0,     null: false
+    t.integer  "total_scores",               default: 0,     null: false
   end
 
   add_index "competition_rosters", ["division_id"], name: "index_competition_rosters_on_division_id", using: :btree
