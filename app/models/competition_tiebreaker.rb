@@ -15,22 +15,18 @@ class CompetitionTiebreaker < ActiveRecord::Base
   end
 
   def get_set_score_difference(roster)
-    roster.not_forfeited_home_team_sets.sum(:home_team_score) +
-      roster.not_forfeited_away_team_sets.sum(:away_team_score)
+    roster.total_scores
   end
 
   def get_set_wins_against_tied_rosters(roster)
     tied_rosters = roster.division.approved_rosters.where(points: roster.points)
 
-    tied_rosters.map { |r| get_set_wins_against_roster(roster, r) }.sum
-  end
+    return 0 unless tied_rosters.exists?
 
-  def get_set_wins_against_roster(roster, other)
-    away_wins = roster.won_sets.joins(:match)
-                      .where(competition_matches: { home_team_id: other.id })
-
-    roster.won_sets.joins(:match).where(competition_matches: { away_team_id: other.id })
-          .union(away_wins).count
+    won_sets = roster.won_sets.joins(:match)
+    won_sets.where(competition_matches: { home_team_id: tied_rosters })
+            .union(won_sets.where(competition_matches: { away_team_id: tied_rosters }))
+            .count
   end
 
   def get_median_bucholz_score(roster)
