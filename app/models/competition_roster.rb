@@ -83,7 +83,8 @@ class CompetitionRoster < ActiveRecord::Base
             lost_sets_count:            lost_sets.count,
             forfeit_won_matches_count:  forfeit_won_matches.count,
             forfeit_lost_matches_count: forfeit_lost_matches.count)
-    update!(points: calculate_points)
+    update!(points: calculate_points,
+            total_scores: calculate_total_scores)
   end
 
   def approved_transfers
@@ -140,6 +141,11 @@ class CompetitionRoster < ActiveRecord::Base
     comp_counts = competition.point_multipliers
 
     local_counts.zip(comp_counts).map { |x, y| x * y }.sum
+  end
+
+  def calculate_total_scores
+    not_forfeited_home_team_sets.sum(:home_team_score) +
+      not_forfeited_away_team_sets.sum(:away_team_score)
   end
 
   def forfeit_all!
