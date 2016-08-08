@@ -1,4 +1,4 @@
-= bootstrap_form_for @roster,
+= bootstrap_form_for @roster, as: :roster,
     url: approve_league_roster_path(@league, @roster) do |f|
   = f.text_field :name
   = f.select :division_id, divisions_select, label: 'Desired Division'

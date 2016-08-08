@@ -9,7 +9,7 @@
 .panel.panel-default
   .panel-heading Info
   .panel-body
-    = bootstrap_form_for @roster,
+    = bootstrap_form_for @roster, as: :roster,
         url: league_roster_path(@league, @roster) do |f|
 
       - if user_can_edit_league?

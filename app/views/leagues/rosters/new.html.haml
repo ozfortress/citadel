@@ -16,7 +16,7 @@
   %h4
     Sign up with #{@team.name}
 
-  = bootstrap_form_for @roster,
+  = bootstrap_form_for @roster, as: :roster,
       url: league_rosters_path(@league, team_id: @team.id) do |f|
     = f.text_field :name
     = f.select :division_id, divisions_select, label: 'Desired Division'

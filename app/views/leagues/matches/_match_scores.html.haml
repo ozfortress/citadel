@@ -12,7 +12,7 @@
   - if match.status == 'pending' || user_can_edit_league?
     .panel-body
       - match.rounds.includes(:map).to_a
-      = bootstrap_form_for match, url: league_match_scores_path(league, match) do |f|
+      = bootstrap_form_for match, as: :match, url: league_match_scores_path(league, match) do |f|
         = f.fields_for :rounds do |ff|
           .form-group
             .form-inline
