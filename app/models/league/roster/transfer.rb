@@ -53,9 +53,7 @@ class League
         end
 
         user.notify!(user_msg, league_roster_path(league, roster))
-        User.get_revokeable(:edit, team).each do |captain|
-          captain.notify!(capt_msg, user_path(user))
-        end
+        notify_captains(capt_msg, user_path(user))
       end
 
       before_destroy do
@@ -72,12 +70,16 @@ class League
         end
 
         user.notify!(user_msg, league_roster_path(league, roster))
-        User.get_revokeable(:edit, team).each do |captain|
-          captain.notify!(capt_msg, user_path(user))
-        end
+        notify_captains(capt_msg, user_path(user))
       end
 
       private
+
+      def notify_captains(message, link)
+        User.get_revokeable(:edit, team).each do |captain|
+          captain.notify!(message, link)
+        end
+      end
 
       def after_create_joining
         msg = if approved?

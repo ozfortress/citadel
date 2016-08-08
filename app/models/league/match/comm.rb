@@ -17,15 +17,18 @@ class League
       after_create do
         message = "'#{user.name}' posted a message on the match: "\
                   "'#{home_team.name}' vs '#{away_team.name}'"
+        link = league_match_path(league, match)
 
-        User.get_revokeable(:edit, home_team.team).each do |captain|
-          next if captain == user
-          captain.notify!(message, league_match_path(league, match))
-        end
+        notify_captains(home_team, message, link)
+        notify_captains(away_team, message, link)
+      end
 
-        User.get_revokeable(:edit, away_team.team).each do |captain|
+      private
+
+      def notify_captains(roster, message, link)
+        User.get_revokeable(:edit, roster.team).each do |captain|
           next if captain == user
-          captain.notify!(message, league_match_path(league, match))
+          captain.notify!(message, link)
         end
       end
     end
