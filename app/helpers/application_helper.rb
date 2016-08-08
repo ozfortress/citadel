@@ -44,4 +44,8 @@ module ApplicationHelper
       present(object, &block)
     end
   end
+
+  def bootstrap_paginate(target)
+    will_paginate target, renderer: BootstrapPagination::Rails
+  end
 end
