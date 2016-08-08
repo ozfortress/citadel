@@ -70,7 +70,7 @@ Rails.application.routes.draw do
   end
 
   # TODO: fix XSS vuln (wasn't able to style forms as links in navbar)
-  get 'notifications/:id', to: 'notifications#read', as: 'read_notification'
+  get 'notifications/:id', to: 'users/notifications#read', as: 'read_notification'
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 end

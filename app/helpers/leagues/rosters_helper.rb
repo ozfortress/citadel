@@ -4,7 +4,7 @@ module Leagues
     include TransferPermissions
 
     def roster_destroy_confirm
-      if @competition.signuppable?
+      if @league.signuppable?
         'Are you sure you want to remove the signup for this roster?'
       else
         'Are you sure you want to disband this roster?'
@@ -12,7 +12,7 @@ module Leagues
     end
 
     def roster_destroy_label
-      if @competition.signuppable?
+      if @league.signuppable?
         'Remove Signup'
       else
         'Disband'

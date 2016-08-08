@@ -2,9 +2,9 @@ module Leagues
   class MatchesController < ApplicationController
     include MatchPermissions
 
-    before_action { @competition = Competition.find(params[:league_id]) }
+    before_action { @league = League.find(params[:league_id]) }
     before_action except: [:index, :new, :create, :generate, :create_round] do
-      @match = @competition.matches.find(params[:id])
+      @match = @league.matches.find(params[:id])
     end
 
     before_action :require_user_league_permission, only: [:new, :create, :generate, :create_round,
@@ -18,44 +18,44 @@ module Leagues
     end
 
     def new
-      @match = CompetitionMatch.new
-      @match.sets.new
-      @division = @competition.divisions.first
+      @match = League::Match.new
+      @match.rounds.new
+      @division = @league.divisions.first
     end
 
     def create
-      @match = CompetitionMatch.new(match_params)
-      @division = @competition.divisions.find(params[:division_id])
+      @match = League::Match.new(match_params)
+      @division = @league.divisions.find(params[:division_id])
 
       if @match.save
-        redirect_to league_match_path(@competition, @match)
+        redirect_to league_match_path(@league, @match)
       else
         render :new
       end
     end
 
     def generate
-      @match = CompetitionMatch.new
-      @match.sets.new
-      @division = @competition.divisions.first
+      @match = League::Match.new
+      @match.rounds.new
+      @division = @league.divisions.first
       @kind = :swiss
     end
 
     def create_round
       params = create_round_params
-      @division = @competition.divisions.find(params.delete(:division_id))
+      @division = @league.divisions.find(params.delete(:division_id))
       @kind = params.delete(:generate_kind)
 
       if @division.seed_round_with(@kind, params)
-        redirect_to league_matches_path(@competition)
+        redirect_to league_matches_path(@league)
       else
-        @match = CompetitionMatch.new(params)
+        @match = League::Match.new(params)
         render :generate
       end
     end
 
     def show
-      @comm = CompetitionComm.new(match: @match)
+      @comm = League::Match::Comm.new(match: @match)
     end
 
     def edit
@@ -63,17 +63,17 @@ module Leagues
 
     def update
       if @match.update(match_params)
-        redirect_to league_match_path(@competition, @match)
+        redirect_to league_match_path(@league, @match)
       else
         render :edit
       end
     end
 
     def comms
-      @comm = CompetitionComm.new(comm_params.merge(user: current_user, match: @match))
+      @comm = League::Match::Comm.new(comm_params.merge(user: current_user, match: @match))
 
       if @comm.save
-        redirect_to league_match_path(@competition, @match)
+        redirect_to league_match_path(@league, @match)
       else
         render :show
       end
@@ -81,7 +81,7 @@ module Leagues
 
     def scores
       if @match.update(report_scores_params)
-        redirect_to league_match_path(@competition, @match)
+        redirect_to league_match_path(@league, @match)
       else
         @match.status = :pending
         show
@@ -95,7 +95,7 @@ module Leagues
         show
         render :show
       else
-        redirect_to league_match_path(@competition, @match)
+        redirect_to league_match_path(@league, @match)
       end
     end
 
@@ -107,7 +107,7 @@ module Leagues
 
     def destroy
       if @match.destroy
-        redirect_to league_path(@competition)
+        redirect_to league_path(@league)
       else
         render :edit
       end
@@ -117,17 +117,17 @@ module Leagues
 
     def report_scores_params
       if user_can_edit_league?
-        params.require(:competition_match)
-              .permit(:status, :forfeit_by, sets_attributes: [:id, :home_team_score,
-                                                              :away_team_score])
+        params.require(:match)
+              .permit(:status, :forfeit_by,
+                      rounds_attributes: [:id, :home_team_score, :away_team_score])
       elsif user_can_either_teams?
         report_scores_by_team_params
       end
     end
 
     def report_scores_by_team_params
-      attrs = params.require(:competition_match)
-                    .permit(sets_attributes: [:id, :home_team_score, :away_team_score])
+      attrs = params.require(:match)
+                    .permit(rounds_attributes: [:id, :home_team_score, :away_team_score])
 
       attrs[:status] = if user_can_home_team?
                          :submitted_by_home_team
@@ -139,37 +139,37 @@ module Leagues
     end
 
     def match_params
-      params.require(:competition_match).permit(:home_team_id, :away_team_id, :round,
-                                                sets_attributes: [:id, :_destroy, :map_id])
+      params.require(:match).permit(:home_team_id, :away_team_id, :round,
+                                    rounds_attributes: [:id, :_destroy, :map_id])
     end
 
     def create_round_params
-      params.require(:competition_match).permit(:division_id, :generate_kind, :round,
-                                                sets_attributes: [:id, :_destroy, :map_id])
+      params.require(:match).permit(:division_id, :generate_kind, :round,
+                                    rounds_attributes: [:id, :_destroy, :map_id])
     end
 
     def comm_params
-      params.require(:competition_comm).permit(:content)
+      params.require(:comm).permit(:content)
     end
 
     def require_user_can_report_scores
-      redirect_to league_match_path(@competition, @match) unless user_can_submit_team_score?
+      redirect_to league_match_path(@league, @match) unless user_can_submit_team_score?
     end
 
     def require_user_league_permission
-      redirect_to league_path(@competition) unless user_can_edit_league?
+      redirect_to league_path(@league) unless user_can_edit_league?
     end
 
     def require_user_either_teams
-      redirect_to league_match_path(@competition, @match) unless user_can_either_teams?
+      redirect_to league_match_path(@league, @match) unless user_can_either_teams?
     end
 
     def require_match_not_bye
-      redirect_to league_match_path(@competition, @match) if @match.bye?
+      redirect_to league_match_path(@league, @match) if @match.bye?
     end
 
     def require_user_can_comm
-      redirect_to league_match_path(@competition, @match) unless user_can_comm?
+      redirect_to league_match_path(@league, @match) unless user_can_comm?
     end
   end
 end

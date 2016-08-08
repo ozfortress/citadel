@@ -3,14 +3,14 @@ require 'support/devise'
 require 'support/factory_girl'
 
 describe 'leagues/rosters/transfers/show' do
-  let!(:roster) { create(:competition_roster) }
+  let!(:roster) { create(:league_roster) }
   let!(:approved_transfers) { roster.transfers }
-  let!(:pending_transfers) { create_list(:competition_transfer, 3, roster: roster) }
+  let!(:pending_transfers) { create_list(:league_roster_transfer, 3, roster: roster) }
 
   it 'displays all transferable users' do
-    assign(:competition, roster.competition)
+    assign(:league, roster.league)
     assign(:roster, roster)
-    assign(:transfer, CompetitionTransfer.new)
+    assign(:transfer, League::Roster::Transfer.new)
 
     render
 

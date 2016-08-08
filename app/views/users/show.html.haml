@@ -15,7 +15,7 @@
       %i aka #{@user.aka.limit(5).map(&:name).join(', ')}
 
 .row!= present_collection(@user.titles.for_roster).map(&:icon).join(' ')
-.row!= present_collection(@user.titles.for_competition).map(&:icon).join(' ')
+.row!= present_collection(@user.titles.for_league).map(&:icon).join(' ')
 .row!= present_collection(@user.titles.general).map(&:icon).join(' ')
 
 .panel.panel-default
@@ -37,7 +37,7 @@
 .panel.panel-default
   .panel-heading Transfers
   %ul.list-group
-    - @user.transfers.includes(:team).each do |transfer|
+    - @user.team_transfers.includes(:team).each do |transfer|
       %li.list-group-item
         - if transfer.is_joining?
           joined
@@ -58,12 +58,12 @@
 .panel.panel-default
   .panel-heading Leagues
   %ul.list-group
-    - rosters = @user.rosters.includes(division: :competition)
+    - rosters = @user.rosters.includes(division: :league)
     - present_collection(rosters).each do |roster|
-      - unless roster.competition.hidden?
+      - unless roster.league.hidden?
         %li.list-group-item
-          - league_link = link_to roster.competition, league_path(roster.competition)
-          - if roster.competition.signuppable?
+          - league_link = link_to roster.league, league_path(roster.league)
+          - if roster.league.signuppable?
             signed up to #{league_link} with #{roster.link}
           - else
             playing in #{league_link} with #{roster.link}

@@ -5,8 +5,8 @@ require 'support/factory_girl'
 describe 'leagues/rosters/new' do
   let(:team) { create(:team) }
   let(:team2) { create(:team) }
-  let(:comp) { create(:competition) }
-  let(:div) { create(:division, competition: comp) }
+  let(:league) { create(:league) }
+  let(:div) { create(:league_division, league: league) }
   let(:captain) { create(:user) }
 
   before do
@@ -16,16 +16,17 @@ describe 'leagues/rosters/new' do
 
   it 'displays form' do
     sign_in captain
-    assign(:competition, comp)
-    assign(:roster, comp.rosters.new)
+    assign(:league, league)
+    assign(:roster, league.rosters.new)
 
     render
   end
 
   it 'displays form for selected team' do
     sign_in captain
-    assign(:competition, comp)
-    assign(:roster, build(:competition_roster, team: team, division: div))
+    assign(:league, league)
+    assign(:roster, build(:league_roster, team: team, division: div))
+    assign(:team, team)
 
     render
   end

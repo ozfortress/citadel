@@ -4,9 +4,9 @@ require 'support/factory_girl'
 
 describe 'teams/show' do
   let!(:team) { create(:team) }
-  let!(:transfers_in) { create_list(:transfer, 5, team: team, is_joining: true) }
-  let!(:transfers_out) { create_list(:transfer, 5, team: team, is_joining: false) }
-  let!(:rosters) { create_list(:competition_roster, 3, team: team) }
+  let!(:transfers_in) { create_list(:team_transfer, 5, team: team, is_joining: true) }
+  let!(:transfers_out) { create_list(:team_transfer, 5, team: team, is_joining: false) }
+  let!(:rosters) { create_list(:league_roster, 3, team: team) }
 
   it 'shows public team data' do
     assign(:team, team)

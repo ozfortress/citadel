@@ -3,10 +3,10 @@ require 'support/devise'
 require 'support/factory_girl'
 
 describe 'leagues/matches/new' do
-  let(:match) { build(:competition_match) }
+  let(:match) { build(:league_match) }
 
   it 'displays form' do
-    assign(:competition, match.competition)
+    assign(:league, match.league)
     assign(:match, match)
 
     render

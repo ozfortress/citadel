@@ -2,7 +2,7 @@ class LeaguesController < ApplicationController
   include LeaguePermissions
 
   before_action except: [:index, :new, :create] do
-    @competition = Competition.find(params[:id])
+    @league = League.find(params[:id])
   end
 
   before_action :require_user_leagues_permission, only: [:new, :create, :destroy]
@@ -11,52 +11,52 @@ class LeaguesController < ApplicationController
   before_action :require_hidden, only: [:destroy]
 
   def index
-    @competitions = Competition.search_all(params[:q])
-                               .order(status: :asc, created_at: :desc)
-                               .paginate(page: params[:page])
+    @leagues = League.search_all(params[:q])
+                     .order(status: :asc, created_at: :desc)
+                     .paginate(page: params[:page])
   end
 
   def new
-    @competition = Competition.new
-    @competition.divisions.new
+    @league = League.new
+    @league.divisions.new
   end
 
   def create
-    @competition = Competition.new(league_params)
+    @league = League.new(league_params)
 
-    if @competition.save
-      redirect_to league_path(@competition)
+    if @league.save
+      redirect_to league_path(@league)
     else
       render :new
     end
   end
 
   def show
-    @divisions = @competition.divisions.includes(:rosters)
+    @divisions = @league.divisions.includes(:rosters)
   end
 
   def edit
   end
 
   def update
-    if @competition.update(league_params)
-      redirect_to league_path(@competition)
+    if @league.update(league_params)
+      redirect_to league_path(@league)
     else
       render :edit
     end
   end
 
   def status
-    if @competition.update(status: params.require(:status))
-      redirect_to league_path(@competition)
+    if @league.update(status: params.require(:status))
+      redirect_to league_path(@league)
     else
       render :edit
     end
   end
 
   def destroy
-    if @competition.destroy
-      redirect_to admin_path(@competition)
+    if @league.destroy
+      redirect_to admin_path(@league)
     else
       render :edit
     end
@@ -65,19 +65,19 @@ class LeaguesController < ApplicationController
   private
 
   def league_params
-    params.require(:competition).permit(:name, :description, :format_id, :signuppable,
-                                        :roster_locked, :matches_submittable,
-                                        :transfers_require_approval, :allow_set_draws,
-                                        :allow_disbanding, :min_players, :max_players,
-                                        :points_per_set_won, :points_per_set_drawn,
-                                        :points_per_set_lost, :points_per_match_forfeit_loss,
-                                        :points_per_match_forfeit_win,
-                                        tiebreakers_attributes: [:id, :kind, :_destroy],
-                                        divisions_attributes: [:id, :name, :_destroy])
+    params.require(:league).permit(:name, :description, :format_id, :signuppable,
+                                   :roster_locked, :matches_submittable,
+                                   :transfers_require_approval, :allow_set_draws,
+                                   :allow_disbanding, :min_players, :max_players,
+                                   :points_per_set_won, :points_per_set_drawn,
+                                   :points_per_set_lost, :points_per_match_forfeit_loss,
+                                   :points_per_match_forfeit_win,
+                                   tiebreakers_attributes: [:id, :kind, :_destroy],
+                                   divisions_attributes: [:id, :name, :_destroy])
   end
 
   def require_hidden
-    redirect_to league_path(@competition) unless @competition.hidden?
+    redirect_to league_path(@league) unless @league.hidden?
   end
 
   def require_user_leagues_permission
@@ -85,10 +85,10 @@ class LeaguesController < ApplicationController
   end
 
   def require_user_league_permission
-    redirect_to league_path(@competition) unless user_can_edit_league?
+    redirect_to league_path(@league) unless user_can_edit_league?
   end
 
   def require_league_not_hidden_or_permission
-    redirect_to leagues_path unless !@competition.hidden? || user_can_edit_league?
+    redirect_to leagues_path unless !@league.hidden? || user_can_edit_league?
   end
 end

@@ -1,5 +1,5 @@
 .alert.alert-warning
-  - if !@competition.hidden?
+  - if !@league.hidden?
     %span.glyphicon.glyphicon-warning-sign
     %b Public
     All changes are visible to everyone.
@@ -7,11 +7,11 @@
     %span.glyphicon.glyphicon-lock
     Private
 
-= bootstrap_form_for @competition, url: league_path(@competition) do |f|
+= bootstrap_form_for @league, url: league_path(@league) do |f|
   = render 'league_form', f: f
 
   = f.submit 'Update'
-  = link_to 'Cancel', league_path(@competition), class: 'btn btn-default'
+  = link_to 'Cancel', league_path(@league), class: 'btn btn-default'
 
 %hr
 
@@ -19,21 +19,21 @@
   .panel.panel-danger
     .panel-heading Danger Zone
     .panel-body
-      - if @competition.hidden?
-        = button_to league_path(@competition), method: :delete, class: 'btn btn-danger',
+      - if @league.hidden?
+        = button_to league_path(@league), method: :delete, class: 'btn btn-danger',
                     data: { confirm: 'Are you sure you want to delete this League?' } do
           %span.glyphicon.glyphicon-trash
           Delete
 
-      - if @competition.hidden?
-        = button_to 'Make Public', league_status_path(@competition, status: 'running'),
+      - if @league.hidden?
+        = button_to 'Make Public', league_status_path(@league, status: 'running'),
                     method: :patch, class: 'btn btn-warning'
-      - elsif @competition.running?
-        = button_to 'Make Private', league_status_path(@competition, status: 'hidden'),
+      - elsif @league.running?
+        = button_to 'Make Private', league_status_path(@league, status: 'hidden'),
                     method: :patch, class: 'btn btn-danger'
-        = button_to 'Mark Completed', league_status_path(@competition, status: 'completed'),
+        = button_to 'Mark Completed', league_status_path(@league, status: 'completed'),
                     method: :patch, class: 'btn btn-warning'
       - else
-        = button_to 'Unmark Completed', league_status_path(@competition, status: 'running'),
+        = button_to 'Unmark Completed', league_status_path(@league, status: 'running'),
                     method: :patch, class: 'btn btn-warning'
 

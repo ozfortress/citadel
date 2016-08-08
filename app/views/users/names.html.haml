@@ -1,7 +1,7 @@
 %h1 User Name Change Requests
 
 %ul.list-group
-  - UserNameChange.pending.each do |name_change|
+  - User::NameChange.pending.each do |name_change|
     - user = present(name_change.user)
 
     %li.list-group-item

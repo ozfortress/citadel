@@ -26,7 +26,7 @@ module Leagues
       user_can_edit_league? || (
         @match.status == 'pending' &&
         (user_can_home_team? || user_can_away_team?) &&
-        @competition.matches_submittable)
+        @league.matches_submittable)
     end
 
     def user_can_comm?

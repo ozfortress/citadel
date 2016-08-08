@@ -5,7 +5,7 @@ require 'support/factory_girl'
 describe Team do
   let!(:team) { create(:team) }
 
-  it { should have_many(:team_invites) }
+  it { should have_many(:invites) }
   it { should have_many(:transfers) }
 
   it { should validate_presence_of(:name) }
@@ -37,7 +37,7 @@ describe Team do
 
   describe '#destroy' do
     it "can't be destroyed when the team has roster" do
-      create(:competition_roster, team: team)
+      create(:league_roster, team: team)
 
       expect(team.destroy).to eq(false)
     end

@@ -1,20 +1,20 @@
-- if @competition.hidden?
+- if @league.hidden?
   .alert.alert-warning
     %span.glyphicon.glyphicon-lock
     Private
 
 - if user_can_edit_league?
-  = link_to edit_league_path(@competition), class: 'btn btn-default pull-right', type: 'button' do
+  = link_to edit_league_path(@league), class: 'btn btn-default pull-right', type: 'button' do
     Manage
     %span.glyphicon.glyphicon-cog
 
-%h1= @competition.name
+%h1= @league.name
 
 .panel.panel-default
   .panel-heading Info
-  .panel-body= markdown @competition.description
+  .panel-body= markdown @league.description
 
-- unless @competition.matches.empty?
+- unless @league.matches.empty?
   .panel.panel-default
     .panel-heading
       - if user_signed_in?
@@ -22,7 +22,7 @@
       - else
         Upcoming Matches for #{@divisions.first}
 
-      = link_to 'All Matches', league_matches_path(@competition),
+      = link_to 'All Matches', league_matches_path(@league),
                 class: 'btn btn-default pull-right'
 
     %ul.list-group
@@ -37,8 +37,8 @@
 .panel.panel-default
   .panel-heading Teams
   %ul.list-group
-    - if @competition.signuppable?
-      - rosters = @competition.rosters.includes(division: :competition)
+    - if @league.signuppable?
+      - rosters = @league.rosters.includes(division: :league)
       - present_collection(rosters).each do |roster|
         %li.list-group-item
           = roster.link
@@ -50,19 +50,19 @@
           %ul.list-group
             - present_collection(div.rosters_sorted).each_with_index do |roster, rank|
               %li.list-group-item
-                = "##{rank + 1}:" if @competition.completed?
+                = "##{rank + 1}:" if @league.completed?
                 = roster.link
                 .pull-right
                   = roster.score_s
 
   - if user_signed_in?
-    - if current_user.can_any?(:edit, :team) && @competition.signuppable?
+    - if current_user.can_any?(:edit, :team) && @league.signuppable?
       .panel-body
-        = link_to 'Sign up', new_league_roster_path(@competition),
+        = link_to 'Sign up', new_league_roster_path(@league),
                              class: 'btn btn-success pull-right'
 
-    - elsif current_user.entered?(@competition)
-      - roster = present @competition.roster_transfer(current_user).first.roster
+    - elsif current_user.entered?(@league)
+      - roster = present @league.roster_transfer(current_user).first.roster
 
       .panel-body
         = roster.link 'View My Team', class: 'btn btn-default pull-right'
@@ -73,6 +73,6 @@
     .panel-body
       - klass = 'btn btn-default pull-right'
 
-      = link_to 'Transfers', league_transfers_path(@competition), class: klass
-      = link_to 'Signups', league_rosters_path(@competition), class: klass
-      = link_to 'Matches', league_matches_path(@competition), class: klass
+      = link_to 'Transfers', league_transfers_path(@league), class: klass
+      = link_to 'Signups', league_rosters_path(@league), class: klass
+      = link_to 'Matches', league_matches_path(@league), class: klass

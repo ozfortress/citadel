@@ -1,19 +1,19 @@
 %h1
-  = link_to @competition.name, league_path(@competition)
+  = link_to @league.name, league_path(@league)
   Transfers
 
 .panel.panel-default
   .panel-heading On Roster
-  - if @competition.pending_transfers.empty?
+  - if @league.pending_transfers.empty?
     .panel-body No pending transfers...
 
   %ul.list-group
-    - @competition.pending_transfers.each do |transfer|
+    - @league.pending_transfers.each do |transfer|
       %li.list-group-item
-        = button_to 'Approve', league_transfer_path(@competition, transfer), method: :patch,
+        = button_to 'Approve', league_transfer_path(@league, transfer), method: :patch,
                     class: 'pull-right btn btn-success'
-        = button_to 'Deny', league_transfer_path(@competition, transfer), method: :delete,
+        = button_to 'Deny', league_transfer_path(@league, transfer), method: :delete,
                     class: 'pull-right btn btn-danger'
 
         = transfer.created_at.strftime('%c')
-        = present(transfer.user).transfer_listing(@competition)
+        = present(transfer.user).transfer_listing(@league)

@@ -3,15 +3,15 @@
 
   - if user_can_edit_league?
     .panel-body
-      = link_to generate_league_matches_path(@competition), class: 'btn btn-default pull-right' do
+      = link_to generate_league_matches_path(@league), class: 'btn btn-default pull-right' do
         %span.glyphicon.glyphicon-plus
         Generate Round
-      = link_to new_league_match_path(@competition), class: 'btn btn-default pull-right' do
+      = link_to new_league_match_path(@league), class: 'btn btn-default pull-right' do
         %span.glyphicon.glyphicon-plus
         Create Single Match
 
   %ul.list-group
-    - @competition.divisions.includes(matches: [:home_team, :away_team]).each do |div|
+    - @league.divisions.includes(matches: [:home_team, :away_team]).each do |div|
       %li.list-group-item
         %h3= div
 

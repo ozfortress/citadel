@@ -35,7 +35,7 @@ module ApplicationHelper
   end
 
   def divisions_select
-    @competition.divisions.all.collect { |div| [div.to_s, div.id] }
+    @league.divisions.all.collect { |div| [div.to_s, div.id] }
   end
 
   # The ActionPresenter #present_collection is broken

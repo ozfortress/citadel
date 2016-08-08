@@ -20,26 +20,26 @@
     - if index == 0
       - klass += ' in active'
 
-    - competitions = @competitions.joins(:format).where(formats: { game_id: game.id })
+    - leagues = @leagues.joins(:format).where(formats: { game_id: game.id })
     %div{ id: game.name.parameterize, class: klass }
-      - if competitions.empty?
+      - if leagues.empty?
         .panel-body No leagues found...
       - else
         %ul.list-group
-          - competitions.each do |competition|
-            - if competition.hidden?
+          - leagues.each do |league|
+            - if league.hidden?
               - next unless user_can_edit_leagues?
               - klass = 'list-group-item-warning'
-            - elsif competition.running?
+            - elsif league.running?
               - klass = 'list-group-item-info'
             - else
               - klass = 'list-group-item-success'
 
-            = link_to league_path(competition), class: 'list-group-item ' + klass do
+            = link_to league_path(league), class: 'list-group-item ' + klass do
               .thumbnail.pull-right
-                Teams: #{competition.rosters.size}
+                Teams: #{league.rosters.size}
 
               %h4.list-group-item-heading
-                = competition.name
+                = league.name
 
-  = will_paginate @competitions, renderer: BootstrapPagination::Rails
+  = will_paginate @leagues, renderer: BootstrapPagination::Rails

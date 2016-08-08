@@ -7,7 +7,10 @@ describe User do
   let!(:user) { create(:user) }
 
   it { should have_many(:team_invites) }
-  it { should have_many(:transfers) }
+  it { should have_many(:team_transfers) }
+  it { should have_many(:roster_transfers) }
+  it { should have_many(:titles) }
+  it { should have_many(:names) }
   it { should have_many(:notifications) }
 
   it { should validate_presence_of(:name) }

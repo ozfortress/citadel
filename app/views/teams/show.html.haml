@@ -71,10 +71,10 @@
   .panel.panel-default
     .panel-heading Leagues
     %ul.list-group
-      - @team.rosters.includes(division: :competition).each do |roster|
+      - @team.rosters.includes(division: :league).each do |roster|
         %li.list-group-item
           - roster_p = present roster
-          = link_to roster.competition, league_path(roster.competition)
+          = link_to roster.league, league_path(roster.league)
           #{roster.division}: #{roster_p.link}.
           Signed up on #{roster_p.created_at_s}.
 

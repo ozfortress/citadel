@@ -12,11 +12,11 @@
     - present_collection(@roster.player_users).each do |user|
       %li.list-group-item
         = form_for(@transfer, method: :post,
-                              url: league_roster_transfers_path(@competition, @roster)) do |f|
+                              url: league_roster_transfers_path(@league, @roster)) do |f|
           = f.hidden_field :user_id, value: user.id
           = f.hidden_field :is_joining, value: false
           = button_tag type: 'submit', class: 'btn btn-danger pull-right',
-                       disabled: @competition.pending_transfer?(user) do
+                       disabled: @league.pending_transfer?(user) do
             Remove
             %span.glyphicon.glyphicon-remove
 
@@ -28,12 +28,12 @@
     - present_collection(@roster.users_off_roster).each do |user|
       %li.list-group-item
         = form_for(@transfer, method: :post,
-                              url: league_roster_transfers_path(@competition, @roster)) do |f|
+                              url: league_roster_transfers_path(@league, @roster)) do |f|
           = f.hidden_field :user_id, value: user.id
           = f.hidden_field :is_joining, value: true
           = button_tag type: 'submit', class: 'btn btn-success pull-right',
-                       disabled: @competition.pending_transfer?(user) do
+                       disabled: @league.pending_transfer?(user) do
             Add
             %span.glyphicon.glyphicon-remove
 
-        = user.transfer_listing @competition, team: @roster.team
+        = user.transfer_listing @league, team: @roster.team

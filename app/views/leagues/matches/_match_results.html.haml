@@ -2,20 +2,20 @@
   .panel-heading Results
 
   %ul.list-group
-    - match.sets.includes(:map).each do |set|
+    - match.rounds.includes(:map).each do |round|
       %li.list-group-item
-        = link_to set.map, meta_map_path(set.map)
+        = link_to round.map, meta_map_path(round.map)
         - home = present(match.home_team).link
         - away = present(match.away_team).link
 
         .pull-right
           - if match.no_forfeit?
-            - if set.home_team_score > set.away_team_score
-              #{home} beat #{away}, #{set.home_team_score} to #{set.away_team_score}
-            - elsif set.home_team_score < set.away_team_score
-              #{away} beat #{home}, #{set.away_team_score} to #{set.home_team_score}
+            - if round.home_team_score > round.away_team_score
+              #{home} beat #{away}, #{round.home_team_score} to #{round.away_team_score}
+            - elsif round.home_team_score < round.away_team_score
+              #{away} beat #{home}, #{round.away_team_score} to #{round.home_team_score}
             - else
-              #{home} tied with #{away}, #{set.home_team_score} to #{set.away_team_score}
+              #{home} tied with #{away}, #{round.home_team_score} to #{round.away_team_score}
           - if match.home_team_forfeit?
             #{away} wins by forfeit
           - if match.away_team_forfeit?

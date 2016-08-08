@@ -8,12 +8,12 @@ class User < ActiveRecord::Base
   include Searchable
   include Auth::Model
 
-  has_many :team_invites
-  has_many :transfers, -> { order(created_at: :desc) }
-  has_many :roster_transfers, class_name: 'CompetitionTransfer'
-  has_many :titles, -> { order(created_at: :desc) }
-  has_many :names, -> { order(created_at: :desc) }, class_name: 'UserNameChange'
-  has_many :notifications, -> { order(created_at: :desc) }
+  has_many :team_invites, class_name: 'Team::Invite'
+  has_many :team_transfers, -> { order(created_at: :desc) }, class_name: 'Team::Transfer'
+  has_many :roster_transfers, class_name: 'League::Roster::Transfer'
+  has_many :titles, -> { order(created_at: :desc) }, class_name: 'Title'
+  has_many :names, -> { order(created_at: :desc) }, class_name: 'NameChange'
+  has_many :notifications, -> { order(created_at: :desc) }, class_name: 'Notification'
 
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:steam]
 
@@ -29,11 +29,11 @@ class User < ActiveRecord::Base
 
   validates_permission_to :edit, :games
 
-  validates_permission_to :edit, :competition
-  validates_permission_to :edit, :competitions
+  validates_permission_to :edit, :league
+  validates_permission_to :edit, :leagues
 
-  validates_permission_to :manage_rosters, :competition
-  validates_permission_to :manage_rosters, :competitions
+  validates_permission_to :manage_rosters, :league
+  validates_permission_to :manage_rosters, :leagues
 
   validates_permission_to :edit, :permissions
 
@@ -46,17 +46,17 @@ class User < ActiveRecord::Base
   end
 
   def teams
-    get_player_rosters(transfers, :team_id, Team, :transfers)
+    get_player_rosters(team_transfers, :team_id, Team, :team_transfers)
   end
 
   def rosters
-    get_player_rosters(roster_transfers, :competition_roster_id,
-                       CompetitionRoster, :competition_transfers)
+    get_player_rosters(roster_transfers, :roster_id,
+                       League::Roster, :league_roster_transfers)
   end
 
   def matches
     rosters_sql = rosters.select(:id).to_sql
-    CompetitionMatch.where("home_team_id IN (#{rosters_sql}) OR away_team_id IN (#{rosters_sql})")
+    League::Match.where("home_team_id IN (#{rosters_sql}) OR away_team_id IN (#{rosters_sql})")
   end
 
   def entered?(comp)
@@ -69,9 +69,9 @@ class User < ActiveRecord::Base
 
   def admin?
     can?(:edit, :teams) ||
-      can?(:edit, :competitions) ||
+      can?(:edit, :leagues) ||
       can?(:edit, :games) ||
-      can?(:manage_rosters, :competitions) ||
+      can?(:manage_rosters, :leagues) ||
       can?(:edit, :permissions)
   end
 

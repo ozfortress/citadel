@@ -7,8 +7,8 @@ describe MatchSeeder::Swiss do
   def run_seedings(players_count)
     @rounds_count = Math.log2(players_count).ceil
 
-    @div = create(:division)
-    @rosters = create_list(:competition_roster, players_count, division: @div)
+    @div = create(:league_division)
+    @rosters = create_list(:league_roster, players_count, division: @div)
     @winners = @rosters.first(10)
     @losers = @rosters.last(10)
 
@@ -16,10 +16,10 @@ describe MatchSeeder::Swiss do
   end
 
   def perform_rounds
-    set = build(:competition_set)
+    round = build(:league_match_round)
 
     @rounds_count.times do
-      described_class.seed_round_for(@div.reload, sets: [set])
+      described_class.seed_round_for(@div.reload, rounds: [round])
 
       finalize_matches
     end

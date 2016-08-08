@@ -1,6 +1,6 @@
 class Format < ActiveRecord::Base
   belongs_to :game
-  has_many   :competitions
+  has_many   :leagues
 
   validates :game, presence: true
   validates :name, presence: true, uniqueness: true, length: { in: 1..128 }

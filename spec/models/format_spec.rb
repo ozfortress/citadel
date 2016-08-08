@@ -6,7 +6,7 @@ describe Format do
   before { create(:format) }
 
   it { should belong_to(:game) }
-  it { should have_many(:competitions) }
+  it { should have_many(:leagues) }
 
   it { should validate_presence_of(:game) }
 

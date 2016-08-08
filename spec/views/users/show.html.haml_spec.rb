@@ -6,17 +6,17 @@ describe 'users/show' do
   let!(:user) { create(:user) }
 
   before do
-    create_list(:transfer, 2, user: user)
+    create_list(:team_transfer, 2, user: user)
 
-    transfers = create_list(:competition_transfer, 2, user: user, approved: true)
+    transfers = create_list(:league_roster_transfer, 2, user: user, approved: true)
     transfers.each do |transfer|
-      transfer.competition.update!(status: :running)
+      transfer.league.update!(status: :running)
     end
-    transfers.first.competition.update!(signuppable: true)
+    transfers.first.league.update!(signuppable: true)
 
-    create(:competition_match, home_team: user.rosters.first)
+    create(:league_match, home_team: user.rosters.first)
     create_list(:team_invite, 2, user: user)
-    create_list(:title, 5, user: user)
+    create_list(:user_title, 5, user: user)
   end
 
   it 'shows public user data' do

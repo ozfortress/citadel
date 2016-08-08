@@ -4,13 +4,13 @@ require 'support/factory_girl'
 
 describe 'leagues/matches/show' do
   context 'home team has more players' do
-    let(:div) { create(:division) }
-    let(:home_team) { create(:competition_roster, division: div, player_count: 12) }
-    let(:away_team) { create(:competition_roster, division: div, player_count: 6) }
-    let(:match) { create(:competition_match, home_team: home_team, away_team: away_team) }
+    let(:div) { create(:league_division) }
+    let(:home_team) { create(:league_roster, division: div, player_count: 12) }
+    let(:away_team) { create(:league_roster, division: div, player_count: 6) }
+    let(:match) { create(:league_match, home_team: home_team, away_team: away_team) }
 
     it 'displays all players' do
-      assign(:competition, div.competition)
+      assign(:league, div.league)
       assign(:match, match)
 
       render
@@ -25,13 +25,13 @@ describe 'leagues/matches/show' do
   end
 
   context 'away team has more players' do
-    let(:div) { create(:division) }
-    let(:home_team) { create(:competition_roster, division: div, player_count: 6) }
-    let(:away_team) { create(:competition_roster, division: div, player_count: 12) }
-    let(:match) { create(:competition_match, home_team: home_team, away_team: away_team) }
+    let(:div) { create(:league_division) }
+    let(:home_team) { create(:league_roster, division: div, player_count: 6) }
+    let(:away_team) { create(:league_roster, division: div, player_count: 12) }
+    let(:match) { create(:league_match, home_team: home_team, away_team: away_team) }
 
     it 'displays all players' do
-      assign(:competition, div.competition)
+      assign(:league, div.league)
       assign(:match, match)
 
       render
@@ -46,14 +46,14 @@ describe 'leagues/matches/show' do
   end
 
   context 'standard match' do
-    let(:match) { create(:competition_match) }
+    let(:match) { create(:league_match) }
     let(:user) { create(:user) }
-    let!(:comms) { create_list(:competition_comm, 12, match: match) }
+    let!(:comms) { create_list(:league_match_comm, 12, match: match) }
 
     before do
-      assign(:competition, match.competition)
+      assign(:league, match.league)
       assign(:match, match)
-      assign(:comm, CompetitionComm.new(match: match))
+      assign(:comm, League::Match::Comm.new(match: match))
     end
 
     it 'displays for home team captains' do
@@ -71,7 +71,7 @@ describe 'leagues/matches/show' do
     end
 
     it 'displays for admins' do
-      user.grant(:edit, match.competition)
+      user.grant(:edit, match.league)
       sign_in user
 
       render

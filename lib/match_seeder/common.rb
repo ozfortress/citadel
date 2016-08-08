@@ -18,7 +18,7 @@ module MatchSeeder
       end
 
       match_options = get_opts(home_team, away_team, options)
-      CompetitionMatch.create!(match_options)
+      League::Match.create!(match_options)
     end
 
     private

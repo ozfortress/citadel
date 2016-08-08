@@ -1,9 +1,9 @@
 - if user_can_edit_league?
-  = link_to edit_league_match_path(@competition, @match), class: 'btn btn-default pull-right' do
+  = link_to edit_league_match_path(@league, @match), class: 'btn btn-default pull-right' do
     Edit
     %span.glyphicon.glyphicon-cog
 
-%h1 #{link_to @competition, league_path(@competition)}: #{@match.home_team.division}
+%h1 #{link_to @league, league_path(@league)}: #{@match.home_team.division}
 %h2= present(@match).title
 
 - unless @match.bye?
@@ -23,8 +23,8 @@
             %td= away_user.listing team: @match.away_team.team if away_user
 
   - if @match.status == 'confirmed' && !user_can_edit_league?
-    = render 'match_results', match: @match, competition: @competition
-  - elsif user_can_either_teams? && @competition.matches_submittable?
-    = render 'match_scores', match: @match, competition: @competition
+    = render 'match_results', match: @match, league: @league
+  - elsif user_can_either_teams? && @league.matches_submittable?
+    = render 'match_scores', match: @match, league: @league
 
-  = render 'match_comms', match: @match, competition: @competition, comm: @comm
+  = render 'match_comms', match: @match, league: @league, comm: @comm

@@ -18,14 +18,14 @@
   .panel-heading Sets
   - if f.object.pending?
     %ul.list-group
-      = f.fields_for :sets do |sets_f|
-        = render 'set_fields', f: sets_f
-      %div{ id: "#{div.id}_sets" }
+      = f.fields_for :rounds do |rounds_f|
+        = render 'round_fields', f: rounds_f
+      %div{ id: "#{div.id}_rounds" }
 
     .panel-body
-      = link_to_add_association f, :sets, class: 'btn btn-default pull-right',
-                                'data-association-insertion-node' => "##{div.id}_sets" do
+      = link_to_add_association f, :rounds, class: 'btn btn-default pull-right',
+                                'data-association-insertion-node' => "##{div.id}_rounds" do
         %span.glyphicon.glyphicon-plus
         Add Set
   - else
-    .panel-body Can't edit sets unless scores are pending
+    .panel-body Can't edit rounds unless scores are pending

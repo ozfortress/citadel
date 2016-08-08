@@ -6,7 +6,7 @@ describe Leagues::Rosters::TransfersController do
   let(:user) { create(:user) }
   let(:player) { create(:user) }
   let(:bencher) { create(:user) }
-  let(:roster) { create(:competition_roster) }
+  let(:roster) { create(:league_roster) }
 
   before do
     roster.team.add_player!(bencher)
@@ -19,36 +19,36 @@ describe Leagues::Rosters::TransfersController do
       user.grant(:edit, roster.team)
       sign_in user
 
-      get :show, league_id: roster.competition, roster_id: roster.id
+      get :show, league_id: roster.league.id, roster_id: roster.id
 
       expect(response).to have_http_status(:success)
     end
 
     it 'succeeds for authorized admin' do
-      user.grant(:edit, roster.competition)
+      user.grant(:edit, roster.league)
       sign_in user
 
-      get :show, league_id: roster.competition, roster_id: roster.id
+      get :show, league_id: roster.league.id, roster_id: roster.id
 
       expect(response).to have_http_status(:success)
     end
 
     it 'redirects for authorized captain when rosters are locked' do
       user.grant(:edit, roster.team)
-      roster.competition.update!(roster_locked: true)
+      roster.league.update!(roster_locked: true)
       sign_in user
 
-      get :show, league_id: roster.competition, roster_id: roster.id
+      get :show, league_id: roster.league.id, roster_id: roster.id
 
-      expect(response).to redirect_to(league_roster_path(roster.competition, roster))
+      expect(response).to redirect_to(league_roster_path(roster.league, roster))
     end
 
     it 'redirects for unauthorized user' do
       sign_in user
 
-      get :show, league_id: roster.competition, roster_id: roster.id
+      get :show, league_id: roster.league.id, roster_id: roster.id
 
-      expect(response).to redirect_to(league_roster_path(roster.competition, roster))
+      expect(response).to redirect_to(league_roster_path(roster.league, roster))
     end
   end
 
@@ -57,46 +57,46 @@ describe Leagues::Rosters::TransfersController do
       user.grant(:edit, roster.team)
       sign_in user
 
-      post :create, league_id: roster.competition.id, roster_id: roster.id,
-                    competition_transfer: { user_id: bencher.id, is_joining: true }
+      post :create, league_id: roster.league.id, roster_id: roster.id,
+                    transfer: { user_id: bencher.id, is_joining: true }
 
       expect(roster.on_roster?(bencher)).to be(false)
-      expect(roster.competition.pending_transfer?(bencher)).to be(true)
+      expect(roster.league.pending_transfer?(bencher)).to be(true)
     end
 
     it 'succeeds for authorized captain with bencher auto-approved' do
       user.grant(:edit, roster.team)
-      roster.competition.update!(transfers_require_approval: false)
+      roster.league.update!(transfers_require_approval: false)
       sign_in user
 
-      post :create, league_id: roster.competition.id, roster_id: roster.id,
-                    competition_transfer: { user_id: bencher.id, is_joining: true }
+      post :create, league_id: roster.league.id, roster_id: roster.id,
+                    transfer: { user_id: bencher.id, is_joining: true }
 
       expect(roster.on_roster?(bencher)).to be(true)
-      expect(roster.competition.pending_transfer?(bencher)).to be(false)
+      expect(roster.league.pending_transfer?(bencher)).to be(false)
     end
 
     it 'fails if rosters are locked' do
       user.grant(:edit, roster.team)
-      roster.competition.update!(roster_locked: true)
+      roster.league.update!(roster_locked: true)
       sign_in user
 
-      post :create, league_id: roster.competition.id, roster_id: roster.id,
-                    competition_transfer: { user_id: bencher.id, is_joining: true }
+      post :create, league_id: roster.league.id, roster_id: roster.id,
+                    transfer: { user_id: bencher.id, is_joining: true }
 
       expect(roster.on_roster?(bencher)).to be(false)
-      expect(roster.competition.pending_transfer?(bencher)).to be(false)
+      expect(roster.league.pending_transfer?(bencher)).to be(false)
     end
 
     it 'fails transferring bencher out for authorized captain' do
       user.grant(:edit, roster.team)
       sign_in user
 
-      post :create, league_id: roster.competition.id, roster_id: roster.id,
-                    competition_transfer: { user_id: bencher.id, is_joining: false }
+      post :create, league_id: roster.league.id, roster_id: roster.id,
+                    transfer: { user_id: bencher.id, is_joining: false }
 
       expect(roster.on_roster?(bencher)).to be(false)
-      expect(roster.competition.pending_transfer?(bencher)).to be(false)
+      expect(roster.league.pending_transfer?(bencher)).to be(false)
     end
 
     # TODO: player tests, as opposed to bencher
