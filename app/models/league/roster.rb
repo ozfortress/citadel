@@ -43,6 +43,14 @@ class League
     validate :player_count_minimums
     validate :player_count_maximums
 
+    after_create do
+      League.increment_counter(:rosters_count, league.id)
+    end
+
+    after_destroy do
+      League.decrement_counter(:rosters_count, league.id)
+    end
+
     after_initialize :set_defaults, unless: :persisted?
 
     def matches

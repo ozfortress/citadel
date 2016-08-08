@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808075127) do
+ActiveRecord::Schema.define(version: 20160808090417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -214,6 +214,7 @@ ActiveRecord::Schema.define(version: 20160808075127) do
     t.boolean  "allow_round_draws",             default: true,  null: false
     t.boolean  "allow_disbanding",              default: false, null: false
     t.integer  "status",                        default: 0,     null: false
+    t.integer  "rosters_count",                 default: 0,     null: false
   end
 
   add_index "leagues", ["format_id"], name: "index_leagues_on_format_id", using: :btree

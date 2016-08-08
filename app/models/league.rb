@@ -12,7 +12,7 @@ class League < ActiveRecord::Base
                          class_name: 'Tiebreaker'
   accepts_nested_attributes_for :tiebreakers, allow_destroy: true
 
-  has_many :rosters,   through: :divisions, class_name: 'Roster'
+  has_many :rosters,   through: :divisions, class_name: 'Roster', counter_cache: :rosters_count
   has_many :transfers, through: :rosters,   class_name: 'Roster::Transfer'
   has_many :matches,   through: :divisions, class_name: 'Match'
   has_many :titles,    class_name: 'User::Title'
