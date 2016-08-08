@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160807073505) do
+ActiveRecord::Schema.define(version: 20160808075127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -206,12 +206,12 @@ ActiveRecord::Schema.define(version: 20160807073505) do
     t.integer  "max_players",                   default: 0,     null: false
     t.boolean  "matches_submittable",           default: false, null: false
     t.boolean  "transfers_require_approval",    default: true,  null: false
-    t.integer  "points_per_set_won",            default: 2,     null: false
-    t.integer  "points_per_set_drawn",          default: 1,     null: false
-    t.integer  "points_per_set_lost",           default: 0,     null: false
+    t.integer  "points_per_round_won",          default: 2,     null: false
+    t.integer  "points_per_round_drawn",        default: 1,     null: false
+    t.integer  "points_per_round_lost",         default: 0,     null: false
     t.integer  "points_per_match_forfeit_loss", default: 1,     null: false
     t.integer  "points_per_match_forfeit_win",  default: 1,     null: false
-    t.boolean  "allow_set_draws",               default: true,  null: false
+    t.boolean  "allow_round_draws",             default: true,  null: false
     t.boolean  "allow_disbanding",              default: false, null: false
     t.integer  "status",                        default: 0,     null: false
   end

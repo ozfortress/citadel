@@ -46,10 +46,10 @@ describe LeaguesController do
       post :create, league: { name: 'A', description: 'B', format_id: format.id,
                               signuppable: true, roster_locked: false,
                               matches_submittable: true, transfers_require_approval: false,
-                              allow_set_draws: true, allow_disbanding: true,
+                              allow_round_draws: true, allow_disbanding: true,
                               min_players: 1, max_players: 3,
-                              points_per_set_won: 3, points_per_set_drawn: 2,
-                              points_per_set_lost: 1, points_per_match_forfeit_loss: 5,
+                              points_per_round_won: 3, points_per_round_drawn: 2,
+                              points_per_round_lost: 1, points_per_match_forfeit_loss: 5,
                               points_per_match_forfeit_win: 6,
                               divisions_attributes: [{ name: 'PREM' }] }
 
@@ -61,13 +61,13 @@ describe LeaguesController do
       expect(comp.roster_locked).to be(false)
       expect(comp.matches_submittable).to be(true)
       expect(comp.transfers_require_approval).to be(false)
-      expect(comp.allow_set_draws).to be(true)
+      expect(comp.allow_round_draws).to be(true)
       expect(comp.allow_disbanding).to be(true)
       expect(comp.min_players).to eq(1)
       expect(comp.max_players).to eq(3)
-      expect(comp.points_per_set_won).to eq(3)
-      expect(comp.points_per_set_drawn).to eq(2)
-      expect(comp.points_per_set_lost).to eq(1)
+      expect(comp.points_per_round_won).to eq(3)
+      expect(comp.points_per_round_drawn).to eq(2)
+      expect(comp.points_per_round_lost).to eq(1)
       expect(comp.points_per_match_forfeit_loss).to eq(5)
       expect(comp.points_per_match_forfeit_win).to eq(6)
       expect(comp.divisions.size).to eq(1)

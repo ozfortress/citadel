@@ -39,7 +39,7 @@ class League
       def can_draw
         return unless match.present? && match.home_team
 
-        if match_can_draw? && !league.allow_set_draws? && home_team_score == away_team_score
+        if match_can_draw? && !league.allow_round_draws? && home_team_score == away_team_score
           errors.add(:away_team_score, 'cannot be tied')
         end
       end

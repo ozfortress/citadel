@@ -17,7 +17,7 @@ describe League::Match::Round do
 
   it "doesn't allows rounds to draw when league doesn't allow it" do
     match = build(:league_match, status: :submitted_by_home_team)
-    match.league.allow_set_draws = false
+    match.league.allow_round_draws = false
 
     expect(build(:league_match_round, match: match, home_team_score: 2,
                                       away_team_score: 3)).to be_valid
@@ -31,7 +31,7 @@ describe League::Match::Round do
 
   it 'allows rounds to draw when league allows it' do
     match = build(:league_match, status: :submitted_by_away_team)
-    match.league.allow_set_draws = true
+    match.league.allow_round_draws = true
 
     expect(build(:league_match_round, match: match, home_team_score: 2,
                                       away_team_score: 3)).to be_valid

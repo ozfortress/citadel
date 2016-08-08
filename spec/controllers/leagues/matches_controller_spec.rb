@@ -387,7 +387,7 @@ describe Leagues::MatchesController do
     let!(:round) { create(:league_match_round, match: match) }
 
     before do
-      league.update!(allow_set_draws: false)
+      league.update!(allow_round_draws: false)
     end
 
     it 'succeeds for home team authorized user' do
