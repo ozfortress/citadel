@@ -26,7 +26,7 @@ module MatchSeeder
     def get_opts(home_team, away_team, options)
       match_options = options.merge(home_team: home_team, away_team: away_team)
 
-      match_options[:sets] = match_options[:sets].map(&:dup) if match_options.key? :sets
+      match_options[:rounds] = match_options[:rounds].map(&:dup) if match_options.key? :rounds
 
       match_options
     end

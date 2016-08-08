@@ -34,14 +34,14 @@ class UserPresenter < ActionPresenter::Base
     titles.join(', ')
   end
 
-  def transfer_listing(competition, options = {})
-    elements = [listing(options), roster_status(competition), transfer_status(competition)]
+  def transfer_listing(league, options = {})
+    elements = [listing(options), roster_status(league), transfer_status(league)]
     elements = elements.select { |e| !e.empty? }
     elements.join(', ').html_safe
   end
 
-  def roster_status(competition)
-    transfers = competition.players.where(user: user, approved: true)
+  def roster_status(league)
+    transfers = league.players.where(user: user, approved: true)
 
     if transfers.exists?
       roster = transfers.first.roster
@@ -51,8 +51,8 @@ class UserPresenter < ActionPresenter::Base
     end
   end
 
-  def transfer_status(competition)
-    transfers = competition.transfers.where(user: user, approved: false)
+  def transfer_status(league)
+    transfers = league.transfers.where(user: user, approved: false)
 
     if transfers.exists?
       present(transfers.first).transfer_message

@@ -9,7 +9,7 @@ class League
     has_many :comms, class_name: 'Match::Comm', dependent: :destroy
 
     validates :home_team, presence: true
-    validates :rounds, associated: true # Make *really* sure all sets are valid
+    validates :rounds, associated: true # Make *really* sure all rounds are valid
 
     enum status: [:pending, :submitted_by_home_team, :submitted_by_away_team, :confirmed]
     validates :status, presence: true
