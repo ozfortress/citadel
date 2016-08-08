@@ -3,16 +3,16 @@ require 'support/devise'
 require 'support/factory_girl'
 
 describe 'leagues/rosters/show' do
-  let(:roster) { create(:competition_roster) }
+  let(:roster) { create(:league_roster) }
 
   before do
     5.times do
-      create(:competition_match, home_team: roster)
+      create(:league_match, home_team: roster)
     end
   end
 
   it 'shows all data' do
-    assign(:competition, roster.competition)
+    assign(:league, roster.league)
     assign(:roster, roster)
 
     render

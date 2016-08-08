@@ -17,7 +17,7 @@ describe 'layouts/application' do
     let(:user) { create(:user) }
 
     before do
-      create_list(:notification, 10, user: user)
+      create_list(:user_notification, 10, user: user)
     end
 
     it 'displays username' do

@@ -1,16 +1,16 @@
-%h1= @competition.name
+%h1= @league.name
 
 %h4
-  - if @competition.signuppable?
-    Edit sign up for #{@roster.team.name}
+  - if @league.signuppable?
+    Edit sign up for #{@roster.name}
   - else
     Edit #{@roster.name}
 
 .panel.panel-default
   .panel-heading Info
   .panel-body
-    = bootstrap_form_for @roster,
-        url: league_roster_path(@competition, @roster) do |f|
+    = bootstrap_form_for @roster, as: :roster,
+        url: league_roster_path(@league, @roster) do |f|
 
       - if user_can_edit_league?
         = f.text_field :name
@@ -21,13 +21,13 @@
       = f.text_area :description, label: 'Tell us about your team', rows: 10
 
       = f.submit 'Update'
-      = link_to 'Cancel', league_roster_path(@competition, @roster), class: 'btn btn-default'
+      = link_to 'Cancel', league_roster_path(@league, @roster), class: 'btn btn-default'
 
 - if user_can_disband_roster? && !user_can_edit_league?
   .panel.panel-danger
     .panel-heading Danger Zone
     .panel-body
-      = button_to league_roster_path(@competition, @roster), method: :delete,
+      = button_to league_roster_path(@league, @roster), method: :delete,
                       class: 'btn btn-danger',
                       data: { confirm: roster_destroy_confirm } do
         %span.glyphicon.glyphicon-trash

@@ -1,5 +1,5 @@
 module AdminHelper
-  def competitions
-    Competition.all
+  def leagues
+    League.all
   end
 end

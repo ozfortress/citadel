@@ -3,11 +3,11 @@ require 'support/devise'
 require 'support/factory_girl'
 
 describe 'admin/index' do
-  context 'when competitions authorized' do
+  context 'when leagues authorized' do
     let(:user) { create(:user) }
 
     before do
-      user.grant(:edit, :competitions)
+      user.grant(:edit, :leagues)
     end
 
     it 'displays username' do

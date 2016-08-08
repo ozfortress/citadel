@@ -1,6 +1,6 @@
 %h2 For all your admin needs
 
-- if current_user.can?(:edit, :competitions)
+- if current_user.can?(:edit, :leagues)
   .panel.panel-default
     .panel-heading Leagues
     .panel-body
@@ -8,8 +8,8 @@
         %span.glyphicon.glyphicon-plus
         Create New League
     %ul.list-group
-      - competitions.each do |competition|
-        = link_to competition.name, league_path(competition), class: 'list-group-item'
+      - leagues.each do |league|
+        = link_to league.name, league_path(league), class: 'list-group-item'
 
 - if current_user.can?(:edit, :games)
   .panel.panel-default

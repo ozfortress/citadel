@@ -14,4 +14,4 @@ process = Map.create(game: tf2, name: 'cp_process_final', description: 'Best map
 # Import indexes to elasticsearch
 User.import force: true
 Team.import force: true
-Competition.import force: true
+League.import force: true

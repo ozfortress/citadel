@@ -5,12 +5,12 @@ require 'match_seeder/seeder'
 describe MatchSeeder::RoundRobin do
   context 'even number of teams' do
     before do
-      @div = create(:division)
-      @rosters = create_list(:competition_roster, 6, division: @div)
-      set = build(:competition_set)
+      @div = create(:league_division)
+      @rosters = create_list(:league_roster, 6, division: @div)
+      round = build(:league_match_round)
 
       5.times do
-        described_class.seed_round_for(@div.reload, sets: [set])
+        described_class.seed_round_for(@div.reload, rounds: [round])
       end
     end
 
@@ -29,12 +29,12 @@ describe MatchSeeder::RoundRobin do
 
   context 'odd number of teams' do
     before do
-      @div = create(:division)
-      @rosters = create_list(:competition_roster, 5, division: @div)
-      set = build(:competition_set)
+      @div = create(:league_division)
+      @rosters = create_list(:league_roster, 5, division: @div)
+      round = build(:league_match_round)
 
       5.times do
-        described_class.seed_round_for(@div.reload, sets: [set])
+        described_class.seed_round_for(@div.reload, rounds: [round])
       end
     end
 

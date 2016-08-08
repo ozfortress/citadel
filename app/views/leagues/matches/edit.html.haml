@@ -1,16 +1,16 @@
 .panel.panel-default
   .panel-heading Info
   .panel-body
-    = bootstrap_form_for @match, url: league_match_path(@competition, @match) do |f|
+    = bootstrap_form_for @match, as: :match, url: league_match_path(@league, @match) do |f|
       = render 'match_form', f: f, div: @match.division
 
       = f.submit 'Update'
-      = link_to 'Cancel', league_match_path(@competition, @match), class: 'btn btn-default'
+      = link_to 'Cancel', league_match_path(@league, @match), class: 'btn btn-default'
 
 .panel.panel-danger
   .panel-heading Danger Zone
   .panel-body
-    = button_to league_match_path(@competition, @match), method: :delete, class: 'btn btn-danger',
+    = button_to league_match_path(@league, @match), method: :delete, class: 'btn btn-danger',
                     data: { confirm: 'Are you sure you want to delete this Match?' } do
       %span.glyphicon.glyphicon-trash
       Delete

@@ -13,7 +13,7 @@ module Leagues
 
     def user_can_disband_roster?
       user_can_edit_league? || (user_can_edit_roster? &&
-        (@competition.allow_disbanding? || @competition.signuppable?))
+        (@league.allow_disbanding? || @league.signuppable?))
     end
   end
 end

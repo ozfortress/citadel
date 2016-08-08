@@ -1,5 +1,5 @@
 %ul.nav.nav-tabs
-  - @competition.divisions.each do |div|
+  - @league.divisions.each do |div|
     - klass = div == @division ? 'active' : ''
 
     %li{ class: klass }
@@ -7,19 +7,19 @@
         = div
 
 .tab-content
-  - @competition.divisions.each do |div|
+  - @league.divisions.each do |div|
     - klass = div == @division ? ' in active' : ''
 
     %div{ id: div.to_s.parameterize, class: 'tab-pane fade' + klass }
-      = bootstrap_form_for @match, url: generate_league_matches_path(@competition) do |f|
+      = bootstrap_form_for @match, as: :match, url: generate_league_matches_path(@league) do |f|
         = f.hidden_field :division_id, value: div.id
         .form-group
           %label.control-label Generator
-          = select_tag :generate_kind, generation_select, name: 'competition_match[generate_kind]',
+          = select_tag :generate_kind, generation_select, name: 'match[generate_kind]',
                                                           include_blank: false,
                                                           class: 'form-control'
 
         = render 'match_form', f: f, div: div, no_team_fields: true
 
         = f.submit 'Create Round'
-        = link_to 'Cancel', league_matches_path(@competition), class: 'btn btn-default'
+        = link_to 'Cancel', league_matches_path(@league), class: 'btn btn-default'

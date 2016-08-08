@@ -2,9 +2,9 @@ module Leagues
   class TransfersController < ApplicationController
     include LeaguePermissions
 
-    before_action { @competition = Competition.find(params[:league_id]) }
+    before_action { @league = League.find(params[:league_id]) }
     before_action except: [:index] do
-      @transfer = @competition.pending_transfers.find(params[:id])
+      @transfer = @league.pending_transfers.find(params[:id])
     end
 
     before_action :require_user_league_permission
@@ -25,7 +25,7 @@ module Leagues
     private
 
     def require_user_league_permission
-      redirect_to league_path(@competition) unless user_can_edit_league?
+      redirect_to league_path(@league) unless user_can_edit_league?
     end
   end
 end

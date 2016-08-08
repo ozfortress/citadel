@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'leagues/rosters/edit' do
-  let(:roster) { create(:competition_roster) }
+  let(:roster) { create(:league_roster) }
   let(:captain) { create(:user) }
   let(:admin) { create(:user) }
 
@@ -12,13 +12,13 @@ describe 'leagues/rosters/edit' do
 
   context 'signuppable league' do
     before do
-      roster.competition.update!(signuppable: true)
+      roster.league.update!(signuppable: true)
     end
 
     it 'displays form for captains' do
       sign_in captain
       assign(:roster, roster)
-      assign(:competition, roster.competition)
+      assign(:league, roster.league)
 
       render
     end
@@ -26,7 +26,7 @@ describe 'leagues/rosters/edit' do
     it 'displays form for admins' do
       sign_in admin
       assign(:roster, roster)
-      assign(:competition, roster.competition)
+      assign(:league, roster.league)
 
       render
     end
@@ -36,7 +36,7 @@ describe 'leagues/rosters/edit' do
     it 'displays form for captains' do
       sign_in captain
       assign(:roster, roster)
-      assign(:competition, roster.competition)
+      assign(:league, roster.league)
 
       render
     end
@@ -44,7 +44,7 @@ describe 'leagues/rosters/edit' do
     it 'displays form for admins' do
       sign_in admin
       assign(:roster, roster)
-      assign(:competition, roster.competition)
+      assign(:league, roster.league)
 
       render
     end

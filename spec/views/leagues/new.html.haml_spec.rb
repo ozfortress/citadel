@@ -4,7 +4,7 @@ require 'support/factory_girl'
 
 describe 'leagues/new' do
   it 'displays form' do
-    assign(:competition, Competition.new)
+    assign(:league, League.new)
 
     render
   end

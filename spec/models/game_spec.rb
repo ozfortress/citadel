@@ -6,7 +6,7 @@ describe Game do
   before { create(:game) }
 
   it { should have_many(:formats) }
-  it { should have_many(:competitions).through(:formats) }
+  it { should have_many(:leagues).through(:formats) }
 
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }

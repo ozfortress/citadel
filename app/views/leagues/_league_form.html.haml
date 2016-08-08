@@ -20,15 +20,15 @@
     = f.check_box :roster_locked
     = f.check_box :matches_submittable
     = f.check_box :transfers_require_approval
-    = f.check_box :allow_set_draws
+    = f.check_box :allow_round_draws, label: 'Allow round draws'
     = f.check_box :allow_disbanding
 
 .panel.panel-default
   .panel-heading Points
   .panel-body
-    = f.number_field :points_per_set_won
-    = f.number_field :points_per_set_drawn
-    = f.number_field :points_per_set_lost
+    = f.number_field :points_per_round_won, label: 'Points per set won'
+    = f.number_field :points_per_round_drawn, label: 'Points per set drawn'
+    = f.number_field :points_per_round_lost, label: 'Points per set lost'
     = f.number_field :points_per_match_forfeit_loss, label: 'Points per match lost by forfeit'
     = f.number_field :points_per_match_forfeit_win, label: 'Points per match won by forfeit'
 

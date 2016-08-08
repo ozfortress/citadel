@@ -3,10 +3,10 @@ require 'support/devise'
 require 'support/factory_girl'
 
 describe 'leagues/edit' do
-  let(:comp) { create(:competition) }
+  let(:league) { create(:league) }
 
   it 'displays form' do
-    assign(:competition, comp)
+    assign(:league, league)
 
     render
   end
