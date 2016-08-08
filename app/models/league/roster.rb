@@ -5,10 +5,8 @@ class League
     belongs_to :team
     belongs_to :division
     delegate :league, to: :division, allow_nil: true
-    has_many :transfers, -> { order(created_at: :desc) }, inverse_of: :roster,
-                                                          class_name: 'Transfer',
-                                                          foreign_key: 'roster_id',
-                                                          dependent: :destroy
+    has_many :transfers, -> { order(created_at: :desc) },
+             inverse_of: :roster, class_name: 'Transfer', dependent: :destroy
     accepts_nested_attributes_for :transfers
 
     has_many :home_team_matches, class_name: 'Match', foreign_key: 'home_team_id',
@@ -140,11 +138,9 @@ class League
     def calculate_sort_keys
       keys = [ranking || Float::INFINITY, -points]
 
-      league.tiebreakers.each do |tiebreaker|
-        keys << -tiebreaker.get_comparison(self)
-      end
+      tiebreaker_keys = league.tiebreakers.map { |tiebreaker| -tiebreaker.get_comparison(self) }
 
-      keys
+      keys + tiebreaker_keys
     end
 
     def calculate_points
