@@ -48,6 +48,15 @@ describe PermissionsController do
         get :users, action_: :edit, subject: :array, target: team.id
       end.to raise_error NoMethodError
     end
+
+    it 'fails for unauthorized user' do
+      team = create(:team)
+      sign_in users.first
+
+      get :users, action_: :edit, subject: :team, target: team.id
+
+      expect(response).to redirect_to(root_path)
+    end
   end
 
   describe 'POST #grant' do
