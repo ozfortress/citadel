@@ -46,10 +46,11 @@ module Leagues
       @division = @league.divisions.find(params.delete(:division_id))
       @kind = params.delete(:generate_kind)
 
-      if @division.seed_round_with(@kind, params)
+      matches = @division.seed_round_with(@kind, params)
+      @match = matches.first(&:invalid?)
+      if @match.valid?
         redirect_to league_matches_path(@league)
       else
-        @match = League::Match.new(params)
         render :generate
       end
     end

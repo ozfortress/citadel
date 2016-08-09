@@ -126,6 +126,18 @@ describe Leagues::MatchesController do
         expect(match.rounds.first.map).to eq(map)
       end
     end
+
+    it 'fails with invalid data' do
+      user.grant(:edit, league)
+      sign_in user
+
+      post :create_round, league_id: league.id, match: {
+        generate_kind: :swiss, division_id: div.id, round: -1
+      }
+
+      expect(league.matches).to be_empty
+      expect(response).to render_template(:generate)
+    end
   end
 
   describe 'GET #show' do
