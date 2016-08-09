@@ -1,4 +1,4 @@
-class Game < ActiveRecord::Base
+class Game < ApplicationRecord
   has_many :formats
   has_many :leagues, through: :formats
   has_many :maps

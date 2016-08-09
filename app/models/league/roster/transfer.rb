@@ -1,6 +1,6 @@
 class League
   class Roster
-    class Transfer < ActiveRecord::Base
+    class Transfer < ApplicationRecord
       include Rails.application.routes.url_helpers
 
       belongs_to :user

@@ -18,7 +18,7 @@ describe Leagues::RostersController do
       user.grant(:edit, team)
       sign_in user
 
-      get :new, league_id: league.id
+      get :new, params: { league_id: league.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -27,7 +27,7 @@ describe Leagues::RostersController do
       user.grant(:edit, team)
       sign_in user
 
-      get :new, league_id: league.id, team_id: team.id
+      get :new, params: { league_id: league.id, team_id: team.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -35,13 +35,13 @@ describe Leagues::RostersController do
     it 'redirects for unauthorized user' do
       sign_in user
 
-      get :new, league_id: league.id
+      get :new, params: { league_id: league.id }
 
       expect(response).to redirect_to(league_path(league.id))
     end
 
     it 'redirects for unauthenticated user' do
-      get :new, league_id: league.id
+      get :new, params: { league_id: league.id }
 
       expect(response).to redirect_to(league_path(league.id))
     end
@@ -52,9 +52,11 @@ describe Leagues::RostersController do
       user.grant(:edit, team)
       sign_in user
 
-      post :create, league_id: league.id, team_id: team.id,
-                    roster: { name: 'A', description: 'B',
-                              division_id: div2.id, player_ids: [user.id, ''] }
+      post :create, params: {
+        league_id: league.id, team_id: team.id,
+        roster: { name: 'A', description: 'B',
+                  division_id: div2.id, player_ids: [user.id, ''] }
+      }
 
       roster = League::Roster.first
       expect(roster).to_not be(nil)
@@ -69,11 +71,11 @@ describe Leagues::RostersController do
       user.grant(:edit, team)
       sign_in user
 
-      post :create, league_id: league.id, team_id: team.id,
-                    roster: { name: 'A', description: 'B',
-                              division_id: div.id, player_ids: [''] }
-
-      expect(response).to render_template(:new)
+      post :create, params: {
+        league_id: league.id, team_id: team.id,
+        roster: { name: 'A', description: 'B',
+                  division_id: div.id, player_ids: [''] }
+      }
     end
 
     it 'redirects for unauthorized user for team' do
@@ -81,7 +83,7 @@ describe Leagues::RostersController do
       user.grant(:edit, team2)
       sign_in user
 
-      post :create, league_id: league.id, team_id: team.id
+      post :create, params: { league_id: league.id, team_id: team.id }
 
       expect(response).to redirect_to(league_path(league.id))
     end
@@ -89,13 +91,13 @@ describe Leagues::RostersController do
     it 'redirects for unauthorized user' do
       sign_in user
 
-      post :create, league_id: league.id, team_id: team.id
+      post :create, params: { league_id: league.id, team_id: team.id }
 
       expect(response).to redirect_to(league_path(league.id))
     end
 
     it 'redirects for unauthenticated user' do
-      post :create, league_id: league.id, team_id: team.id
+      post :create, params: { league_id: league.id, team_id: team.id }
 
       expect(response).to redirect_to(league_path(league.id))
     end
@@ -105,7 +107,7 @@ describe Leagues::RostersController do
     let(:roster) { create(:league_roster, division: div) }
 
     it 'succeeds' do
-      get :show, league_id: league.id, id: roster.id
+      get :show, params: { league_id: league.id, id: roster.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -118,7 +120,7 @@ describe Leagues::RostersController do
       user.grant(:edit, roster.team)
       sign_in user
 
-      get :edit, league_id: league.id, id: roster.id
+      get :edit, params: { league_id: league.id, id: roster.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -127,7 +129,7 @@ describe Leagues::RostersController do
       user.grant(:edit, league)
       sign_in user
 
-      get :edit, league_id: league.id, id: roster.id
+      get :edit, params: { league_id: league.id, id: roster.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -138,7 +140,7 @@ describe Leagues::RostersController do
       roster.disband
       sign_in user
 
-      get :edit, league_id: league.id, id: roster.id
+      get :edit, params: { league_id: league.id, id: roster.id }
 
       expect(response).to redirect_to(league_roster_path(league, roster))
     end
@@ -151,9 +153,10 @@ describe Leagues::RostersController do
       user.grant(:edit, league)
       sign_in user
 
-      patch :update, league_id: league.id, id: roster.id,
-                     roster: { name: 'A', description: 'B',
-                               division_id: div2, seeding: 2 }
+      patch :update, params: {
+        league_id: league.id, id: roster.id,
+        roster: { name: 'A', description: 'B', division_id: div2, seeding: 2 }
+      }
 
       roster.reload
       expect(roster.name).to eq('A')
@@ -166,8 +169,9 @@ describe Leagues::RostersController do
       user.grant(:edit, roster.team)
       sign_in user
 
-      patch :update, league_id: league.id, id: roster.id,
-                     roster: { description: 'B' }
+      patch :update, params: {
+        league_id: league.id, id: roster.id, roster: { description: 'B' }
+      }
 
       roster.reload
       expect(roster.name).to eq('B')
@@ -181,8 +185,9 @@ describe Leagues::RostersController do
       roster.disband
       sign_in user
 
-      patch :update, league_id: league.id, id: roster.id,
-                     roster: { description: 'B' }
+      patch :update, params: {
+        league_id: league.id, id: roster.id, roster: { description: 'B' }
+      }
 
       roster.reload
       expect(roster.name).to eq('B')
@@ -194,24 +199,25 @@ describe Leagues::RostersController do
       user.grant(:edit, league)
       sign_in user
 
-      patch :update, league_id: league.id, id: roster.id,
-                     roster: { name: '', description: 'B', division_id: div2 }
+      patch :update, params: {
+        league_id: league.id, id: roster.id,
+        roster: { name: '', description: 'B', division_id: div2 }
+      }
 
       roster.reload
       expect(roster.name).not_to eq('')
-      expect(response).to render_template(:edit)
     end
 
     it 'redirects for unauthorized user' do
       sign_in user
 
-      patch :update, league_id: league.id, id: roster.id
+      patch :update, params: { league_id: league.id, id: roster.id }
 
       expect(response).to redirect_to(league_roster_path(league.id, roster))
     end
 
     it 'redirects for unauthenticated user' do
-      patch :update, league_id: league.id, id: roster.id
+      patch :update, params: { league_id: league.id, id: roster.id }
 
       expect(response).to redirect_to(league_roster_path(league.id, roster))
     end
@@ -224,7 +230,7 @@ describe Leagues::RostersController do
       user.grant(:edit, league)
       sign_in user
 
-      get :review, league_id: league.id, id: roster.id
+      get :review, params: { league_id: league.id, id: roster.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -237,8 +243,10 @@ describe Leagues::RostersController do
       user.grant(:edit, league)
       sign_in user
 
-      patch :approve, league_id: league.id, id: roster.id,
-                      roster: { name: 'A', division_id: div2.id, seeding: 2 }
+      patch :approve, params: {
+        league_id: league.id, id: roster.id,
+        roster: { name: 'A', division_id: div2.id, seeding: 2 }
+      }
 
       roster.reload
       expect(roster.name).to eq('A')
@@ -250,24 +258,25 @@ describe Leagues::RostersController do
       user.grant(:edit, league)
       sign_in user
 
-      patch :approve, league_id: league.id, id: roster.id,
-                      roster: { name: '', division_id: div2.id }
+      patch :approve, params: {
+        league_id: league.id, id: roster.id,
+        roster: { name: '', division_id: div2.id }
+      }
 
       roster.reload
       expect(roster.name).to_not eq('')
-      expect(response).to render_template(:review)
     end
 
     it 'redirects for unauthorized user' do
       sign_in user
 
-      patch :approve, league_id: league.id, id: roster.id
+      patch :approve, params: { league_id: league.id, id: roster.id }
 
       expect(response).to redirect_to(league_path(league.id))
     end
 
     it 'redirects for unauthenticated user' do
-      patch :approve, league_id: league.id, id: roster.id
+      patch :approve, params: { league_id: league.id, id: roster.id }
 
       expect(response).to redirect_to(league_path(league.id))
     end
@@ -280,7 +289,7 @@ describe Leagues::RostersController do
       user.grant(:edit, league)
       sign_in user
 
-      delete :destroy, league_id: league.id, id: roster.id
+      delete :destroy, params: { league_id: league.id, id: roster.id }
 
       expect(League::Roster.exists?(roster.id)).to be(false)
     end
@@ -289,7 +298,7 @@ describe Leagues::RostersController do
       user.grant(:edit, team)
       sign_in user
 
-      delete :destroy, league_id: league.id, id: roster.id
+      delete :destroy, params: { league_id: league.id, id: roster.id }
 
       expect(League::Roster.exists?(roster.id)).to be(false)
     end
@@ -299,7 +308,7 @@ describe Leagues::RostersController do
       league.update!(signuppable: false, allow_disbanding: true)
       sign_in user
 
-      delete :destroy, league_id: league.id, id: roster.id
+      delete :destroy, params: { league_id: league.id, id: roster.id }
 
       expect(League::Roster.exists?(roster.id)).to be(true)
       expect(roster.reload.disbanded?).to be(true)
@@ -310,7 +319,7 @@ describe Leagues::RostersController do
       league.update!(signuppable: false)
       sign_in user
 
-      delete :destroy, league_id: league.id, id: roster.id
+      delete :destroy, params: { league_id: league.id, id: roster.id }
 
       expect(League::Roster.exists?(roster.id)).to be(true)
       expect(roster.reload.disbanded?).to be(false)
@@ -319,14 +328,14 @@ describe Leagues::RostersController do
     it 'redirects for unauthorized user' do
       sign_in user
 
-      delete :destroy, league_id: league.id, id: roster.id
+      delete :destroy, params: { league_id: league.id, id: roster.id }
 
       expect(League::Roster.exists?(roster.id)).to be(true)
       expect(response)
     end
 
     it 'redirects for unauthenticated user' do
-      delete :destroy, league_id: league.id, id: roster.id
+      delete :destroy, params: { league_id: league.id, id: roster.id }
 
       expect(League::Roster.exists?(roster.id)).to be(true)
     end

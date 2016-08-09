@@ -1,16 +1,16 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.6'
+gem 'rails', '5.0.0'
 # Use postgres
 gem 'pg'
 # Active Record extensions
-gem 'active_record_union', '~> 1.1.1'
+gem 'active_record_union', '~> 1.2.0'
 # SASS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Compress JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails', '~> 4.2.0'
 # Presenter pattern
 gem 'action_presenter'
 # Easy styling

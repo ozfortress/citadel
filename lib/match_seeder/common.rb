@@ -3,7 +3,7 @@ module MatchSeeder
     extend self
 
     def get_roster_pool(target)
-      rosters = target.approved_rosters.order(:seeding, :created_at)
+      rosters = target.approved_rosters.order(:seeding, :created_at).to_a
       rosters << nil if rosters.size.odd?
       rosters.to_a
     end
@@ -18,7 +18,7 @@ module MatchSeeder
       end
 
       match_options = get_opts(home_team, away_team, options)
-      League::Match.create!(match_options)
+      League::Match.create(match_options)
     end
 
     private

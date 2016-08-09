@@ -1,6 +1,6 @@
 require 'elasticsearch/model'
 
-class League < ActiveRecord::Base
+class League < ApplicationRecord
   include Searchable
   include RosterPlayers
 

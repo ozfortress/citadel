@@ -1,5 +1,5 @@
 class Team
-  class Invite < ActiveRecord::Base
+  class Invite < ApplicationRecord
     include Rails.application.routes.url_helpers
 
     belongs_to :user

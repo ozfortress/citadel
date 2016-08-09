@@ -1,6 +1,6 @@
 module Users
   class NotificationsController < ApplicationController
-    before_action { redirect_to_back unless user_signed_in? }
+    before_action :require_login
     before_action { @notification = current_user.notifications.find(params[:id]) }
 
     def read

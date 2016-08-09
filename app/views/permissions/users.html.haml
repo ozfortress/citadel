@@ -13,7 +13,7 @@
         %li.list-group-item
           = present(user).listing
 
-          - url_params = params.merge(user_id: user.id)
+          - url_params = params.to_h.merge(user_id: user.id)
           - if user.can?(@action, target)
             .button-group.pull-right
               = button_to revoke_permissions_path(url_params), method: :delete,

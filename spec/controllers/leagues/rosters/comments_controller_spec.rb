@@ -11,8 +11,9 @@ describe Leagues::Rosters::CommentsController do
       user.grant(:edit, roster.league)
       sign_in user
 
-      post :create, league_id: roster.league.id, roster_id: roster.id,
-                    comment: { content: 'Foo' }
+      post :create, params: {
+        league_id: roster.league.id, roster_id: roster.id, comment: { content: 'Foo' }
+      }
 
       expect(roster.comments.size).to eq(1)
       comment = roster.comments.first
@@ -25,15 +26,17 @@ describe Leagues::Rosters::CommentsController do
       user.grant(:edit, roster.team)
       sign_in user
 
-      post :create, league_id: roster.league.id, roster_id: roster.id,
-                    comment: { content: 'Foo' }
+      post :create, params: {
+        league_id: roster.league.id, roster_id: roster.id, comment: { content: 'Foo' }
+      }
 
       expect(roster.comments).to be_empty
     end
 
     it 'fails for unauthenticated user' do
-      post :create, league_id: roster.league.id, roster_id: roster.id,
-                    comment: { content: 'Foo' }
+      post :create, params: {
+        league_id: roster.league.id, roster_id: roster.id, comment: { content: 'Foo' }
+      }
 
       expect(roster.comments).to be_empty
     end

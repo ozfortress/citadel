@@ -22,7 +22,7 @@ module Leagues
       end
 
       def require_league_permissions
-        redirect_to_back unless user_can_edit_league?
+        redirect_back(fallback_location: root_path) unless user_can_edit_league?
       end
     end
   end

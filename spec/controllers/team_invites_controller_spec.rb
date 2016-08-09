@@ -12,7 +12,7 @@ describe TeamInvitesController do
 
       sign_in user
       request.env['HTTP_REFERER'] = users_path
-      patch :accept, id: invite.id
+      patch :accept, params: { id: invite.id }
 
       expect(team.invited?(user)).to be(false)
       expect(team.on_roster?(user)).to be(true)
@@ -26,7 +26,7 @@ describe TeamInvitesController do
 
       sign_in user
       request.env['HTTP_REFERER'] = users_path
-      patch :decline, id: invite.id
+      patch :decline, params: { id: invite.id }
 
       expect(team.invited?(user)).to be(false)
       expect(team.on_roster?(user)).to be(false)
