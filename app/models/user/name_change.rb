@@ -1,5 +1,5 @@
 class User
-  class NameChange < ActiveRecord::Base
+  class NameChange < ApplicationRecord
     include Rails.application.routes.url_helpers
 
     belongs_to :user, autosave: true

@@ -1,6 +1,6 @@
 class League
   class Roster
-    class Comment < ActiveRecord::Base
+    class Comment < ApplicationRecord
       belongs_to :user
       belongs_to :roster, class_name: 'Roster'
 

@@ -61,7 +61,7 @@ class TeamsController < ApplicationController
     end
 
     @team.remove_player!(user) if @team.on_roster?(user)
-    redirect_to_back teams_path
+    redirect_back(fallback_location: teams_path)
   end
 
   def destroy

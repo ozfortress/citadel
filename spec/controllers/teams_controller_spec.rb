@@ -17,7 +17,7 @@ describe TeamsController do
     end
 
     it 'succeeds with search' do
-      get :index, q: 'foo'
+      get :index, params: { q: 'foo' }
 
       expect(response).to have_http_status(:success)
     end
@@ -36,7 +36,7 @@ describe TeamsController do
   describe 'POST #create' do
     it 'creates a team' do
       sign_in user
-      post :create, team: { name: 'A', description: 'B' }
+      post :create, params: { team: { name: 'A', description: 'B' } }
 
       team = Team.find_by(name: 'A')
       expect(team).to_not be_nil
@@ -49,9 +49,7 @@ describe TeamsController do
       create(:team, name: 'A')
 
       sign_in user
-      post :create, team: { name: 'A', description: 'B' }
-
-      expect(response).to render_template(:new)
+      post :create, params: { team: { name: 'A', description: 'B' } }
     end
   end
 
@@ -59,7 +57,7 @@ describe TeamsController do
     it 'succeeds' do
       team = create(:team)
 
-      get :show, id: team.id
+      get :show, params: { id: team.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -71,7 +69,7 @@ describe TeamsController do
       user.grant(:edit, team)
 
       sign_in user
-      get :edit, id: team.id
+      get :edit, params: { id: team.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -83,7 +81,7 @@ describe TeamsController do
       user.grant(:edit, team)
 
       sign_in user
-      patch :update, id: team.id, team: { name: 'C', description: 'D' }
+      patch :update, params: { id: team.id, team: { name: 'C', description: 'D' } }
 
       team = Team.find(team.id)
       expect(team.name).to eq('C')
@@ -99,7 +97,7 @@ describe TeamsController do
       user.grant(:edit, team)
 
       sign_in user
-      get :recruit, id: team.id
+      get :recruit, params: { id: team.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -112,7 +110,7 @@ describe TeamsController do
       user.grant(:edit, team)
 
       sign_in user
-      patch :invite, id: team.id, user_id: invited.id
+      patch :invite, params: { id: team.id, user_id: invited.id }
 
       invite = invited.team_invites.first
       expect(invite).to_not be_nil
@@ -129,7 +127,7 @@ describe TeamsController do
 
       sign_in user
       request.env['HTTP_REFERER'] = '/'
-      patch :leave, id: team.id
+      patch :leave, params: { id: team.id }
 
       expect(team.on_roster?(user)).to be(false)
       expect(team.invited?(user)).to be(false)
@@ -143,7 +141,7 @@ describe TeamsController do
 
       sign_in user
       request.env['HTTP_REFERER'] = '/'
-      patch :leave, id: team.id, user_id: player.id
+      patch :leave, params: { id: team.id, user_id: player.id }
 
       expect(team.on_roster?(player)).to be(false)
       expect(team.invited?(player)).to be(false)
@@ -165,7 +163,7 @@ describe TeamsController do
       user.grant(:edit, :teams)
       sign_in user
 
-      delete :destroy, id: team.id
+      delete :destroy, params: { id: team.id }
 
       expect(Team.all).to be_empty
     end
@@ -174,7 +172,7 @@ describe TeamsController do
       invited.grant(:edit, team)
       sign_in invited
 
-      delete :destroy, id: team.id
+      delete :destroy, params: { id: team.id }
 
       expect(Team.all).to be_empty
     end
@@ -182,7 +180,7 @@ describe TeamsController do
     it 'fails for unauthorized user' do
       sign_in user
 
-      delete :destroy, id: team.id
+      delete :destroy, params: { id: team.id }
 
       expect(Team.where(id: team.id)).to exist
     end

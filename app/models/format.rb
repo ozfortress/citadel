@@ -1,4 +1,4 @@
-class Format < ActiveRecord::Base
+class Format < ApplicationRecord
   belongs_to :game
   has_many   :leagues
 

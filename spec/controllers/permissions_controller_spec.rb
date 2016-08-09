@@ -26,7 +26,7 @@ describe PermissionsController do
     it 'succeeds for authorized user' do
       sign_in admin
 
-      get :users, action_: :edit, subject: :users
+      get :users, params: { action_: :edit, subject: :users }
 
       expect(response).to have_http_status(:success)
     end
@@ -35,7 +35,7 @@ describe PermissionsController do
       team = create(:team)
       sign_in admin
 
-      get :users, action_: :edit, subject: :team, target: team.id
+      get :users, params: { action_: :edit, subject: :team, target: team.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -45,7 +45,7 @@ describe PermissionsController do
       sign_in admin
 
       expect do
-        get :users, action_: :edit, subject: :array, target: team.id
+        get :users, params: { action_: :edit, subject: :array, target: team.id }
       end.to raise_error NoMethodError
     end
 
@@ -53,9 +53,9 @@ describe PermissionsController do
       team = create(:team)
       sign_in users.first
 
-      get :users, action_: :edit, subject: :team, target: team.id
+      get :users, params: { action_: :edit, subject: :team, target: team.id }
 
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(permissions_path)
     end
   end
 
@@ -63,7 +63,7 @@ describe PermissionsController do
     it 'succeeds for authorized user' do
       sign_in admin
 
-      post :grant, action_: :edit, subject: :users, user_id: user.id
+      post :grant, params: { action_: :edit, subject: :users, user_id: user.id }
 
       expect(user.can?(:edit, :users)).to be(true)
     end
@@ -72,7 +72,8 @@ describe PermissionsController do
       team = create(:team)
       sign_in admin
 
-      post :grant, action_: :edit, subject: :team, target: team.id, user_id: user.id
+      post :grant, params: { action_: :edit, subject: :team,
+                             target: team.id, user_id: user.id }
 
       expect(user.can?(:edit, team)).to be(true)
     end
@@ -83,7 +84,7 @@ describe PermissionsController do
       user.grant(:edit, :users)
       sign_in admin
 
-      delete :revoke, action_: :edit, subject: :users, user_id: user.id
+      delete :revoke, params: { action_: :edit, subject: :users, user_id: user.id }
 
       expect(user.can?(:edit, :users)).to be(false)
     end
@@ -93,7 +94,8 @@ describe PermissionsController do
       user.grant(:edit, team)
       sign_in admin
 
-      delete :revoke, action_: :edit, subject: :team, target: team.id, user_id: user.id
+      delete :revoke, params: { action_: :edit, subject: :team,
+                                target: team.id, user_id: user.id }
 
       expect(user.can?(:edit, team)).to be(false)
     end

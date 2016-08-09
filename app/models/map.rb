@@ -1,4 +1,4 @@
-class Map < ActiveRecord::Base
+class Map < ApplicationRecord
   belongs_to :game
 
   validates :game, presence: true

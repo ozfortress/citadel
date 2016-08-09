@@ -1,5 +1,5 @@
 class League
-  class Tiebreaker < ActiveRecord::Base
+  class Tiebreaker < ApplicationRecord
     belongs_to :league
 
     enum kind: [:round_wins, :round_score_difference, :round_wins_against_tied_rosters,

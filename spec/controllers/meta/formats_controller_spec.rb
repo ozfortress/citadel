@@ -32,8 +32,9 @@ describe Meta::FormatsController do
     it 'succeeds for authorized user' do
       sign_in admin
 
-      post :create, format_: { game_id: game.id, player_count: 3,
-                               name: 'Foo', description: 'Bar' }
+      post :create, params: {
+        format_: { game_id: game.id, player_count: 3, name: 'Foo', description: 'Bar' }
+      }
 
       format = Format.first
       expect(format.game).to eq(game)
@@ -49,7 +50,7 @@ describe Meta::FormatsController do
     let(:format) { create(:format, game: game) }
 
     it 'succeeds' do
-      get :show, id: format.id
+      get :show, params: { id: format.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -61,7 +62,7 @@ describe Meta::FormatsController do
     it 'succeeds for authorized user' do
       sign_in admin
 
-      get :edit, id: format.id
+      get :edit, params: { id: format.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -74,8 +75,10 @@ describe Meta::FormatsController do
     it 'succeeds for authorized user' do
       sign_in admin
 
-      patch :update, id: format.id, format_: { game_id: game2.id, player_count: 1,
-                                               name: 'A', description: 'B' }
+      patch :update, params: {
+        id: format.id, format_: { game_id: game2.id, player_count: 1,
+                                  name: 'A', description: 'B' }
+      }
 
       format = Format.first
       expect(format.game).to eq(game2)

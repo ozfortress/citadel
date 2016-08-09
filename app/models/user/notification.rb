@@ -1,5 +1,5 @@
 class User
-  class Notification < ActiveRecord::Base
+  class Notification < ApplicationRecord
     belongs_to :user
 
     validates :user, presence: true

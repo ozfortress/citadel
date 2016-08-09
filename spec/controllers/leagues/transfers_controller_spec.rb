@@ -15,7 +15,7 @@ describe Leagues::TransfersController do
       user.grant(:edit, league)
       sign_in user
 
-      get :index, league_id: league.id
+      get :index, params: { league_id: league.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -23,13 +23,13 @@ describe Leagues::TransfersController do
     it 'fails for unauthorized user' do
       sign_in user
 
-      get :index, league_id: league.id
+      get :index, params: { league_id: league.id }
 
       expect(response).to redirect_to(league_path(league))
     end
 
     it 'fails for unauthenticated user' do
-      get :index, league_id: league.id
+      get :index, params: { league_id: league.id }
 
       expect(response).to redirect_to(league_path(league))
     end
@@ -40,7 +40,7 @@ describe Leagues::TransfersController do
       user.grant(:edit, league)
       sign_in user
 
-      patch :update, league_id: league.id, id: transfer.id
+      patch :update, params: { league_id: league.id, id: transfer.id }
 
       expect(roster.on_roster?(player)).to be(true)
       expect(league.pending_transfer?(player)).to be(false)
@@ -49,7 +49,7 @@ describe Leagues::TransfersController do
     it 'fails for unauthorized user' do
       sign_in user
 
-      patch :update, league_id: league.id, id: transfer.id
+      patch :update, params: { league_id: league.id, id: transfer.id }
 
       expect(roster.on_roster?(player)).to be(false)
       expect(league.pending_transfer?(player)).to be(true)
@@ -61,7 +61,7 @@ describe Leagues::TransfersController do
       user.grant(:edit, league)
       sign_in user
 
-      delete :destroy, league_id: league.id, id: transfer.id
+      delete :destroy, params: { league_id: league.id, id: transfer.id }
 
       expect(roster.on_roster?(player)).to be(false)
       expect(league.pending_transfer?(player)).to be(false)
@@ -70,7 +70,7 @@ describe Leagues::TransfersController do
     it 'fails for unauthorized user' do
       sign_in user
 
-      delete :destroy, league_id: league.id, id: transfer.id
+      delete :destroy, params: { league_id: league.id, id: transfer.id }
 
       expect(roster.on_roster?(player)).to be(false)
       expect(league.pending_transfer?(player)).to be(true)

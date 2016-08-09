@@ -19,7 +19,7 @@ describe Leagues::Rosters::TransfersController do
       user.grant(:edit, roster.team)
       sign_in user
 
-      get :show, league_id: roster.league.id, roster_id: roster.id
+      get :show, params: { league_id: roster.league.id, roster_id: roster.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -28,7 +28,7 @@ describe Leagues::Rosters::TransfersController do
       user.grant(:edit, roster.league)
       sign_in user
 
-      get :show, league_id: roster.league.id, roster_id: roster.id
+      get :show, params: { league_id: roster.league.id, roster_id: roster.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -38,7 +38,7 @@ describe Leagues::Rosters::TransfersController do
       roster.league.update!(roster_locked: true)
       sign_in user
 
-      get :show, league_id: roster.league.id, roster_id: roster.id
+      get :show, params: { league_id: roster.league.id, roster_id: roster.id }
 
       expect(response).to redirect_to(league_roster_path(roster.league, roster))
     end
@@ -46,7 +46,7 @@ describe Leagues::Rosters::TransfersController do
     it 'redirects for unauthorized user' do
       sign_in user
 
-      get :show, league_id: roster.league.id, roster_id: roster.id
+      get :show, params: { league_id: roster.league.id, roster_id: roster.id }
 
       expect(response).to redirect_to(league_roster_path(roster.league, roster))
     end
@@ -57,8 +57,10 @@ describe Leagues::Rosters::TransfersController do
       user.grant(:edit, roster.team)
       sign_in user
 
-      post :create, league_id: roster.league.id, roster_id: roster.id,
-                    transfer: { user_id: bencher.id, is_joining: true }
+      post :create, params: {
+        league_id: roster.league.id, roster_id: roster.id,
+        transfer: { user_id: bencher.id, is_joining: true }
+      }
 
       expect(roster.on_roster?(bencher)).to be(false)
       expect(roster.league.pending_transfer?(bencher)).to be(true)
@@ -69,8 +71,10 @@ describe Leagues::Rosters::TransfersController do
       roster.league.update!(transfers_require_approval: false)
       sign_in user
 
-      post :create, league_id: roster.league.id, roster_id: roster.id,
-                    transfer: { user_id: bencher.id, is_joining: true }
+      post :create, params: {
+        league_id: roster.league.id, roster_id: roster.id,
+        transfer: { user_id: bencher.id, is_joining: true }
+      }
 
       expect(roster.on_roster?(bencher)).to be(true)
       expect(roster.league.pending_transfer?(bencher)).to be(false)
@@ -81,8 +85,10 @@ describe Leagues::Rosters::TransfersController do
       roster.league.update!(roster_locked: true)
       sign_in user
 
-      post :create, league_id: roster.league.id, roster_id: roster.id,
-                    transfer: { user_id: bencher.id, is_joining: true }
+      post :create, params: {
+        league_id: roster.league.id, roster_id: roster.id,
+        transfer: { user_id: bencher.id, is_joining: true }
+      }
 
       expect(roster.on_roster?(bencher)).to be(false)
       expect(roster.league.pending_transfer?(bencher)).to be(false)
@@ -92,8 +98,10 @@ describe Leagues::Rosters::TransfersController do
       user.grant(:edit, roster.team)
       sign_in user
 
-      post :create, league_id: roster.league.id, roster_id: roster.id,
-                    transfer: { user_id: bencher.id, is_joining: false }
+      post :create, params: {
+        league_id: roster.league.id, roster_id: roster.id,
+        transfer: { user_id: bencher.id, is_joining: false }
+      }
 
       expect(roster.on_roster?(bencher)).to be(false)
       expect(roster.league.pending_transfer?(bencher)).to be(false)

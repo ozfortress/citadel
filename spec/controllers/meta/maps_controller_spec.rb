@@ -32,8 +32,7 @@ describe Meta::MapsController do
     it 'succeeds for authorized user' do
       sign_in admin
 
-      post :create, map: { game_id: game.id,
-                           name: 'Foo', description: 'Bar' }
+      post :create, params: { map: { game_id: game.id, name: 'Foo', description: 'Bar' } }
 
       map = Map.first
       expect(map.game).to eq(game)
@@ -48,7 +47,7 @@ describe Meta::MapsController do
     let(:map) { create(:map, game: game) }
 
     it 'succeeds' do
-      get :show, id: map.id
+      get :show, params: { id: map.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -60,7 +59,7 @@ describe Meta::MapsController do
     it 'succeeds for authorized user' do
       sign_in admin
 
-      get :edit, id: map.id
+      get :edit, params: { id: map.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -73,8 +72,9 @@ describe Meta::MapsController do
     it 'succeeds for authorized user' do
       sign_in admin
 
-      patch :update, id: map.id, map: { game_id: game2.id,
-                                        name: 'A', description: 'B' }
+      patch :update, params: {
+        id: map.id, map: { game_id: game2.id, name: 'A', description: 'B' }
+      }
 
       map = Map.first
       expect(map.game).to eq(game2)

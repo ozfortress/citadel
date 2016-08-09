@@ -17,7 +17,7 @@ module Users
     end
 
     def failure
-      redirect_to_back
+      redirect_back(fallback_location: root_path)
     end
   end
 end
