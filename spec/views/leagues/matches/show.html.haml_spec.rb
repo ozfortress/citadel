@@ -45,6 +45,17 @@ describe 'leagues/matches/show' do
     end
   end
 
+  context 'BYE match' do
+    let(:match) { create(:bye_league_match) }
+
+    it 'displays' do
+      assign(:league, match.league)
+      assign(:match, match)
+
+      render
+    end
+  end
+
   context 'standard match' do
     let(:match) { create(:league_match) }
     let(:user) { create(:user) }

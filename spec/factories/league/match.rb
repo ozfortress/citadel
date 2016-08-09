@@ -18,10 +18,10 @@ FactoryGirl.define do
     end
   end
 
-  factory :bye_match, class: League::Match do
+  factory :bye_league_match, class: League::Match do
     status :pending
     away_team nil
-    round 1
+    round nil
 
     after(:build) do |match, _|
       div = if match.home_team

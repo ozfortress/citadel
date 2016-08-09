@@ -48,7 +48,7 @@ describe League::Match do
     home_team = create(:league_roster)
     home_team.player_users.each { |user| user.notifications.destroy_all }
 
-    create(:bye_match, home_team: home_team)
+    create(:bye_league_match, home_team: home_team)
 
     home_team.player_users.each do |user|
       expect(user.notifications).to_not be_empty
