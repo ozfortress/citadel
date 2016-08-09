@@ -1,6 +1,6 @@
 require 'elasticsearch/model'
 
-class Team < ActiveRecord::Base
+class Team < ApplicationRecord
   include Searchable
   include RosterMixin
 
@@ -41,7 +41,7 @@ class Team < ActiveRecord::Base
     if rosters.exists?
       errors.add(:id, 'can only destroy teams without any rosters')
 
-      return false
+      throw(:abort)
     end
   end
 end

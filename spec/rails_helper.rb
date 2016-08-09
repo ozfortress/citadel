@@ -58,4 +58,7 @@ RSpec.configure do |config|
 
   # RSpec doesn't respect helper hierarchy
   config.include ApplicationHelper, file_path: %r{spec/views}
+
+  # Include url helpers
+  config.include Rails.application.routes.url_helpers
 end

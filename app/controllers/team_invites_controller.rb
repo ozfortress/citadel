@@ -3,12 +3,12 @@ class TeamInvitesController < ApplicationController
 
   def accept
     @invite.accept
-    redirect_to_back
+    redirect_back
   end
 
   def decline
     @invite.decline
-    redirect_to_back
+    redirect_back
   end
 
   private
@@ -16,5 +16,9 @@ class TeamInvitesController < ApplicationController
   def require_invited
     redirect_to :root unless user_signed_in?
     @invite = current_user.team_invites.find(params[:id])
+  end
+
+  def redirect_back
+    super(fallback_location: user_path(current_user))
   end
 end

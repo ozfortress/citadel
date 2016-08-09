@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 
   def create
     steam_data = session['devise.steam_data']
-    @user = User.new(new_user_params.update(steam_id: steam_data['uid']))
+    @user = User.new(new_user_params.merge(steam_id: steam_data['uid']))
 
     if @user.save
       @user.names.create!(name: @user.name, approved_by: @user)
@@ -69,7 +69,8 @@ class UsersController < ApplicationController
 
   def logout
     sign_out current_user
-    redirect_to_back
+
+    redirect_back(fallback_location: root_path)
   end
 
   private

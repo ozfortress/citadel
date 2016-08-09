@@ -1,6 +1,6 @@
 class League
   class Match
-    class Comm < ActiveRecord::Base
+    class Comm < ApplicationRecord
       include Rails.application.routes.url_helpers
 
       belongs_to :user

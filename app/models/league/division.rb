@@ -1,7 +1,7 @@
 require 'match_seeder/seeder'
 
 class League
-  class Division < ActiveRecord::Base
+  class Division < ApplicationRecord
     include MatchSeeder
 
     belongs_to :league

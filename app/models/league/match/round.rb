@@ -2,7 +2,7 @@ require 'validators/reduce_validator'
 
 class League
   class Match
-    class Round < ActiveRecord::Base
+    class Round < ApplicationRecord
       belongs_to :match, class_name: 'Match'
       belongs_to :map
 

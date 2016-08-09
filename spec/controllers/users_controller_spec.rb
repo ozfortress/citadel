@@ -14,7 +14,7 @@ describe UsersController do
     end
 
     it 'succeeds with search' do
-      get :index, q: 'foo'
+      get :index, params: { q: 'foo' }
 
       expect(response).to have_http_status(:success)
     end
@@ -36,7 +36,7 @@ describe UsersController do
     it 'creates a user' do
       session['devise.steam_data'] = OmniAuth.mock_auth_hash
 
-      post :create, user: { name: 'A', description: 'B' }
+      post :create, params: { user: { name: 'A', description: 'B' } }
 
       user = User.find_by(name: 'A')
       expect(user).to_not be_nil
@@ -47,9 +47,7 @@ describe UsersController do
       user = create(:user, steam_id: 123)
       session['devise.steam_data'] = OmniAuth.mock_auth_hash(steam_id: 456)
 
-      post :create, user: { name: user.name, description: 'B' }
-
-      expect(response).to render_template(:new)
+      post :create, params: { user: { name: user.name, description: 'B' } }
     end
   end
 
@@ -57,7 +55,7 @@ describe UsersController do
     let(:user) { create(:user) }
 
     it 'succeeds' do
-      get :show, id: user.id
+      get :show, params: { id: user.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -69,7 +67,7 @@ describe UsersController do
     it 'succeeds' do
       sign_in user
 
-      get :edit, id: user.id
+      get :edit, params: { id: user.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -80,7 +78,7 @@ describe UsersController do
     it 'updates a user' do
       sign_in user
 
-      patch :update, id: user.id, user: { description: 'D' }
+      patch :update, params: { id: user.id, user: { description: 'D' } }
 
       usr = User.find(user.id)
       expect(usr).to_not be_nil
@@ -122,7 +120,7 @@ describe UsersController do
       sign_in user
       expect(user.pending_names.size).to eq(0)
 
-      post :request_name_change, id: user.id, name_change: { name: 'B' }
+      post :request_name_change, params: { id: user.id, name_change: { name: 'B' } }
 
       expect(user.pending_names.size).to eq(1)
       name_change = user.pending_names.first
@@ -134,7 +132,7 @@ describe UsersController do
     it 'fails for identical name' do
       sign_in user
 
-      post :request_name_change, id: user.id, name_change: { name: 'A' }
+      post :request_name_change, params: { id: user.id, name_change: { name: 'A' } }
 
       expect(user.pending_names.size).to eq(0)
     end
@@ -143,7 +141,7 @@ describe UsersController do
       create(:user_name_change, user: user, name: 'B')
       sign_in user
 
-      post :request_name_change, id: user.id, name_change: { name: 'C' }
+      post :request_name_change, params: { id: user.id, name_change: { name: 'C' } }
 
       expect(user.pending_names.size).to eq(1)
     end
@@ -158,7 +156,9 @@ describe UsersController do
     it 'accepts name changes' do
       sign_in admin
 
-      patch :handle_name_change, user_id: user.id, id: name_change.id, approve: 'true'
+      patch :handle_name_change, params: {
+        user_id: user.id, id: name_change.id, approve: 'true'
+      }
 
       usr = User.find(user.id)
       expect(usr.name).to eq('B')
@@ -169,7 +169,9 @@ describe UsersController do
     it 'denies name changes' do
       sign_in admin
 
-      patch :handle_name_change, user_id: user.id, id: name_change.id, approve: 'false'
+      patch :handle_name_change, params: {
+        user_id: user.id, id: name_change.id, approve: 'false'
+      }
 
       expect(user.name).to eq('A')
       expect(user.pending_names.size).to eq(0)

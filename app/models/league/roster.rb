@@ -1,5 +1,5 @@
 class League
-  class Roster < ActiveRecord::Base
+  class Roster < ApplicationRecord
     include ::RosterMixin
 
     belongs_to :team

@@ -3,7 +3,7 @@ require 'elasticsearch/model'
 require 'auth'
 require 'steam_id'
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   include Transfers
   include Searchable
   include Auth::Model

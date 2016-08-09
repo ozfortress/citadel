@@ -1,5 +1,5 @@
 class User
-  class Title < ActiveRecord::Base
+  class Title < ApplicationRecord
     belongs_to :user
     belongs_to :league
     belongs_to :roster, class_name: 'League::Roster'

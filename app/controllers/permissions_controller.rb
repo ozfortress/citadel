@@ -25,22 +25,26 @@ class PermissionsController < ApplicationController
 
   def grant
     @user.grant(@action, target)
-    redirect_to_back
+    redirect_back
   end
 
   def revoke
     @user.revoke(@action, target)
-    redirect_to_back
+    redirect_back
   end
 
   private
 
   def require_permission
-    redirect_to_back unless current_user.can?(:edit, :permissions) ||
-                            current_user.can?(@action, target)
+    redirect_back unless current_user.can?(:edit, :permissions) ||
+                         current_user.can?(@action, target)
   end
 
   def ensure_valid_target
-    redirect_to_back if subject? && ![:team].include?(@subject)
+    redirect_back if subject? && ![:team].include?(@subject)
+  end
+
+  def redirect_back
+    super(fallback_location: permissions_path)
   end
 end

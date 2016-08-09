@@ -31,7 +31,7 @@ describe Meta::GamesController do
     it 'succeeds for authorized user' do
       sign_in admin
 
-      post :create, game: { name: 'Bar' }
+      post :create, params: { game: { name: 'Bar' } }
 
       game = Game.first
       expect(game.name).to eq('Bar')
@@ -44,7 +44,7 @@ describe Meta::GamesController do
     let(:game) { create(:game) }
 
     it 'succeeds' do
-      get :show, id: game.id
+      get :show, params: { id: game.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -56,7 +56,7 @@ describe Meta::GamesController do
     it 'succeeds for authorized user' do
       sign_in admin
 
-      get :edit, id: game.id
+      get :edit, params: { id: game.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -68,7 +68,7 @@ describe Meta::GamesController do
     it 'succeeds for authorized user' do
       sign_in admin
 
-      patch :update, id: game.id, game: { name: 'A' }
+      patch :update, params: { id: game.id, game: { name: 'A' } }
 
       game = Game.first
       expect(game.name).to eq('A')

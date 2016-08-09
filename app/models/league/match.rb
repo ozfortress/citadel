@@ -1,5 +1,5 @@
 class League
-  class Match < ActiveRecord::Base
+  class Match < ApplicationRecord
     include Rails.application.routes.url_helpers
 
     belongs_to :home_team, class_name: 'Roster'
