@@ -127,8 +127,9 @@ describe League::Roster::Transfer do
 
     it "doesn't allow transfers out when roster is too small" do
       user = roster.players.first.user
+      transfer = build(:league_roster_transfer, roster: roster, is_joining: false, user: user)
 
-      expect(build(:league_roster_transfer, roster: roster, is_joining: false, user: user)).to be_invalid
+      expect(transfer).to be_invalid
     end
 
     it "doesn't allow transfers in when roster is too large" do
