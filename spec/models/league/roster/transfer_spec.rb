@@ -105,6 +105,7 @@ describe League::Roster::Transfer do
     end
 
     it 'allows a player to transfer between rosters' do
+      roster.add_player!(user, approved: true)
       roster2 = create(:league_roster, division: div2)
       roster2.team.add_player!(user)
 
@@ -117,6 +118,22 @@ describe League::Roster::Transfer do
     end
 
     include_examples 'common'
+  end
+
+  context 'roster in tiny league' do
+    let(:league) { create(:league, min_players: 1, max_players: 1) }
+    let(:div) { create(:league_division, league: league) }
+    let(:roster) { create(:league_roster, division: div, player_count: 1) }
+
+    it "doesn't allow transfers out when roster is too small" do
+      user = roster.players.first.user
+
+      expect(build(:league_roster_transfer, roster: roster, is_joining: false, user: user)).to be_invalid
+    end
+
+    it "doesn't allow transfers in when roster is too large" do
+      expect(build(:league_roster_transfer, roster: roster, is_joining: true)).to be_invalid
+    end
   end
 
   it 'notifies player on creation for joining' do
