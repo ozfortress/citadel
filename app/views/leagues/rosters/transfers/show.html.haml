@@ -11,7 +11,7 @@
   %ul.list-group
     - present_collection(@roster.player_users).each do |user|
       %li.list-group-item
-        = form_for(@transfer, method: :post,
+        = form_for(@transfer, as: :transfer, method: :post,
                               url: league_roster_transfers_path(@league, @roster)) do |f|
           = f.hidden_field :user_id, value: user.id
           = f.hidden_field :is_joining, value: false
@@ -27,7 +27,7 @@
   %ul.list-group
     - present_collection(@roster.users_off_roster).each do |user|
       %li.list-group-item
-        = form_for(@transfer, method: :post,
+        = form_for(@transfer, as: :transfer, method: :post,
                               url: league_roster_transfers_path(@league, @roster)) do |f|
           = f.hidden_field :user_id, value: user.id
           = f.hidden_field :is_joining, value: true
