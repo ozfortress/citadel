@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,70 +10,78 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808090417) do
+ActiveRecord::Schema.define(version: 20160810055559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "action_user_edit_games", force: :cascade do |t|
     t.integer "user_id"
+    t.index ["user_id"], name: "index_action_user_edit_games_on_user_id", using: :btree
   end
-
-  add_index "action_user_edit_games", ["user_id"], name: "index_action_user_edit_games_on_user_id", using: :btree
 
   create_table "action_user_edit_league", force: :cascade do |t|
     t.integer "user_id"
     t.integer "league_id"
+    t.index ["league_id"], name: "index_action_user_edit_league_on_league_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_edit_league_on_user_id", using: :btree
   end
-
-  add_index "action_user_edit_league", ["league_id"], name: "index_action_user_edit_league_on_league_id", using: :btree
-  add_index "action_user_edit_league", ["user_id"], name: "index_action_user_edit_league_on_user_id", using: :btree
 
   create_table "action_user_edit_leagues", force: :cascade do |t|
     t.integer "user_id"
+    t.index ["user_id"], name: "index_action_user_edit_leagues_on_user_id", using: :btree
   end
-
-  add_index "action_user_edit_leagues", ["user_id"], name: "index_action_user_edit_leagues_on_user_id", using: :btree
 
   create_table "action_user_edit_permissions", force: :cascade do |t|
     t.integer "user_id"
+    t.index ["user_id"], name: "index_action_user_edit_permissions_on_user_id", using: :btree
   end
-
-  add_index "action_user_edit_permissions", ["user_id"], name: "index_action_user_edit_permissions_on_user_id", using: :btree
 
   create_table "action_user_edit_team", force: :cascade do |t|
     t.integer "user_id"
     t.integer "team_id"
+    t.index ["team_id"], name: "index_action_user_edit_team_on_team_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_edit_team_on_user_id", using: :btree
   end
-
-  add_index "action_user_edit_team", ["team_id"], name: "index_action_user_edit_team_on_team_id", using: :btree
-  add_index "action_user_edit_team", ["user_id"], name: "index_action_user_edit_team_on_user_id", using: :btree
 
   create_table "action_user_edit_teams", force: :cascade do |t|
     t.integer "user_id"
+    t.index ["user_id"], name: "index_action_user_edit_teams_on_user_id", using: :btree
   end
-
-  add_index "action_user_edit_teams", ["user_id"], name: "index_action_user_edit_teams_on_user_id", using: :btree
 
   create_table "action_user_edit_users", force: :cascade do |t|
     t.integer "user_id"
+    t.index ["user_id"], name: "index_action_user_edit_users_on_user_id", using: :btree
   end
-
-  add_index "action_user_edit_users", ["user_id"], name: "index_action_user_edit_users_on_user_id", using: :btree
 
   create_table "action_user_manage_rosters_league", force: :cascade do |t|
     t.integer "user_id"
     t.integer "league_id"
+    t.index ["league_id"], name: "index_action_user_manage_rosters_league_on_league_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_manage_rosters_league_on_user_id", using: :btree
   end
-
-  add_index "action_user_manage_rosters_league", ["league_id"], name: "index_action_user_manage_rosters_league_on_league_id", using: :btree
-  add_index "action_user_manage_rosters_league", ["user_id"], name: "index_action_user_manage_rosters_league_on_user_id", using: :btree
 
   create_table "action_user_manage_rosters_leagues", force: :cascade do |t|
     t.integer "user_id"
+    t.index ["user_id"], name: "index_action_user_manage_rosters_leagues_on_user_id", using: :btree
   end
 
-  add_index "action_user_manage_rosters_leagues", ["user_id"], name: "index_action_user_manage_rosters_leagues_on_user_id", using: :btree
+  create_table "ahoy_events", force: :cascade do |t|
+    t.integer  "visit_id"
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "method"
+    t.string   "ip"
+    t.string   "uri"
+    t.json     "properties"
+    t.datetime "time"
+    t.index ["ip"], name: "index_ahoy_events_on_ip", using: :btree
+    t.index ["method"], name: "index_ahoy_events_on_method", using: :btree
+    t.index ["name", "time"], name: "index_ahoy_events_on_name_and_time", using: :btree
+    t.index ["uri"], name: "index_ahoy_events_on_uri", using: :btree
+    t.index ["user_id", "name"], name: "index_ahoy_events_on_user_id_and_name", using: :btree
+    t.index ["visit_id", "name"], name: "index_ahoy_events_on_visit_id_and_name", using: :btree
+  end
 
   create_table "formats", force: :cascade do |t|
     t.integer  "game_id"
@@ -83,27 +90,24 @@ ActiveRecord::Schema.define(version: 20160808090417) do
     t.integer  "player_count", null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["game_id"], name: "index_formats_on_game_id", using: :btree
+    t.index ["name"], name: "index_formats_on_name", unique: true, using: :btree
   end
-
-  add_index "formats", ["game_id"], name: "index_formats_on_game_id", using: :btree
-  add_index "formats", ["name"], name: "index_formats_on_name", unique: true, using: :btree
 
   create_table "games", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_games_on_name", unique: true, using: :btree
   end
-
-  add_index "games", ["name"], name: "index_games_on_name", unique: true, using: :btree
 
   create_table "league_divisions", force: :cascade do |t|
     t.integer  "league_id"
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["league_id"], name: "index_league_divisions_on_league_id", using: :btree
   end
-
-  add_index "league_divisions", ["league_id"], name: "index_league_divisions_on_league_id", using: :btree
 
   create_table "league_match_comms", force: :cascade do |t|
     t.integer  "match_id"
@@ -111,10 +115,9 @@ ActiveRecord::Schema.define(version: 20160808090417) do
     t.text     "content",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_league_match_comms_on_match_id", using: :btree
+    t.index ["user_id"], name: "index_league_match_comms_on_user_id", using: :btree
   end
-
-  add_index "league_match_comms", ["match_id"], name: "index_league_match_comms_on_match_id", using: :btree
-  add_index "league_match_comms", ["user_id"], name: "index_league_match_comms_on_user_id", using: :btree
 
   create_table "league_match_rounds", force: :cascade do |t|
     t.integer  "match_id"
@@ -123,10 +126,9 @@ ActiveRecord::Schema.define(version: 20160808090417) do
     t.integer  "away_team_score", null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index ["map_id"], name: "index_league_match_rounds_on_map_id", using: :btree
+    t.index ["match_id"], name: "index_league_match_rounds_on_match_id", using: :btree
   end
-
-  add_index "league_match_rounds", ["map_id"], name: "index_league_match_rounds_on_map_id", using: :btree
-  add_index "league_match_rounds", ["match_id"], name: "index_league_match_rounds_on_match_id", using: :btree
 
   create_table "league_matches", force: :cascade do |t|
     t.integer  "home_team_id"
@@ -136,10 +138,9 @@ ActiveRecord::Schema.define(version: 20160808090417) do
     t.datetime "updated_at",               null: false
     t.integer  "forfeit_by",   default: 0, null: false
     t.integer  "round"
+    t.index ["away_team_id"], name: "index_league_matches_on_away_team_id", using: :btree
+    t.index ["home_team_id"], name: "index_league_matches_on_home_team_id", using: :btree
   end
-
-  add_index "league_matches", ["away_team_id"], name: "index_league_matches_on_away_team_id", using: :btree
-  add_index "league_matches", ["home_team_id"], name: "index_league_matches_on_home_team_id", using: :btree
 
   create_table "league_roster_comments", force: :cascade do |t|
     t.integer  "roster_id",  null: false
@@ -147,10 +148,9 @@ ActiveRecord::Schema.define(version: 20160808090417) do
     t.text     "content",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["roster_id"], name: "index_league_roster_comments_on_roster_id", using: :btree
+    t.index ["user_id"], name: "index_league_roster_comments_on_user_id", using: :btree
   end
-
-  add_index "league_roster_comments", ["roster_id"], name: "index_league_roster_comments_on_roster_id", using: :btree
-  add_index "league_roster_comments", ["user_id"], name: "index_league_roster_comments_on_user_id", using: :btree
 
   create_table "league_roster_transfers", force: :cascade do |t|
     t.integer  "roster_id",                  null: false
@@ -159,10 +159,9 @@ ActiveRecord::Schema.define(version: 20160808090417) do
     t.boolean  "approved",   default: false, null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.index ["roster_id"], name: "index_league_roster_transfers_on_roster_id", using: :btree
+    t.index ["user_id"], name: "index_league_roster_transfers_on_user_id", using: :btree
   end
-
-  add_index "league_roster_transfers", ["roster_id"], name: "index_league_roster_transfers_on_roster_id", using: :btree
-  add_index "league_roster_transfers", ["user_id"], name: "index_league_roster_transfers_on_user_id", using: :btree
 
   create_table "league_rosters", force: :cascade do |t|
     t.integer  "team_id",                                    null: false
@@ -182,17 +181,15 @@ ActiveRecord::Schema.define(version: 20160808090417) do
     t.integer  "forfeit_lost_matches_count", default: 0,     null: false
     t.integer  "points",                     default: 0,     null: false
     t.integer  "total_scores",               default: 0,     null: false
+    t.index ["division_id"], name: "index_league_rosters_on_division_id", using: :btree
+    t.index ["team_id"], name: "index_league_rosters_on_team_id", using: :btree
   end
-
-  add_index "league_rosters", ["division_id"], name: "index_league_rosters_on_division_id", using: :btree
-  add_index "league_rosters", ["team_id"], name: "index_league_rosters_on_team_id", using: :btree
 
   create_table "league_tiebreakers", force: :cascade do |t|
     t.integer "league_id"
     t.integer "kind",      null: false
+    t.index ["league_id"], name: "index_league_tiebreakers_on_league_id", using: :btree
   end
-
-  add_index "league_tiebreakers", ["league_id"], name: "index_league_tiebreakers_on_league_id", using: :btree
 
   create_table "leagues", force: :cascade do |t|
     t.integer  "format_id"
@@ -215,9 +212,8 @@ ActiveRecord::Schema.define(version: 20160808090417) do
     t.boolean  "allow_disbanding",              default: false, null: false
     t.integer  "status",                        default: 0,     null: false
     t.integer  "rosters_count",                 default: 0,     null: false
+    t.index ["format_id"], name: "index_leagues_on_format_id", using: :btree
   end
-
-  add_index "leagues", ["format_id"], name: "index_leagues_on_format_id", using: :btree
 
   create_table "maps", force: :cascade do |t|
     t.integer  "game_id"
@@ -225,19 +221,17 @@ ActiveRecord::Schema.define(version: 20160808090417) do
     t.text     "description", null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["game_id"], name: "index_maps_on_game_id", using: :btree
   end
-
-  add_index "maps", ["game_id"], name: "index_maps_on_game_id", using: :btree
 
   create_table "team_invites", force: :cascade do |t|
     t.integer  "team_id"
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_team_invites_on_team_id", using: :btree
+    t.index ["user_id"], name: "index_team_invites_on_user_id", using: :btree
   end
-
-  add_index "team_invites", ["team_id"], name: "index_team_invites_on_team_id", using: :btree
-  add_index "team_invites", ["user_id"], name: "index_team_invites_on_user_id", using: :btree
 
   create_table "team_transfers", force: :cascade do |t|
     t.integer  "user_id"
@@ -245,10 +239,9 @@ ActiveRecord::Schema.define(version: 20160808090417) do
     t.boolean  "is_joining", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_team_transfers_on_team_id", using: :btree
+    t.index ["user_id"], name: "index_team_transfers_on_user_id", using: :btree
   end
-
-  add_index "team_transfers", ["team_id"], name: "index_team_transfers_on_team_id", using: :btree
-  add_index "team_transfers", ["user_id"], name: "index_team_transfers_on_user_id", using: :btree
 
   create_table "teams", force: :cascade do |t|
     t.string   "name",        null: false
@@ -256,9 +249,8 @@ ActiveRecord::Schema.define(version: 20160808090417) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "avatar"
+    t.index ["name"], name: "index_teams_on_name", unique: true, using: :btree
   end
-
-  add_index "teams", ["name"], name: "index_teams_on_name", unique: true, using: :btree
 
   create_table "user_name_changes", force: :cascade do |t|
     t.integer  "user_id"
@@ -267,11 +259,10 @@ ActiveRecord::Schema.define(version: 20160808090417) do
     t.string   "name"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.index ["approved_by_id"], name: "index_user_name_changes_on_approved_by_id", using: :btree
+    t.index ["denied_by_id"], name: "index_user_name_changes_on_denied_by_id", using: :btree
+    t.index ["user_id"], name: "index_user_name_changes_on_user_id", using: :btree
   end
-
-  add_index "user_name_changes", ["approved_by_id"], name: "index_user_name_changes_on_approved_by_id", using: :btree
-  add_index "user_name_changes", ["denied_by_id"], name: "index_user_name_changes_on_denied_by_id", using: :btree
-  add_index "user_name_changes", ["user_id"], name: "index_user_name_changes_on_user_id", using: :btree
 
   create_table "user_notifications", force: :cascade do |t|
     t.integer  "user_id",                    null: false
@@ -280,9 +271,8 @@ ActiveRecord::Schema.define(version: 20160808090417) do
     t.string   "link",                       null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.index ["user_id"], name: "index_user_notifications_on_user_id", using: :btree
   end
-
-  add_index "user_notifications", ["user_id"], name: "index_user_notifications_on_user_id", using: :btree
 
   create_table "user_titles", force: :cascade do |t|
     t.integer  "user_id"
@@ -292,30 +282,59 @@ ActiveRecord::Schema.define(version: 20160808090417) do
     t.string   "badge"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["league_id"], name: "index_user_titles_on_league_id", using: :btree
+    t.index ["roster_id"], name: "index_user_titles_on_roster_id", using: :btree
+    t.index ["user_id"], name: "index_user_titles_on_user_id", using: :btree
   end
 
-  add_index "user_titles", ["league_id"], name: "index_user_titles_on_league_id", using: :btree
-  add_index "user_titles", ["roster_id"], name: "index_user_titles_on_roster_id", using: :btree
-  add_index "user_titles", ["user_id"], name: "index_user_titles_on_user_id", using: :btree
-
   create_table "users", force: :cascade do |t|
-    t.string   "name",                                       null: false
-    t.integer  "steam_id",            limit: 8,              null: false
+    t.string   "name",                             null: false
+    t.bigint   "steam_id",                         null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                 default: 0,  null: false
+    t.integer  "sign_in_count",       default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
-    t.text     "description",                   default: "", null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.text     "description",         default: "", null: false
     t.string   "remember_token"
     t.string   "avatar"
+    t.index ["name"], name: "index_users_on_name", unique: true, using: :btree
+    t.index ["steam_id"], name: "index_users_on_steam_id", unique: true, using: :btree
   end
 
-  add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
-  add_index "users", ["steam_id"], name: "index_users_on_steam_id", unique: true, using: :btree
+  create_table "visits", force: :cascade do |t|
+    t.string   "visit_token"
+    t.string   "visitor_token"
+    t.string   "ip"
+    t.text     "user_agent"
+    t.text     "referrer"
+    t.text     "landing_page"
+    t.integer  "user_id"
+    t.string   "referring_domain"
+    t.string   "search_keyword"
+    t.string   "browser"
+    t.string   "os"
+    t.string   "device_type"
+    t.integer  "screen_height"
+    t.integer  "screen_width"
+    t.string   "country"
+    t.string   "region"
+    t.string   "city"
+    t.string   "postal_code"
+    t.decimal  "latitude"
+    t.decimal  "longitude"
+    t.string   "utm_source"
+    t.string   "utm_medium"
+    t.string   "utm_term"
+    t.string   "utm_content"
+    t.string   "utm_campaign"
+    t.datetime "started_at"
+    t.index ["user_id"], name: "index_visits_on_user_id", using: :btree
+    t.index ["visit_token"], name: "index_visits_on_visit_token", unique: true, using: :btree
+  end
 
   add_foreign_key "action_user_edit_games", "users"
   add_foreign_key "action_user_edit_league", "leagues"

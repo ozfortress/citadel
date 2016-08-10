@@ -49,6 +49,8 @@ gem 'letsencrypt_plugin'
 # So lock it to the latest working version until letsencrypt updates
 gem 'acme-client', '0.3.1'
 gem 'json-jwt', '1.5.2'
+# Tracking and analytics
+gem 'ahoy_matey'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
