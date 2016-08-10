@@ -17,7 +17,7 @@ Open Source, Web-based league system designed for games such as Team Fortress 2.
 
 You will need:
 
-* Ruby 2.2
+* Ruby 2.3.1
 * Bundler
 * Postgres (configured in `config/database.yml`)
 * Elasticsearch
