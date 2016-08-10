@@ -13,8 +13,7 @@ module Ahoy
       return all if query.blank?
 
       where('ip = ? OR uri = ? OR method = ? OR ahoy_events.name = ? OR users.name = ?',
-          query, query, query, query, query,
-        ).joins(:user)
+            query, query, query, query, query).joins(:user)
     end
   end
 end

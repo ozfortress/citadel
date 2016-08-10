@@ -6,7 +6,7 @@ class AdminController < ApplicationController
 
   def logs
     timeframe = 4.hours
-    events_in_timeframe = Ahoy::Event.where(time: timeframe.ago..Time.now)
+    events_in_timeframe = Ahoy::Event.where(time: timeframe.ago..Time.current)
     @events_per_second = events_in_timeframe.count / timeframe.to_f
     @users_count = User.count
     @teams_count = Team.count
