@@ -39,6 +39,7 @@
     - present_collection(@team.player_users).each do |user|
       %li.list-group-item
         = user.listing
+        = user.titles team: @team
 
         - if user == current_user
           .button-group.pull-right

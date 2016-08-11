@@ -3,48 +3,76 @@
     Settings
     %span.glyphicon.glyphicon-cog
 
-.clearfix
-  = image_tag @user.avatar.icon.url, class: 'pull-left thumbnail' if @user.avatar?
+//////////////// BANNER ////////////////
+.col-md-12
 
-  %h2 #{@user.name}'s Profile
+  /.clearfix
+  %p.spaced-letters.player-profile-text
+    = link_to :users do
+      Users
+    > #{@user.name}'s profile
+    %i.glyphicon.glyphicon-user.icon-small
 
-  %p
-    [#{link_to @user.steam_id_nice, @user.steam_profile_url, target: '_blank'}]
+  .panel.group-header
+    .row
+      %div.col-fixed-50
+        - if @user.avatar?
+          = image_tag @user.avatar.icon.url, class: 'group-avatar'
+        - else
+          = image_tag 'icon_missing_user.png', class: 'group-avatar'
 
-    - unless @user.aka.empty?
-      %i aka #{@user.aka.limit(5).map(&:name).join(', ')}
+      %div.col-md-12.col-xs-12.col-offset-50.group-title
+        %h2.spaced-letters
+          = @user.name
+
+        - if not @user.aka.empty?
+          %p.group-aka aka #{@user.aka.limit(5).map(&:name).join(', ')}
+        - else
+          %p.group-aka &nbsp;
+
+        #{link_to 'View Steam Profile', @user.steam_profile_url, target: '_blank'}
+
+  //////////////// STEAMID64 ////////////////
+  %p.steam64
+    #{link_to @user.steam_id_nice, @user.steam_profile_url, target: '_blank'}
 
 .row!= present_collection(@user.titles.for_roster).map(&:icon).join(' ')
 .row!= present_collection(@user.titles.for_league).map(&:icon).join(' ')
 .row!= present_collection(@user.titles.general).map(&:icon).join(' ')
 
-.panel.panel-default
-  .panel-heading Description
-  .panel-body= markdown @user.description
+//////////////// DESCRIPTION ////////////////
+.col-md-12
+  .panel.panel-default
+    .panel-heading Description
+    .panel-body= markdown @user.description
 
-.panel.panel-default
-  .panel-heading Teams
-  %ul.list-group
-    - @user.teams.each do |team|
-      %li.list-group-item
-        = link_to team.name, team_path(team)
-        - if current_user?
-          .button-group.pull-right
-            = button_to leave_team_path(team), method: :patch, class: 'btn btn-danger' do
-              Leave
-              %span.glyphicon.glyphicon-remove
+//////////////// TEAMS ////////////////
+.col-md-12
+  .panel.panel-default
+    .panel-heading Teams
+    %ul.list-group
+      - @user.teams.each do |team|
+        %li.list-group-item
+          = link_to team.name, team_path(team)
+          - if current_user?
+            .button-group.pull-right
+              = button_to leave_team_path(team), method: :patch, class: 'btn btn-danger' do
+                Leave
+                %span.glyphicon.glyphicon-remove
 
-.panel.panel-default
-  .panel-heading Transfers
-  %ul.list-group
-    - @user.team_transfers.includes(:team).each do |transfer|
-      %li.list-group-item
-        - if transfer.is_joining?
-          joined
-        - else
-          left
-        = link_to transfer.team, team_path(transfer.team)
-        on #{transfer.created_at.strftime('%c')}
+//////////////// TRANSFERS ////////////////
+.col-md-12
+  .panel.panel-default
+    .panel-heading Transfers
+    %ul.list-group
+      - @user.team_transfers.includes(:team).each do |transfer|
+        %li.list-group-item
+          - if transfer.is_joining?
+            joined
+          - else
+            left
+          = link_to transfer.team, team_path(transfer.team)
+          on #{transfer.created_at.strftime('%c')}
 
 - if current_user?
   .panel.panel-default
@@ -55,35 +83,37 @@
         %li.list-group-item
           = match.link
 
-.panel.panel-default
-  .panel-heading Leagues
-  %ul.list-group
-    - rosters = @user.rosters.includes(division: :league)
-    - present_collection(rosters).each do |roster|
-      - unless roster.league.hidden?
-        %li.list-group-item
-          - league_link = link_to roster.league, league_path(roster.league)
-          - if roster.league.signuppable?
-            signed up to #{league_link} with #{roster.link}
-          - else
-            playing in #{league_link} with #{roster.link}
-
-- if current_user? && !@user.team_invites.empty?
+//////////////// LEAGUES ////////////////
+.col-md-12
   .panel.panel-default
-    .panel-heading Team Invites
-    .panel-body
-      %ul.list-group
-        - @user.team_invites.each do |invite|
+    .panel-heading Leagues
+    %ul.list-group
+      - rosters = @user.rosters.includes(division: :league)
+      - present_collection(rosters).each do |roster|
+        - unless roster.league.hidden?
           %li.list-group-item
-            You have been invited to join
-            = link_to invite.team, team_path(invite.team)
-            .button-group.pull-right
-              = button_to decline_team_invite_path(invite),
-                          method: :patch, class: 'btn btn-danger' do
-                Decline
-                %span.glyphicon.glyphicon-remove
-            .button-group.pull-right
-              = button_to accept_team_invite_path(invite),
-                          method: :patch, class: 'btn btn-success' do
-                Accept
-                %span.glyphicon.glyphicon-ok
+            - league_link = link_to roster.league, league_path(roster.league)
+            - if roster.league.signuppable?
+              signed up to #{league_link} with #{roster.link}
+            - else
+              playing in #{league_link} with #{roster.link}
+
+  - if current_user? && !@user.team_invites.empty?
+    .panel.panel-default
+      .panel-heading Team Invites
+      .panel-body
+        %ul.list-group
+          - @user.team_invites.each do |invite|
+            %li.list-group-item
+              You have been invited to join
+              = link_to invite.team, team_path(invite.team)
+              .button-group.pull-right
+                = button_to decline_team_invite_path(invite),
+                            method: :patch, class: 'btn btn-danger' do
+                  Decline
+                  %span.glyphicon.glyphicon-remove
+              .button-group.pull-right
+                = button_to accept_team_invite_path(invite),
+                            method: :patch, class: 'btn btn-success' do
+                  Accept
+                  %span.glyphicon.glyphicon-ok
