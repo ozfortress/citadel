@@ -1,16 +1,40 @@
-%h1 Users
+.col-md-12
+  %p.spaced-letters.player-profile-text
+    = link_to :users do
+      Users
 
-.row
-  .col-sm-3.col-md-3.pull-right
-    = render 'search'
+  .panel.borderless
+    .row
+      %h2.spaced-header
+        All Users
 
-.panel.panel-default
-  - if @users.empty?
-    .panel-body No users found...
-  - else
-    %ul.list-group
-      - present_collection(@users).each do |user|
-        %li.list-group-item
-          = user.listing
+      .col-sm-3.col-md-3.pull-right
+        = render 'search'
+
+  .panel.panel-default
+
+
+    - if @users.empty?
+      .panel-body No users found...
+
+    - else
+      %ul.list-group
+        - present_collection(@users).each do |user|
+          %li.list-group-item.user-row
+
+            %div.row.slim-gutter
+
+              %div.col-fixed-50
+                = user.avatar_link
+
+              %div.col-md-12.col-xs-12.user-details
+                %div.row.slim-gutter
+                  = user.link
+                  = user.titles
+
+                %div.row.slim-gutter
+                  %span.steam-link= user.steam_id_nice
+
+            //= user.listing
 
 = bootstrap_paginate @users
