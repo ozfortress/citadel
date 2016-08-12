@@ -16,10 +16,7 @@
   .panel.group-header
     .row
       %div.col-fixed-50
-        - if @user.avatar?
-          = image_tag @user.avatar.icon.url, class: 'group-avatar'
-        - else
-          = image_tag 'icon_missing_user.png', class: 'group-avatar'
+        = image_tag @user.avatar.icon.url, class: 'group-avatar'
 
       %div.col-md-12.col-xs-12.col-offset-50.group-title
         %h2.spaced-letters

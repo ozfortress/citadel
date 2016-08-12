@@ -11,14 +11,7 @@ class UserPresenter < ActionPresenter::Base
   end
 
   def avatar_link
-    html = ''.html_safe
-    if user.avatar?
-      html += image_tag(user.avatar.thumb.url, class: 'avatar center-block')
-    else
-      html += image_tag('thumb_missing_user.png', class: 'avatar center-block')
-    end
-
-    html
+    image_tag(user.avatar.thumb.url, class: 'avatar center-block')
   end
 
   def steam_link

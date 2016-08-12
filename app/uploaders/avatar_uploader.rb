@@ -3,10 +3,10 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   storage :file
 
-  # Provide a default URL as a default if there hasn't been a file uploaded:
-  # def default_url
-  #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
-  # end
+  def default_url
+    model_name = model.model_name.singular
+    'fallback/' + [version_name, model_name, 'avatar_default.png'].compact.join('_')
+  end
 
   process resize_to_fit: [200, 200]
 
