@@ -3,8 +3,8 @@ class BadgeUploader < CarrierWave::Uploader::Base
 
   storage :file
 
-  def default_url(*)
-    [version_name, 'default_badge.png'].compact.join('_')
+  def default_url
+    'fallback/' + [version_name, 'default_badge.png'].compact.join('_')
   end
 
   process resize_to_fit: [64, 64]
