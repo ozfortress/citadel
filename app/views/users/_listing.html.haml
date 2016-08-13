@@ -1,0 +1,12 @@
+- user = present(user)
+
+.row.slim-gutter
+  .col-fixed-50
+    = user.avatar_link
+
+  .user-details
+    .row.slim-gutter
+      = user.link
+      = user.titles team: local_assigns[:team]
+      %br
+      %span.steam-link= user.steam_id_nice

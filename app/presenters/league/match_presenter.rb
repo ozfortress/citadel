@@ -26,8 +26,8 @@ class League
       home_players = object.home_team.player_users
       away_players = object.away_team.player_users
       [home_players.length, away_players.length].max.times do |i|
-        home_player = present(home_players[i]) if i < home_players.length
-        away_player = present(away_players[i]) if i < away_players.length
+        home_player = home_players[i] if i < home_players.length
+        away_player = away_players[i] if i < away_players.length
 
         yield(home_player, away_player)
       end

@@ -41,17 +41,16 @@ signed up on #{@roster.created_at.strftime('%c')}
                 class: 'btn btn-default pull-right' do
         Manage
   %ul.list-group
-    - present_collection(@roster.player_users).each do |user|
+    - @roster.player_users.each do |user|
       %li.list-group-item
-        = user.listing team: @roster.team
+        = render 'users/listing', user: user, team: @roster.team
 
 .panel.panel-default
   .panel-heading Transfers
   %ul.list-group
     - @roster.approved_transfers.each do |transfer|
       %li.list-group-item
-        - present(transfer.user) do |user|
-          = user.listing titles: false
+        = present(transfer.user).link
         - if transfer.is_joining?
           joined the team
         - else
@@ -72,7 +71,7 @@ signed up on #{@roster.created_at.strftime('%c')}
         %li.list-group-item
           .panel.panel-default
             .panel-heading
-              = present(comment.user).listing
+              = render 'users/listing', user: comment.user
               .pull-right= comment.created_at.strftime('%c')
 
           = markdown comment.content

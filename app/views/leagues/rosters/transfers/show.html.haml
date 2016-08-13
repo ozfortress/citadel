@@ -4,12 +4,12 @@
     - present(@transfer.user) do |user|
       .alert.alert-danger
         %span.glyphicon.glyphicon-warning-sign
-        #{user.listing(titles: false)} #{error}
+        #{user.link} #{error}
 
 .panel.panel-default
   .panel-heading On Roster
   %ul.list-group
-    - present_collection(@roster.player_users).each do |user|
+    - @roster.player_users.each do |user|
       %li.list-group-item
         = form_for(@transfer, as: :transfer, method: :post,
                               url: league_roster_transfers_path(@league, @roster)) do |f|
@@ -20,12 +20,12 @@
             Remove
             %span.glyphicon.glyphicon-remove
 
-        = user.listing team: @roster.team
+        = render 'users/listing', user: user, team: @roster.team
 
 .panel.panel-default
   .panel-heading Off Roster
   %ul.list-group
-    - present_collection(@roster.users_off_roster).each do |user|
+    - @roster.users_off_roster.each do |user|
       %li.list-group-item
         = form_for(@transfer, as: :transfer, method: :post,
                               url: league_roster_transfers_path(@league, @roster)) do |f|
@@ -36,4 +36,5 @@
             Add
             %span.glyphicon.glyphicon-remove
 
-        = user.transfer_listing @league, team: @roster.team
+        = render 'users/listing', user: user, team: @roster.team
+        = present(user).league_status(@league)
