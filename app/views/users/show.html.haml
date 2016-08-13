@@ -15,7 +15,7 @@
       - unless @user.aka.empty?
         %p.group-aka aka #{@user.aka.limit(5).map(&:name).join(', ')}
 
-%p.steam64= link_to @user.steam_id_nice, @user.steam_profile_url, target: '_blank'
+%p.steam64= present(@user).steam_link
 
 .row!= present_collection(@user.titles.for_roster).map(&:icon).join(' ')
 .row!= present_collection(@user.titles.for_league).map(&:icon).join(' ')
