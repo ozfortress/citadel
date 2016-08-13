@@ -8,14 +8,15 @@
   - if @users.empty?
     .panel-body No users found...
   - else
+    - url_params = { action_: @action, subject: @subject, target: target }
     %ul.list-group
       - @users.each do |user|
         %li.list-group-item
-          - url_params = params.to_h.merge(user_id: user.id)
+          - url_params = url_params.merge(user_id: user.id)
           - if user.can?(@action, target)
             .button-group.pull-right
               = button_to revoke_permissions_path(url_params), method: :delete,
-                                                              class: 'btn btn-danger' do
+                                                               class: 'btn btn-danger' do
                 Revoke
           - else
             .button-group.pull-right
