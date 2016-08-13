@@ -11,8 +11,6 @@
     %ul.list-group
       - @users.each do |user|
         %li.list-group-item
-          = render 'users/listing', user: user
-
           - url_params = params.to_h.merge(user_id: user.id)
           - if user.can?(@action, target)
             .button-group.pull-right
@@ -25,5 +23,6 @@
                                                               class: 'btn btn-success' do
                 Grant
 
+          = render 'users/listing', user: user
 
 = bootstrap_paginate @users
