@@ -428,7 +428,6 @@ DEPENDENCIES
   json-jwt (= 1.5.2)
   letsencrypt_plugin
   mini_magick
-  minitest
   momentjs-rails (>= 2.9.0)
   omniauth-steam
   pg
