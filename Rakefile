@@ -25,6 +25,7 @@ begin
     analyzer.output
   end
 
+  Rake::Task['test'].clear # Rails puts minitest on the test task automatically
   task test: %w(rspec rubocop reek haml_lint rbp)
   task default: [:rubocop, :haml_lint, :rbp]
 rescue LoadError

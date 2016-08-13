@@ -3,16 +3,19 @@
     Settings
     %span.glyphicon.glyphicon-cog
 
-.clearfix
-  = image_tag @user.avatar.icon.url, class: 'pull-left thumbnail' if @user.avatar?
+.panel.group-header
+  .row
+    .col-fixed-50
+      = image_tag @user.avatar.icon.url, class: 'group-avatar'
 
-  %h2 #{@user.name}'s Profile
+    .col-offset-50.group-title
+      %h2.spaced-letters
+        = @user.name
 
-  %p
-    [#{link_to @user.steam_id_nice, @user.steam_profile_url, target: '_blank'}]
+      - unless @user.aka.empty?
+        %p.group-aka aka #{@user.aka.limit(5).map(&:name).join(', ')}
 
-    - unless @user.aka.empty?
-      %i aka #{@user.aka.limit(5).map(&:name).join(', ')}
+%p.steam64= present(@user).steam_link
 
 .row!= present_collection(@user.titles.for_roster).map(&:icon).join(' ')
 .row!= present_collection(@user.titles.for_league).map(&:icon).join(' ')

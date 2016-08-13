@@ -3,41 +3,40 @@ class UserPresenter < ActionPresenter::Base
 
   delegate :id, to: :user
   delegate :name, to: :user
-  delegate :==, to: :user
+  delegate :steam_id_nice, to: :user
 
   def link(label = nil)
     label ||= user.name
     link_to(label, user_path(user))
   end
 
-  def steam_link
-    link_to(user.steam_id_nice, user.steam_profile_url, target: '_blank')
+  def avatar_link
+    image_tag(user.avatar.thumb.url, class: 'avatar center-block')
   end
 
-  def listing(options = {})
-    html = ''.html_safe
-    html += image_tag(user.avatar.thumb.url) if user.avatar?
-    html += link
-    html += " [#{steam_link}]".html_safe unless options[:steam] == false
-    html += "<sub>#{titles(options)}</sub>".html_safe unless options[:titles] == false
-
-    html
+  def steam_link
+    link_to(user.steam_id_nice, user.steam_profile_url, target: '_blank')
   end
 
   def titles(options = {})
     team = options[:team]
 
-    titles = []
-    titles << 'captain' if team && user.can?(:edit, team)
-    titles << 'admin'   if user.admin?
-
-    titles.join(', ')
+    titles = ''.html_safe
+    klass = 'badge alert-danger'
+    titles += content_tag :span, 'captain', class: klass if team && user.can?(:edit, team)
+    titles += content_tag :span, 'admin', class: klass   if user.admin?
+    titles
   end
 
-  def transfer_listing(league, options = {})
-    elements = [listing(options), roster_status(league), transfer_status(league)]
+  def transfer_listing(league)
+    elements = [link, transfer_status(league)]
+    elements.join(' ').html_safe
+  end
+
+  def league_status(league)
+    elements = [roster_status(league), transfer_status(league)]
     elements = elements.select { |e| !e.empty? }
-    elements.join(', ').html_safe
+    elements.select { |e| !e.empty? }.join(', ').html_safe
   end
 
   def roster_status(league)

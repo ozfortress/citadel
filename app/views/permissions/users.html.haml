@@ -11,7 +11,7 @@
     %ul.list-group
       - @users.each do |user|
         %li.list-group-item
-          = present(user).listing
+          = render 'users/listing', user: user
 
           - url_params = params.to_h.merge(user_id: user.id)
           - if user.can?(@action, target)

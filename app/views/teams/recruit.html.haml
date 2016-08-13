@@ -11,7 +11,8 @@
     %ul.list-group
       - present_collection(@users).each do |user|
         %li.list-group-item
-          = user.listing
+          = render 'users/listing', user: user
+
           .button-group.pull-right
             = button_to invite_team_path(@team, user_id: user.id),
                         method: :patch, class: 'btn btn-primary',

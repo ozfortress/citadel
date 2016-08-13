@@ -19,8 +19,8 @@
       %tbody
         - present(@match).players do |home_user, away_user|
           %tr
-            %td= home_user.listing team: @match.home_team.team if home_user
-            %td= away_user.listing team: @match.away_team.team if away_user
+            %td= render 'users/listing', user: home_user, team: @match.home_team.team if home_user
+            %td= render 'users/listing', user: away_user, team: @match.away_team.team if away_user
 
   - if @match.status == 'confirmed' && !user_can_edit_league?
     = render 'match_results', match: @match, league: @league
