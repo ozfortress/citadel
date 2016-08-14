@@ -29,7 +29,7 @@ class UserPresenter < ActionPresenter::Base
   end
 
   def transfer_listing(league)
-    elements = [link, transfer_status(league)]
+    elements = [link, league_status(league)]
     elements.join(' ').html_safe
   end
 
