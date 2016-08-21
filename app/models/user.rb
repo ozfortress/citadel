@@ -92,10 +92,6 @@ class User < ApplicationRecord
     approved_names.where.not(name: name)
   end
 
-  def unread_notifications
-    notifications.where(read: false)
-  end
-
   def notify!(message, link)
     notifications.create!(message: message, link: link)
   end

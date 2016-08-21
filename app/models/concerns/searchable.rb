@@ -16,7 +16,7 @@ module Searchable
     end
 
     def simple_search(query)
-      search(query: { simple_query_string: { query: query } })
+      search(query: { simple_query_string: { query: query, flags: 'FUZZY|SLOP' } })
     end
   end
 end

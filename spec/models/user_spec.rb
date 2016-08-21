@@ -53,7 +53,7 @@ describe User do
 
     expect(notification).to be_persisted
     expect(user.notifications).to eq([notification])
-    expect(user.unread_notifications).to eq([notification])
+    expect(user.notifications.unread).to eq([notification])
   end
 
   it 'has avatar' do

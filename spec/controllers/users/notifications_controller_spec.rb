@@ -31,4 +31,18 @@ describe Users::NotificationsController do
       expect(response).to redirect_to(root_path)
     end
   end
+
+  describe 'DELETE #clear' do
+    let(:user) { create(:user) }
+    let!(:notifications) { create_list(:user_notification, 20, user: user) }
+
+    it 'succeeds for notified user' do
+      sign_in user
+
+      delete :clear
+
+      expect(response).to redirect_to(root_path)
+      expect(user.notifications.unread).to be_empty
+    end
+  end
 end

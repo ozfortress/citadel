@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  before_action do
+    @notifications = current_user.notifications.unread if user_signed_in?
+  end
+
   after_action :track_action
 
   protected

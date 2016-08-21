@@ -3,8 +3,11 @@ require 'support/devise'
 require 'support/factory_girl'
 
 describe 'admin/logs' do
-  it 'displays' do
+  before do
     view.lookup_context.prefixes = %w(application)
+  end
+
+  it 'displays' do
     assign(:events_per_second, 1)
     assign(:users_count, 2)
     assign(:teams_count, 3)

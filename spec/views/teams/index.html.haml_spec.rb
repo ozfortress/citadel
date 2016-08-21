@@ -5,8 +5,11 @@ require 'support/factory_girl'
 describe 'teams/index' do
   let!(:teams) { create_list(:team, 4) }
 
-  it 'shows all teams' do
+  before do
     view.lookup_context.prefixes = %w(application)
+  end
+
+  it 'shows all teams' do
     assign(:teams, Team.paginate(page: 1))
 
     render
