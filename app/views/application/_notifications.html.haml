@@ -1,10 +1,10 @@
 %a.dropdown-toggle#notifications{ data: { toggle: 'dropdown' } }
   %span.glyphicon.glyphicon-bell#notifications-glyph
-  - unless @notifications.empty?
-    %span.badge#notifications-badge= @notifications.size
+  - unless notifications.empty?
+    %span.badge#notifications-badge= notifications.size
 %ul.dropdown-menu.navbar-right-menu#notifications-dropdown
   / TODO: Ajax for loading notifications
-  - if @notifications.empty?
+  - if notifications.empty?
     %li.dropdown-header No Notifications...
   - else
     %li.dropdown-header
@@ -15,5 +15,5 @@
       Notifications
 
     %li.divider
-    - present_collection(@notifications).each do |notification|
+    - present_collection(notifications).each do |notification|
       %li= notification.link

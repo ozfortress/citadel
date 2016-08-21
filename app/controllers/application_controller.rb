@@ -5,7 +5,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_action :get_notifications
+  before_action do
+    @notifications = current_user.notifications.unread if user_signed_in?
+  end
 
   after_action :track_action
 
@@ -13,12 +15,6 @@ class ApplicationController < ActionController::Base
 
   def require_login
     redirect_back(fallback_location: root_path) unless user_signed_in?
-  end
-
-  def get_notifications
-    if user_signed_in?
-      @notifications = current_user.notifications.unread
-    end
   end
 
   def track_action
