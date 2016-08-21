@@ -3,10 +3,12 @@ require 'support/devise'
 require 'support/factory_girl'
 
 describe 'layouts/application' do
+  before do
+    view.lookup_context.prefixes = %w(application)
+  end
+
   context 'when unauthenticated' do
     it 'displays steam login' do
-      view.lookup_context.prefixes = %w(application)
-
       render
 
       expect(rendered).to include('assets/steam/login')
@@ -17,33 +19,29 @@ describe 'layouts/application' do
     let(:user) { create(:user) }
 
     before do
-      create_list(:user_notification, 10, user: user)
+      assign(:notifications, create_list(:user_notification, 10, user: user))
     end
 
     it 'displays username' do
-      view.lookup_context.prefixes = %w(application)
       sign_in(user)
 
       render
 
       expect(rendered).to include(user.name)
     end
-  end
 
-  context 'when meta authorized' do
-    let(:user) { create(:user) }
+    context 'when meta authorized' do
+      before do
+        user.grant(:edit, :games)
+      end
 
-    before do
-      user.grant(:edit, :games)
-    end
+      it 'displays admin link' do
+        sign_in(user)
 
-    it 'displays admin link' do
-      view.lookup_context.prefixes = %w(application)
-      sign_in(user)
+        render
 
-      render
-
-      expect(rendered).to include('Admin')
+        expect(rendered).to include('Admin')
+      end
     end
   end
 end

@@ -7,8 +7,11 @@ describe 'leagues/index' do
   let!(:league1) { create(:league, format: format, status: :running) }
   let!(:league2) { create(:league, format: format, status: :hidden) }
 
-  it 'displays all leagues' do
+  before do
     view.lookup_context.prefixes = %w(application)
+  end
+
+  it 'displays all leagues' do
     assign(:leagues, League.paginate(page: 1))
 
     render
