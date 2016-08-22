@@ -19,6 +19,8 @@ class League
 
       after_initialize :set_defaults, unless: :persisted?
 
+      default_scope { order(:id) }
+
       scope :home_team_wins, lambda {
         where(arel_table[:home_team_score].gt(arel_table[:away_team_score]))
       }
