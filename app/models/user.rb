@@ -50,7 +50,7 @@ class User < ApplicationRecord
   end
 
   def rosters
-    get_player_rosters(roster_transfers, :roster_id,
+    get_player_rosters(roster_transfers.approved, :roster_id,
                        League::Roster, :league_roster_transfers)
   end
 

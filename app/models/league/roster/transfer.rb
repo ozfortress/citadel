@@ -29,6 +29,8 @@ class League
         end
       end
 
+      scope :approved, -> { where(approved: true) }
+
       after_create do
         if is_joining?
           after_create_joining
