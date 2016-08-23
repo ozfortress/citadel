@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'support/devise'
+require 'support/factory_girl'
 
 describe AdminController do
   describe 'GET #index' do
@@ -26,6 +27,21 @@ describe AdminController do
       get :index
 
       expect(response).to redirect_to(root_path)
+    end
+  end
+
+  describe 'GET #logs' do
+    let(:user) { create(:user) }
+    let(:visit) { create(:visit, user: user) }
+    let!(:events) { create_list(:ahoy_event, 200, user: user, visit: visit) }
+
+    it 'succeeds for authorized' do
+      user.grant(:edit, :games)
+      sign_in user
+
+      get :logs
+
+      expect(response).to have_http_status(:success)
     end
   end
 end
