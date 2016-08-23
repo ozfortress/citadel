@@ -32,7 +32,7 @@ class LeaguesController < ApplicationController
   end
 
   def show
-    @divisions = @league.divisions.includes(:rosters)
+    @divisions = @league.divisions
   end
 
   def edit

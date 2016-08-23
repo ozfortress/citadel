@@ -1,6 +1,5 @@
 %h2 Logs
 
-
 .panel.panel-default
   .panel-heading Statistics
   %table.table
@@ -30,13 +29,13 @@
     .panel-body No events found...
   - else
     %table.table
-      - fields = [:name, :method, :uri, :ip]
+      - fields = [:name, :method, :uri, :ip, :user]
       %thead
         %tr
           - fields.each do |field|
             %td= field.to_s.humanize
       %tbody
-        - @events.each do |event|
+        - present_collection(@events).each do |event|
           %tr
             - fields.each do |field|
               %td= event.send(field)
