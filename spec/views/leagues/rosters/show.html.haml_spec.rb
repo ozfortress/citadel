@@ -4,16 +4,12 @@ require 'support/factory_girl'
 
 describe 'leagues/rosters/show' do
   let(:roster) { create(:league_roster) }
-
-  before do
-    5.times do
-      create(:league_match, home_team: roster)
-    end
-  end
+  let(:matches) { create_list(:league_match, 5, home_team: roster) }
 
   it 'shows all data' do
     assign(:league, roster.league)
     assign(:roster, roster)
+    assign(:matches, matches)
 
     render
 

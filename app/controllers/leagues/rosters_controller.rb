@@ -42,6 +42,7 @@ module Leagues
 
     def show
       @comment = League::Roster::Comment.new
+      @matches = @roster.matches.order(:created_at).includes(:home_team, :away_team)
     end
 
     def edit
