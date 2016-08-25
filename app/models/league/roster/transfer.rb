@@ -9,8 +9,6 @@ class League
       delegate :division, to: :roster,   allow_nil: true
       delegate :league,   to: :division, allow_nil: true
 
-      validates :user,       presence: true
-      validates :roster,     presence: true
       validates :is_joining, inclusion: { in: [true, false] }
       validates :approved,   inclusion: { in: [true, false] }
 

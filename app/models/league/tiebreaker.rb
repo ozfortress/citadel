@@ -5,8 +5,6 @@ class League
     enum kind: [:round_wins, :round_score_difference, :round_wins_against_tied_rosters,
                 :median_bucholz_score]
 
-    validates :league, presence: true
-
     def get_comparison(roster)
       send("get_#{kind}", roster)
     end

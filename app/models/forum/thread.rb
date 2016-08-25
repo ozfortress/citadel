@@ -5,8 +5,6 @@ module Forum
 
     has_many :posts
 
-    validates :topic, presence: true
-    validates :created_by, presence: true
     validates :title, presence: true, length: { in: 1..128 }
   end
 end

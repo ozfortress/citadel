@@ -9,7 +9,6 @@ class League
     has_many :matches, -> { order(round: :desc, created_at: :asc) },
              through: :rosters, source: :home_team_matches, class_name: 'Match'
 
-    validates :league, presence: true
     validates :name,   presence: true, length: { in: 1..64 }
 
     alias_attribute :to_s, :name

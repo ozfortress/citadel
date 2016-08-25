@@ -3,10 +3,9 @@ class User
     include Rails.application.routes.url_helpers
 
     belongs_to :user, autosave: true
-    belongs_to :approved_by, class_name: 'User'
-    belongs_to :denied_by, class_name: 'User'
+    belongs_to :approved_by, class_name: 'User', optional: true
+    belongs_to :denied_by, class_name: 'User', optional: true
 
-    validates :user, presence: true
     validates :name, presence: true, length: { in: 1..64 }
 
     validate :unique_name, on: :create

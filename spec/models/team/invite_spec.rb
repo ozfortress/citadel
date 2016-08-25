@@ -6,10 +6,10 @@ describe Team::Invite do
   let!(:invite) { create(:team_invite) }
 
   it { should belong_to(:user) }
-  it { should belong_to(:team) }
+  it { should_not allow_value(nil).for(:user) }
 
-  it { should validate_presence_of(:user) }
-  it { should validate_presence_of(:team) }
+  it { should belong_to(:team) }
+  it { should_not allow_value(nil).for(:team) }
 
   it 'notifies user on creation' do
     expect(invite.user.notifications).to_not be_empty

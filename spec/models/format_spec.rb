@@ -6,9 +6,9 @@ describe Format do
   before { create(:format) }
 
   it { should belong_to(:game) }
-  it { should have_many(:leagues) }
+  it { should_not allow_value(nil).for(:game) }
 
-  it { should validate_presence_of(:game) }
+  it { should have_many(:leagues) }
 
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }

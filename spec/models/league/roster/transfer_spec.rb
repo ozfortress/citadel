@@ -6,10 +6,10 @@ describe League::Roster::Transfer do
   before { create(:league_roster_transfer) }
 
   it { should belong_to(:roster) }
-  it { should belong_to(:user) }
+  it { should_not allow_value(nil).for(:roster) }
 
-  it { should validate_presence_of(:roster) }
-  it { should validate_presence_of(:user) }
+  it { should belong_to(:user) }
+  it { should_not allow_value(nil).for(:user) }
 
   let(:comp) { create(:league) }
   let(:div) { create(:league_division, league: comp) }

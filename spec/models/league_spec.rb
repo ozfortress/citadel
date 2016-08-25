@@ -4,10 +4,10 @@ describe League do
   before { create(:league) }
 
   it { should belong_to(:format) }
+  it { should_not allow_value(nil).for(:format) }
+
   it { should have_many(:divisions) }
   it { should have_many(:titles) }
-
-  it { should validate_presence_of(:format) }
 
   it { should validate_presence_of(:name) }
   it { should validate_length_of(:name).is_at_least(1) }

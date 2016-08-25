@@ -6,16 +6,17 @@ describe League::Roster do
   before { create(:league_roster) }
 
   it { should belong_to(:team) }
+  it { should_not allow_value(nil).for(:team) }
+  it { should validate_uniqueness_of(:team).scoped_to(:division_id) }
+
   it { should belong_to(:division) }
+  it { should_not allow_value(nil).for(:division) }
+
   it { should have_many(:transfers).class_name('League::Roster::Transfer') }
   it { should have_many(:home_team_matches).class_name('League::Match') }
   it { should have_many(:away_team_matches).class_name('League::Match') }
   it { should have_many(:comments).class_name('League::Roster::Comment') }
   it { should have_many(:titles).class_name('User::Title') }
-
-  it { should validate_presence_of(:team) }
-  it { should validate_uniqueness_of(:team).scoped_to(:division_id) }
-  it { should validate_presence_of(:division) }
 
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name).scoped_to(:division_id) }

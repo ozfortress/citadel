@@ -4,10 +4,12 @@ require 'support/factory_girl'
 
 describe League::Match::Round do
   before { create(:league_match_round) }
-  it { should belong_to(:map) }
-  it { should belong_to(:match).class_name('League::Match') }
 
-  it { should validate_presence_of(:match) }
+  it { should belong_to(:map) }
+  it { should_not allow_value(nil).for(:map) }
+
+  it { should belong_to(:match).class_name('League::Match') }
+  it { should_not allow_value(nil).for(:match) }
 
   it { should validate_presence_of(:home_team_score) }
   it { should validate_numericality_of(:home_team_score).is_greater_than_or_equal_to(0) }

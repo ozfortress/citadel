@@ -9,7 +9,7 @@ describe Forum::Topic do
   it { should allow_value(nil).for(:parent_topic) }
 
   it { should belong_to(:created_by).class_name('User') }
-  it { should validate_presence_of(:created_by) }
+  it { should_not allow_value(nil).for(:created_by) }
 
   it { should validate_presence_of(:name) }
   it { should validate_length_of(:name).is_at_least(1) }
