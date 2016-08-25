@@ -8,6 +8,7 @@ describe League::Match do
   it { should belong_to(:home_team).class_name('League::Roster') }
   it { should belong_to(:away_team).class_name('League::Roster') }
   it { should have_many(:rounds).class_name('Match::Round') }
+  it { should have_many(:comms).class_name('Match::Comm') }
 
   it { should validate_presence_of(:home_team) }
 
