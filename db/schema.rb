@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810055559) do
+ActiveRecord::Schema.define(version: 20160825035700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,36 @@ ActiveRecord::Schema.define(version: 20160810055559) do
     t.datetime "updated_at",   null: false
     t.index ["game_id"], name: "index_formats_on_game_id", using: :btree
     t.index ["name"], name: "index_formats_on_name", unique: true, using: :btree
+  end
+
+  create_table "forum_posts", force: :cascade do |t|
+    t.integer  "thread_id",     null: false
+    t.integer  "created_by_id", null: false
+    t.string   "content",       null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["created_by_id"], name: "index_forum_posts_on_created_by_id", using: :btree
+    t.index ["thread_id"], name: "index_forum_posts_on_thread_id", using: :btree
+  end
+
+  create_table "forum_threads", force: :cascade do |t|
+    t.integer  "topic_id",      null: false
+    t.integer  "created_by_id", null: false
+    t.string   "title",         null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["created_by_id"], name: "index_forum_threads_on_created_by_id", using: :btree
+    t.index ["topic_id"], name: "index_forum_threads_on_topic_id", using: :btree
+  end
+
+  create_table "forum_topics", force: :cascade do |t|
+    t.integer  "parent_topic_id"
+    t.integer  "created_by_id",   null: false
+    t.string   "name",            null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["created_by_id"], name: "index_forum_topics_on_created_by_id", using: :btree
+    t.index ["parent_topic_id"], name: "index_forum_topics_on_parent_topic_id", using: :btree
   end
 
   create_table "games", force: :cascade do |t|
@@ -349,6 +379,12 @@ ActiveRecord::Schema.define(version: 20160810055559) do
   add_foreign_key "action_user_manage_rosters_league", "users"
   add_foreign_key "action_user_manage_rosters_leagues", "users"
   add_foreign_key "formats", "games"
+  add_foreign_key "forum_posts", "forum_threads", column: "thread_id"
+  add_foreign_key "forum_posts", "users", column: "created_by_id"
+  add_foreign_key "forum_threads", "forum_topics", column: "topic_id"
+  add_foreign_key "forum_threads", "users", column: "created_by_id"
+  add_foreign_key "forum_topics", "forum_topics", column: "parent_topic_id"
+  add_foreign_key "forum_topics", "users", column: "created_by_id"
   add_foreign_key "league_divisions", "leagues"
   add_foreign_key "league_match_comms", "league_matches", column: "match_id"
   add_foreign_key "league_match_comms", "users"
