@@ -6,7 +6,7 @@ describe Forum::Thread do
   before { create(:forum_thread) }
 
   it { should belong_to(:topic) }
-  it { should_not allow_value(nil).for(:topic) }
+  it { should allow_value(nil).for(:topic) }
 
   it { should belong_to(:created_by).class_name('User') }
   it { should_not allow_value(nil).for(:created_by) }

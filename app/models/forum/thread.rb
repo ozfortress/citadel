@@ -1,6 +1,6 @@
 module Forum
   class Thread < ApplicationRecord
-    belongs_to :topic
+    belongs_to :topic, optional: true
     belongs_to :created_by, class_name: 'User'
 
     has_many :posts
