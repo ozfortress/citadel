@@ -11,13 +11,13 @@
 
         .panel.panel-default
           .panel-heading
+            .pull-right= comm.created_at.strftime('%c')
             - if roster
               = present(roster).link
               \:
 
             - team = roster.team if roster
             = render 'users/listing', user: comm.user, team: team
-            .pull-right= comm.created_at.strftime('%c')
         = markdown comm.content
 
   - if user_can_comm?
