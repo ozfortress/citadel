@@ -1,4 +1,4 @@
-module Forum
+module Forums
   class Thread < ApplicationRecord
     belongs_to :topic, optional: true
     belongs_to :created_by, class_name: 'User'

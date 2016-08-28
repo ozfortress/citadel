@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :forum_thread, class: 'Forum::Thread' do
-    association :topic, factory: :forum_topic
+  factory :forums_thread, class: 'Forums::Thread' do
+    association :topic, factory: :forums_topic
     association :created_by, factory: :user
     title 'Check this out'
   end

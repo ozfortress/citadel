@@ -1,4 +1,4 @@
-module Forum
+module Forums
   class Topic < ApplicationRecord
     belongs_to :parent_topic, class_name: 'Topic', optional: true
     belongs_to :created_by,   class_name: 'User'

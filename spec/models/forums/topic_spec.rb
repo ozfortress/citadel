@@ -2,10 +2,10 @@ require 'rails_helper'
 require 'support/shoulda'
 require 'support/factory_girl'
 
-describe Forum::Topic do
-  before { create(:forum_topic) }
+describe Forums::Topic do
+  before { create(:forums_topic) }
 
-  it { should belong_to(:parent_topic).class_name('Forum::Topic') }
+  it { should belong_to(:parent_topic).class_name('Forums::Topic') }
   it { should allow_value(nil).for(:parent_topic) }
 
   it { should belong_to(:created_by).class_name('User') }
