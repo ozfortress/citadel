@@ -13,12 +13,10 @@ module ApplicationHelper
     case name
     when :home
       controller_name == 'pages' && action_name == 'home'
-    when :recruitment
-      controller_name == 'users' && action_name == 'index'
     when :admin
       controller.is_a? AdminController
     else
-      controller_name == name.to_s
+      controller_path.start_with? name.to_s
     end
   end
 
