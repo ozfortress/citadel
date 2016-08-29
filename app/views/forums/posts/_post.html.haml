@@ -1,0 +1,6 @@
+.panel.panel-default
+  .panel-heading
+    .pull-right= post.created_at.strftime('%c')
+    = render 'users/listing', user: post.created_by
+
+.container-fluid= markdown post.content

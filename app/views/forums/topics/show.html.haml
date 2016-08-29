@@ -1,0 +1,6 @@
+- topic_p = present(@topic)
+%h2= topic_p
+
+%br= topic_p.path
+
+= render 'forums/page', topics: @subtopics, threads: @threads

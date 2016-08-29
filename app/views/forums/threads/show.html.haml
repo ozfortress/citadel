@@ -1,0 +1,8 @@
+- thread_p = present(@thread)
+%h2= thread_p
+
+%br= thread_p.path
+
+.panel.panel-default
+  - @posts.each do |post|
+    = render post

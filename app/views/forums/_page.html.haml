@@ -1,0 +1,14 @@
+.panel.panel-default
+  - unless threads.empty?
+    .panel-heading Threads
+    %ul.list-group
+    - present_collection(threads).each do |thread|
+      %li.list-group-item
+        = thread.link
+
+  - unless topics.empty?
+    .panel-heading Topics
+    %ul.list-group
+      - present_collection(topics).each do |topic|
+        %li.list-group-item
+          = topic.link

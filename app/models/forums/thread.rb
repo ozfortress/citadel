@@ -6,5 +6,13 @@ module Forums
     has_many :posts
 
     validates :title, presence: true, length: { in: 1..128 }
+
+    def path
+      if topic
+        topic.path + [topic]
+      else
+        []
+      end
+    end
   end
 end
