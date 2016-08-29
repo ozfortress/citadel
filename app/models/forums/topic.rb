@@ -1,6 +1,6 @@
 module Forums
   class Topic < ApplicationRecord
-    has_ancestors   :parent_topics, key: :parent_topic_id
+    has_ancestors :parent_topics, key: :parent_topic_id
     belongs_to :parent_topic, class_name: 'Topic', optional: true
     belongs_to :created_by,   class_name: 'User'
 
