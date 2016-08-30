@@ -2,9 +2,9 @@
   - unless threads.empty?
     .panel-heading Threads
     %ul.list-group
-    - present_collection(threads).each do |thread|
-      %li.list-group-item
-        = thread.link
+      - present_collection(threads).each do |thread|
+        %li.list-group-item
+          = thread.link
 
   - unless topics.empty?
     .panel-heading Topics
