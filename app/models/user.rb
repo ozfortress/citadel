@@ -37,6 +37,8 @@ class User < ApplicationRecord
 
   validates_permission_to :edit, :permissions
 
+  validates_permission_to :manage, :forums
+
   mount_uploader :avatar, AvatarUploader
 
   alias_attribute :to_s, :name

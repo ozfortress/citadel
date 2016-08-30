@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160825035700) do
+ActiveRecord::Schema.define(version: 20160830060144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,11 @@ ActiveRecord::Schema.define(version: 20160825035700) do
   create_table "action_user_edit_users", force: :cascade do |t|
     t.integer "user_id"
     t.index ["user_id"], name: "index_action_user_edit_users_on_user_id", using: :btree
+  end
+
+  create_table "action_user_manage_forums", force: :cascade do |t|
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_action_user_manage_forums_on_user_id", using: :btree
   end
 
   create_table "action_user_manage_rosters_league", force: :cascade do |t|
@@ -375,6 +380,7 @@ ActiveRecord::Schema.define(version: 20160825035700) do
   add_foreign_key "action_user_edit_team", "users"
   add_foreign_key "action_user_edit_teams", "users"
   add_foreign_key "action_user_edit_users", "users"
+  add_foreign_key "action_user_manage_forums", "users"
   add_foreign_key "action_user_manage_rosters_league", "leagues"
   add_foreign_key "action_user_manage_rosters_league", "users"
   add_foreign_key "action_user_manage_rosters_leagues", "users"
