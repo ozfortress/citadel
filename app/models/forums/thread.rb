@@ -9,7 +9,7 @@ module Forums
 
     def path
       if topic
-        topic.path + [topic]
+        topic.parent_topics + [topic]
       else
         []
       end
