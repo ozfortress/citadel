@@ -1,8 +1,19 @@
-- thread_p = present(@thread)
-%h2= thread_p
+.pull-right.dropdown
+  = link_to edit_forums_thread_path(@thread), class: 'btn btn-default' do
+    Edit
+    %span.glyphicon.glyphicon-cog
 
-%br= thread_p.path
+= render 'forums/head', object: @thread
 
 .panel.panel-default
   - @posts.each do |post|
     = render post
+
+  .container-fluid
+    %hr
+    = bootstrap_form_for @post, url: forums_thread_posts_path(@thread) do |f|
+      = render 'forums/posts/form', f: f
+
+      .row
+        = f.submit 'Post', class: 'btn btn-default pull-right'
+    %hr

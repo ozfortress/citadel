@@ -1,0 +1,17 @@
+= render 'forums/head', object: @topic
+
+.panel.panel-default
+  .panel-body
+    = bootstrap_form_for @topic do |f|
+      = render 'form', f: f
+
+      = f.submit 'Update'
+      = link_to 'Cancel', :back, class: 'btn btn-default'
+
+.panel.panel-danger
+  .panel-heading Danger Zone
+  .panel-body
+    = button_to forums_topic_path(@topic), method: :delete, class: 'btn btn-danger',
+                data: { confirm: 'Are you sure you want to delete this Topic?' } do
+      %span.glyphicon.glyphicon-trash
+      Delete
