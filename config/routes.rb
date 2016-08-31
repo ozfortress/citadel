@@ -72,9 +72,9 @@ Rails.application.routes.draw do
 
   resource :forums, only: :show
   namespace :forums, shallow: true do
-    resources :topics
-    resources :threads do
-      resources :posts, controller: 'posts'
+    resources :topics, except: :index
+    resources :threads, except: :index do
+      resources :posts, except: [:show, :new, :index], controller: 'posts'
     end
   end
 
