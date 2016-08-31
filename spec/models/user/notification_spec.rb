@@ -6,8 +6,7 @@ describe User::Notification do
   let!(:notification) { create(:user_notification) }
 
   it { should belong_to(:user) }
-
-  it { should validate_presence_of(:user) }
+  it { should_not allow_value(nil).for(:user) }
 
   it { should validate_presence_of(:message) }
   it { should validate_length_of(:message).is_at_least(1) }

@@ -17,7 +17,6 @@ class League < ApplicationRecord
   has_many :matches,   through: :divisions, class_name: 'Match'
   has_many :titles,    class_name: 'User::Title'
 
-  validates :format, presence: true
   validates :name, presence: true, length: { in: 1..64 }
   validates :description, presence: true
   enum status: [:hidden, :running, :completed]

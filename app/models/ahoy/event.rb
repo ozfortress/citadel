@@ -6,8 +6,8 @@ module Ahoy
 
     default_scope { order(time: :desc) }
 
-    belongs_to :visit
-    belongs_to :user
+    belongs_to :visit, optional: true
+    belongs_to :user,  optional: true
 
     def self.search(query)
       return all if query.blank?

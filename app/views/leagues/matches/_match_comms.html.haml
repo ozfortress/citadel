@@ -1,24 +1,24 @@
 .panel.panel-default
   .panel-heading Match Comms
 
-  %ul.list-group
-    - match.comms.order(:created_at).includes(:user).each do |comm|
-      %li.list-group-item
-        - if match.home_team.on_roster?(comm.user)
-          - roster = match.home_team
-        - elsif match.away_team.on_roster?(comm.user)
-          - roster = match.away_team
+  - match.comms.order(:created_at).includes(:user).each do |comm|
+    - if match.home_team.on_roster?(comm.user)
+      - roster = match.home_team
+    - elsif match.away_team.on_roster?(comm.user)
+      - roster = match.away_team
 
-        .panel.panel-default
-          .panel-heading
-            - if roster
-              = present(roster).link
-              \:
+    .panel.panel-default
+      .panel-heading
+        .pull-right= comm.created_at.strftime('%c')
+        - if roster
+          = present(roster).link
+          \:
 
-            - team = roster.team if roster
-            = render 'users/listing', user: comm.user, team: team
-            .pull-right= comm.created_at.strftime('%c')
-        = markdown comm.content
+        - team = roster.team if roster
+        = render 'users/listing', user: comm.user, team: team
+
+    .panel-body
+      = markdown comm.content
 
   - if user_can_comm?
     .panel-body

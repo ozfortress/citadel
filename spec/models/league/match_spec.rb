@@ -6,10 +6,13 @@ describe League::Match do
   before { create(:league_match) }
 
   it { should belong_to(:home_team).class_name('League::Roster') }
-  it { should belong_to(:away_team).class_name('League::Roster') }
-  it { should have_many(:rounds).class_name('Match::Round') }
+  it { should_not allow_value(nil).for(:home_team) }
 
-  it { should validate_presence_of(:home_team) }
+  it { should belong_to(:away_team).class_name('League::Roster') }
+  it { should allow_value(nil).for(:away_team) }
+
+  it { should have_many(:rounds).class_name('Match::Round') }
+  it { should have_many(:comms).class_name('Match::Comm') }
 
   it { should validate_numericality_of(:round).is_greater_than_or_equal_to(0) }
 

@@ -1,0 +1,8 @@
+.pull-right.dropdown
+  = link_to edit_forums_topic_path(@topic), class: 'btn btn-default' do
+    Edit
+    %span.glyphicon.glyphicon-cog
+
+= render 'forums/head', object: @topic
+
+= render 'forums/page', topics: @subtopics, threads: @threads, parent_topic: @topic

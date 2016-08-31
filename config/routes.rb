@@ -70,6 +70,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :forums, only: :show
+  namespace :forums, shallow: true do
+    resources :topics, except: :index
+    resources :threads, except: :index do
+      resources :posts, except: [:show, :new, :index], controller: 'posts'
+    end
+  end
+
   # TODO: fix XSS vuln (wasn't able to style forms as links in navbar)
   get 'notifications/:id', to: 'users/notifications#read', as: 'read_notification'
   delete 'notifications', to: 'users/notifications#clear', as: 'clear_notifications'

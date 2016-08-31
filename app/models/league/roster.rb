@@ -29,8 +29,7 @@ class League
     has_many :comments, class_name: 'Roster::Comment', inverse_of: :roster,
                         dependent: :destroy
 
-    validates :team,        presence: true, uniqueness: { scope: :division_id }
-    validates :division,    presence: true
+    validates :team,        uniqueness: { scope: :division_id }
     validates :name,        presence: true, uniqueness: { scope: :division_id },
                             length: { in: 1..64 }
     validates :description, presence: true, allow_blank: true

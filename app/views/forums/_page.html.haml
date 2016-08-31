@@ -1,0 +1,26 @@
+.panel.panel-default
+  - if !threads.empty? || user_can_manage_forums?
+    .panel-heading
+      .pull-right
+        = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-default' do
+          Create
+          %span.glyphicon.glyphicon-plus
+      Threads
+
+    %ul.list-group
+      - present_collection(threads).each do |thread|
+        %li.list-group-item
+          = thread.link
+
+  - if !topics.empty? || user_can_manage_forums?
+    .panel-heading
+      .pull-right
+        = link_to new_forums_topic_path(parent_topic: parent_topic), class: 'btn btn-default' do
+          Create
+          %span.glyphicon.glyphicon-plus
+      Topics
+
+    %ul.list-group
+      - present_collection(topics).each do |topic|
+        %li.list-group-item
+          = topic.link

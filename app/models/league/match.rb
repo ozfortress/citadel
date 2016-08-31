@@ -3,12 +3,11 @@ class League
     include Rails.application.routes.url_helpers
 
     belongs_to :home_team, class_name: 'Roster'
-    belongs_to :away_team, class_name: 'Roster'
+    belongs_to :away_team, class_name: 'Roster', optional: true
     has_many :rounds, inverse_of: :match, class_name: 'Match::Round', dependent: :destroy
     accepts_nested_attributes_for :rounds, allow_destroy: true
     has_many :comms, class_name: 'Match::Comm', dependent: :destroy
 
-    validates :home_team, presence: true
     validates :rounds, associated: true # Make *really* sure all rounds are valid
 
     enum status: [:pending, :submitted_by_home_team, :submitted_by_away_team, :confirmed]

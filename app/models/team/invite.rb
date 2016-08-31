@@ -5,9 +5,6 @@ class Team
     belongs_to :user
     belongs_to :team
 
-    validates :user, presence: true
-    validates :team, presence: true
-
     after_create do
       user.notify!("You have been invited to join the team'#{team.name}'.", user_path(user))
     end

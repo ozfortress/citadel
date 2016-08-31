@@ -1,0 +1,12 @@
+.panel.panel-default
+  .panel-heading
+    - if user_can_manage_forums?
+      .pull-right
+        = link_to edit_forums_post_path(post), class: 'btn btn-link btn-sm' do
+          %span.glyphicon.glyphicon-cog
+    .pull-right
+      = post.created_at.strftime('%c')
+
+    = render 'users/listing', user: post.created_by
+
+.container-fluid= markdown post.content

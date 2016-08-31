@@ -6,8 +6,6 @@ class League
       belongs_to :user
       belongs_to :match, class_name: 'Match'
 
-      validates :user,    presence: true
-      validates :match,   presence: true
       validates :content, presence: true
 
       delegate :home_team, to: :match

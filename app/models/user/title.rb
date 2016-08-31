@@ -1,10 +1,9 @@
 class User
   class Title < ApplicationRecord
     belongs_to :user
-    belongs_to :league
-    belongs_to :roster, class_name: 'League::Roster'
+    belongs_to :league, optional: true
+    belongs_to :roster, class_name: 'League::Roster', optional: true
 
-    validates :user, presence: true
     validates :name, presence: true, length: { in: 1..64 }
 
     mount_uploader :badge, BadgeUploader
