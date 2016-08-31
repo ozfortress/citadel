@@ -3,7 +3,7 @@ module Forums
     belongs_to :topic, optional: true
     belongs_to :created_by, class_name: 'User'
 
-    has_many :posts
+    has_many :posts, dependent: :destroy
 
     validates :title, presence: true, length: { in: 1..128 }
 

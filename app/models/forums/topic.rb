@@ -4,8 +4,8 @@ module Forums
     belongs_to :parent_topic, class_name: 'Topic', optional: true
     belongs_to :created_by,   class_name: 'User'
 
-    has_many :child_topics, class_name: 'Topic', foreign_key: :parent_topic_id
-    has_many :threads
+    has_many :child_topics, class_name: 'Topic', foreign_key: :parent_topic_id, dependent: :destroy
+    has_many :threads,      dependent: :destroy
 
     validates :name, presence: true, length: { in: 1..128 }
   end
