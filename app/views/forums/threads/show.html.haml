@@ -9,11 +9,12 @@
   - @posts.each do |post|
     = render post
 
-  .container-fluid
-    %hr
-    = bootstrap_form_for @post, url: forums_thread_posts_path(@thread) do |f|
-      = render 'forums/posts/form', f: f
+  - if user_can_manage_forums?
+    .container-fluid
+      %hr
+      = bootstrap_form_for @post, url: forums_thread_posts_path(@thread) do |f|
+        = render 'forums/posts/form', f: f
 
-      .row
-        = f.submit 'Post', class: 'btn btn-default pull-right'
-    %hr
+        .row
+          = f.submit 'Post', class: 'btn btn-default pull-right'
+      %hr
