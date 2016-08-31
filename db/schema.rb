@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(version: 20160830060144) do
   end
 
   create_table "forum_threads", force: :cascade do |t|
-    t.integer  "topic_id"
+    t.integer  "topic_id",      null: false
     t.integer  "created_by_id", null: false
     t.string   "title",         null: false
     t.datetime "created_at",    null: false
