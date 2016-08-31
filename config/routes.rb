@@ -70,12 +70,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :forums, only: :show, shallow: true do
-    namespace :forums do
-      resources :topics
-      resources :threads do
-        resources :posts, controller: 'forums/posts'
-      end
+  resource :forums, only: :show
+  namespace :forums, shallow: true do
+    resources :topics
+    resources :threads do
+      resources :posts, controller: 'posts'
     end
   end
 
