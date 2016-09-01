@@ -1,17 +1,18 @@
 require 'rails_helper'
+require 'support/auth'
 require 'support/devise'
 require 'support/factory_girl'
 
 describe 'admin/index' do
   context 'when leagues authorized' do
-    let(:user) { create(:user) }
+    let(:user) { build_stubbed(:user) }
 
     before do
-      user.grant(:edit, :leagues)
+      stub_auth(user, :edit, :leagues)
     end
 
     it 'displays username' do
-      sign_in(user)
+      sign_in user
 
       render
 
@@ -22,14 +23,14 @@ describe 'admin/index' do
   end
 
   context 'when meta authorized' do
-    let(:user) { create(:user) }
+    let(:user) { build_stubbed(:user) }
 
     before do
-      user.grant(:edit, :games)
+      stub_auth(user, :edit, :games)
     end
 
     it 'displays admin link' do
-      sign_in(user)
+      sign_in user
 
       render
 
@@ -43,11 +44,11 @@ describe 'admin/index' do
     let(:user) { create(:user) }
 
     before do
-      user.grant(:edit, :users)
+      stub_auth(user, :edit, :users)
     end
 
     it 'displays name changes link' do
-      sign_in(user)
+      sign_in user
 
       render
 
