@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe 'forums/show' do
-  let(:threads) { create_list(:forums_thread, 20) }
-  let(:topics) { create_list(:forums_topic, 20) }
+  let(:threads) { build_stubbed_list(:forums_thread, 20) }
+  let(:topics) { build_stubbed_list(:forums_topic, 20) }
 
   it 'displays' do
     assign(:threads, threads)

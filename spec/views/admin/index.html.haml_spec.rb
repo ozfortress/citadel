@@ -2,10 +2,10 @@ require 'rails_helper'
 
 describe 'admin/index' do
   context 'when leagues authorized' do
-    let(:user) { build_stubbed(:user) }
+    let(:user) { create(:user) }
 
     before do
-      stub_auth(user, :edit, :leagues)
+      user.grant(:edit, :leagues)
     end
 
     it 'displays username' do
@@ -20,10 +20,10 @@ describe 'admin/index' do
   end
 
   context 'when meta authorized' do
-    let(:user) { build_stubbed(:user) }
+    let(:user) { create(:user) }
 
     before do
-      stub_auth(user, :edit, :games)
+      user.grant(:edit, :games)
     end
 
     it 'displays admin link' do
@@ -41,7 +41,7 @@ describe 'admin/index' do
     let(:user) { create(:user) }
 
     before do
-      stub_auth(user, :edit, :users)
+      user.grant(:edit, :users)
     end
 
     it 'displays name changes link' do

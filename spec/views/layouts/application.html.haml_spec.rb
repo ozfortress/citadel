@@ -17,11 +17,11 @@ describe 'layouts/application' do
     let(:user) { create(:user) }
 
     before do
-      assign(:notifications, create_list(:user_notification, 10, user: user))
+      assign(:notifications, build_stubbed_list(:user_notification, 10, user: user))
     end
 
     it 'displays username' do
-      sign_in(user)
+      sign_in user
 
       render
 
@@ -34,7 +34,7 @@ describe 'layouts/application' do
       end
 
       it 'displays admin link' do
-        sign_in(user)
+        sign_in user
 
         render
 

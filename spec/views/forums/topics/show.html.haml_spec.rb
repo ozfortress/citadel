@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 describe 'forums/topics/show' do
-  let(:topic) { create(:forums_topic) }
-  let(:subtopics) { create_list(:forums_topic, 5, parent_topic: topic) }
-  let(:threads) { create_list(:forums_thread, 5, topic: topic) }
+  let(:topic) { build_stubbed(:forums_topic) }
+  let(:threads) { build_stubbed_list(:forums_thread, 5, topic: topic) }
+  let(:subtopics) { build_stubbed_list(:forums_topic, 5, parent_topic: topic) }
 
   it 'displays data' do
     assign(:topic, topic)
-    assign(:subtopics, subtopics)
     assign(:threads, threads)
+    assign(:subtopics, subtopics)
 
     render
 
