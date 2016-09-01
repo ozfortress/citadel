@@ -5,6 +5,9 @@ require 'support/factory_girl'
 describe 'admin/logs' do
   before do
     view.lookup_context.prefixes = %w(application)
+
+    create_list(:ahoy_event, 20)
+    create_list(:ahoy_event, 10, user: nil)
   end
 
   it 'displays' do
