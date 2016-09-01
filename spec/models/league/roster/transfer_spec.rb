@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/shoulda'
-require 'support/factory_girl'
 
 describe League::Roster::Transfer do
   before { create(:league_roster_transfer) }

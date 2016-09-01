@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/shoulda'
-require 'validators/reduce_validator'
 
 describe ReduceValidator do
   let(:reduce_validator) { ReduceValidator.new(attributes: [:name]) }

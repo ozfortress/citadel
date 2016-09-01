@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/shoulda'
-require 'support/factory_girl'
 
 describe Forums::Topic do
   before { create(:forums_topic) }

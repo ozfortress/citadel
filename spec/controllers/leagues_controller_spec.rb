@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/devise'
-require 'support/factory_girl'
 
 describe LeaguesController do
   let(:admin) { create(:user) }

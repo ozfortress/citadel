@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/devise'
-require 'support/factory_girl'
 
 describe 'forums/topics/show' do
   let(:topic) { create(:forums_topic) }

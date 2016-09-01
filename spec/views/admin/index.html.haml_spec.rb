@@ -1,7 +1,4 @@
 require 'rails_helper'
-require 'support/auth'
-require 'support/devise'
-require 'support/factory_girl'
 
 describe 'admin/index' do
   context 'when leagues authorized' do

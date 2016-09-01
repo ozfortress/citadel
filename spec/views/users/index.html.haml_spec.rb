@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/devise'
-require 'support/factory_girl'
 
 describe 'users/index' do
   let!(:user1) { create(:user) }

@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/shoulda'
-require 'support/factory_girl'
 
 describe User::Title do
   it { should belong_to(:user) }

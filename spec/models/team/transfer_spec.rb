@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/shoulda'
-require 'support/factory_girl'
 
 describe Team::Transfer do
   before { create(:team_transfer) }

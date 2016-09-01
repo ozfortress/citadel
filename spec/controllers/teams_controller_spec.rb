@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/factory_girl'
-require 'support/devise'
 
 describe TeamsController do
   let(:user) { create(:user) }

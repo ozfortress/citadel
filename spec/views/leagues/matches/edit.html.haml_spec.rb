@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/devise'
-require 'support/factory_girl'
 
 describe 'leagues/matches/edit' do
   let(:match) { create(:league_match) }

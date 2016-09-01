@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/devise'
-require 'support/factory_girl'
 
 describe 'teams/index' do
   let!(:teams) { create_list(:team, 4) }

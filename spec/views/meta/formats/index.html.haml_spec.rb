@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/devise'
-require 'support/factory_girl'
 
 describe 'meta/formats/index' do
   let!(:formats) { create_list(:format, 5) }

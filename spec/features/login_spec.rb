@@ -1,5 +1,4 @@
-require 'support/omniauth'
-require 'support/capybara'
+require 'rails_helper'
 
 feature 'User tries to login with steam' do
   scenario 'for the first time' do

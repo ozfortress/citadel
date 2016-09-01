@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/shoulda'
-require 'support/factory_girl'
 
 describe User::Notification do
   let!(:notification) { create(:user_notification) }

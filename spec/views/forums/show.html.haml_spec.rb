@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/devise'
-require 'support/factory_girl'
 
 describe 'forums/show' do
   let(:threads) { create_list(:forums_thread, 20) }
