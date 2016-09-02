@@ -20,8 +20,7 @@ class League
     end
 
     def get_round_wins_against_tied_rosters(roster)
-      tied_rosters = roster.division.approved_rosters.where(points: roster.points).not(id: roster.id)
-
+      tied_rosters = get_tied_rosters_for(roster)
       return 0 unless tied_rosters.exists?
 
       won_rounds = roster.won_rounds.joins(:match)
@@ -32,6 +31,10 @@ class League
 
     def get_median_bucholz_score(roster)
       roster.won_rounds_count * 1.0 + roster.drawn_rounds_count * 0.5
+    end
+
+    def get_tied_rosters_for(roster)
+      roster.division.approved_rosters.where(points: roster.points).where.not(id: roster.id)
     end
   end
 end
