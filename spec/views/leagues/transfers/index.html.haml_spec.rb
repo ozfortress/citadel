@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/devise'
-require 'support/factory_girl'
 
 describe 'leagues/transfers/index' do
   let!(:roster) { create(:league_roster) }

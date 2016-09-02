@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/factory_girl'
-require 'match_seeder/seeder'
 
 describe MatchSeeder::RoundRobin do
   context 'even number of teams' do

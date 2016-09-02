@@ -1,12 +1,10 @@
 require 'rails_helper'
-require 'support/devise'
-require 'support/factory_girl'
 
 describe 'leagues/matches/show' do
   context 'home team has more players' do
     let(:div) { create(:league_division) }
-    let(:home_team) { create(:league_roster, division: div, player_count: 12) }
-    let(:away_team) { create(:league_roster, division: div, player_count: 6) }
+    let(:home_team) { create(:league_roster, division: div, player_count: 4) }
+    let(:away_team) { create(:league_roster, division: div, player_count: 2) }
     let(:match) { create(:league_match, home_team: home_team, away_team: away_team) }
 
     it 'displays all players' do
@@ -26,8 +24,8 @@ describe 'leagues/matches/show' do
 
   context 'away team has more players' do
     let(:div) { create(:league_division) }
-    let(:home_team) { create(:league_roster, division: div, player_count: 6) }
-    let(:away_team) { create(:league_roster, division: div, player_count: 12) }
+    let(:home_team) { create(:league_roster, division: div, player_count: 3) }
+    let(:away_team) { create(:league_roster, division: div, player_count: 4) }
     let(:match) { create(:league_match, home_team: home_team, away_team: away_team) }
 
     it 'displays all players' do
@@ -46,7 +44,7 @@ describe 'leagues/matches/show' do
   end
 
   context 'BYE match' do
-    let(:match) { create(:bye_league_match) }
+    let(:match) { build(:bye_league_match) }
 
     it 'displays' do
       assign(:league, match.league)
@@ -59,7 +57,7 @@ describe 'leagues/matches/show' do
   context 'standard match' do
     let(:match) { create(:league_match) }
     let(:user) { create(:user) }
-    let!(:comms) { create_list(:league_match_comm, 12, match: match) }
+    let!(:comms) { create_list(:league_match_comm, 6, match: match) }
 
     before do
       assign(:league, match.league)

@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/shoulda'
-require 'support/factory_girl'
 
 describe User::NameChange do
   let!(:name) { create(:user_name_change) }

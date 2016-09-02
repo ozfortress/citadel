@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/devise'
-require 'support/factory_girl'
 
 describe 'admin/index' do
   context 'when leagues authorized' do
@@ -11,7 +9,7 @@ describe 'admin/index' do
     end
 
     it 'displays username' do
-      sign_in(user)
+      sign_in user
 
       render
 
@@ -29,7 +27,7 @@ describe 'admin/index' do
     end
 
     it 'displays admin link' do
-      sign_in(user)
+      sign_in user
 
       render
 
@@ -47,7 +45,7 @@ describe 'admin/index' do
     end
 
     it 'displays name changes link' do
-      sign_in(user)
+      sign_in user
 
       render
 

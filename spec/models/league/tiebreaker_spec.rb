@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'support/shoulda'
-require 'support/factory_girl'
 
 describe League::Tiebreaker do
   before { create(:league_tiebreaker) }

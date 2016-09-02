@@ -1,7 +1,4 @@
 require 'rails_helper'
-require 'support/carrierwave'
-require 'support/shoulda'
-require 'support/factory_girl'
 
 describe User do
   let!(:user) { create(:user) }

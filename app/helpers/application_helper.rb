@@ -36,13 +36,6 @@ module ApplicationHelper
     @league.divisions.all.collect { |div| [div.to_s, div.id] }
   end
 
-  # The ActionPresenter #present_collection is broken
-  def present_collection(collection, &block)
-    collection.to_a.compact.map do |object|
-      present(object, &block)
-    end
-  end
-
   def bootstrap_paginate(target)
     will_paginate target, renderer: BootstrapPagination::Rails
   end
