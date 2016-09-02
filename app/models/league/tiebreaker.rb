@@ -20,7 +20,7 @@ class League
     end
 
     def get_round_wins_against_tied_rosters(roster)
-      tied_rosters = roster.division.approved_rosters.where(points: roster.points)
+      tied_rosters = roster.division.approved_rosters.where(points: roster.points).not(id: roster.id)
 
       return 0 unless tied_rosters.exists?
 
