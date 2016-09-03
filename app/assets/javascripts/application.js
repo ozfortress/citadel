@@ -17,6 +17,9 @@
 //= require moment
 //= require bootstrap-datetimepicker
 //= require cocoon
+//= require markdown.converter
+//= require markdown.editor
+//= require markdown.extra
 //= require_tree .
 
 $(function() {
