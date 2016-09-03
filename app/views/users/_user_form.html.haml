@@ -5,6 +5,8 @@
 
   = f.file_field :avatar, accept: 'image/png,image/jpeg'
   = f.hidden_field :avatar_cache
+  - if user.avatar.file
+    = f.check_box :remove_avatar
 
 = f.markdown_editor :description, rows: 10
 

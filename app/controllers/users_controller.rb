@@ -80,7 +80,7 @@ class UsersController < ApplicationController
   end
 
   def edit_user_params
-    params.require(:user).permit(:avatar, :description)
+    params.require(:user).permit(:avatar, :remove_avatar, :description)
   end
 
   def name_change_params
