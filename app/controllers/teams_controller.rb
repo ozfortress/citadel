@@ -75,7 +75,7 @@ class TeamsController < ApplicationController
   private
 
   def team_params
-    params.require(:team).permit(:name, :avatar, :description)
+    params.require(:team).permit(:name, :avatar, :remove_avatar, :description)
   end
 
   def require_team_permission

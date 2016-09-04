@@ -71,15 +71,25 @@ describe UsersController do
   end
 
   describe 'PATCH #update' do
-    let(:user) { create(:user, description: 'B') }
+    let(:user) { create(:user_with_avatar, description: 'B') }
+
     it 'updates a user' do
       sign_in user
 
       patch :update, params: { id: user.id, user: { description: 'D' } }
 
-      usr = User.find(user.id)
-      expect(usr).to_not be_nil
-      expect(usr.description).to eq('D')
+      user.reload
+      expect(user).to_not be_nil
+      expect(user.description).to eq('D')
+    end
+
+    it 'allows avatar removal' do
+      sign_in user
+
+      patch :update, params: { id: user.id, user: { remove_avatar: true } }
+
+      user.reload
+      expect(user.avatar.url).to eq(user.avatar.default_url)
     end
   end
 

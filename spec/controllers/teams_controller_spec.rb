@@ -74,16 +74,27 @@ describe TeamsController do
   end
 
   describe 'PATCH #update' do
-    it 'updates a team' do
-      team = create(:team, name: 'A', description: 'B')
-      user.grant(:edit, team)
+    let(:team) { create(:team_with_avatar, name: 'A', description: 'B') }
 
+    it 'updates a team' do
+      user.grant(:edit, team)
       sign_in user
+
       patch :update, params: { id: team.id, team: { name: 'C', description: 'D' } }
 
-      team = Team.find(team.id)
+      team.reload
       expect(team.name).to eq('C')
       expect(team.description).to eq('D')
+    end
+
+    it 'allows avatar removal' do
+      user.grant(:edit, team)
+      sign_in user
+
+      patch :update, params: { id: team.id, team: { remove_avatar: true } }
+
+      team.reload
+      expect(team.avatar.url).to eq(team.avatar.default_url)
     end
   end
 
