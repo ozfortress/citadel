@@ -126,7 +126,9 @@ class League
     end
 
     def schedule_data=(data)
-      self[:schedule_data] = league.scheduler.transform_data(data)
+      self[:schedule_data] = if league.scheduler
+                               league.scheduler.transform_data(data)
+                             end
     end
 
     private
@@ -165,7 +167,10 @@ class League
 
     def set_defaults
       self.approved = false unless approved.present?
-      self[:schedule_data] = league.scheduler.default_schedule if league.scheduler && !schedule_data
+
+      if league.present? && league.scheduler && !schedule_data
+        self[:schedule_data] = league.scheduler.default_schedule
+      end
     end
 
     def player_count_minimums
@@ -187,7 +192,7 @@ class League
     end
 
     def validate_schedule
-      return unless league.scheduler
+      return unless league.present? && league.scheduler
 
       if schedule_data.present?
         league.scheduler.validate_roster(self)

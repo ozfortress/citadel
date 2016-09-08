@@ -78,7 +78,8 @@ module Leagues
     private
 
     def schedule_params
-      @params_schedule_data ||= params[:roster].delete(:schedule_data).permit!
+      @params_schedule_data ||= params[:roster].delete(:schedule_data)
+      @params_schedule_data.permit! if @params_schedule_data
     end
 
     def new_roster_params
