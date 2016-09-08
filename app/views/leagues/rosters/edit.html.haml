@@ -18,7 +18,7 @@
         = f.check_box :disbanded
         = f.number_field :seeding
         = f.number_field :ranking
-      = f.markdown_editor :description, label: 'Tell us about your team', rows: 10
+      = render 'form', f: f
 
       = f.submit 'Update'
       = link_to 'Cancel', league_roster_path(@league, @roster), class: 'btn btn-default'

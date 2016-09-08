@@ -89,7 +89,7 @@ class League < ApplicationRecord
   private
 
   def update_roster_match_counters
-    rosters.each(&:update_match_counters!)
+    rosters.where(approved: true).find_each(&:update_match_counters!)
   end
 
   def validate_players_range

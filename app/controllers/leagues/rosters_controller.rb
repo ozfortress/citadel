@@ -77,17 +77,30 @@ module Leagues
 
     private
 
+    def schedule_params
+      @params_schedule_data ||= params[:roster].delete(:schedule_data).permit!
+    end
+
     def new_roster_params
-      params.require(:roster).permit(:name, :description, :division_id, player_ids: [])
+      param = params.require(:roster).permit(:name, :description, :division_id, player_ids: [])
+
+      param.tap do |whitelisted|
+        whitelisted[:schedule_data] = schedule_params
+      end
     end
 
     def roster_params
-      param = params.require(:roster)
+      roster = params.require(:roster)
 
-      if user_can_edit_league?
-        param.permit(:name, :description, :disbanded, :ranking, :seeding, :division_id)
-      else
-        param.permit(:description)
+      param = if user_can_edit_league?
+                roster.permit(:name, :description, :disbanded, :ranking,
+                              :seeding, :division_id)
+              else
+                roster.permit(:description)
+              end
+
+      param.tap do |whitelisted|
+        whitelisted[:schedule_data] = schedule_params
       end
     end
 
