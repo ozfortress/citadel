@@ -70,6 +70,17 @@ class League
         rotated_names.each_with_index.select { |_, i| rotated_days[i] }.map(&:first)
       end
 
+      def common_schedule(roster1, roster2)
+        common = []
+
+        schedule_days.each do |day|
+          common << day if roster1.schedule_data['availability'].include?(day) &&
+                           roster2.schedule_data['availability'].include?(day)
+        end
+
+        common
+      end
+
       private
 
       def validate_days_length
