@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe League::Schedulers::Weekly do
-  before { create(:league_schedulers_weekly) }
+  before(:all) { create(:league_schedulers_weekly) }
 
   it { should belong_to(:league) }
   it { should_not allow_value(nil).for(:league) }

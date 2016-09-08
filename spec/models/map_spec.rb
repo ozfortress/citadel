@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Map do
-  before { create(:map) }
+  before(:all) { create(:map) }
 
   it { should belong_to(:game) }
   it { should_not allow_value(nil).for(:game) }

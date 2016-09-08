@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Forums::Topic do
-  before { create(:forums_topic) }
+  before(:all) { create(:forums_topic) }
 
   it { should belong_to(:parent_topic).class_name('Forums::Topic') }
   it { should allow_value(nil).for(:parent_topic) }

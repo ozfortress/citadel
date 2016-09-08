@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe User do
-  let!(:user) { create(:user) }
+  before(:all) { create(:user) }
 
   it { should have_many(:team_invites) }
   it { should have_many(:team_transfers) }

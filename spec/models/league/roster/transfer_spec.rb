@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe League::Roster::Transfer do
-  before { create(:league_roster_transfer) }
+  before(:all) { create(:league_roster_transfer) }
 
   it { should belong_to(:roster) }
   it { should_not allow_value(nil).for(:roster) }

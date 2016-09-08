@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Format do
-  before { create(:format) }
+  before(:all) { create(:format) }
 
   it { should belong_to(:game) }
   it { should_not allow_value(nil).for(:game) }

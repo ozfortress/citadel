@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe League::Roster do
-  before { create(:league_roster) }
+  before(:all) { create(:league_roster) }
 
   it { should belong_to(:team) }
   it { should_not allow_value(nil).for(:team) }
@@ -32,8 +32,8 @@ describe League::Roster do
 
   describe 'player count limits' do
     it 'validates minimum players' do
-      comp = create(:league, min_players: 1)
-      div = create(:league_division, league: comp)
+      comp = build(:league, min_players: 1)
+      div = build(:league_division, league: comp)
 
       expect(build(:league_roster, division: div, player_count: 1)).to be_valid
       expect(build(:league_roster, division: div, player_count: 5)).to be_valid
@@ -41,8 +41,8 @@ describe League::Roster do
     end
 
     it 'validates maximum players' do
-      comp = create(:league, min_players: 1, max_players: 2)
-      div = create(:league_division, league: comp)
+      comp = build(:league, min_players: 1, max_players: 2)
+      div = build(:league_division, league: comp)
 
       expect(build(:league_roster, division: div, player_count: 1)).to be_valid
       expect(build(:league_roster, division: div, player_count: 2)).to be_valid
@@ -51,12 +51,12 @@ describe League::Roster do
     end
 
     it 'validates no maximum on players' do
-      comp = create(:league, min_players: 1, max_players: 0)
-      div = create(:league_division, league: comp)
+      comp = build(:league, min_players: 1, max_players: 0)
+      div = build(:league_division, league: comp)
 
       expect(build(:league_roster, division: div, player_count: 1)).to be_valid
-      expect(build(:league_roster, division: div, player_count: 10)).to be_valid
-      expect(build(:league_roster, division: div, player_count: 20)).to be_valid
+      expect(build(:league_roster, division: div, player_count: 6)).to be_valid
+      expect(build(:league_roster, division: div, player_count: 7)).to be_valid
     end
   end
 

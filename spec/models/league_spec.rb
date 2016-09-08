@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe League do
-  before { create(:league) }
+  before(:all) { create(:league) }
 
   it { should belong_to(:format) }
   it { should_not allow_value(nil).for(:format) }

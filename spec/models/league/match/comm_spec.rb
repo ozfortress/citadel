@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe League::Match::Comm do
-  before { create(:league_match_comm) }
+  before(:all) { create(:league_match_comm) }
 
   it { should belong_to(:user) }
   it { should_not allow_value(nil).for(:user) }
