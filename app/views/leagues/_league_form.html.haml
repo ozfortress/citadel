@@ -60,3 +60,12 @@
                                 'data-association-insertion-node' => '#divisions' do
         %span.glyphicon.glyphicon-plus
         Add Division
+
+.panel.panel-default
+  .panel-heading Scheduling
+  .panel-body
+    = f.select :schedule, League.schedules.map { |name, _| [name.humanize, name] }
+
+    #weeklies
+      = f.fields_for :weekly_scheduler, weekly_scheduler do |scheduler_f|
+        = render 'leagues/schedulers/weekly_form', f: scheduler_f

@@ -1,0 +1,19 @@
+= f.select :start_of_week, Date::DAYNAMES
+
+- klass = ''
+- if f.object.errors.include? :days
+  - klass = 'has-error'
+
+.control-group{ class: klass }
+  = f.label 'Days', class: 'control-label'
+  %table.table
+    %tr
+      - Date::DAYNAMES.each do |weekday|
+        %th= weekday
+    %tr
+      - f.object.days.each_with_index do |value, index|
+        %td
+          = check_box_tag "#{f.object_name}[days_indecies][]", index, value, class: 'checkbox'
+  %span.help-block= f.object.errors.full_messages_for(:days).first
+
+= f.number_field :minimum_selected, label: 'Minimum Required (0 for unlimited)'

@@ -8,7 +8,7 @@
     Private
 
 = bootstrap_form_for @league, url: league_path(@league) do |f|
-  = render 'league_form', f: f
+  = render 'league_form', f: f, weekly_scheduler: @weekly_scheduler
 
   = f.submit 'Update'
   = link_to 'Cancel', league_path(@league), class: 'btn btn-default'

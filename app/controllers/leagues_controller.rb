@@ -19,6 +19,7 @@ class LeaguesController < ApplicationController
   def new
     @league = League.new
     @league.divisions.new
+    @weekly_scheduler = League::Schedulers::Weekly.new
   end
 
   def create
@@ -27,6 +28,7 @@ class LeaguesController < ApplicationController
     if @league.save
       redirect_to league_path(@league)
     else
+      edit
       render :new
     end
   end
@@ -36,12 +38,14 @@ class LeaguesController < ApplicationController
   end
 
   def edit
+    @weekly_scheduler = @league.weekly_scheduler || League::Schedulers::Weekly.new
   end
 
   def update
     if @league.update(league_params)
       redirect_to league_path(@league)
     else
+      edit
       render :edit
     end
   end
@@ -65,15 +69,14 @@ class LeaguesController < ApplicationController
   private
 
   def league_params
-    params.require(:league).permit(:name, :description, :format_id, :signuppable,
-                                   :roster_locked, :matches_submittable,
-                                   :transfers_require_approval, :allow_round_draws,
-                                   :allow_disbanding, :min_players, :max_players,
-                                   :points_per_round_won, :points_per_round_drawn,
-                                   :points_per_round_lost, :points_per_match_forfeit_loss,
-                                   :points_per_match_forfeit_win,
-                                   tiebreakers_attributes: [:id, :kind, :_destroy],
-                                   divisions_attributes: [:id, :name, :_destroy])
+    params.require(:league).permit(
+      :name, :description, :format_id, :signuppable, :roster_locked, :matches_submittable,
+      :transfers_require_approval, :allow_round_draws, :allow_disbanding, :min_players,
+      :max_players, :points_per_round_won, :points_per_round_drawn, :points_per_round_lost,
+      :points_per_match_forfeit_loss, :points_per_match_forfeit_win, :schedule,
+      weekly_scheduler_attributes: [:id, :start_of_week, :minimum_selected, days_indecies: []],
+      tiebreakers_attributes: [:id, :kind, :_destroy],
+      divisions_attributes: [:id, :name, :_destroy])
   end
 
   def require_hidden

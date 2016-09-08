@@ -8,8 +8,7 @@ class League < ApplicationRecord
 
   has_many :divisions, inverse_of: :league, dependent: :destroy
   accepts_nested_attributes_for :divisions, allow_destroy: true
-  has_many :tiebreakers, inverse_of: :league, dependent: :destroy,
-                         class_name: 'Tiebreaker'
+  has_many :tiebreakers, inverse_of: :league, dependent: :destroy
   accepts_nested_attributes_for :tiebreakers, allow_destroy: true
 
   has_many :rosters,   through: :divisions, class_name: 'Roster', counter_cache: :rosters_count
@@ -34,7 +33,12 @@ class League < ApplicationRecord
   validates :points_per_match_forfeit_loss, presence: true, numericality: { only_integer: true }
   validates :points_per_match_forfeit_win, presence: true, numericality: { only_integer: true }
 
+  enum schedule: [:manual, :weeklies]
+  has_one :weekly_scheduler, class_name: 'League::Schedulers::Weekly', dependent: :destroy
+  accepts_nested_attributes_for :weekly_scheduler, update_only: true
+
   validate :validate_players_range
+  validate :validate_has_scheduler
 
   scope :not_hidden, -> { where.not(status: League.statuses[:hidden]) }
 
@@ -71,6 +75,17 @@ class League < ApplicationRecord
     super.where(approved: true)
   end
 
+  def scheduler
+    case schedule
+    when 'manual'
+      nil
+    when 'weeklies'
+      weekly_scheduler
+    else
+      fail
+    end
+  end
+
   private
 
   def update_roster_match_counters
@@ -84,12 +99,18 @@ class League < ApplicationRecord
     end
   end
 
+  def validate_has_scheduler
+    errors.add(:schedule, 'missing scheduler') unless schedule == 'manual' || scheduler.present?
+  end
+
   def set_defaults
-    self.status = :private     unless status.present?
-    self.signuppable = true    unless signuppable.present?
+    self.status ||= :private
+    self.signuppable ||= true
     self.roster_locked = false unless roster_locked.present?
 
-    self.min_players = 6  unless min_players.present?
-    self.max_players = 16 unless max_players.present?
+    self.min_players ||= 6
+    self.max_players ||= 16
+
+    self.schedule ||= :manual
   end
 end
