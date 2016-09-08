@@ -29,6 +29,7 @@ describe User do
   end
 
   it 'has teams' do
+    user = create(:user)
     team = create(:team, name: 'A')
     team2 = create(:team, name: 'B')
     create(:team, name: 'C')
