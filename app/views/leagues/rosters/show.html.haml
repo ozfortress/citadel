@@ -61,7 +61,9 @@ signed up on #{@roster.created_at.strftime('%c')}
   .panel-heading Matches
   %ul.list-group
     - present_collection(@matches).each do |match|
-      %li.list-group-item= match.link
+      %li.list-group-item
+        = match.link
+        .pull-right= match.results
 
 - if user_can_edit_league?
   .panel.panel-info

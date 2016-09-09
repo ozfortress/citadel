@@ -33,7 +33,34 @@ class League
       end
     end
 
+    def results
+      return unless match.confirmed?
+
+      if match.no_forfeit?
+        score_results
+      else
+        forfeit_results
+      end
+    end
+
     private
+
+    def score_results
+      scores = match.rounds.map { |round| "#{round.home_team_score}:#{round.away_team_score}" }
+
+      "| #{scores.join(' | ')} |"
+    end
+
+    def forfeit_results
+      case match.forfeit_by
+      when 'home_team_forfeit'
+        "#{home_team.name} forfeit"
+      when 'away_team_forfeit'
+        "#{away_team.name} forfeit"
+      else
+        match.forfeit_by.to_s.humanize
+      end
+    end
 
     def match_s
       round_s + if bye?
