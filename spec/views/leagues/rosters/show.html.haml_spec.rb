@@ -7,7 +7,7 @@ describe 'leagues/rosters/show' do
   it 'shows all data' do
     assign(:league, roster.league)
     assign(:roster, roster)
-    assign(:matches, matches)
+    assign(:matches, roster.matches)
 
     render
 
