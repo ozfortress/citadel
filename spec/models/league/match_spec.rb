@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe League::Match do
-  before { create(:league_match) }
+  before(:all) { create(:league_match) }
 
   it { should belong_to(:home_team).class_name('League::Roster') }
   it { should_not allow_value(nil).for(:home_team) }

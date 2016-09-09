@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe User do
-  let!(:user) { create(:user) }
+  before(:all) { create(:user) }
 
   it { should have_many(:team_invites) }
   it { should have_many(:team_transfers) }
@@ -29,6 +29,7 @@ describe User do
   end
 
   it 'has teams' do
+    user = create(:user)
     team = create(:team, name: 'A')
     team2 = create(:team, name: 'B')
     create(:team, name: 'C')

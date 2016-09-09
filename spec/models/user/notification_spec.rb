@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe User::Notification do
-  let!(:notification) { create(:user_notification) }
+  before(:all) { create(:user_notification) }
 
   it { should belong_to(:user) }
   it { should_not allow_value(nil).for(:user) }

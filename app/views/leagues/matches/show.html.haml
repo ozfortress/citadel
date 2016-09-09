@@ -27,4 +27,12 @@
   - elsif user_can_either_teams? && @league.matches_submittable?
     = render 'match_scores', match: @match, league: @league
 
+  - if @match.home_team.schedule_data && @match.away_team.schedule_data
+    - if @league.schedule == 'weeklies'
+      .panel.panel-default
+        .panel-heading Availability
+        .panel-body
+          Schedule suggestions (based on availability):
+          %b= @league.scheduler.common_schedule(@match.home_team, @match.away_team).join(', ')
+
   = render 'match_comms', match: @match, league: @league, comm: @comm

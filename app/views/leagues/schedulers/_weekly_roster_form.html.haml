@@ -1,0 +1,20 @@
+- klass = ''
+- if f.object.errors.include? :schedule_data
+  - klass = 'has-error'
+
+.control-group{ class: klass }
+  = f.label 'Availability', class: 'control-label'
+
+  = hidden_field_tag "#{f.object_name}[schedule_data][type]", 'weekly'
+  %table.table
+    %tr
+      - scheduler.schedule_days.each do |weekday|
+        %th= weekday
+    %tr
+      - scheduler.schedule_days.each do |weekday|
+        %td
+          - name = "#{f.object_name}[schedule_data][availability][#{weekday}]"
+          - value = false
+          - value = f.object.schedule_data['availability'][weekday] if f.object.schedule_data
+          = check_box_tag name, true, value, class: 'checkbox'
+  %span.help-block= f.object.errors.full_messages_for(:schedule_data).first

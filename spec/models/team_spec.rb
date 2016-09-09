@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Team do
-  let!(:team) { create(:team) }
+  before(:all) { create(:team) }
 
   it { should have_many(:invites) }
   it { should have_many(:transfers) }
@@ -15,6 +15,7 @@ describe Team do
   it { should validate_length_of(:description).is_at_least(0) }
 
   describe 'players' do
+    let(:team) { create(:team) }
     let(:user1) { create(:user) }
     let(:user2) { create(:user) }
     let(:user3) { create(:user) }
@@ -34,6 +35,8 @@ describe Team do
   end
 
   describe '#destroy' do
+    let(:team) { create(:team) }
+
     it "can't be destroyed when the team has roster" do
       create(:league_roster, team: team)
 

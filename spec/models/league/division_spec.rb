@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe League::Division do
-  before { create(:league_division) }
+  before(:all) { create(:league_division) }
 
   it { should belong_to(:league) }
   it { should_not allow_value(nil).for(:league) }

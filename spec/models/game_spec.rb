@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Game do
-  before { create(:game) }
+  before(:all) { create(:game) }
 
   it { should have_many(:formats) }
   it { should have_many(:leagues).through(:formats) }

@@ -20,7 +20,7 @@
       url: league_rosters_path(@league, team_id: @team.id) do |f|
     = f.text_field :name
     = f.select :division_id, divisions_select, label: 'Desired Division'
-    = f.markdown_editor :description, label: 'Tell us about your team', rows: 10
+    = render 'form', f: f
 
     - users = present_collection(@team.player_users)
     - listings = users.map { |user| [user.id, user.transfer_listing(@league)] }

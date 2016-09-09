@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe League::Tiebreaker do
-  before { create(:league_tiebreaker) }
+  before(:all) { create(:league_tiebreaker) }
 
   it { should belong_to(:league) }
   it { should_not allow_value(nil).for(:league) }

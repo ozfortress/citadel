@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe League::Match::Round do
-  before { create(:league_match_round) }
+  before(:all) { create(:league_match_round) }
 
   it { should belong_to(:map) }
   it { should_not allow_value(nil).for(:map) }

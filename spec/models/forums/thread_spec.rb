@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Forums::Thread do
-  before { create(:forums_thread) }
+  before(:all) { create(:forums_thread) }
 
   it { should belong_to(:topic) }
   it { should allow_value(nil).for(:topic) }

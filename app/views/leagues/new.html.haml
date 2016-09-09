@@ -1,5 +1,5 @@
 = bootstrap_form_for @league, url: leagues_path(@league) do |f|
-  = render 'league_form', f: f
+  = render 'league_form', f: f, weekly_scheduler: @weekly_scheduler
 
   = f.submit 'Create'
   = link_to 'Cancel', admin_path, class: 'btn btn-default'

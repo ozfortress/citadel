@@ -10,5 +10,6 @@ FactoryGirl.define do
     transfers_require_approval true
     min_players 1
     max_players 0
+    schedule :manual
   end
 end

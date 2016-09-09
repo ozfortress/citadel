@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe MatchSeeder::RoundRobin do
   context 'even number of teams' do
-    before do
+    before(:all) do
       @div = create(:league_division)
       @rosters = create_list(:league_roster, 6, division: @div)
       round = build(:league_match_round)
@@ -26,7 +26,7 @@ describe MatchSeeder::RoundRobin do
   end
 
   context 'odd number of teams' do
-    before do
+    before(:all) do
       @div = create(:league_division)
       @rosters = create_list(:league_roster, 5, division: @div)
       round = build(:league_match_round)

@@ -36,8 +36,8 @@ describe MatchSeeder::Swiss do
   end
 
   context 'even number of teams' do
-    before do
-      run_seedings(30)
+    before(:all) do
+      run_seedings(6)
     end
 
     it 'creates matches for all teams' do
@@ -54,8 +54,8 @@ describe MatchSeeder::Swiss do
   end
 
   context 'odd number of teams' do
-    before do
-      run_seedings(31)
+    before(:all) do
+      run_seedings(5)
     end
 
     it 'creates matches covering all teams' do

@@ -39,6 +39,7 @@ class League
     validates :disbanded,   inclusion: { in: [true, false] }
     validate :player_count_minimums
     validate :player_count_maximums
+    validate :validate_schedule
 
     after_create do
       League.increment_counter(:rosters_count, league.id)
@@ -55,35 +56,27 @@ class League
     end
 
     def won_rounds
-      not_forfeited_home_team_rounds
-        .home_team_wins
-        .union(not_forfeited_away_team_rounds.away_team_wins)
+      away_won = not_forfeited_away_team_rounds.away_team_wins
+      not_forfeited_home_team_rounds.home_team_wins.union(away_won)
     end
 
     def drawn_rounds
-      not_forfeited_home_team_rounds
-        .union(not_forfeited_away_team_rounds)
-        .draws
+      not_forfeited_home_team_rounds.union(not_forfeited_away_team_rounds).draws
     end
 
     def lost_rounds
-      not_forfeited_home_team_rounds
-        .away_team_wins
-        .union(not_forfeited_away_team_rounds.home_team_wins)
+      away_lost = not_forfeited_away_team_rounds.home_team_wins
+      not_forfeited_home_team_rounds.away_team_wins.union(away_lost)
     end
 
     def forfeit_won_matches
-      away_team_matches
-        .home_team_forfeited
-        .union(home_team_matches.away_team_forfeited)
-        .union(matches.technically_forfeited)
+      away_forfeit = home_team_matches.away_team_forfeited
+      away_team_matches.home_team_forfeited.union(away_forfeit).union(matches.technically_forfeited)
     end
 
     def forfeit_lost_matches
-      home_team_matches
-        .home_team_forfeited
-        .union(away_team_matches.away_team_forfeited)
-        .union(matches.mutually_forfeited)
+      away_forfeit = away_team_matches.away_team_forfeited
+      home_team_matches.home_team_forfeited.union(away_forfeit).union(matches.mutually_forfeited)
     end
 
     def update_match_counters!
@@ -92,7 +85,7 @@ class League
               lost_rounds_count:          lost_rounds.count,
               forfeit_won_matches_count:  forfeit_won_matches.count,
               forfeit_lost_matches_count: forfeit_lost_matches.count)
-      update!(points: calculate_points,
+      update!(points:       calculate_points,
               total_scores: calculate_total_scores)
     end
 
@@ -132,6 +125,12 @@ class League
       @sort_keys ||= calculate_sort_keys
     end
 
+    def schedule_data=(data)
+      self[:schedule_data] = if league.scheduler
+                               league.scheduler.transform_data(data)
+                             end
+    end
+
     private
 
     def calculate_sort_keys
@@ -168,6 +167,10 @@ class League
 
     def set_defaults
       self.approved = false unless approved.present?
+
+      if league.present? && league.scheduler && !schedule_data
+        self[:schedule_data] = league.scheduler.default_schedule
+      end
     end
 
     def player_count_minimums
@@ -185,6 +188,16 @@ class League
       max_players = league.max_players
       if players.size > max_players && max_players > 0
         errors.add(:player_ids, "must have no more than #{max_players} players")
+      end
+    end
+
+    def validate_schedule
+      return unless league.present? && league.scheduler
+
+      if schedule_data.present?
+        league.scheduler.validate_roster(self)
+      else
+        errors.add(:schedule_data, 'is required')
       end
     end
   end

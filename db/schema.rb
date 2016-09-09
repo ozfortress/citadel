@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160830060144) do
+ActiveRecord::Schema.define(version: 20160908081432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(version: 20160830060144) do
   end
 
   create_table "forum_threads", force: :cascade do |t|
-    t.integer  "topic_id",      null: false
+    t.integer  "topic_id"
     t.integer  "created_by_id", null: false
     t.string   "title",         null: false
     t.datetime "created_at",    null: false
@@ -216,8 +216,17 @@ ActiveRecord::Schema.define(version: 20160830060144) do
     t.integer  "forfeit_lost_matches_count", default: 0,     null: false
     t.integer  "points",                     default: 0,     null: false
     t.integer  "total_scores",               default: 0,     null: false
+    t.json     "schedule_data"
     t.index ["division_id"], name: "index_league_rosters_on_division_id", using: :btree
     t.index ["team_id"], name: "index_league_rosters_on_team_id", using: :btree
+  end
+
+  create_table "league_schedulers_weeklies", force: :cascade do |t|
+    t.integer "league_id",                                                             null: false
+    t.integer "start_of_week",                                                         null: false
+    t.boolean "days",             default: [true, true, true, true, true, true, true], null: false, array: true
+    t.integer "minimum_selected", default: 0,                                          null: false
+    t.index ["league_id"], name: "index_league_schedulers_weeklies_on_league_id", using: :btree
   end
 
   create_table "league_tiebreakers", force: :cascade do |t|
@@ -247,6 +256,7 @@ ActiveRecord::Schema.define(version: 20160830060144) do
     t.boolean  "allow_disbanding",              default: false, null: false
     t.integer  "status",                        default: 0,     null: false
     t.integer  "rosters_count",                 default: 0,     null: false
+    t.integer  "schedule",                      default: 0,     null: false
     t.index ["format_id"], name: "index_leagues_on_format_id", using: :btree
   end
 
@@ -404,6 +414,7 @@ ActiveRecord::Schema.define(version: 20160830060144) do
   add_foreign_key "league_roster_transfers", "users"
   add_foreign_key "league_rosters", "league_divisions", column: "division_id"
   add_foreign_key "league_rosters", "teams"
+  add_foreign_key "league_schedulers_weeklies", "leagues"
   add_foreign_key "league_tiebreakers", "leagues"
   add_foreign_key "leagues", "formats"
   add_foreign_key "maps", "games"
