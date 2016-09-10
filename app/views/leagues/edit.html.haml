@@ -26,14 +26,14 @@
           Delete
 
       - if @league.hidden?
-        = button_to 'Make Public', league_status_path(@league, status: 'running'),
+        = button_to 'Make Public', modify_league_path(@league, status: 'running'),
                     method: :patch, class: 'btn btn-warning'
       - elsif @league.running?
-        = button_to 'Make Private', league_status_path(@league, status: 'hidden'),
+        = button_to 'Make Private', modify_league_path(@league, status: 'hidden'),
                     method: :patch, class: 'btn btn-danger'
-        = button_to 'Mark Completed', league_status_path(@league, status: 'completed'),
+        = button_to 'Mark Completed', modify_league_path(@league, status: 'completed'),
                     method: :patch, class: 'btn btn-warning'
       - else
-        = button_to 'Unmark Completed', league_status_path(@league, status: 'running'),
+        = button_to 'Unmark Completed', modify_league_path(@league, status: 'running'),
                     method: :patch, class: 'btn btn-warning'
 
