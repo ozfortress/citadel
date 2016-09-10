@@ -9,10 +9,9 @@ module Leagues
 
     before_action :require_user_league_permission, only: [:new, :create, :generate, :create_round,
                                                           :edit, :update, :destroy]
-    before_action :require_user_either_teams, only: [:scores, :confirm]
-    before_action :require_user_can_report_scores, only: [:scores, :forfeit]
-    before_action :require_match_not_bye, only: [:scores, :confirm, :forfeit]
-    before_action :require_user_can_comm, only: [:comms]
+    before_action :require_user_either_teams, only: [:submit, :confirm]
+    before_action :require_user_can_report_scores, only: [:submit, :forfeit]
+    before_action :require_match_not_bye, only: [:submit, :confirm, :forfeit]
 
     def index
     end
@@ -70,17 +69,7 @@ module Leagues
       end
     end
 
-    def comms
-      @comm = League::Match::Comm.new(comm_params.merge(user: current_user, match: @match))
-
-      if @comm.save
-        redirect_to league_match_path(@league, @match)
-      else
-        render :show
-      end
-    end
-
-    def scores
+    def submit
       if @match.update(report_scores_params)
         redirect_to league_match_path(@league, @match)
       else
@@ -149,10 +138,6 @@ module Leagues
                                     rounds_attributes: [:id, :_destroy, :map_id])
     end
 
-    def comm_params
-      params.require(:comm).permit(:content)
-    end
-
     def require_user_can_report_scores
       redirect_to league_match_path(@league, @match) unless user_can_submit_team_score?
     end
@@ -167,10 +152,6 @@ module Leagues
 
     def require_match_not_bye
       redirect_to league_match_path(@league, @match) if @match.bye?
-    end
-
-    def require_user_can_comm
-      redirect_to league_match_path(@league, @match) unless user_can_comm?
     end
   end
 end

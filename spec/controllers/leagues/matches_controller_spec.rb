@@ -208,40 +208,7 @@ describe Leagues::MatchesController do
     end
   end
 
-  describe 'POST #comms' do
-    let!(:match) { create(:league_match, home_team: team1, away_team: team2) }
-
-    it 'succeeds for authorized user' do
-      user.grant(:edit, team1.team)
-      sign_in user
-
-      post :comms, params: { league_id: league.id, id: match.id, comm: { content: 'A' } }
-
-      comm = match.comms.first
-      expect(comm).to_not be nil
-      expect(comm.match).to eq(match)
-      expect(comm.content).to eq('A')
-    end
-
-    it 'fails with invalid data' do
-      user.grant(:edit, team1.team)
-      sign_in user
-
-      post :comms, params: { league_id: league.id, id: match.id, comm: { content: nil } }
-
-      expect(match.comms.first).to be(nil)
-    end
-
-    it 'fails for unauthorized user' do
-      sign_in user
-
-      post :comms, params: { league_id: league.id, id: match.id, comm: { content: 'A' } }
-
-      expect(match.comms.first).to be(nil)
-    end
-  end
-
-  describe 'PATCH #scores' do
+  describe 'PATCH #submit' do
     let!(:match) { create(:league_match, home_team: team1, away_team: team2) }
     let!(:round) { create(:league_match_round, match: match) }
 
@@ -249,7 +216,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, league)
       sign_in user
 
-      patch :scores, params: {
+      patch :submit, params: {
         league_id: league.id, id: match.id, match: {
           status: :confirmed, rounds_attributes: {
             id: round.id, home_team_score: 2, away_team_score: 5,
@@ -269,7 +236,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, league)
       sign_in user
 
-      patch :scores, params: {
+      patch :submit, params: {
         league_id: league.id, id: match.id, match: { forfeit_by: :home_team_forfeit }
       }
 
@@ -282,7 +249,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, team1.team)
       sign_in user
 
-      patch :scores, params: {
+      patch :submit, params: {
         league_id: league.id, id: match.id, match: {
           rounds_attributes: { id: round.id, home_team_score: 2, away_team_score: 5 }
         }
@@ -300,7 +267,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, team2.team)
       sign_in user
 
-      patch :scores, params: {
+      patch :submit, params: {
         league_id: league.id, id: match.id, match: {
           rounds_attributes: {
             id: round.id, home_team_score: 2, away_team_score: 5,
@@ -320,7 +287,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, team1.team)
       sign_in user
 
-      patch :scores, params: {
+      patch :submit, params: {
         league_id: league.id, id: match.id, match: {
           rounds_attributes: {
             id: round.id, home_team_score: -1, away_team_score: 5,
@@ -336,7 +303,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, team1.team)
       sign_in user
 
-      patch :scores, params: {
+      patch :submit, params: {
         league_id: league.id, id: match.id, match: {
           status: :confirmed, rounds_attributes: {
             id: round.id, home_team_score: 2, away_team_score: 5,
@@ -354,7 +321,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, team2.team)
       sign_in user
 
-      patch :scores, params: {
+      patch :submit, params: {
         league_id: league.id, id: match.id, match: {
           rounds_attributes: {
             id: round.id, home_team_score: 2, away_team_score: 5,
