@@ -171,13 +171,13 @@ describe LeaguesController do
     end
   end
 
-  describe 'PATCH #status' do
+  describe 'PATCH #modify' do
     let(:comp) { create(:league, status: :hidden) }
 
     it 'succeeds for authorized user' do
       sign_in admin
 
-      patch :status, params: { id: comp.id, status: 'running' }
+      patch :modify, params: { id: comp.id, status: 'running' }
 
       comp.reload
       expect(comp.status).to eq('running')

@@ -25,7 +25,8 @@ module ApplicationHelper
     @markdown ||= Redcarpet::Markdown.new(@markdown_renderer,
                                           autolink: true, strikethrough: true,
                                           underline: true, no_intra_emphasis: true)
-    raw @markdown.render(source)
+
+    content_tag(:div, @markdown.render(source).html_safe, class: 'markdown')
   end
 
   def format_options

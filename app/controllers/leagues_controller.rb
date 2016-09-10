@@ -6,7 +6,7 @@ class LeaguesController < ApplicationController
   end
 
   before_action :require_user_leagues_permission, only: [:new, :create, :destroy]
-  before_action :require_user_league_permission, only: [:edit, :update, :status, :transfers]
+  before_action :require_user_league_permission, only: [:edit, :update, :modify, :transfers]
   before_action :require_league_not_hidden_or_permission, only: [:show]
   before_action :require_hidden, only: [:destroy]
 
@@ -50,7 +50,7 @@ class LeaguesController < ApplicationController
     end
   end
 
-  def status
+  def modify
     if @league.update(status: params.require(:status))
       redirect_to league_path(@league)
     else
