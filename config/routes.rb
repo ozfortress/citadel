@@ -14,10 +14,9 @@ Rails.application.routes.draw do
     resources :maps, except: [:destroy]
   end
 
-  # TODO: Use simplify routing with member and collection routes for resources
-
-  patch 'leagues/:id/status', to: 'leagues#status', as: 'league_status'
   resources :leagues do
+    patch 'modify', on: :member
+
     resources :transfers, controller: 'leagues/transfers', only: [:index, :destroy, :update]
 
     resources :rosters, controller: 'leagues/rosters' do
@@ -30,15 +29,19 @@ Rails.application.routes.draw do
       resource :comments, controller: 'leagues/rosters/comments', only: [:create]
     end
 
-    post  'matches/:id/comms',   to: 'leagues/matches#comms',   as: 'match_comms'
-    patch 'matches/:id/scores',  to: 'leagues/matches#scores',  as: 'match_scores'
-    patch 'matches/:id/confirm', to: 'leagues/matches#confirm', as: 'match_confirm'
     resources :matches, controller: 'leagues/matches' do
       collection do
         get 'generate'
         post 'generate', action: 'create_round'
       end
-      patch 'forfeit', on: :member
+
+      member do
+        patch 'forfeit'
+        patch 'submit'
+        patch 'confirm'
+      end
+
+      resources :comms, controller: 'leagues/matches/comms', only: [:create]
     end
   end
 
