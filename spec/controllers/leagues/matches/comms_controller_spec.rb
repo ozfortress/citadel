@@ -9,7 +9,9 @@ describe Leagues::Matches::CommsController do
       user.grant(:edit, match.home_team.team)
       sign_in user
 
-      post :create, params: { league_id: match.league.id, match_id: match.id, comm: { content: 'A' } }
+      post :create, params: {
+        league_id: match.league.id, match_id: match.id, comm: { content: 'A' }
+      }
 
       comm = match.comms.first
       expect(comm).to_not be nil
@@ -21,7 +23,9 @@ describe Leagues::Matches::CommsController do
       user.grant(:edit, match.home_team.team)
       sign_in user
 
-      post :create, params: { league_id: match.league.id, match_id: match.id, comm: { content: nil } }
+      post :create, params: {
+        league_id: match.league.id, match_id: match.id, comm: { content: nil }
+      }
 
       expect(match.comms.first).to be(nil)
     end
@@ -29,7 +33,9 @@ describe Leagues::Matches::CommsController do
     it 'fails for unauthorized user' do
       sign_in user
 
-      post :create, params: { league_id: match.league.id, match_id: match.id, comm: { content: 'A' } }
+      post :create, params: {
+        league_id: match.league.id, match_id: match.id, comm: { content: 'A' }
+      }
 
       expect(match.comms.first).to be(nil)
     end
