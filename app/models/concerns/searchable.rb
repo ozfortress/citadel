@@ -51,8 +51,8 @@ module Searchable
       @searchable_fields ||= fields
     end
 
-    def search_mappings(&block)
-      settings GLOBAL_INDEX_SETTINGS do
+    def search_mappings(options = {}, &block)
+      settings GLOBAL_INDEX_SETTINGS.merge(options) do
         mappings(dynamic: 'false', &block)
       end
     end
