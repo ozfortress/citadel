@@ -13,14 +13,14 @@ module Searchable
       analysis: {
         filter: {
           edgeNGram_filter: {
-            type: 'edgeNGram',
+            type: :edgeNGram,
             min_gram: 2,
             max_gram: 20,
           },
         },
         tokenizer: {
           edgeNgram_tokenizer: {
-            type: 'edgeNGram',
+            type: :edgeNGram,
             min_gram: 2,
             max_gram: 20,
             token_chars: [:letter, :digit],
@@ -28,13 +28,13 @@ module Searchable
         },
         analyzer: {
           search: {
-            tokenizer: 'edgeNgram_tokenizer',
-            filter: ['lowercase', 'asciifolding', 'edgeNGram_filter'],
+            tokenizer: :edgeNgram_tokenizer,
+            filter: [:lowercase, :asciifolding, :edgeNGram_filter],
           }
         }
       }
     }
-  }
+  }.freeze
 
   def as_indexed_json(_ = {})
     out = {}
@@ -66,7 +66,8 @@ module Searchable
     end
 
     def simple_search(query)
-      search(query: { multi_match: { query: query, fields: searchable_fields, type: :most_fields } })
+      match = { query: query, fields: searchable_fields, type: :most_fields }
+      search(query: { multi_match: match })
     end
   end
 end
