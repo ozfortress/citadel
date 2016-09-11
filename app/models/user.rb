@@ -43,6 +43,13 @@ class User < ApplicationRecord
 
   alias_attribute :to_s, :name
 
+  searchable_fields :name, :steam_id, :steam_id_nice
+  search_mappings do
+    indexes :name, analyzer: 'search'
+    indexes :steam_id, analyzer: 'keyword'
+    indexes :steam_id_nice, analyzer: 'keyword'
+  end
+
   def steam_profile_url
     "http://steamcommunity.com/profiles/#{steam_id}"
   end
@@ -75,11 +82,6 @@ class User < ApplicationRecord
       can?(:edit, :games) ||
       can?(:manage_rosters, :leagues) ||
       can?(:edit, :permissions)
-  end
-
-  def as_indexed_json(_ = {})
-    as_json(only: [:name, :steam_id],
-            methods: [:steam_id_nice])
   end
 
   def pending_names

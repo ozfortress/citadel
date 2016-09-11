@@ -47,6 +47,11 @@ class League < ApplicationRecord
 
   alias_attribute :to_s, :name
 
+  searchable_fields :name
+  search_mappings do
+    indexes :name, analyzer: 'search'
+  end
+
   def roster_transfer(user)
     transfers.where(user_id: user.id)
              .order(created_at: :desc)

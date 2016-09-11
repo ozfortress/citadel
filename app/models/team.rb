@@ -17,6 +17,11 @@ class Team < ApplicationRecord
 
   before_destroy :must_not_have_rosters, prepend: true
 
+  searchable_fields :name
+  search_mappings do
+    indexes :name, analyzer: 'search'
+  end
+
   def invite(user)
     invites.create(user: user)
   end
