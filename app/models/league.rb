@@ -34,8 +34,9 @@ class League < ApplicationRecord
   validates :points_per_match_forfeit_win, presence: true, numericality: { only_integer: true }
 
   enum schedule: [:manual, :weeklies]
-  has_one :weekly_scheduler, class_name: 'League::Schedulers::Weekly', dependent: :destroy
-  accepts_nested_attributes_for :weekly_scheduler, update_only: true
+  has_one :weekly_scheduler, inverse_of: :league, class_name: 'League::Schedulers::Weekly',
+                             dependent: :destroy
+  accepts_nested_attributes_for :weekly_scheduler
 
   validate :validate_players_range
   validate :validate_has_scheduler
