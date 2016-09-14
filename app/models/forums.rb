@@ -5,6 +5,6 @@ module Forums
   PATH_SEP = ' / '.freeze
 
   def self.table_name_prefix
-    'forum_'
+    'forums_'
   end
 end

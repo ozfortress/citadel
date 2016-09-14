@@ -17,7 +17,7 @@ module Forums
     private
 
     def path_topics
-      present_collection(topic.parent_topics).map(&:link)
+      present_collection(topic.ancestors).map(&:link)
     end
   end
 end

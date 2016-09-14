@@ -22,8 +22,8 @@ describe Forums::TopicsController do
 
       post :create, params: { forums_topic: { name: 'Foo', parent_topic_id: parent_topic.id } }
 
-      expect(parent_topic.child_topics).to_not be_empty
-      topic = parent_topic.child_topics.first
+      expect(parent_topic.children).to_not be_empty
+      topic = parent_topic.children.first
       expect(topic.name).to eq('Foo')
       expect(topic.created_by).to eq(user)
       expect(response).to redirect_to(forums_topic_path(topic))
@@ -35,7 +35,7 @@ describe Forums::TopicsController do
 
       post :create, params: { forums_topic: { name: '', parent_topic_id: parent_topic.id } }
 
-      expect(parent_topic.child_topics).to be_empty
+      expect(parent_topic.children).to be_empty
     end
 
     it 'redirects for unauthorized user' do
@@ -95,7 +95,7 @@ describe Forums::TopicsController do
 
         delete :destroy, params: { id: topic.id }
 
-        expect(topic.child_topics).to be_empty
+        expect(topic.children).to be_empty
         expect(response).to redirect_to(forums_topic_path(parent_topic))
       end
     end

@@ -5,7 +5,7 @@ gem 'rails', '~> 5.0.0'
 gem 'pg'
 # Active Record extensions
 gem 'active_record_union', '~> 1.2.0'
-gem 'activerecord-recursive_tree_scopes'
+gem 'ancestry'
 # SASS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Compress JavaScript assets

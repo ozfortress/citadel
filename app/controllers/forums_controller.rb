@@ -1,6 +1,6 @@
 class ForumsController < ApplicationController
   def show
-    @topics  = Forums::Topic.where(parent_topic: nil)
+    @topics  = Forums::Topic.roots
     @threads = Forums::Thread.where(topic: nil)
   end
 end

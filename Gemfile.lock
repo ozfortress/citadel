@@ -41,8 +41,6 @@ GEM
       activemodel (= 5.0.0.1)
       activesupport (= 5.0.0.1)
       arel (~> 7.0)
-    activerecord-recursive_tree_scopes (0.2.0)
-      activerecord (>= 3)
     activesupport (5.0.0.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
@@ -62,6 +60,8 @@ GEM
       uuidtools
     airbrussh (1.1.0)
       sshkit (>= 1.6.1, != 1.7.0)
+    ancestry (2.1.0)
+      activerecord (>= 3.0.0)
     arel (7.1.1)
     ast (2.3.0)
     autoprefixer-rails (6.4.1)
@@ -407,8 +407,8 @@ DEPENDENCIES
   acme-client (= 0.3.1)
   action_presenter
   active_record_union (~> 1.2.0)
-  activerecord-recursive_tree_scopes
   ahoy_matey
+  ancestry
   bootstrap-sass (~> 3.3.6)
   bootstrap3-datetimepicker-rails (~> 4.17.37)
   bootstrap_form
