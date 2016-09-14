@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160908081432) do
+ActiveRecord::Schema.define(version: 20160914024709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_user_edit_forum_thread", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "forum_thread_id"
+    t.index ["forum_thread_id"], name: "index_action_user_edit_forum_thread_on_forum_thread_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_edit_forum_thread_on_user_id", using: :btree
+  end
 
   create_table "action_user_edit_games", force: :cascade do |t|
     t.integer "user_id"
@@ -52,6 +59,20 @@ ActiveRecord::Schema.define(version: 20160908081432) do
   create_table "action_user_edit_users", force: :cascade do |t|
     t.integer "user_id"
     t.index ["user_id"], name: "index_action_user_edit_users_on_user_id", using: :btree
+  end
+
+  create_table "action_user_manage_forum_thread", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "forum_thread_id"
+    t.index ["forum_thread_id"], name: "index_action_user_manage_forum_thread_on_forum_thread_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_manage_forum_thread_on_user_id", using: :btree
+  end
+
+  create_table "action_user_manage_forum_topic", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "forum_topic_id"
+    t.index ["forum_topic_id"], name: "index_action_user_manage_forum_topic_on_forum_topic_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_manage_forum_topic_on_user_id", using: :btree
   end
 
   create_table "action_user_manage_forums", force: :cascade do |t|
@@ -111,20 +132,30 @@ ActiveRecord::Schema.define(version: 20160908081432) do
 
   create_table "forum_threads", force: :cascade do |t|
     t.integer  "topic_id"
-    t.integer  "created_by_id", null: false
-    t.string   "title",         null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "created_by_id",                 null: false
+    t.string   "title",                         null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.boolean  "locked",        default: false
+    t.boolean  "pinned",        default: false
+    t.boolean  "hidden",        default: false
+    t.integer  "depth",         default: 0,     null: false
     t.index ["created_by_id"], name: "index_forum_threads_on_created_by_id", using: :btree
     t.index ["topic_id"], name: "index_forum_threads_on_topic_id", using: :btree
   end
 
   create_table "forum_topics", force: :cascade do |t|
     t.integer  "parent_topic_id"
-    t.integer  "created_by_id",   null: false
-    t.string   "name",            null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer  "created_by_id",                   null: false
+    t.string   "name",                            null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.boolean  "locked",          default: false
+    t.boolean  "pinned",          default: false
+    t.boolean  "hidden",          default: false
+    t.boolean  "isolated",        default: false
+    t.boolean  "default_hidden",  default: false
+    t.integer  "depth",           default: 0,     null: false
     t.index ["created_by_id"], name: "index_forum_topics_on_created_by_id", using: :btree
     t.index ["parent_topic_id"], name: "index_forum_topics_on_parent_topic_id", using: :btree
   end
@@ -381,6 +412,8 @@ ActiveRecord::Schema.define(version: 20160908081432) do
     t.index ["visit_token"], name: "index_visits_on_visit_token", unique: true, using: :btree
   end
 
+  add_foreign_key "action_user_edit_forum_thread", "forum_threads"
+  add_foreign_key "action_user_edit_forum_thread", "users"
   add_foreign_key "action_user_edit_games", "users"
   add_foreign_key "action_user_edit_league", "leagues"
   add_foreign_key "action_user_edit_league", "users"
@@ -390,6 +423,10 @@ ActiveRecord::Schema.define(version: 20160908081432) do
   add_foreign_key "action_user_edit_team", "users"
   add_foreign_key "action_user_edit_teams", "users"
   add_foreign_key "action_user_edit_users", "users"
+  add_foreign_key "action_user_manage_forum_thread", "forum_threads"
+  add_foreign_key "action_user_manage_forum_thread", "users"
+  add_foreign_key "action_user_manage_forum_topic", "forum_topics"
+  add_foreign_key "action_user_manage_forum_topic", "users"
   add_foreign_key "action_user_manage_forums", "users"
   add_foreign_key "action_user_manage_rosters_league", "leagues"
   add_foreign_key "action_user_manage_rosters_league", "users"
