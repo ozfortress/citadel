@@ -19,7 +19,7 @@ class LeaguesController < ApplicationController
   def new
     @league = League.new
     @league.divisions.new
-    @weekly_scheduler = League::Schedulers::Weekly.new
+    @weekly_scheduler = @league.build_weekly_scheduler
   end
 
   def create
