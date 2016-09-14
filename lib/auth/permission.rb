@@ -56,7 +56,7 @@ module Auth
         action_cls = klass.get_action_class(action, subject)
 
         actor = klass.name.underscore
-        subj = subject.class.name.underscore
+        subj = klass.get_subject_name(subject)
 
         params = { actor => self }
         params.update(subj => subject) if action_cls.has_subject
@@ -95,13 +95,24 @@ module Auth
       attr_reader :permissions
 
       def get_action_class(action, subject)
-        subject_cls = subject.class
-        subject = subject_cls.name.underscore.to_sym unless subject_cls == Symbol
+        subject = get_subject_name(subject)
 
         action_cls = permissions[action][subject]
         throw "Unknown action or subject `#{action}##{subject}`" unless action_cls
 
         action_cls
+      end
+
+      def get_subject_name(subject)
+        return subject if subject.is_a?(Symbol)
+
+        subject_cls = if subject.is_a?(ActiveRecord::Relation)
+                        subject.model
+                      else
+                        subject.class
+                      end
+
+        subject_cls.name.underscore.to_sym
       end
 
       private
