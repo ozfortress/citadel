@@ -14,7 +14,6 @@ class AddForumsPermissionsAndOptions < ActiveRecord::Migration[5.0]
     add_column :forums_threads, :pinned,         :boolean, default: false
     add_column :forums_threads, :hidden,         :boolean, default: false
     add_action_auth :user, :manage, :forums_topic
-    add_action_auth :user, :edit,   :forums_thread
     add_action_auth :user, :manage, :forums_thread
   end
 end

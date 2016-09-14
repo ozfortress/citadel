@@ -1,8 +1,5 @@
 require 'elasticsearch/model'
 
-require 'auth'
-require 'steam_id'
-
 class User < ApplicationRecord
   include Transfers
   include Searchable
@@ -38,6 +35,8 @@ class User < ApplicationRecord
   validates_permission_to :edit, :permissions
 
   validates_permission_to :manage, :forums
+  validates_permission_to :manage, :forums_topic,  class_name: '::Forums::Topic'
+  validates_permission_to :manage, :forums_thread, class_name: '::Forums::Thread'
 
   mount_uploader :avatar, AvatarUploader
 
