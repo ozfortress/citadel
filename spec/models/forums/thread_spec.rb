@@ -14,4 +14,19 @@ describe Forums::Thread do
   it { should validate_presence_of(:title) }
   it { should validate_length_of(:title).is_at_least(1) }
   it { should validate_length_of(:title).is_at_most(128) }
+
+  it 'sets depth from topic' do
+    topic = create(:forums_topic)
+    topic.update!(depth: 12)
+    other_topic = create(:forums_topic)
+    other_topic.update!(depth: 3)
+
+    thread = create(:forums_thread, topic: topic)
+    thread.reload
+    expect(thread.depth).to eq(13)
+
+    thread.update!(topic: other_topic)
+    thread.reload
+    expect(thread.depth).to eq(4)
+  end
 end
