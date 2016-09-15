@@ -32,9 +32,8 @@ module Forums
 
     def set_defaults
       if parent
-        self.locked         = parent.locked
-        self.hidden         = parent.hidden
-        self.default_hidden = parent.default_hidden
+        self.locked = parent.locked
+        self.hidden = parent.hidden
       end
     end
 
