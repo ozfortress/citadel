@@ -154,7 +154,7 @@ ActiveRecord::Schema.define(version: 20160915040215) do
     t.boolean  "hidden",         default: false
     t.boolean  "isolated",       default: false
     t.boolean  "default_hidden", default: false
-    t.integer  "depth",          default: 0,     null: false
+    t.integer  "ancestry_depth", default: 0,     null: false
     t.string   "ancestry"
     t.index ["ancestry"], name: "index_forums_topics_on_ancestry", using: :btree
     t.index ["created_by_id"], name: "index_forums_topics_on_created_by_id", using: :btree
