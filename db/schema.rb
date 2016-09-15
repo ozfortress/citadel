@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160908081432) do
+ActiveRecord::Schema.define(version: 20160915040215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,20 @@ ActiveRecord::Schema.define(version: 20160908081432) do
     t.index ["user_id"], name: "index_action_user_manage_forums_on_user_id", using: :btree
   end
 
+  create_table "action_user_manage_forums_thread", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "forums_thread_id"
+    t.index ["forums_thread_id"], name: "index_action_user_manage_forums_thread_on_forums_thread_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_manage_forums_thread_on_user_id", using: :btree
+  end
+
+  create_table "action_user_manage_forums_topic", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "forums_topic_id"
+    t.index ["forums_topic_id"], name: "index_action_user_manage_forums_topic_on_forums_topic_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_manage_forums_topic_on_user_id", using: :btree
+  end
+
   create_table "action_user_manage_rosters_league", force: :cascade do |t|
     t.integer "user_id"
     t.integer "league_id"
@@ -106,34 +120,44 @@ ActiveRecord::Schema.define(version: 20160908081432) do
     t.index ["name"], name: "index_formats_on_name", unique: true, using: :btree
   end
 
-  create_table "forum_posts", force: :cascade do |t|
+  create_table "forums_posts", force: :cascade do |t|
     t.integer  "thread_id",     null: false
     t.integer  "created_by_id", null: false
     t.string   "content",       null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.index ["created_by_id"], name: "index_forum_posts_on_created_by_id", using: :btree
-    t.index ["thread_id"], name: "index_forum_posts_on_thread_id", using: :btree
+    t.index ["created_by_id"], name: "index_forums_posts_on_created_by_id", using: :btree
+    t.index ["thread_id"], name: "index_forums_posts_on_thread_id", using: :btree
   end
 
-  create_table "forum_threads", force: :cascade do |t|
+  create_table "forums_threads", force: :cascade do |t|
     t.integer  "topic_id"
-    t.integer  "created_by_id", null: false
-    t.string   "title",         null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.index ["created_by_id"], name: "index_forum_threads_on_created_by_id", using: :btree
-    t.index ["topic_id"], name: "index_forum_threads_on_topic_id", using: :btree
+    t.integer  "created_by_id",                 null: false
+    t.string   "title",                         null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.boolean  "locked",        default: false
+    t.boolean  "pinned",        default: false
+    t.boolean  "hidden",        default: false
+    t.integer  "depth",         default: 0,     null: false
+    t.index ["created_by_id"], name: "index_forums_threads_on_created_by_id", using: :btree
+    t.index ["topic_id"], name: "index_forums_threads_on_topic_id", using: :btree
   end
 
-  create_table "forum_topics", force: :cascade do |t|
-    t.integer  "parent_topic_id"
-    t.integer  "created_by_id",   null: false
-    t.string   "name",            null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.index ["created_by_id"], name: "index_forum_topics_on_created_by_id", using: :btree
-    t.index ["parent_topic_id"], name: "index_forum_topics_on_parent_topic_id", using: :btree
+  create_table "forums_topics", force: :cascade do |t|
+    t.integer  "created_by_id",                  null: false
+    t.string   "name",                           null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.boolean  "locked",         default: false
+    t.boolean  "pinned",         default: false
+    t.boolean  "hidden",         default: false
+    t.boolean  "isolated",       default: false
+    t.boolean  "default_hidden", default: false
+    t.integer  "depth",          default: 0,     null: false
+    t.string   "ancestry"
+    t.index ["ancestry"], name: "index_forums_topics_on_ancestry", using: :btree
+    t.index ["created_by_id"], name: "index_forums_topics_on_created_by_id", using: :btree
   end
 
   create_table "games", force: :cascade do |t|
@@ -388,7 +412,7 @@ ActiveRecord::Schema.define(version: 20160908081432) do
     t.index ["visit_token"], name: "index_visits_on_visit_token", unique: true, using: :btree
   end
 
-  add_foreign_key "action_user_edit_forums_thread", "forum_threads", column: "forums_thread_id"
+  add_foreign_key "action_user_edit_forums_thread", "forums_threads"
   add_foreign_key "action_user_edit_forums_thread", "users"
   add_foreign_key "action_user_edit_games", "users"
   add_foreign_key "action_user_edit_league", "leagues"
@@ -400,16 +424,19 @@ ActiveRecord::Schema.define(version: 20160908081432) do
   add_foreign_key "action_user_edit_teams", "users"
   add_foreign_key "action_user_edit_users", "users"
   add_foreign_key "action_user_manage_forums", "users"
+  add_foreign_key "action_user_manage_forums_thread", "forums_threads"
+  add_foreign_key "action_user_manage_forums_thread", "users"
+  add_foreign_key "action_user_manage_forums_topic", "forums_topics"
+  add_foreign_key "action_user_manage_forums_topic", "users"
   add_foreign_key "action_user_manage_rosters_league", "leagues"
   add_foreign_key "action_user_manage_rosters_league", "users"
   add_foreign_key "action_user_manage_rosters_leagues", "users"
   add_foreign_key "formats", "games"
-  add_foreign_key "forum_posts", "forum_threads", column: "thread_id"
-  add_foreign_key "forum_posts", "users", column: "created_by_id"
-  add_foreign_key "forum_threads", "forum_topics", column: "topic_id"
-  add_foreign_key "forum_threads", "users", column: "created_by_id"
-  add_foreign_key "forum_topics", "forum_topics", column: "parent_topic_id"
-  add_foreign_key "forum_topics", "users", column: "created_by_id"
+  add_foreign_key "forums_posts", "forums_threads", column: "thread_id"
+  add_foreign_key "forums_posts", "users", column: "created_by_id"
+  add_foreign_key "forums_threads", "forums_topics", column: "topic_id"
+  add_foreign_key "forums_threads", "users", column: "created_by_id"
+  add_foreign_key "forums_topics", "users", column: "created_by_id"
   add_foreign_key "league_divisions", "leagues"
   add_foreign_key "league_match_comms", "league_matches", column: "match_id"
   add_foreign_key "league_match_comms", "users"
