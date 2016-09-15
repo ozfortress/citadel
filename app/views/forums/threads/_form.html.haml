@@ -1,2 +1,6 @@
 = f.text_field :title
-= f.hidden_field :topic_id
+
+- if user_can_manage_thread?
+  = f.check_box :locked
+  = f.check_box :pinned
+  = f.check_box :hidden

@@ -2,7 +2,7 @@
 
 = render 'forums/head', object: @topic.parent
 
-= bootstrap_form_for @topic do |f|
+= bootstrap_form_for @topic, url: forums_topics_path(parent: @topic.parent) do |f|
   = render 'form', f: f
 
   = f.submit 'Create'

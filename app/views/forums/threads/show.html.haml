@@ -1,7 +1,8 @@
-.pull-right.dropdown
-  = link_to edit_forums_thread_path(@thread), class: 'btn btn-default' do
-    Edit
-    %span.glyphicon.glyphicon-cog
+- if user_can_edit_thread?
+  .pull-right.dropdown
+    = link_to edit_forums_thread_path(@thread), class: 'btn btn-default' do
+      Edit
+      %span.glyphicon.glyphicon-cog
 
 = render 'forums/head', object: @thread
 
@@ -9,7 +10,7 @@
   - @posts.each do |post|
     = render post
 
-  - if user_can_manage_forums?
+  - if user_can_create_post?
     .container-fluid
       %hr
       = bootstrap_form_for @post, url: forums_thread_posts_path(@thread) do |f|

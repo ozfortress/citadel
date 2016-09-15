@@ -1,10 +1,12 @@
 .panel.panel-default
-  - if !threads.empty? || user_can_manage_forums?
+  - if user_can_create_thread? || !threads.empty?
     .panel-heading
-      .pull-right
-        = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-default' do
-          Create
-          %span.glyphicon.glyphicon-plus
+      - if user_can_create_thread?
+        .pull-right
+          = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-default' do
+            Create
+            %span.glyphicon.glyphicon-plus
+
       Threads
 
     %ul.list-group
@@ -12,12 +14,14 @@
         %li.list-group-item
           = thread.link
 
-  - if !topics.empty? || user_can_manage_forums?
+  - if user_can_manage_topic? || !topics.empty?
     .panel-heading
-      .pull-right
-        = link_to new_forums_topic_path(parent_topic: parent_topic), class: 'btn btn-default' do
-          Create
-          %span.glyphicon.glyphicon-plus
+      - if user_can_manage_topic?
+        .pull-right
+          = link_to new_forums_topic_path(parent: parent_topic), class: 'btn btn-default' do
+            Create
+            %span.glyphicon.glyphicon-plus
+
       Topics
 
     %ul.list-group
