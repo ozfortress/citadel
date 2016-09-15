@@ -1,17 +1,24 @@
 module Forums
   class ThreadsController < ApplicationController
-    include Permissions
+    include Forums::Permissions
 
+    before_action only: [:new, :create] do
+      @topic = Forums::Topic.find(params[:topic]) if params[:topic]
+    end
     before_action except: [:new, :create] { @thread = Forums::Thread.find(params[:id]) }
-    before_action :require_forums_permission, except: :show
+
+    before_action :require_can_create_thread, only: [:new, :create]
+    before_action :require_can_view_thread, only: :show
+    before_action :require_can_edit_thread, only: [:edit, :update]
+    before_action :require_can_manage_thread, only: [:destroy]
 
     def new
-      @thread = Forums::Thread.new
-      @thread.topic = Topic.find(params[:topic]) if params[:topic]
+      @thread = Forums::Thread.new(topic: @topic)
     end
 
     def create
-      @thread = Forums::Thread.new(thread_params.merge(created_by: current_user))
+      params = new_thread_params.merge(topic: @topic, created_by: current_user)
+      @thread = Forums::Thread.new(params)
 
       if @thread.save
         redirect_to forums_thread_path(@thread)
@@ -55,12 +62,36 @@ module Forums
       end
     end
 
-    def thread_params
-      params.require(:forums_thread).permit(:title, :topic_id)
+    def new_thread_params
+      if user_can_manage_topic?
+        params.require(:forums_thread).permit(:topic_id, :title, :locked, :pinned, :hidden)
+      else
+        params.require(:forums_thread).permit(:topic_id, :title)
+      end
     end
 
-    def require_forums_permission
-      redirect_back(fallback_location: forums_path) unless user_can_manage_forums?
+    def thread_params
+      if user_can_manage_thread?
+        params.require(:forums_thread).permit(:topic_id, :title, :locked, :pinned, :hidden)
+      else
+        params.require(:forums_thread).permit(:topic_id, :title)
+      end
+    end
+
+    def require_can_create_thread
+      redirect_back(fallback_location: forums_path) unless user_can_create_thread?
+    end
+
+    def require_can_manage_thread
+      redirect_back(fallback_location: forums_path) unless user_can_manage_thread?
+    end
+
+    def require_can_edit_thread
+      redirect_back(fallback_location: forums_path) unless user_can_edit_thread?
+    end
+
+    def require_can_view_thread
+      redirect_back(fallback_location: forums_path) unless user_can_view_thread?
     end
   end
 end

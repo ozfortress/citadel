@@ -9,7 +9,7 @@ describe Forums::TopicsController do
       user.grant(:manage, :forums)
       sign_in user
 
-      get :new, params: { parent_topic: parent_topic.id }
+      get :new, params: { parent: parent_topic.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -20,12 +20,40 @@ describe Forums::TopicsController do
       user.grant(:manage, :forums)
       sign_in user
 
-      post :create, params: { forums_topic: { name: 'Foo', parent_topic_id: parent_topic.id } }
+      post :create, params: { parent: parent_topic.id, forums_topic: {
+        name: 'Foo', locked: true, pinned: true, hidden: true, isolated: false,
+        default_hidden: true } }
 
       expect(parent_topic.children).to_not be_empty
       topic = parent_topic.children.first
       expect(topic.name).to eq('Foo')
       expect(topic.created_by).to eq(user)
+      expect(topic.locked).to eq(true)
+      expect(topic.pinned).to eq(true)
+      expect(topic.hidden).to eq(true)
+      expect(topic.isolated).to eq(false)
+      expect(topic.default_hidden).to eq(true)
+      expect(response).to redirect_to(forums_topic_path(topic))
+    end
+
+    it 'succeeds in isolated forum for authorized user' do
+      parent_topic.update!(isolated: true)
+      user.grant(:manage, parent_topic)
+      sign_in user
+
+      post :create, params: { parent: parent_topic.id, forums_topic: {
+        name: 'Foo', locked: true, pinned: true, hidden: true, isolated: false,
+        default_hidden: true } }
+
+      expect(parent_topic.children).to_not be_empty
+      topic = parent_topic.children.first
+      expect(topic.name).to eq('Foo')
+      expect(topic.created_by).to eq(user)
+      expect(topic.locked).to eq(true)
+      expect(topic.pinned).to eq(true)
+      expect(topic.hidden).to eq(true)
+      expect(topic.isolated).to eq(false)
+      expect(topic.default_hidden).to eq(true)
       expect(response).to redirect_to(forums_topic_path(topic))
     end
 
@@ -33,34 +61,73 @@ describe Forums::TopicsController do
       user.grant(:manage, :forums)
       sign_in user
 
-      post :create, params: { forums_topic: { name: '', parent_topic_id: parent_topic.id } }
+      post :create, params: { parent: parent_topic.id, forums_topic: { name: '' } }
 
       expect(parent_topic.children).to be_empty
+    end
+
+    it 'redirects for unauthorized user in isolated forum' do
+      parent_topic.update!(isolated: true)
+      user.grant(:manage, :forums)
+      sign_in user
+
+      post :create, params: { parent: parent_topic.id, forums_topic: { name: 'Foo' } }
+
+      expect(response).to redirect_to(forums_path)
     end
 
     it 'redirects for unauthorized user' do
       sign_in user
 
-      post :create, params: { forums_topic: { name: 'Foo', parent_topic_id: parent_topic.id } }
+      post :create, params: { parent: parent_topic.id, forums_topic: { name: 'Foo' } }
 
       expect(response).to redirect_to(forums_path)
     end
 
     it 'redirects for unauthenticated user' do
-      post :create, params: { forums_topic: { name: 'Foo', parent_topic_id: parent_topic.id } }
+      post :create, params: { parent: parent_topic.id, forums_topic: { name: 'Foo' } }
 
       expect(response).to redirect_to(forums_path)
     end
   end
 
   context 'Existing Topic' do
-    let(:topic) { create(:forums_topic, parent_topic: parent_topic) }
+    let(:topic) { create(:forums_topic, parent: parent_topic, name: 'Foo') }
 
     describe 'GET #show' do
       it 'succeeds' do
         get :show, params: { id: topic.id }
 
         expect(response).to have_http_status(:success)
+      end
+
+      context 'hidden topic' do
+        before do
+          topic.update!(hidden: true)
+        end
+
+        it 'succeeds for authorized user' do
+          user.grant(:manage, topic)
+          sign_in user
+
+          get :show, params: { id: topic.id }
+
+          expect(response).to have_http_status(:success)
+        end
+
+        it 'redirects for unauthorized user' do
+          sign_in user
+
+          get :show, params: { id: topic.id }
+
+          expect(response).to redirect_to(forums_path)
+        end
+
+        it 'redirects for unauthenticated user' do
+          get :show, params: { id: topic.id }
+
+          expect(response).to redirect_to(forums_path)
+        end
       end
     end
 
@@ -80,11 +147,55 @@ describe Forums::TopicsController do
         user.grant(:manage, :forums)
         sign_in user
 
-        patch :update, params: { id: topic.id, forums_topic: { name: 'Test' } }
+        patch :update, params: { id: topic.id, forums_topic: {
+          name: 'Test', locked: true, pinned: true, hidden: true, isolated: true,
+          default_hidden: true }
+        }
 
         topic.reload
         expect(topic.name).to eq('Test')
+        expect(topic.locked).to eq(true)
+        expect(topic.pinned).to eq(true)
+        expect(topic.hidden).to eq(true)
+        expect(topic.isolated).to eq(true)
+        expect(topic.default_hidden).to eq(true)
         expect(response).to redirect_to(forums_topic_path(topic))
+      end
+
+      it 'fails with invalid data' do
+        user.grant(:manage, :forums)
+        sign_in user
+
+        patch :update, params: { id: topic.id, forums_topic: { name: '' } }
+
+        topic.reload
+        expect(topic.name).to eq('Foo')
+      end
+
+      context 'isolated forum' do
+        before do
+          parent_topic.update!(isolated: true)
+        end
+
+        it 'succeeds for authorized user' do
+          user.grant(:manage, parent_topic)
+          sign_in user
+
+          patch :update, params: { id: topic.id, forums_topic: { name: 'Test' } }
+
+          topic.reload
+          expect(topic.name).to eq('Test')
+          expect(response).to redirect_to(forums_topic_path(topic))
+        end
+
+        it 'redirects for unauthorized user' do
+          user.grant(:manage, :forums)
+          sign_in user
+
+          patch :update, params: { id: topic.id, forums_topic: { name: 'Test' } }
+
+          expect(response).to redirect_to(forums_path)
+        end
       end
     end
 
@@ -97,6 +208,31 @@ describe Forums::TopicsController do
 
         expect(topic.children).to be_empty
         expect(response).to redirect_to(forums_topic_path(parent_topic))
+      end
+
+      context 'isolated forum' do
+        before do
+          parent_topic.update!(isolated: true)
+        end
+
+        it 'succeeds for authorized user' do
+          user.grant(:manage, parent_topic)
+          sign_in user
+
+          delete :destroy, params: { id: topic.id }
+
+          expect(topic.children).to be_empty
+          expect(response).to redirect_to(forums_topic_path(parent_topic))
+        end
+
+        it 'redirects for unauthorized user' do
+          user.grant(:manage, :forums)
+          sign_in user
+
+          delete :destroy, params: { id: topic.id }
+
+          expect(response).to redirect_to(forums_path)
+        end
       end
     end
   end

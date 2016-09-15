@@ -1,30 +1,39 @@
 module Forums
   class TopicsController < ApplicationController
-    include Permissions
+    include Forums::Permissions
 
+    before_action only: [:new, :create] do
+      @parent_topic = Topic.find(params[:parent]) if params[:parent]
+    end
     before_action except: [:new, :create] { @topic = Topic.find(params[:id]) }
-    before_action :require_forums_permission, except: :show
+    before_action :require_can_manage_parent, only: [:new, :create]
+    before_action :require_can_view, only: :show
+    before_action :require_can_manage, only: [:edit, :update, :destroy]
 
     def new
-      @topic = Topic.new
-      @topic.parent_topic = Topic.find(params[:parent_topic]) if params[:parent_topic]
+      @topic = Forums::Topic.new(parent: @parent_topic)
     end
 
     def create
-      @topic = Topic.new(topic_params.merge(created_by: current_user))
+      params = topic_params.merge(parent: @parent_topic, created_by: current_user)
+      @topic = Forums::Topic.new(params)
 
       if @topic.save
         redirect_to forums_topic_path(@topic)
       else
-        @parent_topic = @topic.parent_topic
+        @parent_topic = @topic.parent
         render :new
       end
     end
 
     def show
-      @topic = Topic.find(params[:id])
-      @subtopics = @topic.child_topics
+      @subtopics = @topic.children
       @threads = @topic.threads
+
+      unless user_can_manage_topic?
+        @subtopics = @subtopics.visible
+        @threads   = @threads.visible.union(@threads.where(created_by: current_user))
+      end
     end
 
     def edit
@@ -49,19 +58,28 @@ module Forums
     private
 
     def topic_parent_path(topic)
-      if topic.parent_topic
-        forums_topic_path(topic.parent_topic)
+      if topic.parent
+        forums_topic_path(topic.parent)
       else
         forums_path
       end
     end
 
     def topic_params
-      params.require(:forums_topic).permit(:name, :parent_topic_id)
+      params.require(:forums_topic).permit(:parent_id, :name, :locked, :pinned,
+                                           :hidden, :isolated, :default_hidden)
     end
 
-    def require_forums_permission
-      redirect_back(fallback_location: forums_path) unless user_can_manage_forums?
+    def require_can_manage_parent
+      redirect_back(fallback_location: forums_path) unless user_can_manage_topic?(@parent_topic)
+    end
+
+    def require_can_view
+      redirect_back(fallback_location: forums_path) unless user_can_view_topic?
+    end
+
+    def require_can_manage
+      redirect_back(fallback_location: forums_path) unless user_can_manage_topic?
     end
   end
 end
