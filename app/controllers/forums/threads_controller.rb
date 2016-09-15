@@ -14,11 +14,14 @@ module Forums
 
     def new
       @thread = Forums::Thread.new(topic: @topic)
+      @post = @thread.posts.new
     end
 
     def create
       params = new_thread_params.merge(topic: @topic, created_by: current_user)
       @thread = Forums::Thread.new(params)
+      post_params = new_thread_post_params.merge(created_by: current_user)
+      @post = @thread.posts.new(post_params)
 
       if @thread.save
         redirect_to forums_thread_path(@thread)
@@ -60,6 +63,10 @@ module Forums
       else
         forums_path
       end
+    end
+
+    def new_thread_post_params
+      params.require(:forums_thread).require(:forums_post).permit(:content)
     end
 
     def new_thread_params

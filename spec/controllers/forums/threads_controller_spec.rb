@@ -21,7 +21,8 @@ describe Forums::ThreadsController do
       sign_in user
 
       post :create, params: { topic: topic.id, forums_thread: {
-        title: 'Foo', locked: true, pinned: true, hidden: true } }
+        title: 'Foo', locked: true, pinned: true, hidden: true,
+        forums_post: { content: 'Bar' } } }
 
       expect(topic.threads).to_not be_empty
       thread = topic.threads.first
@@ -30,6 +31,10 @@ describe Forums::ThreadsController do
       expect(thread.locked).to eq(true)
       expect(thread.pinned).to eq(true)
       expect(thread.hidden).to eq(true)
+      expect(thread.posts).to_not be_empty
+      post = thread.posts.first
+      expect(post.content).to eq('Bar')
+      expect(post.created_by).to eq(user)
       expect(response).to redirect_to(forums_thread_path(thread))
     end
 
@@ -37,7 +42,8 @@ describe Forums::ThreadsController do
       user.grant(:manage, :forums)
       sign_in user
 
-      post :create, params: { topic: topic.id, forums_thread: { title: '' } }
+      post :create, params: { topic: topic.id, forums_thread: {
+        title: '', forums_post: { content: '' } } }
 
       expect(topic.threads).to be_empty
     end
@@ -46,7 +52,8 @@ describe Forums::ThreadsController do
       sign_in user
 
       post :create, params: { topic: topic.id, forums_thread: {
-        title: 'Foo', locked: true, pinned: true, hidden: true } }
+        title: 'Foo', locked: true, pinned: true, hidden: true,
+        forums_post: { content: 'Bar' } } }
 
       expect(topic.threads).to_not be_empty
       thread = topic.threads.first
@@ -55,6 +62,10 @@ describe Forums::ThreadsController do
       expect(thread.locked).to eq(false)
       expect(thread.pinned).to eq(false)
       expect(thread.hidden).to eq(false)
+      expect(thread.posts).to_not be_empty
+      post = thread.posts.first
+      expect(post.content).to eq('Bar')
+      expect(post.created_by).to eq(user)
       expect(response).to redirect_to(forums_thread_path(thread))
     end
 
@@ -70,7 +81,8 @@ describe Forums::ThreadsController do
         sign_in user
 
         post :create, params: { forums_thread: {
-          title: 'Foo', locked: true, pinned: true, hidden: true } }
+          title: 'Foo', locked: true, pinned: true, hidden: true,
+          forums_post: { content: 'Bar' } } }
 
         expect(Forums::Thread.all).to_not be_empty
         thread = Forums::Thread.first
@@ -99,7 +111,8 @@ describe Forums::ThreadsController do
       it 'creates hidden threads for any user' do
         sign_in user
 
-        post :create, params: { topic: topic.id, forums_thread: { title: 'Foo', hidden: false } }
+        post :create, params: { topic: topic.id, forums_thread: {
+          title: 'Foo', hidden: false, forums_post: { content: 'Bar' } } }
 
         expect(topic.threads).to_not be_empty
         thread = topic.threads.first
@@ -119,7 +132,8 @@ describe Forums::ThreadsController do
         user.grant(:manage, :forums)
         sign_in user
 
-        post :create, params: { topic: topic.id, forums_thread: { title: 'Foo' } }
+        post :create, params: { topic: topic.id, forums_thread: {
+          title: 'Foo', forums_post: { content: 'Bar' } } }
 
         expect(topic.threads).to_not be_empty
         thread = topic.threads.first
@@ -145,7 +159,8 @@ describe Forums::ThreadsController do
         user.grant(:manage, :forums)
         sign_in user
 
-        post :create, params: { topic: topic.id, forums_thread: { title: 'Foo' } }
+        post :create, params: { topic: topic.id, forums_thread: {
+          title: 'Foo', forums_post: { content: 'Bar' } } }
 
         expect(topic.threads).to_not be_empty
         thread = topic.threads.first
@@ -172,7 +187,8 @@ describe Forums::ThreadsController do
         sign_in user
 
         post :create, params: { topic: topic.id, forums_thread: {
-          title: 'Foo', locked: true, pinned: true, hidden: true } }
+          title: 'Foo', locked: true, pinned: true, hidden: true,
+          forums_post: { content: 'Bar' } } }
 
         expect(topic.threads).to_not be_empty
         thread = topic.threads.first
