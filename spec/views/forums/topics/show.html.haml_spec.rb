@@ -6,6 +6,7 @@ describe 'forums/topics/show' do
   let(:subtopics) { build_stubbed_list(:forums_topic, 5, parent: topic) }
 
   it 'displays data' do
+    allow(view).to receive(:user_can_manage_topic?).and_return(true)
     assign(:topic, topic)
     assign(:threads, threads)
     assign(:subtopics, subtopics)

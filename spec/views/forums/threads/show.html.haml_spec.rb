@@ -5,6 +5,7 @@ describe 'forums/threads/show' do
   let(:posts) { build_stubbed_list(:forums_post, 20, thread: thread) }
 
   it 'displays data' do
+    allow(view).to receive(:user_can_manage_thread?).and_return(true)
     assign(:thread, thread)
     assign(:posts, posts)
     assign(:post, build(:forums_post))
