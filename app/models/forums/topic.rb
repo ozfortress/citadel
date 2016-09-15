@@ -2,9 +2,9 @@ module Forums
   class Topic < ApplicationRecord
     has_ancestry cache_depth: true
 
-    belongs_to :created_by,   class_name: 'User'
+    belongs_to :created_by, class_name: 'User'
 
-    has_many :threads,      dependent: :destroy
+    has_many :threads, dependent: :destroy
 
     validates :name, presence: true, length: { in: 1..128 }
     validates :locked,         inclusion: { in: [true, false] }
@@ -31,10 +31,9 @@ module Forums
     private
 
     def set_defaults
-      if parent
-        self.locked = parent.locked
-        self.hidden = parent.hidden
-      end
+      return unless parent
+      self.locked = parent.locked if locked.nil?
+      self.hidden = parent.hidden if hidden.nil?
     end
 
     def cascade_threads_depth!

@@ -45,8 +45,8 @@ module Forums
 
     def set_defaults
       if topic
-        self.locked = topic.locked?
-        self.hidden = topic.hidden? || topic.default_hidden?
+        self.locked = topic.locked? if locked.nil?
+        self.hidden = topic.hidden? || topic.default_hidden? if hidden.nil?
       end
     end
 
