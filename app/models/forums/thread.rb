@@ -44,10 +44,11 @@ module Forums
     private
 
     def set_defaults
-      if topic
-        self.locked = topic.locked? if locked.nil?
-        self.hidden = topic.hidden? || topic.default_hidden? if hidden.nil?
-      end
+      return unless topic
+      self.locked = topic.locked? if locked.nil?
+      self.pinned = false         if pinned.nil?
+
+      self.hidden = topic.hidden? || topic.default_hidden? if hidden.nil?
     end
 
     def update_depth

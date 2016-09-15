@@ -32,8 +32,11 @@ module Forums
 
     def set_defaults
       return unless parent
-      self.locked = parent.locked if locked.nil?
-      self.hidden = parent.hidden if hidden.nil?
+      self.locked   = parent.locked if locked.nil?
+      self.pinned   = false         if pinned.nil?
+      self.hidden   = parent.hidden if hidden.nil?
+      self.isolated = false         if isolated.nil?
+      self.default_hidden = false   if default_hidden.nil?
     end
 
     def cascade_threads_depth!
