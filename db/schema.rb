@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915040215) do
+ActiveRecord::Schema.define(version: 20160915064226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,29 +132,29 @@ ActiveRecord::Schema.define(version: 20160915040215) do
 
   create_table "forums_threads", force: :cascade do |t|
     t.integer  "topic_id"
-    t.integer  "created_by_id",                 null: false
-    t.string   "title",                         null: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.boolean  "locked",        default: false
-    t.boolean  "pinned",        default: false
-    t.boolean  "hidden",        default: false
-    t.integer  "depth",         default: 0,     null: false
+    t.integer  "created_by_id",             null: false
+    t.string   "title",                     null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.boolean  "locked"
+    t.boolean  "pinned"
+    t.boolean  "hidden"
+    t.integer  "depth",         default: 0, null: false
     t.index ["created_by_id"], name: "index_forums_threads_on_created_by_id", using: :btree
     t.index ["topic_id"], name: "index_forums_threads_on_topic_id", using: :btree
   end
 
   create_table "forums_topics", force: :cascade do |t|
-    t.integer  "created_by_id",                  null: false
-    t.string   "name",                           null: false
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.boolean  "locked",         default: false
-    t.boolean  "pinned",         default: false
-    t.boolean  "hidden",         default: false
-    t.boolean  "isolated",       default: false
-    t.boolean  "default_hidden", default: false
-    t.integer  "ancestry_depth", default: 0,     null: false
+    t.integer  "created_by_id",              null: false
+    t.string   "name",                       null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "locked"
+    t.boolean  "pinned"
+    t.boolean  "hidden"
+    t.boolean  "isolated"
+    t.boolean  "default_hidden"
+    t.integer  "ancestry_depth", default: 0, null: false
     t.string   "ancestry"
     t.index ["ancestry"], name: "index_forums_topics_on_ancestry", using: :btree
     t.index ["created_by_id"], name: "index_forums_topics_on_created_by_id", using: :btree
