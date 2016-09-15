@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'forums/topics/new' do
-  let(:topic) { build(:forums_topic, parent_topic: create(:forums_topic)) }
+  let(:topic) { build(:forums_topic, parent: create(:forums_topic)) }
 
   it 'displays' do
     assign(:topic, topic)

@@ -3,8 +3,7 @@ require 'rails_helper'
 describe Forums::Topic do
   before(:all) { create(:forums_topic) }
 
-  it { should belong_to(:parent_topic).class_name('Forums::Topic') }
-  it { should allow_value(nil).for(:parent_topic) }
+  it { should allow_value(nil).for(:parent) }
 
   it { should belong_to(:created_by).class_name('User') }
   it { should_not allow_value(nil).for(:created_by) }
@@ -17,43 +16,39 @@ describe Forums::Topic do
 
   it 'sets depth of root topic' do
     topic = create(:forums_topic)
-    topic.reload
-    expect(topic.depth).to eq(0)
+    expect(topic.reload.depth).to eq(0)
   end
 
   it 'sets depth from parent_topic' do
     parent_topic = create(:forums_topic)
-    parent_topic.update!(depth: 12)
-    other_topic = create(:forums_topic)
-    other_topic.update!(depth: 3)
+    other_topic = create(:forums_topic, parent: parent_topic)
 
-    topic = create(:forums_topic, parent_topic: parent_topic)
+    topic = create(:forums_topic, parent: parent_topic)
     topic.reload
-    expect(topic.depth).to eq(13)
+    expect(topic.depth).to eq(1)
 
-    topic.update!(parent_topic: other_topic)
+    topic.update!(parent: other_topic)
     topic.reload
-    expect(topic.depth).to eq(4)
+    expect(topic.depth).to eq(2)
   end
 
   it 'updates depth of children when moved' do
-    topic = create(:forums_topic, parent_topic: nil)
+    topic = create(:forums_topic, parent: nil)
     c_thread = create(:forums_thread, topic: topic)
-    c_topic = create(:forums_topic, parent_topic: topic)
-    c_topic2 = create(:forums_topic, parent_topic: topic)
+    c_topic = create(:forums_topic, parent: topic)
+    c_topic2 = create(:forums_topic, parent: topic)
     gc_thread = create(:forums_thread, topic: c_topic)
-    gc_topic = create(:forums_topic, parent_topic: c_topic2)
+    gc_topic = create(:forums_topic, parent: c_topic2)
 
     parent_topic = create(:forums_topic)
-    parent_topic.update!(depth: 4)
 
-    topic.update!(parent_topic: parent_topic)
+    topic.update!(parent: parent_topic)
 
-    expect(topic.reload.depth).to eq(5)
-    expect(c_thread.reload.depth).to eq(6)
-    expect(c_topic.reload.depth).to eq(6)
-    expect(c_topic2.reload.depth).to eq(6)
-    expect(gc_thread.reload.depth).to eq(7)
-    expect(gc_topic.reload.depth).to eq(7)
+    expect(topic.reload.depth).to eq(1)
+    expect(c_thread.reload.depth).to eq(2)
+    expect(c_topic.reload.depth).to eq(2)
+    expect(c_topic2.reload.depth).to eq(2)
+    expect(gc_thread.reload.depth).to eq(3)
+    expect(gc_topic.reload.depth).to eq(3)
   end
 end

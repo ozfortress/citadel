@@ -1,6 +1,6 @@
 module Forums
   class Topic < ApplicationRecord
-    has_ancestry ancestry_column: :parent_topic_id, depth_cache_column: :depth
+    has_ancestry cache_depth: true
 
     belongs_to :created_by,   class_name: 'User'
 
@@ -20,24 +20,26 @@ module Forums
     scope :visible,  -> { where(hidden: false) }
     scope :isolated, -> { where(isolated: true) }
 
-    before_create :update_depth
-    before_update :update_depth!, if: :parent_topic_id_changed?
+    after_save :cascade_threads_depth!, if: :ancestry_changed?
 
-    def update_depth!
-      update_column(:depth, update_depth)
+    after_initialize :set_defaults, unless: :persisted?
 
-      threads.each(&:update_depth!)
-      children.each(&:update_depth!)
+    def not_isolated?
+      !isolated && (!parent || ancestors.empty? || ancestors.isolated.empty?)
     end
 
     private
 
-    def update_depth
-      self.depth = if parent
-                     parent.depth + 1
-                   else
-                     0
-                   end
+    def set_defaults
+      if parent
+        self.locked         = parent.locked
+        self.hidden         = parent.hidden
+        self.default_hidden = parent.default_hidden
+      end
+    end
+
+    def cascade_threads_depth!
+      threads.update(depth: depth + 1)
     end
   end
 end

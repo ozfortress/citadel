@@ -19,6 +19,8 @@ module Forums
     before_create :update_depth
     before_update :update_depth, if: :topic_id_changed?
 
+    after_initialize :set_defaults, unless: :persisted?
+
     def ancestors
       if topic
         Topic.where(id: topic.id).union(topic.ancestors)
@@ -35,11 +37,18 @@ module Forums
       end
     end
 
-    def update_depth!
-      update_column(:depth, update_depth)
+    def not_isolated?
+      !topic || ancestors.empty? || ancestors.isolated.empty?
     end
 
     private
+
+    def set_defaults
+      if topic
+        self.locked = topic.locked?
+        self.hidden = topic.hidden? || topic.default_hidden?
+      end
+    end
 
     def update_depth
       self.depth = if topic
