@@ -63,6 +63,17 @@ describe 'leagues/matches/show' do
       assign(:league, match.league)
       assign(:match, match)
       assign(:comm, League::Match::Comm.new(match: match))
+
+      days = Array.new(5, true) + Array.new(2, false)
+      scheduler = build(:league_schedulers_weekly, days: days, minimum_selected: 3)
+      match.league.update!(schedule: 'weeklies', weekly_scheduler: scheduler)
+
+      schedule = { 'type' => 'weekly', 'availability' => {
+        "Sunday" => 'true', "Monday" => 'true', "Tuesday" => 'true' } }
+      match.home_team.update!(schedule_data: schedule)
+
+      schedule['availability'] = { "Tuesday" => 'true', "Wednesday" => 'true', "Thursday" => 'true' }
+      match.away_team.update!(schedule_data: schedule)
     end
 
     it 'displays for home team captains' do
@@ -97,6 +108,7 @@ describe 'leagues/matches/show' do
     end
 
     after do
+      expect(rendered).to include('Tuesday')
       comms.each do |comm|
         expect(rendered).to include(comm.content)
       end
