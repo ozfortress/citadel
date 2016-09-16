@@ -80,13 +80,15 @@ class League
     end
 
     def update_match_counters!
-      update!(won_rounds_count:           won_rounds.count,
-              drawn_rounds_count:         drawn_rounds.count,
-              lost_rounds_count:          lost_rounds.count,
-              forfeit_won_matches_count:  forfeit_won_matches.count,
-              forfeit_lost_matches_count: forfeit_lost_matches.count)
-      update!(points:       calculate_points,
-              total_scores: calculate_total_scores)
+      assign_attributes(won_rounds_count:           won_rounds.count,
+                        drawn_rounds_count:         drawn_rounds.count,
+                        lost_rounds_count:          lost_rounds.count,
+                        forfeit_won_matches_count:  forfeit_won_matches.count,
+                        forfeit_lost_matches_count: forfeit_lost_matches.count)
+      save!(validate: false)
+      assign_attributes(points:       calculate_points,
+                        total_scores: calculate_total_scores)
+      save!(validate: false)
     end
 
     def approved_transfers
