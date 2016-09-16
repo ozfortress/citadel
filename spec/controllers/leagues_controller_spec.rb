@@ -51,7 +51,7 @@ describe LeaguesController do
                   points_per_match_forfeit_win: 6, schedule: 'weeklies',
                   divisions_attributes: [{ name: 'PREM' }],
                   tiebreakers_attributes: [{ kind: 'round_wins' },
-                                           { kind: 'round_score_difference'}],
+                                           { kind: 'round_score_difference' }],
                   weekly_scheduler_attributes: {
                     start_of_week: 'Monday', minimum_selected: 2,
                     days_indecies: [0, 1, 3, 5, 6] } }

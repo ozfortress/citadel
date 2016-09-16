@@ -69,10 +69,11 @@ describe 'leagues/matches/show' do
       match.league.update!(schedule: 'weeklies', weekly_scheduler: scheduler)
 
       schedule = { 'type' => 'weekly', 'availability' => {
-        "Sunday" => 'true', "Monday" => 'true', "Tuesday" => 'true' } }
+        'Sunday' => 'true', 'Monday' => 'true', 'Tuesday' => 'true' } }
       match.home_team.update!(schedule_data: schedule)
 
-      schedule['availability'] = { "Tuesday" => 'true', "Wednesday" => 'true', "Thursday" => 'true' }
+      schedule['availability'] = {
+        'Tuesday' => 'true', 'Wednesday' => 'true', 'Thursday' => 'true' }
       match.away_team.update!(schedule_data: schedule)
     end
 
