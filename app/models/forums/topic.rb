@@ -4,7 +4,8 @@ module Forums
 
     belongs_to :created_by, class_name: 'User'
 
-    has_many :threads, dependent: :destroy
+    has_many :threads,       dependent: :destroy
+    has_many :subscriptions, dependent: :destroy
 
     validates :name, presence: true, length: { in: 1..128 }
     validates :locked,         inclusion: { in: [true, false] }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915064226) do
+ActiveRecord::Schema.define(version: 20160917074313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,6 +128,17 @@ ActiveRecord::Schema.define(version: 20160915064226) do
     t.datetime "updated_at",    null: false
     t.index ["created_by_id"], name: "index_forums_posts_on_created_by_id", using: :btree
     t.index ["thread_id"], name: "index_forums_posts_on_thread_id", using: :btree
+  end
+
+  create_table "forums_subscriptions", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "topic_id"
+    t.integer  "thread_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["thread_id"], name: "index_forums_subscriptions_on_thread_id", using: :btree
+    t.index ["topic_id"], name: "index_forums_subscriptions_on_topic_id", using: :btree
+    t.index ["user_id"], name: "index_forums_subscriptions_on_user_id", using: :btree
   end
 
   create_table "forums_threads", force: :cascade do |t|
@@ -434,6 +445,9 @@ ActiveRecord::Schema.define(version: 20160915064226) do
   add_foreign_key "formats", "games"
   add_foreign_key "forums_posts", "forums_threads", column: "thread_id"
   add_foreign_key "forums_posts", "users", column: "created_by_id"
+  add_foreign_key "forums_subscriptions", "forums_threads", column: "thread_id"
+  add_foreign_key "forums_subscriptions", "forums_topics", column: "topic_id"
+  add_foreign_key "forums_subscriptions", "users"
   add_foreign_key "forums_threads", "forums_topics", column: "topic_id"
   add_foreign_key "forums_threads", "users", column: "created_by_id"
   add_foreign_key "forums_topics", "users", column: "created_by_id"
