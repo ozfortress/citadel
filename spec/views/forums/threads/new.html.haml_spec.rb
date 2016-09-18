@@ -5,6 +5,7 @@ describe 'forums/threads/new' do
 
   it 'displays' do
     assign(:thread, thread)
+    assign(:post, thread.posts.new)
 
     render
   end

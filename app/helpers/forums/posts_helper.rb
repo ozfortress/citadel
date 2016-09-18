@@ -1,5 +1,5 @@
 module Forums
   module PostsHelper
-    include Permissions
+    include Forums::Permissions
   end
 end

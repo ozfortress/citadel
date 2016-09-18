@@ -40,7 +40,9 @@ module Auth
         action_cls = klass.get_action_class(action, subject)
 
         params = { klass.name.underscore + '_id' => id }
-        params.update(subject.class.name.underscore + '_id' => subject.id) if action_cls.has_subject
+
+        subject_name = klass.get_subject_name(subject)
+        params.update(subject_name + '_id' => subject.id) if action_cls.has_subject
 
         action_cls.create!(params)
       end
@@ -56,7 +58,7 @@ module Auth
         action_cls = klass.get_action_class(action, subject)
 
         actor = klass.name.underscore
-        subj = subject.class.name.underscore
+        subj = klass.get_subject_name(subject).to_sym
 
         params = { actor => self }
         params.update(subj => subject) if action_cls.has_subject
@@ -69,7 +71,7 @@ module Auth
       def get_revokeable(action, subject)
         action_cls = get_action_class(action, subject)
 
-        subject_name = subject.class.name.underscore
+        subject_name = get_subject_name(subject).to_sym
 
         params = {}
         params.update(subject_name => subject) if action_cls.has_subject
@@ -80,23 +82,23 @@ module Auth
         find(ids)
       end
 
-      def validates_permission_to(action, subject)
+      def validates_permission_to(action, subject, options = {})
         actor = name.underscore.to_sym
 
         table = Auth.auth_name(actor, action, subject)
-        model = new_permission_model(table, actor, subject)
+        model = new_permission_model(table: table, actor: actor, subject: subject,
+                                     subject_options: options)
 
         @permissions ||= Hash.new { |hash, key| hash[key] = {} }
         @permissions[action].update(subject => model)
         const_set(table.camelize, model)
-        assign_subject_relation(subject, model) if model.has_subject
+        assign_subject_relation(subject, model, options[:class_name]) if model.has_subject
       end
 
       attr_reader :permissions
 
       def get_action_class(action, subject)
-        subject_cls = subject.class
-        subject = subject_cls.name.underscore.to_sym unless subject_cls == Symbol
+        subject = get_subject_name(subject).to_sym
 
         action_cls = permissions[action][subject]
         throw "Unknown action or subject `#{action}##{subject}`" unless action_cls
@@ -104,30 +106,48 @@ module Auth
         action_cls
       end
 
+      def get_subject_name(subject)
+        return subject if subject.is_a?(Symbol)
+
+        subject_cls = if subject.is_a?(ActiveRecord::Relation)
+                        subject.model
+                      else
+                        subject.class
+                      end
+
+        subject_cls.name.underscore.sub('/', '_')
+      end
+
       private
 
-      def new_permission_model(table, actor, subject)
+      # Since this method defines a class, we can disable line length checks
+      # rubocop:disable Metrics/MethodLength
+      def new_permission_model(options)
+        subject = options[:subject]
         subject_s = subject.to_s
 
         Class.new(ActiveRecord::Base) do
-          self.table_name = table
-          belongs_to actor
+          self.table_name = options[:table]
+          belongs_to options[:actor]
 
           # Only permissions relating to singular objects have a subject
+          @has_subject = subject_s.singularize == subject_s
           class << self
             attr_reader :has_subject
           end
 
-          @has_subject = subject_s.singularize == subject_s
-          belongs_to subject if has_subject
+          belongs_to subject, options[:subject_options] if has_subject
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
-      def assign_subject_relation(subject, model)
+      def assign_subject_relation(subject, model, subject_cls)
         association_name = model.table_name.to_sym
-        subject_cls = subject.to_s.camelize.constantize
+        subject_cls ||= subject.to_s.camelize
+        subject_cls = subject_cls.constantize
 
-        subject_cls.has_many association_name, class_name: model.name, dependent: :delete_all
+        subject_cls.has_many association_name, class_name: model.name, foreign_key: subject,
+                                               dependent: :delete_all
       end
     end
   end

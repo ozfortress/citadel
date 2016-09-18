@@ -20,12 +20,21 @@ describe Forums::ThreadsController do
       user.grant(:manage, :forums)
       sign_in user
 
-      post :create, params: { forums_thread: { title: 'Foo', topic_id: topic.id } }
+      post :create, params: { topic: topic.id, forums_thread: {
+        title: 'Foo', locked: true, pinned: true, hidden: true,
+        forums_post: { content: 'Bar' } } }
 
       expect(topic.threads).to_not be_empty
       thread = topic.threads.first
       expect(thread.title).to eq('Foo')
       expect(thread.created_by).to eq(user)
+      expect(thread.locked).to eq(true)
+      expect(thread.pinned).to eq(true)
+      expect(thread.hidden).to eq(true)
+      expect(thread.posts).to_not be_empty
+      post = thread.posts.first
+      expect(post.content).to eq('Bar')
+      expect(post.created_by).to eq(user)
       expect(response).to redirect_to(forums_thread_path(thread))
     end
 
@@ -33,23 +42,163 @@ describe Forums::ThreadsController do
       user.grant(:manage, :forums)
       sign_in user
 
-      post :create, params: { forums_thread: { title: '', topic_id: topic.id } }
+      post :create, params: { topic: topic.id, forums_thread: {
+        title: '', forums_post: { content: '' } } }
 
       expect(topic.threads).to be_empty
     end
 
-    it 'redirects for unauthorized user' do
+    it 'succeeds for any user' do
       sign_in user
 
-      post :create, params: { forums_thread: { title: 'Foo', topic_id: topic.id } }
+      post :create, params: { topic: topic.id, forums_thread: {
+        title: 'Foo', locked: true, pinned: true, hidden: true,
+        forums_post: { content: 'Bar' } } }
+
+      expect(topic.threads).to_not be_empty
+      thread = topic.threads.first
+      expect(thread.title).to eq('Foo')
+      expect(thread.created_by).to eq(user)
+      expect(thread.locked).to eq(false)
+      expect(thread.pinned).to eq(false)
+      expect(thread.hidden).to eq(false)
+      expect(thread.posts).to_not be_empty
+      post = thread.posts.first
+      expect(post.content).to eq('Bar')
+      expect(post.created_by).to eq(user)
+      expect(response).to redirect_to(forums_thread_path(thread))
+    end
+
+    it 'redirects for unauthenticated user' do
+      post :create, params: { topic: topic.id, forums_thread: { title: 'Foo' } }
 
       expect(response).to redirect_to(forums_path)
     end
 
-    it 'redirects for unauthenticated user' do
-      post :create, params: { forums_thread: { title: 'Foo', topic_id: topic.id } }
+    context 'root thread' do
+      it 'succeeds for authorized user' do
+        user.grant(:manage, :forums)
+        sign_in user
 
-      expect(response).to redirect_to(forums_path)
+        post :create, params: { forums_thread: {
+          title: 'Foo', locked: true, pinned: true, hidden: true,
+          forums_post: { content: 'Bar' } } }
+
+        expect(Forums::Thread.all).to_not be_empty
+        thread = Forums::Thread.first
+        expect(thread.title).to eq('Foo')
+        expect(thread.created_by).to eq(user)
+        expect(thread.locked).to eq(true)
+        expect(thread.pinned).to eq(true)
+        expect(thread.hidden).to eq(true)
+        expect(response).to redirect_to(forums_thread_path(thread))
+      end
+
+      it 'redirects for any user' do
+        sign_in user
+
+        post :create, params: { forums_thread: { title: 'Foo' } }
+
+        expect(response).to redirect_to(forums_path)
+      end
+    end
+
+    context 'default hidden' do
+      before do
+        topic.update!(default_hidden: true)
+      end
+
+      it 'creates hidden threads for any user' do
+        sign_in user
+
+        post :create, params: { topic: topic.id, forums_thread: {
+          title: 'Foo', hidden: false, forums_post: { content: 'Bar' } } }
+
+        expect(topic.threads).to_not be_empty
+        thread = topic.threads.first
+        expect(thread.title).to eq('Foo')
+        expect(thread.created_by).to eq(user)
+        expect(thread.hidden).to eq(true)
+        expect(response).to redirect_to(forums_thread_path(thread))
+      end
+    end
+
+    context 'locked topic' do
+      before do
+        topic.update!(locked: true)
+      end
+
+      it 'succeeds for authorized user' do
+        user.grant(:manage, :forums)
+        sign_in user
+
+        post :create, params: { topic: topic.id, forums_thread: {
+          title: 'Foo', forums_post: { content: 'Bar' } } }
+
+        expect(topic.threads).to_not be_empty
+        thread = topic.threads.first
+        expect(response).to redirect_to(forums_thread_path(thread))
+      end
+
+      it 'redirects for any user' do
+        sign_in user
+
+        post :create, params: { topic: topic.id, forums_thread: { title: 'Foo' } }
+
+        expect(topic.threads).to be_empty
+        expect(response).to redirect_to(forums_path)
+      end
+    end
+
+    context 'hidden topic' do
+      before do
+        topic.update!(hidden: true)
+      end
+
+      it 'succeeds for authorized user' do
+        user.grant(:manage, :forums)
+        sign_in user
+
+        post :create, params: { topic: topic.id, forums_thread: {
+          title: 'Foo', forums_post: { content: 'Bar' } } }
+
+        expect(topic.threads).to_not be_empty
+        thread = topic.threads.first
+        expect(response).to redirect_to(forums_thread_path(thread))
+      end
+
+      it 'redirects for any user' do
+        sign_in user
+
+        post :create, params: { topic: topic.id, forums_thread: { title: 'Foo' } }
+
+        expect(topic.threads).to be_empty
+        expect(response).to redirect_to(forums_path)
+      end
+    end
+
+    context 'isolated topic' do
+      before do
+        topic.update!(isolated: true)
+      end
+
+      it 'succeeds for any user' do
+        user.grant(:manage, :forums)
+        sign_in user
+
+        post :create, params: { topic: topic.id, forums_thread: {
+          title: 'Foo', locked: true, pinned: true, hidden: true,
+          forums_post: { content: 'Bar' } } }
+
+        expect(topic.threads).to_not be_empty
+        thread = topic.threads.first
+        expect(thread.title).to eq('Foo')
+        expect(thread.created_by).to eq(user)
+        expect(thread.locked).to eq(false)
+        expect(thread.pinned).to eq(false)
+        expect(thread.hidden).to eq(false)
+        expect(response).to redirect_to(forums_thread_path(thread))
+      end
     end
   end
 
@@ -61,6 +210,42 @@ describe Forums::ThreadsController do
         get :show, params: { id: thread.id }
 
         expect(response).to have_http_status(:success)
+      end
+    end
+
+    describe 'PATCH #toggle_subscription' do
+      it 'subscribes unsubscribed user' do
+        sign_in user
+
+        patch :toggle_subscription, params: { id: thread.id }
+
+        expect(user.forums_subscriptions.where(thread: thread)).to exist
+        expect(response).to redirect_to(forums_thread_path(thread))
+      end
+
+      it 'subsubscribes subscribed user' do
+        sign_in user
+        user.forums_subscriptions.create(thread: thread)
+
+        patch :toggle_subscription, params: { id: thread.id }
+
+        expect(user.forums_subscriptions.where(thread: thread)).to_not exist
+        expect(response).to redirect_to(forums_thread_path(thread))
+      end
+
+      it 'redirects for unauthorized user' do
+        sign_in user
+        thread.update!(hidden: true)
+
+        patch :toggle_subscription, params: { id: thread.id }
+
+        expect(response).to redirect_to(forums_path)
+      end
+
+      it 'redirects for unauthenticated user' do
+        patch :toggle_subscription, params: { id: thread.id }
+
+        expect(response).to redirect_to(root_path)
       end
     end
 
@@ -80,11 +265,50 @@ describe Forums::ThreadsController do
         user.grant(:manage, :forums)
         sign_in user
 
-        patch :update, params: { id: thread.id, forums_thread: { title: 'Test' } }
+        patch :update, params: { id: thread.id, forums_thread: {
+          title: 'Test', locked: true, pinned: true, hidden: true } }
 
         thread.reload
         expect(thread.title).to eq('Test')
+        expect(thread.locked).to be(true)
+        expect(thread.pinned).to be(true)
+        expect(thread.hidden).to be(true)
         expect(response).to redirect_to(forums_thread_path(thread))
+      end
+
+      it 'succeeds for creator' do
+        thread.update!(created_by: user)
+        sign_in user
+
+        patch :update, params: { id: thread.id, forums_thread: {
+          title: 'Test', locked: true, pinned: true, hidden: true } }
+
+        thread.reload
+        expect(thread.title).to eq('Test')
+        expect(thread.locked).to be(false)
+        expect(thread.pinned).to be(false)
+        expect(thread.hidden).to be(false)
+        expect(response).to redirect_to(forums_thread_path(thread))
+      end
+
+      it 'fails for invalid data' do
+        user.grant(:manage, :forums)
+        sign_in user
+
+        patch :update, params: { id: thread.id, forums_thread: { title: '' } }
+
+        thread.reload
+        expect(thread.title).to_not eq('Test')
+      end
+
+      it 'redirects for any user' do
+        sign_in user
+
+        patch :update, params: { id: thread.id, forums_thread: { title: 'Test' } }
+
+        thread.reload
+        expect(thread.title).to_not eq('Test')
+        expect(response).to redirect_to(forums_path)
       end
     end
 
@@ -97,6 +321,16 @@ describe Forums::ThreadsController do
 
         expect(topic.threads).to be_empty
         expect(response).to redirect_to(forums_topic_path(topic))
+      end
+
+      it 'fails for any user' do
+        thread.update!(created_by: user)
+        sign_in user
+
+        delete :destroy, params: { id: thread.id }
+
+        expect(topic.threads).to_not be_empty
+        expect(response).to redirect_to(forums_path)
       end
     end
   end

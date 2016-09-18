@@ -1,8 +1,5 @@
 require 'elasticsearch/model'
 
-require 'auth'
-require 'steam_id'
-
 class User < ApplicationRecord
   include Transfers
   include Searchable
@@ -14,6 +11,7 @@ class User < ApplicationRecord
   has_many :titles, -> { order(created_at: :desc) }, class_name: 'Title'
   has_many :names, -> { order(created_at: :desc) }, class_name: 'NameChange'
   has_many :notifications, -> { order(created_at: :desc) }, class_name: 'Notification'
+  has_many :forums_subscriptions, class_name: 'Forums::Subscription'
 
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:steam]
 
@@ -38,6 +36,8 @@ class User < ApplicationRecord
   validates_permission_to :edit, :permissions
 
   validates_permission_to :manage, :forums
+  validates_permission_to :manage, :forums_topic,  class_name: '::Forums::Topic'
+  validates_permission_to :manage, :forums_thread, class_name: '::Forums::Thread'
 
   mount_uploader :avatar, AvatarUploader
 

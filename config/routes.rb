@@ -73,10 +73,20 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :subscribable do
+    member do
+      patch :toggle_subscription, as: 'toggle_subscription_for'
+    end
+  end
+
   resource :forums, only: :show
   namespace :forums, shallow: true do
-    resources :topics, except: :index
+    resources :topics, except: :index do
+      concerns :subscribable
+    end
+
     resources :threads, except: :index do
+      concerns :subscribable
       resources :posts, except: [:show, :new, :index], controller: 'posts'
     end
   end

@@ -2,8 +2,11 @@
 
 = render 'forums/head', object: @thread.topic
 
-= bootstrap_form_for @thread do |f|
+= bootstrap_form_for @thread, url: forums_threads_path(topic: @thread.topic) do |f|
   = render 'form', f: f
+
+  = f.fields_for @post do |post_f|
+    = render 'forums/posts/form', f: post_f
 
   = f.submit 'Create'
   = link_to 'Cancel', :back, class: 'btn btn-default'

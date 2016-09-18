@@ -9,6 +9,7 @@ describe User do
   it { should have_many(:titles) }
   it { should have_many(:names) }
   it { should have_many(:notifications) }
+  it { should have_many(:forums_subscriptions).class_name('Forums::Subscription') }
 
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }

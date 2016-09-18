@@ -48,7 +48,13 @@ describe LeaguesController do
                   allow_disbanding: true, min_players: 1, max_players: 3,
                   points_per_round_won: 3, points_per_round_drawn: 2,
                   points_per_round_lost: 1, points_per_match_forfeit_loss: 5,
-                  points_per_match_forfeit_win: 6, divisions_attributes: [{ name: 'PREM' }] }
+                  points_per_match_forfeit_win: 6, schedule: 'weeklies',
+                  divisions_attributes: [{ name: 'PREM' }],
+                  tiebreakers_attributes: [{ kind: 'round_wins' },
+                                           { kind: 'round_score_difference' }],
+                  weekly_scheduler_attributes: {
+                    start_of_week: 'Monday', minimum_selected: 2,
+                    days_indecies: [0, 1, 3, 5, 6] } }
       }
 
       comp = League.first
@@ -71,6 +77,16 @@ describe LeaguesController do
       expect(comp.divisions.size).to eq(1)
       div = comp.divisions.first
       expect(div.name).to eq('PREM')
+      expect(comp.tiebreakers.size).to eq(2)
+      tieb1 = comp.tiebreakers.first
+      expect(tieb1.kind).to eq('round_wins')
+      tieb2 = comp.tiebreakers.last
+      expect(tieb2.kind).to eq('round_score_difference')
+      expect(comp.schedule).to eq('weeklies')
+      scheduler = comp.weekly_scheduler
+      expect(scheduler.start_of_week).to eq('Monday')
+      expect(scheduler.minimum_selected).to eq(2)
+      expect(scheduler.days).to eq([true, true, false, true, false, true, true])
     end
 
     it 'fails for invalid data' do

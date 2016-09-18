@@ -1,6 +1,6 @@
 .panel.panel-default
   .panel-heading
-    - if user_can_manage_forums?
+    - if user_can_edit_post?(post)
       .pull-right
         = link_to edit_forums_post_path(post), class: 'btn btn-link btn-sm' do
           %span.glyphicon.glyphicon-cog

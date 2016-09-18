@@ -1,7 +1,17 @@
-.pull-right.dropdown
-  = link_to edit_forums_thread_path(@thread), class: 'btn btn-default' do
-    Edit
-    %span.glyphicon.glyphicon-cog
+- if user_can_edit_thread?
+  .pull-right
+    = link_to edit_forums_thread_path(@thread), class: 'btn btn-default' do
+      Edit
+      %span.glyphicon.glyphicon-cog
+
+- if user_signed_in?
+  .pull-right
+    = button_to toggle_subscription_for_forums_thread_path(@thread),
+                method: :patch, class: 'btn btn-default' do
+      - if current_user.forums_subscriptions.where(thread: @thread).exists?
+        = render 'forums/unsubscribe_btn'
+      - else
+        = render 'forums/subscribe_btn'
 
 = render 'forums/head', object: @thread
 
@@ -9,7 +19,7 @@
   - @posts.each do |post|
     = render post
 
-  - if user_can_manage_forums?
+  - if user_can_create_post?
     .container-fluid
       %hr
       = bootstrap_form_for @post, url: forums_thread_posts_path(@thread) do |f|
