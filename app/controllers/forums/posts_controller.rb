@@ -10,9 +10,9 @@ module Forums
     before_action :require_can_manage_thread, only: :destroy
 
     def create
-      @post = Post.new(post_params.merge(created_by: current_user, thread: @thread))
+      @post = Posts::CreationService.call(current_user, @thread, post_params)
 
-      if @post.save
+      if @post.persisted?
         redirect_to forums_thread_path(@thread)
       else
         @posts = @thread.posts

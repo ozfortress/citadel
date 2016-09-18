@@ -19,12 +19,11 @@ module Forums
     end
 
     def create
-      params = new_thread_params.merge(topic: @topic, created_by: current_user)
-      @thread = Forums::Thread.new(params)
-      post_params = new_thread_post_params.merge(created_by: current_user)
-      @post = @thread.posts.new(post_params)
+      @thread = Threads::CreationService.call(current_user, @topic, new_thread_params,
+                                              new_thread_post_params)
+      @post = @thread.posts.first
 
-      if @thread.save
+      if @thread.persisted?
         redirect_to forums_thread_path(@thread)
       else
         render :new
