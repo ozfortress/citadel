@@ -8,7 +8,8 @@ module Forums
     before_action except: [:new, :create] { @thread = Forums::Thread.find(params[:id]) }
 
     before_action :require_can_create_thread, only: [:new, :create]
-    before_action :require_can_view_thread, only: :show
+    before_action :require_login, only: :toggle_subscription
+    before_action :require_can_view_thread, only: [:show, :toggle_subscription]
     before_action :require_can_edit_thread, only: [:edit, :update]
     before_action :require_can_manage_thread, only: [:destroy]
 
@@ -34,6 +35,16 @@ module Forums
       @thread = Forums::Thread.find(params[:id])
       @posts = @thread.posts
       @post = Post.new
+    end
+
+    def toggle_subscription
+      subscription = current_user.forums_subscriptions.where(thread: @thread)
+      if subscription.exists?
+        subscription.destroy_all
+      else
+        subscription.create!
+      end
+      redirect_to forums_thread_path(@thread)
     end
 
     def edit

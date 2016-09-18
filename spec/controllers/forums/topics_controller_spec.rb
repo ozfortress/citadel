@@ -131,6 +131,42 @@ describe Forums::TopicsController do
       end
     end
 
+    describe 'PATCH #toggle_subscription' do
+      it 'subscribes unsubscribed user' do
+        sign_in user
+
+        patch :toggle_subscription, params: { id: topic.id }
+
+        expect(user.forums_subscriptions.where(topic: topic)).to exist
+        expect(response).to redirect_to(forums_topic_path(topic))
+      end
+
+      it 'subsubscribes subscribed user' do
+        sign_in user
+        user.forums_subscriptions.create(topic: topic)
+
+        patch :toggle_subscription, params: { id: topic.id }
+
+        expect(user.forums_subscriptions.where(topic: topic)).to_not exist
+        expect(response).to redirect_to(forums_topic_path(topic))
+      end
+
+      it 'redirects for unauthorized user' do
+        sign_in user
+        topic.update!(hidden: true)
+
+        patch :toggle_subscription, params: { id: topic.id }
+
+        expect(response).to redirect_to(forums_path)
+      end
+
+      it 'redirects for unauthenticated user' do
+        patch :toggle_subscription, params: { id: topic.id }
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
     describe 'GET #edit' do
       it 'succeeds for authorized user' do
         user.grant(:manage, :forums)

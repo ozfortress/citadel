@@ -7,7 +7,8 @@ module Forums
     end
     before_action except: [:new, :create] { @topic = Topic.find(params[:id]) }
     before_action :require_can_manage_parent, only: [:new, :create]
-    before_action :require_can_view, only: :show
+    before_action :require_login, only: :toggle_subscription
+    before_action :require_can_view, only: [:show, :toggle_subscription]
     before_action :require_can_manage, only: [:edit, :update, :destroy]
 
     def new
@@ -34,6 +35,16 @@ module Forums
         @subtopics = @subtopics.visible
         @threads   = @threads.visible.union(@threads.where(created_by: current_user))
       end
+    end
+
+    def toggle_subscription
+      subscription = current_user.forums_subscriptions.where(topic: @topic)
+      if subscription.exists?
+        subscription.destroy_all
+      else
+        subscription.create!
+      end
+      redirect_to forums_topic_path(@topic)
     end
 
     def edit
