@@ -13,6 +13,9 @@
 %li{ class: navbar_class(:leagues) }
   = link_to('Leagues', :leagues)
 
+%li{ class: navbar_class(:rules) }
+  = link_to('Rules', :rules)
+
 - if user_signed_in? && current_user.admin?
   %li{ class: navbar_class(:admin) }
     = link_to('Admin', :admin)
