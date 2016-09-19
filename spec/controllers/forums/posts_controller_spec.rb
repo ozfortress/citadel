@@ -98,6 +98,17 @@ describe Forums::PostsController do
   context 'Existing Post' do
     let!(:post) { create(:forums_post, thread: thread, content: 'Foo') }
 
+    describe 'GET #edits' do
+      it 'succeeds for any user' do
+        create_list(:forums_post_edit, 3, post: post)
+        sign_in user
+
+        get :edits, params: { id: post.id }
+
+        expect(response).to have_http_status(:success)
+      end
+    end
+
     describe 'GET #edit' do
       it 'succeeds for authorized user' do
         user.grant(:manage, :forums)

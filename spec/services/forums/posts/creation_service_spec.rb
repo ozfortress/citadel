@@ -10,6 +10,10 @@ describe Forums::Posts::CreationService do
     expect(post).to_not be(nil)
     expect(post.created_by).to eq(user)
     expect(post.content).to eq('Foo')
+    expect(post.edits.count).to eq(1)
+    edit = post.edits.first
+    expect(edit.created_by).to eq(user)
+    expect(edit.content).to eq('Foo')
   end
 
   it 'notifies subscribed users' do

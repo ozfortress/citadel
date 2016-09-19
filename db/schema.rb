@@ -10,17 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160917074313) do
+ActiveRecord::Schema.define(version: 20160919024908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "action_user_edit_forums_thread", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "forums_thread_id"
-    t.index ["forums_thread_id"], name: "index_action_user_edit_forums_thread_on_forums_thread_id", using: :btree
-    t.index ["user_id"], name: "index_action_user_edit_forums_thread_on_user_id", using: :btree
-  end
 
   create_table "action_user_edit_games", force: :cascade do |t|
     t.integer "user_id"
@@ -118,6 +111,16 @@ ActiveRecord::Schema.define(version: 20160917074313) do
     t.datetime "updated_at",   null: false
     t.index ["game_id"], name: "index_formats_on_game_id", using: :btree
     t.index ["name"], name: "index_formats_on_name", unique: true, using: :btree
+  end
+
+  create_table "forums_post_edits", force: :cascade do |t|
+    t.integer  "post_id",       null: false
+    t.integer  "created_by_id", null: false
+    t.string   "content",       null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["created_by_id"], name: "index_forums_post_edits_on_created_by_id", using: :btree
+    t.index ["post_id"], name: "index_forums_post_edits_on_post_id", using: :btree
   end
 
   create_table "forums_posts", force: :cascade do |t|
@@ -423,8 +426,6 @@ ActiveRecord::Schema.define(version: 20160917074313) do
     t.index ["visit_token"], name: "index_visits_on_visit_token", unique: true, using: :btree
   end
 
-  add_foreign_key "action_user_edit_forums_thread", "forums_threads"
-  add_foreign_key "action_user_edit_forums_thread", "users"
   add_foreign_key "action_user_edit_games", "users"
   add_foreign_key "action_user_edit_league", "leagues"
   add_foreign_key "action_user_edit_league", "users"
@@ -443,6 +444,8 @@ ActiveRecord::Schema.define(version: 20160917074313) do
   add_foreign_key "action_user_manage_rosters_league", "users"
   add_foreign_key "action_user_manage_rosters_leagues", "users"
   add_foreign_key "formats", "games"
+  add_foreign_key "forums_post_edits", "forums_posts", column: "post_id"
+  add_foreign_key "forums_post_edits", "users", column: "created_by_id"
   add_foreign_key "forums_posts", "forums_threads", column: "thread_id"
   add_foreign_key "forums_posts", "users", column: "created_by_id"
   add_foreign_key "forums_subscriptions", "forums_threads", column: "thread_id"

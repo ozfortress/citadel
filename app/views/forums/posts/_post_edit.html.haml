@@ -1,0 +1,8 @@
+.panel.panel-default
+  .panel-heading
+    .pull-right
+      = post_edit.created_at.strftime('%c')
+
+    = render 'users/listing', user: post_edit.created_by
+
+.container-fluid= markdown post_edit.content

@@ -20,11 +20,17 @@ module Forums
       end
     end
 
+    def edits
+      @edits = @post.edits
+    end
+
     def edit
     end
 
     def update
-      if @post.update(post_params)
+      Posts::EditingService.call(current_user, @post, post_params)
+
+      if !@post.changed?
         redirect_to forums_thread_path(@post.thread)
       else
         render :edit
