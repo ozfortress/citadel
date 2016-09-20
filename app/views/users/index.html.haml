@@ -1,10 +1,12 @@
-.panel.borderless
-  .row
-    %h2.spaced-header
-      Users
+/ .panel.borderless
+/ .row
+%h2.spaced-header
+  Users
 
-    .col-sm-3.col-md-3.pull-right
-      = render 'search'
+.col-sm-3.col-md-3.pull-right
+  = render 'search'
+
+%hr
 
 .panel.panel-default
   - if @users.empty?

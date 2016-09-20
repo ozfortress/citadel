@@ -22,7 +22,7 @@ class UserPresenter < ActionPresenter::Base
     team = options[:team]
 
     titles = ''.html_safe
-    klass = 'badge alert-danger'
+    klass = 'label alert-danger'
     titles += content_tag :span, 'captain', class: klass if team && user.can?(:edit, team)
     titles += content_tag :span, 'admin', class: klass   if user.admin?
     titles
