@@ -3,23 +3,24 @@
     Settings
     %span.glyphicon.glyphicon-cog
 
-.panel.group-header
-  .row
-    .col-fixed-50
-      = image_tag @user.avatar.icon.url, class: 'group-avatar'
+.row
+  .pull-left
+    = image_tag @user.avatar.icon.url, class: 'group-avatar'
 
-    .col-offset-50.group-title
-      %h2.spaced-letters
-        = @user.name
+  .group-title
+    %h2.spaced-letters
+      = @user.name
 
-      - unless @user.aka.empty?
-        %p.group-aka aka #{@user.aka.limit(5).map(&:name).join(', ')}
+    - unless @user.aka.empty?
+      %p.group-aka aka #{@user.aka.limit(5).map(&:name).join(', ')}
 
-%p.steam64= present(@user).steam_link
+%p.steam-link-large= present(@user).steam_link
 
 .row!= present_collection(@user.titles.for_roster).map(&:icon).join(' ')
 .row!= present_collection(@user.titles.for_league).map(&:icon).join(' ')
 .row!= present_collection(@user.titles.general).map(&:icon).join(' ')
+
+%hr
 
 .panel.panel-default
   .panel-heading Description

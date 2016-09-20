@@ -9,4 +9,9 @@
 
     = render 'users/listing', user: post.created_by
 
+  - if post.edits.size > 1
+    .pull-right
+      = link_to edits_for_forums_post_path(post), class: 'btn btn-default btn-sm' do
+        View Edits
+
 .container-fluid= markdown post.content

@@ -88,7 +88,9 @@ Rails.application.routes.draw do
 
     resources :threads, except: :index do
       concerns :subscribable
-      resources :posts, except: [:show, :new, :index], controller: 'posts'
+      resources :posts, except: [:show, :new, :index], controller: 'posts' do
+        get :edits, on: :member, as: 'edits_for'
+      end
     end
   end
 

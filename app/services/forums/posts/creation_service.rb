@@ -4,11 +4,13 @@ module Forums
       include BaseService
 
       def call(user, thread, params)
-        params = params.merge(created_by: user, thread: thread)
-        post = Post.new(params)
+        params[:created_by] = user
+        post_params = params.merge(thread: thread)
+        post = Post.new(post_params)
 
         post.transaction do
           post.save || rollback!
+          post.edits.create!(params)
 
           users = thread.subscriptions.where.not(user: user).map(&:user)
           notify_users(users, thread, post)
