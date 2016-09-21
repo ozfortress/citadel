@@ -7,7 +7,7 @@ describe 'forums/threads/show' do
   it 'displays data' do
     allow(view).to receive(:user_can_manage_thread?).and_return(true)
     assign(:thread, thread)
-    assign(:posts, posts)
+    assign(:posts, posts.paginate(page: 1))
     assign(:post, build(:forums_post))
 
     render
