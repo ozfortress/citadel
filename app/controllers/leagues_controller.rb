@@ -73,7 +73,7 @@ class LeaguesController < ApplicationController
       :name, :description, :format_id, :signuppable, :roster_locked, :matches_submittable,
       :transfers_require_approval, :allow_round_draws, :allow_disbanding, :min_players,
       :max_players, :points_per_round_won, :points_per_round_drawn, :points_per_round_lost,
-      :points_per_match_forfeit_loss, :points_per_match_forfeit_win, :schedule,
+      :points_per_match_forfeit_loss, :points_per_match_forfeit_win, :schedule_locked, :schedule,
       weekly_scheduler_attributes: [:id, :start_of_week, :minimum_selected, days_indecies: []],
       tiebreakers_attributes: [:id, :kind, :_destroy],
       divisions_attributes: [:id, :name, :_destroy])

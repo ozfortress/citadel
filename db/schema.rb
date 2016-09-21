@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919024908) do
+ActiveRecord::Schema.define(version: 20160921013900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -302,6 +302,7 @@ ActiveRecord::Schema.define(version: 20160919024908) do
     t.integer  "status",                        default: 0,     null: false
     t.integer  "rosters_count",                 default: 0,     null: false
     t.integer  "schedule",                      default: 0,     null: false
+    t.boolean  "schedule_locked",               default: false, null: false
     t.index ["format_id"], name: "index_leagues_on_format_id", using: :btree
   end
 

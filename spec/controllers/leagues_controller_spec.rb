@@ -48,8 +48,8 @@ describe LeaguesController do
                   allow_disbanding: true, min_players: 1, max_players: 3,
                   points_per_round_won: 3, points_per_round_drawn: 2,
                   points_per_round_lost: 1, points_per_match_forfeit_loss: 5,
-                  points_per_match_forfeit_win: 6, schedule: 'weeklies',
-                  divisions_attributes: [{ name: 'PREM' }],
+                  points_per_match_forfeit_win: 6, schedule_locked: true,
+                  schedule: 'weeklies', divisions_attributes: [{ name: 'PREM' }],
                   tiebreakers_attributes: [{ kind: 'round_wins' },
                                            { kind: 'round_score_difference' }],
                   weekly_scheduler_attributes: {
@@ -82,6 +82,7 @@ describe LeaguesController do
       expect(tieb1.kind).to eq('round_wins')
       tieb2 = comp.tiebreakers.last
       expect(tieb2.kind).to eq('round_score_difference')
+      expect(comp.schedule_locked).to be(true)
       expect(comp.schedule).to eq('weeklies')
       scheduler = comp.weekly_scheduler
       expect(scheduler.start_of_week).to eq('Monday')

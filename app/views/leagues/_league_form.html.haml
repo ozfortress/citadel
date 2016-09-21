@@ -64,6 +64,7 @@
 .panel.panel-default
   .panel-heading Scheduling
   .panel-body
+    = f.check_box :schedule_locked
     = f.select :schedule, League.schedules.map { |name, _| [name.humanize, name] }
 
     #weeklies
