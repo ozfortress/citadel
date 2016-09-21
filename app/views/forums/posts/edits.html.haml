@@ -3,3 +3,5 @@
 .panel.panel-default
   - @edits.each do |post_edit|
     = render 'post_edit', post_edit: post_edit
+
+= bootstrap_paginate @edits

@@ -13,7 +13,7 @@ module Forums
       @post = Posts::CreationService.call(current_user, @thread, post_params)
 
       if @post.persisted?
-        redirect_to forums_thread_path(@thread)
+        redirect_to path_for(@post)
       else
         @posts = @thread.posts
         render 'forums/threads/show'
@@ -21,7 +21,7 @@ module Forums
     end
 
     def edits
-      @edits = @post.edits
+      @edits = @post.edits.paginate(page: params[:page])
     end
 
     def edit
@@ -31,7 +31,7 @@ module Forums
       Posts::EditingService.call(current_user, @post, post_params)
 
       if !@post.changed?
-        redirect_to forums_thread_path(@post.thread)
+        redirect_to path_for(@post)
       else
         render :edit
       end
@@ -39,13 +39,25 @@ module Forums
 
     def destroy
       if @post.destroy
-        redirect_to forums_thread_path(@post.thread)
+        path = if @post.previous_post
+                 path_for(@post.previous_post)
+               else
+                 forums_thread_path(@post.thread)
+               end
+
+        redirect_to path
       else
         render :edit
       end
     end
 
     private
+
+    def path_for(post, thread = nil)
+      page = Post.page_of(post)
+
+      forums_thread_path(post.thread, page: page, anchor: "post_#{post.id}")
+    end
 
     def post_params
       params.require(:forums_post).permit(:content)
