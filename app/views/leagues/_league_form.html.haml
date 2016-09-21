@@ -20,7 +20,7 @@
     = f.check_box :roster_locked
     = f.check_box :matches_submittable
     = f.check_box :transfers_require_approval
-    = f.check_box :allow_round_draws, label: 'Allow round draws'
+    = f.check_box :allow_round_draws, label: 'Allow set draws'
     = f.check_box :allow_disbanding
 
 .panel.panel-default
@@ -64,6 +64,7 @@
 .panel.panel-default
   .panel-heading Scheduling
   .panel-body
+    = f.check_box :schedule_locked
     = f.select :schedule, League.schedules.map { |name, _| [name.humanize, name] }
 
     #weeklies

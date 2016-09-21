@@ -85,9 +85,7 @@ module Leagues
     def new_roster_params
       param = params.require(:roster).permit(:name, :description, :division_id, player_ids: [])
 
-      param.tap do |whitelisted|
-        whitelisted[:schedule_data] = schedule_params
-      end
+      whitelist_schedule_params(param)
     end
 
     def roster_params
@@ -100,7 +98,11 @@ module Leagues
                 roster.permit(:description)
               end
 
-      param.tap do |whitelisted|
+      whitelist_schedule_params(param) unless @league.schedule_locked?
+    end
+
+    def whitelist_schedule_params(params)
+      params.tap do |whitelisted|
         whitelisted[:schedule_data] = schedule_params
       end
     end

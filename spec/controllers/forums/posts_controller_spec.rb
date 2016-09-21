@@ -129,7 +129,8 @@ describe Forums::PostsController do
 
         post.reload
         expect(post.content).to eq('Test')
-        expect(response).to redirect_to(forums_thread_path(thread))
+        path = forums_thread_path(thread, page: 1, anchor: "post_#{post.id}")
+        expect(response).to redirect_to(path)
       end
 
       it 'succeeds for user who created the post' do
@@ -140,7 +141,8 @@ describe Forums::PostsController do
 
         post.reload
         expect(post.content).to eq('Test')
-        expect(response).to redirect_to(forums_thread_path(thread))
+        path = forums_thread_path(thread, page: 1, anchor: "post_#{post.id}")
+        expect(response).to redirect_to(path)
       end
 
       it 'fails for invalid data' do

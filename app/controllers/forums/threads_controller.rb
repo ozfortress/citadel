@@ -32,7 +32,7 @@ module Forums
 
     def show
       @thread = Forums::Thread.find(params[:id])
-      @posts = @thread.posts
+      @posts = @thread.posts.paginate(page: params[:page])
       @post = Post.new
     end
 
