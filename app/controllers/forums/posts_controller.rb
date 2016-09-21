@@ -53,7 +53,7 @@ module Forums
 
     private
 
-    def path_for(post, thread = nil)
+    def path_for(post)
       page = Post.page_of(post)
 
       forums_thread_path(post.thread, page: page, anchor: "post_#{post.id}")
