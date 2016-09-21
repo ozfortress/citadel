@@ -1,9 +1,11 @@
-- league = f.object.league
-- scheduler = league.scheduler
+:ruby
+  league = f.object.league
+  scheduler = league.scheduler
 
-- klass = ''
-- if f.object.errors.include? :schedule_data
-  - klass = 'has-error'
+  klass = ''
+  if f.object.errors.include? :schedule_data
+    klass = 'has-error'
+  end
 
 .control-group{ class: klass }
   - label = 'Availability'
