@@ -49,10 +49,6 @@ gem 'carrierwave'
 gem 'mini_magick'
 # SSL
 gem 'letsencrypt_plugin'
-# Dependencies of letsencrypt decided to change their API on a minor version
-# So lock it to the latest working version until letsencrypt updates
-gem 'acme-client', '0.3.1'
-gem 'json-jwt', '1.5.2'
 # Tracking and analytics
 gem 'ahoy_matey'
 
