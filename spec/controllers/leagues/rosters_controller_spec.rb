@@ -177,6 +177,21 @@ describe Leagues::RostersController do
       expect(roster.division).to eq(div)
     end
 
+    it 'succeeds for authorized captain with locked schedule' do
+      user.grant(:edit, roster.team)
+      league.update!(schedule_locked: true)
+      sign_in user
+
+      patch :update, params: {
+        league_id: league.id, id: roster.id, roster: { description: 'B' }
+      }
+
+      roster.reload
+      expect(roster.name).to eq('B')
+      expect(roster.description).to eq('B')
+      expect(roster.division).to eq(div)
+    end
+
     it 'redirects for authorized captain if team disbanded' do
       user.grant(:edit, roster.team)
       league.update!(signuppable: false)

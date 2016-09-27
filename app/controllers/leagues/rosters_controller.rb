@@ -91,14 +91,16 @@ module Leagues
     def roster_params
       roster = params.require(:roster)
 
-      param = if user_can_edit_league?
-                roster.permit(:name, :description, :disbanded, :ranking,
-                              :seeding, :division_id)
-              else
-                roster.permit(:description)
-              end
+      params = if user_can_edit_league?
+                 roster.permit(:name, :description, :disbanded, :ranking,
+                               :seeding, :division_id)
+               else
+                 roster.permit(:description)
+               end
 
-      whitelist_schedule_params(param) unless @league.schedule_locked?
+      params = whitelist_schedule_params(params) if @league.schedule_locked?
+
+      params
     end
 
     def whitelist_schedule_params(params)
