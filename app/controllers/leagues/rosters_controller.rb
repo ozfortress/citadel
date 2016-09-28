@@ -98,7 +98,7 @@ module Leagues
                  roster.permit(:description)
                end
 
-      params = whitelist_schedule_params(params) if @league.schedule_locked?
+      params = whitelist_schedule_params(params) unless @league.schedule_locked?
 
       params
     end
