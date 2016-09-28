@@ -179,11 +179,15 @@ describe Leagues::RostersController do
 
     it 'succeeds for authorized captain with locked schedule' do
       user.grant(:edit, roster.team)
-      league.update!(schedule_locked: true)
+      league.update!(schedule: :weeklies, schedule_locked: true,
+                     weekly_scheduler: build(:league_schedulers_weekly))
+      roster.schedule_data = league.scheduler.default_schedule
+      roster.save!
       sign_in user
 
       patch :update, params: {
-        league_id: league.id, id: roster.id, roster: { description: 'B' }
+        league_id: league.id, id: roster.id, roster: {
+          description: 'B', schedule_data: { foo: 'bar' } },
       }
 
       roster.reload
