@@ -1,4 +1,6 @@
-VAC = [76561198044298308]
+# rubocop:disable Style/NumericLiterals
+VAC = [76561198044298308].freeze
+# rubocop:enable Style/NumericLiterals
 
 league = League.find(1)
 
