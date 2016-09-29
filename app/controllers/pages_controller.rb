@@ -4,4 +4,7 @@ class PagesController < ApplicationController
 
   def rules
   end
+
+  def staff
+  end
 end

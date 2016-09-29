@@ -13,8 +13,17 @@
 %li{ class: navbar_class(:leagues) }
   = link_to('Leagues', :leagues)
 
-%li{ class: navbar_class(:rules) }
-  = link_to('Rules', :rules)
+%li.dropdown
+  %a.dropdown-toggle{ role: :button, data: { toggle: :dropdown } }
+    About
+    %span.caret
+
+  %ul.dropdown-menu
+    %li{ class: navbar_class(:rules) }
+      = link_to('Rules', :rules)
+
+    %li{ class: navbar_class(:staff) }
+      = link_to('Staff', :staff)
 
 - if user_signed_in? && current_user.admin?
   %li{ class: navbar_class(:admin) }
