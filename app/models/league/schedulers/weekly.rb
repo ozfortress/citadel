@@ -49,7 +49,7 @@ class League
 
         availability.each do |week, value|
           return nil unless schedule_days.include?(week)
-          availability[week] = value == 'true'
+          availability[week] = value == 'true' || value == true
         end
 
         data
@@ -59,7 +59,7 @@ class League
         availability = Date::DAYNAMES.each_with_index.map { |name, i| { name => days[i] } }
                                      .reduce(&:merge)
 
-        { type: :weekly, availability: availability }
+        { 'type' => 'weekly', 'availability' => availability }
       end
 
       def schedule_days

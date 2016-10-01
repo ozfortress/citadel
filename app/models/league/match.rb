@@ -32,6 +32,8 @@ class League
       self.status = :confirmed unless forfeit_by == 'no_forfeit'
     end
 
+    scope :bye, -> { where(away_team: nil) }
+    scope :not_bye, -> { where.not(away_team: nil) }
     scope :not_forfeited, -> { confirmed.no_forfeit }
     scope :home_team_forfeited, -> { confirmed.home_team_forfeit }
     scope :away_team_forfeited, -> { confirmed.away_team_forfeit }

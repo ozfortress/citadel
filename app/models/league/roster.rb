@@ -41,6 +41,9 @@ class League
     validate :player_count_maximums
     validate :validate_schedule
 
+    scope :approved, -> { where(approved: true) }
+    scope :active, -> { approved.where(disbanded: false) }
+
     after_create do
       League.increment_counter(:rosters_count, league.id)
     end
@@ -96,7 +99,7 @@ class League
     end
 
     def rosters_not_played
-      division.approved_rosters
+      division.rosters.active
               .where.not(id: id)
               .where.not(id: home_team_matches.select(:away_team_id))
               .where.not(id: away_team_matches.select(:home_team_id))

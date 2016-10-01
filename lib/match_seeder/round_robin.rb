@@ -4,8 +4,19 @@ module MatchSeeder
 
     extend self
 
+    def get_roster_pool(target)
+      rosters = Common.get_roster_pool(target).to_a
+
+      # Replace disbanded rosters with nil to keep seeding consistent
+      rosters.map! { |roster| roster.disbanded? ? nil : roster }
+
+      rosters << nil if rosters.size.odd?
+
+      rosters
+    end
+
     def seed_round_for(target, options = {})
-      target.transaction do
+      transaction do
         rosters = get_roster_pool(target)
 
         round_no = target.matches.size / (rosters.size / 2)
@@ -37,7 +48,10 @@ module MatchSeeder
       bottom_row = rosters[round_size...rosters_size].reverse
 
       top_row.zip(bottom_row).map do |home_team, away_team|
-        create_match_for(home_team, away_team, options)
+        next unless home_team || away_team
+
+        # Make sure that BYE matches have the home_team as the bye'd team
+        create_match_for(home_team || away_team, home_team && away_team, options)
       end
     end
   end

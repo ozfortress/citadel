@@ -13,16 +13,8 @@ class League
 
     alias_attribute :to_s, :name
 
-    def approved_rosters
-      @approved_roster ||= rosters.where(approved: true)
-    end
-
-    def active_rosters
-      approved_rosters.where(disbanded: false)
-    end
-
     def rosters_sorted
-      @rosters_sorted ||= approved_rosters.sort_by(&:sort_keys)
+      @rosters_sorted ||= rosters.approved.sort_by(&:sort_keys)
     end
   end
 end
