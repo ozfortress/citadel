@@ -11,7 +11,7 @@ def dump_roster(roster)
 end
 
 league.divisions.each do |division|
-  rosters = division.active_rosters.sort_by(&:sort_keys)
+  rosters = division.rosters.active.sort_by(&:sort_keys)
 
   dump_roster rosters.first
   puts
