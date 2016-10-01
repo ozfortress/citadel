@@ -34,7 +34,7 @@ class League
     end
 
     def get_tied_rosters_for(roster)
-      roster.division.approved_rosters.where(points: roster.points).where.not(id: roster.id)
+      roster.division.rosters.active.where(points: roster.points).where.not(id: roster.id)
     end
   end
 end
