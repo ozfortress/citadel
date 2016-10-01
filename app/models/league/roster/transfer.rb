@@ -143,7 +143,7 @@ class League
       end
 
       def within_roster_size_for_joining
-        if roster.players.size >= league.max_players
+        if roster.players.size >= league.max_players && league.max_players > 0
           errors.add(:user_id, 'transferring in would make the roster too large')
         end
       end
