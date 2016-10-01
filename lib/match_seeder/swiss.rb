@@ -4,14 +4,20 @@ module MatchSeeder
 
     extend self
 
+    def get_roster_pool(target)
+      rosters = Common.get_roster_pool(target)
+
+      # We can just ignore disbanded rosters
+      rosters.reject(&:disbanded?)
+    end
+
     def seed_round_for(target, options = {})
-      target.transaction do
+      transaction do
         rosters = get_roster_pool(target)
         roster_points = map_points(rosters)
         roster_points.sort! { |x, y| y[1] <=> x[1] }
         rosters = roster_points.map { |x| x[0] }
 
-        # puts roster_points.map { |x| [x[0].name, x[1]] }.join(", ")
         create_matches_for(rosters, options)
       end
     end
@@ -43,8 +49,12 @@ module MatchSeeder
       rosters.sample
     end
 
+    # :reek:DuplicateMethodCall { allow_calls: ['rosters.size'] }
     def create_matches_for(rosters, options)
       matches = []
+
+      # Pick BYE first, if needed
+      matches << create_bye_match(rosters, options) unless rosters.size.even?
 
       while rosters.size > 1
         home_team = rosters.shift
@@ -55,6 +65,19 @@ module MatchSeeder
       end
 
       matches
+    end
+
+    def create_bye_match(rosters, options)
+      roster_byes = rosters.map { |roster| [roster, roster.home_team_matches.bye.size] }
+
+      # Select roster to BYE from back to front
+      max_bies = roster_byes.map(&:second).max
+
+      team = roster_byes.select { |r_bye| r_bye.second < max_bies }.map(&:first).last
+      team ||= rosters.last
+      rosters.delete(team)
+
+      create_match_for(team, nil, options)
     end
   end
 end
