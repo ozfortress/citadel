@@ -19,8 +19,8 @@
               = link_to ff.object.map, meta_map_path(ff.object.map)
               \:
               .form-group.pull-right
-                = ff.number_field :home_team_score
-                = ff.number_field :away_team_score
+                = ff.number_field :home_team_score, label: "'#{match.home_team.name}'s score"
+                = ff.number_field :away_team_score, label: "'#{match.away_team.name}'s score"
 
         - if user_can_edit_league?
           = f.select :status, League::Match.statuses.keys.map { |s| [s.humanize, s] }
