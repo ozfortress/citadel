@@ -29,6 +29,7 @@ module Leagues
       if @match.save
         redirect_to league_match_path(@league, @match)
       else
+        @match.reset_results
         render :new
       end
     end
@@ -50,6 +51,7 @@ module Leagues
       if @match.valid?
         redirect_to league_matches_path(@league)
       else
+        @match.reset_results
         render :generate
       end
     end

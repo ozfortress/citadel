@@ -74,6 +74,11 @@ class League
       update(forfeit_by: (is_home_team ? :home_team_forfeit : :away_team_forfeit))
     end
 
+    def reset_results
+      self.status = :pending
+      self.forfeit_by = :no_forfeit
+    end
+
     def bye?
       !away_team
     end
