@@ -25,8 +25,9 @@ begin
     analyzer.output
   end
 
-  Rake::Task['test'].clear # Rails puts minitest on the test task automatically
-  task test: %w(rspec rubocop reek haml_lint rbp)
+  Rake::Task['test'].clear # Rails puts minitest on the test task automatically'
+  task lint: %w(rubocop reek haml_lint rbp)
+  task test: %w(rspec lint)
   task default: [:rubocop, :haml_lint, :rbp]
 rescue LoadError
   puts "Test tasks not available (you're probably in a production environment)"
