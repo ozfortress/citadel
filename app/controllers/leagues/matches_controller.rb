@@ -46,9 +46,7 @@ module Leagues
       @division = @league.divisions.find(params.delete(:division_id))
       @kind = params.delete(:generate_kind)
 
-      matches = @division.seed_round_with(@kind, params)
-      @match = matches.first(&:invalid?)
-      if @match.valid?
+      if create_round_matches(@kind, params)
         redirect_to league_matches_path(@league)
       else
         @match.reset_results
@@ -106,6 +104,13 @@ module Leagues
     end
 
     private
+
+    def create_round_matches(kind, params)
+      matches = @division.seed_round_with(kind, params)
+      @match = matches.first(&:invalid?)
+
+      @match.valid?
+    end
 
     def report_scores_params
       if user_can_edit_league?
