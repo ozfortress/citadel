@@ -10,13 +10,9 @@ module Auth
     module InstanceMethods
       def can?(action, subject)
         @permissions_cache ||= {}
-        @permissions_cache[action] ||= {}
+        cache = @permissions_cache[action] ||= {}
 
-        if @permissions_cache[action][subject].nil?
-          @permissions_cache[action][subject] = get_permission(action, subject).exists?
-        else
-          @permissions_cache[action][subject]
-        end
+        cache[subject] ||= get_permission(action, subject).exists?
       end
 
       def can_any?(action, subject)
