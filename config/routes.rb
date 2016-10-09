@@ -53,10 +53,12 @@ Rails.application.routes.draw do
       patch 'grant'
       patch 'revoke'
     end
-  end
 
-  patch 'team_invites/:id/accept',  to: 'team_invites#accept',  as: 'accept_team_invite'
-  patch 'team_invites/:id/decline', to: 'team_invites#decline', as: 'decline_team_invite'
+    resource :invite, controller: 'teams/invite', only: [] do
+      post 'accept', on: :member
+      delete 'decline', on: :member
+    end
+  end
 
   get   'users/logout',            to: 'users#logout',              as: 'logout_user'
   get   'users/names',             to: 'users#names',               as: 'users_names'

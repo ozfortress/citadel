@@ -5,24 +5,10 @@ class Team
     belongs_to :user
     belongs_to :team
 
-    after_create do
-      user.notify!("You have been invited to join the team'#{team.name}'.", user_path(user))
-    end
-
-    before_destroy do
-      message = if team.on_roster?(user)
-                  "'#{user.name}' has joined the team '#{team.name}'!"
-                else
-                  "'#{user.name}' has declined the invitation to join '#{team.name}'."
-                end
-
-      User.get_revokeable(:edit, team).each do |captain|
-        captain.notify!(message, user_path(user))
-      end
-    end
+    validates :user, uniqueness: { scope: :team }
 
     def accept
-      team.add_player!(user)
+      team.add_player!(user: user)
       destroy
     end
 
