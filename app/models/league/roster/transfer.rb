@@ -121,6 +121,8 @@ class League
       end
 
       def on_team_for_joining
+        return if approved?
+
         unless roster.team.on_roster?(user) && !roster.on_roster?(user)
           errors.add(:user_id, 'must be on the team to get transferred to the roster')
         end
