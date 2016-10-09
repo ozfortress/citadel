@@ -61,7 +61,6 @@ describe League::Roster::Transfer do
 
     it "doesn't auto-approve transfers between rosters" do
       roster2 = create(:league_roster, division: div2)
-      roster.team.add_player!(user)
       roster.add_player!(user, approved: true)
       roster2.team.add_player!(user)
 

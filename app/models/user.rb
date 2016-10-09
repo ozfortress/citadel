@@ -8,9 +8,9 @@ class User < ApplicationRecord
   has_many :team_invites, class_name: 'Team::Invite'
   has_many :team_transfers, -> { order(created_at: :desc) }, class_name: 'Team::Transfer'
   has_many :roster_transfers, class_name: 'League::Roster::Transfer'
-  has_many :titles, -> { order(created_at: :desc) }, class_name: 'Title'
+  has_many :titles, -> { order(created_at: :desc) }
   has_many :names, -> { order(created_at: :desc) }, class_name: 'NameChange'
-  has_many :notifications, -> { order(created_at: :desc) }, class_name: 'Notification'
+  has_many :notifications, -> { order(created_at: :desc) }
   has_many :forums_subscriptions, class_name: 'Forums::Subscription'
 
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:steam]

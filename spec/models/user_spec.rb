@@ -3,11 +3,11 @@ require 'rails_helper'
 describe User do
   before(:all) { create(:user) }
 
-  it { should have_many(:team_invites) }
-  it { should have_many(:team_transfers) }
-  it { should have_many(:roster_transfers) }
+  it { should have_many(:team_invites).class_name('Team::Invite') }
+  it { should have_many(:team_transfers).class_name('Team::Transfer') }
+  it { should have_many(:roster_transfers).class_name('League::Roster::Transfer') }
   it { should have_many(:titles) }
-  it { should have_many(:names) }
+  it { should have_many(:names).class_name('User::NameChange') }
   it { should have_many(:notifications) }
   it { should have_many(:forums_subscriptions).class_name('Forums::Subscription') }
 
