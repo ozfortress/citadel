@@ -25,6 +25,16 @@ describe League::Match do
                                               :technical_forfeit])
   end
 
+  it 'allows creating BYE matches with tied scores' do
+    round = build(:league_match_round)
+    match = build(:bye_league_match, rounds: [round])
+    match.league.update!(allow_round_draws: false)
+
+    expect(match.rounds).to_not be_empty
+    expect(match).to be_valid
+    expect(match.rounds).to be_empty
+  end
+
   it 'should confirm BYE matches' do
     roster = build(:league_roster)
 

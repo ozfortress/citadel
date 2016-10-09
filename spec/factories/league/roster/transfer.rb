@@ -16,8 +16,8 @@ FactoryGirl.define do
                                           user: transfer.user, approved: true)
         end
 
-        create(:team_transfer, team: transfer.roster.team, user: transfer.user,
-                               is_joining: true)
+        team = transfer.roster.team
+        team.add_player!(transfer.user) unless team.on_roster?(transfer.user)
       end
     end
   end

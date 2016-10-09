@@ -30,6 +30,7 @@ class League
 
     before_validation do
       self.status = :confirmed unless forfeit_by == 'no_forfeit'
+      self.rounds = [] if bye?
     end
 
     scope :bye, -> { where(away_team: nil) }

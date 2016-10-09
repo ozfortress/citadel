@@ -2,11 +2,12 @@ require 'elasticsearch/model'
 
 class Team < ApplicationRecord
   include Searchable
-  include RosterMixin
 
   has_many :invites, dependent: :destroy
+  has_many :players,   -> { order(created_at: :desc) }, dependent: :destroy
   has_many :transfers, -> { order(created_at: :desc) }, dependent: :destroy
   has_many :rosters, class_name: 'League::Roster'
+  has_many :users, through: :players
 
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
   validates :description, presence: true, allow_blank: true
@@ -32,6 +33,18 @@ class Team < ApplicationRecord
 
   def invited?(user)
     invites.exists?(user: user)
+  end
+
+  def add_player!(user)
+    players.create!(user: user)
+  end
+
+  def remove_player!(user)
+    players.find_by(user: user).destroy!
+  end
+
+  def on_roster?(user)
+    players.where(user: user).exists?
   end
 
   def entered?(comp)

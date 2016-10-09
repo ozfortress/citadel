@@ -4,7 +4,10 @@ describe Team do
   before(:all) { create(:team) }
 
   it { should have_many(:invites) }
+  it { should have_many(:players) }
   it { should have_many(:transfers) }
+  it { should have_many(:rosters).class_name('League::Roster') }
+  it { should have_many(:users).through(:players) }
 
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }
@@ -29,8 +32,10 @@ describe Team do
       team.add_player!(user2)
 
       expect(team.transfers.size).to eq(6)
-      expect(team.player_users).to include(user1)
-      expect(team.player_users).to include(user2)
+      expect(team.players.size).to eq(2)
+      expect(team.users).to include(user1)
+      expect(team.users).to include(user2)
+      expect(team.users).to_not include(user3)
     end
   end
 

@@ -74,7 +74,9 @@ class League
 
     def forfeit_won_matches
       away_forfeit = home_team_matches.away_team_forfeited
-      away_team_matches.home_team_forfeited.union(away_forfeit).union(matches.technically_forfeited)
+      away_team_matches.home_team_forfeited.union(away_forfeit)
+                       .union(matches.technically_forfeited)
+                       .union(home_team_matches.bye)
     end
 
     def forfeit_lost_matches
@@ -105,12 +107,8 @@ class League
               .where.not(id: away_team_matches.select(:home_team_id))
     end
 
-    def players_off_roster
-      team.players.where.not(user: players.map(&:user_id))
-    end
-
     def users_off_roster
-      players_off_roster.map(&:user)
+      team.users.where.not(id: players.map(&:user_id))
     end
 
     def player_transfers(*args)

@@ -85,6 +85,7 @@ describe TeamsController do
       team.reload
       expect(team.name).to eq('C')
       expect(team.description).to eq('D')
+      expect(response).to redirect_to(team_path(team))
     end
 
     it 'allows avatar removal' do
@@ -95,6 +96,19 @@ describe TeamsController do
 
       team.reload
       expect(team.avatar.url).to eq(team.avatar.default_url)
+      expect(response).to redirect_to(team_path(team))
+    end
+
+    it 'fails for invalid data' do
+      user.grant(:edit, team)
+      sign_in user
+
+      patch :update, params: { id: team.id, team: { name: '', description: '' } }
+
+      team.reload
+      expect(team.name).to eq('A')
+      expect(team.description).to eq('B')
+      expect(response).to have_http_status(:success)
     end
   end
 
@@ -126,6 +140,26 @@ describe TeamsController do
       expect(invite.user).to eq(invited)
       expect(invite.team).to eq(team)
       expect(team.invited?(invited)).to be(true)
+      expect(invited.notifications).to_not be_empty
+      expect(user.notifications).to be_empty
+    end
+  end
+
+  describe 'PATCH #kick' do
+    it 'removes a player from a team' do
+      team = create(:team)
+      player = create(:user)
+      team.add_player!(player)
+      user.grant(:edit, team)
+      sign_in user
+
+      patch :kick, params: { id: team.id, user_id: player.id }
+
+      expect(team.on_roster?(player)).to be(false)
+      expect(team.invited?(player)).to be(false)
+      expect(player.notifications).to_not be_empty
+      expect(user.notifications).to be_empty
+      expect(response).to redirect_to(team_path(team))
     end
   end
 
@@ -133,27 +167,18 @@ describe TeamsController do
     it 'removes a player from a team' do
       team = create(:team)
       team.add_player!(user)
-
+      captain = create(:user)
+      captain.grant(:edit, team)
       sign_in user
-      request.env['HTTP_REFERER'] = '/'
+
       patch :leave, params: { id: team.id }
 
+      team.reload
       expect(team.on_roster?(user)).to be(false)
       expect(team.invited?(user)).to be(false)
-    end
-
-    it 'kicks a player from a team' do
-      team = create(:team)
-      player = create(:user)
-      team.add_player!(player)
-      user.grant(:edit, team)
-
-      sign_in user
-      request.env['HTTP_REFERER'] = '/'
-      patch :leave, params: { id: team.id, user_id: player.id }
-
-      expect(team.on_roster?(player)).to be(false)
-      expect(team.invited?(player)).to be(false)
+      expect(user.notifications).to be_empty
+      expect(captain.notifications).to_not be_empty
+      expect(response).to redirect_to(team_path(team))
     end
   end
 

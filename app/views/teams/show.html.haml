@@ -14,29 +14,26 @@
 
 .panel.panel-default
   .panel-heading Roster
+  - if @invite
+    %li.list-group-item.list-group-item-info
+      You have been invited to join this team
+
+      .button-group.pull-right
+        = button_to decline_team_invite_path(@team), method: :delete, class: 'btn btn-danger' do
+          Decline
+          %span.glyphicon.glyphicon-remove
+      .button-group.pull-right
+        = button_to accept_team_invite_path(@team), method: :post, class: 'btn btn-success' do
+          Accept
+          %span.glyphicon.glyphicon-ok
+
   - if user_can_edit_team?
     .panel-body
       = link_to recruit_team_path(@team), class: 'btn btn-default' do
         Invite
         %span.glyphicon.glyphicon-plus
   %ul.list-group
-    - if user_signed_in? && @team.invited?(current_user)
-      %li.list-group-item.list-group-item-info
-        You have been invited to join this team
-
-        - invite = @team.invite_for(current_user)
-        .button-group.pull-right
-          = button_to decline_team_invite_path(invite),
-                      method: :patch, class: 'btn btn-danger' do
-            Decline
-            %span.glyphicon.glyphicon-remove
-        .button-group.pull-right
-          = button_to accept_team_invite_path(invite),
-                      method: :patch, class: 'btn btn-success' do
-            Accept
-            %span.glyphicon.glyphicon-ok
-
-    - @team.player_users.each do |user|
+    - @team.users.each do |user|
       %li.list-group-item
         - if user == current_user
           .button-group.pull-right
@@ -46,7 +43,7 @@
               %span.glyphicon.glyphicon-remove
         - elsif user_can_edit_team?
           .button-group.pull-right
-            = button_to leave_team_path(@team, user_id: user.id),
+            = button_to kick_team_path(@team, user_id: user.id),
                         method: :patch, class: 'btn btn-danger',
                         data: { confirm: "Are you sure you want to kick #{user.name}?" } do
               Kick
@@ -59,12 +56,7 @@
   %ul.list-group
     - @team.transfers.each do |transfer|
       %li.list-group-item
-        = present(transfer.user).link
-        - if transfer.is_joining?
-          joined the team
-        - else
-          left the team
-        on #{transfer.created_at.strftime('%c')}
+        = present(transfer).listing
 
 - unless @team.rosters.empty?
   .panel.panel-default
