@@ -26,7 +26,11 @@ describe UsersController do
       expect(response).to have_http_status(:success)
     end
 
-    it 'fails for unauthenticated user'
+    it 'fails for unauthenticated user' do
+      get :new
+
+      expect(response).to redirect_to(root_path)
+    end
   end
 
   describe 'POST #create' do

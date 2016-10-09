@@ -15,7 +15,12 @@ class UsersController < ApplicationController
 
   def new
     steam_data = session['devise.steam_data']
-    @user = User.new(name: params[:name], steam_id: steam_data['uid'])
+
+    if steam_data
+      @user = User.new(name: params[:name], steam_id: steam_data['uid'])
+    else
+      redirect_to root_path
+    end
   end
 
   def create
