@@ -74,7 +74,9 @@ class League
 
     def forfeit_won_matches
       away_forfeit = home_team_matches.away_team_forfeited
-      away_team_matches.home_team_forfeited.union(away_forfeit).union(matches.technically_forfeited)
+      away_team_matches.home_team_forfeited.union(away_forfeit)
+                       .union(matches.technically_forfeited)
+                       .union(home_team_matches.bye)
     end
 
     def forfeit_lost_matches

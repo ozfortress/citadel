@@ -85,4 +85,8 @@ describe League::Roster do
       expect(away_match.reload.forfeit_by).to eq('away_team_forfeit')
     end
   end
+
+  describe 'points' do
+    pending
+  end
 end
