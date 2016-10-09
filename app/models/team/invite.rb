@@ -6,6 +6,7 @@ class Team
     belongs_to :team
 
     validates :user, uniqueness: { scope: :team }
+    validate :user_not_in_team
 
     def accept
       team.add_player!(user)
@@ -14,6 +15,14 @@ class Team
 
     def decline
       destroy
+    end
+
+    private
+
+    def user_not_in_team
+      if team.present? && user.present?
+        errors.add(:user, 'already in team') if team.on_roster?(user)
+      end
     end
   end
 end
