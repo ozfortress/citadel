@@ -10,6 +10,8 @@ describe User do
   it { should have_many(:names).class_name('User::NameChange') }
   it { should have_many(:notifications) }
   it { should have_many(:forums_subscriptions).class_name('Forums::Subscription') }
+  it { should have_many(:team_players).class_name('Team::Player') }
+  it { should have_many(:teams).through(:team_players) }
 
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }
@@ -40,6 +42,7 @@ describe User do
     team2.remove_player!(user)
 
     expect(user.teams).to eq([team])
+    expect(team.on_roster?(user)).to be(true)
   end
 
   it 'has rosters'

@@ -16,11 +16,9 @@ class TeamsController < ApplicationController
   end
 
   def create
-    @team = Team.new(team_params)
+    @team = Teams::CreationService.call(current_user, team_params)
 
-    if @team.save
-      @team.add_player!(current_user)
-      current_user.grant(:edit, @team)
+    if @team.persisted?
       redirect_to team_path(@team)
     else
       render :new
@@ -28,6 +26,7 @@ class TeamsController < ApplicationController
   end
 
   def show
+    @invite = @team.invite_for(current_user) if user_signed_in?
   end
 
   def edit
@@ -47,21 +46,22 @@ class TeamsController < ApplicationController
 
   def invite
     user = User.find(params[:user_id])
+    Teams::InvitationService.call(@team, user) unless @team.invited?(user) || @team.on_roster?(user)
 
-    @team.invite(user) unless @team.invited?(user) || @team.on_roster?(user)
     redirect_to team_path(@team)
   end
 
   def leave
-    if params.key? :user_id
-      require_team_permission
-      user = User.find(params[:user_id])
-    else
-      user = current_user
-    end
+    Teams::LeavingService.call(current_user, @team)
 
-    @team.remove_player!(user) if @team.on_roster?(user)
-    redirect_back(fallback_location: teams_path)
+    redirect_back(fallback_location: team_path(@team))
+  end
+
+  def kick
+    @user = User.find(params[:user_id])
+    Teams::KickingService.call(@user, @team)
+
+    redirect_back(fallback_location: team_path(@team))
   end
 
   def destroy

@@ -50,6 +50,7 @@ Rails.application.routes.draw do
       get   'recruit'
       patch 'invite'
       patch 'leave'
+      patch 'kick'
       patch 'grant'
       patch 'revoke'
     end

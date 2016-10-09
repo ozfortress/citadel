@@ -8,7 +8,7 @@ class Team
     validates :user, uniqueness: { scope: :team }
 
     def accept
-      team.add_player!(user: user)
+      team.add_player!(user)
       destroy
     end
 

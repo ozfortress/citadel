@@ -5,7 +5,7 @@ AlwaysAddDbIndexCheck: { }
 DefaultScopeIsEvilCheck: { }
 DryBundlerInCapistranoCheck: { }
 #HashSyntaxCheck: { }
-IsolateSeedDataCheck: { }
+# IsolateSeedDataCheck: { }
 KeepFindersOnTheirOwnModelCheck: { }
 LawOfDemeterCheck: { }
 #LongLineCheck: { max_line_length: 80 }
