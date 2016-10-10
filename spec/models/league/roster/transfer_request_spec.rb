@@ -10,7 +10,19 @@ describe League::Roster::TransferRequest do
 
   describe '#deny'
 
-  it 'validates unique within league'
+  it 'validates unique within league' do
+    roster = create(:league_roster)
+    roster2 = create(:league_roster, division: roster.division)
+    user = create(:user)
+
+    request = build(:league_roster_transfer_request, propagate: true, roster: roster, user: user)
+    expect(request).to be_valid
+    expect(build(:league_roster_transfer_request, propagate: true, roster: roster)).to be_valid
+    request.save!
+    expect(build(:league_roster_transfer_request, propagate: true, roster: roster2,
+                                                  user: user)).to be_invalid
+    expect(build(:league_roster_transfer_request, propagate: true, roster: roster)).to be_valid
+  end
 
   it 'validates on team' do
     roster = create(:league_roster)
