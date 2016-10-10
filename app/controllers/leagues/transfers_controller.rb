@@ -4,21 +4,26 @@ module Leagues
 
     before_action { @league = League.find(params[:league_id]) }
     before_action except: [:index] do
-      @transfer = @league.pending_transfers.find(params[:id])
+      @transfer_request = @league.transfer_requests.find(params[:id])
     end
 
     before_action :require_user_league_permission
 
     def index
+      @transfer_requests = @league.transfer_requests
     end
 
     def update
-      @transfer.update(approved: true)
+      Transfers::ApprovalService.call(@transfer_request)
+
+      index
       render :index
     end
 
     def destroy
-      @transfer.delete
+      Transfers::DenialService.call(@transfer_request)
+
+      index
       render :index
     end
 
