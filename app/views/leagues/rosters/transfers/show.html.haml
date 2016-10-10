@@ -1,7 +1,7 @@
 %h1 Manage Roster for #{present(@roster).link}
-- if @transfer.errors[:user_id]
-  - @transfer.errors[:user_id].each do |error|
-    - present(@transfer.user) do |user|
+- if @transfer_request.errors[:user_id]
+  - @transfer_request.errors[:user_id].each do |error|
+    - present(@transfer_request.user) do |user|
       .alert.alert-danger
         %span.glyphicon.glyphicon-warning-sign
         #{user.link} #{error}
@@ -9,30 +9,31 @@
 .panel.panel-default
   .panel-heading On Roster
   %ul.list-group
-    - @roster.player_users.each do |user|
+    - @roster.users.each do |user|
       %li.list-group-item
-        = form_for(@transfer, as: :transfer, method: :post,
+        = form_for(@transfer_request, as: :request, method: :post,
                               url: league_roster_transfers_path(@league, @roster)) do |f|
           = f.hidden_field :user_id, value: user.id
           = f.hidden_field :is_joining, value: false
           = button_tag type: 'submit', class: 'btn btn-danger pull-right',
-                       disabled: @league.pending_transfer?(user) do
+                       disabled: @league.transfer_requests.exists?(user: user) do
             Remove
             %span.glyphicon.glyphicon-remove
 
         = render 'users/listing', user: user, team: @roster.team
+        = present(user).transfer_status(@league)
 
 .panel.panel-default
   .panel-heading Off Roster
   %ul.list-group
     - @roster.users_off_roster.each do |user|
       %li.list-group-item
-        = form_for(@transfer, as: :transfer, method: :post,
+        = form_for(@transfer_request, as: :request, method: :post,
                               url: league_roster_transfers_path(@league, @roster)) do |f|
           = f.hidden_field :user_id, value: user.id
           = f.hidden_field :is_joining, value: true
           = button_tag type: 'submit', class: 'btn btn-success pull-right',
-                       disabled: @league.pending_transfer?(user) do
+                       disabled: @league.transfer_requests.exists?(user: user) do
             Add
             %span.glyphicon.glyphicon-remove
 

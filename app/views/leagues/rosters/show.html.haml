@@ -41,14 +41,14 @@ signed up on #{@roster.created_at.strftime('%c')}
                 class: 'btn btn-default pull-right' do
         Manage
   %ul.list-group
-    - @roster.player_users.each do |user|
+    - @roster.users.each do |user|
       %li.list-group-item
         = render 'users/listing', user: user, team: @roster.team
 
 .panel.panel-default
   .panel-heading Transfers
   %ul.list-group
-    - @roster.approved_transfers.each do |transfer|
+    - @roster.transfers.each do |transfer|
       %li.list-group-item
         = present(transfer.user).link
         - if transfer.is_joining?

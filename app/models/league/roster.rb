@@ -1,13 +1,18 @@
 class League
   class Roster < ApplicationRecord
-    include ::RosterMixin
-
     belongs_to :team
     belongs_to :division
     delegate :league, to: :division, allow_nil: true
-    has_many :transfers, -> { order(created_at: :desc) },
-             inverse_of: :roster, class_name: 'Transfer', dependent: :destroy
-    accepts_nested_attributes_for :transfers
+
+    has_many :players,           -> { order(created_at: :desc) }, dependent: :destroy,
+                                                                  inverse_of: :roster
+    has_many :transfers,         -> { order(created_at: :desc) }, dependent: :destroy,
+                                                                  inverse_of: :roster
+    has_many :transfer_requests, -> { order(created_at: :desc) }, dependent: :destroy,
+                                                                  inverse_of: :roster
+    has_many :users, through: :players
+
+    accepts_nested_attributes_for :players, reject_if: proc { |attrs| attrs['user_id'].blank? }
 
     has_many :home_team_matches, class_name: 'Match', foreign_key: 'home_team_id',
                                  dependent: :destroy
@@ -37,8 +42,7 @@ class League
     validates :seeding,     numericality: { greater_than: 0 }, allow_nil: true
     validates :approved,    inclusion: { in: [true, false] }
     validates :disbanded,   inclusion: { in: [true, false] }
-    validate :player_count_minimums
-    validate :player_count_maximums
+    validate :within_roster_size_limits
     validate :validate_schedule
 
     scope :approved, -> { where(approved: true) }
@@ -96,23 +100,11 @@ class League
       save!(validate: false)
     end
 
-    def approved_transfers
-      transfers.where(approved: true)
-    end
-
     def rosters_not_played
       division.rosters.active
               .where.not(id: id)
               .where.not(id: home_team_matches.select(:away_team_id))
               .where.not(id: away_team_matches.select(:home_team_id))
-    end
-
-    def users_off_roster
-      team.users.where.not(id: players.map(&:user_id))
-    end
-
-    def player_transfers(*args)
-      super.where(approved: true)
     end
 
     def disband
@@ -122,6 +114,22 @@ class League
         forfeit_all!
         update!(disbanded: true)
       end
+    end
+
+    def users_off_roster
+      team.users.where.not(id: users)
+    end
+
+    def add_player!(user)
+      players.create!(user: user)
+    end
+
+    def remove_player!(user)
+      players.find_by(user: user).destroy!
+    end
+
+    def on_roster?(user)
+      players.where(user: user).exists?
     end
 
     def sort_keys
@@ -176,21 +184,12 @@ class League
       end
     end
 
-    def player_count_minimums
+    def within_roster_size_limits
       return unless league.present?
 
-      min_players = league.min_players
-      if players.size < min_players
-        errors.add(:player_ids, "must have at least #{min_players} players")
-      end
-    end
-
-    def player_count_maximums
-      return unless league.present?
-
-      max_players = league.max_players
-      if players.size > max_players && max_players > 0
-        errors.add(:player_ids, "must have no more than #{max_players} players")
+      unless league.valid_roster_size?(players.size)
+        errors.add(:players, "must have at least #{league.min_players} players" +
+          (league.max_players > 0 ? " and no more than #{league.max_players} players" : ''))
       end
     end
 

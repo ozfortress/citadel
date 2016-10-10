@@ -26,7 +26,11 @@ describe UsersController do
       expect(response).to have_http_status(:success)
     end
 
-    it 'fails for unauthenticated user'
+    it 'fails for unauthenticated user' do
+      get :new
+
+      expect(response).to redirect_to(root_path)
+    end
   end
 
   describe 'POST #create' do
@@ -125,12 +129,12 @@ describe UsersController do
 
     it 'creates name change for authorized user' do
       sign_in user
-      expect(user.pending_names.size).to eq(0)
+      expect(user.names.pending.size).to eq(0)
 
       post :request_name_change, params: { id: user.id, name_change: { name: 'B' } }
 
-      expect(user.pending_names.size).to eq(1)
-      name_change = user.pending_names.first
+      expect(user.names.pending.size).to eq(1)
+      name_change = user.names.pending.first
       expect(name_change.name).to eq('B')
       expect(name_change.approved_by).to be_nil
       expect(name_change.denied_by).to be_nil
@@ -141,7 +145,7 @@ describe UsersController do
 
       post :request_name_change, params: { id: user.id, name_change: { name: 'A' } }
 
-      expect(user.pending_names.size).to eq(0)
+      expect(user.names.pending.size).to eq(0)
     end
 
     it 'fails if name change is already pending' do
@@ -150,7 +154,7 @@ describe UsersController do
 
       post :request_name_change, params: { id: user.id, name_change: { name: 'C' } }
 
-      expect(user.pending_names.size).to eq(1)
+      expect(user.names.pending.size).to eq(1)
     end
   end
 
@@ -167,10 +171,11 @@ describe UsersController do
         user_id: user.id, id: name_change.id, approve: 'true'
       }
 
-      usr = User.find(user.id)
-      expect(usr.name).to eq('B')
-      expect(usr.pending_names.size).to eq(0)
-      expect(usr.approved_names.where(name: 'B')).to exist
+      user.reload
+      expect(user.name).to eq('B')
+      expect(user.names.pending.size).to eq(0)
+      expect(user.names.approved.where(name: 'B')).to exist
+      expect(user.notifications).to_not be_empty
     end
 
     it 'denies name changes' do
@@ -180,9 +185,11 @@ describe UsersController do
         user_id: user.id, id: name_change.id, approve: 'false'
       }
 
+      user.reload
       expect(user.name).to eq('A')
-      expect(user.pending_names.size).to eq(0)
-      expect(user.approved_names.where(name: 'B')).to_not exist
+      expect(user.names.pending.size).to eq(0)
+      expect(user.names.approved.where(name: 'B')).to_not exist
+      expect(user.notifications).to_not be_empty
     end
   end
 

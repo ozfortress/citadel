@@ -22,9 +22,13 @@
     = f.select :division_id, divisions_select, label: 'Desired Division'
     = render 'form', f: f
 
-    - users = present_collection(@team.users)
-    - listings = users.map { |user| [user.id, user.transfer_listing(@league)] }
-    = f.collection_check_boxes :player_ids, listings, :first, :last, label: 'Players'
+    = f.form_group :players, label: { text: 'Players' } do
+      = f.fields_for(:players, @team.users) do |user_f|
+        - user = user_f.object
+        - user_p = present(user)
+        - player = @roster.players.first { |pl| pl.user_id == user.id }
+        = user_f.check_box :user_id, { label: user_p.link, checked: player }, user.id, nil
+        = user_p.league_status(@league)
 
     = f.submit 'Sign up'
     = link_to 'Cancel', league_path(@league), class: 'btn btn-default'

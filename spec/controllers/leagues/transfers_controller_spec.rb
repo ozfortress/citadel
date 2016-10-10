@@ -5,8 +5,15 @@ describe Leagues::TransfersController do
   let!(:league) { create(:league, matches_submittable: true) }
   let!(:div) { create(:league_division, league: league) }
   let(:player) { create(:user) }
+  let(:captain) { create(:user) }
   let(:roster) { create(:league_roster, division: div) }
-  let(:transfer) { create(:league_roster_transfer, roster: roster, user: player) }
+  let(:transfer_request) do
+    create(:league_roster_transfer_request, propagate: true, roster: roster, user: player)
+  end
+
+  before do
+    captain.grant(:edit, roster.team)
+  end
 
   describe 'GET #index' do
     it 'succeeds for authorized user' do
@@ -38,19 +45,21 @@ describe Leagues::TransfersController do
       user.grant(:edit, league)
       sign_in user
 
-      patch :update, params: { league_id: league.id, id: transfer.id }
+      patch :update, params: { league_id: league.id, id: transfer_request.id }
 
       expect(roster.on_roster?(player)).to be(true)
-      expect(league.pending_transfer?(player)).to be(false)
+      expect(league.transfer_requests.where(user: player)).to_not exist
+      expect(captain.notifications).to_not be_empty
+      expect(transfer_request.user.notifications).to_not be_empty
     end
 
     it 'fails for unauthorized user' do
       sign_in user
 
-      patch :update, params: { league_id: league.id, id: transfer.id }
+      patch :update, params: { league_id: league.id, id: transfer_request.id }
 
       expect(roster.on_roster?(player)).to be(false)
-      expect(league.pending_transfer?(player)).to be(true)
+      expect(league.transfer_requests.where(user: player)).to exist
     end
   end
 
@@ -59,19 +68,21 @@ describe Leagues::TransfersController do
       user.grant(:edit, league)
       sign_in user
 
-      delete :destroy, params: { league_id: league.id, id: transfer.id }
+      delete :destroy, params: { league_id: league.id, id: transfer_request.id }
 
       expect(roster.on_roster?(player)).to be(false)
-      expect(league.pending_transfer?(player)).to be(false)
+      expect(league.transfer_requests.where(user: player)).to_not exist
+      expect(captain.notifications).to_not be_empty
+      expect(transfer_request.user.notifications).to_not be_empty
     end
 
     it 'fails for unauthorized user' do
       sign_in user
 
-      delete :destroy, params: { league_id: league.id, id: transfer.id }
+      delete :destroy, params: { league_id: league.id, id: transfer_request.id }
 
       expect(roster.on_roster?(player)).to be(false)
-      expect(league.pending_transfer?(player)).to be(true)
+      expect(league.transfer_requests.where(user: player)).to exist
     end
   end
 end

@@ -40,29 +40,4 @@ describe League::Match do
 
     expect(League::Match.new(home_team: roster).status).to eq('confirmed')
   end
-
-  it 'should notify all players of upcoming matches' do
-    div = create(:league_division)
-    home_team = create(:league_roster, division: div)
-    away_team = create(:league_roster, division: div)
-    players = home_team.player_users + away_team.player_users
-    players.each { |user| user.notifications.destroy_all }
-
-    create(:league_match, home_team: home_team, away_team: away_team)
-
-    (home_team.player_users + away_team.player_users).each do |user|
-      expect(user.notifications).to_not be_empty
-    end
-  end
-
-  it 'should notify all players of a BYE match' do
-    home_team = create(:league_roster)
-    home_team.player_users.each { |user| user.notifications.destroy_all }
-
-    create(:bye_league_match, home_team: home_team)
-
-    home_team.player_users.each do |user|
-      expect(user.notifications).to_not be_empty
-    end
-  end
 end

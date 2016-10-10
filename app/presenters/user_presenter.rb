@@ -40,10 +40,9 @@ class UserPresenter < ActionPresenter::Base
   end
 
   def roster_status(league)
-    transfers = league.players.where(user: user, approved: true)
+    roster = league.roster_for(user)
 
-    if transfers.exists?
-      roster = transfers.first.roster
+    if roster
       "on roster '#{present(roster).link}'".html_safe
     else
       ''
@@ -51,10 +50,10 @@ class UserPresenter < ActionPresenter::Base
   end
 
   def transfer_status(league)
-    transfers = league.transfers.where(user: user, approved: false)
+    request = league.transfer_requests.find_by(user: user)
 
-    if transfers.exists?
-      present(transfers.first).transfer_message
+    if request
+      present(request).transfer_message
     else
       ''
     end

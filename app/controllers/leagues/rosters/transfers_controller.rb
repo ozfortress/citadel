@@ -8,20 +8,18 @@ module Leagues
       before_action :require_transfer_permissions
 
       def show
-        @transfer = @roster.transfers.new
+        @transfer_request = @roster.transfer_requests.new
       end
 
       def create
-        @transfer = @roster.transfers.new(transfer_params)
-
-        @transfer.save
+        @transfer_request = Rosters::Transfers::CreationService.call(@roster, transfer_params)
         render :show
       end
 
       private
 
       def transfer_params
-        params.require(:transfer).permit(:user_id, :is_joining)
+        params.require(:request).permit(:user_id, :is_joining)
       end
 
       def require_transfer_permissions

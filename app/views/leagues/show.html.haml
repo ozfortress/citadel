@@ -62,11 +62,9 @@
         = link_to 'Sign up', new_league_roster_path(@league),
                              class: 'btn btn-success pull-right'
 
-    - elsif current_user.entered?(@league)
-      - roster = present @league.roster_transfer(current_user).first.roster
-
+    - elsif @roster
       .panel-body
-        = roster.link 'View My Team', class: 'btn btn-default pull-right'
+        = present(@roster).link 'View My Team', class: 'btn btn-default pull-right'
 
 - if user_can_edit_league?
   .panel.panel-default

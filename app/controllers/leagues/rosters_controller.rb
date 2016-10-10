@@ -26,15 +26,16 @@ module Leagues
 
         @roster.team = @team
         @roster.name = @team.name
+        @team.users.each { |user| @roster.players.new(user: user) }
       end
     end
 
     def create
-      @roster = @league.rosters.new(new_roster_params)
-      @roster.team = Team.find(params[:team_id])
+      @team = Team.find(params[:team_id])
+      @roster = Rosters::CreationService.call(@league, @team, new_roster_params)
 
-      if @roster.save
-        redirect_to league_path(@league)
+      if @roster.persisted?
+        redirect_to league_roster_path(@league, @roster)
       else
         render :new
       end
@@ -83,7 +84,8 @@ module Leagues
     end
 
     def new_roster_params
-      param = params.require(:roster).permit(:name, :description, :division_id, player_ids: [])
+      param = params.require(:roster).permit(:name, :description, :division_id,
+                                             players_attributes: [:user_id])
 
       whitelist_schedule_params(param)
     end

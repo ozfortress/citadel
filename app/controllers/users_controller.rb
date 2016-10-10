@@ -15,7 +15,12 @@ class UsersController < ApplicationController
 
   def new
     steam_data = session['devise.steam_data']
-    @user = User.new(name: params[:name], steam_id: steam_data['uid'])
+
+    if steam_data
+      @user = User.new(name: params[:name], steam_id: steam_data['uid'])
+    else
+      redirect_to root_path
+    end
   end
 
   def create
@@ -62,7 +67,7 @@ class UsersController < ApplicationController
   def handle_name_change
     @user = User.find(params[:user_id])
     @name_change = @user.pending_names.find(params[:id])
-    @name_change.approve!(@user, params[:approve] == 'true')
+    Users::NameChangeHandlingService.call(@name_change, current_user, params[:approve] == 'true')
 
     render :names
   end

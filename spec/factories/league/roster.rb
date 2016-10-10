@@ -8,16 +8,15 @@ FactoryGirl.define do
 
     transient do
       player_count 1
-      transfers nil
+      players nil
     end
 
     after(:build) do |roster, evaluator|
-      if evaluator.transfers
-        roster.transfers = evaluator.transfers
-      else
-        roster.transfers = build_list(:league_roster_transfer, evaluator.player_count,
-                                      is_joining: true, approved: true, roster: roster)
-      end
+      roster.players = if evaluator.players
+                         evaluator.players
+                       else
+                         build_list(:league_roster_player, evaluator.player_count, roster: roster)
+                       end
     end
   end
 end

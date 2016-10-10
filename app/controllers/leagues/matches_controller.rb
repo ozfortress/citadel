@@ -23,10 +23,10 @@ module Leagues
     end
 
     def create
-      @match = League::Match.new(match_params)
       @division = @league.divisions.find(params[:division_id])
+      @match = Matches::CreationService.call(match_params)
 
-      if @match.save
+      if @match.persisted?
         redirect_to league_match_path(@league, @match)
       else
         @match.reset_results
@@ -43,10 +43,11 @@ module Leagues
 
     def create_round
       params = create_round_params
+      @kind     = params.delete(:generate_kind)
       @division = @league.divisions.find(params.delete(:division_id))
-      @kind = params.delete(:generate_kind)
+      @match    = Matches::GenerationService.call(@division, @kind, params)
 
-      if create_round_matches(@kind, params)
+      if @match.persisted?
         redirect_to league_matches_path(@league)
       else
         @match.reset_results
@@ -104,13 +105,6 @@ module Leagues
     end
 
     private
-
-    def create_round_matches(kind, params)
-      matches = @division.seed_round_with(kind, params)
-      @match = matches.first(&:invalid?)
-
-      @match.valid?
-    end
 
     def report_scores_params
       if user_can_edit_league?

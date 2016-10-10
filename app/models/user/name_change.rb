@@ -12,30 +12,21 @@ class User
     validate :only_one_request_per_user, on: :create
     validate :name_not_already_used, on: :create
 
-    after_update do
-      if approved_by
-        user.notify!("The request to change your name to '#{name}' was accepted!", user_path(user))
-      elsif denied_by
-        user.notify!("The request to change your name to '#{name}' was denied.", user_path(user))
-      end
-    end
+    scope :pending, -> { where(approved_by: nil, denied_by: nil) }
+    scope :approved, -> { where.not(approved_by: nil) }
 
     def pending?
       !approved_by && !denied_by
     end
 
-    def self.pending
-      all.where(approved_by: nil, denied_by: nil)
-    end
-
-    def approve!(user, approved)
+    def approve(user, approved)
       if approved
         self.approved_by = user
         self.user.update!(name: name)
       else
         self.denied_by = user
       end
-      save!
+      save
     end
 
     private
@@ -47,7 +38,7 @@ class User
     end
 
     def only_one_request_per_user
-      if user.present? && pending? && !user.pending_names.empty?
+      if user.present? && pending? && !user.names.pending.empty?
         errors.add(:name, 'a name request is already pending')
       end
     end

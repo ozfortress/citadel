@@ -2,7 +2,6 @@ require 'elasticsearch/model'
 
 class League < ApplicationRecord
   include Searchable
-  include RosterPlayers
 
   belongs_to :format
 
@@ -11,14 +10,17 @@ class League < ApplicationRecord
   has_many :tiebreakers, inverse_of: :league, dependent: :destroy
   accepts_nested_attributes_for :tiebreakers, allow_destroy: true
 
-  has_many :rosters,   through: :divisions, class_name: 'Roster', counter_cache: :rosters_count
-  has_many :transfers, through: :rosters,   class_name: 'Roster::Transfer'
-  has_many :matches,   through: :divisions, class_name: 'Match'
-  has_many :titles,    class_name: 'User::Title'
+  has_many :rosters,           through: :divisions, class_name: 'Roster',
+                               counter_cache: :rosters_count
+  has_many :transfers,         through: :rosters,   class_name: 'Roster::Transfer'
+  has_many :players,           through: :rosters,   class_name: 'Roster::Player'
+  has_many :transfer_requests, through: :rosters,   class_name: 'Roster::TransferRequest'
+  has_many :matches,           through: :divisions, class_name: 'Match'
+  has_many :titles,                                 class_name: 'User::Title'
 
-  validates :name, presence: true, length: { in: 1..64 }
-  validates :description, presence: true
   enum status: [:hidden, :running, :completed]
+  validates :name,        presence: true, length: { in: 1..64 }
+  validates :description, presence: true
   validates :signuppable,                inclusion: { in: [true, false] }
   validates :roster_locked,              inclusion: { in: [true, false] }
   validates :matches_submittable,        inclusion: { in: [true, false] }
@@ -26,14 +28,17 @@ class League < ApplicationRecord
   validates :allow_round_draws,          inclusion: { in: [true, false] }
   validates :allow_disbanding,           inclusion: { in: [true, false] }
   validates :schedule_locked,            inclusion: { in: [true, false] }
+
   validates :min_players, presence: true, numericality: { greater_than: 0 }
   validates :max_players, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :points_per_round_won, presence: true, numericality: { only_integer: true }
-  validates :points_per_round_drawn, presence: true, numericality: { only_integer: true }
-  validates :points_per_round_lost, presence: true, numericality: { only_integer: true }
-  validates :points_per_match_forfeit_loss, presence: true, numericality: { only_integer: true }
-  validates :points_per_match_forfeit_win, presence: true, numericality: { only_integer: true }
 
+  validates :points_per_round_won,          presence: true, numericality: { only_integer: true }
+  validates :points_per_round_drawn,        presence: true, numericality: { only_integer: true }
+  validates :points_per_round_lost,         presence: true, numericality: { only_integer: true }
+  validates :points_per_match_forfeit_loss, presence: true, numericality: { only_integer: true }
+  validates :points_per_match_forfeit_win,  presence: true, numericality: { only_integer: true }
+
+  # Scheduling
   enum schedule: [:manual, :weeklies]
   has_one :weekly_scheduler, inverse_of: :league, class_name: 'League::Schedulers::Weekly',
                              dependent: :destroy
@@ -54,32 +59,22 @@ class League < ApplicationRecord
     indexes :name, analyzer: 'search'
   end
 
-  def roster_transfer(user)
-    transfers.where(user_id: user.id)
-             .order(created_at: :desc)
-             .limit(1)
-             .where(is_joining: true)
-  end
-
   def as_indexed_json(_ = {})
     as_json(only: [:name, :description])
   end
 
-  def pending_transfers
-    transfers.where(approved: false)
+  def entered?(user)
+    players.where(user: user).exists?
   end
 
-  def pending_transfer?(user)
-    pending_transfers.where(user_id: user.id).exists?
+  def roster_for(user)
+    player = players.find_by(user: user)
+
+    player.roster if player
   end
 
-  def point_multipliers
-    [points_per_round_won, points_per_round_drawn, points_per_round_lost,
-     points_per_match_forfeit_win, points_per_match_forfeit_loss]
-  end
-
-  def player_transfers(*args)
-    super.where(approved: true)
+  def valid_roster_size?(size)
+    min_players <= size && (size <= max_players || max_players == 0)
   end
 
   def scheduler
@@ -93,10 +88,15 @@ class League < ApplicationRecord
     end
   end
 
+  def point_multipliers
+    [points_per_round_won, points_per_round_drawn, points_per_round_lost,
+     points_per_match_forfeit_win, points_per_match_forfeit_loss]
+  end
+
   private
 
   def update_roster_match_counters
-    rosters.where(approved: true).find_each(&:update_match_counters!)
+    rosters.approved.find_each(&:update_match_counters!)
   end
 
   def validate_players_range

@@ -4,16 +4,16 @@
 
 .panel.panel-default
   .panel-heading On Roster
-  - if @league.pending_transfers.empty?
+  - if @transfer_requests.empty?
     .panel-body No pending transfers...
 
   %ul.list-group
-    - @league.pending_transfers.each do |transfer|
+    - @transfer_requests.each do |request|
       %li.list-group-item
-        = button_to 'Approve', league_transfer_path(@league, transfer), method: :patch,
+        = button_to 'Approve', league_transfer_path(@league, request), method: :patch,
                     class: 'pull-right btn btn-success'
-        = button_to 'Deny', league_transfer_path(@league, transfer), method: :delete,
+        = button_to 'Deny', league_transfer_path(@league, request), method: :delete,
                     class: 'pull-right btn btn-danger'
 
-        = transfer.created_at.strftime('%c')
-        = present(transfer.user).transfer_listing(@league)
+        = request.created_at.strftime('%c')
+        = present(request.user).transfer_listing(@league)
