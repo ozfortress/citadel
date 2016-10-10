@@ -8,11 +8,11 @@ describe 'leagues/rosters/transfers/show' do
   it 'displays all transferable users' do
     assign(:league, roster.league)
     assign(:roster, roster)
-    assign(:transfer, League::Roster::Transfer.new)
+    assign(:transfer_request, League::Roster::TransferRequest.new)
 
     render
 
-    roster.player_users.each do |user|
+    roster.users.each do |user|
       expect(rendered).to include(user.name)
     end
 
