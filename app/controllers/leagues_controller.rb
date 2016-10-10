@@ -35,6 +35,7 @@ class LeaguesController < ApplicationController
 
   def show
     @divisions = @league.divisions
+    @roster = @league.roster_for(current_user) if user_signed_in?
   end
 
   def edit
