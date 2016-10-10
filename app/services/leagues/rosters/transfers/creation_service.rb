@@ -10,6 +10,8 @@ module Leagues
           request.transaction do
             save_or_approve(request, roster) || rollback!
           end
+
+          request
         end
 
         private
