@@ -16,7 +16,8 @@
 
     %hr
 
-= link_to "http://logs.tf/profile/#{@user.steam_id}", title: 'logs.tf profile', target: '_blank', class: 'user-external-link' do
+= link_to "http://logs.tf/profile/#{@user.steam_id}",
+          title: 'logs.tf profile', target: '_blank', class: 'user-external-link' do
   = image_tag 'logs.tf-logo.png'
 
 = link_to 'livelogs', "http://livelogs.ozfortress.com/player/#{@user.steam_id}",
