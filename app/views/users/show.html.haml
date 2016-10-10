@@ -14,6 +14,14 @@
     - unless @user.aka.empty?
       %p.group-aka aka #{@user.aka.limit(5).map(&:name).join(', ')}
 
+    %hr
+
+= link_to "http://logs.tf/profile/#{@user.steam_id}", title: 'logs.tf profile', target: '_blank', class: 'user-external-link' do
+  = image_tag 'logs.tf-logo.png'
+
+= link_to 'livelogs', "http://livelogs.ozfortress.com/player/#{@user.steam_id}",
+          class: 'user-external-link', title: 'livelogs profile', target: '_blank'
+
 %p.steam-link-large= present(@user).steam_link
 
 .row!= present_collection(@user.titles.for_roster).map(&:icon).join(' ')
