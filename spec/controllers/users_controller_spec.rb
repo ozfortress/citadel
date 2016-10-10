@@ -129,12 +129,12 @@ describe UsersController do
 
     it 'creates name change for authorized user' do
       sign_in user
-      expect(user.pending_names.size).to eq(0)
+      expect(user.names.pending.size).to eq(0)
 
       post :request_name_change, params: { id: user.id, name_change: { name: 'B' } }
 
-      expect(user.pending_names.size).to eq(1)
-      name_change = user.pending_names.first
+      expect(user.names.pending.size).to eq(1)
+      name_change = user.names.pending.first
       expect(name_change.name).to eq('B')
       expect(name_change.approved_by).to be_nil
       expect(name_change.denied_by).to be_nil
@@ -145,7 +145,7 @@ describe UsersController do
 
       post :request_name_change, params: { id: user.id, name_change: { name: 'A' } }
 
-      expect(user.pending_names.size).to eq(0)
+      expect(user.names.pending.size).to eq(0)
     end
 
     it 'fails if name change is already pending' do
@@ -154,7 +154,7 @@ describe UsersController do
 
       post :request_name_change, params: { id: user.id, name_change: { name: 'C' } }
 
-      expect(user.pending_names.size).to eq(1)
+      expect(user.names.pending.size).to eq(1)
     end
   end
 
@@ -173,8 +173,8 @@ describe UsersController do
 
       user.reload
       expect(user.name).to eq('B')
-      expect(user.pending_names.size).to eq(0)
-      expect(user.approved_names.where(name: 'B')).to exist
+      expect(user.names.pending.size).to eq(0)
+      expect(user.names.approved.where(name: 'B')).to exist
       expect(user.notifications).to_not be_empty
     end
 
@@ -187,8 +187,8 @@ describe UsersController do
 
       user.reload
       expect(user.name).to eq('A')
-      expect(user.pending_names.size).to eq(0)
-      expect(user.approved_names.where(name: 'B')).to_not exist
+      expect(user.names.pending.size).to eq(0)
+      expect(user.names.approved.where(name: 'B')).to_not exist
       expect(user.notifications).to_not be_empty
     end
   end

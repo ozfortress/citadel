@@ -87,12 +87,8 @@ class User < ApplicationRecord
     names.where(approved_by: nil, denied_by: nil)
   end
 
-  def approved_names
-    names.where.not(approved_by: nil)
-  end
-
   def aka
-    approved_names.where.not(name: name)
+    names.approved.where.not(name: name)
   end
 
   def notify!(message, link)

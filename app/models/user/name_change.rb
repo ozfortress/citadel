@@ -12,12 +12,11 @@ class User
     validate :only_one_request_per_user, on: :create
     validate :name_not_already_used, on: :create
 
+    scope :pending, -> { where(approved_by: nil, denied_by: nil) }
+    scope :approved, -> { where.not(approved_by: nil) }
+
     def pending?
       !approved_by && !denied_by
-    end
-
-    def self.pending
-      all.where(approved_by: nil, denied_by: nil)
     end
 
     def approve(user, approved)
@@ -39,7 +38,7 @@ class User
     end
 
     def only_one_request_per_user
-      if user.present? && pending? && !user.pending_names.empty?
+      if user.present? && pending? && !user.names.pending.empty?
         errors.add(:name, 'a name request is already pending')
       end
     end
