@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161008090929) do
+ActiveRecord::Schema.define(version: 20161009102519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -237,6 +237,25 @@ ActiveRecord::Schema.define(version: 20161008090929) do
     t.datetime "updated_at", null: false
     t.index ["roster_id"], name: "index_league_roster_comments_on_roster_id", using: :btree
     t.index ["user_id"], name: "index_league_roster_comments_on_user_id", using: :btree
+  end
+
+  create_table "league_roster_players", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "roster_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["roster_id"], name: "index_league_roster_players_on_roster_id", using: :btree
+    t.index ["user_id"], name: "index_league_roster_players_on_user_id", using: :btree
+  end
+
+  create_table "league_roster_transfer_requests", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "roster_id"
+    t.boolean  "is_joining", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["roster_id"], name: "index_league_roster_transfer_requests_on_roster_id", using: :btree
+    t.index ["user_id"], name: "index_league_roster_transfer_requests_on_user_id", using: :btree
   end
 
   create_table "league_roster_transfers", force: :cascade do |t|
@@ -482,6 +501,10 @@ ActiveRecord::Schema.define(version: 20161008090929) do
   add_foreign_key "league_matches", "league_rosters", column: "home_team_id"
   add_foreign_key "league_roster_comments", "league_rosters", column: "roster_id"
   add_foreign_key "league_roster_comments", "users"
+  add_foreign_key "league_roster_players", "league_rosters", column: "roster_id"
+  add_foreign_key "league_roster_players", "users"
+  add_foreign_key "league_roster_transfer_requests", "league_rosters", column: "roster_id"
+  add_foreign_key "league_roster_transfer_requests", "users"
   add_foreign_key "league_roster_transfers", "league_rosters", column: "roster_id"
   add_foreign_key "league_roster_transfers", "users"
   add_foreign_key "league_rosters", "league_divisions", column: "division_id"

@@ -13,7 +13,7 @@ describe League::Match::Comm do
 
   it 'notifies relevant users of a new comm' do
     match = create(:league_match)
-    commer = match.home_team.player_users.first
+    commer = match.home_team.users.first
     commer.notifications.destroy_all
     home_captain = create(:user)
     home_captain.grant(:edit, match.home_team.team)

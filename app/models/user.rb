@@ -1,20 +1,25 @@
 require 'elasticsearch/model'
 
 class User < ApplicationRecord
-  include Transfers
   include Searchable
   include Auth::Model
 
-  has_many :team_invites, class_name: 'Team::Invite'
-  has_many :team_transfers, -> { order(created_at: :desc) }, class_name: 'Team::Transfer'
-  has_many :roster_transfers, class_name: 'League::Roster::Transfer'
   has_many :titles, -> { order(created_at: :desc) }
   has_many :names, -> { order(created_at: :desc) }, class_name: 'NameChange'
   has_many :notifications, -> { order(created_at: :desc) }
   has_many :forums_subscriptions, class_name: 'Forums::Subscription'
+
   has_many :team_players, class_name: 'Team::Player'
   private :team_players, :team_players=
   has_many :teams, through: :team_players
+  has_many :team_invites, class_name: 'Team::Invite'
+  has_many :team_transfers, -> { order(created_at: :desc) }, class_name: 'Team::Transfer'
+
+  has_many :roster_players, class_name: 'League::Roster::Player'
+  private :roster_players, :roster_players=
+  has_many :rosters, through: :roster_players, class_name: 'League::Roster'
+  has_many :roster_transfers,         class_name: 'League::Roster::Transfer'
+  has_many :roster_transfer_requests, class_name: 'League::Roster::TransferRequest'
 
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:steam]
 
@@ -57,18 +62,13 @@ class User < ApplicationRecord
     "http://steamcommunity.com/profiles/#{steam_id}"
   end
 
-  def rosters
-    get_player_rosters(roster_transfers.approved, :roster_id,
-                       League::Roster, :league_roster_transfers)
-  end
-
   def matches
     rosters_sql = rosters.select(:id).to_sql
     League::Match.where("home_team_id IN (#{rosters_sql}) OR away_team_id IN (#{rosters_sql})")
   end
 
   def entered?(comp)
-    comp.roster_transfer(self).exists?
+    comp.players(user: self).exists?
   end
 
   def steam_id_nice
