@@ -12,14 +12,6 @@ class User
     validate :only_one_request_per_user, on: :create
     validate :name_not_already_used, on: :create
 
-    after_update do
-      if approved_by
-        user.notify!("The request to change your name to '#{name}' was accepted!", user_path(user))
-      elsif denied_by
-        user.notify!("The request to change your name to '#{name}' was denied.", user_path(user))
-      end
-    end
-
     def pending?
       !approved_by && !denied_by
     end
@@ -28,14 +20,14 @@ class User
       all.where(approved_by: nil, denied_by: nil)
     end
 
-    def approve!(user, approved)
+    def approve(user, approved)
       if approved
         self.approved_by = user
         self.user.update!(name: name)
       else
         self.denied_by = user
       end
-      save!
+      save
     end
 
     private

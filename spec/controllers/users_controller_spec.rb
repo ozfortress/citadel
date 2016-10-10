@@ -171,10 +171,11 @@ describe UsersController do
         user_id: user.id, id: name_change.id, approve: 'true'
       }
 
-      usr = User.find(user.id)
-      expect(usr.name).to eq('B')
-      expect(usr.pending_names.size).to eq(0)
-      expect(usr.approved_names.where(name: 'B')).to exist
+      user.reload
+      expect(user.name).to eq('B')
+      expect(user.pending_names.size).to eq(0)
+      expect(user.approved_names.where(name: 'B')).to exist
+      expect(user.notifications).to_not be_empty
     end
 
     it 'denies name changes' do
@@ -184,9 +185,11 @@ describe UsersController do
         user_id: user.id, id: name_change.id, approve: 'false'
       }
 
+      user.reload
       expect(user.name).to eq('A')
       expect(user.pending_names.size).to eq(0)
       expect(user.approved_names.where(name: 'B')).to_not exist
+      expect(user.notifications).to_not be_empty
     end
   end
 
