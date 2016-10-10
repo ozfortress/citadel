@@ -63,6 +63,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'users/steam_id/:id', to: 'steam#show'
+
   get   'users/logout',            to: 'users#logout',              as: 'logout_user'
   get   'users/names',             to: 'users#names',               as: 'users_names'
   patch 'users/:user_id/name/:id', to: 'users#handle_name_change',  as: 'handle_user_name'
