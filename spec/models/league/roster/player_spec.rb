@@ -6,7 +6,29 @@ describe League::Roster::Player do
   it { should belong_to(:roster) }
   it { should belong_to(:user) }
 
-  it 'validates unique within league'
+  it 'validates unique within league' do
+    roster = create(:league_roster)
+    roster2 = create(:league_roster, division: roster.division)
+    div2 = create(:league_division, league: roster.league)
+    roster3 = create(:league_roster, division: div2)
+    user = create(:user)
+
+    expect(build(:league_roster_player, roster: roster, user: user)).to be_valid
+    expect(build(:league_roster_player, roster: roster2, user: user)).to be_valid
+    expect(build(:league_roster_player, roster: roster3, user: user)).to be_valid
+
+    roster.add_player!(user)
+
+    expect(build(:league_roster_player, roster: roster, user: user)).to be_invalid
+    expect(build(:league_roster_player, roster: roster2, user: user)).to be_invalid
+    expect(build(:league_roster_player, roster: roster3, user: user)).to be_invalid
+
+    roster.remove_player!(user)
+
+    expect(build(:league_roster_player, roster: roster, user: user)).to be_valid
+    expect(build(:league_roster_player, roster: roster2, user: user)).to be_valid
+    expect(build(:league_roster_player, roster: roster3, user: user)).to be_valid
+  end
 
   it 'creates transfers on creation' do
     roster = create(:league_roster)
