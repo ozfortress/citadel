@@ -52,6 +52,9 @@ describe Leagues::MatchesController do
       expect(match.rounds.count).to eq(1)
       round = match.rounds.first
       expect(round.map).to eq(map)
+      (team1.users + team2.users).each do |user|
+        expect(user.notifications).to_not be_empty
+      end
     end
 
     it 'fails with same team' do
@@ -124,6 +127,10 @@ describe Leagues::MatchesController do
         expect(match.round).to eq(3)
         expect(match.rounds.size).to eq(1)
         expect(match.rounds.first.map).to eq(map)
+
+        (match.home_team.users + match.away_team.users).each do |user|
+          expect(user.notifications).to_not be_empty
+        end
       end
     end
 
