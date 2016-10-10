@@ -8,9 +8,7 @@ class League
 
       validates :is_joining, inclusion: { in: [true, false] }
 
-      include ::Validations::UserUniqueWithinLeague
-      validate :validate_user_unique_within_league, if: :is_joining?
-
+      validate :unique_within_league
       validate :on_team,   if: :is_joining?
       validate :on_roster, unless: :is_joining?
       validate :within_roster_size_limits
@@ -70,6 +68,14 @@ class League
         new_size = leaving_roster.players.size - 1
         unless league.valid_roster_size?(new_size)
           errors.add(:user_id, 'would result in breach of roster size limits')
+        end
+      end
+
+      def unique_within_league
+        return unless user.present? && roster.present?
+
+        if league.transfer_requests.where(user: user).where.not(id: id).exists?
+          errors.add(:user_id, 'is already pending a transfer')
         end
       end
     end
