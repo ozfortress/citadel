@@ -145,7 +145,7 @@ class League
     private
 
     def calculate_sort_keys
-      keys = [ranking || Float::INFINITY, -points]
+      keys = [ranking || Float::INFINITY, disbanded? ? 1 : -points]
 
       tiebreaker_keys = league.tiebreakers.map { |tiebreaker| -tiebreaker.get_comparison(self) }
 
