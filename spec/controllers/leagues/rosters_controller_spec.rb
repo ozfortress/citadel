@@ -47,13 +47,15 @@ describe Leagues::RostersController do
 
   describe 'POST #create' do
     it 'succeeds for authorized user' do
+      other_user = create(:user)
+      team.add_player!(other_user)
       user.grant(:edit, team)
       sign_in user
 
       post :create, params: {
         league_id: league.id, team_id: team.id,
         roster: { name: 'A', description: 'B',
-                  division_id: div2.id, player_ids: [user.id, ''] }
+                  division_id: div2.id, players_attributes: [{ user_id: user.id }] }
       }
 
       roster = League::Roster.first
@@ -61,8 +63,10 @@ describe Leagues::RostersController do
       expect(roster.name).to eq('A')
       expect(roster.description).to eq('B')
       expect(roster.team).to eq(team)
-      expect(roster.player_users).to eq([user])
+      expect(roster.users).to eq([user])
       expect(roster.division).to eq(div2)
+      expect(user.notifications).to_not be_empty
+      expect(other_user.notifications).to be_empty
     end
 
     it 'fails for too little players' do
@@ -72,7 +76,7 @@ describe Leagues::RostersController do
       post :create, params: {
         league_id: league.id, team_id: team.id,
         roster: { name: 'A', description: 'B',
-                  division_id: div.id, player_ids: [''] }
+                  division_id: div.id, players_attributes: [] }
       }
     end
 
