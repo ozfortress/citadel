@@ -9,8 +9,11 @@ class Team
     validate :user_not_in_team
 
     def accept
-      team.add_player!(user)
-      destroy
+      transaction do
+        team.add_player!(user)
+
+        destroy || fail(ActiveRecord::Rollback)
+      end
     end
 
     def decline
