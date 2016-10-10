@@ -12,8 +12,8 @@ module Leagues
           match = matches.first(&:invalid?)
           rollback! if match.invalid?
 
-          matches.each do |match|
-            CreationService.notify_for_match!(match)
+          matches.each do |mat|
+            CreationService.notify_for_match!(mat)
           end
         end
 
