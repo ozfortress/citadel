@@ -20,8 +20,9 @@
           title: 'logs.tf profile', target: '_blank', class: 'user-external-link' do
   = image_tag 'logs.tf-logo.png'
 
-= link_to 'livelogs', "http://livelogs.ozfortress.com/player/#{@user.steam_id}",
-          class: 'user-external-link', title: 'livelogs profile', target: '_blank'
+= link_to "http://livelogs.ozfortress.com/player/#{@user.steam_id}",
+          class: 'user-external-link', title: 'livelogs profile', target: '_blank' do
+  = image_tag 'livelogs-logo.png'
 
 %p.steam-link-large= present(@user).steam_link
 
