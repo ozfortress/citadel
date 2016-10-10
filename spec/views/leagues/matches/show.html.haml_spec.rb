@@ -13,10 +13,10 @@ describe 'leagues/matches/show' do
 
       render
 
-      home_team.player_users.each do |user|
+      home_team.users.each do |user|
         expect(rendered).to include(user.name)
       end
-      away_team.player_users.each do |user|
+      away_team.users.each do |user|
         expect(rendered).to include(user.name)
       end
     end
@@ -34,10 +34,10 @@ describe 'leagues/matches/show' do
 
       render
 
-      home_team.player_users.each do |user|
+      home_team.users.each do |user|
         expect(rendered).to include(user.name)
       end
-      away_team.player_users.each do |user|
+      away_team.users.each do |user|
         expect(rendered).to include(user.name)
       end
     end
