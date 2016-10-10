@@ -12,7 +12,7 @@ module Leagues
       end
 
       def create
-        Transfers::CreationService.call(@roster, transfer_params)
+        Rosters::Transfers::CreationService.call(@roster, transfer_params)
         render :show
       end
 
