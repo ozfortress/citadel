@@ -11,6 +11,8 @@ class CreateLeagueRosterTransferRequests < ActiveRecord::Migration[5.0]
 
     add_foreign_key :league_roster_transfer_requests, :league_rosters, column: :roster_id
 
+    change_column_default :league_roster_transfers, :approved, from: false, to: true
+
     reversible do |dir|
       dir.up do
         create_transfer_requests_from_transfers

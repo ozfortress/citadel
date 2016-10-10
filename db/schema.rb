@@ -15,13 +15,6 @@ ActiveRecord::Schema.define(version: 20161009102519) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "action_user_edit_forums_thread", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "forums_thread_id"
-    t.index ["forums_thread_id"], name: "index_action_user_edit_forums_thread_on_forums_thread_id", using: :btree
-    t.index ["user_id"], name: "index_action_user_edit_forums_thread_on_user_id", using: :btree
-  end
-
   create_table "action_user_edit_games", force: :cascade do |t|
     t.integer "user_id"
     t.index ["user_id"], name: "index_action_user_edit_games_on_user_id", using: :btree
@@ -259,12 +252,12 @@ ActiveRecord::Schema.define(version: 20161009102519) do
   end
 
   create_table "league_roster_transfers", force: :cascade do |t|
-    t.integer  "roster_id",                  null: false
-    t.integer  "user_id",                    null: false
-    t.boolean  "is_joining",                 null: false
-    t.boolean  "approved",   default: false, null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "roster_id",                 null: false
+    t.integer  "user_id",                   null: false
+    t.boolean  "is_joining",                null: false
+    t.boolean  "approved",   default: true, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.index ["roster_id"], name: "index_league_roster_transfers_on_roster_id", using: :btree
     t.index ["user_id"], name: "index_league_roster_transfers_on_user_id", using: :btree
   end
@@ -462,8 +455,6 @@ ActiveRecord::Schema.define(version: 20161009102519) do
     t.index ["visit_token"], name: "index_visits_on_visit_token", unique: true, using: :btree
   end
 
-  add_foreign_key "action_user_edit_forums_thread", "forums_threads"
-  add_foreign_key "action_user_edit_forums_thread", "users"
   add_foreign_key "action_user_edit_games", "users"
   add_foreign_key "action_user_edit_league", "leagues"
   add_foreign_key "action_user_edit_league", "users"
