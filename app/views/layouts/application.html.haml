@@ -23,7 +23,7 @@
       .container
         .row
           - if user_signed_in?
-            %ul.navbar-header.nav.navbar-right
+            %ul.nav.navbar-header.navbar-right
               %li= render 'user_dropdown'
             %ul.nav.navbar-header.navbar-right
               %li= render 'notifications', notifications: @notifications
