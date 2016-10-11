@@ -9,7 +9,7 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    %header.banner-citadel#banner
+    %header.hidden-xs.banner-citadel#banner
       .banner-container-citadel
         .banner-background-citadel
           = image_tag 'background2.png'
@@ -37,10 +37,14 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
+
+          .visible-xs.pull-left.banner-logo-citadel
+            = image_tag 'logo.png', height: '50px'
+
           .collapse.navbar-collapse.navbar-left#navbar-collapse
             %ul.nav.navbar-nav= render 'navbar'
 
-    .container
+    .container#content
       .row
         .col-md-9
           = yield

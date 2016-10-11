@@ -45,7 +45,7 @@ a:hover
   right: 0
   top: 0
 
-.navbar-citadel
+#navbar.navbar-citadel
   @extend .navbar-inverse
   background-color: #324752
   border-style: solid
@@ -53,6 +53,9 @@ a:hover
   border-width: 4px 0 4px 0
   border-radius: 0
   box-shadow: 0 0 5px black
+
+#navbar
+  max-height: 100%
 
 #navbar.affix
   top: 0
@@ -65,8 +68,21 @@ a:hover
 @media (max-width: 768px)
   .navbar-toggle
     float: left
+    margin-top: 6px
+    margin-bottom: 6px
   .navbar-right
     float: right
+  #content
+    padding-top: 78px
+  #navbar-collapse
+    width: 100%
+    max-height: 320px
+    overflow-y: auto
+  .affix-top
+    position: fixed
+    top: 0
+    width: 100%
+    z-index: 100
 
 textarea
   resize: vertical
