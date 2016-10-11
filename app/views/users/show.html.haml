@@ -78,16 +78,17 @@
     .panel-body
       %ul.list-group
         - @user.team_invites.each do |invite|
+          - team = invite.team
           %li.list-group-item
             You have been invited to join
-            = link_to invite.team, team_path(invite.team)
+            = link_to team, team_path(team)
             .button-group.pull-right
-              = button_to decline_team_invite_path(invite),
+              = button_to decline_team_invite_path(team),
                           method: :patch, class: 'btn btn-danger' do
                 Decline
                 %span.glyphicon.glyphicon-remove
             .button-group.pull-right
-              = button_to accept_team_invite_path(invite),
+              = button_to accept_team_invite_path(team),
                           method: :patch, class: 'btn btn-success' do
                 Accept
                 %span.glyphicon.glyphicon-ok
