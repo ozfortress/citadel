@@ -1,7 +1,7 @@
-%a.dropdown-toggle{ data: { toggle: 'dropdown' } }
+%a.dropdown-toggle#navbar-user{ data: { toggle: 'dropdown' } }
   = current_user.name
   %span.caret
-%ul.navbar-right-menu.dropdown-menu
+%ul.navbar-right-menu.dropdown-menu#navbar-user-dropdown
   %li= link_to('Profile', user_path(current_user))
   %li= link_to('Settings', edit_user_path(current_user))
   %li= link_to('Logout', logout_user_path)
