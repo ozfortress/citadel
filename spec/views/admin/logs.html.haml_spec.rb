@@ -2,8 +2,6 @@ require 'rails_helper'
 
 describe 'admin/logs' do
   before do
-    view.lookup_context.prefixes = %w(application)
-
     user = create(:user)
     create_list(:ahoy_event, 5, user: user)
     create_list(:ahoy_event, 5, user: nil)

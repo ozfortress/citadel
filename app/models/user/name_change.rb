@@ -1,7 +1,5 @@
 class User
   class NameChange < ApplicationRecord
-    include Rails.application.routes.url_helpers
-
     belongs_to :user, autosave: true
     belongs_to :approved_by, class_name: 'User', optional: true
     belongs_to :denied_by, class_name: 'User', optional: true

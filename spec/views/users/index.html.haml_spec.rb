@@ -4,10 +4,6 @@ describe 'users/index' do
   let!(:user1) { create(:user) }
   let!(:user2) { create(:user) }
 
-  before do
-    view.lookup_context.prefixes = %w(application)
-  end
-
   it 'shows all users' do
     assign(:users, User.paginate(page: 1))
 
