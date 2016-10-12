@@ -16,6 +16,16 @@ FactoryGirl.define do
       match.home_team = create(:league_roster, division: div) unless match.home_team
       match.away_team = create(:league_roster, division: div) unless match.away_team
     end
+
+    after(:stub) do |match, evaluator|
+      div = if match.home_team || match.away_team
+              (match.home_team || match.away_team).division
+            else
+              evaluator.division || build_stubbed(:league_division)
+            end
+      match.home_team = build_stubbed(:league_roster, division: div) unless match.home_team
+      match.away_team = build_stubbed(:league_roster, division: div) unless match.away_team
+    end
   end
 
   factory :bye_league_match, class: League::Match do
