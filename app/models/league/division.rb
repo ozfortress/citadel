@@ -12,7 +12,7 @@ class League
     # Special association for preloading
     has_many :approved_rosters, -> { approved }, inverse_of: :division, class_name: 'Roster'
 
-    validates :name,   presence: true, length: { in: 1..64 }
+    validates :name, presence: true, length: { in: 1..64 }
 
     alias_attribute :to_s, :name
 
