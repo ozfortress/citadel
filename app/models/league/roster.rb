@@ -106,10 +106,9 @@ class League
     end
 
     def disband
-      return destroy if league.signuppable?
-
       transaction do
         forfeit_all!
+        transfer_requests.destroy_all
         update!(disbanded: true)
       end
     end
