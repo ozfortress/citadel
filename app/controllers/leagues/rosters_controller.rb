@@ -11,8 +11,10 @@ module Leagues
     before_action :require_any_team_permission, only: [:new, :create]
     before_action :require_team_permission, only: [:create]
     before_action :require_user_league_permission, only: [:index, :review, :approve]
-    before_action :require_roster_permission, only: [:edit, :update, :destroy]
-    before_action :require_roster_disbandable, only: [:destroy]
+    before_action :require_roster_permission, only: [:edit, :update]
+    before_action :require_roster_pending, only: [:review, :approve]
+    before_action :require_roster_disbandable, only: :disband
+    before_action :require_roster_destroyable, only: :destroy
 
     def index
     end
@@ -68,8 +70,16 @@ module Leagues
       end
     end
 
-    def destroy
+    def disband
       if @roster.disband
+        redirect_to league_roster_path(@league, @roster)
+      else
+        render :edit
+      end
+    end
+
+    def destroy
+      if @roster.destroy
         redirect_to league_path(@league)
       else
         render :edit
@@ -94,7 +104,7 @@ module Leagues
       roster = params.require(:roster)
 
       params = if user_can_edit_league?
-                 roster.permit(:name, :description, :disbanded, :ranking,
+                 roster.permit(:name, :description, :ranking,
                                :seeding, :division_id)
                else
                  roster.permit(:description)
@@ -134,12 +144,20 @@ module Leagues
       redirect_to league_path(@league) unless user_can_edit_roster?(team: team)
     end
 
+    def require_roster_pending
+      redirect_to league_path(@league) if @roster.approved?
+    end
+
     def require_roster_permission
       redirect_to league_roster_path(@league, @roster) unless user_can_edit_roster?
     end
 
     def require_roster_disbandable
       redirect_to league_roster_path(@league, @roster) unless user_can_disband_roster?
+    end
+
+    def require_roster_destroyable
+      redirect_to league_roster_path(@league, @roster) unless user_can_destroy_roster?
     end
   end
 end

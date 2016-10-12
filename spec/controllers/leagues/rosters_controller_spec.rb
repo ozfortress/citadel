@@ -105,260 +105,315 @@ describe Leagues::RostersController do
     end
   end
 
-  describe 'GET #show' do
-    let(:roster) { create(:league_roster, division: div) }
-
-    it 'succeeds' do
-      get :show, params: { league_id: league.id, id: roster.id }
-
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe 'GET #edit' do
+  context 'existing roster' do
     let(:roster) { create(:league_roster, division: div, team: team) }
 
-    it 'succeeds for authorized captain' do
-      user.grant(:edit, roster.team)
-      sign_in user
+    describe 'GET #show' do
+      it 'succeeds' do
+        get :show, params: { league_id: league.id, id: roster.id }
 
-      get :edit, params: { league_id: league.id, id: roster.id }
-
-      expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(:success)
+      end
     end
 
-    it 'succeeds for authorized admin' do
-      user.grant(:edit, league)
-      sign_in user
+    describe 'GET #edit' do
+      it 'succeeds for authorized captain' do
+        user.grant(:edit, roster.team)
+        sign_in user
 
-      get :edit, params: { league_id: league.id, id: roster.id }
+        get :edit, params: { league_id: league.id, id: roster.id }
 
-      expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'succeeds for authorized admin' do
+        user.grant(:edit, league)
+        sign_in user
+
+        get :edit, params: { league_id: league.id, id: roster.id }
+
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'redirects for authorized captain if team disbanded' do
+        user.grant(:edit, roster.team)
+        league.update!(signuppable: false)
+        roster.disband
+        sign_in user
+
+        get :edit, params: { league_id: league.id, id: roster.id }
+
+        expect(response).to redirect_to(league_roster_path(league, roster))
+      end
     end
 
-    it 'redirects for authorized captain if team disbanded' do
-      user.grant(:edit, roster.team)
-      league.update!(signuppable: false)
-      roster.disband
-      sign_in user
+    describe 'PATCH #update' do
+      it 'succeeds for authorized admin' do
+        user.grant(:edit, league)
+        sign_in user
 
-      get :edit, params: { league_id: league.id, id: roster.id }
+        patch :update, params: {
+          league_id: league.id, id: roster.id,
+          roster: { name: 'A', description: 'B', division_id: div2, seeding: 2, ranking: 3 }
+        }
 
-      expect(response).to redirect_to(league_roster_path(league, roster))
-    end
-  end
+        roster.reload
+        expect(roster.name).to eq('A')
+        expect(roster.description).to eq('B')
+        expect(roster.division).to eq(div2)
+        expect(roster.seeding).to eq(2)
+        expect(roster.ranking).to eq(3)
+      end
 
-  describe 'PATCH #update' do
-    let(:roster) { create(:league_roster, name: 'B', division: div, team: team) }
+      it 'succeeds for authorized captain' do
+        user.grant(:edit, roster.team)
+        sign_in user
 
-    it 'succeeds for authorized admin' do
-      user.grant(:edit, league)
-      sign_in user
+        patch :update, params: {
+          league_id: league.id, id: roster.id,
+          roster: { name: 'A', description: 'B', division_id: div2, seeding: 2, ranking: 3 }
+        }
 
-      patch :update, params: {
-        league_id: league.id, id: roster.id,
-        roster: { name: 'A', description: 'B', division_id: div2, seeding: 2 }
-      }
+        roster.reload
+        expect(roster.description).to eq('B')
+        expect(roster.division).to eq(div)
+        expect(roster.name).to_not eq('A')
+        expect(roster.seeding).to_not eq(2)
+        expect(roster.ranking).to_not eq(3)
+      end
 
-      roster.reload
-      expect(roster.name).to eq('A')
-      expect(roster.description).to eq('B')
-      expect(roster.division).to eq(div2)
-      expect(roster.seeding).to eq(2)
-    end
+      it 'succeeds for authorized captain with locked schedule' do
+        user.grant(:edit, roster.team)
+        league.update!(schedule: :weeklies, schedule_locked: true,
+                       weekly_scheduler: build(:league_schedulers_weekly))
+        roster.schedule_data = league.scheduler.default_schedule
+        roster.save!
+        sign_in user
 
-    it 'succeeds for authorized captain' do
-      user.grant(:edit, roster.team)
-      sign_in user
+        patch :update, params: {
+          league_id: league.id, id: roster.id, roster: {
+            description: 'B', division_id: div2, schedule_data: { foo: 'bar' } },
+        }
 
-      patch :update, params: {
-        league_id: league.id, id: roster.id, roster: { description: 'B' }
-      }
+        roster.reload
+        expect(roster.description).to eq('B')
+        expect(roster.division).to eq(div)
+      end
 
-      roster.reload
-      expect(roster.name).to eq('B')
-      expect(roster.description).to eq('B')
-      expect(roster.division).to eq(div)
-    end
+      it 'fails with invalid data' do
+        user.grant(:edit, league)
+        sign_in user
 
-    it 'succeeds for authorized captain with locked schedule' do
-      user.grant(:edit, roster.team)
-      league.update!(schedule: :weeklies, schedule_locked: true,
-                     weekly_scheduler: build(:league_schedulers_weekly))
-      roster.schedule_data = league.scheduler.default_schedule
-      roster.save!
-      sign_in user
+        patch :update, params: {
+          league_id: league.id, id: roster.id,
+          roster: { name: '', description: 'B', division_id: div2 }
+        }
 
-      patch :update, params: {
-        league_id: league.id, id: roster.id, roster: {
-          description: 'B', schedule_data: { foo: 'bar' } },
-      }
+        roster.reload
+        expect(roster.name).not_to eq('')
+        expect(roster.description).to_not eq('B')
+      end
 
-      roster.reload
-      expect(roster.name).to eq('B')
-      expect(roster.description).to eq('B')
-      expect(roster.division).to eq(div)
-    end
+      it 'redirects for authorized captain if team disbanded' do
+        user.grant(:edit, roster.team)
+        league.update!(signuppable: false)
+        expect(roster.disband).to be(true)
+        sign_in user
 
-    it 'redirects for authorized captain if team disbanded' do
-      user.grant(:edit, roster.team)
-      league.update!(signuppable: false)
-      roster.disband
-      sign_in user
+        patch :update, params: {
+          league_id: league.id, id: roster.id, roster: { description: 'B' }
+        }
 
-      patch :update, params: {
-        league_id: league.id, id: roster.id, roster: { description: 'B' }
-      }
+        roster.reload
+        expect(roster.description).to_not eq('B')
+        expect(roster.division).to eq(div)
+      end
 
-      roster.reload
-      expect(roster.name).to eq('B')
-      expect(roster.description).to_not eq('B')
-      expect(roster.division).to eq(div)
-    end
+      it 'redirects for unauthorized user' do
+        sign_in user
 
-    it 'fails with invalid data' do
-      user.grant(:edit, league)
-      sign_in user
+        patch :update, params: { league_id: league.id, id: roster.id }
 
-      patch :update, params: {
-        league_id: league.id, id: roster.id,
-        roster: { name: '', description: 'B', division_id: div2 }
-      }
+        expect(response).to redirect_to(league_roster_path(league.id, roster))
+      end
 
-      roster.reload
-      expect(roster.name).not_to eq('')
-    end
+      it 'redirects for unauthenticated user' do
+        patch :update, params: { league_id: league.id, id: roster.id }
 
-    it 'redirects for unauthorized user' do
-      sign_in user
-
-      patch :update, params: { league_id: league.id, id: roster.id }
-
-      expect(response).to redirect_to(league_roster_path(league.id, roster))
+        expect(response).to redirect_to(league_roster_path(league.id, roster))
+      end
     end
 
-    it 'redirects for unauthenticated user' do
-      patch :update, params: { league_id: league.id, id: roster.id }
+    describe 'GET #review' do
+      before do
+        roster.update!(approved: false)
+      end
 
-      expect(response).to redirect_to(league_roster_path(league.id, roster))
-    end
-  end
+      it 'succeeds for authorized user' do
+        user.grant(:edit, league)
+        sign_in user
 
-  describe 'GET #review' do
-    let(:roster) { create(:league_roster, division: div, team: team, approved: false) }
+        get :review, params: { league_id: league.id, id: roster.id }
 
-    it 'succeeds for authorized user' do
-      user.grant(:edit, league)
-      sign_in user
-
-      get :review, params: { league_id: league.id, id: roster.id }
-
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe 'PATCH #approve' do
-    let(:roster) { create(:league_roster, division: div, team: team, approved: false) }
-
-    it 'succeeds for authorized user' do
-      user.grant(:edit, league)
-      sign_in user
-
-      patch :approve, params: {
-        league_id: league.id, id: roster.id,
-        roster: { name: 'A', division_id: div2.id, seeding: 2 }
-      }
-
-      roster.reload
-      expect(roster.name).to eq('A')
-      expect(roster.division).to eq(div2)
-      expect(roster.seeding).to eq(2)
+        expect(response).to have_http_status(:success)
+      end
     end
 
-    it 'fails with invalid name' do
-      user.grant(:edit, league)
-      sign_in user
+    describe 'PATCH #approve' do
+      before do
+        roster.update!(approved: false)
+      end
 
-      patch :approve, params: {
-        league_id: league.id, id: roster.id,
-        roster: { name: '', division_id: div2.id }
-      }
+      it 'succeeds for authorized user' do
+        user.grant(:edit, league)
+        sign_in user
 
-      roster.reload
-      expect(roster.name).to_not eq('')
+        patch :approve, params: {
+          league_id: league.id, id: roster.id,
+          roster: { name: 'A', division_id: div2.id, seeding: 2 }
+        }
+
+        roster.reload
+        expect(roster.name).to eq('A')
+        expect(roster.division).to eq(div2)
+        expect(roster.seeding).to eq(2)
+      end
+
+      it 'fails with invalid name' do
+        user.grant(:edit, league)
+        sign_in user
+
+        patch :approve, params: {
+          league_id: league.id, id: roster.id,
+          roster: { name: '', division_id: div2.id }
+        }
+
+        roster.reload
+        expect(roster.name).to_not eq('')
+      end
+
+      it 'redirects for approved roster' do
+        roster.update!(approved: true)
+        user.grant(:edit, league)
+        sign_in user
+
+        patch :approve, params: {
+          league_id: league.id, id: roster.id,
+          roster: { name: 'A', division_id: div2.id, seeding: 2 }
+        }
+
+        expect(response).to redirect_to(league_path(league.id))
+      end
+
+      it 'redirects for unauthorized user' do
+        sign_in user
+
+        patch :approve, params: { league_id: league.id, id: roster.id }
+
+        expect(response).to redirect_to(league_path(league.id))
+      end
+
+      it 'redirects for unauthenticated user' do
+        patch :approve, params: { league_id: league.id, id: roster.id }
+
+        expect(response).to redirect_to(league_path(league.id))
+      end
     end
 
-    it 'redirects for unauthorized user' do
-      sign_in user
+    describe 'DELETE #disband' do
+      it 'succeeds for authorized admin' do
+        user.grant(:edit, league)
+        sign_in user
 
-      patch :approve, params: { league_id: league.id, id: roster.id }
+        delete :disband, params: { league_id: league.id, id: roster.id }
 
-      expect(response).to redirect_to(league_path(league.id))
+        expect(roster.reload.disbanded?).to be(true)
+      end
+
+      it 'succeeds for authorized captain if league allows disbands' do
+        league.update!(allow_disbanding: true)
+        user.grant(:edit, team)
+        sign_in user
+
+        delete :disband, params: { league_id: league.id, id: roster.id }
+
+        expect(roster.reload.disbanded?).to be(true)
+      end
+
+      it 'redirects for authorized captain' do
+        user.grant(:edit, team)
+        sign_in user
+
+        delete :disband, params: { league_id: league.id, id: roster.id }
+
+        expect(roster.reload.disbanded?).to be(false)
+        expect(response).to redirect_to(league_roster_path(league, roster))
+      end
+
+      it 'redirects for unauthorized user' do
+        sign_in user
+
+        delete :disband, params: { league_id: league.id, id: roster.id }
+
+        expect(roster.reload.disbanded?).to be(false)
+        expect(response).to redirect_to(league_roster_path(league, roster))
+      end
+
+      it 'redirects for unauthenticated user' do
+        delete :disband, params: { league_id: league.id, id: roster.id }
+
+        expect(roster.reload.disbanded?).to be(false)
+        expect(response).to redirect_to(league_roster_path(league, roster))
+      end
     end
 
-    it 'redirects for unauthenticated user' do
-      patch :approve, params: { league_id: league.id, id: roster.id }
+    describe 'DELETE #destroy' do
+      it 'succeeds for authorized admin' do
+        user.grant(:edit, league)
+        sign_in user
 
-      expect(response).to redirect_to(league_path(league.id))
-    end
-  end
+        delete :destroy, params: { league_id: league.id, id: roster.id }
 
-  describe 'DELETE #destroy' do
-    let(:roster) { create(:league_roster, division: div, team: team, approved: false) }
+        expect(League::Roster.exists?(roster.id)).to be(false)
+        expect(response).to redirect_to(league_path(league))
+      end
 
-    it 'succeeds for authorized admin' do
-      user.grant(:edit, league)
-      sign_in user
+      it 'redirects for authorized admin when roster has matches' do
+        create(:league_match, home_team: roster)
+        user.grant(:edit, league)
+        sign_in user
 
-      delete :destroy, params: { league_id: league.id, id: roster.id }
+        delete :destroy, params: { league_id: league.id, id: roster.id }
 
-      expect(League::Roster.exists?(roster.id)).to be(false)
-    end
+        expect(roster.reload.disbanded?).to be(false)
+        expect(response).to redirect_to(league_roster_path(league, roster))
+      end
 
-    it 'succeeds for authorized team captain' do
-      user.grant(:edit, team)
-      sign_in user
+      it 'redirects for authorized team captain' do
+        user.grant(:edit, team)
+        sign_in user
 
-      delete :destroy, params: { league_id: league.id, id: roster.id }
+        delete :destroy, params: { league_id: league.id, id: roster.id }
 
-      expect(League::Roster.exists?(roster.id)).to be(false)
-    end
+        expect(League::Roster.exists?(roster.id)).to be(true)
+        expect(response).to redirect_to(league_roster_path(league, roster))
+      end
 
-    it 'disbands roster for authorized team captain if not signuppable and allowed' do
-      user.grant(:edit, team)
-      league.update!(signuppable: false, allow_disbanding: true)
-      sign_in user
+      it 'redirects for unauthorized user' do
+        sign_in user
 
-      delete :destroy, params: { league_id: league.id, id: roster.id }
+        delete :destroy, params: { league_id: league.id, id: roster.id }
 
-      expect(League::Roster.exists?(roster.id)).to be(true)
-      expect(roster.reload.disbanded?).to be(true)
-    end
+        expect(League::Roster.exists?(roster.id)).to be(true)
+        expect(response).to redirect_to(league_roster_path(league, roster))
+      end
 
-    it 'fails disbanding roster for authorized team captain when not allowed' do
-      user.grant(:edit, team)
-      league.update!(signuppable: false)
-      sign_in user
+      it 'redirects for unauthenticated user' do
+        delete :destroy, params: { league_id: league.id, id: roster.id }
 
-      delete :destroy, params: { league_id: league.id, id: roster.id }
-
-      expect(League::Roster.exists?(roster.id)).to be(true)
-      expect(roster.reload.disbanded?).to be(false)
-    end
-
-    it 'redirects for unauthorized user' do
-      sign_in user
-
-      delete :destroy, params: { league_id: league.id, id: roster.id }
-
-      expect(League::Roster.exists?(roster.id)).to be(true)
-      expect(response)
-    end
-
-    it 'redirects for unauthenticated user' do
-      delete :destroy, params: { league_id: league.id, id: roster.id }
-
-      expect(League::Roster.exists?(roster.id)).to be(true)
+        expect(League::Roster.exists?(roster.id)).to be(true)
+        expect(response).to redirect_to(league_roster_path(league, roster))
+      end
     end
   end
 end

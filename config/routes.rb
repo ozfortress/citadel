@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       member do
         get   'review'
         patch 'approve'
+        delete 'disband'
       end
 
       resource :transfers, controller: 'leagues/rosters/transfers', only: [:show, :create]
