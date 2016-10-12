@@ -36,6 +36,11 @@ class LeaguesController < ApplicationController
   def show
     @divisions = @league.divisions
     @roster = @league.roster_for(current_user) if user_signed_in?
+    @matches = if user_signed_in?
+                 @roster.matches
+               else
+                 @divisions.first.matches
+               end.pending.includes(:home_team, :away_team)
   end
 
   def edit
