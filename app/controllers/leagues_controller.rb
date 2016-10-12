@@ -34,7 +34,8 @@ class LeaguesController < ApplicationController
   end
 
   def show
-    @divisions = @league.divisions
+    @rosters = @league.rosters.includes(division: :league)
+    @divisions = @league.divisions.includes(:approved_rosters)
     @roster = @league.roster_for(current_user) if user_signed_in?
     @matches = if user_signed_in?
                  @roster.matches

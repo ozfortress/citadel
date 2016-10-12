@@ -34,8 +34,7 @@
   .panel-heading Teams
   %ul.list-group
     - if @league.signuppable?
-      - rosters = @league.rosters.includes(division: :league)
-      - present_collection(rosters).each do |roster|
+      - present_collection(@rosters).each do |roster|
         %li.list-group-item
           = roster.link
 
