@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 describe 'layouts/application' do
-  before do
-    view.lookup_context.prefixes = %w(application)
-  end
-
   context 'when unauthenticated' do
     it 'displays steam login' do
       render

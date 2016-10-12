@@ -7,8 +7,6 @@ describe 'permissions/users' do
 
   before do
     user.grant(:edit, :teams)
-
-    view.lookup_context.prefixes = %w(application)
   end
 
   it 'shows all teams' do
