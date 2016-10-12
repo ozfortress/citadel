@@ -39,7 +39,7 @@ class UsersController < ApplicationController
   def show
     @teams          = @user.teams
     @team_transfers = @user.team_transfers.includes(:team)
-    @team_invites   = @user.team_invites
+    @team_invites   = @user.team_invites.includes(:team)
     @rosters        = @user.rosters.includes(division: :league)
     @matches        = @user.matches.pending.includes(:home_team, :away_team)
   end
