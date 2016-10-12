@@ -9,6 +9,9 @@ class Team < ApplicationRecord
   has_many :rosters, class_name: 'League::Roster'
   has_many :users, through: :players
 
+  has_many :home_team_matches, through: :rosters, class_name: 'League::Match', foreign_key: 'home_team_id'
+  has_many :away_team_matches, through: :rosters, class_name: 'League::Match', foreign_key: 'away_team_id'
+
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
   validates :description, presence: true, allow_blank: true
 
@@ -21,6 +24,10 @@ class Team < ApplicationRecord
   searchable_fields :name
   search_mappings do
     indexes :name, analyzer: 'search'
+  end
+
+  def matches
+    home_team_matches.union(away_team_matches)
   end
 
   def invite(user)

@@ -26,7 +26,12 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @invite = @team.invite_for(current_user) if user_signed_in?
+    @invite    = @team.invite_for(current_user) if user_signed_in?
+
+    @players   = @team.players.includes(:user)
+    @transfers = @team.transfers.includes(:user)
+    @rosters   = @team.rosters.includes(division: :league)
+    @matches   = @team.matches.pending.includes(:home_team, :away_team)
   end
 
   def edit

@@ -33,8 +33,10 @@
         Invite
         %span.glyphicon.glyphicon-plus
   %ul.list-group
-    - @team.users.each do |user|
+    - @players.each do |player|
       %li.list-group-item
+        - user = player.user
+
         - if user == current_user
           .button-group.pull-right
             = button_to leave_team_path(@team), method: :patch, class: 'btn btn-danger',
@@ -54,15 +56,15 @@
 .panel.panel-default
   .panel-heading Transfers
   %ul.list-group
-    - @team.transfers.each do |transfer|
+    - @transfers.each do |transfer|
       %li.list-group-item
         = present(transfer).listing
 
-- unless @team.rosters.empty?
+- unless @rosters.empty?
   .panel.panel-default
     .panel-heading Leagues
     %ul.list-group
-      - @team.rosters.includes(division: :league).each do |roster|
+      - @rosters.each do |roster|
         %li.list-group-item
           = link_to roster.league, league_path(roster.league)
           - roster_p = present roster
@@ -72,7 +74,5 @@
   .panel.panel-default
     .panel-heading Upcoming Matches
     %ul.list-group
-      - @team.rosters.each do |roster|
-        - matches = roster.matches.pending.includes(:home_team, :away_team)
-        - present_collection(matches).each do |match|
-          %li.list-group-item= match.link
+      - present_collection(@matches).each do |match|
+        %li.list-group-item= match.link
