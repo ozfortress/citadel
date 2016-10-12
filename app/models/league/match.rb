@@ -15,6 +15,7 @@ class League
                       :mutual_forfeit, :technical_forfeit]
     validates :forfeit_by, presence: true
     validates :round, allow_nil: :true, numericality: { greater_than_or_equal_to: 0 }
+    validates :notice, presence: true, allow_blank: true
 
     validate :home_and_away_team_are_different
     validate :home_and_away_team_are_in_the_same_division

@@ -13,6 +13,10 @@ describe League::Match do
   it { should have_many(:comms).class_name('Match::Comm') }
 
   it { should validate_numericality_of(:round).is_greater_than_or_equal_to(0) }
+  it { should allow_value(nil).for(:round) }
+
+  it { should allow_value('').for(:notice) }
+  it { should validate_length_of(:notice).is_at_least(0) }
 
   it do
     should define_enum_for(:status).with([:pending, :submitted_by_home_team,

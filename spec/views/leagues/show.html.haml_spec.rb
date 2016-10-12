@@ -1,13 +1,30 @@
 require 'rails_helper'
 
 describe 'leagues/show' do
-  context 'private league' do
-    let(:league) { create(:league) }
+  let(:league) { build_stubbed(:league) }
+  let(:divisions) { build_stubbed_list(:league_division, 3) }
+  let(:roster) { build_stubbed(:league_roster) }
+  let(:matches) { build_stubbed_list(:league_match, 3) }
 
-    it 'displays league details' do
-      assign(:league, league)
-      assign(:divisions, league.divisions.includes(:rosters))
+  before do
+    all_rosters = []
+    divisions.each do |division|
+      rosters = build_stubbed_list(:league_roster, 5)
+      all_rosters += rosters
+      allow(division).to receive(:rosters_sorted).and_return(rosters)
+    end
 
+    assign(:league, league)
+    assign(:rosters, all_rosters)
+    assign(:divisions, divisions)
+    assign(:roster, roster)
+    assign(:matches, matches)
+  end
+
+  context 'hidden league' do
+    before { league.status = 'hidden' }
+
+    it 'displays league details for' do
       render
 
       expect(rendered).to include(league.name)
@@ -17,49 +34,39 @@ describe 'leagues/show' do
     end
   end
 
-  context 'public league with teams and signups open' do
-    let!(:league) { create(:league, status: :running, signuppable: true) }
-    let!(:div) { create(:league_division, league: league) }
-    let!(:roster1) { create(:league_roster, division: div, approved: false) }
-    let!(:roster2) { create(:league_roster, division: div, approved: true) }
+  context 'league with signups open' do
+    before do
+      # Fake login
+      allow(view).to receive(:user_signed_in?).and_return(true)
+      allow(view).to receive(:current_user).and_return(build(:user))
+
+      league.signuppable = true
+    end
 
     it 'displays league details' do
-      assign(:league, league)
-      assign(:divisions, league.divisions.includes(:rosters))
-
       render
 
       expect(rendered).to include(league.name)
-      expect(rendered).to_not include(div.name)
-      expect(rendered).to include(roster1.name)
-      expect(rendered).to include(roster2.name)
+      divisions.each do |division|
+        expect(rendered).to_not include(division.name)
+
+        division.rosters_sorted.each do |roster|
+          expect(rendered).to include(roster.name)
+        end
+      end
     end
   end
 
-  context 'public league with teams and signups closed' do
-    let!(:league) { create(:league, status: :running, signuppable: false) }
-    let!(:div) { create(:league_division, league: league) }
-    let!(:roster1) { create(:league_roster, division: div, approved: false) }
-    let!(:roster2) { create(:league_roster, division: div, approved: true) }
-    let!(:roster3) { create(:league_roster, division: div, disbanded: true) }
+  it 'displays league details' do
+    render
 
-    before do
-      League::Tiebreaker.kinds.each do |_, kind|
-        create(:league_tiebreaker, league: league, kind: kind)
+    expect(rendered).to include(league.name)
+    divisions.each do |division|
+      expect(rendered).to include(division.name)
+
+      division.rosters_sorted.each do |roster|
+        expect(rendered).to include(roster.name)
       end
-    end
-
-    it 'displays league details' do
-      assign(:league, league)
-      assign(:divisions, league.divisions.includes(:rosters))
-
-      render
-
-      expect(rendered).to include(league.name)
-      expect(rendered).to include(div.name)
-      expect(rendered).to_not include(roster1.name)
-      expect(rendered).to include(roster2.name)
-      expect(rendered).to include(roster3.name)
     end
   end
 end

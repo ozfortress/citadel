@@ -112,7 +112,8 @@ describe LeaguesController do
   end
 
   describe 'GET #show' do
-    let!(:comp) { create(:league, status: :running) }
+    let!(:comp) { create(:league) }
+    let!(:div) { create(:league_division, league: comp) }
 
     it 'succeeds for authorized user' do
       get :show, params: { id: comp.id }
@@ -202,7 +203,7 @@ describe LeaguesController do
   end
 
   describe 'DELETE #destroy' do
-    let(:comp) { create(:league) }
+    let(:comp) { create(:league, status: :hidden) }
 
     it 'succeeds for hidden league' do
       sign_in admin

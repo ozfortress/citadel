@@ -14,7 +14,7 @@ module Leagues
     before_action :require_match_not_bye, only: [:submit, :confirm, :forfeit]
 
     def index
-      @divisions = @league.divisions.includes(matches: [:home_team, :away_team, :rounds])
+      @divisions = @league.divisions.includes(matches: [:away_team, :rounds, home_team: :division])
     end
 
     def new
@@ -131,12 +131,12 @@ module Leagues
     end
 
     def match_params
-      params.require(:match).permit(:home_team_id, :away_team_id, :round,
+      params.require(:match).permit(:home_team_id, :away_team_id, :round, :notice,
                                     rounds_attributes: [:id, :_destroy, :map_id])
     end
 
     def create_round_params
-      params.require(:match).permit(:division_id, :generate_kind, :round,
+      params.require(:match).permit(:division_id, :generate_kind, :round, :notice,
                                     rounds_attributes: [:id, :_destroy, :map_id])
     end
 

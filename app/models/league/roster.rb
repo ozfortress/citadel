@@ -1,7 +1,7 @@
 class League
   class Roster < ApplicationRecord
     belongs_to :team
-    belongs_to :division
+    belongs_to :division, inverse_of: :rosters
     delegate :league, to: :division, allow_nil: true
 
     has_many :players,           -> { order(created_at: :desc) }, dependent: :destroy,
@@ -14,16 +14,14 @@ class League
 
     accepts_nested_attributes_for :players, reject_if: proc { |attrs| attrs['user_id'].blank? }
 
-    has_many :home_team_matches, class_name: 'Match', foreign_key: 'home_team_id',
-                                 dependent: :destroy
+    has_many :home_team_matches, class_name: 'Match', foreign_key: 'home_team_id'
     has_many :home_team_rounds, through: :home_team_matches, source: :rounds
     has_many :not_forfeited_home_team_matches, -> { not_forfeited }, class_name: 'Match',
                                                                      foreign_key: 'home_team_id'
     has_many :not_forfeited_home_team_rounds, through: :not_forfeited_home_team_matches,
                                               source: :rounds
 
-    has_many :away_team_matches, class_name: 'Match', foreign_key: 'away_team_id',
-                                 dependent: :destroy
+    has_many :away_team_matches, class_name: 'Match', foreign_key: 'away_team_id'
     has_many :away_team_rounds, through: :away_team_matches, source: :rounds
     has_many :not_forfeited_away_team_matches, -> { not_forfeited }, class_name: 'Match',
                                                                      foreign_key: 'away_team_id'
@@ -108,10 +106,9 @@ class League
     end
 
     def disband
-      return destroy if league.signuppable?
-
       transaction do
         forfeit_all!
+        transfer_requests.destroy_all
         update!(disbanded: true)
       end
     end

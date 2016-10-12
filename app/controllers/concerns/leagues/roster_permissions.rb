@@ -12,8 +12,11 @@ module Leagues
     end
 
     def user_can_disband_roster?
-      user_can_edit_league? || (user_can_edit_roster? &&
-        (@league.allow_disbanding? || @league.signuppable?))
+      user_can_edit_league? || (user_can_edit_roster? && @league.allow_disbanding?)
+    end
+
+    def user_can_destroy_roster?
+      user_can_edit_league? && @roster.matches.empty?
     end
   end
 end

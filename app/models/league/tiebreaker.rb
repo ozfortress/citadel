@@ -1,6 +1,6 @@
 class League
   class Tiebreaker < ApplicationRecord
-    belongs_to :league
+    belongs_to :league, inverse_of: :tiebreakers
 
     enum kind: [:round_wins, :round_score_difference, :round_wins_against_tied_rosters,
                 :median_bucholz_score]

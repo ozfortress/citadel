@@ -13,7 +13,7 @@ MoveCodeIntoControllerCheck: { }
 MoveCodeIntoHelperCheck: { array_count: 3 }
 MoveCodeIntoModelCheck: { use_count: 2 }
 MoveFinderToNamedScopeCheck: { }
-MoveModelLogicIntoModelCheck: { use_count: 4 }
+# MoveModelLogicIntoModelCheck: { use_count: 4 } # False positives when retrieving many associations
 NeedlessDeepNestingCheck: { nested_count: 3 }
 NotRescueExceptionCheck: { }
 NotUseDefaultRouteCheck: { }

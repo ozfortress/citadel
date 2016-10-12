@@ -37,7 +37,7 @@ describe Leagues::MatchesController do
 
       post :create, params: {
         league_id: league.id, division_id: div.id, match: {
-          home_team_id: team1.id, away_team_id: team2.id, round: 3,
+          home_team_id: team1.id, away_team_id: team2.id, round: 3, notice: 'B',
           rounds_attributes: [
             { map_id: map.id }
           ]
@@ -49,6 +49,7 @@ describe Leagues::MatchesController do
       expect(match.home_team).to eq(team1)
       expect(match.away_team).to eq(team2)
       expect(match.round).to eq(3)
+      expect(match.notice).to eq('B')
       expect(match.rounds.count).to eq(1)
       round = match.rounds.first
       expect(round.map).to eq(map)
@@ -117,7 +118,7 @@ describe Leagues::MatchesController do
 
       post :create_round, params: {
         league_id: league.id, match: {
-          generate_kind: :swiss, division_id: div.id, round: 3,
+          generate_kind: :swiss, division_id: div.id, round: 3, notice: 'B',
           rounds_attributes: [{ map_id: map.id }]
         }
       }
@@ -125,6 +126,7 @@ describe Leagues::MatchesController do
       expect(league.matches.size).to eq(1)
       league.matches.each do |match|
         expect(match.round).to eq(3)
+        expect(match.notice).to eq('B')
         expect(match.rounds.size).to eq(1)
         expect(match.rounds.first.map).to eq(map)
 

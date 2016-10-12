@@ -15,7 +15,6 @@
       - if user_can_edit_league?
         = f.text_field :name
         = f.select :division_id, divisions_select, label: 'Division'
-        = f.check_box :disbanded
         = f.number_field :seeding
         = f.number_field :ranking
       = render 'form', f: f
@@ -23,12 +22,19 @@
       = f.submit 'Update'
       = link_to 'Cancel', league_roster_path(@league, @roster), class: 'btn btn-default'
 
-- if user_can_disband_roster? && !user_can_edit_league?
+- if user_can_disband_roster? || user_can_destroy_roster?
   .panel.panel-danger
     .panel-heading Danger Zone
     .panel-body
-      = button_to league_roster_path(@league, @roster), method: :delete,
-                      class: 'btn btn-danger',
-                      data: { confirm: roster_destroy_confirm } do
-        %span.glyphicon.glyphicon-trash
-        = roster_destroy_label
+      - if user_can_disband_roster?
+        = button_to disband_league_roster_path(@league, @roster),
+                    method: :delete, class: 'btn btn-danger',
+                    data: { confirm: 'Are you sure you want to Disband this Roster?' } do
+          Disband
+
+      - if user_can_destroy_roster?
+        = button_to league_roster_path(@league, @roster),
+                        method: :delete, class: 'btn btn-danger',
+                        data: { confirm: 'Are you sure you want to Delete this Roster?' } do
+          %span.glyphicon.glyphicon-trash
+          Destroy
