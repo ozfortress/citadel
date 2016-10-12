@@ -3,7 +3,7 @@ FactoryGirl.define do
     sequence(:name) { |n| "OWL #{n}" }
     description "The owl that won't happen"
     format
-    status :hidden
+    status :running
     signuppable false
     roster_locked false
     matches_submittable false
