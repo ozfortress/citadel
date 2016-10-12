@@ -131,12 +131,12 @@ module Leagues
     end
 
     def match_params
-      params.require(:match).permit(:home_team_id, :away_team_id, :round,
+      params.require(:match).permit(:home_team_id, :away_team_id, :round, :notice,
                                     rounds_attributes: [:id, :_destroy, :map_id])
     end
 
     def create_round_params
-      params.require(:match).permit(:division_id, :generate_kind, :round,
+      params.require(:match).permit(:division_id, :generate_kind, :round, :notice,
                                     rounds_attributes: [:id, :_destroy, :map_id])
     end
 
