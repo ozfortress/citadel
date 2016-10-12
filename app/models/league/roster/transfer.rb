@@ -1,8 +1,6 @@
 class League
   class Roster
     class Transfer < ApplicationRecord
-      include Rails.application.routes.url_helpers
-
       belongs_to :user
       belongs_to :roster, class_name: 'Roster', foreign_key: 'roster_id'
       delegate :team,     to: :roster,   allow_nil: true

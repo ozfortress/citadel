@@ -1,7 +1,5 @@
 class League
   class Match < ApplicationRecord
-    include Rails.application.routes.url_helpers
-
     belongs_to :home_team, class_name: 'Roster'
     belongs_to :away_team, class_name: 'Roster', optional: true
     has_many :rounds, inverse_of: :match, class_name: 'Match::Round', dependent: :destroy
