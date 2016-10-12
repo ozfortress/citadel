@@ -60,7 +60,7 @@ signed up on #{@roster.created_at.strftime('%c')}
 .panel.panel-default
   .panel-heading Matches
   %ul.list-group
-    - present_collection(@matches.includes(:home_team, :away_team, :rounds)).each do |match|
+    - present_collection(@matches).each do |match|
       %li.list-group-item
         = match.link
         .pull-right= match.results
