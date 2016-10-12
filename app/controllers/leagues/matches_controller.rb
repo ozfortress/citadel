@@ -14,6 +14,7 @@ module Leagues
     before_action :require_match_not_bye, only: [:submit, :confirm, :forfeit]
 
     def index
+      @divisions = @league.divisions.includes(matches: [:home_team, :away_team, :rounds])
     end
 
     def new

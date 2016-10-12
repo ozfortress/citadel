@@ -11,7 +11,7 @@
         Create Single Match
 
   %ul.list-group
-    - @league.divisions.includes(matches: [:home_team, :away_team, :rounds]).each do |div|
+    - @divisions.each do |div|
       %li.list-group-item
         %h3= div
 
