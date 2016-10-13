@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe UsersController do
   describe 'GET #index' do
-    let!(:users) { create_list(:user, 50) }
+    let!(:users) { create_list(:user, 20) }
 
     it 'succeeds' do
       get :index

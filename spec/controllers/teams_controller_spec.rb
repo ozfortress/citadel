@@ -113,7 +113,7 @@ describe TeamsController do
   end
 
   describe 'GET #recruit' do
-    before { create_list(:user, 50) }
+    before { create_list(:user, 20) }
 
     it 'succeeds' do
       team = create(:team)

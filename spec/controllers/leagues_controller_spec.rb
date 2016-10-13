@@ -9,7 +9,7 @@ describe LeaguesController do
 
   describe 'GET #index' do
     before do
-      create_list(:league, 50)
+      create_list(:league, 20)
     end
 
     it 'succeeds' do
