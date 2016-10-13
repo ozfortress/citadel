@@ -18,5 +18,16 @@ FactoryGirl.define do
                          build_list(:league_roster_player, evaluator.player_count, roster: roster)
                        end
     end
+
+    after(:stub) do |roster, evaluator|
+      players = if evaluator.players
+                  evaluator.players
+                else
+                  build_stubbed_list(:league_roster_player, evaluator.player_count, roster: roster)
+                end
+      allow(roster).to receive(:players).and_return(players)
+      allow(roster).to receive(:users).and_return(players.map(&:user))
+      allow(roster).to receive(:on_roster?) { |user| players.any? { |player| player.user == user } }
+    end
   end
 end
