@@ -17,6 +17,7 @@ module Leagues
     before_action :require_roster_destroyable, only: :destroy
 
     def index
+      @divisions = @league.divisions.includes(:rosters)
     end
 
     def new
