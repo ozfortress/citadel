@@ -1,7 +1,7 @@
 %h1= @league
 %h2 Sign ups
 
-- @league.divisions.includes(:rosters).each do |div|
+- @divisions.each do |div|
   .panel.panel-default
     .panel-heading #{div} Division
     %ul.list-group

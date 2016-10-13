@@ -8,11 +8,14 @@ module Leagues
       before_action :require_transfer_permissions
 
       def show
-        @transfer_request = @roster.transfer_requests.new
+        @transfer_request ||= @roster.transfer_requests.new
+        @users_on_roster  = @roster.users
+        @users_off_roster = @roster.users_off_roster
       end
 
       def create
         @transfer_request = Rosters::Transfers::CreationService.call(@roster, transfer_params)
+        show
         render :show
       end
 

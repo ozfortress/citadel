@@ -9,7 +9,7 @@
 .panel.panel-default
   .panel-heading On Roster
   %ul.list-group
-    - @roster.users.each do |user|
+    - @users_on_roster.each do |user|
       %li.list-group-item
         = form_for(@transfer_request, as: :request, method: :post,
                               url: league_roster_transfers_path(@league, @roster)) do |f|
@@ -26,7 +26,7 @@
 .panel.panel-default
   .panel-heading Off Roster
   %ul.list-group
-    - @roster.users_off_roster.each do |user|
+    - @users_off_roster.each do |user|
       %li.list-group-item
         = form_for(@transfer_request, as: :request, method: :post,
                               url: league_roster_transfers_path(@league, @roster)) do |f|

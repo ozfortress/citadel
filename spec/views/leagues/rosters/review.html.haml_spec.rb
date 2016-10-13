@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'leagues/rosters/review' do
-  let(:roster) { create(:league_roster) }
+  let(:roster) { build_stubbed(:league_roster) }
 
   it 'displays correctly' do
     assign(:league, roster.league)
