@@ -58,6 +58,7 @@ module Leagues
 
     def show
       @comm = League::Match::Comm.new(match: @match)
+      @comms = @match.comms.order(:created_at).includes(:user)
     end
 
     def edit
