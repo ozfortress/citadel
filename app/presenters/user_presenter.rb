@@ -20,11 +20,11 @@ class UserPresenter < ActionPresenter::Base
 
   def titles(options = {})
     team = options[:team]
+    has_captain_label = team && user.can?(:edit, team)
 
     titles = ''.html_safe
-    klass = 'label alert-danger'
-    titles += content_tag :span, 'captain', class: klass if team && user.can?(:edit, team)
-    titles += content_tag :span, 'admin', class: klass   if user.admin?
+    titles += content_tag :div, 'captain', class: 'label alert-danger' if has_captain_label
+    titles += content_tag :div, 'admin', class: 'label alert-success'  if user.admin?
     titles
   end
 
