@@ -9,6 +9,8 @@ class League
     has_many :matches, -> { order(round: :desc, created_at: :asc) },
              through: :rosters, source: :home_team_matches, class_name: 'Match'
 
+    has_many :transfer_requests, through: :rosters, class_name: 'Roster::TransferRequest'
+
     # Special association for preloading
     has_many :approved_rosters, -> { approved }, inverse_of: :division, class_name: 'Roster'
 
