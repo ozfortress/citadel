@@ -1,7 +1,7 @@
 .panel.panel-default
   .panel-heading Match Comms
 
-  - match.comms.order(:created_at).includes(:user).each do |comm|
+  - comms.each do |comm|
     - if match.home_team.on_roster?(comm.user)
       - roster = match.home_team
     - elsif match.away_team.on_roster?(comm.user)

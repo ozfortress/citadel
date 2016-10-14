@@ -2,18 +2,20 @@
   = link_to @league.name, league_path(@league)
   Transfers
 
-.panel.panel-default
-  .panel-heading On Roster
-  - if @transfer_requests.empty?
-    .panel-body No pending transfers...
+- @divisions.each do |division|
+  .panel.panel-default
+    .panel-heading= division.name
+    - transfer_requests = division.transfer_requests
+    - if transfer_requests.empty?
+      .panel-body No pending transfers...
 
-  %ul.list-group
-    - @transfer_requests.each do |request|
-      %li.list-group-item
-        = button_to 'Approve', league_transfer_path(@league, request), method: :patch,
-                    class: 'pull-right btn btn-success'
-        = button_to 'Deny', league_transfer_path(@league, request), method: :delete,
-                    class: 'pull-right btn btn-danger'
+    %ul.list-group
+      - transfer_requests.each do |request|
+        %li.list-group-item
+          = button_to 'Approve', league_transfer_path(@league, request), method: :patch,
+                      class: 'pull-right btn btn-success'
+          = button_to 'Deny', league_transfer_path(@league, request), method: :delete,
+                      class: 'pull-right btn btn-danger'
 
-        = request.created_at.strftime('%c')
-        = present(request.user).transfer_listing(@league)
+          = request.created_at.strftime('%c')
+          = present(request.user).transfer_listing(@league)

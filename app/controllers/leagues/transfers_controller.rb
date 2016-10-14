@@ -10,7 +10,7 @@ module Leagues
     before_action :require_user_league_permission
 
     def index
-      @transfer_requests = @league.transfer_requests
+      @divisions = @league.divisions.includes(transfer_requests: :user)
     end
 
     def update
