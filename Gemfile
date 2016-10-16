@@ -62,9 +62,6 @@ group :development, :test do
   # Test coverage
   gem 'simplecov'
 
-  # Profilers
-  gem 'bullet'
-
   # Use for validation testing
   gem 'shoulda-matchers'
 
@@ -93,6 +90,9 @@ group :development do
 
   # Test emails
   gem 'letter_opener'
+
+  # Profilers
+  gem 'bullet'
 
   # Faster development
   gem 'spring'
