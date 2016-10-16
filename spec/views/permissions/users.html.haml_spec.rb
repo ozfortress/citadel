@@ -1,20 +1,19 @@
 require 'rails_helper'
 
 describe 'permissions/users' do
-  let(:users) { create_list(:user, 4) }
-  let(:team) { create(:team) }
-  let(:user) { create(:user) }
+  let(:users) { build_stubbed_list(:user, 5) }
+  let(:team) { build_stubbed(:team) }
+  let(:admin) { users.sample }
 
   before do
-    user.grant(:edit, :teams)
+    allow(admin).to receive(:can?).and_return(true)
   end
 
   it 'shows all teams' do
-    sign_in user
-    assign(:users, User.paginate(page: 1))
+    assign(:users, users.paginate(page: 1))
     assign(:action, :edit)
     assign(:subject, :team)
-    assign(:target, team.id)
+    assign(:target, team)
 
     render
   end
