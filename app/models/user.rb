@@ -4,6 +4,8 @@ class User < ApplicationRecord
   include Searchable
   include Auth::Model
 
+  EMAIL_CONFIRMATION_TIMEOUT = 1.hour
+
   has_many :titles, -> { order(created_at: :desc) }
   has_many :names, -> { order(created_at: :desc) }, class_name: 'NameChange'
   has_many :notifications, -> { order(created_at: :desc) }
@@ -27,6 +29,7 @@ class User < ApplicationRecord
   validates :steam_id, presence: true, uniqueness: true,
                        numericality: { greater_than: 0 }
   validates :description, presence: true, allow_blank: true
+  validates :email, allow_blank: true, format: { with: /@/ } # How you actually validate emails
 
   validates_permission_to :edit, :users
 
@@ -89,6 +92,24 @@ class User < ApplicationRecord
 
   def notify!(message, link)
     notifications.create!(message: message, link: link)
+  end
+
+  def confirm
+    update(confirmed_at: Time.current)
+  end
+
+  def generate_confirmation_token
+    self.confirmed_at = nil
+    self.confirmation_sent_at = Time.current
+    self.confirmation_token = SecureRandom.urlsafe_base64(64)
+  end
+
+  def confirmation_timed_out?
+    (Time.current - confirmation_sent_at) > EMAIL_CONFIRMATION_TIMEOUT
+  end
+
+  def confirmed?
+    !confirmed_at.nil?
   end
 
   # Always remember using devise rememberable

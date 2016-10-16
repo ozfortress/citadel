@@ -25,6 +25,12 @@ describe User do
   it { should allow_value('').for(:description) }
   it { should validate_length_of(:description).is_at_least(0) }
 
+  it { should allow_value('').for(:email) }
+  it { should allow_value('foo@bar.com').for(:email) }
+  # Example from Wikipedia
+  it { should allow_value('"v.(),:;<>[]\".V.\"v@\\ \"v\".u"@strange.com').for(:email) }
+  it { should_not allow_value('foo').for(:email) }
+
   it 'creates proper steam profile links' do
     user = create(:user, name: 'Crock Facker', steam_id: '76561198037529561')
 
