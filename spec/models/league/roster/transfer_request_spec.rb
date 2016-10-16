@@ -71,5 +71,39 @@ describe League::Roster::TransferRequest do
       expect(build(:league_roster_transfer_request, roster: other_roster, user: user,
                                                     is_joining: true)).to be_invalid
     end
+
+    context 'for overflown roster' do
+      before do
+        roster.league.update!(max_players: 1)
+      end
+
+      it 'when joining' do
+        expect(build(:league_roster_transfer_request,
+                     roster: roster, propagate: true)).to be_invalid
+      end
+
+      it 'when leaving' do
+        user = roster.users.first
+        expect(build(:league_roster_transfer_request,
+                     roster: roster, user: user, is_joining: false)).to be_valid
+      end
+    end
+
+    context 'for underflown roster' do
+      before do
+        roster.league.update!(min_players: 5)
+      end
+
+      it 'when joining' do
+        expect(build(:league_roster_transfer_request,
+                     roster: roster, propagate: true)).to be_valid
+      end
+
+      it 'when leaving' do
+        user = roster.users.first
+        expect(build(:league_roster_transfer_request,
+                     roster: roster, user: user, is_joining: false)).to be_invalid
+      end
+    end
   end
 end
