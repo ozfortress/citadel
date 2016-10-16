@@ -2,7 +2,7 @@ module Users
   module UpdatingService
     include BaseService
 
-    def call(user, params, flash)
+    def call(user, params, flash = {})
       user.transaction do
         user.assign_attributes(params)
 
