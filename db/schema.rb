@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161012084910) do
+ActiveRecord::Schema.define(version: 20161014133210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_user_edit_forums_thread", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "forums_thread_id"
+    t.index ["forums_thread_id"], name: "index_action_user_edit_forums_thread_on_forums_thread_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_edit_forums_thread_on_user_id", using: :btree
+  end
 
   create_table "action_user_edit_games", force: :cascade do |t|
     t.integer "user_id"
@@ -253,12 +260,12 @@ ActiveRecord::Schema.define(version: 20161012084910) do
   end
 
   create_table "league_roster_transfers", force: :cascade do |t|
-    t.integer  "roster_id",                 null: false
-    t.integer  "user_id",                   null: false
-    t.boolean  "is_joining",                null: false
-    t.boolean  "approved",   default: true, null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.integer  "roster_id",                  null: false
+    t.integer  "user_id",                    null: false
+    t.boolean  "is_joining",                 null: false
+    t.boolean  "approved",   default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["roster_id"], name: "index_league_roster_transfers_on_roster_id", using: :btree
     t.index ["user_id"], name: "index_league_roster_transfers_on_user_id", using: :btree
   end
@@ -408,19 +415,24 @@ ActiveRecord::Schema.define(version: 20161012084910) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",                             null: false
-    t.bigint   "steam_id",                         null: false
+    t.string   "name",                              null: false
+    t.bigint   "steam_id",                          null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",       default: 0,  null: false
+    t.integer  "sign_in_count",        default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.text     "description",         default: "", null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.text     "description",          default: "", null: false
     t.string   "remember_token"
     t.string   "avatar"
+    t.string   "email"
+    t.datetime "confirmed_at"
+    t.string   "confirmation_token"
+    t.datetime "confirmation_sent_at"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["name"], name: "index_users_on_name", unique: true, using: :btree
     t.index ["steam_id"], name: "index_users_on_steam_id", unique: true, using: :btree
   end
@@ -456,6 +468,8 @@ ActiveRecord::Schema.define(version: 20161012084910) do
     t.index ["visit_token"], name: "index_visits_on_visit_token", unique: true, using: :btree
   end
 
+  add_foreign_key "action_user_edit_forums_thread", "forums_threads"
+  add_foreign_key "action_user_edit_forums_thread", "users"
   add_foreign_key "action_user_edit_games", "users"
   add_foreign_key "action_user_edit_league", "leagues"
   add_foreign_key "action_user_edit_league", "users"

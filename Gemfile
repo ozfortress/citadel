@@ -62,9 +62,6 @@ group :development, :test do
   # Test coverage
   gem 'simplecov'
 
-  # Profilers
-  gem 'bullet'
-
   # Use for validation testing
   gem 'shoulda-matchers'
 
@@ -90,6 +87,12 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
+
+  # Test emails
+  gem 'letter_opener'
+
+  # Profilers
+  gem 'bullet'
 
   # Faster development
   gem 'spring'

@@ -1,0 +1,11 @@
+:plain
+  Dear #{@user.name},
+
+  Thank you for registering your email with citadel.
+  Please follow this link to activate your email:
+
+  #{confirm_user_email_url(token: @user.confirmation_token)}
+
+  If you received this email by mistake, simply ignore and/or delete it.
+
+  Cheers!

@@ -3,15 +3,21 @@ require 'rails_helper'
 describe User do
   before(:all) { create(:user) }
 
-  it { should have_many(:team_invites).class_name('Team::Invite') }
-  it { should have_many(:team_transfers).class_name('Team::Transfer') }
   it { should have_many(:roster_transfers).class_name('League::Roster::Transfer') }
   it { should have_many(:titles) }
   it { should have_many(:names).class_name('User::NameChange') }
   it { should have_many(:notifications) }
   it { should have_many(:forums_subscriptions).class_name('Forums::Subscription') }
+
   it { should have_many(:team_players).class_name('Team::Player') }
   it { should have_many(:teams).through(:team_players) }
+  it { should have_many(:team_invites).class_name('Team::Invite') }
+  it { should have_many(:team_transfers).class_name('Team::Transfer') }
+
+  it { should have_many(:roster_players).class_name('League::Roster::Player') }
+  it { should have_many(:rosters).through(:team_players) }
+  it { should have_many(:roster_transfers).class_name('League::Roster::Transfer') }
+  it { should have_many(:roster_transfer_requests).class_name('League::Roster::TransferRequest') }
 
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }
@@ -24,6 +30,12 @@ describe User do
 
   it { should allow_value('').for(:description) }
   it { should validate_length_of(:description).is_at_least(0) }
+
+  it { should allow_value('').for(:email) }
+  it { should allow_value('foo@bar.com').for(:email) }
+  # Example from Wikipedia
+  it { should allow_value('"v.(),:;<>[]\".V.\"v@\\ \"v\".u"@strange.com').for(:email) }
+  it { should_not allow_value('foo').for(:email) }
 
   it 'creates proper steam profile links' do
     user = create(:user, name: 'Crock Facker', steam_id: '76561198037529561')
@@ -44,8 +56,6 @@ describe User do
     expect(user.teams).to eq([team])
     expect(team.on_roster?(user)).to be(true)
   end
-
-  it 'has rosters'
 
   it 'can be notified' do
     user = create(:user)
@@ -115,31 +125,20 @@ describe User do
       let(:admin) { create(:user) }
       let(:old)   { create(:user) }
 
-      before do
-        admin.grant(:edit, :games)
-        old.grant(:edit, :games)
-        old.revoke(:edit, :games)
-      end
-
       it "shouldn't let normal users edit meta" do
         expect(user.can?(:edit, :games)).to be(false)
       end
 
       it 'should let a admin edit meta' do
+        admin.grant(:edit, :games)
         expect(admin.can?(:edit, :games)).to be(true)
       end
 
       it "shouldn't let an old admin edit meta" do
+        old.grant(:edit, :games)
+        old.revoke(:edit, :games)
         expect(old.can?(:edit, :games)).to be(false)
       end
-    end
-
-    describe 'Competition' do
-      pending
-    end
-
-    describe 'Competition Rosters' do
-      pending
     end
   end
 end

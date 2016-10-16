@@ -95,6 +95,15 @@ describe UsersController do
       user.reload
       expect(user.avatar.url).to eq(user.avatar.default_url)
     end
+
+    it 'sends a confirmation email when email is set' do
+      sign_in user
+
+      patch :update, params: { id: user.id, user: { email: 'foo@bar.com' } }
+
+      expect(controller).to set_flash[:notice]
+      expect(ActionMailer::Base.deliveries).to_not be_empty
+    end
   end
 
   describe 'GET #names' do
@@ -190,6 +199,45 @@ describe UsersController do
       expect(user.names.pending.size).to eq(0)
       expect(user.names.approved.where(name: 'B')).to_not exist
       expect(user.notifications).to_not be_empty
+    end
+  end
+
+  describe 'GET #confirm_email' do
+    let(:user) { create(:user, email: 'foo@bar.com') }
+
+    it 'succeeds' do
+      token = user.generate_confirmation_token
+      user.save!
+
+      patch :confirm_email, params: { token: token }
+
+      user.reload
+      expect(user).to be_confirmed
+      expect(controller).to set_flash[:notice]
+      expect(response).to redirect_to(user_path(user))
+    end
+
+    it 'fails after timeout' do
+      token = user.generate_confirmation_token
+      user.save!
+
+      # Jump an hour into the future
+      allow(Time).to receive(:current).and_return(Time.current + 1.hour)
+
+      patch :confirm_email, params: { token: token }
+
+      user.reload
+      expect(user).to_not be_confirmed
+      expect(user.email).to be_nil
+      expect(controller).to set_flash[:error]
+      expect(response).to redirect_to(user_path(user))
+    end
+
+    it 'fails with invalid token' do
+      patch :confirm_email, params: { token: 'guarbage' }
+
+      expect(controller).to set_flash[:error]
+      expect(response).to redirect_to(root_path)
     end
   end
 

@@ -8,7 +8,8 @@ module Teams
       invite.transaction do
         invite.save || rollback!
 
-        user.notify!("You have been invited to join the team: #{team.name}.", team_path(user))
+        msg = "You have been invited to join the team: #{team.name}."
+        Users::NotificationService.call(user, msg, team_path(team))
       end
 
       invite

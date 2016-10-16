@@ -4,9 +4,10 @@ module Leagues
       include BaseService
 
       def notify_users(request, user, roster)
-        msg = message user_transfer_msg(request, roster)
+        msg  = message user_transfer_msg(request, roster)
+        link = league_roster_path(roster.league, roster)
 
-        user.notify!(msg, league_roster_path(roster.league, roster))
+        Users::NotificationService.call(user, msg, link)
       end
 
       def user_transfer_msg(request, roster)
@@ -22,7 +23,7 @@ module Leagues
         link = league_roster_path(roster.league, roster)
 
         User.get_revokeable(:edit, roster.team).each do |captain|
-          captain.notify!(msg, link)
+          Users::NotificationService.call(captain, msg, link)
         end
       end
 

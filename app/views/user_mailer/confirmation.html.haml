@@ -1,0 +1,13 @@
+%p Dear #{@user.name},
+
+%p
+  Thank you for registering your email with citadel.
+  Please follow this link to activate your email:
+
+%p
+  = link_to confirm_user_email_url(token: @user.confirmation_token), target: '_blank' do
+    Confirmation Link
+
+%p If you received this email by mistake, simply ignore and/or delete it.
+
+%p Cheers!

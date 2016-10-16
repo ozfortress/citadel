@@ -1,0 +1,7 @@
+- if flash[:error]
+  .alert.alert-danger
+    %span.glyphicon.glyphicon-warning-sign
+    = flash[:error]
+
+- if flash[:notice]
+  .alert.alert-info= flash[:notice]

@@ -26,7 +26,7 @@ class League
       def notify_captains(roster, message, link)
         User.get_revokeable(:edit, roster.team).each do |captain|
           next if captain == user
-          captain.notify!(message, link)
+          Users::NotificationService.call(captain, message, link)
         end
       end
     end

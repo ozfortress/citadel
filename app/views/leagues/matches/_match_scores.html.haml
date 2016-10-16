@@ -14,7 +14,7 @@
       - match.rounds.includes(:map).to_a
       = bootstrap_form_for match, as: :match, url: submit_league_match_path(league, match) do |f|
         = f.fields_for :rounds do |ff|
-          .form-group
+          .row.form-group
             .form-inline
               = link_to ff.object.map, meta_map_path(ff.object.map)
               \:
