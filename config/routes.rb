@@ -64,6 +64,7 @@ Rails.application.routes.draw do
 
   get   'users/logout',            to: 'users#logout',              as: 'logout_user'
   get   'users/names',             to: 'users#names',               as: 'users_names'
+  get   'users/confirm/:token',    to: 'users#confirm_email',       as: 'confirm_user_email'
   patch 'users/:user_id/name/:id', to: 'users#handle_name_change',  as: 'handle_user_name'
   resources :users, except: [:destroy] do
     post 'name',  on: :member, to: 'users#request_name_change'

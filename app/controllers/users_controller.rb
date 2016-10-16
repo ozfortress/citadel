@@ -2,12 +2,15 @@ class UsersController < ApplicationController
   include UsersPermissions
   include Searchable
 
-  before_action except: [:index, :new, :create, :logout, :names,
-                         :handle_name_change] { @user = User.find(params[:id]) }
+  before_action only: [:show, :edit, :update,
+                       :request_name_change] { @user = User.find(params[:id]) }
+  before_action only: [:confirm_email] { @user = User.find_by(confirmation_token: params[:token]) }
 
   before_action :require_login, only: [:logout]
   before_action :require_user_permission, only: [:edit, :update, :request_name_change]
   before_action :require_users_permission, only: [:names, :handle_name_change]
+  before_action :require_user, only: :confirm_email
+  before_action :require_user_confirmation_not_timed_out, only: :confirm_email
 
   def index
     @users = User.search_all(params[:q]).paginate(page: params[:page])
@@ -49,7 +52,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update(edit_user_params)
+    if Users::UpdatingService.call(@user, edit_user_params, flash)
       redirect_to(user_path(@user))
     else
       render :edit
@@ -77,6 +80,16 @@ class UsersController < ApplicationController
     render :names
   end
 
+  def confirm_email
+    if @user.confirm
+      flash[:notice] = 'Email successfully confirmed'
+      redirect_to user_path(@user)
+    else
+      flash[:error] = 'Error confirming email'
+      redirect_to edit_user_path(@user)
+    end
+  end
+
   def logout
     sign_out current_user
 
@@ -90,7 +103,7 @@ class UsersController < ApplicationController
   end
 
   def edit_user_params
-    params.require(:user).permit(:avatar, :remove_avatar, :description)
+    params.require(:user).permit(:avatar, :remove_avatar, :description, :email)
   end
 
   def name_change_params
@@ -103,5 +116,20 @@ class UsersController < ApplicationController
 
   def require_users_permission
     redirect_to pages_home_path unless user_can_edit_users?
+  end
+
+  def require_user
+    return if @user
+
+    flash[:error] = 'Invalid confirmation token'
+    redirect_to root_path
+  end
+
+  def require_user_confirmation_not_timed_out
+    return unless @user.confirmation_timed_out?
+
+    flash[:error] = 'Confirmation timed out'
+    @user.update!(email: nil)
+    redirect_to user_path(@user)
   end
 end

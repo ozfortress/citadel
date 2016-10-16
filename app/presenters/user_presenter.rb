@@ -58,4 +58,15 @@ class UserPresenter < ActionPresenter::Base
       ''
     end
   end
+
+  def confirmation_label
+    'Email for Notifications ' +
+      if user.confirmed?
+        '(confirmed!)'
+      elsif !user.email.blank?
+        '(pending confirmation)'
+      else
+        ''
+      end
+  end
 end
