@@ -64,16 +64,16 @@ class League
       end
 
       def within_roster_size_limits_when_joining
-        return unless league.max_players > 0
+        max_players = league.max_players
 
-        if roster.players.size + 1 > league.max_players
-          errors.add(:user_id, 'would result in too many players')
+        if roster.players.size + 1 > max_players && max_players > 0
+          errors.add(:base, 'would result in too many players on roster')
         end
       end
 
       def within_roster_size_limits_when_leaving
         if roster.players.size - 1 < league.min_players
-          errors.add(:user_id, 'would result in too few players')
+          errors.add(:base, 'would result in too few players on roster')
         end
       end
 
@@ -82,7 +82,7 @@ class League
 
         new_size = leaving_roster.players.size - 1
         unless new_size >= league.min_players
-          errors.add(:user_id, "would cause #{leaving_roster.name} to have too few players")
+          errors.add(:base, "would cause #{leaving_roster.name} to have too few players")
         end
       end
 
