@@ -30,5 +30,5 @@ begin
   task test: %w(rspec lint)
   task default: [:lint]
 rescue LoadError
-  puts "Test tasks not available"
+  puts 'Test tasks not available'
 end
