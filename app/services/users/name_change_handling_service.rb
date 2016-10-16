@@ -15,7 +15,7 @@ module Users
     def notify_user(name_change, user)
       msg = notify_message(name_change)
 
-      user.notify!(msg, user_path(user))
+      Users::NotificationService.call(user, msg, user_path(user))
     end
 
     def notify_message(name_change)

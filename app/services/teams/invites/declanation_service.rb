@@ -17,7 +17,7 @@ module Teams
         message = "'#{user.name}' has declined the invitation to join '#{team.name}'."
 
         User.get_revokeable(:edit, team).each do |captain|
-          captain.notify!(message, user_path(user))
+          Users::NotificationService.call(captain, message, user_path(user))
         end
       end
     end

@@ -12,7 +12,8 @@ module Teams
     private
 
     def notify_user(user, team)
-      user.notify!("You have been kicked from #{team.name}", team_path(team))
+      msg = "You have been kicked from #{team.name}"
+      Users::NotificationService.call(user, msg, team_path(team))
     end
   end
 end
