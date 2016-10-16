@@ -61,6 +61,9 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
+  # Send using postfix, which proxies sendmail
+  config.action_mailer.delivery_method = :sendmail
+
   # Default to this host for urls in mail views
   config.action_mailer.default_url_options = { host: "warzone.ozfortress.com" }
 
