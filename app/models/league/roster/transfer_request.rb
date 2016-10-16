@@ -16,12 +16,9 @@ class League
 
       def approve
         transaction do
-          if is_joining?
-            leaving_roster.remove_player!(user) if leaving_roster
-            roster.add_player!(user)
-          else
-            roster.remove_player!(user)
-          end
+          validate || fail(ActiveRecord::Rollback)
+
+          propagate_players!
 
           destroy || fail(ActiveRecord::Rollback) if persisted?
         end
@@ -38,6 +35,15 @@ class League
       end
 
       private
+
+      def propagate_players!
+        if is_joining?
+          leaving_roster.remove_player!(user) if leaving_roster
+          roster.add_player!(user)
+        else
+          roster.remove_player!(user)
+        end
+      end
 
       def on_team
         return unless user.present? && roster.present?

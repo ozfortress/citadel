@@ -6,9 +6,57 @@ describe League::Roster::TransferRequest do
   it { should belong_to(:roster) }
   it { should belong_to(:user) }
 
-  describe '#approve'
+  describe '#approve' do
+    it 'succeeds when joining' do
+      request = create(:league_roster_transfer_request, propagate: true)
+      user = request.user
+      roster = request.roster
+      roster2 = create(:league_roster, division: request.division)
+      roster2.add_player!(request.user)
 
-  describe '#deny'
+      expect(request.approve).to be_truthy
+      expect(roster.on_roster?(user)).to be(true)
+      expect(roster2.on_roster?(user)).to be(false)
+      expect { request.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'succeeds when leaving' do
+      roster = create(:league_roster, player_count: 3)
+      user = roster.users.first
+      request = create(:league_roster_transfer_request,
+                       roster: roster, user: user, is_joining: false)
+
+      expect(request.approve).to be_truthy
+      expect(roster.on_roster?(user)).to be(false)
+      expect { request.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  describe '#deny' do
+    it 'succeeds when joining' do
+      request = create(:league_roster_transfer_request, propagate: true)
+      user = request.user
+      roster = request.roster
+      roster2 = create(:league_roster, division: request.division)
+      roster2.add_player!(request.user)
+
+      expect(request.deny).to be_truthy
+      expect(roster.on_roster?(user)).to be(false)
+      expect(roster2.on_roster?(user)).to be(true)
+      expect { request.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'succeeds when leaving' do
+      roster = create(:league_roster, player_count: 3)
+      user = roster.users.first
+      request = create(:league_roster_transfer_request,
+                       roster: roster, user: user, is_joining: false)
+
+      expect(request.deny).to be_truthy
+      expect(roster.on_roster?(user)).to be(true)
+      expect { request.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
 
   it 'validates unique within league' do
     roster = create(:league_roster)
