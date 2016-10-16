@@ -83,10 +83,6 @@ class User < ApplicationRecord
       can?(:edit, :permissions)
   end
 
-  def pending_names
-    names.where(approved_by: nil, denied_by: nil)
-  end
-
   def aka
     names.approved.where.not(name: name)
   end
