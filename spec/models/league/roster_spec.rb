@@ -103,7 +103,7 @@ describe League::Roster do
     end
   end
 
-  describe 'points' do
+  describe '#points' do
     pending
   end
 end
