@@ -15,7 +15,7 @@ describe User do
   it { should have_many(:team_transfers).class_name('Team::Transfer') }
 
   it { should have_many(:roster_players).class_name('League::Roster::Player') }
-  it { should have_many(:rosters).through(:team_players) }
+  it { should have_many(:rosters).through(:roster_players).class_name('League::Roster') }
   it { should have_many(:roster_transfers).class_name('League::Roster::Transfer') }
   it { should have_many(:roster_transfer_requests).class_name('League::Roster::TransferRequest') }
 
