@@ -8,9 +8,8 @@ class UserMailer < ApplicationMailer
   def notification(user, message, link)
     @user = user
     @message = message
-    if link.starts_with?('/')
-      link = root_url + link[1..link.length]
-    end
+    # 'root' links to the root_url if they're relative
+    link = root_url + link[1..link.length] if link.starts_with?('/')
     @link = link
 
     mail(to: user.email, subject: 'New Notification')
