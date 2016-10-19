@@ -3,20 +3,25 @@ module Leagues
     extend ActiveSupport::Concern
     include ::LeaguePermissions
 
-    def user_can_edit_roster?(options = {})
-      team = options[:team] || @roster.team
-      disbanded = @roster && @roster.disbanded?
+    def user_can_edit_roster?(roster = nil)
+      roster ||= @roster
+      disbanded = roster && roster.disbanded?
 
-      user_can_edit_league? ||
-        user_signed_in? && current_user.can?(:edit, team) && !disbanded
+      user_can_edit_league?(roster.league) ||
+        user_signed_in? && current_user.can?(:edit, roster.team) && !disbanded
     end
 
-    def user_can_disband_roster?
-      user_can_edit_league? || (user_can_edit_roster? && @league.allow_disbanding?)
+    def user_can_disband_roster?(roster = nil)
+      roster ||= @roster
+
+      user_can_edit_league?(roster.league) || (
+        user_can_edit_roster?(roster) && roster.league.allow_disbanding?)
     end
 
-    def user_can_destroy_roster?
-      user_can_edit_league? && @roster.matches.empty?
+    def user_can_destroy_roster?(roster = nil)
+      roster ||= @roster
+
+      user_can_edit_league?(roster.league) && roster.matches.empty?
     end
   end
 end
