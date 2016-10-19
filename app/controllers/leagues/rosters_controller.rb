@@ -10,7 +10,7 @@ module Leagues
     before_action :require_signuppable, only: [:new, :create]
     before_action :require_any_team_permission, only: [:new, :create]
     before_action :require_team_permission, only: [:create]
-    before_action :require_user_league_permission, only: [:index, :review, :approve]
+    before_action :require_league_permission, only: [:index, :show, :review, :approve]
     before_action :require_roster_permission, only: [:edit, :update]
     before_action :require_roster_pending, only: [:review, :approve]
     before_action :require_roster_disbandable, only: :disband

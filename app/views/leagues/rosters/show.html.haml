@@ -1,9 +1,9 @@
 - unless @roster.approved?
   .alert.alert-warning
     - if user_can_edit_league?
-      = link_to 'Approve', review_league_roster_path(@league, @roster),
+      = link_to 'Approve', review_roster_path(@roster),
                            class: 'btn btn-success pull-right'
-      = button_to 'Decline', league_roster_path(@league, @roster),
+      = button_to 'Decline', roster_path(@roster),
           method: :delete, class: 'btn btn-danger pull-right',
           data: { confirm: "Are you sure you want to decline this team's sign up?" }
 
@@ -11,21 +11,17 @@
     Roster is awaiting approval
 
 - if user_can_edit_roster?
-  = link_to edit_league_roster_path(@league, @roster), class: 'btn btn-default pull-right' do
+  = link_to edit_roster_path(@roster), class: 'btn btn-default pull-right' do
     Edit
     %span.glyphicon.glyphicon-cog
 
-%h1
-  = link_to @league, league_path(@league)
-  - unless @league.signuppable?
-    \: #{@roster.division}
-
 %h2
-  = @roster.name
+  = present(@roster).title
   - if @roster.disbanded?
     %span.pull-right.label.label-danger Disbanded
-Team #{link_to @roster.team, team_path(@roster.team)}
-signed up on #{@roster.created_at.strftime('%c')}
+%h4
+  Team #{link_to @roster.team, team_path(@roster.team)}
+  signed up on #{@roster.created_at.strftime('%c')}
 
 %p
 
@@ -36,10 +32,6 @@ signed up on #{@roster.created_at.strftime('%c')}
 .panel.panel-default
   .panel-heading
     Roster
-    - if user_can_manage_transfers?
-      = link_to league_roster_transfers_path(@league, @roster),
-                class: 'btn btn-default pull-right' do
-        Manage
   %ul.list-group
     - @roster.users.each do |user|
       %li.list-group-item
@@ -79,4 +71,4 @@ signed up on #{@roster.created_at.strftime('%c')}
           = markdown comment.content
 
     .panel-body
-      = render 'comment_form', league: @league, roster: @roster, comment: @comment
+      = render 'comment_form', roster: @roster, comment: @comment
