@@ -45,6 +45,14 @@ class League
 
     scope :approved, -> { where(approved: true) }
     scope :active, -> { approved.where(disbanded: false) }
+    scope :for_incomplete_league, lambda {
+      completed = League.statuses[:completed]
+      includes(division: :league).where.not(leagues: { status: completed })
+    }
+    scope :for_completed_league, lambda {
+      completed = League.statuses[:completed]
+      includes(division: :league).where(leagues: { status: completed })
+    }
 
     after_create do
       League.increment_counter(:rosters_count, league.id)
