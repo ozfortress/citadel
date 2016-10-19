@@ -17,11 +17,13 @@ class League
     end
 
     def title
-      if league.signuppable?
-        signup_title
-      else
-        active_title
-      end
+      title = if league.signuppable?
+                signup_title
+              else
+                active_title
+              end
+      title += disbanded_tag if roster.disbanded?
+      title
     end
 
     def score_s
@@ -41,6 +43,10 @@ class League
     end
 
     private
+
+    def disbanded_tag
+      ' '.html_safe + content_tag(:span, 'Disbanded', class: 'label label-danger')
+    end
 
     def signup_title
       html_escape("#{roster.name} signed up on #{created_at_s} to ") + league_p.link
