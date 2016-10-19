@@ -3,7 +3,7 @@
     Edit
     %span.glyphicon.glyphicon-cog
 
-%h1 #{link_to @league, league_path(@league)}: #{@match.home_team.division}
+%h1 #{present(@league).link}: #{@match.home_team.division}
 %h2= present(@match).title
 
 - unless @match.bye?
