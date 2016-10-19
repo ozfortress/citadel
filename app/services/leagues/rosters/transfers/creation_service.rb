@@ -8,7 +8,7 @@ module Leagues
           request = roster.transfer_requests.new(params)
 
           request.transaction do
-            save_or_approve(request, roster) || rollback!
+            save_or_approve(request, roster)
           end
 
           request
@@ -18,13 +18,13 @@ module Leagues
 
         def save_or_approve(request, roster)
           if roster.league.transfers_require_approval?
+            request.save || rollback!
+
             request_notify_user(request, request.user, roster)
-
-            request.save
           else
-            transfer_notify_user(request, request.user, roster)
+            request.approve || rollback!
 
-            request.approve
+            transfer_notify_user(request, request.user, roster)
           end
         end
 
