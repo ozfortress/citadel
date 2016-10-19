@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     if @user.save
       @user.names.create!(name: @user.name, approved_by: @user)
       sign_in @user
-      render :show
+      redirect_to user_path(@user)
     else
       render :new
     end

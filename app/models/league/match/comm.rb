@@ -15,7 +15,7 @@ class League
       after_create do
         message = "'#{user.name}' posted a message on the match: "\
                   "'#{home_team.name}' vs '#{away_team.name}'"
-        link = league_match_path(league, match)
+        link = match_path(match)
 
         notify_captains(home_team, message, link)
         notify_captains(away_team, message, link)

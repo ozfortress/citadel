@@ -12,44 +12,6 @@ describe Leagues::Rosters::TransfersController do
     roster.add_player!(player)
   end
 
-  describe 'GET #show' do
-    it 'succeeds for authorized captain' do
-      user.grant(:edit, roster.team)
-      sign_in user
-
-      get :show, params: { league_id: roster.league.id, roster_id: roster.id }
-
-      expect(response).to have_http_status(:success)
-    end
-
-    it 'succeeds for authorized admin' do
-      user.grant(:edit, roster.league)
-      sign_in user
-
-      get :show, params: { league_id: roster.league.id, roster_id: roster.id }
-
-      expect(response).to have_http_status(:success)
-    end
-
-    it 'redirects for authorized captain when rosters are locked' do
-      user.grant(:edit, roster.team)
-      roster.league.update!(roster_locked: true)
-      sign_in user
-
-      get :show, params: { league_id: roster.league.id, roster_id: roster.id }
-
-      expect(response).to redirect_to(league_roster_path(roster.league, roster))
-    end
-
-    it 'redirects for unauthorized user' do
-      sign_in user
-
-      get :show, params: { league_id: roster.league.id, roster_id: roster.id }
-
-      expect(response).to redirect_to(league_roster_path(roster.league, roster))
-    end
-  end
-
   describe 'POST #create' do
     it 'succeeds for authorized captain with bencher not auto-approved' do
       user.grant(:edit, roster.team)

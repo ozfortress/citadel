@@ -64,6 +64,9 @@ Rails.application.configure do
   # Send using postfix, which proxies sendmail
   config.action_mailer.delivery_method = :sendmail
 
+  # Default from
+  config.action_mailer.default_options = { from: 'no-reply@warzone.ozfortress.com' }
+
   # Default to this host for urls in mail views
   config.action_mailer.default_url_options = { host: "warzone.ozfortress.com" }
 

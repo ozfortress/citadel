@@ -1,4 +1,4 @@
-= bootstrap_form_for comment, as: :comment, url: league_roster_comments_path(league, roster) do |f|
+= bootstrap_form_for comment, as: :comment, url: roster_comments_path(roster) do |f|
   = f.markdown_editor :content, hide_label: true, rows: 3
 
   = f.submit 'Submit'

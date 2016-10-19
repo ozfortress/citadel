@@ -12,67 +12,143 @@
   .panel-heading Info
   .panel-body= markdown @team.description
 
-.panel.panel-default
-  .panel-heading Roster
-  - if @invite
-    %li.list-group-item.list-group-item-info
-      You have been invited to join this team
-
-      .button-group.pull-right
-        = button_to decline_team_invite_path(@team), method: :delete, class: 'btn btn-danger' do
-          Decline
-          %span.glyphicon.glyphicon-remove
-      .button-group.pull-right
-        = button_to accept_team_invite_path(@team), method: :post, class: 'btn btn-success' do
-          Accept
-          %span.glyphicon.glyphicon-ok
-
-  - if user_can_edit_team?
-    .panel-body
-      = link_to recruit_team_path(@team), class: 'btn btn-default' do
-        Invite
-        %span.glyphicon.glyphicon-plus
-  %ul.list-group
-    - @players.each do |player|
-      %li.list-group-item
-        - user = player.user
-
-        - if user == current_user
-          .button-group.pull-right
-            = button_to leave_team_path(@team), method: :patch, class: 'btn btn-danger',
-                        data: { confirm: 'Are you sure you want to leave this team?' } do
-              Leave
-              %span.glyphicon.glyphicon-remove
-        - elsif user_can_edit_team?
-          .button-group.pull-right
-            = button_to kick_team_path(@team, user_id: user.id),
-                        method: :patch, class: 'btn btn-danger',
-                        data: { confirm: "Are you sure you want to kick #{user.name}?" } do
-              Kick
-              %span.glyphicon.glyphicon-remove
-
-        = render 'users/listing', user: user, team: @team
-
-.panel.panel-default
-  .panel-heading Transfers
-  %ul.list-group
-    - @transfers.each do |transfer|
-      %li.list-group-item
-        = present(transfer).listing
-
-- unless @rosters.empty?
-  .panel.panel-default
-    .panel-heading Leagues
-    %ul.list-group
-      - @rosters.each do |roster|
-        %li.list-group-item
-          = link_to roster.league, league_path(roster.league)
-          - roster_p = present roster
-          #{roster.division}: #{roster_p.link}.
-          Signed up on #{roster_p.created_at_s}.
-
+- unless @matches.empty?
   .panel.panel-default
     .panel-heading Upcoming Matches
     %ul.list-group
       - present_collection(@matches).each do |match|
         %li.list-group-item= match.link
+
+- @active_rosters.each do |roster|
+  - roster_p = present(roster)
+
+  .global-collapsible
+    .panel.panel-default
+      .panel-heading
+        = roster_p.title
+
+        - if user_can_edit_league?(roster.league)
+          = link_to roster_path(roster), class: 'btn btn-default pull-right' do
+            View Details
+
+        - if user_can_manage_transfers?(roster)
+          = link_to edit_roster_path(roster), class: 'btn btn-default pull-right' do
+            Manage
+      %ul.list-group
+        - roster.users.each do |user|
+          %li.list-group-item
+            = render 'users/listing', user: user, team: roster.team
+
+      - unless roster.matches.empty?
+        - id = "#{dom_id(roster)}-matches"
+        .panel-heading
+          %a{ data: { toggle: 'collapse', parent: '.global-collapsible' }, href: "##{id}" }
+            Matches
+            %span.pull-right.glyphicon.glyphicon-chevron-down
+
+        .panel-collapse.collapse{ id: id }
+          %ul.list-group
+            - roster.matches.each do |match|
+              %li.list-group-item
+                = present(match).link
+                .pull-right= present(match).results
+
+      - id = "#{dom_id(roster)}-transfers"
+      .panel-heading
+        %a{ data: { toggle: 'collapse', parent: '.global-collapsible' }, href: "##{id}" }
+          Transfer History
+          %span.pull-right.glyphicon.glyphicon-chevron-down
+
+      .panel-collapse.collapse{ id: id }
+        %ul.list-group
+          - roster.transfers.each do |transfer|
+            %li.list-group-item
+              = present(transfer).listing
+
+.global-collapsible
+  .panel.panel-default
+    .panel-heading
+      .panel-title Team Roster
+    - if @invite
+      %li.list-group-item.list-group-item-info
+        You have been invited to join this team
+
+        .button-group.pull-right
+          = button_to decline_team_invite_path(@team), method: :delete, class: 'btn btn-danger' do
+            Decline
+            %span.glyphicon.glyphicon-remove
+        .button-group.pull-right
+          = button_to accept_team_invite_path(@team), method: :post, class: 'btn btn-success' do
+            Accept
+            %span.glyphicon.glyphicon-ok
+
+    - if user_can_edit_team?
+      .panel-body
+        = link_to recruit_team_path(@team), class: 'btn btn-default' do
+          Invite
+          %span.glyphicon.glyphicon-plus
+    %ul.list-group
+      - @players.each do |player|
+        %li.list-group-item
+          - user = player.user
+
+          - if user == current_user
+            .button-group.pull-right
+              = button_to leave_team_path(@team), method: :patch, class: 'btn btn-danger',
+                          data: { confirm: 'Are you sure you want to leave this team?' } do
+                Leave
+                %span.glyphicon.glyphicon-remove
+          - elsif user_can_edit_team?
+            .button-group.pull-right
+              = button_to kick_team_path(@team, user_id: user.id),
+                          method: :patch, class: 'btn btn-danger',
+                          data: { confirm: "Are you sure you want to kick #{user.name}?" } do
+                Kick
+                %span.glyphicon.glyphicon-remove
+
+          = render 'users/listing', user: user, team: @team
+
+    - id = "#{dom_id(@team)}-transfers"
+    .panel-heading
+      %a{ data: { toggle: 'collapse', parent: '.global-collapsible' }, href: "##{id}" }
+        Transfer History
+        %span.pull-right.glyphicon.glyphicon-chevron-down
+
+    .panel-collapse.collapse{ id: id }
+      %ul.list-group
+        - @transfers.each do |transfer|
+          %li.list-group-item
+            = present(transfer).listing
+
+%hr
+
+- unless @past_rosters.empty?
+  .global-collapsible
+    .panel.panel-default
+      .panel-heading
+        .panel-title Past Rosters
+
+      - @past_rosters.each do |roster|
+        - roster_p = present(roster)
+        - id = dom_id(roster)
+        .panel-heading
+          = roster_p.title
+          %a{ data: { toggle: 'collapse', parent: '.global-collapsible' }, href: "##{id}" }
+            %span.pull-right.glyphicon.glyphicon-chevron-down
+
+        .panel-collapse.collapse{ id: id }
+          %ul.list-group
+            - roster.users.each do |user|
+              %li.list-group-item
+                = render 'users/listing', user: user, team: roster.team
+          .panel-heading Matches:
+          %ul.list-group
+            - roster.matches.each do |match|
+              %li.list-group-item
+                = present(match).link
+                .pull-right= present(match).results
+          .panel-heading Transfer History:
+          %ul.list-group
+            - roster.transfers.each do |transfer|
+              %li.list-group-item
+                = present(transfer).listing

@@ -12,7 +12,7 @@
   - if match.status == 'pending' || user_can_edit_league?
     .panel-body
       - match.rounds.includes(:map).to_a
-      = bootstrap_form_for match, as: :match, url: submit_league_match_path(league, match) do |f|
+      = bootstrap_form_for match, as: :match, url: submit_match_path(match) do |f|
         = f.fields_for :rounds do |ff|
           .row.form-group
             .form-inline
@@ -32,7 +32,7 @@
           = f.submit 'Submit Score'
 
       - unless user_can_edit_league?
-        = button_to 'Forfeit', forfeit_league_match_path(league, match),
+        = button_to 'Forfeit', forfeit_match_path(match),
                     class: 'btn btn-danger', method: :patch,
                     data: { confirm: 'Are you sure you want to forfeit this match?' }
 
@@ -45,11 +45,11 @@
 
     - if user_can_confirm_score?
       .panel-body
-        = button_to confirm_league_match_path(league, match, confirm: true),
+        = button_to confirm_match_path(match, confirm: true),
                     class: 'btn btn-success', method: :patch do
           Confirm Score
 
-        = button_to confirm_league_match_path(league, match, confirm: false),
+        = button_to confirm_match_path(match, confirm: false),
                     class: 'btn btn-danger', method: :patch do
           Challenge Score
 

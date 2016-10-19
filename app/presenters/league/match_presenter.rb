@@ -19,7 +19,7 @@ class League
 
     def link(label = nil, options = {}, &block)
       label ||= to_s
-      link_to(label, league_match_path(league, match), options, &block)
+      link_to(label, match_path(match), options, &block)
     end
 
     def players

@@ -2,9 +2,12 @@ module Leagues
   class MatchesController < ApplicationController
     include MatchPermissions
 
-    before_action { @league = League.find(params[:league_id]) }
+    before_action only: [:index, :new, :create, :generate, :create_round] do
+      @league = League.find(params[:league_id])
+    end
     before_action except: [:index, :new, :create, :generate, :create_round] do
-      @match = @league.matches.find(params[:id])
+      @match = League::Match.find(params[:id])
+      @league = @match.league
     end
 
     before_action :require_user_league_permission, only: [:new, :create, :generate, :create_round,
@@ -28,7 +31,7 @@ module Leagues
       @match = Matches::CreationService.call(match_params)
 
       if @match.persisted?
-        redirect_to league_match_path(@league, @match)
+        redirect_to match_path(@match)
       else
         @match.reset_results
         render :new
@@ -66,7 +69,7 @@ module Leagues
 
     def update
       if @match.update(match_params)
-        redirect_to league_match_path(@league, @match)
+        redirect_to match_path(@match)
       else
         render :edit
       end
@@ -74,7 +77,7 @@ module Leagues
 
     def submit
       if @match.update(report_scores_params)
-        redirect_to league_match_path(@league, @match)
+        redirect_to match_path(@match)
       else
         @match.status = :pending
         show
@@ -88,7 +91,7 @@ module Leagues
         show
         render :show
       else
-        redirect_to league_match_path(@league, @match)
+        redirect_to match_path(@match)
       end
     end
 
@@ -100,7 +103,7 @@ module Leagues
 
     def destroy
       if @match.destroy
-        redirect_to league_path(@league)
+        redirect_to league_path(@match)
       else
         render :edit
       end
@@ -142,7 +145,7 @@ module Leagues
     end
 
     def require_user_can_report_scores
-      redirect_to league_match_path(@league, @match) unless user_can_submit_team_score?
+      redirect_to match_path(@match) unless user_can_submit_team_score?
     end
 
     def require_user_league_permission
@@ -150,11 +153,11 @@ module Leagues
     end
 
     def require_user_either_teams
-      redirect_to league_match_path(@league, @match) unless user_can_either_teams?
+      redirect_to match_path(@match) unless user_can_either_teams?
     end
 
     def require_match_not_bye
-      redirect_to league_match_path(@league, @match) if @match.bye?
+      redirect_to match_path(@match) if @match.bye?
     end
   end
 end

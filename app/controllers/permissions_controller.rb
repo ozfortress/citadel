@@ -1,10 +1,13 @@
 class PermissionsController < ApplicationController
-  include Permissions
-
   before_action except: :index do
     @action = params.require(:action_).to_sym
     @subject = params.require(:subject).to_sym
-    @target = params[:target]
+
+    @target = if subject?
+                @subject.to_s.camelize.constantize.find(params[:target])
+              else
+                @subject
+              end
   end
 
   before_action only: [:grant, :revoke] do
@@ -24,20 +27,24 @@ class PermissionsController < ApplicationController
   end
 
   def grant
-    @user.grant(@action, target)
+    @user.grant(@action, @target)
     redirect_back
   end
 
   def revoke
-    @user.revoke(@action, target)
+    @user.revoke(@action, @target)
     redirect_back
   end
 
   private
 
+  def subject?
+    User.permissions[@action][@subject].has_subject
+  end
+
   def require_permission
     redirect_back unless current_user.can?(:edit, :permissions) ||
-                         current_user.can?(@action, target)
+                         current_user.can?(@action, @target)
   end
 
   def ensure_valid_target

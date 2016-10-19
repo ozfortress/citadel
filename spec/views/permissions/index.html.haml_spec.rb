@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 describe 'permissions/index' do
-  let(:user) { create(:user) }
+  let(:user) { build(:user) }
 
   before do
-    user.grant(:edit, :permissions)
+    allow(user).to receive(:can?).and_return(true)
   end
 
   it 'displays' do
-    sign_in user
+    allow(view).to receive(:current_user).and_return(user)
     assign(:permissions, User.permissions)
 
     render

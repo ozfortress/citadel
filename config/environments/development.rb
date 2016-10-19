@@ -29,8 +29,11 @@ Rails.application.configure do
   # Send mails to letter opener
   config.action_mailer.delivery_method = :letter_opener
 
+  # Default from
+  config.action_mailer.default_options = { from: 'no-reply@localhost' }
+
   # Default to this host for urls in mail views
-  config.action_mailer.default_url_options = { host: "localhost:3000" }
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   config.action_mailer.perform_caching = false
 

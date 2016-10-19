@@ -5,9 +5,9 @@ class Team
     def listing
       out = present(transfer.user).link
       out += if transfer.is_joining?
-               'joined the team'
+               ' joined the team'
              else
-               'left the team'
+               ' left the team'
              end
       out + " on #{transfer.created_at.strftime('%c')}"
     end

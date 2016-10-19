@@ -1,18 +1,22 @@
 require 'rails_helper'
 
 describe 'teams/show' do
-  let(:team) { build(:team) }
+  let(:team) { build_stubbed(:team) }
+  let(:invite) { build_stubbed(:team_invite) }
   let(:players) { build_stubbed_list(:team_player, 6) }
   let(:transfers_in) { build_stubbed_list(:team_transfer, 5, team: team, is_joining: true) }
   let(:transfers_out) { build_stubbed_list(:team_transfer, 5, team: team, is_joining: false) }
-  let(:rosters) { build_stubbed_list(:league_roster, 3, team: team) }
+  let(:active_rosters) { build_stubbed_list(:league_roster, 3, team: team) }
+  let(:past_rosters) { build_stubbed_list(:league_roster, 3, team: team) }
   let(:matches) { build_stubbed_list(:league_match, 4) }
 
   before do
     assign(:team, team)
+    assign(:invite, invite)
     assign(:players, players)
     assign(:transfers, transfers_in + transfers_out)
-    assign(:rosters, rosters)
+    assign(:active_rosters, active_rosters)
+    assign(:past_rosters, past_rosters)
     assign(:matches, matches)
   end
 
@@ -33,8 +37,12 @@ describe 'teams/show' do
       expect(rendered).to include(transfer.user.name)
     end
 
-    rosters.each do |roster|
+    (active_rosters + past_rosters).each do |roster|
       expect(rendered).to include(roster.name)
+
+      roster.users.each do |user|
+        expect(rendered).to include(user.name)
+      end
     end
 
     matches.each do |match|

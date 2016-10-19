@@ -21,18 +21,18 @@ Rails.application.routes.draw do
 
     resources :transfers, controller: 'leagues/transfers', only: [:index, :destroy, :update]
 
-    resources :rosters, controller: 'leagues/rosters' do
+    resources :rosters, controller: 'leagues/rosters', shallow: true do
       member do
         get   'review'
         patch 'approve'
         delete 'disband'
       end
 
-      resource :transfers, controller: 'leagues/rosters/transfers', only: [:show, :create]
+      resource :transfers, controller: 'leagues/rosters/transfers', only: [:create]
       resource :comments, controller: 'leagues/rosters/comments', only: [:create]
     end
 
-    resources :matches, controller: 'leagues/matches' do
+    resources :matches, controller: 'leagues/matches', shallow: true do
       collection do
         get 'generate'
         post 'generate', action: 'create_round'

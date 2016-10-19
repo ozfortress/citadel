@@ -16,12 +16,9 @@ class League
 
       def approve
         transaction do
-          if is_joining?
-            leaving_roster.remove_player!(user) if leaving_roster
-            roster.add_player!(user)
-          else
-            roster.remove_player!(user)
-          end
+          validate || fail(ActiveRecord::Rollback)
+
+          propagate_players!
 
           destroy || fail(ActiveRecord::Rollback) if persisted?
         end
@@ -38,6 +35,15 @@ class League
       end
 
       private
+
+      def propagate_players!
+        if is_joining?
+          leaving_roster.remove_player!(user) if leaving_roster
+          roster.add_player!(user)
+        else
+          roster.remove_player!(user)
+        end
+      end
 
       def on_team
         return unless user.present? && roster.present?
@@ -56,9 +62,24 @@ class League
       def within_roster_size_limits
         return unless user.present? && roster.present?
 
-        new_size = roster.players.size + (is_joining? ? 1 : -1)
-        unless league.valid_roster_size?(new_size)
-          errors.add(:user_id, 'would result in breach of roster size limits')
+        if is_joining?
+          within_roster_size_limits_when_joining
+        else
+          within_roster_size_limits_when_leaving
+        end
+      end
+
+      def within_roster_size_limits_when_joining
+        max_players = league.max_players
+
+        if roster.players.size + 1 > max_players && max_players > 0
+          errors.add(:base, 'would result in too many players on roster')
+        end
+      end
+
+      def within_roster_size_limits_when_leaving
+        if roster.players.size - 1 < league.min_players
+          errors.add(:base, 'would result in too few players on roster')
         end
       end
 
@@ -66,8 +87,8 @@ class League
         return unless user.present? && roster.present? && leaving_roster.present?
 
         new_size = leaving_roster.players.size - 1
-        unless league.valid_roster_size?(new_size)
-          errors.add(:user_id, 'would result in breach of roster size limits')
+        unless new_size >= league.min_players
+          errors.add(:base, "would cause #{leaving_roster.name} to have too few players")
         end
       end
 

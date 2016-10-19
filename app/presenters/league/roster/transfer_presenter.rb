@@ -1,6 +1,6 @@
 class League
   class Roster
-    class TransferPresenter < ActionPresenter::Base
+    class TransferPresenter < Team::TransferPresenter
       presents :transfer
     end
   end

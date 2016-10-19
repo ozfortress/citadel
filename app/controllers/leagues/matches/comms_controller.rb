@@ -14,7 +14,7 @@ module Leagues
         @comm = League::Match::Comm.new(comm_params.merge(user: current_user, match: @match))
 
         if @comm.save
-          redirect_to league_match_path(@match.league, @match)
+          redirect_to match_path(@match)
         else
           render 'leagues/matches/show'
         end
@@ -27,7 +27,7 @@ module Leagues
       end
 
       def require_user_can_comm
-        redirect_to league_match_path(@league, @match) unless user_can_comm?
+        redirect_to match_path(@match) unless user_can_comm?
       end
     end
   end
