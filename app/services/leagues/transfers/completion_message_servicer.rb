@@ -5,7 +5,7 @@ module Leagues
 
       def notify_users(request, user, roster)
         msg  = message user_transfer_msg(request, roster)
-        link = league_roster_path(roster.league, roster)
+        link = roster_path(roster)
 
         Users::NotificationService.call(user, msg, link)
       end
@@ -20,7 +20,7 @@ module Leagues
 
       def notify_captains(request, user, roster)
         msg  = message captains_transfer_msg(request, user, roster)
-        link = league_roster_path(roster.league, roster)
+        link = roster_path(roster)
 
         User.get_revokeable(:edit, roster.team).each do |captain|
           Users::NotificationService.call(captain, msg, link)

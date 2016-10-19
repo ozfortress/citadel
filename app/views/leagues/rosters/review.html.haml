@@ -1,8 +1,8 @@
 = bootstrap_form_for @roster, as: :roster,
-    url: approve_league_roster_path(@league, @roster) do |f|
+    url: approve_roster_path(@roster) do |f|
   = f.text_field :name
   = f.select :division_id, divisions_select, label: 'Desired Division'
   = f.number_field :seeding
 
   = f.submit 'Approve', class: 'btn btn-success'
-  = link_to 'Cancel', league_roster_path(@league, @roster), class: 'btn btn-default'
+  = link_to 'Cancel', roster_path(@roster), class: 'btn btn-default'

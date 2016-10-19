@@ -90,13 +90,13 @@ describe Leagues::MatchesController do
 
       post :create, params: { league_id: league.id }
 
-      expect(response).to redirect_to(league_path(league.id))
+      expect(response).to redirect_to(league_path(league))
     end
 
     it 'redirects for unauthenticated user' do
       post :create, params: { league_id: league.id }
 
-      expect(response).to redirect_to(league_path(league.id))
+      expect(response).to redirect_to(league_path(league))
     end
   end
 
@@ -154,7 +154,7 @@ describe Leagues::MatchesController do
     let!(:match) { create(:league_match, home_team: team1, away_team: team2) }
 
     it 'succeeds' do
-      get :show, params: { league_id: league.id, id: match.id }
+      get :show, params: { id: match.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -167,7 +167,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, league)
       sign_in user
 
-      get :edit, params: { league_id: league.id, id: match.id }
+      get :edit, params: { id: match.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -184,7 +184,7 @@ describe Leagues::MatchesController do
       sign_in user
 
       patch :update, params: {
-        league_id: league.id, id: match.id, match: {
+        id: match.id, match: {
           home_team_id: team3.id, away_team_id: team2.id, round: 5,
           rounds_attributes: [
             { id: round.id, _destroy: true, map_id: map.id },
@@ -207,7 +207,7 @@ describe Leagues::MatchesController do
       sign_in user
 
       patch :update, params: {
-        league_id: league.id, id: match.id, match: {
+        id: match.id, match: {
           home_team_id: team1.id, away_team_id: team1.id
         }
       }
@@ -226,7 +226,7 @@ describe Leagues::MatchesController do
       sign_in user
 
       patch :submit, params: {
-        league_id: league.id, id: match.id, match: {
+        id: match.id, match: {
           status: :confirmed, rounds_attributes: {
             id: round.id, home_team_score: 2, away_team_score: 5,
           }
@@ -246,7 +246,7 @@ describe Leagues::MatchesController do
       sign_in user
 
       patch :submit, params: {
-        league_id: league.id, id: match.id, match: { forfeit_by: :home_team_forfeit }
+        id: match.id, match: { forfeit_by: :home_team_forfeit }
       }
 
       match.reload
@@ -259,7 +259,7 @@ describe Leagues::MatchesController do
       sign_in user
 
       patch :submit, params: {
-        league_id: league.id, id: match.id, match: {
+        id: match.id, match: {
           rounds_attributes: { id: round.id, home_team_score: 2, away_team_score: 5 }
         }
       }
@@ -277,7 +277,7 @@ describe Leagues::MatchesController do
       sign_in user
 
       patch :submit, params: {
-        league_id: league.id, id: match.id, match: {
+        id: match.id, match: {
           rounds_attributes: {
             id: round.id, home_team_score: 2, away_team_score: 5,
           }
@@ -297,7 +297,7 @@ describe Leagues::MatchesController do
       sign_in user
 
       patch :submit, params: {
-        league_id: league.id, id: match.id, match: {
+        id: match.id, match: {
           rounds_attributes: {
             id: round.id, home_team_score: -1, away_team_score: 5,
           }
@@ -313,7 +313,7 @@ describe Leagues::MatchesController do
       sign_in user
 
       patch :submit, params: {
-        league_id: league.id, id: match.id, match: {
+        id: match.id, match: {
           status: :confirmed, rounds_attributes: {
             id: round.id, home_team_score: 2, away_team_score: 5,
           }
@@ -322,7 +322,7 @@ describe Leagues::MatchesController do
 
       match.reload
       expect(match.status).to eq('submitted_by_home_team')
-      expect(response).to redirect_to(league_match_path(league.id, match.id))
+      expect(response).to redirect_to(match_path(match))
     end
 
     it "doesn't allow score submission overriding" do
@@ -331,7 +331,7 @@ describe Leagues::MatchesController do
       sign_in user
 
       patch :submit, params: {
-        league_id: league.id, id: match.id, match: {
+        id: match.id, match: {
           rounds_attributes: {
             id: round.id, home_team_score: 2, away_team_score: 5,
           }
@@ -340,7 +340,7 @@ describe Leagues::MatchesController do
 
       match.reload
       expect(match.status).to eq('submitted_by_home_team')
-      expect(response).to redirect_to(league_match_path(league.id, match.id))
+      expect(response).to redirect_to(match_path(match))
     end
   end
 
@@ -355,7 +355,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, league)
       sign_in user
 
-      patch :confirm, params: { league_id: league.id, id: match.id, confirm: 'true' }
+      patch :confirm, params: { id: match.id, confirm: 'true' }
 
       match.reload
       expect(match.status).to eq('confirmed')
@@ -365,7 +365,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, team2.team)
       sign_in user
 
-      patch :confirm, params: { league_id: league.id, id: match.id, confirm: 'true' }
+      patch :confirm, params: { id: match.id, confirm: 'true' }
 
       match.reload
       expect(match.status).to eq('confirmed')
@@ -375,7 +375,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, team1.team)
       sign_in user
 
-      patch :confirm, params: { league_id: league.id, id: match.id, confirm: 'true' }
+      patch :confirm, params: { id: match.id, confirm: 'true' }
 
       match.reload
       expect(match.status).to eq('submitted_by_home_team')
@@ -394,7 +394,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, team1.team)
       sign_in user
 
-      patch :forfeit, params: { league_id: league.id, id: match.id }
+      patch :forfeit, params: { id: match.id }
 
       match.reload
       expect(match.status).to eq('confirmed')
@@ -405,7 +405,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, team2.team)
       sign_in user
 
-      patch :forfeit, params: { league_id: league.id, id: match.id }
+      patch :forfeit, params: { id: match.id }
 
       match.reload
       expect(match.status).to eq('confirmed')
@@ -420,7 +420,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, league)
       sign_in user
 
-      delete :destroy, params: { league_id: league.id, id: match.id }
+      delete :destroy, params: { id: match.id }
 
       expect(League::Match.exists?(match.id)).to be(false)
     end
@@ -429,7 +429,7 @@ describe Leagues::MatchesController do
       user.grant(:edit, team1.team)
       sign_in user
 
-      delete :destroy, params: { league_id: league.id, id: match.id }
+      delete :destroy, params: { id: match.id }
 
       expect(League::Match.exists?(match.id)).to be(true)
     end
@@ -437,13 +437,13 @@ describe Leagues::MatchesController do
     it 'fails for unauthorized user' do
       sign_in user
 
-      delete :destroy, params: { league_id: league.id, id: match.id }
+      delete :destroy, params: { id: match.id }
 
       expect(League::Match.exists?(match.id)).to be(true)
     end
 
     it 'fails for unauthenticated user' do
-      delete :destroy, params: { league_id: league.id, id: match.id }
+      delete :destroy, params: { id: match.id }
 
       expect(League::Match.exists?(match.id)).to be(true)
     end

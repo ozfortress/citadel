@@ -39,7 +39,7 @@ module Leagues
         def request_notify_user(request, user, roster)
           msg = "It has been requested for you to transfer #{request_msg(request)} "\
                 "#{roster.name} for #{roster.league.name}"
-          link = league_roster_path(roster.league, roster)
+          link = roster_path(roster)
 
           Users::NotificationService.call(user, msg, link)
         end
@@ -47,7 +47,7 @@ module Leagues
         def transfer_notify_user(request, user, roster)
           msg = "You have been transferred #{request_msg(request)} "\
                 "#{roster.name} for #{roster.league.name}"
-          link = league_roster_path(roster.league, roster)
+          link = roster_path(roster)
 
           Users::NotificationService.call(user, msg, link)
         end

@@ -3,8 +3,10 @@ module Leagues
     class CommentsController < ApplicationController
       include ::LeaguePermissions
 
-      before_action { @league = League.find(params[:league_id]) }
-      before_action { @roster = @league.rosters.find(params[:roster_id]) }
+      before_action do
+        @roster = League::Roster.find(params[:roster_id])
+        @league = @roster.league
+      end
       before_action :require_league_permissions
 
       def create
@@ -12,7 +14,7 @@ module Leagues
         params[:user] = current_user
         @comment = @roster.comments.create(params)
 
-        redirect_to league_roster_path(@league, @roster)
+        redirect_to roster_path(@roster)
       end
 
       private

@@ -23,7 +23,7 @@
   - if user_can_comm?
     %hr
     .panel-body
-      = bootstrap_form_for comm, as: :comm, url: league_match_comms_path(league, match) do |f|
+      = bootstrap_form_for comm, as: :comm, url: match_comms_path(match) do |f|
         = f.markdown_editor :content, hide_label: true, rows: 3
 
         = f.submit 'Submit'

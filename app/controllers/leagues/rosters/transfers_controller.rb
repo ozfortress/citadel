@@ -3,20 +3,19 @@ module Leagues
     class TransfersController < ApplicationController
       include TransferPermissions
 
-      before_action { @league = League.find(params[:league_id]) }
-      before_action { @roster = @league.rosters.find(params[:roster_id]) }
-      before_action :require_transfer_permissions
-
-      def show
-        @transfer_request ||= @roster.transfer_requests.new
-        @users_on_roster  = @roster.users
-        @users_off_roster = @roster.users_off_roster
+      before_action do
+        @roster = League::Roster.find(params[:roster_id])
+        @league = @roster.league
       end
+      before_action :require_transfer_permissions
 
       def create
         @transfer_request = Rosters::Transfers::CreationService.call(@roster, transfer_params)
-        show
-        render :show
+
+        unless @transfer_request.errors.empty?
+          flash[:error] = @transfer_request.errors.full_messages.first
+        end
+        redirect_to edit_roster_path(@roster)
       end
 
       private
@@ -26,7 +25,7 @@ module Leagues
       end
 
       def require_transfer_permissions
-        redirect_to league_roster_path(@league, @roster) unless user_can_manage_transfers?
+        redirect_to roster_path(@roster) unless user_can_manage_transfers?
       end
     end
   end
