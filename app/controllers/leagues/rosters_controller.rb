@@ -12,7 +12,8 @@ module Leagues
     before_action :require_signuppable, only: [:new, :create]
     before_action :require_any_team_permission, only: [:new, :create]
     before_action :require_team_permission, only: [:create]
-    before_action :require_league_permission, only: [:index, :show, :review, :approve]
+    before_action :require_league_permission, only: [:index, :review, :approve]
+    before_action :require_roster_league_permission, only: [:show]
     before_action :require_roster_permission, only: [:edit, :update]
     before_action :require_roster_pending, only: [:review, :approve]
     before_action :require_roster_disbandable, only: :disband
@@ -135,48 +136,50 @@ module Leagues
       params.require(:roster).permit(:name, :division_id, :seeding)
     end
 
-    def redirect_back(fallback = nil)
-      fallback ||= if @roster
-                     team_path(@roster.team)
-                   else
-                     league_path(@league)
-                   end
+    def redirect_to_league
+      redirect_to league_path(@league)
+    end
 
-      super(fallback_location: fallback)
+    def redirect_to_team
+      redirect_to team_path(@roster.team)
     end
 
     def require_signuppable
-      redirect_back unless @league.signuppable?
+      redirect_to_league unless @league.signuppable?
     end
 
     def require_any_team_permission
-      redirect_back unless user_signed_in? && current_user.can_any?(:edit, :team)
-    end
-
-    def require_league_permission
-      redirect_back unless user_can_edit_league?
+      redirect_to_league unless user_signed_in? && current_user.can_any?(:edit, :team)
     end
 
     def require_team_permission
       team = Team.find(params[:team_id])
 
-      redirect_back unless user_can_edit_team?(team)
+      redirect_to_league unless user_can_edit_team?(team)
+    end
+
+    def require_league_permission
+      redirect_to_league unless user_can_edit_league?
+    end
+
+    def require_roster_league_permission
+      redirect_to_team unless user_can_edit_league?
     end
 
     def require_roster_pending
-      redirect_back(league_rosters_path(@league)) if @roster.approved?
+      redirect_back(fallback_location: league_rosters_path(@league)) if @roster.approved?
     end
 
     def require_roster_permission
-      redirect_back unless user_can_edit_roster?
+      redirect_to_team unless user_can_edit_roster?
     end
 
     def require_roster_disbandable
-      redirect_back unless user_can_disband_roster?
+      redirect_to_team unless user_can_disband_roster?
     end
 
     def require_roster_destroyable
-      redirect_back unless user_can_destroy_roster?
+      redirect_to_team unless user_can_destroy_roster?
     end
   end
 end

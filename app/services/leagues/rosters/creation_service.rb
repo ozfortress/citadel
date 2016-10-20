@@ -20,7 +20,7 @@ module Leagues
 
       def notify_players(roster, league)
         msg  = "You have been entered in #{league.name} with #{roster.name}."
-        link = roster_path(roster)
+        link = team_path(roster.team)
 
         roster.players.each do |player|
           Users::NotificationService.call(player.user, msg, link)

@@ -28,8 +28,7 @@
         = roster_p.title
 
         - if user_can_edit_league?(roster.league)
-          = link_to roster_path(roster), class: 'btn btn-default pull-right' do
-            View Details
+          = roster_p.admin_link 'View Details', class: 'btn btn-default pull-right'
 
         - if user_can_manage_transfers?(roster)
           = link_to edit_roster_path(roster), class: 'btn btn-default pull-right' do

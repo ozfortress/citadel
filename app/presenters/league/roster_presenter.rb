@@ -13,6 +13,11 @@ class League
 
     def link(label = nil, options = {}, &block)
       label ||= name
+      link_to(label, team_path(roster.team), options, &block)
+    end
+
+    def admin_link(label = nil, options = {}, &block)
+      label ||= name
       link_to(label, roster_path(roster), options, &block)
     end
 
