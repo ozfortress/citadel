@@ -333,13 +333,13 @@ describe Leagues::RostersController do
 
         patch :approve, params: { id: roster.id }
 
-        expect(response).to redirect_to(team_path(roster.team))
+        expect(response).to redirect_to(league_path(league))
       end
 
       it 'redirects for unauthenticated user' do
         patch :approve, params: { id: roster.id }
 
-        expect(response).to redirect_to(team_path(roster.team))
+        expect(response).to redirect_to(league_path(league))
       end
     end
 
