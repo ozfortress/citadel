@@ -66,8 +66,22 @@ module Searchable
     end
 
     def simple_search(query)
-      match = { query: query, fields: searchable_fields, type: :most_fields }
-      search(query: { multi_match: match })
+      matches = []
+      matches += simple_match_queries(query)
+      matches << multi_match_query(query)
+      search(query: { bool: { should: matches } })
+    end
+
+    private
+
+    def simple_match_queries(query)
+      searchable_fields.map do |field|
+        { match: { field => query } }
+      end
+    end
+
+    def multi_match_query(query)
+      { multi_match: { query: query, fields: searchable_fields, type: :most_fields } }
     end
   end
 end
