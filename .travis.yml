@@ -6,6 +6,7 @@ services:
 addons:
   postgresql: "9.4"
 before_script:
+  - export SECRET_KEY_BASE=`rake secret`
   - cp config/database.yml.travis config/database.yml
   - bundle exec rake db:create db:schema:load db:seed
 notifications:
