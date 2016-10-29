@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'pages/home'
   get 'rules', to: 'pages#rules'
   get 'staff', to: 'pages#staff'
+  get 'server_configs', to: 'pages#server_configs'
 
   get 'admin', to: 'admin#index'
   get 'logs',  to: 'admin#logs', as: 'admin_logs'

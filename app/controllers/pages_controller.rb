@@ -7,4 +7,7 @@ class PagesController < ApplicationController
 
   def staff
   end
+
+  def server_configs
+  end
 end

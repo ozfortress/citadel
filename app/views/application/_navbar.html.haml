@@ -25,6 +25,15 @@
     %li{ class: navbar_class(:staff) }
       = link_to('Staff', :staff)
 
+%li.dropdown
+  %a.dropdown-toggle{ role: :button, data: { toggle: :dropdown } }
+    Help
+    %span.caret
+
+  %ul.dropdown-menu
+    %li{ class: navbar_class(:server_configs) }
+      = link_to('Server Configs', :server_configs)
+
 - if user_signed_in? && current_user.admin?
   %li{ class: navbar_class(:admin) }
     = link_to('Admin', :admin)
