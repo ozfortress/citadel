@@ -11,7 +11,10 @@ module Leagues
     before_action :require_user_league_permission
 
     def index
-      @divisions = @league.divisions.includes(transfer_requests: :user)
+      @divisions = @league.divisions
+                          .includes(transfer_requests: :user)
+                          .references(:transfer_requests)
+                          .merge(League::Roster::TransferRequest.order(:created_at))
     end
 
     def update
