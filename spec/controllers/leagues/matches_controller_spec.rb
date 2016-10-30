@@ -331,8 +331,10 @@ describe Leagues::MatchesController do
       before do
         match.update!(status: :submitted_by_home_team)
       end
-      let!(:round) { create(:league_match_round, match: match, home_team_score: 2,
-                                                               away_team_score: 3) }
+
+      let!(:round) do
+        create(:league_match_round, match: match, home_team_score: 2, away_team_score: 3)
+      end
 
       it 'succeeds for admin user' do
         sign_in @admin
