@@ -74,7 +74,7 @@ describe Meta::FormatsController do
       @game2 = create(:game)
     end
 
-    let(:format) { create(:format, game: @game) }
+    let!(:format) { create(:format, game: @game) }
 
     describe 'GET #show' do
       it 'succeeds' do
@@ -103,7 +103,7 @@ describe Meta::FormatsController do
                                     name: 'A', description: 'B' }
         }
 
-        format = Format.first
+        format.reload
         expect(format.game).to eq(@game2)
         expect(format.player_count).to eq(1)
         expect(format.name).to eq('A')
@@ -118,7 +118,7 @@ describe Meta::FormatsController do
           id: format.id, format_: { game_id: @game2.id, player_count: 0, name: '' }
         }
 
-        format = Format.first
+        format.reload
         expect(format.game).to eq(@game)
         expect(format.player_count).to_not eq(0)
         expect(format.name).to_not eq('')
@@ -130,7 +130,7 @@ describe Meta::FormatsController do
 
         patch :update, params: { id: format.id, format_: { game_id: @game2.id } }
 
-        format = Format.first
+        format.reload
         expect(format.game).to eq(@game)
         expect(response).to redirect_to(root_path)
       end

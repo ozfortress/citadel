@@ -59,7 +59,7 @@ describe Meta::GamesController do
   end
 
   context 'existing game' do
-    let(:game) { create(:game) }
+    let!(:game) { create(:game) }
 
     describe 'GET #show' do
       it 'succeeds' do
@@ -85,7 +85,7 @@ describe Meta::GamesController do
 
         patch :update, params: { id: game.id, game: { name: 'A' } }
 
-        game = Game.first
+        game.reload
         expect(game.name).to eq('A')
       end
 
@@ -94,7 +94,7 @@ describe Meta::GamesController do
 
         patch :update, params: { id: game.id, game: { name: '' } }
 
-        game = Game.first
+        game.reload
         expect(game.name).to_not eq('')
         expect(response).to have_http_status(:success)
       end
@@ -104,7 +104,7 @@ describe Meta::GamesController do
 
         patch :update, params: { id: game.id, game: { name: 'Bar' } }
 
-        game = Game.first
+        game.reload
         expect(game.name).to_not eq('Bar')
         expect(response).to redirect_to(root_path)
       end
