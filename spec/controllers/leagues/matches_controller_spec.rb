@@ -1,19 +1,35 @@
 require 'rails_helper'
 
 describe Leagues::MatchesController do
-  let(:user) { create(:user) }
-  let(:map) { create(:map) }
-  let!(:league) { create(:league, matches_submittable: true) }
-  let!(:div) { create(:league_division, league: league) }
-  let!(:team1) { create(:league_roster, division: div) }
-  let!(:team2) { create(:league_roster, division: div) }
+  before(:all) do
+    @map = create(:map)
+    @map2 = create(:map)
+
+    @league = create(:league, matches_submittable: true, allow_round_draws: false)
+    @div = create(:league_division, league: @league)
+    @div2 = create(:league_division, league: @league)
+
+    @team1 = create(:league_roster, division: @div)
+    @team2 = create(:league_roster, division: @div)
+    @team3 = create(:league_roster, division: @div2)
+
+    @admin = create(:user)
+    @admin.grant(:edit, @league)
+
+    @captain1 = create(:user)
+    @captain1.grant(:edit, @team1.team)
+
+    @captain2 = create(:user)
+    @captain2.grant(:edit, @team2.team)
+
+    @user = create(:user)
+  end
 
   describe 'GET #index' do
     it 'succeeds for authorized user' do
-      user.grant(:edit, league)
-      sign_in user
+      sign_in @admin
 
-      get :index, params: { league_id: league.id }
+      get :index, params: { league_id: @league.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -21,10 +37,9 @@ describe Leagues::MatchesController do
 
   describe 'GET #new' do
     it 'succeeds for authorized user' do
-      user.grant(:edit, league)
-      sign_in user
+      sign_in @admin
 
-      get :new, params: { league_id: league.id }
+      get :new, params: { league_id: @league.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -32,80 +47,65 @@ describe Leagues::MatchesController do
 
   describe 'POST #create' do
     it 'succeeds for authorized user' do
-      user.grant(:edit, league)
-      sign_in user
+      sign_in @admin
 
       post :create, params: {
-        league_id: league.id, division_id: div.id, match: {
-          home_team_id: team1.id, away_team_id: team2.id, round: 3, notice: 'B',
+        league_id: @league.id, division_id: @div.id, match: {
+          home_team_id: @team1.id, away_team_id: @team2.id, round: 3, notice: 'B',
           rounds_attributes: [
-            { map_id: map.id }
+            { map_id: @map.id }
           ]
         }
       }
 
-      match = league.matches.first
+      @league.reload
+      match = @league.matches.first
       expect(match).to_not be nil
-      expect(match.home_team).to eq(team1)
-      expect(match.away_team).to eq(team2)
+      expect(match.home_team).to eq(@team1)
+      expect(match.away_team).to eq(@team2)
       expect(match.round).to eq(3)
       expect(match.notice).to eq('B')
       expect(match.rounds.count).to eq(1)
       round = match.rounds.first
-      expect(round.map).to eq(map)
-      (team1.users + team2.users).each do |user|
+      expect(round.map).to eq(@map)
+      (@team1.users + @team2.users).each do |user|
         expect(user.notifications).to_not be_empty
       end
     end
 
-    it 'fails with same team' do
-      user.grant(:edit, league)
-      sign_in user
+    it 'fails with invalid data' do
+      sign_in @admin
 
       post :create, params: {
-        league_id: league.id, division_id: div.id, match: {
-          home_team_id: team1.id, away_team_id: team1.id,
+        league_id: @league.id, division_id: @div.id, match: {
+          home_team_id: @team1.id, away_team_id: @team1.id,
         }
       }
-    end
 
-    it 'fails with teams across divisions' do
-      div2 = create(:league_division, league: league)
-      team2.update!(division: div2)
-      user.grant(:edit, league)
-      sign_in user
-
-      post :create, params: {
-        league_id: league.id, division_id: div2.id, match: {
-          home_team_id: team1.id, away_team_id: team2.id,
-          rounds_attributes: [
-            { map_id: map.id }
-          ]
-        }
-      }
+      expect(League::Match.all).to be_empty
+      expect(response).to have_http_status(:success)
     end
 
     it 'redirects for unauthorized user' do
-      sign_in user
+      sign_in @user
 
-      post :create, params: { league_id: league.id }
+      post :create, params: { league_id: @league.id }
 
-      expect(response).to redirect_to(league_path(league))
+      expect(response).to redirect_to(league_path(@league))
     end
 
     it 'redirects for unauthenticated user' do
-      post :create, params: { league_id: league.id }
+      post :create, params: { league_id: @league.id }
 
-      expect(response).to redirect_to(league_path(league))
+      expect(response).to redirect_to(league_path(@league))
     end
   end
 
   describe 'GET #generate' do
     it 'succeeds for authorized user' do
-      user.grant(:edit, league)
-      sign_in user
+      sign_in @admin
 
-      get :generate, params: { league_id: league.id }
+      get :generate, params: { league_id: @league.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -113,22 +113,21 @@ describe Leagues::MatchesController do
 
   describe 'POST #create_round' do
     it 'succeeds for authorized user' do
-      user.grant(:edit, league)
-      sign_in user
+      sign_in @admin
 
       post :create_round, params: {
-        league_id: league.id, match: {
-          generate_kind: :swiss, division_id: div.id, round: 3, notice: 'B',
-          rounds_attributes: [{ map_id: map.id }]
+        league_id: @league.id, match: {
+          generate_kind: :swiss, division_id: @div.id, round: 3, notice: 'B',
+          rounds_attributes: [{ map_id: @map.id }]
         }
       }
 
-      expect(league.matches.size).to eq(1)
-      league.matches.each do |match|
+      expect(@league.matches.size).to eq(1)
+      @league.matches.each do |match|
         expect(match.round).to eq(3)
         expect(match.notice).to eq('B')
         expect(match.rounds.size).to eq(1)
-        expect(match.rounds.first.map).to eq(map)
+        expect(match.rounds.first.map).to eq(@map)
 
         (match.home_team.users + match.away_team.users).each do |user|
           expect(user.notifications).to_not be_empty
@@ -137,315 +136,286 @@ describe Leagues::MatchesController do
     end
 
     it 'fails with invalid data' do
-      user.grant(:edit, league)
-      sign_in user
+      sign_in @admin
 
       post :create_round, params: {
-        league_id: league.id, match: {
-          generate_kind: :swiss, division_id: div.id, round: -1
+        league_id: @league.id, match: {
+          generate_kind: :swiss, division_id: @div.id, round: -1
         }
       }
 
-      expect(league.matches).to be_empty
+      @league.reload
+      expect(@league.matches).to be_empty
     end
   end
 
-  describe 'GET #show' do
-    let!(:match) { create(:league_match, home_team: team1, away_team: team2) }
-
-    it 'succeeds' do
-      get :show, params: { id: match.id }
-
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe 'GET #edit' do
-    let!(:match) { create(:league_match, home_team: team1, away_team: team2) }
-
-    it 'succeeds for authorized user' do
-      user.grant(:edit, league)
-      sign_in user
-
-      get :edit, params: { id: match.id }
-
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe 'PATCH #update' do
-    let!(:match) { create(:league_match, home_team: team1, away_team: team2) }
-    let!(:team3) { create(:league_roster, division: div) }
-    let!(:map2) { create(:map) }
+  context 'existing match' do
+    let!(:match) { create(:league_match, home_team: @team1, away_team: @team2) }
     let!(:round) { create(:league_match_round, match: match) }
 
-    it 'succeeds for authorized user' do
-      user.grant(:edit, league)
-      sign_in user
+    describe 'GET #show' do
+      it 'succeeds' do
+        get :show, params: { id: match.id }
 
-      patch :update, params: {
-        id: match.id, match: {
-          home_team_id: team3.id, away_team_id: team2.id, round: 5,
-          rounds_attributes: [
-            { id: round.id, _destroy: true, map_id: map.id },
-            { map_id: map2.id },
-          ]
-        }
-      }
-
-      match.reload
-      expect(match).to_not be(nil)
-      expect(match.home_team).to eq(team3)
-      expect(match.away_team).to eq(team2)
-      expect(match.round).to eq(5)
-      round = match.rounds.first
-      expect(round.map).to eq(map2)
+        expect(response).to have_http_status(:success)
+      end
     end
 
-    it 'fails with invalid data' do
-      user.grant(:edit, league)
-      sign_in user
+    describe 'GET #edit' do
+      it 'succeeds for authorized user' do
+        sign_in @admin
 
-      patch :update, params: {
-        id: match.id, match: {
-          home_team_id: team1.id, away_team_id: team1.id
-        }
-      }
+        get :edit, params: { id: match.id }
 
-      match.reload
-      expect(match.away_team).to eq(team2)
+        expect(response).to have_http_status(:success)
+      end
     end
-  end
 
-  describe 'PATCH #submit' do
-    let!(:match) { create(:league_match, home_team: team1, away_team: team2) }
-    let!(:round) { create(:league_match_round, match: match) }
+    describe 'PATCH #update' do
+      it 'succeeds for authorized user' do
+        sign_in @admin
 
-    it 'succeeds for admin user' do
-      user.grant(:edit, league)
-      sign_in user
-
-      patch :submit, params: {
-        id: match.id, match: {
-          status: :confirmed, rounds_attributes: {
-            id: round.id, home_team_score: 2, away_team_score: 5,
+        patch :update, params: {
+          id: match.id, match: {
+            home_team_id: @team2.id, away_team_id: @team1.id, round: 5,
+            rounds_attributes: [
+              { id: round.id, _destroy: true, map_id: @map.id },
+              { map_id: @map2.id },
+            ]
           }
         }
-      }
 
-      match.reload
-      expect(match.status).to eq('confirmed')
-      expect(match.rounds.size).to eq(1)
-      round.reload
-      expect(round.home_team_score).to eq(2)
-      expect(round.away_team_score).to eq(5)
-    end
+        match.reload
+        expect(match).to_not be(nil)
+        expect(match.home_team).to eq(@team2)
+        expect(match.away_team).to eq(@team1)
+        expect(match.round).to eq(5)
+        round = match.rounds.first
+        expect(round.map).to eq(@map2)
+      end
 
-    it 'succeeds for admin user ff' do
-      user.grant(:edit, league)
-      sign_in user
+      it 'fails with invalid data' do
+        sign_in @admin
 
-      patch :submit, params: {
-        id: match.id, match: { forfeit_by: :home_team_forfeit }
-      }
-
-      match.reload
-      expect(match.status).to eq('confirmed')
-      expect(match.forfeit_by).to eq('home_team_forfeit')
-    end
-
-    it 'succeeds for home team authorized user' do
-      user.grant(:edit, team1.team)
-      sign_in user
-
-      patch :submit, params: {
-        id: match.id, match: {
-          rounds_attributes: { id: round.id, home_team_score: 2, away_team_score: 5 }
-        }
-      }
-
-      match.reload
-      expect(match.status).to eq('submitted_by_home_team')
-      expect(match.rounds.size).to eq(1)
-      round.reload
-      expect(round.home_team_score).to eq(2)
-      expect(round.away_team_score).to eq(5)
-    end
-
-    it 'succeeds for away team authorized user' do
-      user.grant(:edit, team2.team)
-      sign_in user
-
-      patch :submit, params: {
-        id: match.id, match: {
-          rounds_attributes: {
-            id: round.id, home_team_score: 2, away_team_score: 5,
+        patch :update, params: {
+          id: match.id, match: {
+            home_team_id: @team1.id, away_team_id: @team1.id
           }
         }
-      }
 
-      match.reload
-      expect(match.status).to eq('submitted_by_away_team')
-      expect(match.rounds.size).to eq(1)
-      round.reload
-      expect(round.home_team_score).to eq(2)
-      expect(round.away_team_score).to eq(5)
+        match.reload
+        expect(match.away_team).to eq(@team2)
+      end
     end
 
-    it 'fails with invalid data' do
-      user.grant(:edit, team1.team)
-      sign_in user
+    describe 'PATCH #submit' do
+      let!(:round) { create(:league_match_round, match: match) }
 
-      patch :submit, params: {
-        id: match.id, match: {
-          rounds_attributes: {
-            id: round.id, home_team_score: -1, away_team_score: 5,
+      it 'succeeds for admin user' do
+        sign_in @admin
+
+        patch :submit, params: {
+          id: match.id, match: {
+            status: :confirmed, rounds_attributes: {
+              id: round.id, home_team_score: 2, away_team_score: 5,
+            }
           }
         }
-      }
 
-      match.reload
-      expect(match.status).to eq('pending')
-    end
+        match.reload
+        expect(match.status).to eq('confirmed')
+        expect(match.rounds.size).to eq(1)
+        round.reload
+        expect(round.home_team_score).to eq(2)
+        expect(round.away_team_score).to eq(5)
+      end
 
-    it "doesn't allow status changes for non-admins with invalid data" do
-      user.grant(:edit, team1.team)
-      sign_in user
+      it 'succeeds for admin user ff' do
+        sign_in @admin
 
-      patch :submit, params: {
-        id: match.id, match: {
-          status: :confirmed, rounds_attributes: {
-            id: round.id, home_team_score: 2, away_team_score: 5,
+        patch :submit, params: {
+          id: match.id, match: { forfeit_by: :home_team_forfeit }
+        }
+
+        match.reload
+        expect(match.status).to eq('confirmed')
+        expect(match.forfeit_by).to eq('home_team_forfeit')
+      end
+
+      it 'succeeds for home team authorized user' do
+        sign_in @captain1
+
+        patch :submit, params: {
+          id: match.id, match: {
+            rounds_attributes: { id: round.id, home_team_score: 2, away_team_score: 5 }
           }
         }
-      }
 
-      match.reload
-      expect(match.status).to eq('submitted_by_home_team')
-      expect(response).to redirect_to(match_path(match))
-    end
+        match.reload
+        expect(match.status).to eq('submitted_by_home_team')
+        expect(match.rounds.size).to eq(1)
+        round.reload
+        expect(round.home_team_score).to eq(2)
+        expect(round.away_team_score).to eq(5)
+      end
 
-    it "doesn't allow score submission overriding" do
-      match.update(status: 'submitted_by_home_team')
-      user.grant(:edit, team2.team)
-      sign_in user
+      it 'succeeds for away team authorized user' do
+        sign_in @captain2
 
-      patch :submit, params: {
-        id: match.id, match: {
-          rounds_attributes: {
-            id: round.id, home_team_score: 2, away_team_score: 5,
+        patch :submit, params: {
+          id: match.id, match: {
+            rounds_attributes: {
+              id: round.id, home_team_score: 2, away_team_score: 5,
+            }
           }
         }
-      }
 
-      match.reload
-      expect(match.status).to eq('submitted_by_home_team')
-      expect(response).to redirect_to(match_path(match))
-    end
-  end
+        match.reload
+        expect(match.status).to eq('submitted_by_away_team')
+        expect(match.rounds.size).to eq(1)
+        round.reload
+        expect(round.home_team_score).to eq(2)
+        expect(round.away_team_score).to eq(5)
+      end
 
-  describe 'PATCH #confirm' do
-    let!(:match) do
-      create(:league_match, home_team: team1, away_team: team2,
-                            status: :submitted_by_home_team)
-    end
-    let!(:round) { create(:league_match_round, match: match) }
+      it 'fails with invalid data' do
+        sign_in @captain1
 
-    it 'succeeds for admin user' do
-      user.grant(:edit, league)
-      sign_in user
+        patch :submit, params: {
+          id: match.id, match: {
+            rounds_attributes: {
+              id: round.id, home_team_score: -1, away_team_score: 5,
+            }
+          }
+        }
 
-      patch :confirm, params: { id: match.id, confirm: 'true' }
+        match.reload
+        expect(match.status).to eq('pending')
+      end
 
-      match.reload
-      expect(match.status).to eq('confirmed')
-    end
+      it "doesn't allow status changes for non-admins with invalid data" do
+        sign_in @captain1
 
-    it 'succeeds for away team authorized user' do
-      user.grant(:edit, team2.team)
-      sign_in user
+        patch :submit, params: {
+          id: match.id, match: {
+            status: :confirmed, rounds_attributes: {
+              id: round.id, home_team_score: 2, away_team_score: 5,
+            }
+          }
+        }
 
-      patch :confirm, params: { id: match.id, confirm: 'true' }
+        match.reload
+        expect(match.status).to eq('submitted_by_home_team')
+        expect(response).to redirect_to(match_path(match))
+      end
 
-      match.reload
-      expect(match.status).to eq('confirmed')
-    end
+      it "doesn't allow score submission overriding" do
+        match.update!(status: 'submitted_by_home_team')
+        sign_in @captain2
 
-    it 'fails for home team authorized user' do
-      user.grant(:edit, team1.team)
-      sign_in user
+        patch :submit, params: {
+          id: match.id, match: {
+            rounds_attributes: {
+              id: round.id, home_team_score: 2, away_team_score: 5,
+            }
+          }
+        }
 
-      patch :confirm, params: { id: match.id, confirm: 'true' }
-
-      match.reload
-      expect(match.status).to eq('submitted_by_home_team')
-    end
-  end
-
-  describe 'PATCH #forfeit' do
-    let!(:match) { create(:league_match, home_team: team1, away_team: team2) }
-    let!(:round) { create(:league_match_round, match: match) }
-
-    before do
-      league.update!(allow_round_draws: false)
-    end
-
-    it 'succeeds for home team authorized user' do
-      user.grant(:edit, team1.team)
-      sign_in user
-
-      patch :forfeit, params: { id: match.id }
-
-      match.reload
-      expect(match.status).to eq('confirmed')
-      expect(match.forfeit_by).to eq('home_team_forfeit')
+        match.reload
+        expect(match.status).to eq('submitted_by_home_team')
+        expect(response).to redirect_to(match_path(match))
+      end
     end
 
-    it 'succeeds for away team authorized user' do
-      user.grant(:edit, team2.team)
-      sign_in user
+    describe 'PATCH #confirm' do
+      before do
+        match.update!(status: :submitted_by_home_team)
+      end
+      let!(:round) { create(:league_match_round, match: match, home_team_score: 2,
+                                                               away_team_score: 3) }
 
-      patch :forfeit, params: { id: match.id }
+      it 'succeeds for admin user' do
+        sign_in @admin
 
-      match.reload
-      expect(match.status).to eq('confirmed')
-      expect(match.forfeit_by).to eq('away_team_forfeit')
-    end
-  end
+        patch :confirm, params: { id: match.id, confirm: 'true' }
 
-  describe 'DELETE #destroy' do
-    let!(:match) { create(:league_match, home_team: team1, away_team: team2) }
+        match.reload
+        expect(match.status).to eq('confirmed')
+      end
 
-    it 'succeeds for authorized user' do
-      user.grant(:edit, league)
-      sign_in user
+      it 'fails for home team authorized user' do
+        sign_in @captain1
 
-      delete :destroy, params: { id: match.id }
+        patch :confirm, params: { id: match.id, confirm: 'true' }
 
-      expect(League::Match.exists?(match.id)).to be(false)
-    end
+        match.reload
+        expect(match.status).to eq('submitted_by_home_team')
+      end
 
-    it 'fails for team authorized user' do
-      user.grant(:edit, team1.team)
-      sign_in user
+      it 'succeeds for away team authorized user' do
+        sign_in @captain2
 
-      delete :destroy, params: { id: match.id }
+        patch :confirm, params: { id: match.id, confirm: 'true' }
 
-      expect(League::Match.exists?(match.id)).to be(true)
-    end
-
-    it 'fails for unauthorized user' do
-      sign_in user
-
-      delete :destroy, params: { id: match.id }
-
-      expect(League::Match.exists?(match.id)).to be(true)
+        match.reload
+        expect(match.status).to eq('confirmed')
+      end
     end
 
-    it 'fails for unauthenticated user' do
-      delete :destroy, params: { id: match.id }
+    describe 'PATCH #forfeit' do
+      let!(:round) { create(:league_match_round, match: match) }
 
-      expect(League::Match.exists?(match.id)).to be(true)
+      it 'succeeds for home team authorized user' do
+        sign_in @captain1
+
+        patch :forfeit, params: { id: match.id }
+
+        match.reload
+        expect(match.status).to eq('confirmed')
+        expect(match.forfeit_by).to eq('home_team_forfeit')
+      end
+
+      it 'succeeds for away team authorized user' do
+        sign_in @captain2
+
+        patch :forfeit, params: { id: match.id }
+
+        match.reload
+        expect(match.status).to eq('confirmed')
+        expect(match.forfeit_by).to eq('away_team_forfeit')
+      end
+    end
+
+    describe 'DELETE #destroy' do
+      it 'succeeds for authorized user' do
+        sign_in @admin
+
+        delete :destroy, params: { id: match.id }
+
+        expect(League::Match.exists?(match.id)).to be(false)
+      end
+
+      it 'fails for team authorized user' do
+        sign_in @captain1
+
+        delete :destroy, params: { id: match.id }
+
+        expect(League::Match.exists?(match.id)).to be(true)
+      end
+
+      it 'fails for unauthorized user' do
+        sign_in @user
+
+        delete :destroy, params: { id: match.id }
+
+        expect(League::Match.exists?(match.id)).to be(true)
+      end
+
+      it 'fails for unauthenticated user' do
+        delete :destroy, params: { id: match.id }
+
+        expect(League::Match.exists?(match.id)).to be(true)
+      end
     end
   end
 end
