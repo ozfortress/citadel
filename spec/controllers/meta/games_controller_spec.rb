@@ -1,16 +1,16 @@
 require 'rails_helper'
 
 describe Meta::GamesController do
-  let(:admin) { create(:user) }
-  let(:user) { create(:user) }
+  before(:all) do
+    @admin = create(:user)
+    @admin.grant(:edit, :games)
 
-  before do
-    admin.grant(:edit, :games)
+    @user = create(:user)
   end
 
   describe 'GET #index' do
     it 'succeeds for authorized user' do
-      sign_in admin
+      sign_in @admin
 
       get :index
 
@@ -20,7 +20,7 @@ describe Meta::GamesController do
 
   describe 'GET #new' do
     it 'succeeds for authorized user' do
-      sign_in admin
+      sign_in @admin
 
       get :new
 
@@ -30,7 +30,7 @@ describe Meta::GamesController do
 
   describe 'POST #create' do
     it 'succeeds for authorized user' do
-      sign_in admin
+      sign_in @admin
 
       post :create, params: { game: { name: 'Bar' } }
 
@@ -40,7 +40,7 @@ describe Meta::GamesController do
     end
 
     it 'fails for invalid data' do
-      sign_in admin
+      sign_in @admin
 
       post :create, params: { game: { name: '' } }
 
@@ -49,7 +49,7 @@ describe Meta::GamesController do
     end
 
     it 'redirects for unauthorized user' do
-      sign_in user
+      sign_in @user
 
       post :create, params: { game: { name: 'Bar' } }
 
@@ -71,7 +71,7 @@ describe Meta::GamesController do
 
     describe 'GET #edit' do
       it 'succeeds for authorized user' do
-        sign_in admin
+        sign_in @admin
 
         get :edit, params: { id: game.id }
 
@@ -81,7 +81,7 @@ describe Meta::GamesController do
 
     describe 'PATCH #update' do
       it 'succeeds for authorized user' do
-        sign_in admin
+        sign_in @admin
 
         patch :update, params: { id: game.id, game: { name: 'A' } }
 
@@ -90,7 +90,7 @@ describe Meta::GamesController do
       end
 
       it 'fails for invalid data' do
-        sign_in admin
+        sign_in @admin
 
         patch :update, params: { id: game.id, game: { name: '' } }
 
@@ -100,7 +100,7 @@ describe Meta::GamesController do
       end
 
       it 'redirects for unauthorized user' do
-        sign_in user
+        sign_in @user
 
         patch :update, params: { id: game.id, game: { name: 'Bar' } }
 
