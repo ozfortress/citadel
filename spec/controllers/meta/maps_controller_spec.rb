@@ -40,9 +40,26 @@ describe Meta::MapsController do
       expect(map.game).to eq(@game)
       expect(map.name).to eq('Foo')
       expect(map.description).to eq('Bar')
+      expect(response).to redirect_to(meta_map_path(map))
     end
 
-    # TODO: Fail case
+    it 'fails for invalid data' do
+      sign_in @admin
+
+      post :create, params: { map: { game_id: @game.id, name: '' } }
+
+      expect(Map.all).to be_empty
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'redirects for unauthorized user' do
+      sign_in @user
+
+      post :create, params: { map: { game_id: @game.id, name: 'Foo', description: 'Bar' } }
+
+      expect(Map.all).to be_empty
+      expect(response).to redirect_to(root_path)
+    end
   end
 
   context 'existing map' do
@@ -50,7 +67,7 @@ describe Meta::MapsController do
       @game2 = create(:game)
     end
 
-    let(:map) { create(:map, game: @game) }
+    let!(:map) { create(:map, game: @game) }
 
     describe 'GET #show' do
       it 'succeeds' do
@@ -78,13 +95,36 @@ describe Meta::MapsController do
           id: map.id, map: { game_id: @game2.id, name: 'A', description: 'B' }
         }
 
-        map = Map.first
+        map.reload
         expect(map.game).to eq(@game2)
         expect(map.name).to eq('A')
         expect(map.description).to eq('B')
+        expect(response).to redirect_to(meta_map_path(map))
       end
 
-      # TODO: Fail case
+      it 'fails for invalid data' do
+        sign_in @admin
+
+        patch :update, params: {
+          id: map.id, map: { game_id: @game2.id, name: '' }
+        }
+
+        map.reload
+        expect(map.game).to eq(@game)
+        expect(map.name).to_not eq('')
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'redirects for unauthorized user' do
+        sign_in @user
+
+        post :create, params: { map: { game_id: @game.id, name: 'Foo' } }
+
+        map.reload
+        expect(map.game).to eq(@game)
+        expect(map.name).to_not eq('Foo')
+        expect(response).to redirect_to(root_path)
+      end
     end
   end
 end
