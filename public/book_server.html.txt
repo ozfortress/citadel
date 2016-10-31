@@ -1,0 +1,15 @@
+﻿<div id="doc" class="markdown-body container-fluid"><h1 id="booking-a-server">Booking a Server</h1><p>Bookings are done in the official ozfortress Discord.</p><p>Simply join the <a href="https://discord.gg/xxx" target="_blank">#bookings</a> channel and say “/book” and server details will be automatically provided to you. See the full list of commands below.</p><p><a href="https://discord.gg/xxx" target="_blank">Click here to join #bookings!</a></p><h3 id="commands">Commands</h3><pre><code>/book                  -  Book a new server.
+/unbook                -  Return a server.
+/demos &lt;user&gt;          -  Get STV demo link (user optional).
+/demoslegacy &lt;user&gt;    -  Old IRC style demo search.
+/servers	       -  List the status of all servers.
+/help                  -  You get this, ya dingus!
+</code></pre><p>Commands can be sent in both the #bookings channel or via PM to the bot.</p><h3 id="additional-information">Additional Information</h3><ul>
+<li>Servers are booked under your Discord ID. All non-alphaneumeric characters are dropped. Please use a name that reflects your ozfortress alias.</li>
+<li>Your Discord name must have <strong>at least one alphabetical character</strong> for the booker to accept commands. If your name does not have at least one alphabetical character, please add one to use the booker.</li>
+<li>If you forget the server details provided, simply type “/book” again.</li>
+<li>When you are finished with the server, please type “/unbook” to free up the server for the rest of the community!</li>
+<li>Demos can be retrieved using both the alias (i.e. obla) or DiscordID (obla3745).</li>
+<li>Logs are provided at <a href="http://livelogs.ozfortress.com/" target="_blank">livelogs.ozfortress.com</a> and <a href="http://logs.tf/" target="_blank">logs.tf</a>.</li>
+<li>Servers will automatically reset after a period of inactivity.</li>
+</ul><p>Discord booker created by smeso. Uses bladez’s IRC booker.</p></div>
