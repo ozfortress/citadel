@@ -15,7 +15,7 @@ ips.each do |ip|
                           .where.not(user: user)
                           .includes(:user)
 
-  alt_events.map(&:user).each do |user|
-    puts "#{user.name}, ip: #{ip}, https://warzone.ozfortress.com/users/#{user.id}"
+  alt_events.map(&:user).each do |alt|
+    puts "#{alt.name}, ip: #{ip}, https://warzone.ozfortress.com/users/#{alt.id}"
   end
 end
