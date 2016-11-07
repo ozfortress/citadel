@@ -1,4 +1,4 @@
-<div id="doc" class="markdown-body container-fluid"><h1 id="ozfortress-seasonal-league-ruleset">ozfortress seasonal league ruleset</h1><p>The following ruleset outlines the organisation and guidelines that players will need to follow for the ozfortress seasonal league. Please have a good working understanding of these rules before entering yourself in the competition.</p><h2 id="contents">Contents</h2><ul>
+<div id="doc" class="markdown-body container-fluid"><h1 id="ozfortress-seasonal-league-ruleset">ozfortress seasonal league Ruleset</h1><p>The following ruleset outlines the organisation and guidelines that players will need to follow for the ozfortress seasonal league. Please have a good working understanding of these rules before entering yourself in the competition.</p><h2 id="contents">Contents</h2><ul>
 <li><a href="#1-league-format">1. League Format</a>
 <ul>
 <li><a href="#11-regular-season-format">1.1 Regular Season Format</a></li>
