@@ -6,6 +6,7 @@ module Meta
     before_action except: [:index, :new, :create] { @map = Map.find(params[:id]) }
 
     def index
+      @maps = Map.all
     end
 
     def new

@@ -5,7 +5,7 @@
 %h1 Maps
 
 %ul.list-group
-  - maps.each do |map|
+  - @maps.each do |map|
     %li.list-group-item
       = link_to map, meta_map_path(map)
 
