@@ -6,6 +6,7 @@ module Meta
     before_action except: [:index, :new, :create] { @game = Game.find(params[:id]) }
 
     def index
+      @games = Game.all
     end
 
     def new

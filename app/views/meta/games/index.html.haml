@@ -5,6 +5,6 @@
 %h1 Games
 
 %ul.list-group
-  - games.each do |game|
+  - @games.each do |game|
     %li.list-group-item
       = link_to game.name, meta_game_path(game)
