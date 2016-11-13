@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 describe 'meta/formats/index' do
-  let!(:formats) { create_list(:format, 5) }
+  let(:formats) { build_stubbed_list(:format, 5) }
 
   it 'shows all formats' do
+    assign(:formats, formats)
+
     render
 
     formats.each do |format|

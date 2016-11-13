@@ -5,7 +5,7 @@
 %h1 Formats
 
 %ul.list-group
-  - formats.each do |format|
+  - @formats.each do |format|
     %li.list-group-item
       = link_to format, meta_format_path(format)
 

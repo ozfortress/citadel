@@ -1,8 +1,7 @@
 .panel.panel-default
   .panel-heading Information
   .panel-body
-    = bootstrap_form_for @format, as: :format_,
-                         url: { controller: 'meta/formats', action: 'update' } do |f|
+    = bootstrap_form_for @format, as: :format_, url: { controller: 'meta/formats' } do |f|
       = render 'format_form', f: f
 
       = f.submit 'Update'

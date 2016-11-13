@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'meta/formats/show' do
-  let!(:format) { create(:format) }
+  let(:format) { build_stubbed(:format) }
 
   it 'shows data' do
     assign(:format, format)
