@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 describe 'meta/games/index' do
-  let!(:games) { create_list(:game, 5) }
+  let(:games) { build_stubbed_list(:game, 5) }
 
   it 'shows all games' do
+    assign(:games, games)
+
     render
 
     games.each do |game|

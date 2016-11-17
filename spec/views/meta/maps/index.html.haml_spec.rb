@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 describe 'meta/maps/index' do
-  let!(:maps) { create_list(:map, 5) }
+  let(:maps) { build_stubbed_list(:map, 5) }
 
   it 'shows all maps' do
+    assign(:maps, maps)
+
     render
 
     maps.each do |map|

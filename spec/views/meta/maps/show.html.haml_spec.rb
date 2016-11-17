@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'meta/maps/show' do
-  let!(:map) { create(:map) }
+  let(:map) { build_stubbed(:map) }
 
   it 'shows data' do
     assign(:map, map)

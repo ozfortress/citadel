@@ -6,6 +6,7 @@ module Meta
     before_action except: [:index, :new, :create] { @format = Format.find(params[:id]) }
 
     def index
+      @formats = Format.all
     end
 
     def new

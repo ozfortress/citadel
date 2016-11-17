@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'meta/games/show' do
-  let!(:game) { create(:game) }
+  let(:game) { build_stubbed(:game) }
 
   it 'shows data' do
     assign(:game, game)

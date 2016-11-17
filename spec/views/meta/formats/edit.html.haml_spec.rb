@@ -1,11 +1,9 @@
 require 'rails_helper'
 
 describe 'meta/formats/edit' do
-  let(:format) { create(:format) }
+  let(:format) { build_stubbed(:format) }
 
   it 'shows form' do
-    pending 'routing issue'
-
     assign(:format, format)
 
     render

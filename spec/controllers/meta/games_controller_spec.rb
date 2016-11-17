@@ -1,15 +1,16 @@
 require 'rails_helper'
 
 describe Meta::GamesController do
-  let(:admin) { create(:user) }
+  before(:all) do
+    @admin = create(:user)
+    @admin.grant(:edit, :games)
 
-  before do
-    admin.grant(:edit, :games)
+    @user = create(:user)
   end
 
   describe 'GET #index' do
     it 'succeeds for authorized user' do
-      sign_in admin
+      sign_in @admin
 
       get :index
 
@@ -19,7 +20,7 @@ describe Meta::GamesController do
 
   describe 'GET #new' do
     it 'succeeds for authorized user' do
-      sign_in admin
+      sign_in @admin
 
       get :new
 
@@ -29,51 +30,84 @@ describe Meta::GamesController do
 
   describe 'POST #create' do
     it 'succeeds for authorized user' do
-      sign_in admin
+      sign_in @admin
 
       post :create, params: { game: { name: 'Bar' } }
 
       game = Game.first
       expect(game.name).to eq('Bar')
+      expect(response).to redirect_to(meta_game_path(game))
     end
 
-    # TODO: Fail case
-  end
+    it 'fails for invalid data' do
+      sign_in @admin
 
-  describe 'GET #show' do
-    let(:game) { create(:game) }
+      post :create, params: { game: { name: '' } }
 
-    it 'succeeds' do
-      get :show, params: { id: game.id }
-
+      expect(Game.all).to be_empty
       expect(response).to have_http_status(:success)
     end
-  end
 
-  describe 'GET #edit' do
-    let(:game) { create(:game) }
+    it 'redirects for unauthorized user' do
+      sign_in @user
 
-    it 'succeeds for authorized user' do
-      sign_in admin
+      post :create, params: { game: { name: 'Bar' } }
 
-      get :edit, params: { id: game.id }
-
-      expect(response).to have_http_status(:success)
+      expect(Game.all).to be_empty
+      expect(response).to redirect_to(root_path)
     end
   end
 
-  describe 'PATCH #update' do
-    let(:game) { create(:game) }
+  context 'existing game' do
+    let!(:game) { create(:game) }
 
-    it 'succeeds for authorized user' do
-      sign_in admin
+    describe 'GET #show' do
+      it 'succeeds' do
+        get :show, params: { id: game.id }
 
-      patch :update, params: { id: game.id, game: { name: 'A' } }
-
-      game = Game.first
-      expect(game.name).to eq('A')
+        expect(response).to have_http_status(:success)
+      end
     end
 
-    # TODO: Fail case
+    describe 'GET #edit' do
+      it 'succeeds for authorized user' do
+        sign_in @admin
+
+        get :edit, params: { id: game.id }
+
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    describe 'PATCH #update' do
+      it 'succeeds for authorized user' do
+        sign_in @admin
+
+        patch :update, params: { id: game.id, game: { name: 'A' } }
+
+        game.reload
+        expect(game.name).to eq('A')
+      end
+
+      it 'fails for invalid data' do
+        sign_in @admin
+
+        patch :update, params: { id: game.id, game: { name: '' } }
+
+        game.reload
+        expect(game.name).to_not eq('')
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'redirects for unauthorized user' do
+        sign_in @user
+
+        patch :update, params: { id: game.id, game: { name: 'Bar' } }
+
+        game.reload
+        expect(game.name).to_not eq('Bar')
+        expect(response).to redirect_to(root_path)
+      end
+    end
   end
 end

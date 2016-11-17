@@ -11,6 +11,22 @@ describe Leagues::RostersController do
     team.add_player!(user)
   end
 
+  describe 'GET #index' do
+    before do
+      create_list(:league_roster, 4, division: div)
+      create_list(:league_roster, 3, division: div)
+    end
+
+    it 'succeeds for authorized user' do
+      user.grant(:edit, league)
+      sign_in user
+
+      get :index, params: { league_id: league.id }
+
+      expect(response).to have_http_status(:success)
+    end
+  end
+
   describe 'GET #new' do
     it 'succeeds for authorized user' do
       user.grant(:edit, team)
