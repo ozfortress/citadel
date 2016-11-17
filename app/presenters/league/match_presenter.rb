@@ -36,7 +36,9 @@ class League
     def results
       return unless match.confirmed?
 
-      if match.no_forfeit?
+      if match.bye?
+        'BYE'
+      elsif match.no_forfeit?
         score_results
       else
         forfeit_results
