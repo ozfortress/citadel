@@ -8,6 +8,9 @@ module Leagues
           request = roster.transfer_requests.new(params)
 
           request.transaction do
+            # Allow creating transfer requests for joining, if a player is already leaving
+            destroy_leaving_requests(request)
+
             save_or_approve(request, roster)
           end
 
@@ -15,6 +18,12 @@ module Leagues
         end
 
         private
+
+        def destroy_leaving_requests(request)
+          requests = request.league.transfer_requests
+
+          requests.where(user: request.user, is_joining: false).destroy_all
+        end
 
         def save_or_approve(request, roster)
           if roster.league.transfers_require_approval?
