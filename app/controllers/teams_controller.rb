@@ -30,10 +30,9 @@ class TeamsController < ApplicationController
 
     @players        = @team.players.includes(:user)
     @transfers      = @team.transfers.includes(:user)
-    @active_rosters = @team.rosters.for_incomplete_league
-                           .includes(:players, :users, transfers: :user)
-    @past_rosters   = @team.rosters.for_completed_league
-                           .includes(:players, :users, transfers: :user)
+    @active_rosters = roster_includes_for @team.rosters.for_incomplete_league
+    @past_rosters   = roster_includes_for @team.rosters.for_completed_league
+
     @matches        = @team.matches.pending.includes(:home_team, :away_team)
   end
 
@@ -81,6 +80,12 @@ class TeamsController < ApplicationController
   end
 
   private
+
+  def roster_includes_for(rosters)
+    rosters.includes(:players, :users, transfers: :user)
+           .order('league_roster_players.created_at')
+           .order('league_roster_transfers.created_at DESC')
+  end
 
   def team_params
     params.require(:team).permit(:name, :avatar, :remove_avatar, :description)
