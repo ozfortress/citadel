@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe LeaguesController do
   let(:admin) { create(:user) }
+  let(:map) { create(:map) }
 
   before do
     admin.grant(:edit, :leagues)
@@ -50,6 +51,7 @@ describe LeaguesController do
                   points_per_round_lost: 1, points_per_match_forfeit_loss: 5,
                   points_per_match_forfeit_win: 6, schedule_locked: true,
                   schedule: 'weeklies', divisions_attributes: [{ name: 'PREM' }],
+                  pooled_maps_attributes: [{ map_id: map.id }],
                   tiebreakers_attributes: [{ kind: 'round_wins' },
                                            { kind: 'round_score_difference' }],
                   weekly_scheduler_attributes: {
@@ -78,6 +80,9 @@ describe LeaguesController do
       div = comp.divisions.first
       expect(div.name).to eq('PREM')
       expect(comp.tiebreakers.size).to eq(2)
+      pooled_map = comp.pooled_maps.first
+      expect(pooled_map).to_not be_nil
+      expect(pooled_map.map).to eq(map)
       tieb1 = comp.tiebreakers.first
       expect(tieb1.kind).to eq('round_wins')
       tieb2 = comp.tiebreakers.last

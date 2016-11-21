@@ -1,0 +1,7 @@
+%li.list-group-item.nested-fields
+  = link_to_remove_association f, class: 'btn btn-default pull-right',
+      data: { confirm: 'Are you sure you want to remove this Map?' } do
+    %span.glyphicon.glyphicon-trash
+    Remove
+
+  = f.collection_select :map_id, Map.all, :id, :name

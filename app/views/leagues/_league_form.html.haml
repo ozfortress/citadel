@@ -62,6 +62,21 @@
         Add Division
 
 .panel.panel-default
+  .panel-heading Map Pool (Leave empty for all maps)
+
+  %ul.list-group
+    = f.fields_for :pooled_maps do |pooled_map_f|
+      = render 'pooled_map_fields', f: pooled_map_f
+    #pooled_maps
+
+  .panel-body
+    %div
+      = link_to_add_association f, :pooled_maps, class: 'btn btn-default pull-right',
+                                'data-association-insertion-node' => '#pooled_maps' do
+        %span.glyphicon.glyphicon-plus
+        Add Map
+
+.panel.panel-default
   .panel-heading Scheduling
   .panel-body
     = f.check_box :schedule_locked

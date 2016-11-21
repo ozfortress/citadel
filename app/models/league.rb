@@ -9,6 +9,8 @@ class League < ApplicationRecord
   accepts_nested_attributes_for :divisions, allow_destroy: true
   has_many :tiebreakers, inverse_of: :league, dependent: :destroy
   accepts_nested_attributes_for :tiebreakers, allow_destroy: true
+  has_many :pooled_maps, inverse_of: :league, dependent: :destroy
+  accepts_nested_attributes_for :pooled_maps, allow_destroy: true
 
   has_many :rosters,           through: :divisions, class_name: 'Roster',
                                counter_cache: :rosters_count
@@ -75,6 +77,14 @@ class League < ApplicationRecord
 
   def valid_roster_size?(size)
     min_players <= size && (size <= max_players || max_players == 0)
+  end
+
+  def map_pool
+    if pooled_maps.empty?
+      Map.all
+    else
+      pooled_maps.map(&:map)
+    end
   end
 
   def scheduler

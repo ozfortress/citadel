@@ -6,8 +6,15 @@ describe League do
   it { should belong_to(:format) }
   it { should_not allow_value(nil).for(:format) }
 
-  it { should have_many(:divisions) }
-  it { should have_many(:tiebreakers) }
+  it { should have_many(:divisions).dependent(:destroy) }
+  it { should accept_nested_attributes_for(:divisions).allow_destroy(true) }
+
+  it { should have_many(:tiebreakers).dependent(:destroy) }
+  it { should accept_nested_attributes_for(:tiebreakers).allow_destroy(true) }
+
+  it { should have_many(:pooled_maps).dependent(:destroy) }
+  it { should accept_nested_attributes_for(:pooled_maps).allow_destroy(true) }
+
   it { should have_many(:titles) }
 
   it { should validate_presence_of(:name) }
@@ -60,5 +67,21 @@ describe League do
     league = build(:league, schedule: :weeklies)
     league.weekly_scheduler = build(:league_schedulers_weekly, league: league)
     expect(league).to be_valid
+  end
+
+  describe '#map_pool' do
+    it 'returns all maps with no pooled maps' do
+      league = create(:league)
+      map = create(:map)
+
+      expect(league.map_pool).to eq([map])
+    end
+
+    it 'returns pooled maps' do
+      league = create(:league)
+      pooled_map = create(:league_pooled_map, league: league)
+
+      expect(league.map_pool).to eq([pooled_map.map])
+    end
   end
 end
