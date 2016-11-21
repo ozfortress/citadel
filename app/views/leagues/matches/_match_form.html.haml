@@ -20,11 +20,12 @@
   - if f.object.pending?
     %ul.list-group
       = f.fields_for :rounds do |rounds_f|
-        = render 'round_fields', f: rounds_f
+        = render 'round_fields', f: rounds_f, league: div.league
       %div{ id: "#{div.id}_rounds" }
 
     .panel-body
       = link_to_add_association f, :rounds, class: 'btn btn-default pull-right',
+                                render_options: { locals: { league: div.league } },
                                 'data-association-insertion-node' => "##{div.id}_rounds" do
         %span.glyphicon.glyphicon-plus
         Add Set
