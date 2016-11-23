@@ -15,6 +15,8 @@ class League
 
       validate :map_and_pick_present
 
+      delegate :league, to: :match
+
       def submit(user, map)
         match.rounds.create!(map: map) if pick?
 
