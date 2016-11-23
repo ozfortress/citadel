@@ -25,11 +25,31 @@ module Leagues
         end
 
         def notify_captains!(pick_ban)
-          msg = 'TODO: Write this message'
+          msg = notification_message(pick_ban)
           link = match_path(pick_ban.match)
 
           captains_for(pick_ban).each do |captain|
             Users::NotificationService.call(captain, msg, link)
+          end
+        end
+
+        def notification_message(pick_ban)
+          "#{team_name(pick_ban)} #{completed_kind(pick_ban)} #{pick_ban.map.name}"
+        end
+
+        def completed_kind(pick_ban)
+          if pick_ban.pick?
+            'picked'
+          else
+            'banned'
+          end
+        end
+
+        def team_name(pick_ban)
+          if pick_ban.home_team?
+            pick_ban.match.home_team.name
+          else
+            pick_ban.match.away_team.name
           end
         end
       end
