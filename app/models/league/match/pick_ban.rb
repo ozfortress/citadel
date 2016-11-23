@@ -10,8 +10,8 @@ class League
       enum kind: [:pick, :ban]
       enum team: [:home_team, :away_team]
 
-      scope :pending,   -> { where(picked_by: nil) }
-      scope :completed, -> { where.not(picked_by: nil) }
+      scope :pending,   -> { where(map: nil) }
+      scope :completed, -> { where.not(map: nil) }
 
       validate :map_and_pick_present
 
@@ -21,6 +21,10 @@ class League
         match.rounds.create!(map: map) if pick?
 
         update(picked_by: user, map: map)
+      end
+
+      def pending?
+        map.nil?
       end
 
       private

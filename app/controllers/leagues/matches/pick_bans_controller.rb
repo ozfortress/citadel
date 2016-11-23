@@ -4,11 +4,12 @@ module Leagues
       include PickBanPermissions
 
       before_action only: :submit do
-        @match = League::Match.find(params[:match_id])
-        @league = @match.league
-        @pick_ban = @match.pick_bans.pending.find(params[:id])
-        @map = @match.map_pool.find(params[:pick_ban][:map_id])
+        @pick_ban = League::Match::PickBan.find(params[:id])
+        @match    = @pick_ban.match
+        @league   = @match.league
+        @map      = @match.map_pool.find(params[:pick_ban][:map_id])
       end
+      before_action :require_pick_ban_pending, only: :submit
       before_action :require_can_submit, only: :submit
 
       def submit
@@ -22,6 +23,10 @@ module Leagues
       end
 
       private
+
+      def require_pick_ban_pending
+        redirect_back(fallback_location: match_path(@match)) unless @pick_ban.pending?
+      end
 
       def require_can_submit
         redirect_back(fallback_location: match_path(@match)) unless user_can_submit_pick_ban?
