@@ -1,5 +1,5 @@
 %li.list-group-item.nested-fields
-  = f.select :map_id, maps_select
+  = f.collection_select :map_id, league.map_pool, :id, :name
 
   = link_to_remove_association f, class: 'btn btn-default' do
     %span.glyphicon.glyphicon-trash

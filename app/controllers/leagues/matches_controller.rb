@@ -103,7 +103,7 @@ module Leagues
 
     def destroy
       if @match.destroy
-        redirect_to league_path(@match)
+        redirect_to league_path(@league)
       else
         render :edit
       end
@@ -136,11 +136,13 @@ module Leagues
 
     def match_params
       params.require(:match).permit(:home_team_id, :away_team_id, :round, :notice,
+                                    pick_bans_attributes: [:id, :_destroy, :kind, :team],
                                     rounds_attributes: [:id, :_destroy, :map_id])
     end
 
     def create_round_params
       params.require(:match).permit(:division_id, :generate_kind, :round, :notice,
+                                    pick_bans_attributes: [:id, :_destroy, :kind, :team],
                                     rounds_attributes: [:id, :_destroy, :map_id])
     end
 

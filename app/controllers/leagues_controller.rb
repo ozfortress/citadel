@@ -83,7 +83,8 @@ class LeaguesController < ApplicationController
       :points_per_match_forfeit_loss, :points_per_match_forfeit_win, :schedule_locked, :schedule,
       weekly_scheduler_attributes: [:id, :start_of_week, :minimum_selected, days_indecies: []],
       tiebreakers_attributes: [:id, :kind, :_destroy],
-      divisions_attributes: [:id, :name, :_destroy])
+      divisions_attributes: [:id, :name, :_destroy],
+      pooled_maps_attributes: [:id, :map_id, :_destroy])
   end
 
   def require_hidden

@@ -9,8 +9,13 @@ describe League::Match do
   it { should belong_to(:away_team).class_name('League::Roster') }
   it { should allow_value(nil).for(:away_team) }
 
-  it { should have_many(:rounds).class_name('Match::Round') }
-  it { should have_many(:comms).class_name('Match::Comm') }
+  it { should have_many(:rounds).class_name('Match::Round').dependent(:destroy) }
+  it { should accept_nested_attributes_for(:rounds) }
+
+  it { should have_many(:pick_bans).class_name('Match::PickBan').dependent(:destroy) }
+  it { should accept_nested_attributes_for(:pick_bans) }
+
+  it { should have_many(:comms).class_name('Match::Comm').dependent(:destroy) }
 
   it { should validate_numericality_of(:round).is_greater_than_or_equal_to(0) }
   it { should allow_value(nil).for(:round) }

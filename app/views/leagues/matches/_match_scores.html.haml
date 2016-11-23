@@ -1,56 +1,28 @@
-.panel.panel-default
-  .panel-heading
-    Results
-    - case match.status
-    - when 'pending'
-      pending
-    - when 'submitted_by_home_team'
-      submitted by home team
-    - when 'submitted_by_away_team'
-      submitted by away team
+- if match.pending? || user_can_edit_league?
+  = render 'match_pick_bans_form', match: match
 
-  - if match.status == 'pending' || user_can_edit_league?
+  .panel-body
+    - if match.picking_completed?
+      = render 'match_scores_form', match: match
+
+    - unless user_can_edit_league?
+      = button_to 'Forfeit', forfeit_match_path(match),
+                  class: 'btn btn-danger', method: :patch,
+                  data: { confirm: 'Are you sure you want to forfeit this match?' }
+
+- if !match.pending? && !match.confirmed? # && !user_can_edit_league?
+  %ul.list-group
+    - match.rounds.includes(:map).each do |round|
+      %li.list-group-item
+        = link_to round.map, meta_map_path(round.map)
+        |#{round.home_team_score} : #{round.away_team_score}|
+
+  - if user_can_confirm_score?
     .panel-body
-      - match.rounds.includes(:map).to_a
-      = bootstrap_form_for match, as: :match, url: submit_match_path(match) do |f|
-        = f.fields_for :rounds do |ff|
-          .row.form-group
-            .form-inline
-              = link_to ff.object.map, meta_map_path(ff.object.map)
-              \:
-              .form-group.pull-right
-                = ff.number_field :home_team_score, label: "'#{match.home_team.name}'s score"
-                = ff.number_field :away_team_score, label: "'#{match.away_team.name}'s score"
+      = button_to confirm_match_path(match, confirm: true),
+                  class: 'btn btn-success', method: :patch do
+        Confirm Score
 
-        - if user_can_edit_league?
-          = f.select :status, League::Match.statuses.keys.map { |s| [s.humanize, s] }
-          = f.select :forfeit_by, League::Match.forfeit_bies.keys.map { |s| [s.humanize, s] }
-
-        - if user_can_edit_league?
-          = f.submit 'Update'
-        - else
-          = f.submit 'Submit Score'
-
-      - unless user_can_edit_league?
-        = button_to 'Forfeit', forfeit_match_path(match),
-                    class: 'btn btn-danger', method: :patch,
-                    data: { confirm: 'Are you sure you want to forfeit this match?' }
-
-  - if match.status != 'pending' && match.status != 'confirmed' # && !user_can_edit_league?
-    %ul.list-group
-      - match.rounds.includes(:map).each do |round|
-        %li.list-group-item
-          = link_to round.map, meta_map_path(round.map)
-          |#{round.home_team_score} : #{round.away_team_score}|
-
-    - if user_can_confirm_score?
-      .panel-body
-        = button_to confirm_match_path(match, confirm: true),
-                    class: 'btn btn-success', method: :patch do
-          Confirm Score
-
-        = button_to confirm_match_path(match, confirm: false),
-                    class: 'btn btn-danger', method: :patch do
-          Challenge Score
-
-
+      = button_to confirm_match_path(match, confirm: false),
+                  class: 'btn btn-danger', method: :patch do
+        Challenge Score

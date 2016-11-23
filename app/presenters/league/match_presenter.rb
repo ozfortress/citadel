@@ -33,6 +33,12 @@ class League
       end
     end
 
+    def status
+      return if match.confirmed?
+
+      match.status.humanize
+    end
+
     def results
       return unless match.confirmed?
 
