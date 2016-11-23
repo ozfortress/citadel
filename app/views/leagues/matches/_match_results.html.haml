@@ -5,18 +5,5 @@
     - match.rounds.includes(:map).each do |round|
       %li.list-group-item
         = link_to round.map, meta_map_path(round.map)
-        - home = present(match.home_team).link
-        - away = present(match.away_team).link
 
-        .pull-right
-          - if match.no_forfeit?
-            - if round.home_team_score > round.away_team_score
-              #{home} beat #{away}, #{round.home_team_score} to #{round.away_team_score}
-            - elsif round.home_team_score < round.away_team_score
-              #{away} beat #{home}, #{round.away_team_score} to #{round.home_team_score}
-            - else
-              #{home} tied with #{away}, #{round.home_team_score} to #{round.away_team_score}
-          - if match.home_team_forfeit?
-            #{away} wins by forfeit
-          - if match.away_team_forfeit?
-            #{home} wins by forfeit
+        .pull-right= present(round).result
