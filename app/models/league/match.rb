@@ -65,6 +65,10 @@ class League
       !away_team
     end
 
+    def map_pool
+      league.map_pool.where.not(id: pick_bans.completed.select(:map_id))
+    end
+
     private
 
     def update_team_match_counters

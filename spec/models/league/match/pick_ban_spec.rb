@@ -26,4 +26,27 @@ describe League::Match::PickBan do
       expect(build(:league_match_pick_ban, map: nil, picked_by: user)).to be_invalid
     end
   end
+
+  describe '#submit' do
+    let(:map) { create(:map) }
+    let(:user) { create(:user) }
+
+    it 'successfully bans a map' do
+      ban = create(:league_match_pick_ban, kind: :ban)
+
+      expect(ban.submit(user, map)).to be(true)
+      ban.match.reload
+      expect(ban.match.rounds).to be_empty
+      expect(ban.match.map_pool).to_not include(map)
+    end
+
+    it 'successfully picks a map' do
+      pick = create(:league_match_pick_ban, kind: :pick)
+
+      expect(pick.submit(user, map)).to be(true)
+      pick.match.reload
+      expect(pick.match.rounds).to_not be_empty
+      expect(pick.match.map_pool).to_not include(map)
+    end
+  end
 end

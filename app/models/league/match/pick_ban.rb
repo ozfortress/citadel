@@ -15,6 +15,12 @@ class League
 
       validate :map_and_pick_present
 
+      def submit(user, map)
+        match.rounds.create!(map: map) if pick?
+
+        update(picked_by: user, map: map)
+      end
+
       private
 
       def map_and_pick_present
