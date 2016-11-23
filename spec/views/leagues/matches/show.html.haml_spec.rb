@@ -63,7 +63,7 @@ describe 'leagues/matches/show' do
     end
   end
 
-  context 'standard match' do
+  shared_examples 'displays matches' do
     it 'displays for captains' do
       allow(view).to receive(:user_can_either_teams?).and_return(true)
 
@@ -80,6 +80,10 @@ describe 'leagues/matches/show' do
     it 'displays for any user' do
       render
     end
+  end
+
+  context 'standard match' do
+    include_examples 'displays matches'
 
     after do
       comms.each do |comm|
@@ -108,6 +112,36 @@ describe 'leagues/matches/show' do
 
         expect(rendered).to include('Tuesday')
       end
+    end
+
+    context 'with pending pick bans' do
+      let(:pick_bans) { build_stubbed_list(:league_match_pick_ban, 3, match: match) }
+      let(:map_pool) { build_stubbed_list(:map, 3) }
+
+      before do
+        allow(match).to receive(:pick_bans).and_return(pick_bans)
+        allow(match).to receive(:picking_completed?).and_return(false)
+        allow(match).to receive(:map_pool).and_return(map_pool)
+      end
+
+      include_examples 'displays matches'
+    end
+
+    context 'with completed pick bans' do
+      let(:map) { build_stubbed(:map) }
+      let(:user) { build_stubbed(:user) }
+      let(:pick_bans) do
+        build_stubbed_list(:league_match_pick_ban, 3, match: match, map: map, picked_by: user)
+      end
+      let(:map_pool) { build_stubbed_list(:map, 3) }
+
+      before do
+        allow(match).to receive(:pick_bans).and_return(pick_bans)
+        allow(match).to receive(:picking_completed?).and_return(true)
+        allow(match).to receive(:map_pool).and_return(map_pool)
+      end
+
+      include_examples 'displays matches'
     end
   end
 end
