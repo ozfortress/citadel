@@ -3,42 +3,28 @@
     Edit
     %span.glyphicon.glyphicon-cog
 
+- match_p = present(@match)
+
 %h1 #{present(@league).link}: #{@match.home_team.division}
-%h2= present(@match).title
+%h2= match_p.title
 
 - unless @match.bye?
-  .table-responsive
-    %table.table
-      %thead
-        %tr
-          %th Home Team
-          %th Away Team
-        %tr
-          %th= present(@match.home_team).link
-          %th= present(@match.away_team).link
-      %tbody
-        - present(@match).players do |home_user, away_user|
-          %tr
-            %td= render 'users/listing', user: home_user, team: @match.home_team.team if home_user
-            %td= render 'users/listing', user: away_user, team: @match.away_team.team if away_user
+  = render 'players_table', match: @match, match_p: match_p
 
-  - if @match.status == 'confirmed' && !user_can_edit_league?
-    = render 'match_results', match: @match, league: @league
-  - elsif user_can_either_teams? && @league.matches_submittable?
-    = render 'match_scores', match: @match, league: @league
+  .panel.panel-default
+    .panel-heading Results #{match_p.status}
+
+    - if !@match.confirmed? && user_can_either_teams? && @league.matches_submittable? || user_can_edit_league?
+      = render 'match_scores', match: @match, league: @league
+    - else
+      = render 'match_results', match: @match, league: @league
 
   - unless @match.notice.blank?
     .panel.panel-default
       .panel-heading Match Notice
-      .panel-body
-        = markdown @match.notice
+      .panel-body= markdown @match.notice
 
   - if @match.home_team.schedule_data && @match.away_team.schedule_data
-    - if @league.schedule == 'weeklies'
-      .panel.panel-default
-        .panel-heading Availability
-        .panel-body
-          Schedule suggestions (based on availability):
-          %b= @league.scheduler.common_schedule(@match.home_team, @match.away_team).join(', ')
+    = render 'schedule', match: @match, league: @league
 
   = render 'match_comms', league: @league, match: @match, comm: @comm, comms: @comms

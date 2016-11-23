@@ -65,6 +65,10 @@ class League
       !away_team
     end
 
+    def picking_completed?
+      pick_bans.pending.empty?
+    end
+
     def map_pool
       league.map_pool.where.not(id: pick_bans.completed.select(:map_id))
     end

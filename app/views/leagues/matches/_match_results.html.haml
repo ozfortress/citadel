@@ -1,6 +1,8 @@
-.panel.panel-default
-  .panel-heading Results
+%ul.list-group
+  - match.pick_bans.each do |pick_ban|
+    %li.list-group-item= present(pick_ban).status
 
+- if match.confirmed?
   %ul.list-group
     - match.rounds.includes(:map).each do |round|
       %li.list-group-item
