@@ -83,7 +83,7 @@ class League < ApplicationRecord
     if pooled_maps.empty?
       Map.all
     else
-      pooled_maps.map(&:map)
+      Map.where(id: pooled_maps.select(:map_id))
     end
   end
 
