@@ -12,7 +12,7 @@ class League
       end
 
       def map_link
-        link_to pick_ban.map.name, meta_map_path(pick_ban.map)
+        link_to pick_ban.map, meta_map_path(pick_ban.map)
       end
 
       def status

@@ -1,5 +1,5 @@
-- past_pick_bans = match.pick_bans.select { |pick_ban| pick_ban.map }
-- next_pick_bans = match.pick_bans.select { |pick_ban| !pick_ban.map }
+- past_pick_bans = match.pick_bans.select(&:completed?)
+- next_pick_bans = match.pick_bans.select(&:pending?)
 
 - past_pick_bans.each do |pick_ban|
   %li.list-group-item= present(pick_ban).status
@@ -9,13 +9,14 @@
   - if user_can_submit_pick_ban?(next_pick_bans.first)
     %li.list-group-item
       - pick_ban = next_pick_bans.shift
-      = bootstrap_form_for pick_ban, as: :pick_ban, url: submit_pick_ban_path(pick_ban), layout: :inline do |f|
+      = bootstrap_form_for pick_ban, as: :pick_ban, url: submit_pick_ban_path(pick_ban),
+                                     layout: :inline do |f|
         = f.collection_select :map_id, match.map_pool, :id, :name
 
         .pull-right= f.submit pick_ban.kind.humanize
 
-  - next_pick_bans.each do |pick_ban|
-    %li.list-group-item= present(pick_ban).status
+  - next_pick_bans.each do |pick_ban2|
+    %li.list-group-item= present(pick_ban2).status
 
   - if user_can_edit_league?
     .panel-body= render 'match_scores_form', match: match

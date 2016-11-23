@@ -27,6 +27,10 @@ class League
         map.nil?
       end
 
+      def completed?
+        !pending?
+      end
+
       private
 
       def map_and_pick_present
