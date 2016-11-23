@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161121075528) do
+ActiveRecord::Schema.define(version: 20161123104400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -197,6 +197,16 @@ ActiveRecord::Schema.define(version: 20161121075528) do
     t.datetime "updated_at", null: false
     t.index ["match_id"], name: "index_league_match_comms_on_match_id", using: :btree
     t.index ["user_id"], name: "index_league_match_comms_on_user_id", using: :btree
+  end
+
+  create_table "league_match_pick_bans", force: :cascade do |t|
+    t.integer  "match_id",               null: false
+    t.integer  "picked_by_id"
+    t.integer  "kind",         limit: 2, null: false
+    t.integer  "team",         limit: 2, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["match_id"], name: "index_league_match_pick_bans_on_match_id", using: :btree
   end
 
   create_table "league_match_rounds", force: :cascade do |t|
@@ -501,6 +511,8 @@ ActiveRecord::Schema.define(version: 20161121075528) do
   add_foreign_key "league_divisions", "leagues"
   add_foreign_key "league_match_comms", "league_matches", column: "match_id"
   add_foreign_key "league_match_comms", "users"
+  add_foreign_key "league_match_pick_bans", "league_matches", column: "match_id"
+  add_foreign_key "league_match_pick_bans", "users", column: "picked_by_id"
   add_foreign_key "league_match_rounds", "league_matches", column: "match_id"
   add_foreign_key "league_match_rounds", "maps"
   add_foreign_key "league_matches", "league_rosters", column: "away_team_id"
