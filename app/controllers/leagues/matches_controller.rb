@@ -103,7 +103,7 @@ module Leagues
 
     def destroy
       if @match.destroy
-        redirect_to league_path(@match)
+        redirect_to league_path(@league)
       else
         render :edit
       end
