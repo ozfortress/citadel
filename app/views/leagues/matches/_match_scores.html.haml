@@ -1,9 +1,9 @@
 - if match.pending? || user_can_edit_league?
-  = render 'match_pick_bans_form', match: match
+  = render 'match_pick_bans_form', match: match, pick_bans: pick_bans
 
   .panel-body
-    - if match.picking_completed?
-      = render 'match_scores_form', match: match
+    - if match.picking_completed? || user_can_edit_league?
+      = render 'match_scores_form', match: match, rounds: rounds
 
     - unless user_can_edit_league?
       = button_to 'Forfeit', forfeit_match_path(match),
@@ -12,7 +12,7 @@
 
 - if !match.pending? && !match.confirmed? # && !user_can_edit_league?
   %ul.list-group
-    - match.rounds.includes(:map).each do |round|
+    - rounds.each do |round|
       %li.list-group-item
         = link_to round.map, meta_map_path(round.map)
         |#{round.home_team_score} : #{round.away_team_score}|

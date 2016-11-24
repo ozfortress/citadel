@@ -6,11 +6,14 @@ describe 'leagues/matches/show' do
   let(:home_team) { build_stubbed(:league_roster, player_count: 3, division: division) }
   let(:away_team) { build_stubbed(:league_roster, player_count: 3, division: division) }
   let(:match) { build_stubbed(:league_match, home_team: home_team, away_team: away_team) }
+  let(:rounds) { build_stubbed_list(:league_match_round, 3, match: match)}
   let(:comms) { build_stubbed_list(:league_match_comm, 6) }
 
   before do
     assign(:league, league)
     assign(:match, match)
+    assign(:pick_bans, [])
+    assign(:rounds, rounds)
     assign(:comm, League::Match::Comm.new(match: match))
     assign(:comms, comms)
   end
@@ -119,6 +122,7 @@ describe 'leagues/matches/show' do
       let(:map_pool) { build_stubbed_list(:map, 3) }
 
       before do
+        assign(:pick_bans, pick_bans)
         allow(match).to receive(:pick_bans).and_return(pick_bans)
         allow(match).to receive(:picking_completed?).and_return(false)
         allow(match).to receive(:map_pool).and_return(map_pool)
@@ -136,6 +140,7 @@ describe 'leagues/matches/show' do
       let(:map_pool) { build_stubbed_list(:map, 3) }
 
       before do
+        assign(:pick_bans, pick_bans)
         allow(match).to receive(:pick_bans).and_return(pick_bans)
         allow(match).to receive(:picking_completed?).and_return(true)
         allow(match).to receive(:map_pool).and_return(map_pool)

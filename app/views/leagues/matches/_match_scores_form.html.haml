@@ -1,6 +1,5 @@
-- match.rounds.includes(:map).to_a
 = bootstrap_form_for match, as: :match, url: submit_match_path(match) do |f|
-  = f.fields_for :rounds do |ff|
+  = f.fields_for :rounds, rounds do |ff|
     .row.form-group
       .form-inline
         = link_to ff.object.map, meta_map_path(ff.object.map)
