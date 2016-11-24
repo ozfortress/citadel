@@ -6,7 +6,7 @@ describe 'leagues/matches/show' do
   let(:home_team) { build_stubbed(:league_roster, player_count: 3, division: division) }
   let(:away_team) { build_stubbed(:league_roster, player_count: 3, division: division) }
   let(:match) { build_stubbed(:league_match, home_team: home_team, away_team: away_team) }
-  let(:rounds) { build_stubbed_list(:league_match_round, 3, match: match)}
+  let(:rounds) { build_stubbed_list(:league_match_round, 3, match: match) }
   let(:comms) { build_stubbed_list(:league_match_comm, 6) }
 
   before do

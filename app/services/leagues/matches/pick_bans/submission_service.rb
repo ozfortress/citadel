@@ -34,7 +34,7 @@ module Leagues
         end
 
         def notification_message(pick_ban)
-          "#{team_name(pick_ban)} #{completed_kind(pick_ban)} #{pick_ban.map.name}"
+          "#{team_name(pick_ban)} #{completed_kind(pick_ban)} #{pick_ban.map}"
         end
 
         def completed_kind(pick_ban)
