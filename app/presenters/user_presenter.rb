@@ -35,7 +35,6 @@ class UserPresenter < ActionPresenter::Base
 
   def league_status(league)
     elements = [roster_status(league), transfer_status(league)]
-    elements = elements.select { |e| !e.empty? }
     elements.select { |e| !e.empty? }.join(', ').html_safe
   end
 
