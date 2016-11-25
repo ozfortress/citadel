@@ -11,14 +11,12 @@
     %h2.spaced-letters
       = @user.name
 
-    - unless @user.aka.empty?
-      %p.group-aka aka #{@user.aka.limit(5).map(&:name).join(', ')}
+    - unless @aka.empty?
+      %p.group-aka aka #{@aka.map(&:name).join(', ')}
 
 %p.steam-link-large= present(@user).steam_link
 
-.row!= present_collection(@user.titles.for_roster).map(&:icon).join(' ')
-.row!= present_collection(@user.titles.for_league).map(&:icon).join(' ')
-.row!= present_collection(@user.titles.general).map(&:icon).join(' ')
+.row!= present_collection(@titles).map(&:icon).join(' ')
 
 %hr
 

@@ -3,6 +3,8 @@ require 'rails_helper'
 describe 'users/show' do
   let(:user) { build(:user) }
   let(:teams) { build_stubbed_list(:team, 3) }
+  let(:aka) { build_stubbed_list(:user_name_change, 5) }
+  let(:titles) { build_stubbed_list(:user_title, 5) }
   let(:team_transfers) { build_stubbed_list(:team_transfer, 5, user: user) }
   let(:team_invites) { build_stubbed_list(:team_invite, 2, user: user) }
   let(:rosters) { build_stubbed_list(:league_roster, 2) }
@@ -11,6 +13,8 @@ describe 'users/show' do
   before do
     assign(:user, user)
     assign(:teams, teams)
+    assign(:aka, aka)
+    assign(:titles, titles)
     assign(:team_transfers, team_transfers)
     assign(:team_invites, team_invites)
     assign(:rosters, rosters)
