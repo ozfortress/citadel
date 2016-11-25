@@ -18,8 +18,8 @@ FactoryGirl.define do
                          build_list(:league_roster_player, evaluator.player_count, roster: roster)
                        end
       roster.transfers ||= roster.players.map do |player|
-                             build(:league_roster_transfer, roster: roster, user: player.user)
-                           end
+        build(:league_roster_transfer, roster: roster, user: player.user)
+      end
     end
 
     after(:stub) do |roster, evaluator|
