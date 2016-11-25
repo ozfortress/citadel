@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'leagues/matches/edit' do
-  let(:match) { create(:league_match) }
+  let(:match) { build_stubbed(:league_match) }
 
   it 'displays form' do
     assign(:league, match.league)
