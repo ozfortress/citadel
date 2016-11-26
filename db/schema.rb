@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161123122239) do
+ActiveRecord::Schema.define(version: 20161126133702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -311,6 +311,7 @@ ActiveRecord::Schema.define(version: 20161123122239) do
     t.integer  "total_scores",               default: 0,     null: false
     t.json     "schedule_data"
     t.index ["division_id"], name: "index_league_rosters_on_division_id", using: :btree
+    t.index ["points"], name: "index_league_rosters_on_points", using: :btree
     t.index ["team_id"], name: "index_league_rosters_on_team_id", using: :btree
   end
 
