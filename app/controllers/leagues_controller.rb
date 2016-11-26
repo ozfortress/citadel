@@ -2,7 +2,7 @@ class LeaguesController < ApplicationController
   include LeaguePermissions
 
   before_action except: [:index, :new, :create] do
-    @league = League.find(params[:id])
+    @league = League.includes(:tiebreakers).find(params[:id])
   end
 
   before_action :require_user_leagues_permission, only: [:new, :create, :destroy]
