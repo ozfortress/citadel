@@ -6,7 +6,8 @@ module Leagues
       @league = League.find(params[:league_id])
     end
     before_action except: [:index, :new, :create, :generate, :create_round] do
-      @match = League::Match.find(params[:id])
+      @match = League::Match.includes(home_team: { division: :league })
+                            .find(params[:id])
       @league = @match.league
     end
 
@@ -60,6 +61,9 @@ module Leagues
     end
 
     def show
+      @pick_bans = @match.pick_bans.includes(:map)
+      @rounds    = @match.rounds.includes(:map)
+
       @comm = League::Match::Comm.new(match: @match)
       @comms = @match.comms.order(:created_at).includes(:user)
     end

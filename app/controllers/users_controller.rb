@@ -40,10 +40,12 @@ class UsersController < ApplicationController
   end
 
   def show
+    @aka            = @user.aka.limit(5)
+    @titles         = @user.titles
     @teams          = @user.teams
     @team_transfers = @user.team_transfers.includes(:team)
     @team_invites   = @user.team_invites.includes(:team)
-    @rosters        = @user.rosters.includes(division: :league)
+    @rosters        = @user.rosters.includes(:team, division: :league)
     @matches        = @user.matches.pending.includes(:home_team, :away_team)
   end
 

@@ -41,6 +41,13 @@ ControlParameter:
   FeatureEnvy:
     enabled: false
 
+# as are services
+"services":
+  UtilityFunction:
+    enabled: false
+  FeatureEnvy:
+    enabled: false
+
 # Migration helpers are like db code, but cleaner
 FeatureEnvy:
   exclude:

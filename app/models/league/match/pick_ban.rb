@@ -24,7 +24,7 @@ class League
       end
 
       def pending?
-        map.nil?
+        map_id.nil?
       end
 
       def completed?

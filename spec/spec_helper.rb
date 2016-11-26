@@ -8,6 +8,7 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new [
 SimpleCov.start 'rails' do
   add_filter 'migration_helper'
   add_group 'Presenters', 'app/presenters'
+  add_group 'Services',   'app/services'
   add_group 'Uploaders',  'app/uploaders'
 end
 

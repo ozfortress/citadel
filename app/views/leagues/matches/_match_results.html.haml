@@ -1,10 +1,10 @@
 %ul.list-group
-  - match.pick_bans.each do |pick_ban|
+  - pick_bans.each do |pick_ban|
     %li.list-group-item= present(pick_ban).status
 
 - if match.confirmed?
   %ul.list-group
-    - match.rounds.includes(:map).each do |round|
+    - rounds.each do |round|
       %li.list-group-item
         = link_to round.map, meta_map_path(round.map)
 
