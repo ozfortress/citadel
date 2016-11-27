@@ -32,23 +32,30 @@
 
 .panel.panel-default
   .panel-heading Teams
-  %ul.list-group
-    - if @league.signuppable?
+  - if @league.signuppable?
+    %ul.list-group
       - present_collection(@rosters).each do |roster|
         %li.list-group-item
           = roster.link
 
-    - else
-      - @divisions.each do |div|
-        %li.list-group-item
-          %h3= div.name
-          %ul.list-group
-            - present_collection(div.rosters_sorted).each_with_index do |roster, rank|
-              %li.list-group-item
-                = "##{rank + 1}:" if @league.completed?
-                = roster.link
-                .pull-right
-                  = roster.score_s
+  - else
+    - @divisions.each do |div|
+      %h3= div.name
+      %table.table
+        %tr
+          %th #
+          %th Team
+          %th Points
+          - present_collection(@league.tiebreakers).each do |tiebreaker|
+            %th= tiebreaker.name
+
+        - div.rosters_sorted.each_with_index do |roster, rank|
+          %tr
+            %th{scope:"row"}= rank + 1
+            %td= present(roster).link
+            %td= roster.points
+            - @league.tiebreakers.each do |tiebreaker|
+              %th= tiebreaker.get_comparison(roster)
 
   - if user_signed_in?
     - if current_user.can_any?(:edit, :team) && @league.signuppable?
