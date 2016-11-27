@@ -51,7 +51,7 @@
 
         - div.rosters_sorted.each_with_index do |roster, rank|
           %tr
-            %th{scope:"row"}= rank + 1
+            %th{ scope: 'row' }= rank + 1
             %td= present(roster).link
             %td= roster.points
             - @league.tiebreakers.each do |tiebreaker|

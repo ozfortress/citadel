@@ -7,7 +7,7 @@ class League
       'round_score_difference'          => 'Total Score',
       'round_wins_against_tied_rosters' => 'Tied Wins',
       'median_bucholz_score'            => 'Buchholz'
-    }
+    }.freeze
 
     def name
       NAMES[tiebreaker.kind]
