@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161126133702) do
+ActiveRecord::Schema.define(version: 20161127124753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -292,24 +292,25 @@ ActiveRecord::Schema.define(version: 20161126133702) do
   end
 
   create_table "league_rosters", force: :cascade do |t|
-    t.integer  "team_id",                                    null: false
-    t.integer  "division_id",                                null: false
-    t.boolean  "approved",                   default: false, null: false
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
-    t.string   "name",                                       null: false
-    t.text     "description",                                null: false
-    t.boolean  "disbanded",                  default: false, null: false
+    t.integer  "team_id",                                               null: false
+    t.integer  "division_id",                                           null: false
+    t.boolean  "approved",                              default: false, null: false
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+    t.string   "name",                                                  null: false
+    t.text     "description",                                           null: false
+    t.boolean  "disbanded",                             default: false, null: false
     t.integer  "ranking"
     t.integer  "seeding"
-    t.integer  "won_rounds_count",           default: 0,     null: false
-    t.integer  "drawn_rounds_count",         default: 0,     null: false
-    t.integer  "lost_rounds_count",          default: 0,     null: false
-    t.integer  "forfeit_won_matches_count",  default: 0,     null: false
-    t.integer  "forfeit_lost_matches_count", default: 0,     null: false
-    t.integer  "points",                     default: 0,     null: false
-    t.integer  "total_scores",               default: 0,     null: false
+    t.integer  "won_rounds_count",                      default: 0,     null: false
+    t.integer  "drawn_rounds_count",                    default: 0,     null: false
+    t.integer  "lost_rounds_count",                     default: 0,     null: false
+    t.integer  "forfeit_won_matches_count",             default: 0,     null: false
+    t.integer  "forfeit_lost_matches_count",            default: 0,     null: false
+    t.integer  "points",                                default: 0,     null: false
+    t.integer  "total_scores",                          default: 0,     null: false
     t.json     "schedule_data"
+    t.integer  "won_rounds_against_tied_rosters_count", default: 0,     null: false
     t.index ["division_id"], name: "index_league_rosters_on_division_id", using: :btree
     t.index ["points"], name: "index_league_rosters_on_points", using: :btree
     t.index ["team_id"], name: "index_league_rosters_on_team_id", using: :btree

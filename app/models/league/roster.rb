@@ -95,15 +95,37 @@ class League
       home_team_matches.home_team_forfeited.union(away_forfeit).union(matches.mutually_forfeited)
     end
 
+    def won_rounds_against_tied_rosters
+      rosters = tied_rosters.select(:id)
+      won_rounds.joins(:match)
+                .where('league_matches.home_team_id = (?) OR league_matches.away_team_id = (?)',
+                       rosters, rosters)
+    end
+
+    def tied_rosters
+      division.rosters.active.where(points: points).where.not(id: id)
+    end
+
     def update_match_counters!
-      assign_attributes(won_rounds_count:           won_rounds.count,
-                        drawn_rounds_count:         drawn_rounds.count,
-                        lost_rounds_count:          lost_rounds.count,
-                        forfeit_won_matches_count:  forfeit_won_matches.count,
-                        forfeit_lost_matches_count: forfeit_lost_matches.count)
+      # Keep old points for updating tied rosters
+      old_points = points
+
+      assign_updated_match_counters
       save!(validate: false)
-      assign_attributes(points:       calculate_points,
-                        total_scores: calculate_total_scores)
+
+      # Update tied counts on relevant rosters (from old and new points)
+      update_tied_rosters_match_counters_tied!(old_points)
+    end
+
+    def update_tied_rosters_match_counters_tied!(old_points)
+      division.rosters.active.where(points: old_points).find_each(&:update_match_counters_tied!)
+      tied_rosters.find_each(&:update_match_counters_tied!)
+      update_match_counters_tied!
+    end
+
+    def update_match_counters_tied!
+      self.won_rounds_against_tied_rosters_count = won_rounds_against_tied_rosters.count
+
       save!(validate: false)
     end
 
@@ -149,6 +171,19 @@ class League
     end
 
     private
+
+    def assign_updated_match_counters
+      # Requires multi-phase updating, as each change is dependent on the previous
+      assign_attributes(total_scores:               calculate_total_scores,
+                        won_rounds_count:           won_rounds.count,
+                        drawn_rounds_count:         drawn_rounds.count,
+                        lost_rounds_count:          lost_rounds.count,
+                        forfeit_won_matches_count:  forfeit_won_matches.count,
+                        forfeit_lost_matches_count: forfeit_lost_matches.count)
+
+      self.points = calculate_points
+      self.won_rounds_against_tied_rosters_count = won_rounds_against_tied_rosters.count
+    end
 
     def calculate_sort_keys
       keys = [ranking || Float::INFINITY, disbanded? ? 1 : -points]

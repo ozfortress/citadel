@@ -45,8 +45,8 @@ class League
     scope :mutually_forfeited, -> { confirmed.mutual_forfeit }
     scope :technically_forfeited, -> { confirmed.technical_forfeit }
 
-    after_save :update_team_match_counters
-    after_destroy :update_team_match_counters
+    after_save :update_roster_match_counters!
+    after_destroy :update_roster_match_counters!
 
     def confirm_scores(confirm)
       update(status: confirm ? :confirmed : :pending)
@@ -75,7 +75,7 @@ class League
 
     private
 
-    def update_team_match_counters
+    def update_roster_match_counters!
       home_team.update_match_counters!
       away_team.update_match_counters! if away_team
     end

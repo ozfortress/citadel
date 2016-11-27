@@ -18,13 +18,14 @@ describe 'leagues/show' do
     assign(:rosters, all_rosters)
     assign(:divisions, divisions)
     assign(:roster, roster)
-    assign(:matches, matches)
   end
 
   context 'hidden league' do
     before { league.status = 'hidden' }
 
     it 'displays league details for' do
+      assign(:top_div_matches, matches)
+
       render
 
       expect(rendered).to include(league.name)
@@ -44,6 +45,8 @@ describe 'leagues/show' do
     end
 
     it 'displays league details' do
+      assign(:personal_matches, matches)
+
       render
 
       expect(rendered).to include(league.name)
@@ -58,6 +61,8 @@ describe 'leagues/show' do
   end
 
   it 'displays league details' do
+    assign(:top_div_matches, matches)
+
     render
 
     expect(rendered).to include(league.name)

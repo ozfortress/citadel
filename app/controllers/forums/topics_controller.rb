@@ -33,7 +33,7 @@ module Forums
 
       unless user_can_manage_topic?
         @subtopics = @subtopics.visible
-        @threads   = @threads.visible.union(@threads.where(created_by: current_user))
+        @threads   = @threads.visible.where(created_by: current_user)
       end
     end
 
