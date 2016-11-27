@@ -98,7 +98,7 @@ class League
     def won_rounds_against_tied_rosters
       rosters = tied_rosters.select(:id)
       won_rounds.joins(:match)
-                .where('league_matches.home_team_id = (?) OR league_matches.away_team_id = (?)',
+                .where('league_matches.home_team_id IN (?) OR league_matches.away_team_id IN (?)',
                        rosters, rosters)
     end
 
