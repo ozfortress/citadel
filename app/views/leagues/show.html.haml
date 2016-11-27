@@ -16,7 +16,7 @@
 
 .panel.panel-default
   .panel-heading
-    - if user_signed_in?
+    - if @personal_matches
       Your Upcoming Matches
     - else
       Upcoming Matches for #{@divisions.first}
@@ -25,7 +25,7 @@
               class: 'btn btn-default pull-right'
 
   %ul.list-group
-    - present_collection(@matches).each do |match|
+    - present_collection(@personal_matches || @top_div_matches).each do |match|
       %li.list-group-item
         = match.link
         .pull-right= match.results
