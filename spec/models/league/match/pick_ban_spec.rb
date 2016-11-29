@@ -49,4 +49,34 @@ describe League::Match::PickBan do
       expect(pick.match.map_pool).to_not include(map)
     end
   end
+
+  describe '#defer!' do
+    let(:map) { create(:map) }
+    let(:user) { create(:user) }
+    let(:match) { create(:league_match) }
+
+    before do
+      @picked = create_list(:league_match_pick_ban, 2, match: match, picked_by: user,
+                                                       map: map, team: :home_team)
+      @deferrable = create(:league_match_pick_ban, match: match, deferrable: true, team: :away_team)
+      @pending = create_list(:league_match_pick_ban, 2, match: match, team: :home_team)
+    end
+
+    it 'successfully defers' do
+      expect(@deferrable.defer!).to be(true)
+
+      @picked.each do |pick_ban|
+        expect(pick_ban.reload.home_team?).to be(true)
+      end
+
+      @deferrable.reload
+      expect(@deferrable.home_team?).to be(true)
+      expect(@deferrable.pending?).to be(true)
+      expect(@deferrable.deferrable?).to be(false)
+
+      @pending.each do |pick_ban|
+        expect(pick_ban.reload.away_team?).to be(true)
+      end
+    end
+  end
 end

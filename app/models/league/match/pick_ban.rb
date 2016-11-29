@@ -10,10 +10,12 @@ class League
       enum kind: [:pick, :ban]
       enum team: [:home_team, :away_team]
 
-      scope :pending,   -> { where(map: nil) }
-      scope :completed, -> { where.not(map: nil) }
+      validates :deferrable, inclusion: { in: [true, false] }
 
       validate :map_and_pick_present
+
+      scope :pending,   -> { where(map: nil) }
+      scope :completed, -> { where.not(map: nil) }
 
       delegate :league, to: :match
 
@@ -23,12 +25,42 @@ class League
         update(picked_by: user, map: map)
       end
 
+      def defer!
+        transaction do
+          pick_bans = match.pick_bans.pending.where.not(id: id).to_a
+          pick_bans.each do |pick_ban|
+            pick_ban.swap_team
+            pick_ban.save!
+          end
+
+          swap_team
+          self.deferrable = false
+          save!
+        end
+      end
+
       def pending?
         map_id.nil?
       end
 
       def completed?
         !pending?
+      end
+
+      def roster
+        home_team? ? match.home_team : match.away_team
+      end
+
+      def other_roster
+        home_team? ? match.away_team : match.home_team
+      end
+
+      def swap_team
+        self.team = if home_team?
+                      :away_team
+                    else
+                      :home_team
+                    end
       end
 
       private

@@ -9,6 +9,12 @@
   - if user_can_submit_pick_ban?(next_pick_bans.first)
     %li.list-group-item
       - pick_ban = next_pick_bans.shift
+
+      - if pick_ban.deferrable?
+        .pull-right
+          = button_to defer_pick_ban_path(pick_ban), method: :patch, class: 'btn btn-warning' do
+            Defer
+
       = bootstrap_form_for pick_ban, as: :pick_ban, url: submit_pick_ban_path(pick_ban),
                                      layout: :inline do |f|
         = f.collection_select :map_id, match.map_pool, :id, :name

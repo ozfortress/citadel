@@ -3,16 +3,17 @@ module Leagues
     class PickBansController < ApplicationController
       include PickBanPermissions
 
-      before_action only: :submit do
+      before_action only: [:submit, :defer] do
         @pick_ban = League::Match::PickBan.find(params[:id])
         @match    = @pick_ban.match
         @league   = @match.league
-        @map      = @match.map_pool.find(params[:pick_ban][:map_id])
       end
-      before_action :require_pick_ban_pending, only: :submit
-      before_action :require_can_submit, only: :submit
+      before_action :require_can_pick_ban, only: [:submit, :defer]
+      before_action :require_pick_ban_pending, only: [:submit, :defer]
+      before_action :require_pick_ban_deferrable, only: :defer
 
       def submit
+        @map = @match.map_pool.find(params[:pick_ban][:map_id])
         PickBans::SubmissionService.call(@pick_ban, current_user, @map)
 
         if @pick_ban.invalid?
@@ -22,14 +23,28 @@ module Leagues
         redirect_to match_path(@match)
       end
 
-      private
+      def defer
+        PickBans::DeferringService.call(@pick_ban)
 
-      def require_pick_ban_pending
-        redirect_back(fallback_location: match_path(@match)) unless @pick_ban.pending?
+        redirect_to match_path(@match)
       end
 
-      def require_can_submit
-        redirect_back(fallback_location: match_path(@match)) unless user_can_submit_pick_ban?
+      private
+
+      def redirect_to_match
+        redirect_back(fallback_location: match_path(@match))
+      end
+
+      def require_can_pick_ban
+        redirect_to_match unless user_can_submit_pick_ban?
+      end
+
+      def require_pick_ban_pending
+        redirect_to_match unless @pick_ban.pending?
+      end
+
+      def require_pick_ban_deferrable
+        redirect_to_match unless @pick_ban.deferrable?
       end
     end
   end
