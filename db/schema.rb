@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161127124753) do
+ActiveRecord::Schema.define(version: 20161129051940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -207,13 +207,14 @@ ActiveRecord::Schema.define(version: 20161127124753) do
   end
 
   create_table "league_match_pick_bans", force: :cascade do |t|
-    t.integer  "match_id",               null: false
+    t.integer  "match_id",                               null: false
     t.integer  "picked_by_id"
-    t.integer  "kind",         limit: 2, null: false
-    t.integer  "team",         limit: 2, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "kind",         limit: 2,                 null: false
+    t.integer  "team",         limit: 2,                 null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.integer  "map_id"
+    t.boolean  "deferrable",             default: false, null: false
     t.index ["map_id"], name: "index_league_match_pick_bans_on_map_id", using: :btree
     t.index ["match_id"], name: "index_league_match_pick_bans_on_match_id", using: :btree
   end

@@ -44,7 +44,10 @@ Rails.application.routes.draw do
 
       resources :comms, controller: 'leagues/matches/comms', only: [:create]
       resources :pick_bans, controller: 'leagues/matches/pick_bans', only: [] do
-        patch 'submit', on: :member
+        member do
+          patch 'submit'
+          patch 'defer'
+        end
       end
     end
   end

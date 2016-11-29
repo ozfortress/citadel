@@ -14,27 +14,13 @@ module Leagues
 
         private
 
-        def captains_for(pick_ban)
-          roster = if pick_ban.home_team?
-                     pick_ban.match.away_team
-                   else
-                     pick_ban.match.home_team
-                   end
-
-          User.get_revokeable(:edit, roster.team)
-        end
-
         def notify_captains!(pick_ban)
-          msg = notification_message(pick_ban)
+          msg = "#{pick_ban.roster.name} #{completed_kind(pick_ban)} #{pick_ban.map}"
           link = match_path(pick_ban.match)
 
-          captains_for(pick_ban).each do |captain|
+          User.get_revokeable(:edit, pick_ban.other_roster.team).each do |captain|
             Users::NotificationService.call(captain, msg, link)
           end
-        end
-
-        def notification_message(pick_ban)
-          "#{team_name(pick_ban)} #{completed_kind(pick_ban)} #{pick_ban.map}"
         end
 
         def completed_kind(pick_ban)
@@ -42,14 +28,6 @@ module Leagues
             'picked'
           else
             'banned'
-          end
-        end
-
-        def team_name(pick_ban)
-          if pick_ban.home_team?
-            pick_ban.match.home_team.name
-          else
-            pick_ban.match.away_team.name
           end
         end
       end
