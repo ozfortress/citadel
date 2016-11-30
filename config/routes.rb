@@ -42,7 +42,10 @@ Rails.application.routes.draw do
         patch 'confirm'
       end
 
-      resources :comms, controller: 'leagues/matches/comms', only: [:create]
+      resources :comms, controller: 'leagues/matches/comms',
+                        only: [:create, :edit, :update, :destroy] do
+        get :edits, on: :member, as: 'edits_for'
+      end
       resources :pick_bans, controller: 'leagues/matches/pick_bans', only: [] do
         member do
           patch 'submit'

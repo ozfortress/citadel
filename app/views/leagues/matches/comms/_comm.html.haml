@@ -1,0 +1,25 @@
+- if match.home_team.on_roster?(comm.user)
+  - roster = match.home_team
+- elsif match.away_team.on_roster?(comm.user)
+  - roster = match.away_team
+
+.panel.panel-default
+  %div{ id: "comm_#{comm.id}" }
+  .panel-heading
+    - if user_can_edit_comm?(comm)
+      .pull-right
+        = link_to edit_comm_path(comm), class: 'btn btn-link btn-sm' do
+          %span.glyphicon.glyphicon-cog
+    .pull-right
+      = comm.created_at.strftime('%c')
+
+    = "#{present(roster).link}:".html_safe if roster
+    - team = roster.team if roster
+    = render 'users/listing', user: comm.user, team: team
+
+  - if user_can_edit_comm?(comm) && comm.edits.size > 1
+    .pull-right
+      = link_to edits_for_comm_path(comm), class: 'btn btn-default btn-sm' do
+        View Edits
+
+.container-fluid= markdown comm.content

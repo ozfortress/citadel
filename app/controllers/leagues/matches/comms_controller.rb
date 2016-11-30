@@ -7,17 +7,45 @@ module Leagues
         @match = League::Match.find(params[:match_id])
         @league = @match.league
       end
-
-      before_action :require_user_can_comm
+      before_action only: [:edit, :update, :edits, :destroy] do
+        @comm   = League::Match::Comm.find(params[:id])
+        @match  = @comm.match
+        @league = @match.league
+      end
+      before_action :require_user_can_comm, only: :create
+      before_action :require_user_can_edit_comm, only: [:edit, :update, :edits]
+      before_action :require_user_can_edit_league, only: :destroy
 
       def create
-        @comm = League::Match::Comm.new(comm_params.merge(user: current_user, match: @match))
+        @comm = Comms::CreationService.call(current_user, @match, comm_params)
 
-        if @comm.save
+        if @comm.valid?
           redirect_to match_path(@match)
         else
           render 'leagues/matches/show'
         end
+      end
+
+      def edit
+      end
+
+      def update
+        @comm = Comms::EditingService.call(current_user, @comm, comm_params)
+
+        if @comm.valid?
+          redirect_to match_path(@match)
+        else
+          render :edit
+        end
+      end
+
+      def edits
+        @edits = @comm.edits
+      end
+
+      def destroy
+        @comm.destroy!
+        redirect_to match_path(@match)
       end
 
       private
@@ -28,6 +56,14 @@ module Leagues
 
       def require_user_can_comm
         redirect_to match_path(@match) unless user_can_comm?
+      end
+
+      def require_user_can_edit_comm
+        redirect_to match_path(@match) unless user_can_edit_comm?(@comm)
+      end
+
+      def require_user_can_edit_league
+        redirect_to match_path(@match) unless user_can_edit_league?(@league)
       end
     end
   end

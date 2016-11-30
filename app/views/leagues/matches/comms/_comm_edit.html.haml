@@ -1,0 +1,15 @@
+- if match.home_team.on_roster?(comm.user)
+  - roster = match.home_team
+- elsif match.away_team.on_roster?(comm.user)
+  - roster = match.away_team
+
+.panel.panel-default
+  .panel-heading
+    .pull-right
+      = comm.created_at.strftime('%c')
+
+    = "#{present(roster).link}:".html_safe if roster
+    - team = roster.team if roster
+    = render 'users/listing', user: comm.user, team: team
+
+.container-fluid= markdown comm.content

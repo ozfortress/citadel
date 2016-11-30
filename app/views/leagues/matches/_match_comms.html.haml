@@ -2,28 +2,14 @@
   .panel-heading Match Comms
 
   - comms.each do |comm|
-    - if match.home_team.on_roster?(comm.user)
-      - roster = match.home_team
-    - elsif match.away_team.on_roster?(comm.user)
-      - roster = match.away_team
-
-    .panel.panel-default
-      .panel-heading
-        .pull-right= comm.created_at.strftime('%c')
-        - if roster
-          = present(roster).link
-          \:
-
-        - team = roster.team if roster
-        = render 'users/listing', user: comm.user, team: team
-
-    .panel-body
-      = markdown comm.content
+    = render 'leagues/matches/comms/comm', match: match, comm: comm
 
   - if user_can_comm?
-    %hr
-    .panel-body
+    .container-fluid
+      %hr
       = bootstrap_form_for comm, as: :comm, url: match_comms_path(match) do |f|
-        = f.markdown_editor :content, hide_label: true, rows: 3
+        = render 'leagues/matches/comms/form', f: f
 
-        = f.submit 'Submit'
+        .row
+          = f.submit 'Post', class: 'btn btn-default pull-right'
+      %hr

@@ -35,5 +35,9 @@ module Leagues
          @match.away_team.on_roster?(current_user) ||
          user_can_either_teams?)
     end
+
+    def user_can_edit_comm?(comm)
+      user_can_edit_league? || current_user == comm.user
+    end
   end
 end
