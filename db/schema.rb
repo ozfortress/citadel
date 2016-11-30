@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161129051940) do
+ActiveRecord::Schema.define(version: 20161130075918) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,6 +194,16 @@ ActiveRecord::Schema.define(version: 20161129051940) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["league_id"], name: "index_league_divisions_on_league_id", using: :btree
+  end
+
+  create_table "league_match_comm_edits", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "comm_id",    null: false
+    t.text     "content",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comm_id"], name: "index_league_match_comm_edits_on_comm_id", using: :btree
+    t.index ["user_id"], name: "index_league_match_comm_edits_on_user_id", using: :btree
   end
 
   create_table "league_match_comms", force: :cascade do |t|
@@ -523,6 +533,8 @@ ActiveRecord::Schema.define(version: 20161129051940) do
   add_foreign_key "forums_threads", "users", column: "created_by_id"
   add_foreign_key "forums_topics", "users", column: "created_by_id"
   add_foreign_key "league_divisions", "leagues"
+  add_foreign_key "league_match_comm_edits", "league_match_comms", column: "comm_id"
+  add_foreign_key "league_match_comm_edits", "users"
   add_foreign_key "league_match_comms", "league_matches", column: "match_id"
   add_foreign_key "league_match_comms", "users"
   add_foreign_key "league_match_pick_bans", "league_matches", column: "match_id"
