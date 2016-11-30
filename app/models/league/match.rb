@@ -62,7 +62,7 @@ class League
     end
 
     def bye?
-      !away_team
+      !away_team_id
     end
 
     def picking_completed?

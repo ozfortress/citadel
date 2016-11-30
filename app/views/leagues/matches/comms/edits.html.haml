@@ -1,0 +1,5 @@
+%h2 Post Edits for #{present(@match).link}
+
+.panel.panel-default
+  - @edits.each do |comm_edit|
+    = render 'comm_edit', match: @match, comm: comm_edit
