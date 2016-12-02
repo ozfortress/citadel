@@ -40,7 +40,8 @@ class League
     validates :seeding,     numericality: { greater_than: 0 }, allow_nil: true
     validates :approved,    inclusion: { in: [true, false] }
     validates :disbanded,   inclusion: { in: [true, false] }
-    validate :within_roster_size_limits
+
+    validate :within_roster_size_limits, on: :create
     validate :validate_schedule
 
     scope :approved, -> { where(approved: true) }
