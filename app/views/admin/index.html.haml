@@ -8,7 +8,7 @@
         %span.glyphicon.glyphicon-plus
         Create New League
     %ul.list-group
-      - leagues.each do |league|
+      - leagues.order(created_at: :desc).each do |league|
         = link_to league.name, league_path(league), class: 'list-group-item'
 
 - if current_user.can?(:edit, :games)
