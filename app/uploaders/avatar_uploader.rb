@@ -8,6 +8,14 @@ class AvatarUploader < CarrierWave::Uploader::Base
     'fallback/' + [version_name, model_name, 'avatar_default.png'].compact.join('_')
   end
 
+  def store_dir
+    'avatars/' + model.model_name.singular
+  end
+
+  def filename
+    "#{model.id}.#{file.extension}" if original_filename
+  end
+
   process resize_to_fit: [200, 200]
 
   version :thumb do
