@@ -8,7 +8,7 @@ class BadgeUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    'badges'
+    'uploads/badges'
   end
 
   process resize_to_fit: [64, 64]
