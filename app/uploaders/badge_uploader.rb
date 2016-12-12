@@ -7,6 +7,10 @@ class BadgeUploader < CarrierWave::Uploader::Base
     'fallback/' + [version_name, 'default_badge.png'].compact.join('_')
   end
 
+  def store_dir
+    'badges'
+  end
+
   process resize_to_fit: [64, 64]
 
   version :thumb do
