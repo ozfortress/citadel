@@ -9,7 +9,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    'avatars/' + model.model_name.plural
+    'uploads/avatars/' + model.model_name.plural
   end
 
   def filename
