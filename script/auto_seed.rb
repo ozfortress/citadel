@@ -7,11 +7,12 @@ rosters_with_values = rosters.map do |roster|
   player_values = roster.users.map do |user|
     # Get highest placement in any roster for completed leagues
     completed = League.statuses[:completed]
-    past_rosters = user.rosters.includes(division: { league: :divisions })
-                               .includes(division: :approved_rosters)
-                               .references(division: :league)
-                               .where(leagues: { status: completed })
-                               .to_a
+    past_rosters = user.rosters
+                       .includes(division: { league: :divisions })
+                       .includes(division: :approved_rosters)
+                       .references(division: :league)
+                       .where(leagues: { status: completed })
+                       .to_a
 
     roster_values = past_rosters.map do |past_roster|
       value = past_roster.division.rosters_sorted.index(past_roster)
@@ -34,7 +35,7 @@ rosters_with_values = rosters.map do |roster|
   [roster, rms_value]
 end
 
-rosters_with_values.sort_by! { |roster, value| value }
+rosters_with_values.sort_by! { |_, value| value }
 
 rosters_with_values.each do |roster, value|
   puts "# Team: '#{roster.name}'"
@@ -43,11 +44,10 @@ rosters_with_values.each do |roster, value|
   puts
   puts roster.description
 
-  puts "Roster:"
+  puts 'Roster:'
   roster.users.each do |user|
     puts "\t#{user.name}\t[[#{user.steam_id_nice}](#{user.steam_profile_url})]"
   end
 
   puts
 end
-
