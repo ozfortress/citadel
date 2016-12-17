@@ -299,7 +299,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rainbow (2.1.0)
-    rake (12.0.0)
+    rake (11.3.0)
     redcarpet (3.3.4)
     reek (4.5.3)
       codeclimate-engine-rb (~> 0.4.0)
@@ -446,6 +446,7 @@ DEPENDENCIES
   pg
   rails (~> 5.0.0)
   rails_best_practices
+  rake (~> 11.3.0)
   redcarpet
   reek
   rspec-rails (~> 3.4)
