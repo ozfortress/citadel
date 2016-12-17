@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'rake', '~> 11.3.0'
 gem 'rails', '~> 5.0.0'
 # Use postgres
 gem 'pg'
