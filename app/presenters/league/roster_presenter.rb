@@ -22,7 +22,7 @@ class League
     end
 
     def title
-      title = if league.signuppable?
+      title = if league.signuppable? || !roster.approved?
                 signup_title
               else
                 active_title
