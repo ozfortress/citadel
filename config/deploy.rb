@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.6.1'
+lock '3.7.1'
 
 set :application, 'citadel'
 set :repo_url, 'git@github.com:ozfortress/citadel.git'
