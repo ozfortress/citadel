@@ -11,6 +11,7 @@ class League
       validate :unique_within_league
       validate :on_team,   if: :is_joining?
       validate :on_roster, unless: :is_joining?
+      validate :active_roster, if: :is_joining?
       validate :within_roster_size_limits
       validate :within_roster_size_limits_for_leaving_roster, if: :is_joining?
 
@@ -59,6 +60,12 @@ class League
         errors.add(:user_id, 'is not on the roster') unless roster.on_roster?(user)
       end
 
+      def active_roster
+        return unless roster.present?
+
+        errors.add(:base, 'cannot join a disbanded roster') if roster.disbanded?
+      end
+
       def within_roster_size_limits
         return unless user.present? && roster.present?
 
@@ -78,6 +85,8 @@ class League
       end
 
       def within_roster_size_limits_when_leaving
+        return if roster.disbanded?
+
         if roster.players.size - 1 < league.min_players
           errors.add(:base, 'would result in too few players on roster')
         end
@@ -85,6 +94,7 @@ class League
 
       def within_roster_size_limits_for_leaving_roster
         return unless user.present? && roster.present? && leaving_roster.present?
+        return if leaving_roster.disbanded?
 
         new_size = leaving_roster.players.size - 1
         unless new_size >= league.min_players
