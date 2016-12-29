@@ -1,8 +1,9 @@
-%h1 Leagues
+%h1.tab-header Leagues
 
-.row
-  .col-sm-3.col-md-3.pull-right
-    = render 'search'
+.col-sm-3.col-md-3.searchbox.pull-right
+  = render 'search'
+
+%hr
 
 - unless games.empty?
   %ul.nav.nav-tabs
