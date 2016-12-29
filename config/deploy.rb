@@ -2,9 +2,9 @@
 lock '3.7.1'
 
 set :application, 'citadel'
-set :repo_url, 'git@github.com:ozfortress/citadel.git'
 
-set :scm, :git
+# git settings
+set :repo_url, 'git@github.com:ozfortress/citadel.git'
 set :branch, :ozfortress
 
 # Default deploy_to directory is /var/www/my_app_name
