@@ -134,6 +134,8 @@
           = roster_p.title
           %a{ data: { toggle: 'collapse', parent: '.global-collapsible' }, href: "##{id}" }
             %span.pull-right.glyphicon.glyphicon-chevron-down
+          - if user_can_edit_league?(roster.league)
+            = roster_p.admin_link 'View Details', class: 'btn btn-default pull-right'
 
         .panel-collapse.collapse{ id: id }
           %ul.list-group
