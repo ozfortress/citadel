@@ -1,17 +1,16 @@
-# rubocop:disable Style/NumericLiterals
-VAC = [76561198044298308].freeze
-# rubocop:enable Style/NumericLiterals
+# List of steam ids to exclude from medals
+VAC = [].freeze
 
-league = League.find(1)
+league = League.find(ARGV.first.to_i)
 
 def dump_roster(roster)
-  roster.player_users.each do |user|
+  roster.users.find_each do |user|
     puts user.steam_id unless VAC.include?(user.steam_id)
   end
 end
 
 league.divisions.each do |division|
-  rosters = division.rosters.active.sort_by(&:sort_keys)
+  rosters = division.rosters_sorted
 
   dump_roster rosters.first
   puts
@@ -19,6 +18,6 @@ league.divisions.each do |division|
   puts
   dump_roster rosters.third
   puts
-  rosters[3..rosters.length].map { |roster| dump_roster roster }
+  rosters[3..rosters.length].each { |roster| dump_roster roster }
   puts
 end
