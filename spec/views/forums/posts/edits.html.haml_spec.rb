@@ -6,6 +6,7 @@ describe 'forums/posts/edits' do
 
   it 'displays' do
     assign(:post, post)
+    assign(:thread, post.thread)
     assign(:edits, edits.paginate(page: 1))
 
     render

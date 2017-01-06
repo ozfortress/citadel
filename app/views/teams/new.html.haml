@@ -1,3 +1,5 @@
+- content_for(:title) { 'Create Team' }
+
 = bootstrap_form_for @team, method: :post do |f|
   = render 'team_form', f: f
 

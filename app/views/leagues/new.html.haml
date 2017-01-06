@@ -1,3 +1,5 @@
+- content_for(:title) { 'Create League' }
+
 = bootstrap_form_for @league, url: leagues_path(@league) do |f|
   = render 'league_form', f: f, weekly_scheduler: @weekly_scheduler
 

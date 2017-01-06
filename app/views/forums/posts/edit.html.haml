@@ -1,3 +1,6 @@
+- thread_title = @post.thread.title
+- content_for(:title) { "Edit Post | #{thread_title}" }
+
 = render 'forums/head', object: @post.thread
 
 .panel.panel-default
@@ -8,7 +11,7 @@
       = f.submit 'Update'
       = link_to 'Cancel', :back, class: 'btn btn-default'
 
-- if user_can_manage_thread?(@post.thread)
+- if user_can_manage_thread?(@thread)
   .panel.panel-danger
     .panel-heading Danger Zone
     .panel-body

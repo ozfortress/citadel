@@ -1,3 +1,5 @@
+- content_for(:title) { @team.name }
+
 - if user_can_edit_team?
   = link_to edit_team_path(@team), class: 'btn btn-default pull-right', type: 'button' do
     Settings

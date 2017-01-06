@@ -1,3 +1,5 @@
+- content_for(:title) { "Sign up | #{@league.name}" }
+
 %h1= @league.name
 
 - if @team.nil?

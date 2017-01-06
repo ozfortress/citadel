@@ -1,3 +1,5 @@
+- content_for(:title) { @league.name }
+
 - if @league.hidden?
   .alert.alert-warning
     %span.glyphicon.glyphicon-lock

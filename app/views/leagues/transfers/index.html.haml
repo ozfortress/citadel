@@ -1,3 +1,5 @@
+- content_for(:title) { "Transfers | #{@league.name}" }
+
 %h1
   = link_to @league.name, league_path(@league)
   Transfers

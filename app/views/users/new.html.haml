@@ -1,3 +1,5 @@
+- content_for(:title) { 'Register' }
+
 %h1 Register with [#{@user.steam_id_nice}]
 
 = bootstrap_form_for @user, method: :new do |f|
