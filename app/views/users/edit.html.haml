@@ -1,5 +1,7 @@
 - content_for(:title) { "Edit: #{@user.name}" }
 
+- user_p = present(@user)
+
 .panel-body
   = bootstrap_form_for @name_change, url: name_user_path(@user),
                        method: :post, as: :name_change do |f|
