@@ -1,3 +1,5 @@
+- content_for(:title) { "#{@roster.name} | #{@league.name}" }
+
 - unless @roster.approved?
   .alert.alert-warning
     - if user_can_edit_league?

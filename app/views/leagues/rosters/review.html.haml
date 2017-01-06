@@ -1,3 +1,5 @@
+- content_for(:title) { "Review: #{@roster.name} | #{@league.name}" }
+
 = bootstrap_form_for @roster, as: :roster,
     url: approve_roster_path(@roster) do |f|
   = f.text_field :name

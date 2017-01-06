@@ -1,3 +1,5 @@
+- content_for(:title) { "Generate Matches | #{@league.name}" }
+
 %ul.nav.nav-tabs
   - @league.divisions.each do |div|
     - klass = div == @division ? 'active' : ''

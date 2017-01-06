@@ -1,3 +1,5 @@
+- content_for(:title) { "#{@topic.name} | Forums" }
+
 - if user_can_manage_topic?
   .pull-right
     = link_to edit_forums_topic_path(@topic), class: 'btn btn-default' do

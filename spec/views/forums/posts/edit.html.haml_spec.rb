@@ -5,6 +5,7 @@ describe 'forums/posts/edit' do
 
   it 'displays' do
     assign(:post, post)
+    assign(:thread, post.thread)
 
     render
   end

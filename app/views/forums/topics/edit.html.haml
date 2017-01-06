@@ -1,3 +1,5 @@
+- content_for(:title) { "Edit: #{present(@topic)} | Forums" }
+
 = render 'forums/head', object: @topic
 
 .panel.panel-default

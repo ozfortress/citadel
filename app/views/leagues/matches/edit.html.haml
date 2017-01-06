@@ -1,3 +1,7 @@
+- match_p = present(@match)
+
+- content_for(:title) { "Edit: #{match_p} | #{@league.name}" }
+
 .panel.panel-default
   .panel-heading Info
   .panel-body

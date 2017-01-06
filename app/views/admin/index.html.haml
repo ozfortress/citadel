@@ -1,3 +1,5 @@
+- content_for(:title) { 'Admin' }
+
 %h2 For all your admin needs
 
 - if current_user.can?(:edit, :leagues)

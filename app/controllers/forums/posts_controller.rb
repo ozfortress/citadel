@@ -3,7 +3,10 @@ module Forums
     include Forums::Permissions
 
     before_action only: [:create] { @thread = Forums::Thread.find(params[:thread_id]) }
-    before_action except: [:create] { @post = Post.find(params[:id]) }
+    before_action except: [:create] do
+      @post = Post.find(params[:id])
+      @thread = @post.thread
+    end
     before_action :require_can_view_thread
     before_action :require_can_create_post, only: :create
     before_action :require_can_edit_post, only: [:edit, :update]
@@ -42,7 +45,7 @@ module Forums
         path = if @post.previous_post
                  path_for(@post.previous_post)
                else
-                 forums_thread_path(@post.thread)
+                 forums_thread_path(@thread)
                end
 
         redirect_to path
@@ -64,12 +67,11 @@ module Forums
     end
 
     def require_can_view_thread
-      thread = @thread || @post.thread
-      redirect_back(fallback_location: forums_path) unless user_can_view_thread?(thread)
+      redirect_back(fallback_location: forums_path) unless user_can_view_thread?(@thread)
     end
 
     def require_can_manage_thread
-      redirect_back(fallback_location: forums_path) unless user_can_manage_thread?(@post.thread)
+      redirect_back(fallback_location: forums_path) unless user_can_manage_thread?(@thread)
     end
 
     def require_can_create_post

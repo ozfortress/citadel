@@ -1,3 +1,5 @@
+- content_for(:title) { "Edit: #{@thread.title} | Forums" }
+
 = render 'forums/head', object: @thread
 
 .panel.panel-default
