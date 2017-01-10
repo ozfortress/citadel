@@ -14,6 +14,8 @@ class UserMailer < ApplicationMailer
 
     @unsubscribe_link = edit_user_url(user)
 
+    headers['List-Unsubscribe'] = "<#{@unsubscribe_link}>"
+
     mail(to: user.email, subject: 'New Notification')
   end
 end
