@@ -12,6 +12,8 @@ class UserMailer < ApplicationMailer
     link = root_url + link[1..link.length] if link.starts_with?('/')
     @link = link
 
+    @unsubscribe_link = edit_user_url(user)
+
     mail(to: user.email, subject: 'New Notification')
   end
 end

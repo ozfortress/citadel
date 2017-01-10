@@ -15,7 +15,7 @@ describe UserMailer do
   end
 
   describe '#notification' do
-    let(:user) { build(:user, email: 'foo@bar.com') }
+    let(:user) { build_stubbed(:user, email: 'foo@bar.com') }
     let(:mail) { described_class.notification(user, 'foo', 'bar').deliver_now }
 
     it 'sets the subject' do
