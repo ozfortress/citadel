@@ -10,6 +10,7 @@ module Searchable
     index: {
       number_of_shards: 1,
       number_of_replicas: 0,
+    }
   }.freeze
 
   def as_indexed_json(_ = {})
