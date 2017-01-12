@@ -16,6 +16,7 @@ describe 'leagues/rosters/new' do
     sign_in captain
     assign(:league, league)
     assign(:roster, league.rosters.new)
+    assign(:teams, [team, team2])
 
     render
   end

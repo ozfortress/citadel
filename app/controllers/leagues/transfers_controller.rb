@@ -20,6 +20,7 @@ module Leagues
     def update
       Transfers::ApprovalService.call(@transfer_request)
 
+      flash[:error] = @transfer_request.errors.full_messages.first
       index
       render :index
     end
@@ -27,6 +28,7 @@ module Leagues
     def destroy
       Transfers::DenialService.call(@transfer_request)
 
+      flash[:error] = @transfer_request.errors.full_messages.first
       index
       render :index
     end

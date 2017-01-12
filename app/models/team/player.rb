@@ -1,6 +1,6 @@
 class Team
   class Player < ApplicationRecord
-    belongs_to :team
+    belongs_to :team, counter_cache: true
     belongs_to :user
 
     validates :user, uniqueness: { scope: :team }

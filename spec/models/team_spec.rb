@@ -31,6 +31,7 @@ describe Team do
       team.remove_player!(user3)
       team.add_player!(user2)
 
+      team.reload
       expect(team.transfers.size).to eq(6)
       expect(team.players.size).to eq(2)
       expect(team.users).to include(user1)

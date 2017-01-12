@@ -33,6 +33,8 @@ module Leagues
         @roster.team = @team
         @roster.name = @team.name
         @team.users.each { |user| @roster.players.new(user: user) }
+      else
+        @teams = current_user.authorized_teams_for(@league)
       end
     end
 

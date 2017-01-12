@@ -25,7 +25,7 @@ class Team < ApplicationRecord
 
   searchable_fields :name
   search_mappings do
-    indexes :name, analyzer: 'search'
+    indexes :name, analyzer: 'snowball'
   end
 
   def matches

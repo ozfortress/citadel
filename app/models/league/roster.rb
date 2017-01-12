@@ -4,13 +4,15 @@ class League
     belongs_to :division, inverse_of: :rosters
     delegate :league, to: :division, allow_nil: true
 
-    has_many :players,           -> { order(created_at: :desc) }, dependent: :destroy,
-                                                                  inverse_of: :roster
-    has_many :transfers,         -> { order(created_at: :desc) }, dependent: :destroy,
-                                                                  inverse_of: :roster
-    has_many :transfer_requests, -> { order(created_at: :desc) }, dependent: :destroy,
-                                                                  inverse_of: :roster
+    has_many :players, -> { order(created_at: :desc) },
+             dependent: :destroy, inverse_of: :roster
     has_many :users, through: :players
+
+    has_many :transfers, -> { order(created_at: :desc) },
+             dependent: :destroy, inverse_of: :roster
+
+    has_many :transfer_requests, -> { order(created_at: :desc) },
+             dependent: :destroy, inverse_of: :roster
 
     accepts_nested_attributes_for :players, reject_if: proc { |attrs| attrs['user_id'].blank? }
 

@@ -56,7 +56,7 @@ class User < ApplicationRecord
 
   searchable_fields :name, :steam_id, :steam_id_nice
   search_mappings do
-    indexes :name, analyzer: 'search'
+    indexes :name, analyzer: 'snowball'
     indexes :steam_id, analyzer: 'keyword'
     indexes :steam_id_nice, analyzer: 'keyword'
   end
@@ -72,6 +72,12 @@ class User < ApplicationRecord
 
   def entered?(comp)
     comp.players(user: self).exists?
+  end
+
+  def authorized_teams_for(league)
+    which_can(:edit, :team).select do |team|
+      team.players_count >= league.min_players && !team.entered?(league)
+    end
   end
 
   def steam_id_nice
