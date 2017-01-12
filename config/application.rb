@@ -21,7 +21,7 @@ module Ozfortress
     # config.i18n.default_locale = :de
 
     # Autoload lib/
-    config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    config.autoload_paths << Rails.root.join('lib')
 
     # Make view helpers, view specific
     config.action_controller.include_all_helpers = false
