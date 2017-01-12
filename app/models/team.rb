@@ -1,3 +1,5 @@
+require 'search'
+
 class Team < ApplicationRecord
   has_many :invites, dependent: :destroy
   has_many :players,   -> { order(created_at: :desc) }, dependent: :destroy

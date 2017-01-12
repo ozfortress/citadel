@@ -1,3 +1,5 @@
+require 'search'
+
 class League < ApplicationRecord
   belongs_to :format
 
