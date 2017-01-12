@@ -1,5 +1,4 @@
 class TeamsController < ApplicationController
-  include Searchable
   include TeamPermissions
 
   before_action except: [:index, :new, :create] { @team = Team.find(params[:id]) }
@@ -8,7 +7,7 @@ class TeamsController < ApplicationController
   before_action :require_team_permission, except: [:index, :new, :create, :show, :leave]
 
   def index
-    @teams = Team.search_all(params[:q]).paginate(page: params[:page])
+    @teams = Team.search(params[:q]).paginate(page: params[:page])
   end
 
   def new

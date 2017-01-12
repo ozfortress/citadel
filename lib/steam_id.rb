@@ -16,4 +16,8 @@ module SteamId
     account_lower, account_higher = string.scanf('STEAM_0:%d:%d')
     account_lower + account_higher * 2 + UNIVERSE_0_TYPE_PUBLIC
   end
+
+  def valid?(string)
+    string =~ /^STEAM_0:[0-9]+:[0-9]+$/
+  end
 end

@@ -1,8 +1,4 @@
-require 'elasticsearch/model'
-
 class League < ApplicationRecord
-  include Searchable
-
   belongs_to :format
 
   has_many :divisions, inverse_of: :league, dependent: :destroy
@@ -52,17 +48,19 @@ class League < ApplicationRecord
   scope :not_hidden, -> { where.not(status: League.statuses[:hidden]) }
 
   after_initialize :set_defaults, unless: :persisted?
+  before_save :update_query_cache
   after_save :update_roster_match_counters
 
   alias_attribute :to_s, :name
 
-  searchable_fields :name
-  search_mappings do
-    indexes :name, analyzer: 'snowball'
-  end
+  def self.search(query)
+    return order(:id) if query.blank?
 
-  def as_indexed_json(_ = {})
-    as_json(only: [:name, :description])
+    query = Search.transform_query(query)
+
+    select('leagues.*', "(query_name_cache <-> #{sanitize(query)}) AS similarity")
+      .where('(query_name_cache <-> ?) < 0.9', query)
+      .order('similarity')
   end
 
   def entered?(user)
@@ -103,7 +101,16 @@ class League < ApplicationRecord
      points_per_match_forfeit_win, points_per_match_forfeit_loss]
   end
 
+  def reset_query_cache!
+    update_query_cache
+    save!
+  end
+
   private
+
+  def update_query_cache
+    self.query_name_cache = Search.transform_query(name)
+  end
 
   def update_roster_match_counters
     rosters.approved.find_each(&:update_match_counters!)

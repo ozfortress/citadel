@@ -1,7 +1,4 @@
-require 'elasticsearch/model'
-
 class User < ApplicationRecord
-  include Searchable
   include Auth::Model
 
   EMAIL_CONFIRMATION_TIMEOUT = 1.hour
@@ -54,13 +51,22 @@ class User < ApplicationRecord
 
   alias_attribute :to_s, :name
 
-  searchable_fields :name, :steam_id, :steam_id_nice
-  search_mappings do
-    indexes :name, analyzer: 'snowball'
-    indexes :steam_id, analyzer: 'keyword'
-    indexes :steam_id_nice, analyzer: 'keyword'
+  before_save :update_query_cache
+
+  def self.search(query)
+    return order(:id) if query.blank?
+
+    query = Search.transform_query(query)
+
+    steam_id = query.to_i
+    steam_id = SteamId.from_str(query) if SteamId.valid?(query)
+
+    select('users.*', "(query_name_cache <-> #{sanitize(query)}) AS similarity")
+      .where('steam_id = ? OR (query_name_cache <-> ?) < 0.9', steam_id, query)
+      .order('similarity')
   end
 
+  # TODO: Move to presenter
   def steam_profile_url
     "http://steamcommunity.com/profiles/#{steam_id}"
   end
@@ -123,7 +129,16 @@ class User < ApplicationRecord
     true
   end
 
+  def reset_query_cache!
+    update_query_cache
+    save!
+  end
+
   private
+
+  def update_query_cache
+    self.query_name_cache = I18n.transliterate(name)
+  end
 
   def get_player_rosters(transfers, transfer_sort, rosters, rosters_sort)
     # TODO: transfer_sort and rosters_sort can be inferred

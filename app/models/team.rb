@@ -1,8 +1,4 @@
-require 'elasticsearch/model'
-
 class Team < ApplicationRecord
-  include Searchable
-
   has_many :invites, dependent: :destroy
   has_many :players,   -> { order(created_at: :desc) }, dependent: :destroy
   has_many :transfers, -> { order(created_at: :desc) }, dependent: :destroy
@@ -21,11 +17,17 @@ class Team < ApplicationRecord
 
   alias_attribute :to_s, :name
 
+  before_save :update_query_cache
   before_destroy :must_not_have_rosters, prepend: true
 
-  searchable_fields :name
-  search_mappings do
-    indexes :name, analyzer: 'snowball'
+  def self.search(query)
+    return order(:id) if query.blank?
+
+    query = Search.transform_query(query)
+
+    select('teams.*', "(query_name_cache <-> #{sanitize(query)}) AS similarity")
+      .where('(query_name_cache <-> ?) < 0.9', query)
+      .order('similarity')
   end
 
   def matches
@@ -62,7 +64,16 @@ class Team < ApplicationRecord
            .exists?
   end
 
+  def reset_query_cache!
+    update_query_cache
+    save!
+  end
+
   private
+
+  def update_query_cache
+    self.query_name_cache = Search.transform_query(name)
+  end
 
   def must_not_have_rosters
     if rosters.exists?
