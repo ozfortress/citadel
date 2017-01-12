@@ -6,8 +6,11 @@
   %h4 Which team do you want to sign up with?
 
   %ul.list-group
-    - current_user.which_can(:edit, :team).each do |team|
-      - next if team.entered?(@league)
+    - if @teams.empty?
+      %li.list-group-item
+        You must have at least #{@league.min_players} players on a team to sign up.
+
+    - @teams.each do |team|
       = link_to new_league_roster_path(@league, team_id: team.id),
                 class: 'list-group-item' do
         = team.name
@@ -25,12 +28,22 @@
     = render 'form', f: f
 
     = f.form_group :players, label: { text: 'Players' } do
+      / Check box list for players from the team to add to the roster
       = f.fields_for(:players, @team.users) do |user_f|
         - user = user_f.object
         - user_p = present(user)
         - player = @roster.players.first { |pl| pl.user_id == user.id }
-        = user_f.check_box :user_id, { label: user_p.link, checked: player }, user.id, nil
-        = user_p.league_status(@league)
+        - has_errors = player && player.errors.any?
+
+        .form-group{ class: ('has-error' if has_errors) }
+          - label = [user_p.link, user_p.league_status(@league)].join(', ').html_safe
+          = user_f.check_box :user_id, { label: label, checked: !player.nil? }, user.id, nil
+
+          / Manually display errors.
+          - if player && has_errors
+            - player.errors.values.each do |errors|
+              - errors.each do |error|
+                %span.help-block= error
 
     = f.submit 'Sign up'
     = link_to 'Cancel', league_path(@league), class: 'btn btn-default'

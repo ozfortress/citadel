@@ -74,6 +74,12 @@ class User < ApplicationRecord
     comp.players(user: self).exists?
   end
 
+  def authorized_teams_for(league)
+    which_can(:edit, :team).select do |team|
+      team.players_count >= league.min_players && !team.entered?(league)
+    end
+  end
+
   def steam_id_nice
     SteamId.to_str(steam_id)
   end
