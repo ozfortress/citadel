@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   include UsersPermissions
-  include Searchable
 
   before_action only: [:show, :edit, :update,
                        :request_name_change] { @user = User.find(params[:id]) }
@@ -13,7 +12,7 @@ class UsersController < ApplicationController
   before_action :require_user_confirmation_not_timed_out, only: :confirm_email
 
   def index
-    @users = User.search_all(params[:q]).paginate(page: params[:page])
+    @users = User.search(params[:q]).paginate(page: params[:page])
   end
 
   def new

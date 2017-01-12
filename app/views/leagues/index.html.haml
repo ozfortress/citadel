@@ -23,6 +23,7 @@
     - if index == 0
       - klass += ' in active'
 
+    / TODO: Reformat this logic into the controller using group_by
     - leagues = @leagues.joins(:format).where(formats: { game_id: game.id })
     %div{ id: game.name.parameterize, class: klass }
       - if leagues.empty?

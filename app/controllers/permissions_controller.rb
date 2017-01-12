@@ -23,7 +23,7 @@ class PermissionsController < ApplicationController
   end
 
   def users
-    @users = User.search_all(params[:q]).paginate(page: params[:page])
+    @users = User.search(params[:q]).paginate(page: params[:page])
   end
 
   def grant

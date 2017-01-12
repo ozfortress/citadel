@@ -1,8 +1,6 @@
 language: ruby
 cache: bundler
 rvm: 2.3.1
-services:
-  - elasticsearch
 addons:
   postgresql: "9.4"
 before_script:

@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112030733) do
+ActiveRecord::Schema.define(version: 20170112071831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_trgm"
 
   create_table "action_user_edit_forums_thread", force: :cascade do |t|
     t.integer "user_id"
@@ -364,6 +365,8 @@ ActiveRecord::Schema.define(version: 20170112030733) do
     t.integer  "rosters_count",                 default: 0,     null: false
     t.integer  "schedule",                      default: 0,     null: false
     t.boolean  "schedule_locked",               default: false, null: false
+    t.string   "query_name_cache",              default: "",    null: false
+    t.index "query_name_cache gist_trgm_ops", name: "index_leagues_on_query_name_change", using: :gist
     t.index ["format_id"], name: "index_leagues_on_format_id", using: :btree
   end
 
@@ -405,12 +408,14 @@ ActiveRecord::Schema.define(version: 20170112030733) do
   end
 
   create_table "teams", force: :cascade do |t|
-    t.string   "name",                      null: false
-    t.text     "description",               null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "name",                          null: false
+    t.text     "description",                   null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.string   "avatar"
-    t.integer  "players_count", default: 0, null: false
+    t.integer  "players_count",    default: 0,  null: false
+    t.string   "query_name_cache", default: "", null: false
+    t.index "query_name_cache gist_trgm_ops", name: "index_teams_on_query_name_cache", using: :gist
     t.index ["name"], name: "index_teams_on_name", unique: true, using: :btree
   end
 
@@ -467,6 +472,8 @@ ActiveRecord::Schema.define(version: 20170112030733) do
     t.datetime "confirmed_at"
     t.string   "confirmation_token"
     t.datetime "confirmation_sent_at"
+    t.string   "query_name_cache",     default: "", null: false
+    t.index "query_name_cache gist_trgm_ops", name: "index_users_on_query_name_cache", using: :gist
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["name"], name: "index_users_on_name", unique: true, using: :btree
     t.index ["steam_id"], name: "index_users_on_steam_id", unique: true, using: :btree

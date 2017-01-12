@@ -11,7 +11,7 @@ class LeaguesController < ApplicationController
   before_action :require_hidden, only: [:destroy]
 
   def index
-    @leagues = League.search_all(params[:q])
+    @leagues = League.search(params[:q])
                      .order(status: :asc, created_at: :desc)
                      .paginate(page: params[:page])
   end

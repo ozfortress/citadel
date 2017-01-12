@@ -42,9 +42,6 @@ gem 'will_paginate', '3.1.0'
 gem 'will_paginate-bootstrap'
 # Forum formatting
 gem 'redcarpet'
-# Search
-gem 'elasticsearch-model'
-gem 'elasticsearch-rails'
 # File Uploads
 gem 'carrierwave'
 gem 'mini_magick'
