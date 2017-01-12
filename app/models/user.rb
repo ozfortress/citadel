@@ -1,3 +1,6 @@
+require 'search'
+require 'auth'
+
 class User < ApplicationRecord
   include Auth::Model
 
