@@ -6,12 +6,12 @@ module Leagues
 
       def call(request)
         request.transaction do
+          request.approve || rollback!
+
           user   = request.user
           roster = request.roster
           notify_users(request, user, roster)
           notify_captains(request, user, roster)
-
-          request.approve || rollback!
         end
       end
 
