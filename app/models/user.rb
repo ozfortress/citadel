@@ -56,7 +56,7 @@ class User < ApplicationRecord
 
   searchable_fields :name, :steam_id, :steam_id_nice
   search_mappings do
-    indexes :name, analyzer: 'search'
+    indexes :name, analyzer: 'snowball'
     indexes :steam_id, analyzer: 'keyword'
     indexes :steam_id_nice, analyzer: 'keyword'
   end

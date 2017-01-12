@@ -10,30 +10,6 @@ module Searchable
     index: {
       number_of_shards: 1,
       number_of_replicas: 0,
-      analysis: {
-        filter: {
-          edgeNGram_filter: {
-            type: :edgeNGram,
-            min_gram: 2,
-            max_gram: 20,
-          },
-        },
-        tokenizer: {
-          edgeNgram_tokenizer: {
-            type: :edgeNGram,
-            min_gram: 2,
-            max_gram: 20,
-            token_chars: [:letter, :digit],
-          }
-        },
-        analyzer: {
-          search: {
-            tokenizer: :edgeNgram_tokenizer,
-            filter: [:lowercase, :asciifolding, :edgeNGram_filter],
-          }
-        }
-      }
-    }
   }.freeze
 
   def as_indexed_json(_ = {})
