@@ -67,6 +67,7 @@ class UsersController < ApplicationController
     @name_change = @user.names.new(name_change_params)
 
     if @name_change.save
+      flash[:notice] = 'Name change request sent!'
       redirect_to(user_path(@user))
     else
       render :edit
