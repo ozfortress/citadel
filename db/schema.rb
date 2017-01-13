@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112071831) do
+ActiveRecord::Schema.define(version: 20170113030247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -248,8 +248,9 @@ ActiveRecord::Schema.define(version: 20170112071831) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.integer  "forfeit_by",   default: 0,  null: false
-    t.integer  "round"
+    t.integer  "round_number"
     t.string   "notice",       default: "", null: false
+    t.string   "round_name",   default: "", null: false
     t.index ["away_team_id"], name: "index_league_matches_on_away_team_id", using: :btree
     t.index ["home_team_id"], name: "index_league_matches_on_home_team_id", using: :btree
   end

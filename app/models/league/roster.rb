@@ -69,7 +69,7 @@ class League
 
     def matches
       home_team_matches.union(away_team_matches)
-                       .order(round: :desc, created_at: :asc)
+                       .order(round_number: :desc, created_at: :asc)
     end
 
     def won_rounds

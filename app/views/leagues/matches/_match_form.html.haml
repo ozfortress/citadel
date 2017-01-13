@@ -12,7 +12,8 @@
                         include_blank: 'BYE', label: 'Away Team'
   = f.errors_on :away_team
 
-= f.number_field :round
+= f.number_field :round_number, label: 'Round Number (Used for ordering)'
+= f.text_field :round_name, label: 'Round Name (Display Name)'
 = f.markdown_editor :notice, id: dom_id(div), rows: 6
 
 .panel.panel-default

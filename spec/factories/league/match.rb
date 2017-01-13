@@ -1,7 +1,8 @@
 FactoryGirl.define do
   factory :league_match, class: League::Match do
     status :pending
-    round 1
+    round_number 1
+    round_name ''
 
     transient do
       division nil
@@ -31,7 +32,8 @@ FactoryGirl.define do
   factory :bye_league_match, class: League::Match do
     status :pending
     away_team nil
-    round nil
+    round_number nil
+    round_name ''
 
     after(:build) do |match, _|
       div = if match.home_team
