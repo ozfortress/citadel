@@ -17,8 +17,11 @@ describe League::Match do
 
   it { should have_many(:comms).class_name('Match::Comm').dependent(:destroy) }
 
-  it { should validate_numericality_of(:round).is_greater_than_or_equal_to(0) }
-  it { should allow_value(nil).for(:round) }
+  it { should validate_numericality_of(:round_number).is_greater_than_or_equal_to(0) }
+  it { should allow_value(nil).for(:round_number) }
+
+  it { should allow_value('').for(:round_name) }
+  it { should validate_length_of(:round_name).is_at_least(0) }
 
   it { should allow_value('').for(:notice) }
   it { should validate_length_of(:notice).is_at_least(0) }

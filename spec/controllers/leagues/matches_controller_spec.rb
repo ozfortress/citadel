@@ -51,7 +51,8 @@ describe Leagues::MatchesController do
 
       post :create, params: {
         league_id: @league.id, division_id: @div.id, match: {
-          home_team_id: @team1.id, away_team_id: @team2.id, round: 3, notice: 'B',
+          home_team_id: @team1.id, away_team_id: @team2.id, round_name: 'foo',
+          round_number: 3, notice: 'B',
           rounds_attributes: [
             { map_id: @map.id }
           ]
@@ -63,7 +64,8 @@ describe Leagues::MatchesController do
       expect(match).to_not be nil
       expect(match.home_team).to eq(@team1)
       expect(match.away_team).to eq(@team2)
-      expect(match.round).to eq(3)
+      expect(match.round_name).to eq('foo')
+      expect(match.round_number).to eq(3)
       expect(match.notice).to eq('B')
       expect(match.rounds.count).to eq(1)
       round = match.rounds.first
@@ -117,14 +119,16 @@ describe Leagues::MatchesController do
 
       post :create_round, params: {
         league_id: @league.id, match: {
-          generate_kind: :swiss, division_id: @div.id, round: 3, notice: 'B',
+          generate_kind: :swiss, division_id: @div.id, round_name: 'foo',
+          round_number: 3, notice: 'B',
           rounds_attributes: [{ map_id: @map.id }]
         }
       }
 
       expect(@league.matches.size).to eq(1)
       @league.matches.each do |match|
-        expect(match.round).to eq(3)
+        expect(match.round_name).to eq('foo')
+        expect(match.round_number).to eq(3)
         expect(match.notice).to eq('B')
         expect(match.rounds.size).to eq(1)
         expect(match.rounds.first.map).to eq(@map)
@@ -140,7 +144,7 @@ describe Leagues::MatchesController do
 
       post :create_round, params: {
         league_id: @league.id, match: {
-          generate_kind: :swiss, division_id: @div.id, round: -1
+          generate_kind: :swiss, division_id: @div.id, round_number: -1
         }
       }
 
@@ -177,7 +181,7 @@ describe Leagues::MatchesController do
 
         patch :update, params: {
           id: match.id, match: {
-            home_team_id: @team2.id, away_team_id: @team1.id, round: 5,
+            home_team_id: @team2.id, away_team_id: @team1.id, round_name: 'foo', round_number: 5,
             rounds_attributes: [
               { id: round.id, _destroy: true, map_id: @map.id },
               { map_id: @map2.id },
@@ -189,7 +193,8 @@ describe Leagues::MatchesController do
         expect(match).to_not be(nil)
         expect(match.home_team).to eq(@team2)
         expect(match.away_team).to eq(@team1)
-        expect(match.round).to eq(5)
+        expect(match.round_name).to eq('foo')
+        expect(match.round_number).to eq(5)
         round = match.rounds.first
         expect(round.map).to eq(@map2)
       end

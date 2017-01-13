@@ -3,7 +3,6 @@ class League
     presents :match
 
     delegate :id, to: :match
-    delegate :round, to: :match
     delegate :home_team, to: :match
     delegate :away_team, to: :match
     delegate :league, to: :match
@@ -79,11 +78,11 @@ class League
     end
 
     def round_s
-      if round
-        "##{round} "
+      if match.round_name.blank?
+        match.round_number ? "##{match.round_number}" : ''
       else
-        ''
-      end
+        match.round_name + ':'
+      end + ' '
     end
   end
 end
