@@ -20,7 +20,6 @@ You will need:
 * Ruby 2.3.1
 * Bundler
 * Postgres (configured in `config/database.yml`)
-* Elasticsearch
 * ImageMagick
 
 To install all other ruby dependencies, run:
