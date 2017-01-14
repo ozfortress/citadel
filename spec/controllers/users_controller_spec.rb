@@ -117,7 +117,7 @@ describe UsersController do
 
     it 'redirects for banned user' do
       sign_in user
-      user.ban(:use, :users, duration: 2.hours)
+      user.ban(:use, :users)
 
       patch :update, params: { id: user.id, user: { description: 'D' } }
 
@@ -199,7 +199,7 @@ describe UsersController do
 
     it 'redirects for banned user' do
       sign_in user
-      user.ban(:use, :users, duration: 2.hours)
+      user.ban(:use, :users)
 
       post :request_name_change, params: { id: user.id, name_change: { name: 'B' } }
 

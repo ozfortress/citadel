@@ -8,7 +8,7 @@ module Auth
 
     scope :active, lambda {
       now = Time.zone.now
-      where('created_at < ? AND ? < terminated_at', now, now)
+      where('terminated_at IS NULL OR (created_at < ? AND ? < terminated_at)', now, now)
     }
 
     def started_at

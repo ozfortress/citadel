@@ -170,6 +170,14 @@ describe User do
           allow(Time.zone).to receive(:now).and_return(end_time)
           expect(user.can?(:user, :users)).to be(true)
         end
+
+        it 'can ban without timeout' do
+          user.ban(:use, :users)
+
+          expect(user.can?(:use, :users)).to be(false)
+          allow(Time.zone).to receive(:now).and_return(Time.zone.now + 10.years)
+          expect(user.can?(:use, :users)).to be(false)
+        end
       end
     end
   end
