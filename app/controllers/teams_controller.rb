@@ -5,6 +5,7 @@ class TeamsController < ApplicationController
 
   before_action :require_login, only: [:new, :create, :leave]
   before_action :require_team_permission, except: [:index, :new, :create, :show, :leave]
+  before_action :require_on_team, only: :leave
 
   def index
     @teams = Team.search(params[:q]).paginate(page: params[:page])
@@ -92,5 +93,9 @@ class TeamsController < ApplicationController
 
   def require_team_permission
     redirect_to team_path(@team) unless user_can_edit_team?
+  end
+
+  def require_on_team
+    redirect_to team_path(@team) unless @team.on_roster?(current_user)
   end
 end
