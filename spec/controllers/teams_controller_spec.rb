@@ -45,17 +45,27 @@ describe TeamsController do
     end
 
     it 'handles duplicate teams' do
-      team = create(:team, name: 'A', description: 'A')
+      create(:team, name: 'A', description: 'A')
       sign_in user
 
       post :create, params: { team: { name: 'A', description: 'B' } }
 
       expect(Team.count).to eq(1)
     end
+
+    it 'redirects for banned users' do
+      user.ban(:use, :teams)
+      sign_in user
+
+      post :create, params: { team: { name: 'A', description: 'B' } }
+
+      expect(Team.all).to be_empty
+      expect(response).to redirect_to(teams_path)
+    end
   end
 
   context 'existing team' do
-    let(:team) { create(:team_with_avatar, name: 'A', description: 'B') }
+    let(:team) { create(:team, name: 'A', description: 'B') }
 
     describe 'GET #show' do
       it 'succeeds' do
@@ -90,6 +100,7 @@ describe TeamsController do
       end
 
       it 'allows avatar removal' do
+        team = create(:team_with_avatar)
         user.grant(:edit, team)
         sign_in user
 
@@ -110,6 +121,19 @@ describe TeamsController do
         expect(team.name).to eq('A')
         expect(team.description).to eq('B')
         expect(response).to have_http_status(:success)
+      end
+
+      it 'redirects for banned user' do
+        user.grant(:edit, team)
+        user.ban(:use, :teams)
+        sign_in user
+
+        patch :update, params: { id: team.id, team: { name: 'C', description: 'D' } }
+
+        team.reload
+        expect(team.name).to eq('A')
+        expect(team.description).to eq('B')
+        expect(response).to redirect_to(team_path(team))
       end
 
       it 'redirects for unauthorized user' do
@@ -162,6 +186,18 @@ describe TeamsController do
         expect(team.invited?(invited)).to be(true)
         expect(invited.notifications).to_not be_empty
         expect(user.notifications).to be_empty
+      end
+
+      it 'redirects for banned user' do
+        user.grant(:edit, team)
+        user.ban(:use, :teams)
+        sign_in user
+
+        patch :invite, params: { id: team.id, user_id: invited.id }
+
+        expect(invited.team_invites).to be_empty
+        expect(invited.notifications).to be_empty
+        expect(response).to redirect_to(team_path(team))
       end
 
       it 'redirects for unauthorized user' do
@@ -292,6 +328,16 @@ describe TeamsController do
         delete :destroy, params: { id: team.id }
 
         expect(Team.all).to be_empty
+      end
+
+      it 'fails for banned user' do
+        user.grant(:edit, team)
+        user.ban(:use, :teams)
+        sign_in user
+
+        delete :destroy, params: { id: team.id }
+
+        expect(Team.where(id: team.id)).to exist
       end
 
       it 'fails for unauthorized user' do

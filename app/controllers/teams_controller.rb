@@ -3,8 +3,10 @@ class TeamsController < ApplicationController
 
   before_action except: [:index, :new, :create] { @team = Team.find(params[:id]) }
 
-  before_action :require_login, only: [:new, :create, :leave]
-  before_action :require_team_permission, except: [:index, :new, :create, :show, :leave]
+  before_action :require_team_create_permission, only: [:new, :create]
+  before_action :require_team_edit_permission, only: [:edit, :update, :recruit,
+                                                      :invite, :kick, :destroy]
+  before_action :require_login, only: :leave
   before_action :require_on_team, only: :leave
 
   def index
@@ -91,7 +93,11 @@ class TeamsController < ApplicationController
     params.require(:team).permit(:name, :avatar, :remove_avatar, :description)
   end
 
-  def require_team_permission
+  def require_team_create_permission
+    redirect_to teams_path unless user_can_create_team?
+  end
+
+  def require_team_edit_permission
     redirect_to team_path(@team) unless user_can_edit_team?
   end
 
