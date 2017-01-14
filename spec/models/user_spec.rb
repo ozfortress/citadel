@@ -140,5 +140,37 @@ describe User do
         expect(old.can?(:edit, :games)).to be(false)
       end
     end
+
+    describe 'Bans' do
+      describe 'use users' do
+        let(:user) { create(:user) }
+
+        it 'can ban' do
+          expect(user.can?(:use, :users)).to be(true)
+
+          user.ban(:use, :users, duration: 2.minutes)
+
+          expect(user.can?(:use, :users)).to be(false)
+        end
+
+        it 'can unban' do
+          user.ban(:use, :users, duration: 2.minutes)
+          user.unban(:use, :users)
+
+          expect(user.can?(:user, :users)).to be(true)
+        end
+
+        it 'can timeout ban' do
+          time = Time.zone.now
+          end_time = time + 3.minutes
+
+          user.ban(:use, :users, duration: 2.minutes)
+
+          expect(user.can?(:use, :users)).to be(false)
+          allow(Time.zone).to receive(:now).and_return(end_time)
+          expect(user.can?(:user, :users)).to be(true)
+        end
+      end
+    end
   end
 end
