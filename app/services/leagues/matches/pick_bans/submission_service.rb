@@ -18,7 +18,7 @@ module Leagues
           msg = "#{pick_ban.roster.name} #{completed_kind(pick_ban)} #{pick_ban.map}"
           link = match_path(pick_ban.match)
 
-          User.get_revokeable(:edit, pick_ban.other_roster.team).each do |captain|
+          User.which_can(:edit, pick_ban.other_roster.team).each do |captain|
             Users::NotificationService.call(captain, msg, link)
           end
         end

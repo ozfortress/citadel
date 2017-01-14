@@ -6,6 +6,8 @@ Metrics/AbcSize:
   Max: 20
 Metrics/ClassLength:
   Max: 200
+Metrics/ModuleLength:
+  Max: 200
 Style/Documentation:
   Enabled: false
 Style/TrailingCommaInLiteral:

@@ -4,10 +4,10 @@
 
 .panel.panel-default
   %ul.list-group
-    - @permissions.keys.each do |action|
-      - @permissions[action].keys.each do |subject|
-        / TODO: Support object permissions
-        - next if @permissions[action][subject].has_subject
+    - @grants.keys.each do |action|
+      - @grants[action].keys.each do |subject|
+        / TODO: Support object grants
+        - next if @grants[action][subject].subject?
 
         - if current_user.can?(action, subject) || current_user.can?(:edit, :permissions)
           %li.list-group-item

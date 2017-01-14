@@ -112,8 +112,8 @@ describe User do
       end
 
       it 'lists the right people with permissions' do
-        users = User.get_revokeable(:edit, team)
-        admins = User.get_revokeable(:edit, :teams)
+        users = User.which_can(:edit, team)
+        admins = User.which_can(:edit, :teams)
 
         expect(users).to eq([leader])
         expect(admins).to eq([admin])

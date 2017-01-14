@@ -84,7 +84,7 @@ class User < ApplicationRecord
   end
 
   def authorized_teams_for(league)
-    which_can(:edit, :team).select do |team|
+    can_for(:edit, :team).select do |team|
       team.players_count >= league.min_players && !team.entered?(league)
     end
   end

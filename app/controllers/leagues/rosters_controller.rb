@@ -151,7 +151,7 @@ module Leagues
     end
 
     def require_any_team_permission
-      redirect_to_league unless user_signed_in? && current_user.can_any?(:edit, :team)
+      redirect_to_league unless user_signed_in? && current_user.can?(:edit, :team)
     end
 
     def require_team_permission
