@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170113030247) do
+ActiveRecord::Schema.define(version: 20170114040917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,58 @@ ActiveRecord::Schema.define(version: 20170113030247) do
   create_table "action_user_manage_rosters_leagues", force: :cascade do |t|
     t.integer "user_id"
     t.index ["user_id"], name: "index_action_user_manage_rosters_leagues_on_user_id", using: :btree
+  end
+
+  create_table "action_user_use_forums_bans", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "terminated_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["user_id"], name: "index_action_user_use_forums_bans_on_user_id", using: :btree
+  end
+
+  create_table "action_user_use_forums_thread_bans", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "forums_thread_id"
+    t.datetime "terminated_at"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["forums_thread_id"], name: "index_action_user_use_forums_thread_bans_on_forums_thread_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_use_forums_thread_bans_on_user_id", using: :btree
+  end
+
+  create_table "action_user_use_forums_topic_bans", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "forums_topic_id"
+    t.datetime "terminated_at"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["forums_topic_id"], name: "index_action_user_use_forums_topic_bans_on_forums_topic_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_use_forums_topic_bans_on_user_id", using: :btree
+  end
+
+  create_table "action_user_use_leagues_bans", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "terminated_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["user_id"], name: "index_action_user_use_leagues_bans_on_user_id", using: :btree
+  end
+
+  create_table "action_user_use_teams_bans", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "terminated_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["user_id"], name: "index_action_user_use_teams_bans_on_user_id", using: :btree
+  end
+
+  create_table "action_user_use_users_bans", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "terminated_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["user_id"], name: "index_action_user_use_users_bans_on_user_id", using: :btree
   end
 
   create_table "ahoy_events", force: :cascade do |t|
@@ -530,6 +582,14 @@ ActiveRecord::Schema.define(version: 20170113030247) do
   add_foreign_key "action_user_manage_rosters_league", "leagues"
   add_foreign_key "action_user_manage_rosters_league", "users"
   add_foreign_key "action_user_manage_rosters_leagues", "users"
+  add_foreign_key "action_user_use_forums_bans", "users"
+  add_foreign_key "action_user_use_forums_thread_bans", "forums_threads"
+  add_foreign_key "action_user_use_forums_thread_bans", "users"
+  add_foreign_key "action_user_use_forums_topic_bans", "forums_topics"
+  add_foreign_key "action_user_use_forums_topic_bans", "users"
+  add_foreign_key "action_user_use_leagues_bans", "users"
+  add_foreign_key "action_user_use_teams_bans", "users"
+  add_foreign_key "action_user_use_users_bans", "users"
   add_foreign_key "formats", "games"
   add_foreign_key "forums_post_edits", "forums_posts", column: "post_id"
   add_foreign_key "forums_post_edits", "users", column: "created_by_id"

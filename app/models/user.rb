@@ -50,6 +50,16 @@ class User < ApplicationRecord
   validates_permission_to :manage, :forums_topic,  class_name: '::Forums::Topic'
   validates_permission_to :manage, :forums_thread, class_name: '::Forums::Thread'
 
+  validates_prohibition_to :use, :users
+
+  validates_prohibition_to :use, :teams
+
+  validates_prohibition_to :use, :leagues
+
+  validates_prohibition_to :use, :forums
+  validates_prohibition_to :use, :forums_topic,  class_name: '::Forums::Topic'
+  validates_prohibition_to :use, :forums_thread, class_name: '::Forums::Thread'
+
   mount_uploader :avatar, AvatarUploader
 
   alias_attribute :to_s, :name
