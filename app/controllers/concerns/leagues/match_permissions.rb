@@ -30,14 +30,20 @@ module Leagues
     end
 
     def user_can_comm?
-      !@match.bye? && user_signed_in? &&
+      !@match.bye? && user_signed_in? && user_not_banned? &&
         (@match.home_team.on_roster?(current_user) ||
          @match.away_team.on_roster?(current_user) ||
          user_can_either_teams?)
     end
 
     def user_can_edit_comm?(comm)
-      user_can_edit_league? || current_user == comm.user
+      user_can_edit_league? || (current_user == comm.user && user_not_banned?)
+    end
+
+    private
+
+    def user_not_banned?
+      current_user.can?(:use, :leagues) && current_user.can?(:use, :teams)
     end
   end
 end
