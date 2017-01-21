@@ -8,10 +8,11 @@ module Leagues
       @roster = League::Roster.find(params[:id])
       @league = @roster.league
     end
+    # team_id may or may not exist
+    before_action only: [:new] { @team = Team.where(id: params[:team_id]).first }
+    before_action only: [:create] { @team = Team.find(params[:team_id]) }
 
-    before_action :require_signuppable, only: [:new, :create]
-    before_action :require_any_team_permission, only: [:new, :create]
-    before_action :require_team_permission, only: [:create]
+    before_action :require_can_sign_up, only: [:new, :create]
     before_action :require_league_permission, only: [:index, :review, :approve]
     before_action :require_roster_league_permission, only: [:show]
     before_action :require_roster_permission, only: [:edit, :update]
@@ -26,10 +27,7 @@ module Leagues
     def new
       @roster = @league.divisions.first.rosters.new
 
-      if params.key?(:team_id)
-        @team = Team.find(params[:team_id])
-        redirect_back if @team.entered?(@league)
-
+      if @team
         @roster.team = @team
         @roster.name = @team.name
         @team.users.each { |user| @roster.players.new(user: user) }
@@ -39,7 +37,6 @@ module Leagues
     end
 
     def create
-      @team = Team.find(params[:team_id])
       @roster = Rosters::CreationService.call(@league, @team, new_roster_params)
 
       if @roster.persisted?
@@ -146,8 +143,8 @@ module Leagues
       redirect_to team_path(@roster.team)
     end
 
-    def require_signuppable
-      redirect_to_league unless @league.signuppable?
+    def require_can_sign_up
+      redirect_to_league unless user_can_sign_up?
     end
 
     def require_any_team_permission

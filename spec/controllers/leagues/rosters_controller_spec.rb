@@ -94,6 +94,8 @@ describe Leagues::RostersController do
         roster: { name: 'A', description: 'B',
                   division_id: div.id, players_attributes: [] }
       }
+
+      expect(league.rosters).to be_empty
     end
 
     it 'redirects for unauthorized user for team' do
@@ -103,6 +105,22 @@ describe Leagues::RostersController do
 
       post :create, params: { league_id: league.id, team_id: team.id }
 
+      expect(league.rosters).to be_empty
+      expect(response).to redirect_to(league_path(league))
+    end
+
+    it 'redirects for banned user' do
+      user.ban(:use, :leagues)
+      user.grant(:edit, team)
+      sign_in user
+
+      post :create, params: {
+        league_id: league.id, team_id: team.id,
+        roster: { name: 'A', description: 'B',
+                  division_id: div2.id, players_attributes: [{ user_id: user.id }] }
+      }
+
+      expect(league.rosters).to be_empty
       expect(response).to redirect_to(league_path(league))
     end
 
@@ -111,12 +129,14 @@ describe Leagues::RostersController do
 
       post :create, params: { league_id: league.id, team_id: team.id }
 
+      expect(league.rosters).to be_empty
       expect(response).to redirect_to(league_path(league))
     end
 
     it 'redirects for unauthenticated user' do
       post :create, params: { league_id: league.id, team_id: team.id }
 
+      expect(league.rosters).to be_empty
       expect(response).to redirect_to(league_path(league))
     end
   end
