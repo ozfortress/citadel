@@ -18,7 +18,7 @@ module Leagues
           msg = "#{pick_ban.other_roster.name} deferred their #{pick_ban.kind}"
           link = match_path(pick_ban.match)
 
-          User.get_revokeable(:edit, pick_ban.roster.team).each do |captain|
+          User.which_can(:edit, pick_ban.roster.team).each do |captain|
             Users::NotificationService.call(captain, msg, link)
           end
         end

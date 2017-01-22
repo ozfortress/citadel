@@ -66,6 +66,7 @@ exclude_paths:
 DataClump:
   exclude:
     - "Auth::Model"
+    - "MigrationHelper"
 UtilityFunction:
   exclude:
     - "Auth::Model"

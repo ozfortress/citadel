@@ -76,7 +76,7 @@ class League < ApplicationRecord
   end
 
   def valid_roster_size?(size)
-    min_players <= size && (size <= max_players || max_players == 0)
+    min_players <= size && (size <= max_players || max_players.zero?)
   end
 
   def map_pool
@@ -94,7 +94,7 @@ class League < ApplicationRecord
     when 'weeklies'
       weekly_scheduler
     else
-      fail
+      throw
     end
   end
 

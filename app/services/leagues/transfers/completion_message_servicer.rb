@@ -22,7 +22,7 @@ module Leagues
         msg  = message captains_transfer_msg(request, user, roster)
         link = team_path(roster.team)
 
-        User.get_revokeable(:edit, roster.team).each do |captain|
+        User.which_can(:edit, roster.team).each do |captain|
           Users::NotificationService.call(captain, msg, link)
         end
       end

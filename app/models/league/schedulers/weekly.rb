@@ -92,7 +92,7 @@ class League
       def validate_days_minimum
         return unless days.present? && minimum_selected.present?
 
-        unless minimum_selected == 0 || minimum_selected <= days.count(true)
+        unless minimum_selected.zero? || minimum_selected <= days.count(true)
           errors.add(:days, 'must have more than the minimum required')
         end
       end

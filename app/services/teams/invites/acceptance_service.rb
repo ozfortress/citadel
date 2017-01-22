@@ -16,7 +16,7 @@ module Teams
       def notify_captains(user, team)
         message = "'#{user.name}' has accepted the invitation to join '#{team.name}'!"
 
-        User.get_revokeable(:edit, team).each do |captain|
+        User.which_can(:edit, team).each do |captain|
           Users::NotificationService.call(captain, message, user_path(user))
         end
       end

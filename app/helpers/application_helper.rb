@@ -25,7 +25,9 @@ module ApplicationHelper
                                           autolink: true, strikethrough: true,
                                           underline: true, no_intra_emphasis: true)
 
+    # rubocop:disable Rails/OutputSafety
     content_tag(:div, @markdown.render(source).html_safe, class: 'markdown')
+    # rubocop:enable Rails/OutputSafety
   end
 
   def format_options

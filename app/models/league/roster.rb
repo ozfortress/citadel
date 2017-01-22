@@ -34,7 +34,6 @@ class League
     has_many :comments, class_name: 'Roster::Comment', inverse_of: :roster,
                         dependent: :destroy
 
-    validates :team,        uniqueness: { scope: :division_id }
     validates :name,        presence: true, uniqueness: { scope: :division_id },
                             length: { in: 1..64 }
     validates :description, presence: true, allow_blank: true
@@ -44,6 +43,7 @@ class League
     validates :disbanded,   inclusion: { in: [true, false] }
 
     validate :within_roster_size_limits, on: :create
+    validate :unique_within_league, on: :create
     validate :validate_schedule
 
     scope :approved, -> { where(approved: true) }
@@ -58,11 +58,15 @@ class League
     }
 
     after_create do
+      # rubocop:disable Rails/SkipsModelValidations
       League.increment_counter(:rosters_count, league.id)
+      # rubocop:enable Rails/SkipsModelValidations
     end
 
     after_destroy do
+      # rubocop:disable Rails/SkipsModelValidations
       League.decrement_counter(:rosters_count, league.id)
+      # rubocop:enable Rails/SkipsModelValidations
     end
 
     after_initialize :set_defaults, unless: :persisted?
@@ -235,6 +239,12 @@ class League
         errors.add(:players, "must have at least #{league.min_players} players" +
           (league.max_players > 0 ? " and no more than #{league.max_players} players" : ''))
       end
+    end
+
+    def unique_within_league
+      return unless league.present?
+
+      errors.add(:base, 'can only sign up once') if league.rosters.where(team: team).exists?
     end
 
     def validate_schedule

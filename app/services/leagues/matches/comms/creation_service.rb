@@ -31,7 +31,7 @@ module Leagues
         end
 
         def notify_captains(roster, user, message, link)
-          User.get_revokeable(:edit, roster.team).each do |captain|
+          User.which_can(:edit, roster.team).each do |captain|
             next if captain == user
             Users::NotificationService.call(captain, message, link)
           end

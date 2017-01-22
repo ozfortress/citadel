@@ -50,6 +50,16 @@ class User < ApplicationRecord
   validates_permission_to :manage, :forums_topic,  class_name: '::Forums::Topic'
   validates_permission_to :manage, :forums_thread, class_name: '::Forums::Thread'
 
+  validates_prohibition_to :use, :users
+
+  validates_prohibition_to :use, :teams
+
+  validates_prohibition_to :use, :leagues
+
+  validates_prohibition_to :use, :forums
+  validates_prohibition_to :use, :forums_topic,  class_name: '::Forums::Topic'
+  validates_prohibition_to :use, :forums_thread, class_name: '::Forums::Thread'
+
   mount_uploader :avatar, AvatarUploader
 
   alias_attribute :to_s, :name
@@ -84,7 +94,7 @@ class User < ApplicationRecord
   end
 
   def authorized_teams_for(league)
-    which_can(:edit, :team).select do |team|
+    can_for(:edit, :team).select do |team|
       team.players_count >= league.min_players && !team.entered?(league)
     end
   end
@@ -124,7 +134,7 @@ class User < ApplicationRecord
   end
 
   def confirmed?
-    !confirmed_at.nil?
+    !confirmed_at.nil? && !email.empty?
   end
 
   # Always remember using devise rememberable

@@ -146,11 +146,13 @@ describe 'leagues/matches/show' do
       league.schedule = 'weeklies'
 
       schedule = { 'type' => 'weekly', 'availability' => {
-        'Sunday' => 'true', 'Monday' => 'true', 'Tuesday' => 'true' } }
+        'Sunday' => 'true', 'Monday' => 'true', 'Tuesday' => 'true'
+      } }
       home_team.schedule_data = schedule
 
       schedule['availability'] = {
-        'Tuesday' => 'true', 'Wednesday' => 'true', 'Thursday' => 'true' }
+        'Tuesday' => 'true', 'Wednesday' => 'true', 'Thursday' => 'true'
+      }
       away_team.schedule_data = schedule
     end
 

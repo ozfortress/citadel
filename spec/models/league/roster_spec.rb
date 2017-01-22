@@ -5,7 +5,6 @@ describe League::Roster do
 
   it { should belong_to(:team) }
   it { should_not allow_value(nil).for(:team) }
-  it { should validate_uniqueness_of(:team).scoped_to(:division_id) }
 
   it { should belong_to(:division) }
   it { should_not allow_value(nil).for(:division) }
@@ -57,6 +56,22 @@ describe League::Roster do
       expect(build(:league_roster, division: div, player_count: 1)).to be_valid
       expect(build(:league_roster, division: div, player_count: 6)).to be_valid
       expect(build(:league_roster, division: div, player_count: 7)).to be_valid
+    end
+  end
+
+  describe 'unique within league' do
+    it 'validates' do
+      comp = create(:league)
+      div = build(:league_division, league: comp)
+      team = create(:team)
+
+      roster = build(:league_roster, division: div, team: team)
+      expect(roster).to be_valid
+      roster.save!
+
+      div2 = build(:league_division, league: comp)
+      roster = build(:league_roster, division: div2, team: team)
+      expect(roster).to be_invalid
     end
   end
 

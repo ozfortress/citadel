@@ -26,7 +26,10 @@
 
 %p.steam-link-large= present(@user).steam_link
 
-.row!= present_collection(@titles).map(&:icon).join(' ')
+.row
+  != present_collection(@titles).map(&:icon).join(' ')
+
+  .pull-right= render 'bans', user: @user
 
 %hr
 

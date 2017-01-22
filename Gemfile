@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rake', '~> 11.3.0'
+gem 'rake', '~> 12.0'
 gem 'rails', '~> 5.0.0'
 # Use postgres
 gem 'pg'
@@ -38,7 +38,7 @@ gem 'devise'
 # Use haml for templating
 gem 'haml-rails', '~> 0.9'
 # Forum Pages
-gem 'will_paginate', '3.1.0'
+gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap'
 # Forum formatting
 gem 'redcarpet'
@@ -55,7 +55,7 @@ group :development, :test do
   gem 'byebug'
 
   # Use rspec for tests
-  gem 'rspec-rails', '~> 3.4'
+  gem 'rspec-rails', '~> 3.5'
 
   # Test coverage
   gem 'simplecov'
@@ -73,7 +73,7 @@ group :development, :test do
   gem 'capybara'
 
   # Keep codebase clean
-  gem 'rubocop', '~> 0.36.0'
+  gem 'rubocop', '~> 0.47'
   gem 'haml_lint'
   gem 'rails_best_practices'
   gem 'reek'
