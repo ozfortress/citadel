@@ -98,6 +98,22 @@ describe Leagues::RostersController do
       expect(league.rosters).to be_empty
     end
 
+    it 'fails for banned player' do
+      user.grant(:edit, team)
+      sign_in user
+
+      player = create(:user)
+      player.ban(:use, :leagues)
+
+      post :create, params: {
+        league_id: league.id, team_id: team.id,
+        roster: { name: 'A', description: 'B',
+                  division_id: div2.id, players_attributes: [{ user_id: player.id }] }
+      }
+
+      expect(league.rosters).to be_empty
+    end
+
     it 'redirects for unauthorized user for team' do
       team2 = create(:team)
       user.grant(:edit, team2)
