@@ -56,7 +56,8 @@ describe LeaguesController do
                                            { kind: 'round_score_difference' }],
                   weekly_scheduler_attributes: {
                     start_of_week: 'Monday', minimum_selected: 2,
-                    days_indecies: [0, 1, 3, 5, 6] } }
+                    days_indecies: [0, 1, 3, 5, 6]
+                  } }
       }
 
       comp = League.first

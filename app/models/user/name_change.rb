@@ -30,20 +30,22 @@ class User
     private
 
     def unique_name
-      if user.present? && name.present? && pending? && user.name == name
-        errors.add(:name, 'must be different to the current name')
-      end
+      return unless user.present? && name.present?
+
+      errors.add(:name, 'must be different to the current name') if pending? && user.name == name
     end
 
     def only_one_request_per_user
-      if user.present? && pending? && !user.names.pending.empty?
-        errors.add(:name, 'a name request is already pending')
-      end
+      return unless user.present?
+
+      errors.add(:name, 'a name request is already pending') unless user.names.pending.empty?
     end
 
     def name_not_already_used
-      if name.present? && pending? && (User.where(name: name).exists? ||
-                                       NameChange.pending.where(name: name).exists?)
+      return unless name.present?
+
+      if pending? && (User.where(name: name).exists? ||
+                      NameChange.pending.where(name: name).exists?)
         errors.add(:name, 'must be unique')
       end
     end

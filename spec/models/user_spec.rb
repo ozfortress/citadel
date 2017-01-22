@@ -69,7 +69,7 @@ describe User do
   end
 
   it 'has avatar' do
-    image = File.open(Rails.root.join('spec/support/avatar.png'))
+    image = File.open(Rails.root.join('spec', 'support', 'avatar.png'))
     expect(build(:user, avatar: image)).to be_valid
   end
 

@@ -10,7 +10,7 @@ class Team
       transaction do
         team.add_player!(user)
 
-        destroy || fail(ActiveRecord::Rollback)
+        destroy || raise(ActiveRecord::Rollback)
       end
     end
 

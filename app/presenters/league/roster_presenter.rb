@@ -50,7 +50,7 @@ class League
     private
 
     def disbanded_tag
-      ' '.html_safe + content_tag(:span, 'Disbanded', class: 'label label-danger')
+      safe_join([' ', content_tag(:span, 'Disbanded', class: 'label label-danger')])
     end
 
     def signup_title

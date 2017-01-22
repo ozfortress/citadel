@@ -18,11 +18,11 @@ class League
 
       def approve
         transaction do
-          validate || fail(ActiveRecord::Rollback)
+          validate || raise(ActiveRecord::Rollback)
 
           propagate_players!
 
-          destroy || fail(ActiveRecord::Rollback) if persisted?
+          destroy || raise(ActiveRecord::Rollback) if persisted?
         end
 
         persisted? ? false : self

@@ -4,8 +4,8 @@ describe Leagues::Rosters::TransfersController do
   let(:user) { create(:user) }
   let(:player) { create(:user) }
   let(:bencher) { create(:user) }
-  let(:team) { create(:team) }
-  let(:roster) { create(:league_roster, team: team) }
+  let!(:team) { create(:team) }
+  let!(:roster) { create(:league_roster, team: team) }
 
   before do
     team.add_player!(bencher)
@@ -97,6 +97,9 @@ describe Leagues::Rosters::TransfersController do
         request: { user_id: bencher.id, is_joining: true }
       }
 
+      roster.reload
+      team.reload
+      expect(roster.team).to eq(team)
       expect(roster.on_roster?(bencher)).to be(false)
       expect(roster.league.transfer_requests.where(user: bencher)).to_not exist
       expect(response).to redirect_to(team_path(team))

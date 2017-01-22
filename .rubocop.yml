@@ -8,6 +8,8 @@ Metrics/ClassLength:
   Max: 200
 Metrics/ModuleLength:
   Max: 200
+Metrics/BlockLength:
+  Enabled: false
 Style/Documentation:
   Enabled: false
 Style/TrailingCommaInLiteral:
@@ -15,8 +17,25 @@ Style/TrailingCommaInLiteral:
 Style/ModuleFunction:
   Enabled: false
 
+# 'old' style
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Rails/SkipsModelValidations:
+  Exclude:
+    - 'spec/factories/*'
+
+# None-guard clauses are often clearer for intent
+Style/GuardClause:
+  Enabled: false
+
+# It makes much more sense to group them according to purpose
+Bundler/OrderedGems:
+  Enabled: false
+
 AllCops:
   Exclude:
     - 'db/**/*'
     - 'config/**/*'
     - 'vendor/**/*'
+  DisplayCopNames: true

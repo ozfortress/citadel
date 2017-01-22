@@ -2,7 +2,7 @@ module MatchSeeder
   module Common
     extend self
 
-    class Rollback < Exception
+    class Rollback < RuntimeError
       attr_reader :match
 
       def initialize(match)
@@ -22,7 +22,7 @@ module MatchSeeder
       match_options = get_opts(home_team, away_team, options)
 
       match = League::Match.create(match_options)
-      fail(Rollback, match) unless match.persisted?
+      raise(Rollback, match) unless match.persisted?
       match
     end
 

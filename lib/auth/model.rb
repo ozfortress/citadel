@@ -131,8 +131,6 @@ module Auth
         subject_cls.name.underscore.sub('/', '_').to_sym
       end
 
-      private
-
       def create_model(type, options)
         model = Class.new(type)
         const_set(options[:table_name].camelize, model)

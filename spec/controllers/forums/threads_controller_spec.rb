@@ -20,9 +20,13 @@ describe Forums::ThreadsController do
       user.grant(:manage, :forums)
       sign_in user
 
-      post :create, params: { topic: topic.id, forums_thread: {
-        title: 'Foo', locked: true, pinned: true, hidden: true,
-        forums_post: { content: 'Bar' } } }
+      post :create, params: {
+        topic: topic.id,
+        forums_thread: {
+          title: 'Foo', locked: true, pinned: true, hidden: true,
+          forums_post: { content: 'Bar' }
+        }
+      }
 
       expect(topic.threads).to_not be_empty
       thread = topic.threads.first
@@ -42,8 +46,12 @@ describe Forums::ThreadsController do
       user.grant(:manage, :forums)
       sign_in user
 
-      post :create, params: { topic: topic.id, forums_thread: {
-        title: '', forums_post: { content: '' } } }
+      post :create, params: {
+        topic: topic.id,
+        forums_thread: {
+          title: '', forums_post: { content: '' }
+        }
+      }
 
       expect(topic.threads).to be_empty
     end
@@ -51,9 +59,13 @@ describe Forums::ThreadsController do
     it 'succeeds for any user' do
       sign_in user
 
-      post :create, params: { topic: topic.id, forums_thread: {
-        title: 'Foo', locked: true, pinned: true, hidden: true,
-        forums_post: { content: 'Bar' } } }
+      post :create, params: {
+        topic: topic.id,
+        forums_thread: {
+          title: 'Foo', locked: true, pinned: true, hidden: true,
+          forums_post: { content: 'Bar' }
+        }
+      }
 
       expect(topic.threads).to_not be_empty
       thread = topic.threads.first
@@ -73,9 +85,13 @@ describe Forums::ThreadsController do
       user.ban(:use, topic)
       sign_in user
 
-      post :create, params: { topic: topic.id, forums_thread: {
-        title: 'Foo', locked: true, pinned: true, hidden: true,
-        forums_post: { content: 'Bar' } } }
+      post :create, params: {
+        topic: topic.id,
+        forums_thread: {
+          title: 'Foo', locked: true, pinned: true, hidden: true,
+          forums_post: { content: 'Bar' }
+        }
+      }
 
       expect(topic.threads).to be_empty
       expect(response).to redirect_to(forums_path)
@@ -92,9 +108,11 @@ describe Forums::ThreadsController do
         user.grant(:manage, :forums)
         sign_in user
 
-        post :create, params: { forums_thread: {
-          title: 'Foo', locked: true, pinned: true, hidden: true,
-          forums_post: { content: 'Bar' } } }
+        post :create, params: {
+          forums_thread: {
+            title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: 'Bar' }
+          }
+        }
 
         expect(Forums::Thread.all).to_not be_empty
         thread = Forums::Thread.first
@@ -110,9 +128,11 @@ describe Forums::ThreadsController do
         user.ban(:use, :forums)
         sign_in user
 
-        post :create, params: { forums_thread: {
-          title: 'Foo', locked: true, pinned: true, hidden: true,
-          forums_post: { content: 'Bar' } } }
+        post :create, params: {
+          forums_thread: {
+            title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: 'Bar' }
+          }
+        }
 
         expect(Forums::Thread.all).to be_empty
         expect(response).to redirect_to(forums_path)
@@ -136,8 +156,11 @@ describe Forums::ThreadsController do
       it 'creates hidden threads for any user' do
         sign_in user
 
-        post :create, params: { topic: topic.id, forums_thread: {
-          title: 'Foo', hidden: false, forums_post: { content: 'Bar' } } }
+        post :create, params: {
+          topic: topic.id, forums_thread: {
+            title: 'Foo', hidden: false, forums_post: { content: 'Bar' }
+          }
+        }
 
         expect(topic.threads).to_not be_empty
         thread = topic.threads.first
@@ -157,8 +180,9 @@ describe Forums::ThreadsController do
         user.grant(:manage, :forums)
         sign_in user
 
-        post :create, params: { topic: topic.id, forums_thread: {
-          title: 'Foo', forums_post: { content: 'Bar' } } }
+        post :create, params: {
+          topic: topic.id, forums_thread: { title: 'Foo', forums_post: { content: 'Bar' } }
+        }
 
         expect(topic.threads).to_not be_empty
         thread = topic.threads.first
@@ -184,8 +208,9 @@ describe Forums::ThreadsController do
         user.grant(:manage, :forums)
         sign_in user
 
-        post :create, params: { topic: topic.id, forums_thread: {
-          title: 'Foo', forums_post: { content: 'Bar' } } }
+        post :create, params: {
+          topic: topic.id, forums_thread: { title: 'Foo', forums_post: { content: 'Bar' } }
+        }
 
         expect(topic.threads).to_not be_empty
         thread = topic.threads.first
@@ -211,9 +236,12 @@ describe Forums::ThreadsController do
         user.grant(:manage, :forums)
         sign_in user
 
-        post :create, params: { topic: topic.id, forums_thread: {
-          title: 'Foo', locked: true, pinned: true, hidden: true,
-          forums_post: { content: 'Bar' } } }
+        post :create, params: {
+          topic: topic.id,
+          forums_thread: {
+            title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: 'Bar' }
+          }
+        }
 
         expect(topic.threads).to_not be_empty
         thread = topic.threads.first
@@ -290,8 +318,9 @@ describe Forums::ThreadsController do
         user.grant(:manage, :forums)
         sign_in user
 
-        patch :update, params: { id: thread.id, forums_thread: {
-          title: 'Test', locked: true, pinned: true, hidden: true } }
+        patch :update, params: {
+          id: thread.id, forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true }
+        }
 
         thread.reload
         expect(thread.title).to eq('Test')
@@ -305,8 +334,9 @@ describe Forums::ThreadsController do
         thread.update!(created_by: user)
         sign_in user
 
-        patch :update, params: { id: thread.id, forums_thread: {
-          title: 'Test', locked: true, pinned: true, hidden: true } }
+        patch :update, params: {
+          id: thread.id, forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true }
+        }
 
         thread.reload
         expect(thread.title).to eq('Test')
@@ -330,8 +360,9 @@ describe Forums::ThreadsController do
         user.ban(:use, :forums)
         sign_in user
 
-        patch :update, params: { id: thread.id, forums_thread: {
-          title: 'Test', locked: true, pinned: true, hidden: true } }
+        patch :update, params: {
+          id: thread.id, forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true }
+        }
 
         thread.reload
         expect(thread.title).to_not eq('Test')
@@ -342,8 +373,9 @@ describe Forums::ThreadsController do
         user.ban(:use, topic)
         sign_in user
 
-        patch :update, params: { id: thread.id, forums_thread: {
-          title: 'Test', locked: true, pinned: true, hidden: true } }
+        patch :update, params: {
+          id: thread.id, forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true }
+        }
 
         thread.reload
         expect(thread.title).to_not eq('Test')
@@ -354,8 +386,9 @@ describe Forums::ThreadsController do
         user.ban(:use, thread)
         sign_in user
 
-        patch :update, params: { id: thread.id, forums_thread: {
-          title: 'Test', locked: true, pinned: true, hidden: true } }
+        patch :update, params: {
+          id: thread.id, forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true }
+        }
 
         thread.reload
         expect(thread.title).to_not eq('Test')

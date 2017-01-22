@@ -13,7 +13,7 @@ module BaseService
     end
 
     def rollback!
-      fail ActiveRecord::Rollback
+      raise ActiveRecord::Rollback
     end
   end
 end

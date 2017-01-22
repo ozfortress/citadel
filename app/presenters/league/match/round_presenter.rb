@@ -21,26 +21,26 @@ class League
           non_forfeit_results(home, away)
         else
           forfeit_results(home, away)
-        end.html_safe
+        end
       end
 
       private
 
       def non_forfeit_results(home, away)
         if round.home_team_score > round.away_team_score
-          "#{home} beat #{away}"
+          safe_join([home, 'beat', away], ' ')
         elsif round.home_team_score < round.away_team_score
-          "#{home} lost to #{away}"
+          safe_join([home, 'lost to', away], ' ')
         else
-          "#{home} tied with #{away}"
+          safe_join([home, 'tied with', away], ' ')
         end + ", #{round.home_team_score} to #{round.away_team_score}"
       end
 
       def forfeit_results(home, away)
         if match.home_team_forfeit?
-          "#{away} wins by forfeit"
+          safe_join([away, 'wins by forfeit'], ' ')
         elsif match.away_team_forfeit?
-          "#{home} wins by forfeit"
+          safe_join([home, 'wins by forfeit'], ' ')
         elsif match.mutual_forfeit?
           'mutual forfeit (both lose)'
         else

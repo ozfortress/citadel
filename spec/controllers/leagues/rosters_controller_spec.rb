@@ -265,8 +265,8 @@ describe Leagues::RostersController do
         sign_in user
 
         patch :update, params: {
-          id: roster.id, roster: {
-            description: 'B', division_id: div2, schedule_data: { foo: 'bar' } },
+          id: roster.id,
+          roster: { description: 'B', division_id: div2, schedule_data: { foo: 'bar' } },
         }
 
         roster.reload

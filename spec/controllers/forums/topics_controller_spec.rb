@@ -22,7 +22,8 @@ describe Forums::TopicsController do
 
       post :create, params: { parent: parent_topic.id, forums_topic: {
         name: 'Foo', locked: true, pinned: true, hidden: true, isolated: false,
-        default_hidden: true } }
+        default_hidden: true
+      } }
 
       expect(parent_topic.children).to_not be_empty
       topic = parent_topic.children.first
@@ -43,7 +44,8 @@ describe Forums::TopicsController do
 
       post :create, params: { parent: parent_topic.id, forums_topic: {
         name: 'Foo', locked: true, pinned: true, hidden: true, isolated: false,
-        default_hidden: true } }
+        default_hidden: true
+      } }
 
       expect(parent_topic.children).to_not be_empty
       topic = parent_topic.children.first
@@ -183,9 +185,12 @@ describe Forums::TopicsController do
         user.grant(:manage, :forums)
         sign_in user
 
-        patch :update, params: { id: topic.id, forums_topic: {
-          name: 'Test', locked: true, pinned: true, hidden: true, isolated: true,
-          default_hidden: true }
+        patch :update, params: {
+          id: topic.id,
+          forums_topic: {
+            name: 'Test', locked: true, pinned: true, hidden: true, isolated: true,
+            default_hidden: true
+          }
         }
 
         topic.reload

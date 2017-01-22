@@ -36,7 +36,7 @@
         - has_errors = player && player.errors.any?
 
         .form-group{ class: ('has-error' if has_errors) }
-          - label = [user_p.link, user_p.league_status(@league)].join(', ').html_safe
+          - label = safe_join([user_p.link, user_p.league_status(@league)], ', ')
           = user_f.check_box :user_id, { label: label, checked: !player.nil? }, user.id, nil
 
           / Manually display errors.

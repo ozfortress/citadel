@@ -24,7 +24,8 @@ module Auth
     end
 
     def active?
-      created_at < Time.zone.now < terminated_at
+      now = Time.zone.now
+      created_at < now && now < terminated_at
     end
 
     private

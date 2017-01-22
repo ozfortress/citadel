@@ -16,11 +16,11 @@ class League
       end
 
       def status
-        team.link + if pick_ban.pending?
-                      " #{pending_kind}"
-                    else
-                      " #{completed_kind} ".html_safe + map_link
-                    end
+        team.link + ' ' + if pick_ban.pending?
+                            pending_kind
+                          else
+                            safe_join([completed_kind, map_link], ' ')
+                          end
       end
 
       private

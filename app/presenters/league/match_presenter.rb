@@ -13,7 +13,7 @@ class League
     end
 
     def title
-      match_s { |team| present(team).link }.html_safe
+      match_s { |team| present(team).link }
     end
 
     def link(label = nil, options = {}, &block)
@@ -69,12 +69,16 @@ class League
       end
     end
 
-    def match_s
-      round_s + if bye?
-                  "#{yield home_team} BYE"
-                else
-                  "#{yield home_team} vs #{yield away_team}"
-                end
+    def match_s(&block)
+      safe_join([round_s, match_name(&block)], ' ')
+    end
+
+    def match_name
+      if bye?
+        safe_join([yield(home_team), 'BYE'], ' ')
+      else
+        safe_join([yield(home_team), 'vs', yield(away_team)], ' ')
+      end
     end
 
     def round_s
@@ -82,7 +86,7 @@ class League
         match.round_number ? "##{match.round_number}" : ''
       else
         match.round_name + ':'
-      end + ' '
+      end
     end
   end
 end

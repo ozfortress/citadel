@@ -58,11 +58,15 @@ class League
     }
 
     after_create do
+      # rubocop:disable Rails/SkipsModelValidations
       League.increment_counter(:rosters_count, league.id)
+      # rubocop:enable Rails/SkipsModelValidations
     end
 
     after_destroy do
+      # rubocop:disable Rails/SkipsModelValidations
       League.decrement_counter(:rosters_count, league.id)
+      # rubocop:enable Rails/SkipsModelValidations
     end
 
     after_initialize :set_defaults, unless: :persisted?
