@@ -7,8 +7,7 @@ module Leagues
       league ||= @league
       team ||= @team
 
-      user_signed_in? && league.signuppable? && user_not_banned? &&
-        (team.nil? || user_can_sign_up_team?(league, team))
+      user_signed_in? && league.signuppable? && user_not_banned? && user_has_signup_team?(team)
     end
 
     def user_can_edit_roster?(roster = nil)
@@ -40,6 +39,14 @@ module Leagues
 
     def user_not_banned?
       current_user.can?(:use, :teams) && current_user.can?(:use, :leagues)
+    end
+
+    def user_has_signup_team?(team)
+      if team
+        user_can_sign_up_team?(league, team)
+      else
+        current_user.can?(:edit, :team)
+      end
     end
   end
 end
