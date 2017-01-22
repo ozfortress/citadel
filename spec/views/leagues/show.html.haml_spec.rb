@@ -14,7 +14,7 @@ describe 'leagues/show' do
       allow(division).to receive(:rosters_sorted).and_return(rosters)
     end
 
-    tiebreakers = League::Tiebreaker.kinds.map do |kind|
+    tiebreakers = League::Tiebreaker.kinds.map do |kind, _|
       build_stubbed(:league_tiebreaker, kind: kind)
     end
     allow(league).to receive(:tiebreakers).and_return(tiebreakers)
