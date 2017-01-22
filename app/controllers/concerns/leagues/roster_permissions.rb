@@ -7,8 +7,8 @@ module Leagues
       league ||= @league
       team ||= @team
 
-      user_signed_in? && league.signuppable? && current_user.can?(:edit, :team) &&
-        current_user.can?(:use, :leagues) && (team.nil? || user_can_sign_up_team?(league, team))
+      user_signed_in? && league.signuppable? && user_not_banned? &&
+        (team.nil? || user_can_sign_up_team?(league, team))
     end
 
     def user_can_edit_roster?(roster = nil)
@@ -16,7 +16,7 @@ module Leagues
       disbanded = roster && roster.disbanded?
 
       user_can_edit_league?(roster.league) ||
-        user_signed_in? && current_user.can?(:edit, roster.team) && !disbanded
+        user_signed_in? && current_user.can?(:edit, roster.team) && user_not_banned? && !disbanded
     end
 
     def user_can_disband_roster?(roster = nil)
@@ -36,6 +36,10 @@ module Leagues
 
     def user_can_sign_up_team?(league, team)
       !team.entered?(league) && current_user.can?(:edit, team)
+    end
+
+    def user_not_banned?
+      current_user.can?(:use, :teams) && current_user.can?(:use, :leagues)
     end
   end
 end
