@@ -147,16 +147,6 @@ module Leagues
       redirect_to_league unless user_can_sign_up?
     end
 
-    def require_any_team_permission
-      redirect_to_league unless user_signed_in? && current_user.can?(:edit, :team)
-    end
-
-    def require_team_permission
-      team = Team.find(params[:team_id])
-
-      redirect_to_league unless user_can_edit_team?(team)
-    end
-
     def require_league_permission
       redirect_to_league unless user_can_edit_league?
     end
