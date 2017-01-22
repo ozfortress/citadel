@@ -28,6 +28,7 @@ module Auth
       end
 
       def init_subject(subject, subject_options)
+        @subject = subject
         subject_s = subject.to_s
         @has_subject = subject_s.singularize == subject_s
 

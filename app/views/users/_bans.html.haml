@@ -1,0 +1,6 @@
+- User.bans.each do |action, bans|
+  - bans.each do |subject, ban_cls|
+    - next if ban_cls.subject?
+
+    - user.bans_for(action, subject).each do |ban|
+      = render 'ban', user: user, ban: ban
