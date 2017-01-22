@@ -12,6 +12,7 @@ class League
       validate :on_team,   if: :is_joining?
       validate :on_roster, unless: :is_joining?
       validate :active_roster, if: :is_joining?
+      validate :league_permissions, if: :is_joining?
       validate :within_roster_size_limits
       validate :within_roster_size_limits_for_leaving_roster, if: :is_joining?
 
@@ -64,6 +65,12 @@ class League
         return unless roster.present?
 
         errors.add(:base, 'cannot join a disbanded roster') if roster.disbanded?
+      end
+
+      def league_permissions
+        return unless user.present?
+
+        errors.add(:base, 'user is banned from leagues') unless user.can?(:use, :leagues)
       end
 
       def within_roster_size_limits
