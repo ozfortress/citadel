@@ -38,7 +38,7 @@ gem 'devise'
 # Use haml for templating
 gem 'haml-rails', '~> 0.9'
 # Forum Pages
-gem 'will_paginate', '3.1.0'
+gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap'
 # Forum formatting
 gem 'redcarpet'
