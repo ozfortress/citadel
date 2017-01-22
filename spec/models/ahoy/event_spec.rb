@@ -13,7 +13,7 @@ describe Ahoy::Event do
     it 'can perform search' do
       user = create(:user)
       ip_events = create_list(:ahoy_event, 5, user: user, ip: '12.34.56.78')
-      other = create_list(:ahoy_event, 5, user: user, ip: '34.56')
+      create_list(:ahoy_event, 5, user: user, ip: '34.56')
 
       expect(Ahoy::Event.search('12.34.56.78')).to eq(ip_events)
       expect(Ahoy::Event.search('')).to_not be_empty
