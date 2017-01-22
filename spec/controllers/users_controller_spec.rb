@@ -76,6 +76,7 @@ describe UsersController do
 
   describe 'PATCH #update' do
     let(:user) { create(:user_with_avatar, description: 'B') }
+    let(:admin) { create(:user) }
 
     it 'updates a user' do
       sign_in user
@@ -83,7 +84,6 @@ describe UsersController do
       patch :update, params: { id: user.id, user: { description: 'D' } }
 
       user.reload
-      expect(user).to_not be_nil
       expect(user.description).to eq('D')
     end
 
@@ -103,6 +103,27 @@ describe UsersController do
 
       expect(controller).to set_flash[:notice]
       expect(ActionMailer::Base.deliveries).to_not be_empty
+    end
+
+    it 'redirects for unauthorized user' do
+      sign_in user
+
+      patch :update, params: { id: admin.id, user: { description: 'D' } }
+
+      user.reload
+      expect(user.description).to eq('B')
+      expect(response).to redirect_to(user_path(admin))
+    end
+
+    it 'redirects for banned user' do
+      sign_in user
+      user.ban(:use, :users)
+
+      patch :update, params: { id: user.id, user: { description: 'D' } }
+
+      user.reload
+      expect(user.description).to eq('B')
+      expect(response).to redirect_to(user_path(user))
     end
   end
 
@@ -165,6 +186,26 @@ describe UsersController do
 
       expect(user.names.pending.size).to eq(1)
     end
+
+    it 'redirects for unauthorized user' do
+      other = create(:user)
+      sign_in other
+
+      post :request_name_change, params: { id: user.id, name_change: { name: 'B' } }
+
+      expect(user.names.pending).to be_empty
+      expect(response).to redirect_to(user_path(user))
+    end
+
+    it 'redirects for banned user' do
+      sign_in user
+      user.ban(:use, :users)
+
+      post :request_name_change, params: { id: user.id, name_change: { name: 'B' } }
+
+      expect(user.names.pending).to be_empty
+      expect(response).to redirect_to(user_path(user))
+    end
   end
 
   describe 'PATCH #handle_name_change' do
@@ -199,6 +240,17 @@ describe UsersController do
       expect(user.names.pending.size).to eq(0)
       expect(user.names.approved.where(name: 'B')).to_not exist
       expect(user.notifications).to_not be_empty
+    end
+
+    it 'redirects for unauthorized user' do
+      sign_in user
+
+      patch :handle_name_change, params: {
+        user_id: user.id, id: name_change.id, approve: 'true'
+      }
+
+      user.reload
+      expect(user.name).to eq('A')
     end
   end
 

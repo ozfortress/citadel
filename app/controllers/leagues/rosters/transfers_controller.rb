@@ -25,7 +25,7 @@ module Leagues
       end
 
       def require_transfer_permissions
-        redirect_to team_path(@roster) unless user_can_manage_transfers?
+        redirect_to team_path(@roster.team) unless user_can_manage_transfers?
       end
     end
   end

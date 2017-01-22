@@ -11,7 +11,7 @@
   %ul.nav.nav-tabs
     - games.each_with_index do |game, index|
       - klass = ''
-      - if index == 0
+      - if index.zero?
         - klass = 'active'
       %li{ class: klass }
         %a{ data: { toggle: 'tab' }, href: "##{game.name.parameterize}" }
@@ -20,7 +20,7 @@
 .tab-content
   - games.each_with_index do |game, index|
     - klass = 'tab-pane fade'
-    - if index == 0
+    - if index.zero?
       - klass += ' in active'
 
     / TODO: Reformat this logic into the controller using group_by

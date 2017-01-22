@@ -7,7 +7,7 @@ module Forums
     end
 
     def path
-      PATH_SEP.html_safe + safe_join(path_topics, PATH_SEP)
+      html_escape(PATH_SEP) + safe_join(path_topics, PATH_SEP)
     end
 
     def to_s

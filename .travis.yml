@@ -1,8 +1,11 @@
 language: ruby
 cache: bundler
-rvm: 2.3.1
+rvm: 2.3.3
 addons:
-  postgresql: "9.4"
+  postgresql: '9.4'
+# rainbow install script is broken
+before_install:
+  - gem update --system
 before_script:
   - export SECRET_KEY_BASE=`bundle exec rake secret`
   - cp config/database.yml.travis config/database.yml

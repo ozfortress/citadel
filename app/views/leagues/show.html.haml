@@ -60,7 +60,7 @@
               %th= tiebreaker.get_comparison(roster)
 
   - if user_signed_in?
-    - if current_user.can_any?(:edit, :team) && @league.signuppable?
+    - if current_user.can?(:edit, :team) && @league.signuppable?
       .panel-body
         = link_to 'Sign up', new_league_roster_path(@league),
                              class: 'btn btn-success pull-right'

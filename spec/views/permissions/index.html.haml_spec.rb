@@ -9,7 +9,7 @@ describe 'permissions/index' do
 
   it 'displays' do
     allow(view).to receive(:current_user).and_return(user)
-    assign(:permissions, User.permissions)
+    assign(:grants, User.grants)
 
     render
   end

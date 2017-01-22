@@ -22,11 +22,18 @@ module Forums
       user_can_manage_topic?(topic) || !topic.hidden?
     end
 
+    def user_can_use_topic?(topic = nil)
+      topic ||= @topic
+
+      user_signed_in? && current_user.can?(:use, :forums) &&
+        current_user.can?(:use, topic) && user_can_use_topics?(topic.ancestors)
+    end
+
     def user_can_create_thread?(topic = nil)
       topic ||= @topic
 
-      user_can_manage_topic?(topic) || (user_signed_in? && topic &&
-                                        !topic.locked? && !topic.hidden?)
+      user_can_manage_topic?(topic) ||
+        (user_signed_in? && topic && user_can_use_topic?(topic) && !topic.locked? && !topic.hidden?)
     end
 
     def user_can_manage_thread?(thread = nil)
@@ -43,7 +50,8 @@ module Forums
       thread ||= @thread
 
       user_can_manage_thread?(thread) ||
-        user_signed_in? && current_user == thread.created_by && !thread.locked?
+        (user_signed_in? && current_user == thread.created_by &&
+         !thread.locked? && user_can_use_thread?(thread))
     end
 
     def user_can_view_thread?(thread = nil)
@@ -52,17 +60,25 @@ module Forums
       user_can_edit_thread?(thread) || !thread.hidden
     end
 
+    def user_can_use_thread?(thread = nil)
+      thread ||= @thread
+
+      user_signed_in? && current_user.can?(:use, thread) && user_can_use_topic?(thread.topic)
+    end
+
     def user_can_create_post?(thread = nil)
       thread ||= @thread
 
-      user_can_edit_thread?(thread) || user_signed_in? && !thread.locked? &&
-        (!thread.hidden? || thread.created_by == current_user)
+      user_can_edit_thread?(thread) ||
+        (user_signed_in? && !thread.locked? && user_can_use_thread?(thread) &&
+         (!thread.hidden? || thread.created_by == current_user))
     end
 
     def user_can_edit_post?(post = nil)
       post ||= @post
 
-      user_can_manage_thread?(post.thread) || user_signed_in? && post.created_by == current_user
+      user_can_manage_thread?(post.thread) ||
+        (user_signed_in? && post.created_by == current_user && user_can_use_thread?(post.thread))
     end
 
     private
@@ -73,6 +89,14 @@ module Forums
       isolation_depth = topics.isolated.maximum(:ancestry_depth) || 0
 
       current_user.can?(:manage, topics.from_depth(isolation_depth))
+    end
+
+    def user_can_use_topics?(topics)
+      return true if topics.empty?
+
+      isolation_depth = topics.isolated.maximum(:ancestry_depth) || 0
+
+      current_user.can?(:use, topics.from_depth(isolation_depth))
     end
   end
 end

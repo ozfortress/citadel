@@ -28,17 +28,53 @@ describe Leagues::Matches::CommsController do
         league_id: league.id, match_id: match.id, comm: { content: nil }
       }
 
-      expect(match.comms.first).to be(nil)
+      expect(match.comms).to be_empty
     end
 
-    it 'fails for unauthorized user' do
+    it 'redirects for banned user for leagues' do
+      user.grant(:edit, match.home_team.team)
+      user.ban(:use, :leagues)
       sign_in user
 
       post :create, params: {
         league_id: league.id, match_id: match.id, comm: { content: 'A' }
       }
 
-      expect(match.comms.first).to be(nil)
+      expect(match.comms).to be_empty
+      expect(response).to redirect_to(match_path(match))
+    end
+
+    it 'redirects for banned user for teams' do
+      user.grant(:edit, match.home_team.team)
+      user.ban(:use, :teams)
+      sign_in user
+
+      post :create, params: {
+        league_id: league.id, match_id: match.id, comm: { content: 'A' }
+      }
+
+      expect(match.comms).to be_empty
+      expect(response).to redirect_to(match_path(match))
+    end
+
+    it 'redirects for unauthorized user' do
+      sign_in user
+
+      post :create, params: {
+        league_id: league.id, match_id: match.id, comm: { content: 'A' }
+      }
+
+      expect(match.comms).to be_empty
+      expect(response).to redirect_to(match_path(match))
+    end
+
+    it 'redirects for unauthenticated user' do
+      post :create, params: {
+        league_id: league.id, match_id: match.id, comm: { content: 'A' }
+      }
+
+      expect(match.comms).to be_empty
+      expect(response).to redirect_to(match_path(match))
     end
   end
 
@@ -110,6 +146,26 @@ describe Leagues::Matches::CommsController do
       it 'redirects for any captain' do
         user.grant(:edit, match.home_team.team)
         sign_in user
+
+        patch :update, params: { id: comm.id, comm: { content: 'A' } }
+
+        expect(comm.reload.content).to_not eq('A')
+        expect(response).to redirect_to(match_path(match))
+      end
+
+      it 'redirects for banned user for leagues' do
+        writer.ban(:use, :leagues)
+        sign_in writer
+
+        patch :update, params: { id: comm.id, comm: { content: 'A' } }
+
+        expect(comm.reload.content).to_not eq('A')
+        expect(response).to redirect_to(match_path(match))
+      end
+
+      it 'redirects for banned user for teams' do
+        writer.ban(:use, :teams)
+        sign_in writer
 
         patch :update, params: { id: comm.id, comm: { content: 'A' } }
 

@@ -37,9 +37,40 @@ describe Forums::PostsController do
       expect(thread.posts).to be_empty
     end
 
+    it 'redirects for banned user for forums' do
+      user.ban(:use, :forums)
+      sign_in user
+
+      post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
+
+      expect(thread.posts).to be_empty
+      expect(response).to redirect_to(forums_path)
+    end
+
+    it 'redirects for banned user for topic' do
+      user.ban(:use, topic)
+      sign_in user
+
+      post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
+
+      expect(thread.posts).to be_empty
+      expect(response).to redirect_to(forums_path)
+    end
+
+    it 'redirects for banned user for thread' do
+      user.ban(:use, thread)
+      sign_in user
+
+      post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
+
+      expect(thread.posts).to be_empty
+      expect(response).to redirect_to(forums_path)
+    end
+
     it 'redirects for unauthenticated user' do
       post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
 
+      expect(thread.posts).to be_empty
       expect(response).to redirect_to(forums_path)
     end
 
@@ -155,11 +186,49 @@ describe Forums::PostsController do
         expect(post.content).to eq('Foo')
       end
 
+      it 'redirects for banned author for forums' do
+        post.update!(created_by: user)
+        user.ban(:use, :forums)
+        sign_in user
+
+        patch :update, params: { id: post.id, forums_post: { content: 'Test' } }
+
+        post.reload
+        expect(post.content).to eq('Foo')
+        expect(response).to redirect_to(forums_path)
+      end
+
+      it 'redirects for banned author for topic' do
+        post.update!(created_by: user)
+        user.ban(:use, topic)
+        sign_in user
+
+        patch :update, params: { id: post.id, forums_post: { content: 'Test' } }
+
+        post.reload
+        expect(post.content).to eq('Foo')
+        expect(response).to redirect_to(forums_path)
+      end
+
+      it 'redirects for banned author for thread' do
+        post.update!(created_by: user)
+        user.ban(:use, thread)
+        sign_in user
+
+        patch :update, params: { id: post.id, forums_post: { content: 'Test' } }
+
+        post.reload
+        expect(post.content).to eq('Foo')
+        expect(response).to redirect_to(forums_path)
+      end
+
       it 'redirects for any user' do
         sign_in user
 
         patch :update, params: { id: post.id, forums_post: { content: 'Test' } }
 
+        post.reload
+        expect(post.content).to eq('Foo')
         expect(response).to redirect_to(forums_path)
       end
     end

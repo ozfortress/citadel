@@ -19,7 +19,7 @@ class PermissionsController < ApplicationController
   before_action :require_permission, except: :index
 
   def index
-    @permissions = User.permissions
+    @grants = User.grants
   end
 
   def users
@@ -39,7 +39,7 @@ class PermissionsController < ApplicationController
   private
 
   def subject?
-    User.permissions[@action][@subject].has_subject
+    User.grants[@action][@subject].subject?
   end
 
   def require_permission

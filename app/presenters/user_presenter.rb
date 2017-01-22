@@ -22,22 +22,22 @@ class UserPresenter < ActionPresenter::Base
     team = options[:team]
     has_captain_label = team && user.can?(:edit, team)
 
-    titles = ''.html_safe
-    titles += content_tag :div, 'captain', class: 'label alert-danger' if has_captain_label
-    titles += content_tag :div, 'admin', class: 'label alert-success'  if user.admin?
-    titles
+    titles = []
+    titles << content_tag(:div, 'captain', class: 'label alert-danger')  if has_captain_label
+    titles << content_tag(:div, 'admin',   class: 'label alert-success') if user.admin?
+    safe_join(titles, ' ')
   end
 
   def league_status(league)
     elements = [roster_status(league), transfer_status(league)]
-    elements.select { |e| !e.empty? }.join(', ').html_safe
+    safe_join(elements.select { |e| !e.empty? })
   end
 
   def roster_status(league)
     roster = league.roster_for(user)
 
     if roster
-      "on roster '#{present(roster).link}'".html_safe
+      safe_join(["on roster '", present(roster).link, "'"])
     else
       ''
     end

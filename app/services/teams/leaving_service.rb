@@ -12,7 +12,7 @@ module Teams
     private
 
     def notify_captains(user, team)
-      User.get_revokeable(:edit, team).each do |captain|
+      User.which_can(:edit, team).each do |captain|
         msg = "'#{user.name}' has left the team '#{team.name}'"
         Users::NotificationService.call(captain, msg, user_path(user))
       end

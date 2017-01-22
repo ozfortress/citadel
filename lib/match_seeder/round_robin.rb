@@ -32,7 +32,7 @@ module MatchSeeder
       wrap_size = rosters.size - 1
 
       rosters.each_with_index.map do |roster, index|
-        if index == 0
+        if index.zero?
           roster
         else
           rosters[(index - 1 + round_no) % wrap_size + 1]
