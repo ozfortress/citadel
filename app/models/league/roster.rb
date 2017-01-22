@@ -240,9 +240,7 @@ class League
     def unique_within_league
       return unless league.present?
 
-      if league.rosters.where(team: team).exists?
-        errors.add(:base, "can only sign up once")
-      end
+      errors.add(:base, 'can only sign up once') if league.rosters.where(team: team).exists?
     end
 
     def validate_schedule
