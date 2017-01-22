@@ -4,6 +4,8 @@ module Auth
   class Ban < ActiveRecord::Base
     include ActionState
 
+    validates :reason, presence: true, allow_blank: true
+
     validate :time_period
 
     scope :active, lambda {

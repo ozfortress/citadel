@@ -95,18 +95,20 @@ ActiveRecord::Schema.define(version: 20170114040917) do
 
   create_table "action_user_use_forums_bans", force: :cascade do |t|
     t.integer  "user_id"
+    t.string   "reason",        default: "", null: false
     t.datetime "terminated_at"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["user_id"], name: "index_action_user_use_forums_bans_on_user_id", using: :btree
   end
 
   create_table "action_user_use_forums_thread_bans", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "forums_thread_id"
+    t.string   "reason",           default: "", null: false
     t.datetime "terminated_at"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.index ["forums_thread_id"], name: "index_action_user_use_forums_thread_bans_on_forums_thread_id", using: :btree
     t.index ["user_id"], name: "index_action_user_use_forums_thread_bans_on_user_id", using: :btree
   end
@@ -114,34 +116,38 @@ ActiveRecord::Schema.define(version: 20170114040917) do
   create_table "action_user_use_forums_topic_bans", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "forums_topic_id"
+    t.string   "reason",          default: "", null: false
     t.datetime "terminated_at"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.index ["forums_topic_id"], name: "index_action_user_use_forums_topic_bans_on_forums_topic_id", using: :btree
     t.index ["user_id"], name: "index_action_user_use_forums_topic_bans_on_user_id", using: :btree
   end
 
   create_table "action_user_use_leagues_bans", force: :cascade do |t|
     t.integer  "user_id"
+    t.string   "reason",        default: "", null: false
     t.datetime "terminated_at"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["user_id"], name: "index_action_user_use_leagues_bans_on_user_id", using: :btree
   end
 
   create_table "action_user_use_teams_bans", force: :cascade do |t|
     t.integer  "user_id"
+    t.string   "reason",        default: "", null: false
     t.datetime "terminated_at"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["user_id"], name: "index_action_user_use_teams_bans_on_user_id", using: :btree
   end
 
   create_table "action_user_use_users_bans", force: :cascade do |t|
     t.integer  "user_id"
+    t.string   "reason",        default: "", null: false
     t.datetime "terminated_at"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["user_id"], name: "index_action_user_use_users_bans_on_user_id", using: :btree
   end
 

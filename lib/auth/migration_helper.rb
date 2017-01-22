@@ -25,7 +25,10 @@ module Auth
       create_table name do |t|
         t.belongs_to actor,   index: true, foreign_key: true
         t.belongs_to subject, index: true, foreign_key: true if singular
+
+        t.string   :reason,        null: false, default: ''
         t.datetime :terminated_at, null: true
+
         t.timestamps null: false
       end
     end
