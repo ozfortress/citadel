@@ -18,7 +18,8 @@ module Users
       user.generate_confirmation_token
       UserMailer.confirmation(user).deliver
 
-      flash[:notice] = "Sent confirmation email to #{user.email}"
+      flash[:notice] = "Sent confirmation email to #{user.email}. " \
+                       'Please check your spam folder if the email has not reached your inbox.'
     end
   end
 end
