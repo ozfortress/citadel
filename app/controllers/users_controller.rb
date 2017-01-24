@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   before_action :require_login, only: [:logout]
   before_action :require_user_permission, only: [:edit, :update, :request_name_change]
   before_action :require_users_permission, only: [:names, :handle_name_change]
-  before_action :require_user, only: :confirm_email
+  before_action :require_user_confirmation_token, only: :confirm_email
   before_action :require_user_confirmation_not_timed_out, only: :confirm_email
 
   def index
@@ -120,7 +120,7 @@ class UsersController < ApplicationController
     redirect_to pages_home_path unless user_can_edit_users?
   end
 
-  def require_user
+  def require_user_confirmation_token
     return if @user
 
     flash[:error] = 'Invalid confirmation token'
@@ -130,7 +130,7 @@ class UsersController < ApplicationController
   def require_user_confirmation_not_timed_out
     return unless @user.confirmation_timed_out?
 
-    flash[:error] = 'Confirmation timed out'
+    flash[:error] = 'Confirmation token timed out.'
     @user.update!(email: nil)
     redirect_to user_path(@user)
   end
