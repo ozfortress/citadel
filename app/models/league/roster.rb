@@ -197,7 +197,7 @@ class League
 
       tiebreaker_keys = league.tiebreakers.map { |tiebreaker| -tiebreaker.get_comparison(self) }
 
-      keys + tiebreaker_keys
+      keys + tiebreaker_keys + [seeding]
     end
 
     def calculate_points
