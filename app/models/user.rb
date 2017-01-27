@@ -1,5 +1,6 @@
 require 'search'
 require 'auth'
+require 'steam_id'
 
 class User < ApplicationRecord
   include Auth::Model
