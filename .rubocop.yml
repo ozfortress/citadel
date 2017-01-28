@@ -3,7 +3,7 @@ Rails:
 Metrics/LineLength:
   Max: 100
 Metrics/AbcSize:
-  Max: 20
+  Max: 25
 Metrics/ClassLength:
   Max: 200
 Metrics/ModuleLength:

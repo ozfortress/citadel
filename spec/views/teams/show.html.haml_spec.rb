@@ -16,8 +16,10 @@ describe 'teams/show' do
     assign(:players, players)
     assign(:transfers, transfers_in + transfers_out)
     assign(:active_rosters, active_rosters)
+    assign(:active_roster_matches, active_rosters.map { matches })
     assign(:past_rosters, past_rosters)
-    assign(:matches, matches)
+    assign(:past_roster_matches, past_rosters.map { matches })
+    assign(:upcoming_matches, matches)
   end
 
   it 'shows public team data' do
