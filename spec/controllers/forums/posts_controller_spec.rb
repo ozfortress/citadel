@@ -12,6 +12,7 @@ describe Forums::PostsController do
 
       post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
 
+      thread.reload
       expect(thread.posts).to_not be_empty
       post = thread.posts.first
       expect(post.content).to eq('Foo')
@@ -23,6 +24,7 @@ describe Forums::PostsController do
 
       post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
 
+      thread.reload
       expect(thread.posts).to_not be_empty
       post = thread.posts.first
       expect(post.content).to eq('Foo')
@@ -34,6 +36,7 @@ describe Forums::PostsController do
 
       post :create, params: { thread_id: thread.id, forums_post: { content: '' } }
 
+      thread.reload
       expect(thread.posts).to be_empty
     end
 
@@ -43,6 +46,7 @@ describe Forums::PostsController do
 
       post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
 
+      thread.reload
       expect(thread.posts).to be_empty
       expect(response).to redirect_to(forums_path)
     end
@@ -53,6 +57,7 @@ describe Forums::PostsController do
 
       post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
 
+      thread.reload
       expect(thread.posts).to be_empty
       expect(response).to redirect_to(forums_path)
     end
@@ -63,6 +68,7 @@ describe Forums::PostsController do
 
       post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
 
+      thread.reload
       expect(thread.posts).to be_empty
       expect(response).to redirect_to(forums_path)
     end
@@ -70,6 +76,7 @@ describe Forums::PostsController do
     it 'redirects for unauthenticated user' do
       post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
 
+      thread.reload
       expect(thread.posts).to be_empty
       expect(response).to redirect_to(forums_path)
     end
@@ -85,6 +92,7 @@ describe Forums::PostsController do
 
         post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
 
+        thread.reload
         expect(thread.posts).to_not be_empty
         post = thread.posts.first
         expect(post.content).to eq('Foo')
@@ -110,6 +118,7 @@ describe Forums::PostsController do
 
         post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
 
+        thread.reload
         expect(thread.posts).to_not be_empty
         post = thread.posts.first
         expect(post.content).to eq('Foo')
@@ -240,6 +249,7 @@ describe Forums::PostsController do
 
         delete :destroy, params: { id: post.id }
 
+        thread.reload
         expect(thread.posts).to be_empty
         expect(response).to redirect_to(forums_thread_path(thread))
       end
@@ -250,6 +260,7 @@ describe Forums::PostsController do
 
         delete :destroy, params: { id: post.id }
 
+        thread.reload
         expect(thread.posts).to_not be_empty
         expect(response).to redirect_to(forums_path)
       end

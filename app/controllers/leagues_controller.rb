@@ -34,8 +34,9 @@ class LeaguesController < ApplicationController
   end
 
   def show
-    @rosters = @league.rosters.includes(division: :league)
-    @divisions = @league.divisions.includes(approved_rosters: :team)
+    @rosters = @league.rosters.includes(:division)
+    @ordered_rosters = @league.ordered_rosters_by_division
+    @divisions = @ordered_rosters.map(&:first)
     @roster = @league.roster_for(current_user) if user_signed_in?
     @personal_matches = @roster.matches.pending.includes(:home_team, :away_team) if @roster
     @top_div_matches = @divisions.first.matches.pending.includes(:home_team, :away_team)

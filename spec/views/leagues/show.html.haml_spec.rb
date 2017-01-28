@@ -8,11 +8,13 @@ describe 'leagues/show' do
 
   before do
     all_rosters = []
+    ordered_rosters = []
     divisions.each do |division|
       rosters = build_stubbed_list(:league_roster, 5)
       all_rosters += rosters
-      allow(division).to receive(:rosters_sorted).and_return(rosters)
+      ordered_rosters << [division, rosters]
     end
+    allow(league).to receive(:ordered_rosters_by_division).and_return(ordered_rosters)
 
     tiebreakers = League::Tiebreaker.kinds.map do |kind, _|
       build_stubbed(:league_tiebreaker, kind: kind)
@@ -21,6 +23,7 @@ describe 'leagues/show' do
 
     assign(:league, league)
     assign(:rosters, all_rosters)
+    assign(:ordered_rosters, ordered_rosters)
     assign(:divisions, divisions)
     assign(:roster, roster)
   end
@@ -58,7 +61,7 @@ describe 'leagues/show' do
       divisions.each do |division|
         expect(rendered).to_not include(division.name)
 
-        division.rosters_sorted.each do |roster|
+        division.rosters.active.each do |roster|
           expect(rendered).to include(roster.name)
         end
       end
@@ -74,7 +77,7 @@ describe 'leagues/show' do
     divisions.each do |division|
       expect(rendered).to include(division.name)
 
-      division.rosters_sorted.each do |roster|
+      division.rosters.active.each do |roster|
         expect(rendered).to include(roster.name)
       end
     end

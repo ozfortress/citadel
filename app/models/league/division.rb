@@ -11,15 +11,8 @@ class League
 
     has_many :transfer_requests, through: :rosters, class_name: 'Roster::TransferRequest'
 
-    # Special association for preloading
-    has_many :approved_rosters, -> { approved }, inverse_of: :division, class_name: 'Roster'
-
     validates :name, presence: true, length: { in: 1..64 }
 
     alias_attribute :to_s, :name
-
-    def rosters_sorted
-      @rosters_sorted ||= approved_rosters.sort_by(&:sort_keys)
-    end
   end
 end

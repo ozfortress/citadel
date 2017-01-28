@@ -41,7 +41,7 @@
           = roster.link
 
   - else
-    - @divisions.each do |div|
+    - @ordered_rosters.each do |div, rosters|
       %h3= div.name
       %table.table
         %tr
@@ -51,13 +51,13 @@
           - present_collection(@league.tiebreakers).each do |tiebreaker|
             %th= tiebreaker.name
 
-        - div.rosters_sorted.each_with_index do |roster, rank|
+        - rosters.each_with_index do |roster, rank|
           %tr
             %th{ scope: 'row' }= rank + 1
             %td= present(roster).link
             %td= roster.points
             - @league.tiebreakers.each do |tiebreaker|
-              %th= tiebreaker.get_comparison(roster)
+              %th= tiebreaker.value_for(roster)
 
   - if user_signed_in?
     - if current_user.can?(:edit, :team) && @league.signuppable?

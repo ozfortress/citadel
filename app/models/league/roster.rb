@@ -56,6 +56,7 @@ class League
       completed = League.statuses[:completed]
       includes(division: :league).where(leagues: { status: completed })
     }
+    scope :ordered, ->(league) { order(Roster.order_keys(league)) }
 
     after_create do
       # rubocop:disable Rails/SkipsModelValidations
@@ -167,14 +168,19 @@ class League
       players.where(user: user).exists?
     end
 
-    def sort_keys
-      @sort_keys ||= calculate_sort_keys
-    end
-
     def schedule_data=(data)
       self[:schedule_data] = if league.scheduler
                                league.scheduler.transform_data(data)
                              end
+    end
+
+    def self.order_keys(league)
+      orderings = []
+      orderings << 'ranking ASC NULLS LAST'
+      orderings << 'CASE WHEN disbanded THEN 0 ELSE points END DESC'
+      orderings += league.tiebreakers.map(&:order)
+      orderings << 'seeding ASC'
+      orderings
     end
 
     private
@@ -190,14 +196,6 @@ class League
 
       self.points = calculate_points
       self.won_rounds_against_tied_rosters_count = won_rounds_against_tied_rosters.count
-    end
-
-    def calculate_sort_keys
-      keys = [ranking || Float::INFINITY, disbanded? ? 1 : -points]
-
-      tiebreaker_keys = league.tiebreakers.map { |tiebreaker| -tiebreaker.get_comparison(self) }
-
-      keys + tiebreaker_keys
     end
 
     def calculate_points
