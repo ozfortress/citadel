@@ -24,7 +24,7 @@ module Forums
     end
 
     def edits
-      @edits = @post.edits.paginate(page: params[:page])
+      @edits = @post.edits.includes(:created_by).paginate(page: params[:page])
     end
 
     def edit
