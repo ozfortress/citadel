@@ -28,6 +28,7 @@ describe Forums::ThreadsController do
         }
       }
 
+      topic.reload
       expect(topic.threads).to_not be_empty
       thread = topic.threads.first
       expect(thread.title).to eq('Foo')
@@ -53,6 +54,7 @@ describe Forums::ThreadsController do
         }
       }
 
+      topic.reload
       expect(topic.threads).to be_empty
     end
 
@@ -67,6 +69,7 @@ describe Forums::ThreadsController do
         }
       }
 
+      topic.reload
       expect(topic.threads).to_not be_empty
       thread = topic.threads.first
       expect(thread.title).to eq('Foo')
@@ -93,6 +96,7 @@ describe Forums::ThreadsController do
         }
       }
 
+      topic.reload
       expect(topic.threads).to be_empty
       expect(response).to redirect_to(forums_path)
     end
@@ -162,6 +166,7 @@ describe Forums::ThreadsController do
           }
         }
 
+        topic.reload
         expect(topic.threads).to_not be_empty
         thread = topic.threads.first
         expect(thread.title).to eq('Foo')
@@ -184,6 +189,7 @@ describe Forums::ThreadsController do
           topic: topic.id, forums_thread: { title: 'Foo', forums_post: { content: 'Bar' } }
         }
 
+        topic.reload
         expect(topic.threads).to_not be_empty
         thread = topic.threads.first
         expect(response).to redirect_to(forums_thread_path(thread))
@@ -194,6 +200,7 @@ describe Forums::ThreadsController do
 
         post :create, params: { topic: topic.id, forums_thread: { title: 'Foo' } }
 
+        topic.reload
         expect(topic.threads).to be_empty
         expect(response).to redirect_to(forums_path)
       end
@@ -212,6 +219,7 @@ describe Forums::ThreadsController do
           topic: topic.id, forums_thread: { title: 'Foo', forums_post: { content: 'Bar' } }
         }
 
+        topic.reload
         expect(topic.threads).to_not be_empty
         thread = topic.threads.first
         expect(response).to redirect_to(forums_thread_path(thread))
@@ -222,6 +230,7 @@ describe Forums::ThreadsController do
 
         post :create, params: { topic: topic.id, forums_thread: { title: 'Foo' } }
 
+        topic.reload
         expect(topic.threads).to be_empty
         expect(response).to redirect_to(forums_path)
       end
@@ -243,6 +252,7 @@ describe Forums::ThreadsController do
           }
         }
 
+        topic.reload
         expect(topic.threads).to_not be_empty
         thread = topic.threads.first
         expect(thread.title).to eq('Foo')
@@ -413,6 +423,7 @@ describe Forums::ThreadsController do
 
         delete :destroy, params: { id: thread.id }
 
+        topic.reload
         expect(topic.threads).to be_empty
         expect(response).to redirect_to(forums_topic_path(topic))
       end
@@ -423,6 +434,7 @@ describe Forums::ThreadsController do
 
         delete :destroy, params: { id: thread.id }
 
+        topic.reload
         expect(topic.threads).to_not be_empty
         expect(response).to redirect_to(forums_path)
       end
