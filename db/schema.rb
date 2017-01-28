@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170114040917) do
+ActiveRecord::Schema.define(version: 20170128010459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,11 +190,12 @@ ActiveRecord::Schema.define(version: 20170114040917) do
   end
 
   create_table "forums_posts", force: :cascade do |t|
-    t.integer  "thread_id",     null: false
-    t.integer  "created_by_id", null: false
-    t.string   "content",       null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "thread_id",                 null: false
+    t.integer  "created_by_id",             null: false
+    t.string   "content",                   null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "edits_count",   default: 0, null: false
     t.index ["created_by_id"], name: "index_forums_posts_on_created_by_id", using: :btree
     t.index ["thread_id"], name: "index_forums_posts_on_thread_id", using: :btree
   end
@@ -220,6 +221,7 @@ ActiveRecord::Schema.define(version: 20170114040917) do
     t.boolean  "pinned"
     t.boolean  "hidden"
     t.integer  "depth",         default: 0, null: false
+    t.integer  "posts_count",   default: 0, null: false
     t.index ["created_by_id"], name: "index_forums_threads_on_created_by_id", using: :btree
     t.index ["topic_id"], name: "index_forums_threads_on_topic_id", using: :btree
   end
@@ -236,6 +238,7 @@ ActiveRecord::Schema.define(version: 20170114040917) do
     t.boolean  "default_hidden"
     t.integer  "ancestry_depth", default: 0, null: false
     t.string   "ancestry"
+    t.integer  "threads_count",  default: 0, null: false
     t.index ["ancestry"], name: "index_forums_topics_on_ancestry", using: :btree
     t.index ["created_by_id"], name: "index_forums_topics_on_created_by_id", using: :btree
   end

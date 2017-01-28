@@ -1,6 +1,6 @@
 module Forums
   class Thread < ApplicationRecord
-    belongs_to :topic, optional: true
+    belongs_to :topic, optional: true, inverse_of: :threads, counter_cache: true
     belongs_to :created_by, class_name: 'User'
 
     has_many :posts,         dependent: :destroy

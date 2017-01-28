@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Forums::PostEdit do
   before(:all) { create(:forums_post_edit) }
 
-  it { should belong_to(:post) }
+  it { should belong_to(:post).inverse_of(:edits).counter_cache(:edits_count) }
   it { should_not allow_value(nil).for(:post) }
 
   it { should belong_to(:created_by).class_name('User') }

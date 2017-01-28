@@ -2,10 +2,10 @@ module Forums
   class Post < ApplicationRecord
     default_scope { order(created_at: :asc) }
 
-    belongs_to :thread
+    belongs_to :thread, inverse_of: :posts, counter_cache: true
     belongs_to :created_by, class_name: 'User'
 
-    has_many :edits, class_name: 'PostEdit', dependent: :delete_all
+    has_many :edits, class_name: 'PostEdit', inverse_of: :post, dependent: :delete_all
 
     validates :content, presence: true
 
