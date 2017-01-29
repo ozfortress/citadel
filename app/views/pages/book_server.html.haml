@@ -1,0 +1,5 @@
+- content_for(:title) { 'Booking a Server' }
+
+-# rubocop:disable Rails/OutputSafety
+= raw File.read(Rails.root.join('public', 'book_server.html.txt'))
+-# rubocop:enable Rails/OutputSafety

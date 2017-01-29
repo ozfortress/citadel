@@ -34,6 +34,9 @@
     %li{ class: navbar_class(:server_configs) }
       = link_to('Server Configs', :server_configs)
 
+    %li{ class: navbar_class(:book_server) }
+      = link_to('Book a Server', :book_server)
+
 - if user_signed_in? && current_user.admin?
   %li{ class: navbar_class(:admin) }
     = link_to('Admin', :admin)

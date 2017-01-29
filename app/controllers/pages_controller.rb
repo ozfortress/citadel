@@ -10,4 +10,7 @@ class PagesController < ApplicationController
 
   def server_configs
   end
+
+  def book_server
+  end
 end
