@@ -12,6 +12,10 @@ class League
       match_s(&:name)
     end
 
+    def week
+      round_s
+    end
+
     def title
       match_s { |team| present(team).link }
     end
@@ -85,7 +89,7 @@ class League
       if match.round_name.blank?
         match.round_number ? "##{match.round_number}" : ''
       else
-        match.round_name + ':'
+        match.round_name + ''
       end
     end
   end

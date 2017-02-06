@@ -12,14 +12,8 @@
         %span.glyphicon.glyphicon-plus
         Create Single Match
 
-  %ul.list-group
-    - @divisions.each do |div|
-      %li.list-group-item
-        %h3= div
 
-        .panel.panel-default
-          %ul.list-group
-            - present_collection(div.matches).each do |match|
-              %li.list-group-item
-                = match.link
-                .pull-right= match.results
+  - @divisions.each do |div|
+    .panel.panel-default
+      %h3= div
+      = render 'matches_table', matches: div.matches
