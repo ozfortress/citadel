@@ -140,9 +140,10 @@
             - roster.users.each do |user|
               %li.list-group-item
                 = render 'users/listing', user: user, team: roster.team
-          .panel-heading Matches:
+          .panel-heading
+            Matches:
             = render 'matches_table', matches: matches, roster: roster
-         
+
           .panel-heading Transfer History:
           %ul.list-group
             - roster.transfers.each do |transfer|

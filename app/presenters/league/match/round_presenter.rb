@@ -27,49 +27,53 @@ class League
       def score(roster = nil)
         if match.no_forfeit?
           if roster.nil?
-            home_div = content_tag(:div, round.home_team_score, class: ("score-highlight" if round.home_team_score > round.away_team_score))
-            away_div = content_tag(:div, round.away_team_score, class: ("score-highlight" if round.home_team_score < round.away_team_score))
-            return content_tag(:div, home_div + " : " + away_div, class: "round-scores")
+            highlight_winner
           else
-            winner = check_winner(home_team, away_team, roster)
-
-            if winner === ""
-              color = "round-scores round-tied"
-            elsif roster.name === winner.name
-              color = "round-scores round-won"
-            else
-              color = "round-scores round-loss"
-            end
-            
-            home_div = content_tag(:div, round.home_team_score)
-            away_div = content_tag(:div, round.away_team_score)
-
-            return content_tag(:div, home_div + " : " + away_div, class: color)
+            check_roster_won(roster)
           end
         else
-          if match.home_team_forfeit?
-            return "home forfeit"
-          elsif match.away_team_forfeit?
-            return "away forfeit"
-          elsif match.mutual_forfeit?
-            return "mutual forfeit"
-          else
-            return "tech forfeit"
-          end
+          check_forfeit
         end
       end
 
       private
 
-      def check_winner(home, away, roster)
-        if round.home_team_score > round.away_team_score
-          winner = home
-        elsif round.home_team_score < round.away_team_score
-          winner = away
+      def highlight_winner
+        home_score = round.home_team_score
+        away_score = round.away_team_score
+        home_div = content_tag(:div, home_score,
+                               class: ('score-highlight' if home_score > away_score))
+        away_div = content_tag(:div, away_score,
+                               class: ('score-highlight' if home_score < away_score))
+        content_tag(:div, home_div + ' : ' + away_div, class: 'round-scores')
+      end
+
+      def check_roster_won(roster)
+        klass = if round.winner.nil?
+                  'round-scores round-tied'
+                elsif round.winner == roster
+                  'round-scores round-won'
+                else
+                  'round-scores round-loss'
+                end
+        winner_s(klass)
+      end
+
+      def winner_s(style)
+        content_tag(:div, "#{round.home_team_score} : #{round.away_team_score}",
+                    class: style)
+      end
+
+      def check_forfeit
+        if match.home_team_forfeit?
+          'home forfeit'
+        elsif match.away_team_forfeit?
+          'away forfeit'
+        elsif match.mutual_forfeit?
+          'mutual forfeit'
         else
-          winner = ""
-        end 
-        return winner
+          'tech forfeit'
+        end
       end
 
       def non_forfeit_results(home, away)
@@ -79,7 +83,7 @@ class League
           safe_join([home, 'lost to', away], ' ')
         else
           safe_join([home, 'tied with', away], ' ')
-        end + ", #{round.home_team_score} to #{round.away_team_score}"
+        end + ', #{round.home_team_score} to #{round.away_team_score}'
       end
 
       def forfeit_results(home, away)
@@ -93,7 +97,6 @@ class League
           'technical forfeit (both win)'
         end
       end
-
     end
   end
 end

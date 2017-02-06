@@ -57,7 +57,7 @@ class League
     private
 
     def score_results
-      scores = match.rounds.map { |round| "#{round.home_team_score}:#{round.away_team_score}" }
+      scores = match.rounds.map { |round| '#{round.home_team_score}:#{round.away_team_score}' }
 
       "| #{scores.join(' | ')} |"
     end
@@ -65,9 +65,9 @@ class League
     def forfeit_results
       case match.forfeit_by
       when 'home_team_forfeit'
-        "#{home_team.name} forfeit"
+        '#{home_team.name} forfeit'
       when 'away_team_forfeit'
-        "#{away_team.name} forfeit"
+        '#{away_team.name} forfeit'
       else
         match.forfeit_by.to_s.humanize
       end
