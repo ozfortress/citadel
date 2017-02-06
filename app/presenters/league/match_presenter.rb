@@ -57,7 +57,7 @@ class League
     private
 
     def score_results
-      scores = match.rounds.map { |round| '#{round.home_team_score}:#{round.away_team_score}' }
+      scores = match.rounds.map { |round| "#{round.home_team_score}:#{round.away_team_score}" }
 
       "| #{scores.join(' | ')} |"
     end
