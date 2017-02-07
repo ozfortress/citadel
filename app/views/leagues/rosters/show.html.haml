@@ -53,11 +53,7 @@
 
 .panel.panel-default
   .panel-heading Matches
-  %ul.list-group
-    - present_collection(@matches).each do |match|
-      %li.list-group-item
-        = match.link
-        .pull-right= match.results
+  = render 'leagues/matches/matches_table', matches: @matches, roster: @roster
 
 - if user_can_edit_league?
   .panel.panel-info
