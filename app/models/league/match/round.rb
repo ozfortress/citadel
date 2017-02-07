@@ -30,24 +30,11 @@ class League
 
       scope :draws, -> { where(arel_table[:away_team_score].eq(arel_table[:home_team_score])) }
 
-      def winner
+      def winning_team
         if home_team_score > away_team_score
           match.home_team
         elsif home_team_score < away_team_score
           match.away_team
-        end
-      end
-
-      def forfeit_winner
-        case match.forfeit_by
-        when 'home_team_forfeit'
-          match.home_team
-        when 'away_team_forfeit'
-          match.away_team
-        when 'mutual_forfeit'
-          'none'
-        else
-          'both'
         end
       end
 
