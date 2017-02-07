@@ -8,18 +8,40 @@ describe 'teams/show' do
   let(:transfers_out) { build_stubbed_list(:team_transfer, 5, team: team, is_joining: false) }
   let(:active_rosters) { build_stubbed_list(:league_roster, 3, team: team) }
   let(:past_rosters) { build_stubbed_list(:league_roster, 3, team: team) }
-  let(:matches) { build_stubbed_list(:league_match, 4) }
 
   before do
+    roster = active_rosters.first
+    @matches = []
+    @matches << build_stubbed(:league_match, home_team: roster, status: 'confirmed')
+    @matches << build_stubbed(:league_match, home_team: roster, status: 'pending',
+                                             round_name: 'Finals')
+    @matches << build_stubbed(:bye_league_match, home_team: roster, status: 'confirmed')
+    League::Match.forfeit_bies.each do |ff, _|
+      @matches << build_stubbed(:league_match, home_team: roster, forfeit_by: ff,
+                                               status: 'confirmed')
+    end
+
+    match = @matches.first
+    rounds = []
+    rounds << build_stubbed(:league_match_round, match: match, home_team_score: 2,
+                                                 away_team_score: 1)
+    rounds << build_stubbed(:league_match_round, match: match, home_team_score: 1,
+                                                 away_team_score: 2)
+    rounds << build_stubbed(:league_match_round, match: match, home_team_score: 3,
+                                                 away_team_score: 3)
+    @matches.each do |match_|
+      allow(match_).to receive(:rounds).and_return(rounds)
+    end
+
     assign(:team, team)
     assign(:invite, invite)
     assign(:players, players)
     assign(:transfers, transfers_in + transfers_out)
     assign(:active_rosters, active_rosters)
-    assign(:active_roster_matches, active_rosters.map { matches })
+    assign(:active_roster_matches, active_rosters.map { @matches })
     assign(:past_rosters, past_rosters)
-    assign(:past_roster_matches, past_rosters.map { matches })
-    assign(:upcoming_matches, matches)
+    assign(:past_roster_matches, past_rosters.map { @matches })
+    assign(:upcoming_matches, @matches)
   end
 
   it 'shows public team data' do
@@ -47,9 +69,9 @@ describe 'teams/show' do
       end
     end
 
-    matches.each do |match|
+    @matches.each do |match|
       expect(rendered).to include(match.home_team.name)
-      expect(rendered).to include(match.away_team.name)
+      expect(rendered).to include(match.away_team.name) if match.away_team
     end
   end
 end
