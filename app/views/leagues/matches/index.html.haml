@@ -16,4 +16,4 @@
   - @divisions.each do |div|
     .panel.panel-default
       %h3= div
-      = render 'matches_table', matches: div.matches
+      = render 'leagues/matches/matches_table', matches: div.matches, roster: nil

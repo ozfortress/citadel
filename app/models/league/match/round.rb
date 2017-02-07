@@ -38,6 +38,19 @@ class League
         end
       end
 
+      def forfeit_winner
+        case match.forfeit_by
+        when 'home_team_forfeit'
+          match.home_team
+        when 'away_team_forfeit'
+          match.away_team
+        when 'mutual_forfeit'
+          'none'
+        else
+          'both'
+        end
+      end
+
       private
 
       def set_defaults

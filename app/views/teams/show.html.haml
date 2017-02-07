@@ -48,7 +48,7 @@
             %span.pull-right.glyphicon.glyphicon-chevron-down
 
         .panel-collapse.collapse{ id: id }
-          = render 'matches_table', matches: matches, roster: roster
+          = render 'leagues/matches/matches_table', matches: matches, roster: roster
 
       - id = "#{dom_id(roster)}-transfers"
       .panel-heading
@@ -142,7 +142,7 @@
                 = render 'users/listing', user: user, team: roster.team
           .panel-heading
             Matches:
-            = render 'matches_table', matches: matches, roster: roster
+            = render 'leagues/matches/matches_table', matches: matches, roster: roster
 
           .panel-heading Transfer History:
           %ul.list-group

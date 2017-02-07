@@ -14,13 +14,15 @@
           %td.match-home-team= present(match.home_team).link
           %td.match-vs
             - match.rounds.each do |round|
-              = present(round).score
+              - if roster.nil?
+                = present(round).results
+              - else
+                = present(round).results(roster)
               %span.round-map
                 //= round.map
-
           - if !match.bye?
             %td.match-away-team= present(match.away_team).link
-            %td.match-view= present(match).link("Match Page")
+            %td.match-view= present(match).link('Match Page')
           - else
             %td.match-away-team= 'BYE'
             %td

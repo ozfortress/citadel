@@ -28,7 +28,7 @@
       Upcoming Matches for #{@divisions.first}
 
 
-  = render 'matches_table', matches: (@personal_matches || @top_div_matches)
+  = render 'leagues/matches/matches_table', matches: (@personal_matches || @top_div_matches), roster: nil
 
 
 .panel.panel-default

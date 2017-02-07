@@ -24,19 +24,31 @@ class League
         end
       end
 
-      def score(roster = nil)
-        if match.no_forfeit?
-          if roster.nil?
-            highlight_winner
-          else
-            check_roster_won(roster)
-          end
+      def results(roster = nil)
+        if roster.nil?
+          non_roster_result
         else
-          check_forfeit
+          roster_result(roster)
         end
       end
 
       private
+
+      def non_roster_result
+        if match.no_forfeit?
+          highlight_winner
+        else
+          highlight_forfeit
+        end
+      end
+
+      def roster_result(roster)
+        if match.no_forfeit?
+          roster_won_round?(roster)
+        else
+          roster_won_forfeit?(roster)
+        end
+      end
 
       def highlight_winner
         home_score = round.home_team_score
@@ -48,7 +60,7 @@ class League
         content_tag(:div, home_div + ' : ' + away_div, class: 'round-scores')
       end
 
-      def check_roster_won(roster)
+      def roster_won_round?(roster)
         klass = if round.winner.nil?
                   'round-scores round-tied'
                 elsif round.winner == roster
@@ -56,24 +68,35 @@ class League
                 else
                   'round-scores round-loss'
                 end
-        winner_s(klass)
+        html_div("#{round.home_team_score} : #{round.away_team_score}", klass)
       end
 
-      def winner_s(style)
-        content_tag(:div, "#{round.home_team_score} : #{round.away_team_score}",
-                    class: style)
-      end
-
-      def check_forfeit
+      def highlight_forfeit
         if match.home_team_forfeit?
-          'home forfeit'
+          html_div('home forfeited')
         elsif match.away_team_forfeit?
-          'away forfeit'
+          html_div('away forfeited')
         elsif match.mutual_forfeit?
-          'mutual forfeit'
+          html_div('mutual forfeit')
         else
-          'tech forfeit'
+          html_div('technical forfeit')
         end
+      end
+
+      def roster_won_forfeit?(roster)
+        if round.forfeit_winner == 'none'
+          html_div('mutual forfeit', 'round-scores round-loss')
+        elsif round.forfeit_winner == 'both'
+          html_div('technical forfeit', 'round-scores round-won')
+        elsif round.forfeit_winner == roster
+          html_div('forfeit won', 'round-scores round-won')
+        else
+          html_div('forfeit loss', 'round-scores round-loss')
+        end
+      end
+
+      def html_div(text, style = nil)
+        content_tag(:div, text, class: style)
       end
 
       def non_forfeit_results(home, away)
