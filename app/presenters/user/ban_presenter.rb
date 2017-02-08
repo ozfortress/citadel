@@ -6,7 +6,7 @@ class User
       'Banned from ' + ban.class.subject.to_s.capitalize
     end
 
-    def title
+    def title_text
       safe_join([expire_s, reason_s], tag(:br))
     end
 

@@ -1,6 +1,6 @@
 - ban_p = present(ban, User::BanPresenter)
 
-- data = { toggle: :tooltip, placement: :bottom, html: 'true', 'original-title' => ban_p.title }
+- data = { toggle: :tooltip, placement: :bottom, html: 'true', 'original-title' => ban_p.title_text }
 %div{ data: data }
   .span.btn.btn-danger{ class: (ban.active? ? 'active' : 'disabled') }
     = ban_p.name
