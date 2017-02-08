@@ -3,13 +3,27 @@ class League
     presents :match
 
     delegate :id, to: :match
-    delegate :home_team, to: :match
-    delegate :away_team, to: :match
     delegate :league, to: :match
     delegate :bye?, to: :match
 
+    def home_team
+      present(match.home_team)
+    end
+
+    def away_team
+      present(match.away_team) unless match.away_team.nil?
+    end
+
     def to_s
       match_s(&:name)
+    end
+
+    def round_s
+      if match.round_name.blank?
+        match.round_number ? "##{match.round_number}" : ''
+      else
+        match.round_name
+      end
     end
 
     def title
@@ -46,46 +60,45 @@ class League
       elsif match.no_forfeit?
         score_results
       else
-        forfeit_results
+        forfeit_results(home_team.name, away_team.name)
       end
+    end
+
+    def forfeit_s
+      forfeit_results('Home', 'Away')
     end
 
     private
 
     def score_results
-      scores = match.rounds.map { |round| "#{round.home_team_score}:#{round.away_team_score}" }
+      scores = present_collection(match.rounds).map(&:score_s)
 
       "| #{scores.join(' | ')} |"
     end
 
-    def forfeit_results
+    def forfeit_results(home_s, away_s)
       case match.forfeit_by
       when 'home_team_forfeit'
-        "#{home_team.name} forfeit"
+        "#{home_s} forfeit"
       when 'away_team_forfeit'
-        "#{away_team.name} forfeit"
+        "#{away_s} forfeit"
       else
         match.forfeit_by.to_s.humanize
       end
     end
 
     def match_s(&block)
-      safe_join([round_s, match_name(&block)], ' ')
+      round = round_s
+      round += ':' unless round.blank?
+
+      safe_join([round, match_name(&block)], ' ')
     end
 
     def match_name
       if bye?
-        safe_join([yield(home_team), 'BYE'], ' ')
+        safe_join([yield(match.home_team), 'BYE'], ' ')
       else
-        safe_join([yield(home_team), 'vs', yield(away_team)], ' ')
-      end
-    end
-
-    def round_s
-      if match.round_name.blank?
-        match.round_number ? "##{match.round_number}" : ''
-      else
-        match.round_name + ':'
+        safe_join([yield(match.home_team), 'vs', yield(match.away_team)], ' ')
       end
     end
   end

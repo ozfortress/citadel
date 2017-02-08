@@ -17,6 +17,14 @@ describe 'leagues/matches/index' do
                                                forfeit_by: ff, status: 'confirmed')
     end
 
+    rounds = []
+    rounds << build_stubbed(:league_match_round, home_team_score: 2, away_team_score: 1)
+    rounds << build_stubbed(:league_match_round, home_team_score: 1, away_team_score: 2)
+    rounds << build_stubbed(:league_match_round, home_team_score: 3, away_team_score: 3)
+    @matches.each do |match|
+      allow(match).to receive(:rounds).and_return(rounds)
+    end
+
     allow(div).to receive(:matches).and_return(@matches)
   end
 

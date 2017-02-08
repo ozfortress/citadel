@@ -17,20 +17,18 @@
   .panel-body= markdown @league.description
 
 .panel.panel-default
+
+  = link_to 'All Matches', league_matches_path(@league),
+            class: 'btn btn-default pull-right'
+
   .panel-heading
     - if @personal_matches
       Your Upcoming Matches
     - else
       Upcoming Matches for #{@divisions.first}
 
-    = link_to 'All Matches', league_matches_path(@league),
-              class: 'btn btn-default pull-right'
-
-  %ul.list-group
-    - present_collection(@personal_matches || @top_div_matches).each do |match|
-      %li.list-group-item
-        = match.link
-        .pull-right= match.results
+  - matches = @personal_matches || @top_div_matches
+  = render 'leagues/matches/matches_table', matches: matches, roster: nil
 
 .panel.panel-default
   .panel-heading Teams
