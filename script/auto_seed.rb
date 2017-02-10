@@ -1,5 +1,5 @@
 # Change to whichever league we're generating for
-league = League.find(3)
+league = League.find(ARGV.first.to_i)
 
 rosters = league.rosters.to_a
 
@@ -9,13 +9,13 @@ rosters_with_values = rosters.map do |roster|
     completed = League.statuses[:completed]
     past_rosters = user.rosters
                        .includes(division: { league: :divisions })
-                       .includes(division: :approved_rosters)
                        .references(division: :league)
                        .where(leagues: { status: completed })
                        .to_a
 
     roster_values = past_rosters.map do |past_roster|
-      value = past_roster.division.rosters_sorted.index(past_roster)
+      league = past_roster.league
+      value = past_roster.division.rosters.ordered(league).index(past_roster)
 
       past_roster.league.divisions.each do |div|
         break if div == past_roster.division
