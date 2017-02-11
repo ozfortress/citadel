@@ -6,7 +6,9 @@ module Users
       user.transaction do
         user.assign_attributes(params)
 
-        send_confirmation_email(user, flash) if user.email_changed? && !user.email.blank?
+        if user.valid?
+          send_confirmation_email(user, flash) if user.email_changed? && !user.email.blank?
+        end
 
         user.save || rollback!
       end

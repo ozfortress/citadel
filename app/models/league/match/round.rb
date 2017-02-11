@@ -30,6 +30,14 @@ class League
 
       scope :draws, -> { where(arel_table[:away_team_score].eq(arel_table[:home_team_score])) }
 
+      def winning_team
+        if home_team_score > away_team_score
+          match.home_team
+        elsif home_team_score < away_team_score
+          match.away_team
+        end
+      end
+
       private
 
       def set_defaults

@@ -48,11 +48,7 @@
             %span.pull-right.glyphicon.glyphicon-chevron-down
 
         .panel-collapse.collapse{ id: id }
-          %ul.list-group
-            - matches.each do |match|
-              %li.list-group-item
-                = present(match).link
-                .pull-right= present(match).results
+          = render 'leagues/matches/matches_table', matches: matches, roster: roster
 
       - id = "#{dom_id(roster)}-transfers"
       .panel-heading
@@ -144,12 +140,10 @@
             - roster.users.each do |user|
               %li.list-group-item
                 = render 'users/listing', user: user, team: roster.team
-          .panel-heading Matches:
-          %ul.list-group
-            - matches.each do |match|
-              %li.list-group-item
-                = present(match).link
-                .pull-right= present(match).results
+          .panel-heading
+            Matches:
+            = render 'leagues/matches/matches_table', matches: matches, roster: roster
+
           .panel-heading Transfer History:
           %ul.list-group
             - roster.transfers.each do |transfer|

@@ -19,6 +19,12 @@ describe 'users/show' do
     assign(:team_invites, team_invites)
     assign(:rosters, rosters)
     assign(:matches, matches)
+
+    ban_cls = double(subject: 'Foo')
+    bans = []
+    bans << double(reason: 'Bad', terminated_at: Time.zone.now, active?: true, class: ban_cls)
+    bans << double(reason: nil, terminated_at: Time.zone.now, active?: false, class: ban_cls)
+    allow(user).to receive(:bans_for).and_return(bans)
   end
 
   it 'shows public user data' do

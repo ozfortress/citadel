@@ -56,6 +56,7 @@ class UsersController < ApplicationController
     if Users::UpdatingService.call(@user, edit_user_params, flash)
       redirect_to(user_path(@user))
     else
+      edit
       render :edit
     end
   end

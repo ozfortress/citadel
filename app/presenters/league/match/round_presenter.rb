@@ -13,7 +13,7 @@ class League
         present(match.away_team)
       end
 
-      def result
+      def result_description
         home = home_team.link
         away = away_team.link
 
@@ -24,7 +24,41 @@ class League
         end
       end
 
+      def score_s
+        "#{round.home_team_score} : #{round.away_team_score}"
+      end
+
+      def result(roster = nil)
+        if roster.nil?
+          highlight_winner
+        else
+          roster_won_round?(roster)
+        end
+      end
+
       private
+
+      def highlight_winner
+        home_score = round.home_team_score
+        away_score = round.away_team_score
+        home_div = content_tag(:div, home_score,
+                               class: ('round-won' if home_score > away_score))
+        away_div = content_tag(:div, away_score,
+                               class: ('round-won' if home_score < away_score))
+        content_tag(:div, home_div + ' : ' + away_div, class: 'round-score')
+      end
+
+      def roster_won_round?(roster)
+        winner = round.winning_team
+        klass = if winner.nil?
+                  'round-tied'
+                elsif winner == roster
+                  'round-won'
+                else
+                  'round-loss'
+                end
+        content_tag(:div, score_s, class: "round-scores #{klass}")
+      end
 
       def non_forfeit_results(home, away)
         if round.home_team_score > round.away_team_score

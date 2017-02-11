@@ -51,7 +51,7 @@ class PermissionsController < ApplicationController
     redirect_back if subject? && ![:team].include?(@subject)
   end
 
-  def redirect_back
-    super(fallback_location: permissions_path)
+  def redirect_back(options = {})
+    super({ fallback_location: permissions_path }.merge(options))
   end
 end
