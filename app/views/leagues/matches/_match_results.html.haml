@@ -9,3 +9,10 @@
         = link_to round.map, meta_map_path(round.map)
 
         .pull-right= present(round).result_description
+- else
+  %ul.list-group
+    - rounds.each do |round|
+      %li.list-group-item
+        = link_to round.map, meta_map_path(round.map)
+
+        .pull-right Results Pending
