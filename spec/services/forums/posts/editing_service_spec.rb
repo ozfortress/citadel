@@ -4,22 +4,23 @@ describe Forums::Posts::EditingService do
   let(:user) { create(:user) }
   let(:post) { create(:forums_post) }
   let(:creator) { post.created_by }
+  let(:content) { 'ABCDEFGHIJKLMNOP' }
 
   it 'succesfully edits a post' do
-    subject.call(user, post, content: 'Foo')
+    subject.call(user, post, content: content)
 
     expect(post).to_not be_changed
     expect(post.created_by).to eq(creator)
-    expect(post.content).to eq('Foo')
+    expect(post.content).to eq(content)
   end
 
   it 'creates post edit history' do
-    subject.call(user, post, content: 'Foo')
+    subject.call(user, post, content: content)
 
     expect(post.edits.count).to eq(1)
     edit = post.edits.first
     expect(edit.created_by).to eq(user)
-    expect(edit.content).to eq('Foo')
+    expect(edit.content).to eq(content)
   end
 
   it 'handles invalid data' do

@@ -5,6 +5,7 @@ describe Leagues::Matches::Comms::CreationService do
   let(:match) { create(:league_match) }
   let(:home_captain) { create(:user) }
   let(:away_captain) { create(:user) }
+  let(:content) { 'ABCDEFGHIJKLMNOP' }
 
   before do
     home_captain.grant(:edit, match.home_team.team)
@@ -12,10 +13,10 @@ describe Leagues::Matches::Comms::CreationService do
   end
 
   it 'user successfully posts a comm' do
-    comm = subject.call(user, match, content: 'A')
+    comm = subject.call(user, match, content: content)
 
     expect(comm).to be_valid
-    expect(comm.content).to eq('A')
+    expect(comm.content).to eq(content)
     expect(comm.user).to be(user)
     expect(user.notifications).to be_empty
     expect(home_captain.notifications).to_not be_empty
@@ -23,10 +24,10 @@ describe Leagues::Matches::Comms::CreationService do
   end
 
   it 'captain successfully submits a ban' do
-    comm = subject.call(home_captain, match, content: 'A')
+    comm = subject.call(home_captain, match, content: content)
 
     expect(comm).to be_valid
-    expect(comm.content).to eq('A')
+    expect(comm.content).to eq(content)
     expect(comm.user).to be(home_captain)
     expect(user.notifications).to be_empty
     expect(home_captain.notifications).to be_empty

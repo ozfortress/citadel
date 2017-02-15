@@ -4,30 +4,31 @@ describe Forums::PostsController do
   let(:topic) { create(:forums_topic) }
   let(:thread) { create(:forums_thread, topic: topic) }
   let(:user) { create(:user) }
+  let(:content) { 'ABCDEFGHIJKLMNOP' }
 
   describe 'POST #create' do
     it 'succeeds for authorized user' do
       user.grant(:manage, :forums)
       sign_in user
 
-      post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
+      post :create, params: { thread_id: thread.id, forums_post: { content: content } }
 
       thread.reload
       expect(thread.posts).to_not be_empty
       post = thread.posts.first
-      expect(post.content).to eq('Foo')
+      expect(post.content).to eq(content)
       expect(post.created_by).to eq(user)
     end
 
     it 'succeeds for any user' do
       sign_in user
 
-      post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
+      post :create, params: { thread_id: thread.id, forums_post: { content: content } }
 
       thread.reload
       expect(thread.posts).to_not be_empty
       post = thread.posts.first
-      expect(post.content).to eq('Foo')
+      expect(post.content).to eq(content)
       expect(post.created_by).to eq(user)
     end
 
@@ -44,7 +45,7 @@ describe Forums::PostsController do
       user.ban(:use, :forums)
       sign_in user
 
-      post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
+      post :create, params: { thread_id: thread.id, forums_post: { content: content } }
 
       thread.reload
       expect(thread.posts).to be_empty
@@ -55,7 +56,7 @@ describe Forums::PostsController do
       user.ban(:use, topic)
       sign_in user
 
-      post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
+      post :create, params: { thread_id: thread.id, forums_post: { content: content } }
 
       thread.reload
       expect(thread.posts).to be_empty
@@ -66,7 +67,7 @@ describe Forums::PostsController do
       user.ban(:use, thread)
       sign_in user
 
-      post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
+      post :create, params: { thread_id: thread.id, forums_post: { content: content } }
 
       thread.reload
       expect(thread.posts).to be_empty
@@ -74,7 +75,7 @@ describe Forums::PostsController do
     end
 
     it 'redirects for unauthenticated user' do
-      post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
+      post :create, params: { thread_id: thread.id, forums_post: { content: content } }
 
       thread.reload
       expect(thread.posts).to be_empty
@@ -90,19 +91,19 @@ describe Forums::PostsController do
         user.grant(:manage, :forums)
         sign_in user
 
-        post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
+        post :create, params: { thread_id: thread.id, forums_post: { content: content } }
 
         thread.reload
         expect(thread.posts).to_not be_empty
         post = thread.posts.first
-        expect(post.content).to eq('Foo')
+        expect(post.content).to eq(content)
         expect(post.created_by).to eq(user)
       end
 
       it 'redirects for any user' do
         sign_in user
 
-        post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
+        post :create, params: { thread_id: thread.id, forums_post: { content: content } }
 
         expect(response).to redirect_to(forums_path)
       end
@@ -116,19 +117,19 @@ describe Forums::PostsController do
       it 'succeeds for user who created the thread' do
         sign_in user
 
-        post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
+        post :create, params: { thread_id: thread.id, forums_post: { content: content } }
 
         thread.reload
         expect(thread.posts).to_not be_empty
         post = thread.posts.first
-        expect(post.content).to eq('Foo')
+        expect(post.content).to eq(content)
         expect(post.created_by).to eq(user)
       end
 
       it 'redirects for other users' do
         sign_in create(:user)
 
-        post :create, params: { thread_id: thread.id, forums_post: { content: 'Foo' } }
+        post :create, params: { thread_id: thread.id, forums_post: { content: content } }
 
         expect(response).to redirect_to(forums_path)
       end
@@ -136,7 +137,7 @@ describe Forums::PostsController do
   end
 
   context 'Existing Post' do
-    let!(:post) { create(:forums_post, thread: thread, content: 'Foo') }
+    let!(:post) { create(:forums_post, thread: thread, content: content) }
 
     describe 'GET #edits' do
       it 'succeeds for any user' do
@@ -165,10 +166,10 @@ describe Forums::PostsController do
         user.grant(:manage, :forums)
         sign_in user
 
-        patch :update, params: { id: post.id, forums_post: { content: 'Test' } }
+        patch :update, params: { id: post.id, forums_post: { content: content } }
 
         post.reload
-        expect(post.content).to eq('Test')
+        expect(post.content).to eq(content)
         path = forums_thread_path(thread, page: 1, anchor: "post_#{post.id}")
         expect(response).to redirect_to(path)
       end
@@ -177,10 +178,10 @@ describe Forums::PostsController do
         post.update!(created_by: user)
         sign_in user
 
-        patch :update, params: { id: post.id, forums_post: { content: 'Test' } }
+        patch :update, params: { id: post.id, forums_post: { content: content } }
 
         post.reload
-        expect(post.content).to eq('Test')
+        expect(post.content).to eq(content)
         path = forums_thread_path(thread, page: 1, anchor: "post_#{post.id}")
         expect(response).to redirect_to(path)
       end
@@ -192,7 +193,7 @@ describe Forums::PostsController do
         patch :update, params: { id: post.id, forums_post: { content: '' } }
 
         post.reload
-        expect(post.content).to eq('Foo')
+        expect(post.content).to eq(content)
       end
 
       it 'redirects for banned author for forums' do
@@ -200,10 +201,10 @@ describe Forums::PostsController do
         user.ban(:use, :forums)
         sign_in user
 
-        patch :update, params: { id: post.id, forums_post: { content: 'Test' } }
+        patch :update, params: { id: post.id, forums_post: { content: content } }
 
         post.reload
-        expect(post.content).to eq('Foo')
+        expect(post.content).to eq(content)
         expect(response).to redirect_to(forums_path)
       end
 
@@ -212,10 +213,10 @@ describe Forums::PostsController do
         user.ban(:use, topic)
         sign_in user
 
-        patch :update, params: { id: post.id, forums_post: { content: 'Test' } }
+        patch :update, params: { id: post.id, forums_post: { content: content } }
 
         post.reload
-        expect(post.content).to eq('Foo')
+        expect(post.content).to eq(content)
         expect(response).to redirect_to(forums_path)
       end
 
@@ -224,20 +225,20 @@ describe Forums::PostsController do
         user.ban(:use, thread)
         sign_in user
 
-        patch :update, params: { id: post.id, forums_post: { content: 'Test' } }
+        patch :update, params: { id: post.id, forums_post: { content: content } }
 
         post.reload
-        expect(post.content).to eq('Foo')
+        expect(post.content).to eq(content)
         expect(response).to redirect_to(forums_path)
       end
 
       it 'redirects for any user' do
         sign_in user
 
-        patch :update, params: { id: post.id, forums_post: { content: 'Test' } }
+        patch :update, params: { id: post.id, forums_post: { content: content } }
 
         post.reload
-        expect(post.content).to eq('Foo')
+        expect(post.content).to eq(content)
         expect(response).to redirect_to(forums_path)
       end
     end
