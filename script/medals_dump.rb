@@ -10,7 +10,7 @@ def dump_roster(roster)
 end
 
 league.divisions.each do |division|
-  rosters = division.rosters_sorted
+  rosters = division.rosters.ordered(league).active
 
   dump_roster rosters.first
   puts
