@@ -3,6 +3,7 @@ require 'rails_helper'
 describe Forums::ThreadsController do
   let(:topic) { create(:forums_topic) }
   let(:user) { create(:user) }
+  let(:content) { 'ABCDEFGHIJKLMNOP' }
 
   describe 'GET #new' do
     it 'succeeds for authorized user' do
@@ -24,7 +25,7 @@ describe Forums::ThreadsController do
         topic: topic.id,
         forums_thread: {
           title: 'Foo', locked: true, pinned: true, hidden: true,
-          forums_post: { content: 'Bar' }
+          forums_post: { content: content }
         }
       }
 
@@ -38,7 +39,7 @@ describe Forums::ThreadsController do
       expect(thread.hidden).to eq(true)
       expect(thread.posts).to_not be_empty
       post = thread.posts.first
-      expect(post.content).to eq('Bar')
+      expect(post.content).to eq(content)
       expect(post.created_by).to eq(user)
       expect(response).to redirect_to(forums_thread_path(thread))
     end
@@ -65,7 +66,7 @@ describe Forums::ThreadsController do
         topic: topic.id,
         forums_thread: {
           title: 'Foo', locked: true, pinned: true, hidden: true,
-          forums_post: { content: 'Bar' }
+          forums_post: { content: content }
         }
       }
 
@@ -79,7 +80,7 @@ describe Forums::ThreadsController do
       expect(thread.hidden).to eq(false)
       expect(thread.posts).to_not be_empty
       post = thread.posts.first
-      expect(post.content).to eq('Bar')
+      expect(post.content).to eq(content)
       expect(post.created_by).to eq(user)
       expect(response).to redirect_to(forums_thread_path(thread))
     end
@@ -92,7 +93,7 @@ describe Forums::ThreadsController do
         topic: topic.id,
         forums_thread: {
           title: 'Foo', locked: true, pinned: true, hidden: true,
-          forums_post: { content: 'Bar' }
+          forums_post: { content: content }
         }
       }
 
@@ -114,7 +115,8 @@ describe Forums::ThreadsController do
 
         post :create, params: {
           forums_thread: {
-            title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: 'Bar' }
+            title: 'Foo', locked: true, pinned: true, hidden: true,
+            forums_post: { content: content }
           }
         }
 
@@ -134,7 +136,8 @@ describe Forums::ThreadsController do
 
         post :create, params: {
           forums_thread: {
-            title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: 'Bar' }
+            title: 'Foo', locked: true, pinned: true, hidden: true,
+            forums_post: { content: content }
           }
         }
 
@@ -162,7 +165,7 @@ describe Forums::ThreadsController do
 
         post :create, params: {
           topic: topic.id, forums_thread: {
-            title: 'Foo', hidden: false, forums_post: { content: 'Bar' }
+            title: 'Foo', hidden: false, forums_post: { content: content }
           }
         }
 
@@ -186,7 +189,7 @@ describe Forums::ThreadsController do
         sign_in user
 
         post :create, params: {
-          topic: topic.id, forums_thread: { title: 'Foo', forums_post: { content: 'Bar' } }
+          topic: topic.id, forums_thread: { title: 'Foo', forums_post: { content: content } }
         }
 
         topic.reload
@@ -216,7 +219,7 @@ describe Forums::ThreadsController do
         sign_in user
 
         post :create, params: {
-          topic: topic.id, forums_thread: { title: 'Foo', forums_post: { content: 'Bar' } }
+          topic: topic.id, forums_thread: { title: 'Foo', forums_post: { content: content } }
         }
 
         topic.reload
@@ -248,7 +251,8 @@ describe Forums::ThreadsController do
         post :create, params: {
           topic: topic.id,
           forums_thread: {
-            title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: 'Bar' }
+            title: 'Foo', locked: true, pinned: true, hidden: true,
+            forums_post: { content: content }
           }
         }
 

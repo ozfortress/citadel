@@ -5,7 +5,7 @@ module Forums
     belongs_to :post, inverse_of: :edits, counter_cache: :edits_count
     belongs_to :created_by, class_name: 'User'
 
-    validates :content, presence: true
+    validates :content, presence: true, length: { in: 10..4_000 }
 
     self.per_page = 8
   end

@@ -29,7 +29,7 @@ class User < ApplicationRecord
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
   validates :steam_id, presence: true, uniqueness: true,
                        numericality: { greater_than: 0 }
-  validates :description, presence: true, allow_blank: true
+  validates :description, presence: true, allow_blank: true, length: { in: 0..500 }
   validates :email, allow_blank: true, format: { with: /@/ } # How you actually validate emails
 
   validates_permission_to :edit, :users

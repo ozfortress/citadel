@@ -7,7 +7,7 @@ module Forums
 
     has_many :edits, class_name: 'PostEdit', inverse_of: :post, dependent: :delete_all
 
-    validates :content, presence: true
+    validates :content, presence: true, length: { in: 10..4_000 }
 
     def previous_post
       @previous_post ||= thread.posts.where('created_at < ?', created_at).last

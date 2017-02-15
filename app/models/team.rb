@@ -13,7 +13,7 @@ class Team < ApplicationRecord
                                foreign_key: 'away_team_id'
 
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
-  validates :description, presence: true, allow_blank: true
+  validates :description, presence: true, allow_blank: true, length: { in: 0..500 }
 
   mount_uploader :avatar, AvatarUploader
 
