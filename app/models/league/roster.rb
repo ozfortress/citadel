@@ -36,7 +36,7 @@ class League
 
     validates :name,        presence: true, uniqueness: { scope: :division_id },
                             length: { in: 1..64 }
-    validates :description, presence: true, allow_blank: true
+    validates :description, presence: true, allow_blank: true, length: { in: 0..500 }
     validates :ranking,     numericality: { greater_than: 0 }, allow_nil: true
     validates :seeding,     numericality: { greater_than: 0 }, allow_nil: true
     validates :approved,    inclusion: { in: [true, false] }

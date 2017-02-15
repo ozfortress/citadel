@@ -21,7 +21,7 @@ describe League::Roster do
   it { should validate_length_of(:name).is_at_most(64) }
 
   it { should allow_value('').for(:description) }
-  it { should validate_length_of(:description).is_at_least(0) }
+  it { should validate_length_of(:description).is_at_least(0).is_at_most(500) }
 
   it { should allow_value(nil).for(:ranking) }
   it { should validate_numericality_of(:ranking).is_greater_than(0) }

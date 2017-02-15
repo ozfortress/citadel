@@ -29,7 +29,7 @@ describe User do
   it { should validate_numericality_of(:steam_id).is_greater_than(0) }
 
   it { should allow_value('').for(:description) }
-  it { should validate_length_of(:description).is_at_least(0) }
+  it { should validate_length_of(:description).is_at_least(0).is_at_most(500) }
 
   it { should allow_value('').for(:email) }
   it { should allow_value('foo@bar.com').for(:email) }

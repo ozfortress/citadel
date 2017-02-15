@@ -10,4 +10,5 @@ describe Forums::PostEdit do
   it { should_not allow_value(nil).for(:created_by) }
 
   it { should validate_presence_of(:content) }
+  it { should validate_length_of(:content).is_at_least(10).is_at_most(4_000) }
 end
