@@ -13,7 +13,9 @@ class User
     private
 
     def expire_s
-      if ban.active?
+      if !ban.terminated_at
+        'Indefinite Ban.'
+      elsif ban.active?
         "Ban expires in #{duration}."
       else
         "Ban expired #{duration} ago."
