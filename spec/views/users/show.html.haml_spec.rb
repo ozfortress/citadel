@@ -24,6 +24,7 @@ describe 'users/show' do
     bans = []
     bans << double(reason: 'Bad', terminated_at: Time.zone.now, active?: true, class: ban_cls)
     bans << double(reason: nil, terminated_at: Time.zone.now, active?: false, class: ban_cls)
+    bans << double(reason: 'Bad', terminated_at: nil, active?: true, class: ban_cls)
     allow(user).to receive(:bans_for).and_return(bans)
   end
 

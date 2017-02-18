@@ -26,6 +26,8 @@ module Auth
     end
 
     def active?
+      return true unless terminated_at
+
       now = Time.zone.now
       created_at < now && now < terminated_at
     end
