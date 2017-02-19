@@ -7,7 +7,7 @@ module API
       attributes :steam_32, :steam_64, :steam_id3
       attribute(:profile_url) { object.avatar.icon.url }
 
-      has_many :rosters, serializer: Leagues::RosterSerializer
+      has_many :rosters, serializer: V1::Leagues::RosterSerializer
     end
   end
 end

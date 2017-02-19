@@ -5,8 +5,8 @@ module API
 
       attributes :id, :name, :description
 
-      has_many :rosters, serializer: Leagues::RosterSerializer
-      has_many :matches, serializer: Leagues::MatchSerializer
+      has_many :rosters, serializer: V1::Leagues::RosterSerializer
+      has_many :matches, serializer: V1::Leagues::MatchSerializer
     end
   end
 end
