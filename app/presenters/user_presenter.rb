@@ -3,7 +3,6 @@ class UserPresenter < ActionPresenter::Base
 
   delegate :id, to: :user
   delegate :name, to: :user
-  delegate :steam_id_nice, to: :user
 
   def link(label = nil)
     label ||= user.name
@@ -15,7 +14,7 @@ class UserPresenter < ActionPresenter::Base
   end
 
   def steam_link
-    link_to(user.steam_id_nice, user.steam_profile_url, target: '_blank')
+    link_to(user.steam_id3, user.steam_profile_url, target: '_blank')
   end
 
   def titles(options = {})

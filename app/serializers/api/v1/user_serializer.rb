@@ -3,11 +3,9 @@ module API
     class UserSerializer < ActiveModel::Serializer
       type :user
 
-      attributes :id, :name, :description
-      attributes :created_at
+      attributes :id, :name, :description, :created_at
+      attributes :steam_32, :steam_64, :steam_id3
       attribute(:profile_url) { object.avatar.icon.url }
-      attribute :steam_id, key: :steam_id_64
-      attribute :steam_id_nice, key: :steam_id_2
 
       has_many :rosters, serializer: Leagues::RosterSerializer
     end
