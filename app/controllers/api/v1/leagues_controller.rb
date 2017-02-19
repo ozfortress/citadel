@@ -11,7 +11,7 @@ module API
       private
 
       def require_visible
-        render_404 if @league.hidden?
+        render_not_found if @league.hidden?
       end
     end
   end
