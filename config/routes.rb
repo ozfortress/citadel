@@ -1,6 +1,17 @@
 Rails.application.routes.draw do
   mount LetsencryptPlugin::Engine, at: '/'
 
+  namespace :api do
+    namespace :v1 do
+      resources :leagues, shallow: true, only: [:index, :show] do
+        resources :matches, only: [:index, :show]
+        resources :rosters, only: [:index, :show]
+      end
+
+      resources :users, only: [:show]
+    end
+  end
+
   root 'pages#home'
 
   get 'pages/home'
