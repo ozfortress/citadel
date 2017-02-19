@@ -35,8 +35,6 @@ module SteamId
 
     elsif valid_64?(value)
       value.to_i
-    else
-      nil
     end
   end
 

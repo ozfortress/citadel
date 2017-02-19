@@ -3,8 +3,8 @@ module API
     class APIController < ActionController::Base
       before_action :authenticate
 
-      rescue_from Exception do |e|
-        error(e)
+      rescue_from Exception do |error|
+        handle_error(error) if error
       end
 
       protected
@@ -16,18 +16,16 @@ module API
         render_error :unauthorized, message: 'Unauthorized API key' unless @api_key
       end
 
-      def error(err)
-        return unless err
-
-        if err.is_a? ActiveRecord::RecordNotFound
+      def handle_error(error)
+        if error.is_a? ActiveRecord::RecordNotFound
           render_not_found
-        elsif err.is_a? ActionController::RoutingError
+        elsif error.is_a? ActionController::RoutingError
           render_not_found message: 'Unknown route'
         else
-          throw err if Rails.env.test?
+          throw error if Rails.env.test?
 
           json = { message: 'Internal error' }
-          json[:traceback] = err.backtrace if Rails.env.development?
+          json[:traceback] = error.backtrace if Rails.env.development?
 
           render_error :internal_server_error, json
         end
