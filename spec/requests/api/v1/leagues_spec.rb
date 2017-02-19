@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 describe API::V1::LeaguesController, type: :request do
+  let(:api_key) { create(:api_key) }
   let(:league) { create(:league) }
 
   describe 'GET #show' do
     let(:route) { '/api/v1/leagues' }
 
     it 'succeeds for existing league' do
-      get "#{route}/#{league.id}"
+      get "#{route}/#{league.id}", headers: { 'X-API-Key' => api_key.key }
 
       json = JSON.parse(response.body)
       league_h = json['league']
@@ -19,7 +20,7 @@ describe API::V1::LeaguesController, type: :request do
     end
 
     it 'succeeds for non-existent league' do
-      get "#{route}/-1"
+      get "#{route}/-1", headers: { 'X-API-Key' => api_key.key }
 
       json = JSON.parse(response.body)
       expect(json['status']).to eq(404)
@@ -30,7 +31,7 @@ describe API::V1::LeaguesController, type: :request do
     it 'succeeds for hidden league' do
       league.update(status: 'hidden')
 
-      get "#{route}/#{league.id}"
+      get "#{route}/#{league.id}", headers: { 'X-API-Key' => api_key.key }
 
       json = JSON.parse(response.body)
       expect(json['status']).to eq(404)

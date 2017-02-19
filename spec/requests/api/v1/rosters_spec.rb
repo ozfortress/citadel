@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 describe API::V1::RostersController, type: :request do
+  let(:api_key) { create(:api_key) }
   let(:roster) { create(:league_roster) }
 
   describe 'GET #show' do
     let(:route) { '/api/v1/rosters' }
 
     it 'succeeds for existing roster' do
-      get "#{route}/#{roster.id}"
+      get "#{route}/#{roster.id}", headers: { 'X-API-Key' => api_key.key }
 
       json = JSON.parse(response.body)
       roster_h = json['roster']
@@ -19,7 +20,7 @@ describe API::V1::RostersController, type: :request do
     end
 
     it 'succeeds for non-existent roster' do
-      get "#{route}/-1"
+      get "#{route}/-1", headers: { 'X-API-Key' => api_key.key }
 
       json = JSON.parse(response.body)
       expect(json['status']).to eq(404)

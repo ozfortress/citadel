@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 describe API::V1::MatchesController, type: :request do
+  let(:api_key) { create(:api_key) }
   let(:match) { create(:league_match) }
 
   describe 'GET #show' do
     let(:route) { '/api/v1/matches' }
 
     it 'succeeds for existing match' do
-      get "#{route}/#{match.id}"
+      get "#{route}/#{match.id}", headers: { 'X-API-Key' => api_key.key }
 
       json = JSON.parse(response.body)
       match_h = json['match']
@@ -27,7 +28,7 @@ describe API::V1::MatchesController, type: :request do
     end
 
     it 'succeeds for non-existent match' do
-      get "#{route}/-1"
+      get "#{route}/-1", headers: { 'X-API-Key' => api_key.key }
 
       json = JSON.parse(response.body)
       expect(json['status']).to eq(404)

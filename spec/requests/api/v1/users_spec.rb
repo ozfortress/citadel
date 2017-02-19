@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 describe API::V1::UsersController, type: :request do
+  let(:api_key) { create(:api_key) }
   let(:user) { create(:user) }
 
   describe 'GET #show' do
     let(:route) { '/api/v1/users' }
 
     it 'succeeds for existing user' do
-      get "#{route}/#{user.id}"
+      get "#{route}/#{user.id}", headers: { 'X-API-Key' => api_key.key }
 
       json = JSON.parse(response.body)
       user_h = json['user']
@@ -18,12 +19,20 @@ describe API::V1::UsersController, type: :request do
     end
 
     it 'succeeds for non-existent user' do
-      get "#{route}/-1"
+      get "#{route}/-1", headers: { 'X-API-Key' => api_key.key }
 
       json = JSON.parse(response.body)
       expect(json['status']).to eq(404)
       expect(json['message']).to eq('Record not found')
       expect(response).to be_not_found
+    end
+
+    it 'fails without authorization' do
+      get "#{route}/#{user.id}"
+
+      json = JSON.parse(response.body)
+      expect(json['status']).to eq(401)
+      expect(json['message']).to eq('Unauthorized API key')
     end
   end
 end

@@ -1,11 +1,20 @@
 module API
   module V1
     class APIController < ActionController::Base
+      before_action :authenticate
+
       rescue_from Exception do |e|
         error(e)
       end
 
       protected
+
+      def authenticate
+        key = request.headers['X-Api-Key']
+        @api_key = APIKey.find_by(key: key)
+
+        render_error :unauthorized, message: 'Unauthorized API key' unless @api_key
+      end
 
       def error(err)
         return unless err
