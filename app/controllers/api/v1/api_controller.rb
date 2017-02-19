@@ -24,6 +24,8 @@ module API
         elsif err.is_a? ActionController::RoutingError
           render_not_found message: 'Unknown route'
         else
+          throw err if Rails.env.test?
+
           json = { message: 'Internal error' }
           json[:traceback] = err.backtrace if Rails.env.development?
 
