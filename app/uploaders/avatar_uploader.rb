@@ -5,7 +5,9 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   def default_url
     model_name = model.model_name.singular
-    'fallback/' + [version_name, model_name, 'avatar_default.png'].compact.join('_')
+    path = 'fallback/' + [version_name, model_name, 'avatar_default.png'].compact.join('_')
+
+    ActionController::Base.helpers.asset_path path
   end
 
   def store_dir

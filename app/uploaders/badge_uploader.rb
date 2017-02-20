@@ -4,7 +4,9 @@ class BadgeUploader < CarrierWave::Uploader::Base
   storage :file
 
   def default_url
-    'fallback/' + [version_name, 'default_badge.png'].compact.join('_')
+    path = 'fallback/' + [version_name, 'default_badge.png'].compact.join('_')
+
+    ActionController::Base.helpers.asset_path path
   end
 
   def store_dir
