@@ -63,6 +63,7 @@ class User < ApplicationRecord
 
   mount_uploader :avatar, AvatarUploader
 
+  alias_attribute :steam_64, :steam_id
   alias_attribute :to_s, :name
 
   before_save :update_query_cache
@@ -72,8 +73,7 @@ class User < ApplicationRecord
 
     query = Search.transform_query(query)
 
-    steam_id = query.to_i
-    steam_id = SteamId.from_str(query) if SteamId.valid?(query)
+    steam_id = SteamId.to_64(query)
 
     select('users.*', "(query_name_cache <-> #{sanitize(query)}) AS similarity")
       .where('steam_id = ? OR (query_name_cache <-> ?) < 0.9', steam_id, query)
@@ -100,8 +100,12 @@ class User < ApplicationRecord
     end
   end
 
-  def steam_id_nice
-    SteamId.to_str(steam_id)
+  def steam_32
+    SteamId.to_32(steam_id)
+  end
+
+  def steam_id3
+    SteamId.to_id3(steam_id)
   end
 
   def admin?

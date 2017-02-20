@@ -11,7 +11,8 @@ describe AvatarUploader do
     let(:uploader) { AvatarUploader.new(user) }
 
     it 'has fallback' do
-      expect(uploader.url).to eq('fallback/user_avatar_default.png')
+      url = ActionController::Base.helpers.asset_path 'fallback/user_avatar_default.png'
+      expect(uploader.url).to eq(url)
     end
 
     it 'succesfully uploads' do
