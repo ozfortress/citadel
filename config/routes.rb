@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         resources :rosters, only: [:index, :show]
       end
 
+      get 'users/steam_id/:id', to: 'users#steam_id'
       resources :users, only: [:show]
     end
   end
@@ -81,6 +82,8 @@ Rails.application.routes.draw do
       delete 'decline', on: :member
     end
   end
+
+  get 'users/steam_id/:id', to: 'steam#show'
 
   get   'users/logout',            to: 'users#logout',              as: 'logout_user'
   get   'users/names',             to: 'users#names',               as: 'users_names'

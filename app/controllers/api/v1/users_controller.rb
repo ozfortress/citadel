@@ -6,6 +6,12 @@ module API
 
         render json: @user, serializer: UserSerializer
       end
+
+      def steam_id
+        @user = User.find_by!(steam_id: params[:id])
+
+        render json: @user, serializer: UserSerializer
+      end
     end
   end
 end
