@@ -10,5 +10,5 @@ describe League::Match::CommEdit do
   it { should_not allow_value(nil).for(:user) }
 
   it { should validate_presence_of(:content) }
-  it { should validate_length_of(:content).is_at_least(10).is_at_most(1_000) }
+  it { should validate_length_of(:content).is_at_least(2).is_at_most(1_000) }
 end

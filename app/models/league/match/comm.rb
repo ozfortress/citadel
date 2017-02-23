@@ -8,7 +8,7 @@ class League
 
       has_many :edits, class_name: 'CommEdit', dependent: :delete_all
 
-      validates :content, presence: true, length: { in: 10..1_000 }
+      validates :content, presence: true, length: { in: 2..1_000 }
 
       delegate :home_team, to: :match
       delegate :away_team, to: :match

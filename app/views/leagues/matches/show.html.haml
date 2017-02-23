@@ -11,16 +11,16 @@
 %h2= match_p.title
 
 - unless @match.bye?
-  = render 'players_table', match: @match, match_p: match_p
+  = render 'leagues/matches/players_table', match: @match, match_p: match_p
 
   .panel.panel-default
     .panel-heading Results #{match_p.status}
 
     - can_view_scores = !@match.confirmed? && user_can_either_teams? && @league.matches_submittable?
     - if can_view_scores || user_can_edit_league?
-      = render 'match_scores', match: @match, pick_bans: @pick_bans, rounds: @rounds
+      = render 'leagues/matches/match_scores', match: @match, pick_bans: @pick_bans, rounds: @rounds
     - else
-      = render 'match_results', match: @match, pick_bans: @pick_bans, rounds: @rounds
+      = render 'leagues/matches/match_results', match: @match, pick_bans: @pick_bans, rounds: @rounds
 
   - unless @match.notice.blank?
     .panel.panel-default
@@ -28,6 +28,6 @@
       .panel-body= markdown @match.notice
 
   - if @match.home_team.schedule_data && @match.away_team.schedule_data
-    = render 'schedule', match: @match, league: @league
+    = render 'leagues/matches/schedule', match: @match, league: @league
 
-  = render 'match_comms', league: @league, match: @match, comm: @comm, comms: @comms
+  = render 'leagues/matches/match_comms', league: @league, match: @match, comm: @comm, comms: @comms

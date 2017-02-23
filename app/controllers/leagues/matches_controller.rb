@@ -1,6 +1,6 @@
 module Leagues
   class MatchesController < ApplicationController
-    include MatchPermissions
+    include MatchesCommon
 
     before_action only: [:index, :new, :create, :generate, :create_round] do
       @league = League.find(params[:league_id])
@@ -61,11 +61,9 @@ module Leagues
     end
 
     def show
-      @pick_bans = @match.pick_bans.includes(:map)
-      @rounds    = @match.rounds.includes(:map)
+      match_show_includes
 
       @comm = League::Match::Comm.new(match: @match)
-      @comms = @match.comms.order(:created_at).includes(:user)
     end
 
     def edit

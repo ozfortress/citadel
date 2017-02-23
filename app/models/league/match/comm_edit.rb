@@ -6,7 +6,7 @@ class League
       belongs_to :comm
       belongs_to :user
 
-      validates :content, presence: true, length: { in: 10..1_000 }
+      validates :content, presence: true, length: { in: 2..1_000 }
     end
   end
 end
