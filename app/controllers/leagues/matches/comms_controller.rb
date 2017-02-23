@@ -1,7 +1,7 @@
 module Leagues
   module Matches
     class CommsController < ApplicationController
-      include MatchPermissions
+      include MatchesCommon
 
       before_action only: :create do
         @match = League::Match.find(params[:match_id])
@@ -22,7 +22,9 @@ module Leagues
         if @comm.valid?
           redirect_to match_path(@match)
         else
-          render 'leagues/matches/show'
+          match_show_includes
+
+          render '/leagues/matches/show'
         end
       end
 

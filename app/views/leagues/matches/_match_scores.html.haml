@@ -1,9 +1,9 @@
 - if match.pending? || user_can_edit_league?
-  = render 'match_pick_bans_form', match: match, pick_bans: pick_bans
+  = render 'leagues/matches/match_pick_bans_form', match: match, pick_bans: pick_bans
 
   .panel-body
     - if match.picking_completed? || user_can_edit_league?
-      = render 'match_scores_form', match: match, rounds: rounds
+      = render 'leagues/matches/match_scores_form', match: match, rounds: rounds
 
     - unless user_can_edit_league?
       = button_to 'Forfeit', forfeit_match_path(match),
