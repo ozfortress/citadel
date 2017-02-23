@@ -20,7 +20,8 @@
     - if can_view_scores || user_can_edit_league?
       = render 'leagues/matches/match_scores', match: @match, pick_bans: @pick_bans, rounds: @rounds
     - else
-      = render 'leagues/matches/match_results', match: @match, pick_bans: @pick_bans, rounds: @rounds
+      = render 'leagues/matches/match_results',
+               match: @match, pick_bans: @pick_bans, rounds: @rounds
 
   - unless @match.notice.blank?
     .panel.panel-default
