@@ -58,7 +58,7 @@
             %th Team
             %th Points
             - present_collection(@league.tiebreakers).each do |tiebreaker|
-              %th= tiebreaker.name
+              %th= tiebreaker.name_with_tooltip
 
           - rosters.each_with_index do |roster, rank|
             %tr
