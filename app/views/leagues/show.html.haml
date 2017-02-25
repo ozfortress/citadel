@@ -32,31 +32,6 @@
 
 .panel.panel-default
   .panel-heading Teams
-  - if @league.signuppable?
-    %ul.list-group
-      - present_collection(@rosters).each do |roster|
-        %li.list-group-item
-          = roster.link
-
-  - else
-    - @ordered_rosters.each do |div, rosters|
-      %h3= div.name
-      %table.table
-        %tr
-          %th #
-          %th Team
-          %th Points
-          - present_collection(@league.tiebreakers).each do |tiebreaker|
-            %th= tiebreaker.name
-
-        - rosters.each_with_index do |roster, rank|
-          %tr
-            %th{ scope: 'row' }= rank + 1
-            %td= present(roster).link
-            %td= roster.points
-            - @league.tiebreakers.each do |tiebreaker|
-              %th= tiebreaker.value_for(roster)
-
   - if user_signed_in?
     - if current_user.can?(:edit, :team) && @league.signuppable?
       .panel-body
@@ -66,6 +41,32 @@
     - elsif @roster
       .panel-body
         = present(@roster).link 'View My Team', class: 'btn btn-default pull-right'
+
+  - if @league.signuppable?
+    %ul.list-group
+      - present_collection(@rosters).each do |roster|
+        %li.list-group-item
+          = roster.link
+
+  - else
+    .panel-body.table-responsive
+      - @ordered_rosters.each do |div, rosters|
+        %h3= div.name
+        %table.table
+          %tr
+            %th #
+            %th Team
+            %th Points
+            - present_collection(@league.tiebreakers).each do |tiebreaker|
+              %th= tiebreaker.name
+
+          - rosters.each_with_index do |roster, rank|
+            %tr
+              %th{ scope: 'row' }= rank + 1
+              %td= present(roster).link
+              %td= roster.points
+              - @league.tiebreakers.each do |tiebreaker|
+                %th= tiebreaker.value_for(roster)
 
 - if user_can_edit_league?
   .panel.panel-default
