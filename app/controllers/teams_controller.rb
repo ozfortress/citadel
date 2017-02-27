@@ -30,16 +30,7 @@ class TeamsController < ApplicationController
   def show
     @invite = @team.invite_for(current_user) if user_signed_in?
 
-    @players               = @team.players.includes(:user)
-    @transfers             = @team.transfers.includes(:user)
-
-    @active_rosters        = roster_includes_for @team.rosters.for_incomplete_league
-    @active_roster_matches = @active_rosters.map { |r| match_includes_for r.matches }
-
-    @past_rosters          = roster_includes_for @team.rosters.for_completed_league
-    @past_roster_matches   = @past_rosters.map { |r| match_includes_for r.matches }
-
-    @upcoming_matches = @team.matches.pending.includes(:home_team, :away_team)
+    teams_show_includes
   end
 
   def edit
@@ -89,12 +80,26 @@ class TeamsController < ApplicationController
 
   def roster_includes_for(rosters)
     rosters.includes(:players, :users, transfers: :user)
-           .order('league_roster_players.created_at')
-           .order('league_roster_transfers.created_at DESC')
+           .merge(League::Roster::Player.order(created_at: :desc))
+           .merge(League::Roster::Transfer.order(created_at: :desc))
   end
 
   def match_includes_for(matches)
     matches.includes(:rounds, :home_team, :away_team)
+  end
+
+  def teams_show_includes
+    @players               = @team.players.includes(:user).order(created_at: :asc)
+    @transfers             = @team.transfers.includes(:user).order(created_at: :desc)
+
+    @active_rosters        = roster_includes_for @team.rosters.for_incomplete_league
+    @active_roster_matches = @active_rosters.map { |r| match_includes_for r.matches }
+
+    @past_rosters          = roster_includes_for @team.rosters.for_completed_league
+    @past_roster_matches   = @past_rosters.map { |r| match_includes_for r.matches }
+
+    @upcoming_matches = @team.matches.pending.includes(:home_team, :away_team)
+                             .order(created_at: :asc)
   end
 
   def team_params
