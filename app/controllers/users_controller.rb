@@ -39,12 +39,12 @@ class UsersController < ApplicationController
   end
 
   def show
-    @aka            = @user.aka.limit(5)
+    @aka            = @user.aka.limit(5).order(created_at: :desc)
     @titles         = @user.titles
-    @teams          = @user.teams
-    @team_transfers = @user.team_transfers.includes(:team)
-    @team_invites   = @user.team_invites.includes(:team)
-    @rosters        = @user.rosters.includes(division: :league)
+    @teams          = @user.teams.order(created_at: :desc)
+    @team_transfers = @user.team_transfers.includes(:team).order(created_at: :desc)
+    @team_invites   = @user.team_invites.includes(:team).order(created_at: :asc)
+    @rosters        = @user.rosters.includes(division: :league).order(created_at: :desc)
     @matches        = @user.matches.pending.includes(:home_team, :away_team)
   end
 
