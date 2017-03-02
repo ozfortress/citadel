@@ -1,4 +1,4 @@
-<div id="doc" class="markdown-body container-fluid"><h1 id="staff">Staff</h1><h3 id="league-director-oblaozfortresscom">League Director - <a href="mailto:obla@ozfortress.com" target="_blank">obla@ozfortress.com</a></h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a></p><h3 id="league-administrators">League Administrators</h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a> - Premier<br>
+<div id="doc" class="markdown-body container-fluid"><h1 id="staff">Staff</h1><h3 id="league-director-oblaozfortresscom">League Director - <a href="mailto:obla@ozfortress.com" target="_blank">obla@ozfortress.com</a></h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a></p><h3 id="league-administrators">League Administrators</h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a><br>
 <a href="https://warzone.ozfortress.com/users/15" target="_blank">Fozzlm</a> - Premier<br>
 <a href="https://warzone.ozfortress.com/users/71" target="_blank">wiggin</a> - Intermediate<br>
 <a href="https://warzone.ozfortress.com/users/4" target="_blank">shrak</a> - Intermediate<br>
