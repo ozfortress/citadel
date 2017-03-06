@@ -52,8 +52,7 @@ module API
       end
 
       def track_action
-        p 1
-        ahoy.track "#{controller_name}##{action_name}", request.filtered_parameters.to_s
+        ahoy.track "#{request.method} #{request.fullpath}", request.filtered_parameters.to_s
       end
     end
   end

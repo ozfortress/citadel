@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170305133946) do
+ActiveRecord::Schema.define(version: 20170305223515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,18 +153,10 @@ ActiveRecord::Schema.define(version: 20170305133946) do
 
   create_table "ahoy_events", force: :cascade do |t|
     t.integer  "visit_id"
-    t.integer  "user_id"
     t.string   "name"
-    t.string   "method"
-    t.string   "ip"
-    t.string   "uri"
     t.json     "properties"
     t.datetime "time"
-    t.index ["ip"], name: "index_ahoy_events_on_ip", using: :btree
-    t.index ["method"], name: "index_ahoy_events_on_method", using: :btree
     t.index ["name", "time"], name: "index_ahoy_events_on_name_and_time", using: :btree
-    t.index ["uri"], name: "index_ahoy_events_on_uri", using: :btree
-    t.index ["user_id", "name"], name: "index_ahoy_events_on_user_id_and_name", using: :btree
     t.index ["visit_id", "name"], name: "index_ahoy_events_on_visit_id_and_name", using: :btree
   end
 
@@ -580,6 +572,8 @@ ActiveRecord::Schema.define(version: 20170305133946) do
     t.string   "utm_campaign"
     t.datetime "started_at"
     t.integer  "api_key_id"
+    t.index ["api_key_id"], name: "index_visits_on_api_key_id", using: :btree
+    t.index ["ip"], name: "index_visits_on_ip", using: :btree
     t.index ["user_id"], name: "index_visits_on_user_id", using: :btree
     t.index ["visit_token"], name: "index_visits_on_visit_token", unique: true, using: :btree
   end

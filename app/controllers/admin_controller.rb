@@ -12,7 +12,7 @@ class AdminController < ApplicationController
     @teams_count = Team.count
     @matches_count = League::Match.count
     @match_comms_count = League::Match::Comm.count
-    @events = Ahoy::Event.search(params[:q]).paginate(page: params[:page]).includes(:user)
+    @events = Ahoy::Event.search(params[:q]).paginate(page: params[:page])
   end
 
   private
