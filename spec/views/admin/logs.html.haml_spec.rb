@@ -2,9 +2,17 @@ require 'rails_helper'
 
 describe 'admin/logs' do
   before do
+    @visits = []
+
     user = create(:user)
-    create_list(:ahoy_event, 5, user: user)
-    create_list(:ahoy_event, 5, user: nil)
+    @visits << create(:visit, user: user)
+
+    api_key = create(:api_key)
+    @visits << create(:visit, api_key: api_key)
+
+    @visits.each do |visit|
+      create_list(:ahoy_event, 2, visit: visit)
+    end
   end
 
   it 'displays' do

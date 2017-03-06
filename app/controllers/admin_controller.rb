@@ -5,14 +5,16 @@ class AdminController < ApplicationController
   end
 
   def logs
-    timeframe = 4.hours
+    timeframe = 30.minutes
     events_in_timeframe = Ahoy::Event.where(time: timeframe.ago..Time.current)
     @events_per_second = events_in_timeframe.count / timeframe.to_f
     @users_count = User.count
     @teams_count = Team.count
     @matches_count = League::Match.count
     @match_comms_count = League::Match::Comm.count
-    @events = Ahoy::Event.search(params[:q]).paginate(page: params[:page]).includes(:user)
+    events_count = Ahoy::Event.count_estimate unless params[:q]
+    @events = Ahoy::Event.search(params[:q])
+                         .paginate(page: params[:page], total_entries: events_count)
   end
 
   private

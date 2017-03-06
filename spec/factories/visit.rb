@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :visit do
-    user
+    user nil
+    api_key nil
   end
 end

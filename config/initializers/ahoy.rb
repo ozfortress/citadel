@@ -1,9 +1,14 @@
+Ahoy.track_visits_immediately = true
+
 class Ahoy::Store < Ahoy::Stores::ActiveRecordTokenStore
-  def track_event(name, properties, options)
-    super do |event|
-      event.method = request.request_method
-      event.ip     = request.remote_ip
-      event.uri    = request.fullpath
+  def exclude?
+    false
+  end
+
+  def track_visit(options)
+    super do |visit|
+      visit.api_key = controller.api_key      if controller.respond_to?(:api_key)
+      visit.user    = controller.current_user if controller.respond_to?(:current_user)
     end
   end
 end

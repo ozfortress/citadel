@@ -1,11 +1,16 @@
 module API
   module V1
     class APIController < ActionController::Base
+      attr_reader :api_key
+
       before_action :authenticate
 
       rescue_from Exception do |error|
+        track_action # track_action isn't called automatically here
         handle_error(error) if error
       end
+
+      after_action :track_action
 
       protected
 
@@ -13,7 +18,10 @@ module API
         key = request.headers['X-Api-Key']
         @api_key = APIKey.find_by(key: key)
 
-        render_error :unauthorized, message: 'Unauthorized API key' unless @api_key
+        unless @api_key
+          track_action # track_action isn't called automatically here
+          render_error :unauthorized, message: 'Unauthorized API key'
+        end
       end
 
       def handle_error(error)
@@ -41,6 +49,10 @@ module API
         options[:message] ||= 'Record not found'
 
         render_error :not_found, options
+      end
+
+      def track_action
+        ahoy.track "#{request.method} #{request.fullpath}", request.filtered_parameters.to_s
       end
     end
   end

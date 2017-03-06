@@ -174,23 +174,16 @@ GEM
       activesupport (>= 4.1.0)
     haml (4.0.7)
       tilt
-    haml-rails (0.9.0)
-      actionpack (>= 4.0.1)
-      activesupport (>= 4.0.1)
-      haml (>= 4.0.6, < 5.0)
-      html2haml (>= 1.0.1)
-      railties (>= 4.0.1)
     haml_lint (0.21.0)
       haml (~> 4.0)
       rake (>= 10, < 13)
       rubocop (>= 0.47.0)
       sysexits (~> 1.1)
+    hamlit (2.8.0)
+      temple (>= 0.8.0)
+      thor
+      tilt
     hashie (3.5.3)
-    html2haml (2.1.0)
-      erubis (~> 2.7.0)
-      haml (~> 4.0)
-      nokogiri (>= 1.6.0)
-      ruby_parser (~> 3.5)
     i18n (0.8.0)
     ice_nine (0.11.2)
     jquery-rails (4.2.2)
@@ -331,8 +324,6 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-openid (2.7.0)
     ruby-progressbar (1.8.1)
-    ruby_parser (3.8.4)
-      sexp_processor (~> 4.1)
     safely_block (0.1.1)
       errbase
     sass (3.4.23)
@@ -364,6 +355,7 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     sysexits (1.2.0)
+    temple (0.8.0)
     term-ansicolor (1.4.0)
       tins (~> 1.0)
     thor (0.19.4)
@@ -431,8 +423,8 @@ DEPENDENCIES
   devise
   factory_girl_rails (~> 4.0)
   font-awesome-rails
-  haml-rails (~> 0.9)
   haml_lint
+  hamlit
   jquery-rails
   letsencrypt_plugin
   letter_opener

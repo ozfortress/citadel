@@ -35,8 +35,8 @@ gem 'turbolinks'
 gem 'omniauth-steam'
 # Authentication
 gem 'devise'
-# Use haml for templating
-gem 'haml-rails', '~> 0.9'
+# Use hamlit for ~fast templating
+gem 'hamlit'
 # Forum Pages
 gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap'
