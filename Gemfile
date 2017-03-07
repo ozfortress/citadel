@@ -40,13 +40,11 @@ gem 'hamlit'
 # Forum Pages
 gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap'
-# Forum formatting
+# Forum markdown formatting
 gem 'redcarpet'
 # File Uploads
 gem 'carrierwave'
 gem 'mini_magick'
-# SSL
-gem 'letsencrypt_plugin'
 # Tracking and analytics
 gem 'ahoy_matey'
 # API Serialization
