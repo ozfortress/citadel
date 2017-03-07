@@ -181,7 +181,10 @@ describe User do
 
         it "can't ban with negative duration" do
           time = Time.zone.now - 1.minute
-          expect { user.ban(:use, :users, terminated_at: time) }.to raise_error(ActiveRecord::RecordInvalid)
+
+          expect do
+            user.ban(:use, :users, terminated_at: time)
+          end.to raise_error(ActiveRecord::RecordInvalid)
         end
       end
     end

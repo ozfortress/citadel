@@ -91,27 +91,16 @@ describe League::Roster do
   describe '#disband' do
     let(:roster) { create(:league_roster) }
 
-    it 'marks the roster as disbanded' do
-      roster.disband
-
-      expect(roster.reload.disbanded?).to be(true)
-    end
-
     it 'forfeits all matches' do
       home_match = create(:league_match, home_team: roster)
       away_match = create(:league_match, away_team: roster)
+      transfers = create_list(:league_roster_transfer_request, 3, propagate: true, roster: roster)
 
       roster.disband
 
+      expect(roster.reload.disbanded?).to be(true)
       expect(home_match.reload.forfeit_by).to eq('home_team_forfeit')
       expect(away_match.reload.forfeit_by).to eq('away_team_forfeit')
-    end
-
-    it 'destroys all transfer requests' do
-      transfers = create_list(:league_roster_transfer_request, 5, propagate: true, roster: roster)
-
-      roster.disband
-
       transfers.each do |transfer|
         expect { transfer.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
