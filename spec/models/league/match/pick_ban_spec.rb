@@ -19,11 +19,15 @@ describe League::Match::PickBan do
     let(:user) { build(:user) }
 
     it 'validates successfully' do
-      expect(build(:league_match_pick_ban, map: nil, picked_by: nil)).to be_valid
-      expect(build(:league_match_pick_ban, map: map, picked_by: user)).to be_valid
+      pick_ban = build(:league_match_pick_ban, map: nil, picked_by: nil)
+      expect(pick_ban).to be_valid
+      pick_ban.assign_attributes(map: map, picked_by: user)
+      expect(pick_ban).to be_valid
 
-      expect(build(:league_match_pick_ban, map: map, picked_by: nil)).to be_invalid
-      expect(build(:league_match_pick_ban, map: nil, picked_by: user)).to be_invalid
+      pick_ban.assign_attributes(map: map, picked_by: nil)
+      expect(pick_ban).to be_invalid
+      pick_ban.assign_attributes(map: nil, picked_by: user)
+      expect(pick_ban).to be_invalid
     end
   end
 

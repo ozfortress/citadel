@@ -347,7 +347,7 @@ describe Leagues::MatchesController do
         patch :confirm, params: { id: match.id, confirm: 'true' }
 
         match.reload
-        expect(match.status).to eq('confirmed')
+        expect(match.confirmed?).to be true
       end
 
       it 'fails for home team authorized user' do
