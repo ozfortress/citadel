@@ -12,7 +12,7 @@
 
 .row
   .pull-right
-    = link_to "https://verify.ozfortress.com?#{{link:  match_url(@match)}.to_param}", target: :blank_ do
+    = link_to verify_rosters_link(@match), target: :blank_ do
       verify.ozfortress.com
       %span.glyphicon.glyphicon-ok
 
