@@ -10,6 +10,12 @@
 %h1 #{present(@league).link}: #{@match.home_team.division}
 %h2= match_p.title
 
+.row
+  .pull-right
+    = link_to "https://verify.ozfortress.com?#{{link:  match_url(@match)}.to_param}", target: :blank_ do
+      verify.ozfortress.com
+      %span.glyphicon.glyphicon-ok
+
 - unless @match.bye?
   = render 'leagues/matches/players_table', match: @match, match_p: match_p
 
