@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  mount LetsencryptPlugin::Engine, at: '/'
-
   namespace :api do
     namespace :v1 do
       resources :leagues, shallow: true, only: [:index, :show] do

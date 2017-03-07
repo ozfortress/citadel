@@ -29,8 +29,6 @@ gem 'font-awesome-rails'
 gem 'cocoon'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
 # Steam Login
 gem 'omniauth-steam'
 # Authentication
@@ -51,9 +49,6 @@ gem 'ahoy_matey'
 gem 'active_model_serializers', '~> 0.10.0'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
-
   # Use rspec for tests
   gem 'rspec-rails', '~> 3.5'
 
@@ -83,9 +78,6 @@ group :development, :test do
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
-
   # Test emails
   gem 'letter_opener'
 

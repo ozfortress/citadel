@@ -80,7 +80,3 @@ bower.json
 # CarrierWave
 public/uploads
 spec/carrierwave
-
-# letsencrypt
-/key
-/challenge
