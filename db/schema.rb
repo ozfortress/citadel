@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170305223515) do
+ActiveRecord::Schema.define(version: 20170307005139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -573,7 +573,11 @@ ActiveRecord::Schema.define(version: 20170305223515) do
     t.datetime "started_at"
     t.integer  "api_key_id"
     t.index ["api_key_id"], name: "index_visits_on_api_key_id", using: :btree
+    t.index ["browser"], name: "index_visits_on_browser", using: :btree
     t.index ["ip"], name: "index_visits_on_ip", using: :btree
+    t.index ["os"], name: "index_visits_on_os", using: :btree
+    t.index ["referring_domain"], name: "index_visits_on_referring_domain", using: :btree
+    t.index ["started_at"], name: "index_visits_on_started_at", using: :btree
     t.index ["user_id"], name: "index_visits_on_user_id", using: :btree
     t.index ["visit_token"], name: "index_visits_on_visit_token", unique: true, using: :btree
   end
