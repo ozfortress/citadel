@@ -178,6 +178,11 @@ describe User do
           allow(Time.zone).to receive(:now).and_return(Time.zone.now + 10.years)
           expect(user.can?(:use, :users)).to be(false)
         end
+
+        it "can't ban with negative duration" do
+          time = Time.zone.now - 1.minute
+          expect { user.ban(:use, :users, terminated_at: time) }.to raise_error(ActiveRecord::RecordInvalid)
+        end
       end
     end
   end
