@@ -1,3 +1,4 @@
+Ahoy.geocode = false
 Ahoy.track_visits_immediately = true
 
 class Ahoy::Store < Ahoy::Stores::ActiveRecordTokenStore
