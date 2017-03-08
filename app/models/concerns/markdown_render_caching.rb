@@ -8,7 +8,9 @@ module MarkdownRenderCaching
       render_cached_attributes[attribute] = transform_render_cache_options(attribute, options)
 
       before_validation do
-        reset_render_cache(attribute) if changed_attributes[attribute.to_s] || new_record?
+        if send(attribute)
+          reset_render_cache(attribute) if changed_attributes[attribute.to_s] || new_record?
+        end
       end
     end
 
