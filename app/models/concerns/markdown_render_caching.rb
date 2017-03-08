@@ -33,11 +33,6 @@ module MarkdownRenderCaching
     end
   end
 
-  def reset_render_caches!(attributes = nil)
-    reset_render_caches(attributes)
-    save!
-  end
-
   def reset_render_cache(attribute)
     options = self.class.render_cached_attributes[attribute]
 
@@ -46,10 +41,5 @@ module MarkdownRenderCaching
 
     cache_attribute = options[:cache_attribute]
     send("#{cache_attribute}=", render)
-  end
-
-  def reset_render_cache!(attribute)
-    reset_render_cache(attribute)
-    save!
   end
 end

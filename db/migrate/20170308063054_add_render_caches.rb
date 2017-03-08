@@ -23,15 +23,20 @@ class AddRenderCaches < ActiveRecord::Migration[5.0]
           League::Match, League::Match::Comm,
           Forums::Post,
         ].each do |cls|
-          cls.find_each { |object| object.reset_render_caches! }
+          cls.find_each do |object|
+            object.reset_render_caches
+            object.save!(validate: false)
+          end
         end
 
         League::Match::CommEdit.find_each do |edit|
-          edit.update!(content_render_cache: MarkdownRenderer.render(edit.content))
+          edit.content_render_cache = MarkdownRenderer.render(edit.content)
+          edit.save!(validate: false)
         end
 
         Forums::PostEdit.find_each do |edit|
-          edit.update!(content_render_cache: MarkdownRenderer.render(edit.content))
+          edit.content_render_cache = MarkdownRenderer.render(edit.content)
+          edit.save!(validate: false)
         end
       end
     end
