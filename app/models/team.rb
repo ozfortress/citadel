@@ -1,6 +1,8 @@
 require 'search'
 
 class Team < ApplicationRecord
+  include MarkdownRenderCaching
+
   has_many :invites, dependent: :destroy
   has_many :players,   -> { order(created_at: :desc) }, dependent: :destroy
   has_many :transfers, -> { order(created_at: :desc) }, dependent: :destroy
@@ -14,6 +16,7 @@ class Team < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
   validates :description, presence: true, allow_blank: true, length: { in: 0..500 }
+  caches_markdown_render_for :description
 
   mount_uploader :avatar, AvatarUploader
 

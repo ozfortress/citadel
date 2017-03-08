@@ -20,17 +20,6 @@ module ApplicationHelper
     end
   end
 
-  def markdown(source)
-    @markdown_renderer = Redcarpet::Render::HTML.new(escape_html: true, hard_wrap: true)
-    @markdown ||= Redcarpet::Markdown.new(@markdown_renderer,
-                                          autolink: true, strikethrough: true,
-                                          underline: true, no_intra_emphasis: true)
-
-    # rubocop:disable Rails/OutputSafety
-    content_tag(:div, @markdown.render(source).html_safe, class: 'markdown')
-    # rubocop:enable Rails/OutputSafety
-  end
-
   def format_options
     Format.all.collect { |format| [format.to_s, format.id] }
   end

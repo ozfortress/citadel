@@ -1,5 +1,7 @@
 class League
   class Match < ApplicationRecord
+    include MarkdownRenderCaching
+
     belongs_to :home_team, class_name: 'Roster'
     belongs_to :away_team, class_name: 'Roster', optional: true
 
@@ -22,6 +24,7 @@ class League
     validates :round_name, presence: true, allow_blank: true
     validates :round_number, allow_nil: :true, numericality: { greater_than_or_equal_to: 0 }
     validates :notice, presence: true, allow_blank: true
+    caches_markdown_render_for :notice, escaped: false
 
     validate :home_and_away_team_are_different
     validate :home_and_away_team_are_in_the_same_division

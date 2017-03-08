@@ -4,12 +4,10 @@ module Forums
       include BaseService
 
       def call(user, post, params)
-        edit_params = params.merge(post: post, created_by: user)
-
         post.transaction do
           post.update(params) || rollback!
 
-          post.edits.create!(edit_params)
+          post.create_edit!(user)
         end
 
         post

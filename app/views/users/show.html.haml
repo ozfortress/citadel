@@ -1,5 +1,7 @@
 - content_for(:title) { @user.name }
 
+- user_p = present(@user)
+
 - if user_can_edit_user?
   = link_to edit_user_path(@user), class: 'btn btn-default pull-right', type: 'button' do
     Settings
@@ -16,7 +18,7 @@
     - unless @aka.empty?
       %p.group-aka aka #{@aka.map(&:name).join(', ')}
 
-%p.steam-link-large= present(@user).steam_link
+%p.steam-link-large= user_p.steam_link
 
 .row
   != present_collection(@titles).map(&:icon).join(' ')
@@ -27,7 +29,7 @@
 
 .panel.panel-default
   .panel-heading Description
-  .panel-body= markdown @user.description
+  .panel-body.markdown= user_p.description
 
 .panel.panel-default
   .panel-heading Teams

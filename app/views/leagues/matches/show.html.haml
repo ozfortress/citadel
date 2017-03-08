@@ -26,7 +26,7 @@
   - unless @match.notice.blank?
     .panel.panel-default
       .panel-heading Match Notice
-      .panel-body= markdown @match.notice
+      .panel-body.markdown= match_p.notice
 
   - if @match.home_team.schedule_data && @match.away_team.schedule_data
     = render 'leagues/matches/schedule', match: @match, league: @league

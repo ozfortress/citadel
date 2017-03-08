@@ -12,7 +12,7 @@
 
 .panel.panel-default
   .panel-heading Info
-  .panel-body= markdown @team.description
+  .panel-body.markdown!= @team.description_render_cache
 
 - unless @upcoming_matches.empty?
   .panel.panel-default

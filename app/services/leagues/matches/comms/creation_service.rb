@@ -11,7 +11,7 @@ module Leagues
 
           comm.transaction do
             comm.save || rollback!
-            comm.edits.create!(params)
+            comm.create_edit!(user)
 
             notify_captains!(user, match)
           end

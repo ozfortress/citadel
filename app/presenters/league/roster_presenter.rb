@@ -47,6 +47,12 @@ class League
       @league_p ||= present(league)
     end
 
+    def description
+      # rubocop:disable Rails/OutputSafety
+      roster.description_render_cache.html_safe
+      # rubocop:enable Rails/OutputSafety
+    end
+
     private
 
     def disbanded_tag
