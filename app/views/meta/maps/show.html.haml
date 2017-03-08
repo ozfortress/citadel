@@ -8,5 +8,4 @@
 
 .panel.panel-default
   .panel-heading Information
-  .panel-body
-    = markdown @map.description
+  .panel-body.markdown!= @map.description_render_cache

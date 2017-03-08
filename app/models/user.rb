@@ -4,6 +4,7 @@ require 'steam_id'
 
 class User < ApplicationRecord
   include Auth::Model
+  include MarkdownRenderCaching
 
   EMAIL_CONFIRMATION_TIMEOUT = 1.hour
 
@@ -30,6 +31,7 @@ class User < ApplicationRecord
   validates :steam_id, presence: true, uniqueness: true,
                        numericality: { greater_than: 0 }
   validates :description, presence: true, allow_blank: true, length: { in: 0..500 }
+  caches_markdown_render_for :description
   validates :email, allow_blank: true, format: { with: /@/ } # How you actually validate emails
 
   validates_permission_to :edit, :users

@@ -22,4 +22,4 @@
       = link_to edits_for_comm_path(comm), class: 'btn btn-default btn-sm' do
         View Edits
 
-.container-fluid= markdown comm.content
+.container-fluid.markdown!= comm.content_render_cache

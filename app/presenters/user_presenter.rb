@@ -27,6 +27,12 @@ class UserPresenter < ActionPresenter::Base
     safe_join(titles, ' ')
   end
 
+  def description
+    # rubocop:disable Rails/OutputSafety
+    user.description_render_cache.html_safe
+    # rubocop:enable Rails/OutputSafety
+  end
+
   def league_status(league)
     elements = [roster_status(league), transfer_status(league)]
     safe_join(elements.select { |e| !e.empty? })

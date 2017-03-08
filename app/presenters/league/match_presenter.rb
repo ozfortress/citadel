@@ -46,6 +46,12 @@ class League
       end
     end
 
+    def notice
+      # rubocop:disable Rails/OutputSafety
+      match.notice_render_cache.html_safe
+      # rubocop:enable Rails/OutputSafety
+    end
+
     def status
       return if match.confirmed?
 

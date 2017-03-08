@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307005139) do
+ActiveRecord::Schema.define(version: 20170308063054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -173,32 +173,35 @@ ActiveRecord::Schema.define(version: 20170307005139) do
 
   create_table "formats", force: :cascade do |t|
     t.integer  "game_id"
-    t.string   "name",         null: false
-    t.text     "description",  null: false
-    t.integer  "player_count", null: false
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string   "name",                                  null: false
+    t.text     "description",                           null: false
+    t.integer  "player_count",                          null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.text     "description_render_cache", default: "", null: false
     t.index ["game_id"], name: "index_formats_on_game_id", using: :btree
     t.index ["name"], name: "index_formats_on_name", unique: true, using: :btree
   end
 
   create_table "forums_post_edits", force: :cascade do |t|
-    t.integer  "post_id",       null: false
-    t.integer  "created_by_id", null: false
-    t.string   "content",       null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "post_id",                           null: false
+    t.integer  "created_by_id",                     null: false
+    t.string   "content",                           null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.text     "content_render_cache", default: "", null: false
     t.index ["created_by_id"], name: "index_forums_post_edits_on_created_by_id", using: :btree
     t.index ["post_id"], name: "index_forums_post_edits_on_post_id", using: :btree
   end
 
   create_table "forums_posts", force: :cascade do |t|
-    t.integer  "thread_id",                 null: false
-    t.integer  "created_by_id",             null: false
-    t.string   "content",                   null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "edits_count",   default: 0, null: false
+    t.integer  "thread_id",                         null: false
+    t.integer  "created_by_id",                     null: false
+    t.string   "content",                           null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.integer  "edits_count",          default: 0,  null: false
+    t.text     "content_render_cache", default: "", null: false
     t.index ["created_by_id"], name: "index_forums_posts_on_created_by_id", using: :btree
     t.index ["thread_id"], name: "index_forums_posts_on_thread_id", using: :btree
   end
@@ -262,11 +265,12 @@ ActiveRecord::Schema.define(version: 20170307005139) do
   end
 
   create_table "league_match_comm_edits", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "comm_id",    null: false
-    t.text     "content",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id",                           null: false
+    t.integer  "comm_id",                           null: false
+    t.text     "content",                           null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.text     "content_render_cache", default: "", null: false
     t.index ["comm_id"], name: "index_league_match_comm_edits_on_comm_id", using: :btree
     t.index ["user_id"], name: "index_league_match_comm_edits_on_user_id", using: :btree
   end
@@ -274,9 +278,10 @@ ActiveRecord::Schema.define(version: 20170307005139) do
   create_table "league_match_comms", force: :cascade do |t|
     t.integer  "match_id"
     t.integer  "user_id"
-    t.text     "content",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "content",                           null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.text     "content_render_cache", default: "", null: false
     t.index ["match_id"], name: "index_league_match_comms_on_match_id", using: :btree
     t.index ["user_id"], name: "index_league_match_comms_on_user_id", using: :btree
   end
@@ -308,13 +313,14 @@ ActiveRecord::Schema.define(version: 20170307005139) do
   create_table "league_matches", force: :cascade do |t|
     t.integer  "home_team_id"
     t.integer  "away_team_id"
-    t.integer  "status",                    null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "forfeit_by",   default: 0,  null: false
+    t.integer  "status",                           null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.integer  "forfeit_by",          default: 0,  null: false
     t.integer  "round_number"
-    t.string   "notice",       default: "", null: false
-    t.string   "round_name",   default: "", null: false
+    t.string   "notice",              default: "", null: false
+    t.string   "round_name",          default: "", null: false
+    t.text     "notice_render_cache", default: "", null: false
     t.index ["away_team_id"], name: "index_league_matches_on_away_team_id", using: :btree
     t.index ["home_team_id"], name: "index_league_matches_on_home_team_id", using: :btree
   end
@@ -329,11 +335,12 @@ ActiveRecord::Schema.define(version: 20170307005139) do
   end
 
   create_table "league_roster_comments", force: :cascade do |t|
-    t.integer  "roster_id",  null: false
+    t.integer  "roster_id",                         null: false
     t.integer  "user_id"
-    t.text     "content",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "content",                           null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.text     "content_render_cache", default: "", null: false
     t.index ["roster_id"], name: "index_league_roster_comments_on_roster_id", using: :btree
     t.index ["user_id"], name: "index_league_roster_comments_on_user_id", using: :btree
   end
@@ -388,6 +395,7 @@ ActiveRecord::Schema.define(version: 20170307005139) do
     t.integer  "total_scores",                          default: 0,     null: false
     t.json     "schedule_data"
     t.integer  "won_rounds_against_tied_rosters_count", default: 0,     null: false
+    t.text     "description_render_cache",              default: "",    null: false
     t.index ["division_id"], name: "index_league_rosters_on_division_id", using: :btree
     t.index ["points"], name: "index_league_rosters_on_points", using: :btree
     t.index ["team_id"], name: "index_league_rosters_on_team_id", using: :btree
@@ -431,16 +439,18 @@ ActiveRecord::Schema.define(version: 20170307005139) do
     t.integer  "schedule",                      default: 0,     null: false
     t.boolean  "schedule_locked",               default: false, null: false
     t.string   "query_name_cache",              default: "",    null: false
+    t.text     "description_render_cache",      default: "",    null: false
     t.index "query_name_cache gist_trgm_ops", name: "index_leagues_on_query_name_change", using: :gist
     t.index ["format_id"], name: "index_leagues_on_format_id", using: :btree
   end
 
   create_table "maps", force: :cascade do |t|
     t.integer  "game_id"
-    t.string   "name",        null: false
-    t.text     "description", null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "name",                                  null: false
+    t.text     "description",                           null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.text     "description_render_cache", default: "", null: false
     t.index ["game_id"], name: "index_maps_on_game_id", using: :btree
   end
 
@@ -473,13 +483,14 @@ ActiveRecord::Schema.define(version: 20170307005139) do
   end
 
   create_table "teams", force: :cascade do |t|
-    t.string   "name",                          null: false
-    t.text     "description",                   null: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.string   "name",                                  null: false
+    t.text     "description",                           null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.string   "avatar"
-    t.integer  "players_count",    default: 0,  null: false
-    t.string   "query_name_cache", default: "", null: false
+    t.integer  "players_count",            default: 0,  null: false
+    t.string   "query_name_cache",         default: "", null: false
+    t.text     "description_render_cache", default: "", null: false
     t.index "query_name_cache gist_trgm_ops", name: "index_teams_on_query_name_cache", using: :gist
     t.index ["name"], name: "index_teams_on_name", unique: true, using: :btree
   end
@@ -520,24 +531,25 @@ ActiveRecord::Schema.define(version: 20170307005139) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",                              null: false
-    t.bigint   "steam_id",                          null: false
+    t.string   "name",                                  null: false
+    t.bigint   "steam_id",                              null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",        default: 0,  null: false
+    t.integer  "sign_in_count",            default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.text     "description",          default: "", null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.text     "description",              default: "", null: false
     t.string   "remember_token"
     t.string   "avatar"
     t.string   "email"
     t.datetime "confirmed_at"
     t.string   "confirmation_token"
     t.datetime "confirmation_sent_at"
-    t.string   "query_name_cache",     default: "", null: false
+    t.string   "query_name_cache",         default: "", null: false
+    t.text     "description_render_cache", default: "", null: false
     t.index "query_name_cache gist_trgm_ops", name: "index_users_on_query_name_cache", using: :gist
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["name"], name: "index_users_on_name", unique: true, using: :btree

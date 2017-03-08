@@ -1,5 +1,7 @@
 - content_for(:title) { "#{@roster.name} | #{@league.name}" }
 
+- roster_p = present(@roster)
+
 - unless @roster.approved?
   .alert.alert-warning
     - if user_can_edit_league?
@@ -18,7 +20,7 @@
     %span.glyphicon.glyphicon-cog
 
 %h2
-  = present(@roster).title
+  = roster_p.title
   - if @roster.disbanded?
     %span.pull-right.label.label-danger Disbanded
 %h4
@@ -29,7 +31,7 @@
 
 .panel.panel-default
   .panel-heading Info
-  .panel-body= markdown @roster.description
+  .panel-body.markdown= roster_p.description
 
 .panel.panel-default
   .panel-heading
@@ -66,7 +68,7 @@
               = render 'users/listing', user: comment.user
               .pull-right= comment.created_at.strftime('%c')
 
-          = markdown comment.content
+          .markdown!= comment.content_render_cache
 
     .panel-body
       = render 'comment_form', roster: @roster, comment: @comment

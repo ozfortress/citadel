@@ -1,6 +1,8 @@
 require 'search'
 
 class League < ApplicationRecord
+  include MarkdownRenderCaching
+
   belongs_to :format
 
   has_many :divisions, inverse_of: :league, dependent: :destroy
@@ -19,8 +21,11 @@ class League < ApplicationRecord
   has_many :titles,                                 class_name: 'User::Title'
 
   enum status: [:hidden, :running, :completed]
+
   validates :name,        presence: true, length: { in: 1..64 }
   validates :description, presence: true
+  caches_markdown_render_for :description, escaped: false
+
   validates :signuppable,                inclusion: { in: [true, false] }
   validates :roster_locked,              inclusion: { in: [true, false] }
   validates :matches_submittable,        inclusion: { in: [true, false] }

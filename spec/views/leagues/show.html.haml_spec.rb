@@ -37,8 +37,6 @@ describe 'leagues/show' do
       render
 
       expect(rendered).to include(league.name)
-      description = ERB::Util.html_escape(league.description)
-      expect(rendered).to include(description)
       expect(rendered).to include('Private')
     end
   end

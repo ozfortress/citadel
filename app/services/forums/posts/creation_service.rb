@@ -10,7 +10,7 @@ module Forums
 
         post.transaction do
           post.save || rollback!
-          post.edits.create!(params)
+          post.create_edit!(user)
 
           users = thread.subscriptions.where.not(user: user).map(&:user)
           notify_users(users, thread, post)

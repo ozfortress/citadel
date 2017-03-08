@@ -8,5 +8,4 @@
 
 .panel.panel-default
   .panel-heading Information
-  .panel-body
-    = markdown @format.description
+  .panel-body.markdown!= @format.description_render_cache

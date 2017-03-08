@@ -1,5 +1,7 @@
 class League
   class Roster < ApplicationRecord
+    include MarkdownRenderCaching
+
     belongs_to :team
     belongs_to :division, inverse_of: :rosters
     delegate :league, to: :division, allow_nil: true
@@ -34,13 +36,14 @@ class League
     has_many :comments, class_name: 'Roster::Comment', inverse_of: :roster,
                         dependent: :destroy
 
-    validates :name,        presence: true, uniqueness: { scope: :division_id },
-                            length: { in: 1..64 }
+    validates :name, presence: true, uniqueness: { scope: :division_id }, length: { in: 1..64 }
     validates :description, presence: true, allow_blank: true, length: { in: 0..500 }
-    validates :ranking,     numericality: { greater_than: 0 }, allow_nil: true
-    validates :seeding,     numericality: { greater_than: 0 }, allow_nil: true
-    validates :approved,    inclusion: { in: [true, false] }
-    validates :disbanded,   inclusion: { in: [true, false] }
+    caches_markdown_render_for :description
+
+    validates :ranking,   numericality: { greater_than: 0 }, allow_nil: true
+    validates :seeding,   numericality: { greater_than: 0 }, allow_nil: true
+    validates :approved,  inclusion: { in: [true, false] }
+    validates :disbanded, inclusion: { in: [true, false] }
 
     validate :within_roster_size_limits, on: :create
     validate :unique_within_league, on: :create

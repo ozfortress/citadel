@@ -93,7 +93,7 @@ describe 'leagues/matches/show' do
 
     after do
       comms.each do |comm|
-        expect(rendered).to include(comm.content)
+        expect(rendered).to include(comm.user.name)
       end
     end
   end

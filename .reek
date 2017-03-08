@@ -8,6 +8,10 @@ TooManyStatements:
 ControlParameter:
   enabled: false
 
+# Pretty dumb if a parameter is optional
+BooleanParameter:
+  enabled: false
+
 # PremaDonna methods show intent when it comes to db operations
 "models":
   PrimaDonnaMethod:

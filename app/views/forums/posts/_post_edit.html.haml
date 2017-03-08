@@ -5,4 +5,4 @@
 
     = render 'users/listing', user: post_edit.created_by
 
-.container-fluid= markdown post_edit.content
+.container-fluid.markdown!= post_edit.content_render_cache

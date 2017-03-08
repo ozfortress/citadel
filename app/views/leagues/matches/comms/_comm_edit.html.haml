@@ -12,4 +12,4 @@
     - team = roster.team if roster
     = render 'users/listing', user: comm.user, team: team
 
-.container-fluid= markdown comm.content
+.container-fluid.markdown!= comm.content_render_cache

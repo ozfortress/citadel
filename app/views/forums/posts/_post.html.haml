@@ -15,4 +15,4 @@
       = link_to edits_for_forums_post_path(post), class: 'btn btn-default btn-sm' do
         View Edits
 
-.container-fluid= markdown post.content
+.container-fluid.markdown!= post.content_render_cache
