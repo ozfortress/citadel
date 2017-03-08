@@ -1,25 +1,22 @@
 module API
   module V1
     class APIController < ActionController::Base
-      attr_reader :api_key
+      def api_key
+        key = request.headers['X-Api-Key']
+        @api_key ||= APIKey.find_by(key: key)
+      end
 
+      before_action :track_action
       before_action :authenticate
 
       rescue_from Exception do |error|
-        track_action # track_action isn't called automatically here
         handle_error(error) if error
       end
-
-      after_action :track_action
 
       protected
 
       def authenticate
-        key = request.headers['X-Api-Key']
-        @api_key = APIKey.find_by(key: key)
-
-        unless @api_key
-          track_action # track_action isn't called automatically here
+        unless api_key
           render_error :unauthorized, message: 'Unauthorized API key'
         end
       end
