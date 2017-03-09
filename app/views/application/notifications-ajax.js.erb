@@ -1,0 +1,12 @@
+var domList = $("#notifications-list");
+<% @notifications.each do |notification| %>
+    <%- serializer = User::NotificationSerializer.new(notification) %>
+
+    if ($("#notification_" + <%= notification.id %>).length == 0) {
+        <%- html = render 'notification', notification: notification %>
+        var html = "<%= escape_javascript(html) %>";
+        domList.append(html);
+    }
+<% end %>
+// Update badge
+$("#notifications-badge").text(<%= @notifications.size %>)
