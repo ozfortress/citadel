@@ -12,4 +12,4 @@ var html = "<%= escape_javascript(html) %>";
 $("#notifications-list").html(html);
 
 // Update badge
-$("#notifications-badge").text(<%= @notifications.size %>)
+$("#notifications-badge").text(<%= @notifications.to_a.count { |n| !n.read } %>)
