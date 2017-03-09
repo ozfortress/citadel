@@ -3,17 +3,14 @@
   - unless notifications.empty?
     %span.badge#notifications-badge= notifications.size
 %ul.dropdown-menu.navbar-right-menu#notifications-dropdown
-  / TODO: Ajax for loading notifications
-  - if notifications.empty?
-    %li.dropdown-header No Notifications...
-  - else
-    %li.dropdown-header
-      = button_to clear_notifications_path, class: 'btn btn-default pull-right', method: :delete,
-                  data: { confirm: 'Are you sure you want to clear all notifications?' } do
-        clear
-        .span.glyphicon.glyphicon-remove
-      Notifications
+  %li.row.dropdown-header
+    = button_to clear_notifications_path, class: 'btn btn-default pull-right',
+                method: :delete, remote: true,
+                data: { confirm: 'Are you sure you want to clear all notifications?' } do
+      clear
+      .span.glyphicon.glyphicon-remove
+    %h5 Notifications
 
-    %li.divider
-    - present_collection(notifications).each do |notification|
-      %li= notification.link
+  %ul.list-group#notifications-list
+    - notifications.each do |notification|
+      = render 'notification', notification: notification

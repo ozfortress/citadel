@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 describe Users::NotificationsController do
-  describe 'GET #read' do
+  describe 'GET #show' do
     let(:user) { create(:user) }
     let!(:notification) { create(:user_notification, user: user) }
 
     it 'succeeds for notified user' do
       sign_in user
 
-      get :read, params: { id: notification.id }
+      get :show, params: { id: notification.id }
 
       expect(response).to redirect_to(user_path(user))
     end
@@ -18,12 +18,12 @@ describe Users::NotificationsController do
       sign_in user2
 
       expect do
-        get :read, params: { id: notification.id }
+        get :show, params: { id: notification.id }
       end.to raise_error ActiveRecord::RecordNotFound
     end
 
     it 'fails for unauthenticated user' do
-      get :read, params: { id: notification.id }
+      get :show, params: { id: notification.id }
 
       expect(response).to redirect_to(root_path)
     end
@@ -31,15 +31,15 @@ describe Users::NotificationsController do
 
   describe 'DELETE #clear' do
     let(:user) { create(:user) }
-    let!(:notifications) { create_list(:user_notification, 20, user: user) }
+    let!(:notifications) { create_list(:user_notification, 5, user: user) }
 
     it 'succeeds for notified user' do
       sign_in user
 
       delete :clear
 
-      expect(response).to redirect_to(root_path)
-      expect(user.notifications.unread).to be_empty
+      expect(user.notifications).to be_empty
+      expect(response).to have_http_status(:success)
     end
   end
 end

@@ -95,6 +95,10 @@ Rails.application.routes.draw do
     post 'name',  on: :member, to: 'users#request_name_change'
   end
 
+  resources :notifications, controller: 'users/notifications', only: [:index, :show, :destroy] do
+    delete :clear, on: :collection
+  end
+
   resources :permissions, only: :index do
     collection do
       get :users
@@ -122,10 +126,6 @@ Rails.application.routes.draw do
       end
     end
   end
-
-  # TODO: fix XSS vuln (wasn't able to style forms as links in navbar)
-  get 'notifications/:id', to: 'users/notifications#read', as: 'read_notification'
-  delete 'notifications', to: 'users/notifications#clear', as: 'clear_notifications'
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 end

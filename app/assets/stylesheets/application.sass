@@ -26,8 +26,7 @@ a:hover
   text-decoration: none
 
 .banner-citadel
-  // background1: #EDEDEA
-  background-color: #C9C9C9 // background2
+  background-color: #C9C9C9
 
 .banner-container-citadel
   @extend .container
@@ -140,6 +139,36 @@ a#login
   background-color: #729AAD
 
 #notifications-dropdown
+  width: 400px
+  @media (max-width: 768px)
+    position: fixed
+    top: 55px
+    width: 100%
+
+#notifications-list
+  margin-bottom: 0
+  margin-top: 2px
+  overflow-y: auto
+  max-height: 205px
+
+.notification
+  border-radius: 0 !important
+  // margin-top: -0.333333px
+  padding-top: 5px
+  padding-bottom: 5px
+  background-color: #e7e7e7
+
+.notification-read
+  background-color: white
+
+.notification-button
+  position: relative
+  z-index: 100
+  padding: 4px 6px 4px 6px
+  background-color: transparent
+
+  &:hover
+    color: grey
 
 #navbar-user
   padding-left: 5px

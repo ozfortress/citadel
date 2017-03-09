@@ -23,10 +23,17 @@
 
 $(function() {
     // Disable disabled links
-    $('a[disabled=disabled]').click(function(event){
+    $('a[disabled=disabled]').click(function(event) {
         event.preventDefault();
     });
 
     // Enable all tooltips
     $("[data-toggle='tooltip']").tooltip();
+
+    // Start periodic checks for notifications
+    function updateNotifications() {
+        var url = "/notifications"
+        $.ajax(url);
+    }
+    setInterval(updateNotifications, 5000);
 });
