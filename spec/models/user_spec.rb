@@ -63,9 +63,9 @@ describe User do
 
     notification = user.notify!('foo', '/bar')
 
+    expect(notification.read).to be false
     expect(notification).to be_persisted
     expect(user.notifications).to eq([notification])
-    expect(user.notifications.unread).to eq([notification])
   end
 
   it 'has avatar' do

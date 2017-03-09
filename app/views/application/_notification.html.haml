@@ -1,2 +1,10 @@
-- notification_p = present(notification)
-%li{ id: "notification_#{notification.id}" }= notification_p.link
+.notification-group{ id: "notification_#{notification.id}" }
+  = button_to notification_path(notification.id), method: :delete, remote: true,
+              class: 'btn pull-right notification-button' do
+    .span.glyphicon.glyphicon-remove
+
+  - cls = 'notification'
+  - if notification.read
+    - cls += ' notification-read'
+
+  = present(notification).link(class: "list-group-item #{cls}")
