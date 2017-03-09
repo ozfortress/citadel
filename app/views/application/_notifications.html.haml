@@ -1,7 +1,7 @@
 %a.dropdown-toggle#notifications{ data: { toggle: 'dropdown' } }
   %span.glyphicon.glyphicon-bell#notifications-glyph
   - unless notifications.empty?
-    %span.badge#notifications-badge= notifications.size
+    %span.badge#notifications-badge= notifications.to_a.cound { |n| !n.read }
 %ul.dropdown-menu.navbar-right-menu#notifications-dropdown
   %li.row.dropdown-header
     = button_to clear_notifications_path, class: 'btn btn-default pull-right',
