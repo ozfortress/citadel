@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action do
-    @notifications = current_user.notifications if user_signed_in?
+    @notifications = current_user.notifications.order(created_at: :desc) if user_signed_in?
   end
 
   after_action :track_action
