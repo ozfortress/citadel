@@ -8,7 +8,7 @@ module Users
     skip_after_action :track_action, only: :index
 
     def index
-      render '/application/notifications-ajax'
+      render '/application/notifications-ajax', formats: [:js]
     end
 
     def clear
