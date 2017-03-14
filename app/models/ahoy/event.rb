@@ -18,6 +18,7 @@ module Ahoy
 
       where('visits.ip = ? OR ahoy_events.name = ? OR users.name = ? OR api_keys.name = ?',
             query, query, query, query)
+        .order(time: :desc)
         .includes(visit: [:user, :api_key])
         .references(visit: [:user, :api_key])
     end
