@@ -43,20 +43,25 @@ module Leagues
       @match = League::Match.new
       @match.rounds.new
       @division = @league.divisions.first
-      @kind = :swiss
+      @tournament_system = :swiss
+      @swiss_tournament              = { pairer: :dutch, pair_options: { min_pair_size: 4 } }
+      @round_robin_tournament        = {}
+      @single_elimination_tournament = { teams_limit: 0, round: 0 }
+      @page_playoffs_tournament      = { starting_round: 0 }
     end
 
     def create_round
-      params = create_round_params
-      @kind     = params.delete(:generate_kind)
       @division = @league.divisions.find(params.delete(:division_id))
-      @match    = Matches::GenerationService.call(@division, @kind, params)
+      fetch_tournament_params
 
-      if @match.persisted?
-        redirect_to league_matches_path(@league)
-      else
+      @match = Matches::GenerationService.call(@division, create_round_params,
+                                               @tournament_system, tournament_params)
+
+      if @match
         @match.reset_results
         render :generate
+      else
+        redirect_to league_matches_path(@league)
       end
     end
 
@@ -150,6 +155,41 @@ module Leagues
                                     pick_bans_attributes: [:id, :_destroy, :kind,
                                                            :team, :deferrable],
                                     rounds_attributes: [:id, :_destroy, :map_id])
+    end
+
+    def fetch_tournament_params
+      @tournament_system             = params.delete(:tournament_system).to_sym
+      @swiss_tournament              = swiss_tournament_params
+      @round_robin_tournament        = round_robin_tournament_params
+      @single_elimination_tournament = single_elimination_tournament_params
+      @page_playoffs_tournament      = page_playoffs_tournament_params
+    end
+
+    def tournament_params
+      case @tournament_system
+      when :swiss              then swiss_tournament_params
+      when :round_robin        then round_robin_tournament_params
+      when :single_elimination then single_elimination_tournament_params
+      when :page_playoffs      then page_playoffs_tournament_params
+      else
+        raise 'Invalid tournament system'
+      end
+    end
+
+    def swiss_tournament_params
+      params.require(:swiss_tournament).permit(:pairer, pair_options: [:min_pair_size])
+    end
+
+    def round_robin_tournament_params
+      {}
+    end
+
+    def single_elimination_tournament_params
+      params.require(:single_elimination_tournament).permit(:teams_limit, :round)
+    end
+
+    def page_playoffs_tournament_params
+      params.require(:page_playoffs_tournament).permit(:starting_round)
     end
 
     def require_user_can_report_scores

@@ -3,21 +3,20 @@ module Leagues
     module GenerationService
       include BaseService
 
-      def call(division, kind, match_params)
-        match = nil
+      def call(division, match_params, tournament_system, tournament_options)
+        invalid_match = nil
 
         division.transaction do
-          matches = division.seed_round_with(kind, match_params)
-
-          match = matches.first(&:invalid?)
-          rollback! if match.invalid?
+          matches = division.generate_matches(tournament_system, match_params, tournament_options)
+          invalid_match = matches.find { |match| !match.save }
+          rollback! if invalid_match
 
           matches.each do |mat|
             CreationService.notify_for_match!(mat)
           end
         end
 
-        match
+        invalid_match
       end
     end
   end

@@ -114,15 +114,19 @@ describe Leagues::MatchesController do
   end
 
   describe 'POST #create_round' do
-    it 'succeeds for authorized user' do
+    it 'succeeds with swiss system for authorized user' do
       sign_in @admin
 
       post :create_round, params: {
-        league_id: @league.id, match: {
-          generate_kind: :swiss, division_id: @div.id, round_name: 'foo',
-          round_number: 3, notice: 'B',
-          rounds_attributes: [{ map_id: @map.id }]
-        }
+        league_id: @league.id,
+        division_id: @div.id,
+        match: {
+          round_name: 'foo', round_number: 3, notice: 'B', rounds_attributes: [{ map_id: @map.id }]
+        },
+        tournament_system: :swiss,
+        swiss_tournament: { pairer: :dutch, pair_options: { min_pair_size: 2 } },
+        single_elimination_tournament: { teams_limit: 0, round: 0 },
+        page_playoffs_tournament: { starting_round: 0 },
       }
 
       expect(@league.matches.size).to eq(1)
@@ -143,9 +147,11 @@ describe Leagues::MatchesController do
       sign_in @admin
 
       post :create_round, params: {
-        league_id: @league.id, match: {
-          generate_kind: :swiss, division_id: @div.id, round_number: -1
-        }
+        league_id: @league.id, division_id: @div.id, match: { round_number: -1 },
+        tournament_system: :swiss,
+        swiss_tournament: { pairer: :dutch, pair_options: { min_pair_size: 2 } },
+        single_elimination_tournament: { teams_limit: 0, round: 0 },
+        page_playoffs_tournament: { starting_round: 0 },
       }
 
       @league.reload

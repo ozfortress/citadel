@@ -60,6 +60,7 @@ class League
       includes(division: :league).where(leagues: { status: completed })
     }
     scope :ordered, ->(league) { order(Roster.order_keys(league)) }
+    scope :seeded, -> { order(seeding: :asc) }
 
     after_create do
       # rubocop:disable Rails/SkipsModelValidations
