@@ -1,10 +1,14 @@
 - content_for(:title) { "Matches | #{@league.name}" }
 
+- league_p = present(@league)
+%h1
+  = league_p.link
+  Matches
+
 .panel.panel-default
   .panel-heading Matches
-
-  - if user_can_edit_league?
-    .panel-body
+  .panel-body
+    - if user_can_edit_league?
       = link_to generate_league_matches_path(@league), class: 'btn btn-default pull-right' do
         %span.glyphicon.glyphicon-plus
         Generate Round
@@ -13,7 +17,6 @@
         Create Single Match
 
 
-  - @divisions.each do |div|
-    .panel.panel-default
+    - @divisions.each do |div|
       %h3= div
       = render 'leagues/matches/matches_table', matches: div.matches, roster: nil
