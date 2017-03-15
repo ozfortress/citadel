@@ -14,7 +14,14 @@ class UserPresenter < ActionPresenter::Base
   end
 
   def steam_link
-    link_to(user.steam_id3, user.steam_profile_url, target: '_blank')
+    link_to(user.steam_profile_url, target: '_blank') do
+      content = [
+        tag(:span, class: 'glyphicon glyphicon-link small'),
+        user.steam_id3,
+      ]
+
+      safe_join(content, '')
+    end
   end
 
   def titles(options = {})
