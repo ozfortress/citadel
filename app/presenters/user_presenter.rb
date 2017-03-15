@@ -15,10 +15,12 @@ class UserPresenter < ActionPresenter::Base
 
   def steam_link
     link_to(user.steam_profile_url, target: '_blank') do
-      safe_join([
+      content = [
         tag(:span, class: 'glyphicon glyphicon-link small'),
         user.steam_id3,
-      ], '')
+      ]
+
+      safe_join(content, '')
     end
   end
 
