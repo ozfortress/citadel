@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'application/notifications-ajax' do
+describe 'users/notifications/index' do
   before do
     @notifications = []
     @notifications << build_stubbed(:user_notification, read: false)
