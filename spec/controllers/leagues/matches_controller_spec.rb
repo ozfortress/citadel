@@ -75,6 +75,34 @@ describe Leagues::MatchesController do
       end
     end
 
+    it 'succeeds for authorized user with bye match' do
+      sign_in @admin
+
+      post :create, params: {
+        league_id: @league.id, division_id: @div.id, match: {
+          home_team_id: @team1.id, away_team_id: nil, round_name: 'foo',
+          round_number: 3, notice: 'B',
+        }
+      }
+
+      @league.reload
+      match = @league.matches.first
+      expect(match).to_not be nil
+      expect(match.bye?).to be true
+      expect(match.home_team).to eq(@team1)
+      expect(match.away_team).to be nil
+      expect(match.round_name).to eq('foo')
+      expect(match.round_number).to eq(3)
+      expect(match.notice).to eq('B')
+      expect(match.rounds).to be_empty
+      @team1.users.each do |user|
+        expect(user.notifications).to_not be_empty
+      end
+      @team2.users.each do |user|
+        expect(user.notifications).to be_empty
+      end
+    end
+
     it 'fails with invalid data' do
       sign_in @admin
 
