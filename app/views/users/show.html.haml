@@ -27,9 +27,35 @@
 
 %hr
 
+- if current_user? && !@team_invites.empty?
+  - @team_invites.each do |invite|
+    - team = invite.team
+    .alert.alert-info
+      You have been invited to join
+      = link_to team, team_path(team)
+
+      .button-group.pull-right
+        = button_to decline_team_invite_path(team),
+                    method: :delete, class: 'btn btn-danger' do
+          Decline
+          %span.glyphicon.glyphicon-remove
+      .button-group.pull-right
+        = button_to accept_team_invite_path(team),
+                    method: :post, class: 'btn btn-success' do
+          Accept
+          %span.glyphicon.glyphicon-ok
+
 .panel.panel-default
   .panel-heading Description
   .panel-body.markdown= user_p.description
+
+- unless @matches.empty?
+  .panel.panel-info
+    .panel-heading Upcoming Matches
+    %ul.list-group
+      - present_collection(@matches).each do |match|
+        %li.list-group-item
+          = match.link
 
 .panel.panel-default
   .panel-heading Teams
@@ -55,43 +81,15 @@
         = link_to transfer.team, team_path(transfer.team)
         on #{transfer.created_at.strftime('%c')}
 
-- if current_user?
+- unless @rosters.empty?
   .panel.panel-default
-    .panel-heading Upcoming Matches
+    .panel-heading Leagues
     %ul.list-group
-      - present_collection(@matches).each do |match|
-        %li.list-group-item
-          = match.link
-
-.panel.panel-default
-  .panel-heading Leagues
-  %ul.list-group
-    - present_collection(@rosters).each do |roster|
-      - unless roster.league.hidden?
-        %li.list-group-item
-          - league_link = link_to roster.league, league_path(roster.league)
-          - if roster.league.signuppable?
-            signed up to #{league_link} with #{roster.link}
-          - else
-            playing in #{league_link} with #{roster.link}
-
-- if current_user? && !@team_invites.empty?
-  .panel.panel-default
-    .panel-heading Team Invites
-    .panel-body
-      %ul.list-group
-        - @team_invites.each do |invite|
-          - team = invite.team
+      - present_collection(@rosters).each do |roster|
+        - unless roster.league.hidden?
           %li.list-group-item
-            You have been invited to join
-            = link_to team, team_path(team)
-            .button-group.pull-right
-              = button_to decline_team_invite_path(team),
-                          method: :delete, class: 'btn btn-danger' do
-                Decline
-                %span.glyphicon.glyphicon-remove
-            .button-group.pull-right
-              = button_to accept_team_invite_path(team),
-                          method: :post, class: 'btn btn-success' do
-                Accept
-                %span.glyphicon.glyphicon-ok
+            - league_link = link_to roster.league, league_path(roster.league)
+            - if roster.league.signuppable?
+              signed up to #{league_link} with #{roster.link}
+            - else
+              playing in #{league_link} with #{roster.link}
