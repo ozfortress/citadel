@@ -16,8 +16,7 @@
   .panel-heading Info
   .panel-body.markdown= present(@league).description
 
-.panel.panel-default
-
+.panel.panel-info
   = link_to 'All Matches', league_matches_path(@league),
             class: 'btn btn-default pull-right'
 
@@ -69,7 +68,7 @@
                 %th= tiebreaker.value_for(roster)
 
 - if user_can_edit_league?
-  .panel.panel-default
+  .panel.panel-info
     .panel-heading Admin
     .panel-body
       - klass = 'btn btn-default pull-right'
