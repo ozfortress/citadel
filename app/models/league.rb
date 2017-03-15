@@ -61,7 +61,7 @@ class League < ApplicationRecord
   alias_attribute :to_s, :name
 
   def self.search(query)
-    return order(:id) if query.blank?
+    return all if query.blank?
 
     query = Search.transform_query(query)
 

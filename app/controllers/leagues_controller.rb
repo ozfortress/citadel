@@ -12,7 +12,7 @@ class LeaguesController < ApplicationController
 
   def index
     @leagues = League.search(params[:q])
-                     .order(status: :asc, created_at: :asc)
+                     .order(status: :asc, created_at: :desc)
                      .paginate(page: params[:page])
   end
 
