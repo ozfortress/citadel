@@ -28,16 +28,16 @@ describe AdminController do
     end
   end
 
-  describe 'GET #logs' do
+  describe 'GET #statistics' do
     let(:user) { create(:user) }
     let(:visit) { create(:visit, user: user) }
-    let!(:events) { create_list(:ahoy_event, 50, user: user, visit: visit) }
+    let!(:events) { create_list(:ahoy_event, 5, user: user, visit: visit) }
 
     it 'succeeds for authorized' do
       user.grant(:edit, :games)
       sign_in user
 
-      get :logs
+      get :statistics
 
       expect(response).to have_http_status(:success)
     end

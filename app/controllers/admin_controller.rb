@@ -4,17 +4,16 @@ class AdminController < ApplicationController
   def index
   end
 
-  def logs
-    timeframe = 30.minutes
-    events_in_timeframe = Ahoy::Event.where(time: timeframe.ago..Time.current)
-    @events_per_second = events_in_timeframe.count / timeframe.to_f
+  def statistics
+    @timeframe = (params[:t] || 30.minutes).to_i.seconds
+    events_in_timeframe = Ahoy::Event.where(time: @timeframe.ago..Time.current)
+    @events_per_second = events_in_timeframe.count / @timeframe.to_f
     @users_count = User.count
+    @api_keys_count = APIKey.count
     @teams_count = Team.count
     @matches_count = League::Match.count
     @match_comms_count = League::Match::Comm.count
-    events_count = Ahoy::Event.count_estimate unless params[:q]
-    @events = Ahoy::Event.search(params[:q])
-                         .paginate(page: params[:page], total_entries: events_count)
+    @match_comm_edits_count = League::Match::CommEdit.count - @match_comms_count
   end
 
   private

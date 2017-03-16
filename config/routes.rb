@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get 'book_server', to: 'pages#book_server'
 
   get 'admin', to: 'admin#index'
-  get 'logs',  to: 'admin#logs', as: 'admin_logs'
+  get 'statistics',  to: 'admin#statistics', as: 'admin_statistics'
 
   namespace :meta do
     resources :games, except: [:destroy]

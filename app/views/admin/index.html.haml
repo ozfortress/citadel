@@ -13,27 +13,23 @@
       - leagues.order(created_at: :desc).each do |league|
         = link_to league.name, league_path(league), class: 'list-group-item'
 
+- if current_user.can?(:edit, :users)
+  .panel.panel-default
+    .panel-heading Community
+    .panel-body
+      = link_to 'Name Changes', users_names_path
+
+.panel.panel-default
+  .panel-heading Admin
+  %li.list-group-item= link_to 'Permissions', permissions_path
+  %li.list-group-item= link_to 'Statistics', admin_statistics_path
+
+
 - if current_user.can?(:edit, :games)
   .panel.panel-default
-    .panel-heading Meta
+    .panel-heading Meta Data
     .panel-body
       %ul.list-group
         = link_to 'Games', meta_games_path, class: 'list-group-item'
         = link_to 'Formats', meta_formats_path, class: 'list-group-item'
         = link_to 'Maps', meta_maps_path, class: 'list-group-item'
-
-- if current_user.can?(:edit, :users)
-  .panel.panel-default
-    .panel-heading Users
-    .panel-body
-      = link_to 'Name Changes', users_names_path
-
-.panel.panel-default
-  .panel-heading Permissions
-  .panel-body
-    = link_to 'Permissions', permissions_path
-
-.panel.panel-default
-  .panel-heading Logs
-  .panel-body
-    = link_to 'Logs', admin_logs_path
