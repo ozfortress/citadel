@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get 'pages/home'
 
   get 'admin', to: 'admin#index'
-  get 'logs',  to: 'admin#logs', as: 'admin_logs'
+  get 'statistics',  to: 'admin#statistics', as: 'admin_statistics'
 
   namespace :meta do
     resources :games, except: [:destroy]
