@@ -61,6 +61,7 @@ describe API::V1::UsersController, type: :request do
       user_h = json['user']
       expect(user_h).to_not be_nil
       expect(user_h['name']).to eq(user.name)
+      expect(user_h['teams']).to be_empty
       expect(user_h['rosters']).to be_empty
       expect(response).to be_success
     end
