@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
       get 'users/steam_id/:id', to: 'users#steam_id'
       resources :users, only: [:show]
+      resources :teams, only: [:show]
     end
   end
 
