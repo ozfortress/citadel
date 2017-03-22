@@ -8,6 +8,8 @@ describe API::V1::MatchesController, type: :request do
     let(:route) { '/api/v1/matches' }
 
     it 'succeeds for existing match' do
+      create_list(:league_match_round, 3, match: match, home_team_score: 12)
+
       get "#{route}/#{match.id}", headers: { 'X-API-Key' => api_key.key }
 
       json = JSON.parse(response.body)
@@ -22,6 +24,10 @@ describe API::V1::MatchesController, type: :request do
       teams = [match_h['home_team'], match_h['away_team']]
       teams.each do |team|
         expect(team['players']).to_not be_empty
+      end
+
+      match_h['rounds'].each do |round|
+        expect(round['home_team_score']).to eq(12)
       end
 
       expect(response).to be_success
