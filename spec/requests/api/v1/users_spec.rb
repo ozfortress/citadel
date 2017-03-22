@@ -8,13 +8,28 @@ describe API::V1::UsersController, type: :request do
     let(:route) { '/api/v1/users' }
 
     it 'succeeds for existing user' do
+      teams = create_list(:team, 3)
+      teams.each { |team| team.add_player!(user) }
+      rosters = create_list(:league_roster, 2)
+      rosters.each { |roster| roster.add_player!(user) }
+
       get "#{route}/#{user.id}", headers: { 'X-API-Key' => api_key.key }
 
       json = JSON.parse(response.body)
       user_h = json['user']
       expect(user_h).to_not be_nil
       expect(user_h['name']).to eq(user.name)
-      expect(user_h['rosters']).to be_empty
+
+      expect(user_h['rosters'].length).to eq(rosters.length)
+      user_h['rosters'].each do |roster|
+        expect(rosters.map(&:id)).to include(roster['id'])
+      end
+
+      expect(user_h['teams'].length).to eq(teams.length)
+      user_h['teams'].each do |team|
+        expect(teams.map(&:id)).to include(team['id'])
+      end
+
       expect(response).to be_success
     end
 
@@ -46,6 +61,7 @@ describe API::V1::UsersController, type: :request do
       user_h = json['user']
       expect(user_h).to_not be_nil
       expect(user_h['name']).to eq(user.name)
+      expect(user_h['teams']).to be_empty
       expect(user_h['rosters']).to be_empty
       expect(response).to be_success
     end

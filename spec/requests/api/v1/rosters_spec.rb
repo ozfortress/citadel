@@ -14,6 +14,7 @@ describe API::V1::RostersController, type: :request do
       roster_h = json['roster']
       expect(roster_h).to_not be_nil
       expect(roster_h['name']).to eq(roster.name)
+      expect(roster_h['division']).to eq(roster.division.name)
       expect(roster_h['players']).to_not be_empty
       expect(roster_h['matches']).to be_empty
       expect(response).to be_success

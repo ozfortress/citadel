@@ -8,7 +8,8 @@ module API
       attribute(:steam_64_str) { object.steam_64.to_s } # For dumb json implementations
       attribute(:profile_url) { object.avatar.thumb.url }
 
-      has_many :rosters, serializer: V1::Leagues::RosterSerializer
+      has_many :teams, serializer: API::V1::Leagues::TeamSerializer
+      has_many :rosters, serializer: API::V1::Leagues::RosterSerializer
     end
   end
 end

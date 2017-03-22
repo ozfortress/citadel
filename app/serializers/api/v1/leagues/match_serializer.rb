@@ -10,6 +10,7 @@ module API
         belongs_to :league
         has_one :home_team, serializer: RosterSerializer
         has_one :away_team, serializer: RosterSerializer
+        has_many :rounds, serializer: Matches::RoundSerializer
       end
     end
   end
