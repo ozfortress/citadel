@@ -24,8 +24,9 @@
                               url: roster_transfers_path(roster)) do |f|
           = f.hidden_field :user_id, value: user.id
           = f.hidden_field :is_joining, value: true
+          - disabled = league.transfer_requests.exists?(user: user, is_joining: true)
           = button_tag type: 'submit', class: 'btn btn-success pull-right',
-                       disabled: league.transfer_requests.exists?(user: user) do
+                       disabled: disabled do
             Add
             %span.glyphicon.glyphicon-remove
 
