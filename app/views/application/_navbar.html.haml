@@ -38,6 +38,7 @@
       = link_to('Book a Server', :book_server)
 
     %li= link_to('Verify Rosters', 'https://verify.ozfortress.com', target: :_blank)
+    %li= link_to('Demos', 'https://demos.ozfortress.com', target: :_blank)
 
 - if user_signed_in? && current_user.admin?
   %li{ class: navbar_class(:admin) }
