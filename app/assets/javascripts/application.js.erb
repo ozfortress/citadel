@@ -36,4 +36,23 @@ $(function() {
         $.ajax(url);
     }
     setInterval(updateNotifications, 20000);
+
+    // Tab toggling for select tags
+    $("select[data-toggle='tab']").on('change', function(e) {
+        var self = $(this);
+        var target_id = self.val();
+
+        self.find("option").each(function(index, option) {
+            var id = option.value;
+
+            if (id === target_id) {
+                $("#" + id).addClass("active");
+            } else {
+                $("#" + option.value).removeClass('active');
+            }
+        });
+    });
+
+    // Most browsers keep form data around, so we need to trigger change on load
+    $("select[data-toggle='tab']").trigger('change', null);
 });
