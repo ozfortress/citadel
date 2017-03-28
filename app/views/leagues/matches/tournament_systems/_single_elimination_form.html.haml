@@ -1,0 +1,20 @@
+.alert.alert-warning
+  %strong
+    When using this for playoffs in a larger tournament,
+    ensure that the top teams participating are manually ranked.
+  %br
+  Do do this, set the ranks of the top teams participating to 1, 2, 3... respectively,
+  and set the "Team Limit" to the number of teams participating.
+
+.form-group
+  %label.control-label Team Limit (0 for no limit)
+  = number_field_tag 'single_elimination_tournament[teams_limit]',
+                     single_elimination_tournament[:teams_limit],
+                     min: 0, class: 'form-control'
+
+.form-group
+  %label.control-label The Round to Generate (Starting at 0)
+  = number_field_tag 'single_elimination_tournament[round]',
+                     single_elimination_tournament[:round],
+                     min: 0, class: 'form-control'
+

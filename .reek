@@ -4,6 +4,9 @@ IrresponsibleModule:
 TooManyStatements:
   max_statements: 10
 
+TooManyInstanceVariables:
+  max_instance_variables: 7
+
 # Kinda broken reek right now
 ControlParameter:
   enabled: false
@@ -74,6 +77,7 @@ DataClump:
 UtilityFunction:
   exclude:
     - "Auth::Model"
+    - "TournamentDriver" # Tournament driver is special
 TooManyMethods:
   exclude:
     - "Leagues::MatchesController"
