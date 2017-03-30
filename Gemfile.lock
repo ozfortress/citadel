@@ -50,7 +50,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
-    ahoy_matey (1.5.5)
+    ahoy_matey (1.5.4)
       addressable
       browser (~> 2.0)
       geocoder
