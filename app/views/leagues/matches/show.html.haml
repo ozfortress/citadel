@@ -10,7 +10,7 @@
 %h1 #{present(@league).link}: #{@match.home_team.division}
 %h2= match_p.title
 
-- if user_signed_in?
+- if user_signed_in? && !@match.bye?
   .row
     .pull-right
       = link_to verify_rosters_link(@match), target: :blank_, class: 'label label-warning',
