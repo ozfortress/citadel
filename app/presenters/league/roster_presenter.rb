@@ -64,7 +64,8 @@ class League
     end
 
     def active_title
-      html_escape("Active roster for #{roster.name} playing in #{roster.division.name} for ") + league_p.link
+      text = "Active roster for #{roster.name} playing in #{roster.division.name} for "
+      html_escape(text) + league_p.link
     end
   end
 end
