@@ -9,6 +9,9 @@ describe League::Match do
   it { should belong_to(:away_team).class_name('League::Roster') }
   it { should allow_value(nil).for(:away_team) }
 
+  it { should belong_to(:winner).class_name('League::Roster') }
+  it { should allow_value(nil).for(:winner) }
+
   it { should have_many(:rounds).class_name('Match::Round').dependent(:destroy) }
   it { should accept_nested_attributes_for(:rounds) }
 
@@ -51,5 +54,40 @@ describe League::Match do
     roster = build(:league_roster)
 
     expect(League::Match.new(home_team: roster).status).to eq('confirmed')
+  end
+
+  it 'validates winnable matches' do
+    map = build(:map)
+    round = -> { League::Match::Round.new(map: map) }
+    match = build(:league_match, rounds: [round.call, round.call, round.call], has_winner: true)
+    match.league.update!(allow_round_draws: false)
+
+    expect(match).to be_valid
+    expect(match.winner).to be nil
+
+    match.rounds[0].home_team_score = 2
+    match.status = :submitted_by_home_team
+
+    expect(match).to be_invalid
+    expect(match.winner).to be nil
+
+    match.rounds[1].home_team_score = 2
+
+    expect(match).to be_valid
+    expect(match.winner).to eq(match.home_team)
+
+    match.rounds[1].away_team_score = 4
+
+    expect(match).to be_invalid
+    expect(match.winner).to be nil
+
+    match.rounds[2].away_team_score = 4
+
+    expect(match).to be_valid
+    expect(match.winner).to eq(match.away_team)
+
+    match.save!
+
+    expect(match.reload.winner).to eq(match.away_team)
   end
 end

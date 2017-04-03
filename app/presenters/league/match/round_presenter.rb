@@ -29,6 +29,8 @@ class League
       end
 
       def result(roster = nil)
+        return if match.has_winner? && round.draw?
+
         if roster.nil?
           highlight_winner
         else
