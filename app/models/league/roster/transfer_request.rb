@@ -7,14 +7,15 @@ class League
       delegate :league, :division, to: :roster
 
       validates :is_joining, inclusion: { in: [true, false] }
+      enum status: [:pending, :approved, :denied]
 
-      validate :unique_within_league
-      validate :on_team,   if: :is_joining?
-      validate :on_roster, unless: :is_joining?
-      validate :active_roster, if: :is_joining?
-      validate :league_permissions, if: :is_joining?
-      validate :within_roster_size_limits
-      validate :within_roster_size_limits_for_leaving_roster, if: :is_joining?
+      validate :unique_within_league,                         if: :pending?
+      validate :on_team,                                      if: :pending?
+      validate :on_roster,                                    if: :pending?
+      validate :active_roster,                                if: :pending?
+      validate :league_permissions,                           if: :pending?
+      validate :within_roster_size_limits,                    if: :pending?
+      validate :within_roster_size_limits_for_leaving_roster, if: :pending?
 
       def approve
         transaction do
@@ -22,14 +23,18 @@ class League
 
           propagate_players!
 
-          destroy || raise(ActiveRecord::Rollback) if persisted?
+          if persisted?
+            update(status: 'approved') || raise(ActiveRecord::Rollback)
+          else
+            self.status = :approved
+          end
         end
 
-        persisted? ? false : self
+        !pending?
       end
 
       def deny
-        destroy
+        update(status: 'denied')
       end
 
       def leaving_roster
@@ -48,7 +53,7 @@ class League
       end
 
       def on_team
-        return unless user.present? && roster.present?
+        return unless user.present? && roster.present? && is_joining?
 
         unless roster.team.on_roster?(user)
           errors.add(:user_id, 'must be on the team to get transferred to the roster')
@@ -56,19 +61,19 @@ class League
       end
 
       def on_roster
-        return unless user.present? && roster.present?
+        return unless user.present? && roster.present? && !is_joining?
 
         errors.add(:user_id, 'is not on the roster') unless roster.on_roster?(user)
       end
 
       def active_roster
-        return unless roster.present?
+        return unless roster.present? && is_joining?
 
         errors.add(:base, 'cannot join a disbanded roster') if roster.disbanded?
       end
 
       def league_permissions
-        return unless user.present?
+        return unless user.present? && is_joining?
 
         errors.add(:base, 'user is banned from leagues') unless user.can?(:use, :leagues)
       end
@@ -110,9 +115,9 @@ class League
       end
 
       def unique_within_league
-        return unless user.present? && roster.present?
+        return unless user.present? && roster.present? && is_joining?
 
-        if league.transfer_requests.where(user: user).where.not(id: id).exists?
+        if league.transfer_requests.pending.where(user: user).where.not(id: id).exists?
           errors.add(:user_id, 'is already pending a transfer')
         end
       end

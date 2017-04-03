@@ -94,15 +94,15 @@ describe League::Roster do
     it 'forfeits all matches' do
       home_match = create(:league_match, home_team: roster)
       away_match = create(:league_match, away_team: roster)
-      transfers = create_list(:league_roster_transfer_request, 3, propagate: true, roster: roster)
+      requests = create_list(:league_roster_transfer_request, 3, propagate: true, roster: roster)
 
       roster.disband
 
       expect(roster.reload.disbanded?).to be(true)
       expect(home_match.reload.forfeit_by).to eq('home_team_forfeit')
       expect(away_match.reload.forfeit_by).to eq('away_team_forfeit')
-      transfers.each do |transfer|
-        expect { transfer.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      requests.each do |request|
+        expect(request.reload).to be_denied
       end
     end
   end
