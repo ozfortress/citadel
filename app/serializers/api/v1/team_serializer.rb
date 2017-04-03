@@ -9,7 +9,7 @@ module API
       attribute(:avatar_icon_url) { object.avatar.icon.url }
 
       has_many :users, key: :players, serializer: UserSerializer
-      has_many :rosters, serializer: Leagues::RosterSerializer
+      has_many :rosters, serializer: V1::Leagues::RosterSerializer
     end
   end
 end
