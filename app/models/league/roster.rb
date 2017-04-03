@@ -151,7 +151,9 @@ class League
     def disband
       transaction do
         forfeit_all!
-        transfer_requests.destroy_all
+        # rubocop:disable Rails/SkipsModelValidations
+        transfer_requests.pending.update_all(status: 'denied')
+        # rubocop:enable Rails/SkipsModelValidations
         update!(disbanded: true)
       end
     end

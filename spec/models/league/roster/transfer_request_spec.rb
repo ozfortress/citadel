@@ -6,6 +6,8 @@ describe League::Roster::TransferRequest do
   it { should belong_to(:roster) }
   it { should belong_to(:user) }
 
+  it { should define_enum_for(:status).with([:pending, :approved, :denied]) }
+
   describe '#approve' do
     it 'succeeds when joining' do
       request = create(:league_roster_transfer_request, propagate: true)
@@ -17,7 +19,7 @@ describe League::Roster::TransferRequest do
       expect(request.approve).to be_truthy
       expect(roster.on_roster?(user)).to be(true)
       expect(roster2.on_roster?(user)).to be(false)
-      expect { request.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      expect(request.reload).to be_approved
     end
 
     it 'succeeds when leaving' do
@@ -28,7 +30,7 @@ describe League::Roster::TransferRequest do
 
       expect(request.approve).to be_truthy
       expect(roster.on_roster?(user)).to be(false)
-      expect { request.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      expect(request.reload).to be_approved
     end
   end
 
@@ -43,7 +45,7 @@ describe League::Roster::TransferRequest do
       expect(request.deny).to be_truthy
       expect(roster.on_roster?(user)).to be(false)
       expect(roster2.on_roster?(user)).to be(true)
-      expect { request.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      expect(request.reload).to be_denied
     end
 
     it 'succeeds when leaving' do
@@ -54,7 +56,7 @@ describe League::Roster::TransferRequest do
 
       expect(request.deny).to be_truthy
       expect(roster.on_roster?(user)).to be(true)
-      expect { request.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      expect(request.reload).to be_denied
     end
   end
 

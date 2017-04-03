@@ -56,7 +56,7 @@ class UserPresenter < ActionPresenter::Base
   end
 
   def transfer_status(league)
-    request = league.transfer_requests.find_by(user: user)
+    request = league.transfer_requests.pending.find_by(user: user)
 
     if request
       present(request).transfer_message

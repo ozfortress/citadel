@@ -48,7 +48,7 @@ describe Leagues::TransfersController do
       patch :update, params: { league_id: league.id, id: transfer_request.id }
 
       expect(roster.on_roster?(player)).to be(true)
-      expect(league.transfer_requests.where(user: player)).to_not exist
+      expect(league.transfer_requests.find_by(user: player)).to be_approved
       expect(captain.notifications).to_not be_empty
       expect(transfer_request.user.notifications).to_not be_empty
     end
@@ -59,7 +59,7 @@ describe Leagues::TransfersController do
       patch :update, params: { league_id: league.id, id: transfer_request.id }
 
       expect(roster.on_roster?(player)).to be(false)
-      expect(league.transfer_requests.where(user: player)).to exist
+      expect(league.transfer_requests.find_by(user: player)).to be_pending
     end
   end
 
@@ -71,7 +71,7 @@ describe Leagues::TransfersController do
       delete :destroy, params: { league_id: league.id, id: transfer_request.id }
 
       expect(roster.on_roster?(player)).to be(false)
-      expect(league.transfer_requests.where(user: player)).to_not exist
+      expect(league.transfer_requests.find_by(user: player)).to be_denied
       expect(captain.notifications).to_not be_empty
       expect(transfer_request.user.notifications).to_not be_empty
     end

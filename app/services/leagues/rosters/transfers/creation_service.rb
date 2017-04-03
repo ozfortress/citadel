@@ -20,7 +20,7 @@ module Leagues
         private
 
         def destroy_leaving_requests(request)
-          requests = request.league.transfer_requests
+          requests = request.league.transfer_requests.pending
 
           requests.where(user: request.user, is_joining: false).destroy_all
         end

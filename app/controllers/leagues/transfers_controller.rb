@@ -15,6 +15,10 @@ module Leagues
                           .includes(transfer_requests: :user)
                           .references(:transfer_requests)
                           .merge(League::Roster::TransferRequest.order(:created_at))
+
+      @pending_transfer_requests = {}
+      @old_transfer_requests = {}
+      sort_transfer_requests
     end
 
     def update
@@ -37,6 +41,14 @@ module Leagues
 
     def require_user_league_permission
       redirect_to league_path(@league) unless user_can_edit_league?
+    end
+
+    def sort_transfer_requests
+      @divisions.each do |div|
+        groups = div.transfer_requests.to_a.group_by(&:pending?)
+        @pending_transfer_requests[div] = groups[true] || []
+        @old_transfer_requests[div] = groups[false] || []
+      end
     end
   end
 end
