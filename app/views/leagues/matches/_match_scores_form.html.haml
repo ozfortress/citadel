@@ -1,4 +1,5 @@
 = bootstrap_form_for match, as: :match, url: submit_match_path(match) do |f|
+  = f.errors_on :base
   = f.fields_for :rounds, rounds do |ff|
     .row.form-group
       .form-inline

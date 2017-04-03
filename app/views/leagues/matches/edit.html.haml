@@ -6,6 +6,7 @@
   .panel-heading Info
   .panel-body
     = bootstrap_form_for @match, as: :match, url: match_path(@match) do |f|
+      = f.errors_on :base
       = render 'match_form', f: f, div: @match.division
 
       = f.submit 'Update'
