@@ -4,6 +4,7 @@ class League
 
     belongs_to :home_team, class_name: 'Roster'
     belongs_to :away_team, class_name: 'Roster', optional: true
+    belongs_to :winner, class_name: 'Roster', optional: true
 
     has_many :rounds, inverse_of: :match, class_name: 'Match::Round', dependent: :destroy
     accepts_nested_attributes_for :rounds, allow_destroy: true
@@ -18,6 +19,8 @@ class League
     enum status: [:pending, :submitted_by_home_team, :submitted_by_away_team, :confirmed]
     validates :status, presence: true
 
+    validates :has_winner, inclusion: { in: [true, false] }
+
     enum forfeit_by: [:no_forfeit, :home_team_forfeit, :away_team_forfeit,
                       :mutual_forfeit, :technical_forfeit]
     validates :forfeit_by, presence: true
@@ -30,6 +33,7 @@ class League
     validate :home_and_away_team_are_in_the_same_division
     validate :teams_are_approved
     validate :rosters_not_disbanded, on: :create
+    validate :validate_winner, if: :has_winner?
 
     delegate :division, to: :home_team, allow_nil: true
     delegate :league,   to: :division,  allow_nil: true
@@ -40,6 +44,8 @@ class League
       self.status = :confirmed unless forfeit_by == 'no_forfeit'
       self.rounds = [] if bye?
     end
+
+    after_validation :update_winner!
 
     scope :bye, -> { where(away_team: nil) }
     scope :not_bye, -> { where.not(away_team: nil) }
@@ -79,9 +85,20 @@ class League
 
     private
 
+    def update_winner!
+      self.winner_id = calculate_winner_id
+    end
+
     def update_roster_match_counters!
       home_team.update_match_counters!
       away_team.update_match_counters! if away_team
+    end
+
+    def calculate_winner_id
+      wins = Hash.new 0
+      rounds.each { |round| wins[round.winning_team_id] += 1 }
+      winner_id, = wins.find { |_, count| count >= rounds.size / 2.0 }
+      winner_id
     end
 
     def home_and_away_team_are_different
@@ -108,6 +125,12 @@ class League
                                                                 home_team.disbanded?
       errors.add(:away_team, 'is disbanded and cannot play') if away_team.present? &&
                                                                 away_team.disbanded?
+    end
+
+    def validate_winner
+      return unless home_team.present? && away_team.present? && !pending?
+
+      errors.add(:base, "scores don't add up, there must be a winner") if calculate_winner_id.nil?
     end
 
     def set_defaults

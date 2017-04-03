@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170308063054) do
+ActiveRecord::Schema.define(version: 20170402234433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -313,14 +313,16 @@ ActiveRecord::Schema.define(version: 20170308063054) do
   create_table "league_matches", force: :cascade do |t|
     t.integer  "home_team_id"
     t.integer  "away_team_id"
-    t.integer  "status",                           null: false
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.integer  "forfeit_by",          default: 0,  null: false
+    t.integer  "status",                              null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.integer  "forfeit_by",          default: 0,     null: false
     t.integer  "round_number"
-    t.string   "notice",              default: "", null: false
-    t.string   "round_name",          default: "", null: false
-    t.text     "notice_render_cache", default: "", null: false
+    t.string   "notice",              default: "",    null: false
+    t.string   "round_name",          default: "",    null: false
+    t.text     "notice_render_cache", default: "",    null: false
+    t.boolean  "has_winner",          default: false, null: false
+    t.integer  "winner_id"
     t.index ["away_team_id"], name: "index_league_matches_on_away_team_id", using: :btree
     t.index ["home_team_id"], name: "index_league_matches_on_home_team_id", using: :btree
   end
@@ -644,6 +646,7 @@ ActiveRecord::Schema.define(version: 20170308063054) do
   add_foreign_key "league_match_rounds", "maps"
   add_foreign_key "league_matches", "league_rosters", column: "away_team_id"
   add_foreign_key "league_matches", "league_rosters", column: "home_team_id"
+  add_foreign_key "league_matches", "league_rosters", column: "winner_id"
   add_foreign_key "league_pooled_maps", "leagues"
   add_foreign_key "league_pooled_maps", "maps"
   add_foreign_key "league_roster_comments", "league_rosters", column: "roster_id"
