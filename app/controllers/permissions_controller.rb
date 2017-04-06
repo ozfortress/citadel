@@ -19,11 +19,17 @@ class PermissionsController < ApplicationController
   before_action :require_permission, except: :index
 
   def index
-    @grants = target_users.grants
+    @grants = User.grants
   end
 
   def users
-    @users = User.search(params[:q]).merge(target_users).paginate(page: params[:page])
+    users_which_can = User.which_can(@action, @target)
+    @users_with_permission = users_which_can.search(params[:q])
+
+    excluded_users = users_which_can.select(:id)
+    @users_without_permission = target_users.search(params[:q])
+                                            .where('users.id NOT IN (?)', excluded_users)
+                                            .paginate(page: params[:page])
   end
 
   def grant
@@ -44,7 +50,7 @@ class PermissionsController < ApplicationController
 
   def target_users
     if @target.is_a? Team
-      User.which_can(@action, @target).union(@target.users)
+      @target.users
     else
       User.all
     end

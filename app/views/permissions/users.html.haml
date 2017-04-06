@@ -7,25 +7,31 @@
     = render 'search'
 
 .panel.panel-default
-  - if @users.empty?
+  - if @users_with_permission.empty? && @users_without_permission.empty?
     .panel-body No users found...
   - else
     - url_params = { action_: @action, subject: @subject, target: @target }
     %ul.list-group
-      - @users.each do |user|
+      - @users_with_permission.each do |user|
         %li.list-group-item
           - url_params = url_params.merge(user_id: user.id)
-          - if user.can?(@action, @target)
-            .button-group.pull-right
-              = button_to revoke_permissions_path(url_params), method: :delete,
-                                                               class: 'btn btn-danger' do
-                Revoke
-          - else
-            .button-group.pull-right
-              = button_to grant_permissions_path(url_params), method: :post,
-                                                              class: 'btn btn-success' do
-                Grant
+          .button-group.pull-right
+            = button_to revoke_permissions_path(url_params), method: :delete,
+                                                             class: 'btn btn-danger' do
+              Revoke
 
           = render 'users/listing', user: user
 
-= bootstrap_paginate @users
+      %hr
+
+      - @users_without_permission.each do |user|
+        %li.list-group-item
+          - url_params = url_params.merge(user_id: user.id)
+          .button-group.pull-right
+            = button_to grant_permissions_path(url_params), method: :post,
+                                                            class: 'btn btn-success' do
+              Grant
+
+          = render 'users/listing', user: user
+
+= bootstrap_paginate @users_without_permission
