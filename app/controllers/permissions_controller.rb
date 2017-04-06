@@ -11,7 +11,7 @@ class PermissionsController < ApplicationController
   end
 
   before_action only: [:grant, :revoke] do
-    @user = User.find(params.require(:user_id))
+    @user = target_users.find(params.require(:user_id))
   end
 
   before_action :require_login
@@ -23,7 +23,13 @@ class PermissionsController < ApplicationController
   end
 
   def users
-    @users = User.search(params[:q]).paginate(page: params[:page])
+    users_which_can = User.which_can(@action, @target)
+    @users_with_permission = users_which_can.search(params[:q])
+
+    excluded_users = users_which_can.select(:id)
+    @users_without_permission = target_users.search(params[:q])
+                                            .where('users.id NOT IN (?)', excluded_users)
+                                            .paginate(page: params[:page])
   end
 
   def grant
@@ -40,6 +46,14 @@ class PermissionsController < ApplicationController
 
   def subject?
     User.grants[@action][@subject].subject?
+  end
+
+  def target_users
+    if @target.is_a? Team
+      @target.users
+    else
+      User.all
+    end
   end
 
   def require_permission

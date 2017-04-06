@@ -70,7 +70,7 @@ class User < ApplicationRecord
 
   before_save :update_query_cache
 
-  def self.search(query)
+  scope :search, (lambda do |query|
     return order(:id) if query.blank?
 
     query = Search.transform_query(query)
@@ -80,7 +80,7 @@ class User < ApplicationRecord
     select('users.*', "(query_name_cache <-> #{sanitize(query)}) AS similarity")
       .where('steam_id = ? OR (query_name_cache <-> ?) < 0.9', steam_id, query)
       .order('similarity')
-  end
+  end)
 
   # TODO: Move to presenter
   def steam_profile_url
