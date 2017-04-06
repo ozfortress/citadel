@@ -66,14 +66,25 @@ describe PermissionsController do
       expect(user.can?(:edit, :users)).to be(true)
     end
 
-    it 'succeeds for authorized user with target' do
+    it 'succeeds for authorized user with team' do
       team = create(:team)
+      team.add_player!(user)
       sign_in admin
 
       post :grant, params: { action_: :edit, subject: :team,
                              target: team.id, user_id: user.id }
 
       expect(user.can?(:edit, team)).to be(true)
+    end
+
+    it 'fails for authorized user with team for random user' do
+      team = create(:team)
+      sign_in admin
+
+      expect do
+        post :grant, params: { action_: :edit, subject: :team,
+                               target: team.id, user_id: user.id }
+      end.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
@@ -87,8 +98,9 @@ describe PermissionsController do
       expect(user.can?(:edit, :users)).to be(false)
     end
 
-    it 'succeeds for authorized user with target' do
+    it 'succeeds for authorized user with team' do
       team = create(:team)
+      team.add_player!(user)
       user.grant(:edit, team)
       sign_in admin
 
@@ -96,6 +108,17 @@ describe PermissionsController do
                                 target: team.id, user_id: user.id }
 
       expect(user.can?(:edit, team)).to be(false)
+    end
+
+    it 'fails for authorized user with team for random user' do
+      team = create(:team)
+      user.grant(:edit, team)
+      sign_in admin
+
+      expect do
+        delete :revoke, params: { action_: :edit, subject: :team,
+                                  target: team.id, user_id: user.id }
+      end.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
