@@ -1,6 +1,6 @@
 - match_p = present(@match)
 
-- content_for(:title) { "#{match_p} | #{@league.name}" }
+- content_for(:title) { safe_join([match_p, @league.name], ' | ') }
 
 - if user_can_edit_league?
   = link_to edit_match_path(@match), class: 'btn btn-default pull-right' do
