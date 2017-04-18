@@ -4,7 +4,9 @@ class League
 
     belongs_to :home_team, class_name: 'Roster'
     belongs_to :away_team, class_name: 'Roster', optional: true
+
     belongs_to :winner, class_name: 'Roster', optional: true
+    belongs_to :loser,  class_name: 'Roster', optional: true
 
     has_many :rounds, inverse_of: :match, class_name: 'Match::Round', dependent: :destroy
     accepts_nested_attributes_for :rounds, allow_destroy: true
@@ -38,6 +40,26 @@ class League
     delegate :division, to: :home_team, allow_nil: true
     delegate :league,   to: :division,  allow_nil: true
 
+    scope :ordered, -> { order(round_number: :desc, created_at: :asc) }
+    scope :bye, -> { where(away_team: nil) }
+    scope :not_bye, -> { where.not(away_team: nil) }
+    scope :round, ->(round) { where(round_number: round) }
+    scope :winnable, -> { where(has_winner: true) }
+
+    scope :for_roster, lambda { |roster|
+      where(home_team: roster).or(where(away_team: roster))
+    }
+
+    scope :winner, lambda { |winner|
+      where(winner: winner).or(for_roster(winner).technical_forfeit)
+    }
+
+    scope :loser, lambda { |loser|
+      where(loser: loser).or(for_roster(loser).mutual_forfeit)
+    }
+
+    scope :drawn, -> { confirmed.where(winner: nil) }
+
     after_initialize :set_defaults, unless: :persisted?
 
     before_validation do
@@ -45,17 +67,10 @@ class League
       self.rounds = [] if bye?
     end
 
-    after_validation :update_winner!
+    after_validation :update_team_cache!, if: :has_winner?
 
-    scope :bye, -> { where(away_team: nil) }
-    scope :not_bye, -> { where.not(away_team: nil) }
-    scope :not_forfeited, -> { confirmed.no_forfeit }
-    scope :home_team_forfeited, -> { confirmed.home_team_forfeit }
-    scope :away_team_forfeited, -> { confirmed.away_team_forfeit }
-    scope :mutually_forfeited, -> { confirmed.mutual_forfeit }
-    scope :technically_forfeited, -> { confirmed.technical_forfeit }
-
-    after_save :update_roster_match_counters!
+    after_create :update_roster_match_counters!, if: :confirmed?
+    after_update :update_roster_match_counters!
     after_destroy :update_roster_match_counters!
 
     def confirm_scores(confirm)
@@ -83,10 +98,17 @@ class League
       league.map_pool.where.not(id: pick_bans.completed.select(:map_id))
     end
 
-    private
-
-    def update_winner!
-      self.winner_id = calculate_winner_id
+    def update_team_cache!
+      if bye?
+        self.winner_id = home_team_id
+        self.loser_id  = nil
+      elsif !no_forfeit?
+        update_forfeit_team_cache!
+      elsif !pending? && has_winner?
+        update_score_team_cache!
+      else
+        clear_team_cache!
+      end
     end
 
     def update_roster_match_counters!
@@ -94,11 +116,36 @@ class League
       away_team.update_match_counters! if away_team
     end
 
-    def calculate_winner_id
+    private
+
+    def update_forfeit_team_cache!
+      if home_team_forfeit?
+        self.winner_id = away_team_id
+        self.loser_id  = home_team_id
+      elsif away_team_forfeit?
+        self.winner_id = home_team_id
+        self.loser_id  = away_team_id
+      else
+        clear_team_cache!
+      end
+    end
+
+    def update_score_team_cache!
       wins = Hash.new 0
-      rounds.each { |round| wins[round.winning_team_id] += 1 }
-      winner_id, = wins.find { |_, count| count >= rounds.size / 2.0 }
-      winner_id
+      rounds.each { |round| wins[round.winner_id] += 1 }
+
+      wins_needed = rounds.size / 2.0
+      self.winner_id, = wins.find { |_, count| count >= wins_needed }
+      if winner_id == home_team_id
+        self.loser_id = away_team_id
+      elsif winner_id == away_team_id
+        self.loser_id = home_team_id
+      end
+    end
+
+    def clear_team_cache!
+      self.winner_id = nil
+      self.loser_id  = nil
     end
 
     def home_and_away_team_are_different
@@ -129,8 +176,23 @@ class League
 
     def validate_winner
       return unless home_team.present? && away_team.present? && !pending?
+      update_team_cache!
 
-      errors.add(:base, "scores don't add up, there must be a winner") if calculate_winner_id.nil?
+      if no_forfeit?
+        validate_no_forfeit_winner
+      else
+        validate_forfeit_winner
+      end
+    end
+
+    def validate_no_forfeit_winner
+      errors.add(:base, "scores don't add up, there must be a winner") if winner_id.nil?
+    end
+
+    def validate_forfeit_winner
+      if technical_forfeit?
+        errors.add(:forfeit_by, "Technical forfeits aren't possible for matches with winners")
+      end
     end
 
     def set_defaults

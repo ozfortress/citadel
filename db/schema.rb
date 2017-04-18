@@ -10,18 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170403051607) do
+ActiveRecord::Schema.define(version: 20170418065404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pg_trgm"
-
-  create_table "action_user_edit_forums_thread", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "forums_thread_id"
-    t.index ["forums_thread_id"], name: "index_action_user_edit_forums_thread_on_forums_thread_id", using: :btree
-    t.index ["user_id"], name: "index_action_user_edit_forums_thread_on_user_id", using: :btree
-  end
 
   create_table "action_user_edit_games", force: :cascade do |t|
     t.integer "user_id"
@@ -302,10 +295,13 @@ ActiveRecord::Schema.define(version: 20170403051607) do
   create_table "league_match_rounds", force: :cascade do |t|
     t.integer  "match_id"
     t.integer  "map_id"
-    t.integer  "home_team_score", null: false
-    t.integer  "away_team_score", null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer  "home_team_score",                 null: false
+    t.integer  "away_team_score",                 null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "loser_id"
+    t.integer  "winner_id"
+    t.boolean  "has_outcome",     default: false, null: false
     t.index ["map_id"], name: "index_league_match_rounds_on_map_id", using: :btree
     t.index ["match_id"], name: "index_league_match_rounds_on_match_id", using: :btree
   end
@@ -323,8 +319,10 @@ ActiveRecord::Schema.define(version: 20170403051607) do
     t.text     "notice_render_cache", default: "",    null: false
     t.boolean  "has_winner",          default: false, null: false
     t.integer  "winner_id"
+    t.integer  "loser_id"
     t.index ["away_team_id"], name: "index_league_matches_on_away_team_id", using: :btree
     t.index ["home_team_id"], name: "index_league_matches_on_home_team_id", using: :btree
+    t.index ["winner_id"], name: "index_league_matches_on_winner_id", using: :btree
   end
 
   create_table "league_pooled_maps", force: :cascade do |t|
@@ -368,12 +366,12 @@ ActiveRecord::Schema.define(version: 20170403051607) do
   end
 
   create_table "league_roster_transfers", force: :cascade do |t|
-    t.integer  "roster_id",                  null: false
-    t.integer  "user_id",                    null: false
-    t.boolean  "is_joining",                 null: false
-    t.boolean  "approved",   default: false, null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "roster_id",                 null: false
+    t.integer  "user_id",                   null: false
+    t.boolean  "is_joining",                null: false
+    t.boolean  "approved",   default: true, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.index ["roster_id"], name: "index_league_roster_transfers_on_roster_id", using: :btree
     t.index ["user_id"], name: "index_league_roster_transfers_on_user_id", using: :btree
   end
@@ -392,13 +390,14 @@ ActiveRecord::Schema.define(version: 20170403051607) do
     t.integer  "won_rounds_count",                      default: 0,     null: false
     t.integer  "drawn_rounds_count",                    default: 0,     null: false
     t.integer  "lost_rounds_count",                     default: 0,     null: false
-    t.integer  "forfeit_won_matches_count",             default: 0,     null: false
-    t.integer  "forfeit_lost_matches_count",            default: 0,     null: false
+    t.integer  "won_matches_count",                     default: 0,     null: false
+    t.integer  "lost_matches_count",                    default: 0,     null: false
     t.integer  "points",                                default: 0,     null: false
     t.integer  "total_scores",                          default: 0,     null: false
     t.json     "schedule_data"
     t.integer  "won_rounds_against_tied_rosters_count", default: 0,     null: false
     t.text     "description_render_cache",              default: "",    null: false
+    t.integer  "drawn_matches_count",                   default: 0,     null: false
     t.index ["division_id"], name: "index_league_rosters_on_division_id", using: :btree
     t.index ["points"], name: "index_league_rosters_on_points", using: :btree
     t.index ["team_id"], name: "index_league_rosters_on_team_id", using: :btree
@@ -597,8 +596,6 @@ ActiveRecord::Schema.define(version: 20170403051607) do
     t.index ["visit_token"], name: "index_visits_on_visit_token", unique: true, using: :btree
   end
 
-  add_foreign_key "action_user_edit_forums_thread", "forums_threads"
-  add_foreign_key "action_user_edit_forums_thread", "users"
   add_foreign_key "action_user_edit_games", "users"
   add_foreign_key "action_user_edit_league", "leagues"
   add_foreign_key "action_user_edit_league", "users"
@@ -644,9 +641,12 @@ ActiveRecord::Schema.define(version: 20170403051607) do
   add_foreign_key "league_match_pick_bans", "maps"
   add_foreign_key "league_match_pick_bans", "users", column: "picked_by_id"
   add_foreign_key "league_match_rounds", "league_matches", column: "match_id"
+  add_foreign_key "league_match_rounds", "league_rosters", column: "loser_id"
+  add_foreign_key "league_match_rounds", "league_rosters", column: "winner_id"
   add_foreign_key "league_match_rounds", "maps"
   add_foreign_key "league_matches", "league_rosters", column: "away_team_id"
   add_foreign_key "league_matches", "league_rosters", column: "home_team_id"
+  add_foreign_key "league_matches", "league_rosters", column: "loser_id"
   add_foreign_key "league_matches", "league_rosters", column: "winner_id"
   add_foreign_key "league_pooled_maps", "leagues"
   add_foreign_key "league_pooled_maps", "maps"

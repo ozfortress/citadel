@@ -19,18 +19,7 @@ class League
     accepts_nested_attributes_for :players, reject_if: proc { |attrs| attrs['user_id'].blank? }
 
     has_many :home_team_matches, class_name: 'Match', foreign_key: 'home_team_id'
-    has_many :home_team_rounds, through: :home_team_matches, source: :rounds
-    has_many :not_forfeited_home_team_matches, -> { not_forfeited }, class_name: 'Match',
-                                                                     foreign_key: 'home_team_id'
-    has_many :not_forfeited_home_team_rounds, through: :not_forfeited_home_team_matches,
-                                              source: :rounds
-
     has_many :away_team_matches, class_name: 'Match', foreign_key: 'away_team_id'
-    has_many :away_team_rounds, through: :away_team_matches, source: :rounds
-    has_many :not_forfeited_away_team_matches, -> { not_forfeited }, class_name: 'Match',
-                                                                     foreign_key: 'away_team_id'
-    has_many :not_forfeited_away_team_rounds, through: :not_forfeited_away_team_matches,
-                                              source: :rounds
 
     has_many :titles, class_name: 'User::Title'
     has_many :comments, class_name: 'Roster::Comment', inverse_of: :roster,
@@ -61,61 +50,54 @@ class League
     }
     scope :ordered, ->(league) { order(Roster.order_keys(league)) }
     scope :seeded, -> { order(seeding: :asc) }
+    scope :tied, ->(points) { active.where(points: points) }
 
-    after_create do
-      # rubocop:disable Rails/SkipsModelValidations
-      League.increment_counter(:rosters_count, league.id)
-      # rubocop:enable Rails/SkipsModelValidations
-    end
-
-    after_destroy do
-      # rubocop:disable Rails/SkipsModelValidations
-      League.decrement_counter(:rosters_count, league.id)
-      # rubocop:enable Rails/SkipsModelValidations
-    end
+    # rubocop:disable Rails/SkipsModelValidations
+    after_create { League.increment_counter(:rosters_count, league.id) }
+    after_destroy { League.decrement_counter(:rosters_count, league.id) }
+    # rubocop:enable Rails/SkipsModelValidations
 
     after_initialize :set_defaults, unless: :persisted?
 
     def matches
-      home_team_matches.union(away_team_matches)
-                       .order(round_number: :desc, created_at: :asc)
+      Match.for_roster(self)
+    end
+
+    def won_matches
+      Match.winner(self)
+    end
+
+    def drawn_matches
+      matches.drawn
+    end
+
+    def lost_matches
+      Match.loser(self)
+    end
+
+    def rounds
+      Match::Round.where(match: matches)
     end
 
     def won_rounds
-      away_won = not_forfeited_away_team_rounds.away_team_wins
-      not_forfeited_home_team_rounds.home_team_wins.union(away_won)
+      Match::Round.winner(self)
     end
 
     def drawn_rounds
-      not_forfeited_home_team_rounds.union(not_forfeited_away_team_rounds).draws
+      rounds.drawn
     end
 
     def lost_rounds
-      away_lost = not_forfeited_away_team_rounds.home_team_wins
-      not_forfeited_home_team_rounds.away_team_wins.union(away_lost)
-    end
-
-    def forfeit_won_matches
-      away_forfeit = home_team_matches.away_team_forfeited
-      away_team_matches.home_team_forfeited.union(away_forfeit)
-                       .union(matches.technically_forfeited)
-                       .union(home_team_matches.bye)
-    end
-
-    def forfeit_lost_matches
-      away_forfeit = away_team_matches.away_team_forfeited
-      home_team_matches.home_team_forfeited.union(away_forfeit).union(matches.mutually_forfeited)
+      Match::Round.loser(self)
     end
 
     def won_rounds_against_tied_rosters
-      rosters = tied_rosters.select(:id)
-      won_rounds.joins(:match)
-                .where('league_matches.home_team_id IN (?) OR league_matches.away_team_id IN (?)',
-                       rosters, rosters)
+      won_rounds.for_roster(tied_rosters)
     end
 
-    def tied_rosters
-      division.rosters.active.where(points: points).where.not(id: id)
+    def tied_rosters(points = nil)
+      points ||= self.points
+      division.rosters.tied(points).where.not(id: id)
     end
 
     def update_match_counters!
@@ -126,26 +108,18 @@ class League
       save!(validate: false)
 
       # Update tied counts on relevant rosters (from old and new points)
-      update_tied_rosters_match_counters_tied!(old_points)
+      Roster.update_tied_match_counters!(division, points)
+      Roster.update_tied_match_counters!(division, old_points) if old_points != points
     end
 
-    def update_tied_rosters_match_counters_tied!(old_points)
-      division.rosters.active.where(points: old_points).find_each(&:update_match_counters_tied!)
-      tied_rosters.find_each(&:update_match_counters_tied!)
-      update_match_counters_tied!
-    end
+    def self.update_tied_match_counters!(division, points)
+      rosters = division.rosters.tied(points)
+      count = Match::Round.joins(:match).select('COUNT(*)').reorder(nil).loser(rosters)
+                          .where('league_match_rounds.winner_id = league_rosters.id')
 
-    def update_match_counters_tied!
-      self.won_rounds_against_tied_rosters_count = won_rounds_against_tied_rosters.count
-
-      save!(validate: false)
-    end
-
-    def rosters_not_played
-      division.rosters.active
-              .where.not(id: id)
-              .where.not(id: home_team_matches.select(:away_team_id))
-              .where.not(id: away_team_matches.select(:home_team_id))
+      # rubocop:disable Rails/SkipsModelValidations
+      rosters.update_all("won_rounds_against_tied_rosters_count = (#{count.to_sql})")
+      # rubocop:enable Rails/SkipsModelValidations
     end
 
     def disband
@@ -191,30 +165,39 @@ class League
 
     private
 
+    # rubocop:disable Metrics/MethodLength
     def assign_updated_match_counters
-      # Requires multi-phase updating, as each change is dependent on the previous
-      assign_attributes(total_scores:               calculate_total_scores,
-                        won_rounds_count:           won_rounds.count,
-                        drawn_rounds_count:         drawn_rounds.count,
-                        lost_rounds_count:          lost_rounds.count,
-                        forfeit_won_matches_count:  forfeit_won_matches.count,
-                        forfeit_lost_matches_count: forfeit_lost_matches.count)
+      count = ->(query) { query.reorder(nil).select('COUNT(*)').to_sql }
+      query = ActiveRecord::Base.connection.exec_query(%{
+        SELECT (#{calculate_total_scores_query}) AS total_scores,
+               (#{count.call(won_rounds)})       AS won_rounds_count,
+               (#{count.call(drawn_rounds)})     AS drawn_rounds_count,
+               (#{count.call(lost_rounds)})      AS lost_rounds_count,
+               (#{count.call(won_matches)})      AS won_matches_count,
+               (#{count.call(drawn_matches)})    AS drawn_matches_count,
+               (#{count.call(lost_matches)})     AS lost_matches_count
+      })
 
+      assign_attributes(query.to_hash[0])
+      # Calculate points after assigning aggregates
       self.points = calculate_points
-      self.won_rounds_against_tied_rosters_count = won_rounds_against_tied_rosters.count
     end
+    # rubocop:enable Metrics/MethodLength
 
     def calculate_points
       local_counts = [won_rounds_count, drawn_rounds_count, lost_rounds_count,
-                      forfeit_won_matches_count, forfeit_lost_matches_count]
+                      won_matches_count, lost_matches_count]
       comp_counts = league.point_multipliers
 
       local_counts.zip(comp_counts).map { |x, y| x * y }.sum
     end
 
-    def calculate_total_scores
-      not_forfeited_home_team_rounds.sum(:home_team_score) +
-        not_forfeited_away_team_rounds.sum(:away_team_score)
+    def calculate_total_scores_query
+      subquery = ->(rounds, col) { rounds.reorder(nil).select("COALESCE(SUM(#{col}), 0)") }
+      rounds = Match::Round.joins(:match).merge(Match.confirmed.no_forfeit).with_outcome
+
+      "(#{subquery.call(rounds.merge(home_team_matches), 'home_team_score').to_sql}) + "\
+        "(#{subquery.call(rounds.merge(away_team_matches), 'away_team_score').to_sql})"
     end
 
     def forfeit_all!
