@@ -10,7 +10,7 @@ class User < ApplicationRecord
 
   has_many :titles, -> { order(created_at: :desc) }
   has_many :names, -> { order(created_at: :desc) }, class_name: 'NameChange'
-  has_many :notifications, -> { order(created_at: :desc) }
+  has_many :notifications, -> { order(created_at: :desc) }, inverse_of: :user
   has_many :forums_subscriptions, class_name: 'Forums::Subscription'
 
   has_many :team_players, class_name: 'Team::Player'
