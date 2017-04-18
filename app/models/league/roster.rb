@@ -201,13 +201,8 @@ class League
     end
 
     def forfeit_all!
-      no_forfeit = Match.forfeit_bies[:no_forfeit]
-
-      home_team_matches.where(forfeit_by: no_forfeit).find_each do |match|
-        match.update!(forfeit_by: Match.forfeit_bies[:home_team_forfeit])
-      end
-      away_team_matches.where(forfeit_by: no_forfeit).find_each do |match|
-        match.update!(forfeit_by: Match.forfeit_bies[:away_team_forfeit])
+      matches.find_each do |match|
+        match.forfeit!(self)
       end
     end
 

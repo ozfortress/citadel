@@ -116,6 +116,18 @@ class League
       away_team.update_match_counters! if away_team
     end
 
+    def forfeit!(roster)
+      if no_forfeit? || technical_forfeit?
+        if home_team_id == roster.id
+          update!(forfeit_by: :home_team_forfeit)
+        else
+          update!(forfeit_by: :away_team_forfeit)
+        end
+      elsif !mutual_forfeit?
+        update!(forfeit_by: :mutual_forfeit)
+      end
+    end
+
     private
 
     def update_forfeit_team_cache!
