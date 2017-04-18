@@ -59,6 +59,7 @@ class League
       teams_limit = (options[:teams_limit] || 0).to_i
       round = (options[:round] || 0).to_i
 
+      match_options[:has_winner] = true
       driver_options = { teams_limit: teams_limit }
       tournament_options = { round: round }
       Tournament::SingleElimination.generate new_driver(match_options, driver_options),
@@ -66,6 +67,7 @@ class League
     end
 
     def generate_page_playoffs(match_options, options)
+      match_options[:has_winner] = true
       driver_options = options.slice(:starting_round)
       Tournament::SingleElimination.generate new_driver(match_options, driver_options)
     end
