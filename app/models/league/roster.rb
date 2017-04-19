@@ -185,8 +185,8 @@ class League
     # rubocop:enable Metrics/MethodLength
 
     def calculate_points
-      local_counts = [won_rounds_count, drawn_rounds_count, lost_rounds_count,
-                      won_matches_count, lost_matches_count]
+      local_counts = [won_rounds_count,  drawn_rounds_count,  lost_rounds_count,
+                      won_matches_count, drawn_matches_count, lost_matches_count]
       comp_counts = league.point_multipliers
 
       local_counts.zip(comp_counts).map { |x, y| x * y }.sum

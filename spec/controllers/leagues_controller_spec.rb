@@ -47,9 +47,10 @@ describe LeaguesController do
                   roster_locked: false, matches_submittable: true,
                   transfers_require_approval: false, allow_round_draws: true,
                   allow_disbanding: true, min_players: 1, max_players: 3,
-                  points_per_round_won: 3, points_per_round_drawn: 2,
-                  points_per_round_lost: 1, points_per_match_forfeit_loss: 5,
-                  points_per_match_forfeit_win: 6, schedule_locked: true,
+                  points_per_round_win: 3, points_per_round_draw: 2,
+                  points_per_round_loss: 1, points_per_match_win: 5,
+                  points_per_match_draw: 6, points_per_match_loss: 7,
+                  schedule_locked: true,
                   schedule: 'weeklies', divisions_attributes: [{ name: 'PREM' }],
                   pooled_maps_attributes: [{ map_id: map.id }],
                   tiebreakers_attributes: [{ kind: 'round_wins' },
@@ -72,11 +73,12 @@ describe LeaguesController do
       expect(comp.allow_disbanding).to be(true)
       expect(comp.min_players).to eq(1)
       expect(comp.max_players).to eq(3)
-      expect(comp.points_per_round_won).to eq(3)
-      expect(comp.points_per_round_drawn).to eq(2)
-      expect(comp.points_per_round_lost).to eq(1)
-      expect(comp.points_per_match_forfeit_loss).to eq(5)
-      expect(comp.points_per_match_forfeit_win).to eq(6)
+      expect(comp.points_per_round_win).to eq(3)
+      expect(comp.points_per_round_draw).to eq(2)
+      expect(comp.points_per_round_loss).to eq(1)
+      expect(comp.points_per_match_win).to eq(5)
+      expect(comp.points_per_match_draw).to eq(6)
+      expect(comp.points_per_match_loss).to eq(7)
       expect(comp.divisions.size).to eq(1)
       div = comp.divisions.first
       expect(div.name).to eq('PREM')

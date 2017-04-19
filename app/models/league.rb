@@ -37,11 +37,12 @@ class League < ApplicationRecord
   validates :min_players, presence: true, numericality: { greater_than: 0 }
   validates :max_players, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
-  validates :points_per_round_won,          presence: true, numericality: { only_integer: true }
-  validates :points_per_round_drawn,        presence: true, numericality: { only_integer: true }
-  validates :points_per_round_lost,         presence: true, numericality: { only_integer: true }
-  validates :points_per_match_forfeit_loss, presence: true, numericality: { only_integer: true }
-  validates :points_per_match_forfeit_win,  presence: true, numericality: { only_integer: true }
+  validates :points_per_round_win,  presence: true, numericality: { only_integer: true }
+  validates :points_per_round_draw, presence: true, numericality: { only_integer: true }
+  validates :points_per_round_loss, presence: true, numericality: { only_integer: true }
+  validates :points_per_match_win,  presence: true, numericality: { only_integer: true }
+  validates :points_per_match_draw, presence: true, numericality: { only_integer: true }
+  validates :points_per_match_loss, presence: true, numericality: { only_integer: true }
 
   # Scheduling
   enum schedule: [:manual, :weeklies]
@@ -109,8 +110,8 @@ class League < ApplicationRecord
   end
 
   def point_multipliers
-    [points_per_round_won, points_per_round_drawn, points_per_round_lost,
-     points_per_match_forfeit_win, points_per_match_forfeit_loss]
+    [points_per_round_win, points_per_round_draw, points_per_round_loss,
+     points_per_match_win, points_per_match_draw, points_per_match_loss]
   end
 
   def reset_query_cache!

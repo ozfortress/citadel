@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418065404) do
+ActiveRecord::Schema.define(version: 20170419012544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -419,29 +419,30 @@ ActiveRecord::Schema.define(version: 20170418065404) do
 
   create_table "leagues", force: :cascade do |t|
     t.integer  "format_id"
-    t.string   "name",                                          null: false
-    t.text     "description",                                   null: false
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
-    t.boolean  "signuppable",                   default: false, null: false
-    t.boolean  "roster_locked",                 default: false, null: false
-    t.integer  "min_players",                   default: 6,     null: false
-    t.integer  "max_players",                   default: 0,     null: false
-    t.boolean  "matches_submittable",           default: false, null: false
-    t.boolean  "transfers_require_approval",    default: true,  null: false
-    t.integer  "points_per_round_won",          default: 2,     null: false
-    t.integer  "points_per_round_drawn",        default: 1,     null: false
-    t.integer  "points_per_round_lost",         default: 0,     null: false
-    t.integer  "points_per_match_forfeit_loss", default: 1,     null: false
-    t.integer  "points_per_match_forfeit_win",  default: 1,     null: false
-    t.boolean  "allow_round_draws",             default: true,  null: false
-    t.boolean  "allow_disbanding",              default: false, null: false
-    t.integer  "status",                        default: 0,     null: false
-    t.integer  "rosters_count",                 default: 0,     null: false
-    t.integer  "schedule",                      default: 0,     null: false
-    t.boolean  "schedule_locked",               default: false, null: false
-    t.string   "query_name_cache",              default: "",    null: false
-    t.text     "description_render_cache",      default: "",    null: false
+    t.string   "name",                                       null: false
+    t.text     "description",                                null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.boolean  "signuppable",                default: false, null: false
+    t.boolean  "roster_locked",              default: false, null: false
+    t.integer  "min_players",                default: 6,     null: false
+    t.integer  "max_players",                default: 0,     null: false
+    t.boolean  "matches_submittable",        default: false, null: false
+    t.boolean  "transfers_require_approval", default: true,  null: false
+    t.integer  "points_per_round_win",       default: 2,     null: false
+    t.integer  "points_per_round_draw",      default: 1,     null: false
+    t.integer  "points_per_round_loss",      default: 0,     null: false
+    t.integer  "points_per_match_loss",      default: 0,     null: false
+    t.integer  "points_per_match_win",       default: 1,     null: false
+    t.boolean  "allow_round_draws",          default: true,  null: false
+    t.boolean  "allow_disbanding",           default: false, null: false
+    t.integer  "status",                     default: 0,     null: false
+    t.integer  "rosters_count",              default: 0,     null: false
+    t.integer  "schedule",                   default: 0,     null: false
+    t.boolean  "schedule_locked",            default: false, null: false
+    t.string   "query_name_cache",           default: "",    null: false
+    t.text     "description_render_cache",   default: "",    null: false
+    t.integer  "points_per_match_draw",      default: 0,     null: false
     t.index "query_name_cache gist_trgm_ops", name: "index_leagues_on_query_name_change", using: :gist
     t.index ["format_id"], name: "index_leagues_on_format_id", using: :btree
   end
