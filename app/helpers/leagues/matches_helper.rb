@@ -3,6 +3,11 @@ module Leagues
     include MatchPermissions
     include Matches::PickBanPermissions
 
+    def user_on_either_teams?(match = nil)
+      match ||= @match
+      match.home_team.on_roster?(current_user) || match.away_team&.on_roster?(current_user)
+    end
+
     def division_select
       options_from_collection_for_select(@league.divisions, :id, :name, @division.id)
     end

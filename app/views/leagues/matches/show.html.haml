@@ -23,7 +23,7 @@
       = render 'leagues/matches/match_results',
                match: @match, pick_bans: @pick_bans, rounds: @rounds
 
-  - unless @match.notice.blank?
+  - if !@match.notice.blank? && (user_on_either_teams? || user_can_edit_league?)
     .panel.panel-default
       .panel-heading Match Notice
       .panel-body.markdown= match_p.notice
