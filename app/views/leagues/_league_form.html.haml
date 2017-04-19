@@ -26,11 +26,12 @@
 .panel.panel-default
   .panel-heading Points
   .panel-body
-    = f.number_field :points_per_round_won, label: 'Points per set won'
-    = f.number_field :points_per_round_drawn, label: 'Points per set drawn'
-    = f.number_field :points_per_round_lost, label: 'Points per set lost'
-    = f.number_field :points_per_match_forfeit_loss, label: 'Points per match lost by forfeit'
-    = f.number_field :points_per_match_forfeit_win, label: 'Points per match won by forfeit'
+    = f.number_field :points_per_round_win,  label: 'Points per set won'
+    = f.number_field :points_per_round_draw, label: 'Points per set drawn'
+    = f.number_field :points_per_round_loss, label: 'Points per set lost'
+    = f.number_field :points_per_match_win,  label: 'Points per match won'
+    = f.number_field :points_per_match_draw, label: 'Points per match drawn'
+    = f.number_field :points_per_match_loss, label: 'Points per match lost'
 
 .panel.panel-default
   .panel-heading Tiebreaking

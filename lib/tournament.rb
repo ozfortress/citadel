@@ -6,10 +6,10 @@ class TournamentDriver < Tournament::Driver
     @match_options = match_options
 
     @teams_limit = options[:teams_limit] || 0
-    @teams_limit = nil if @teams_limit <= 0
+    @teams_limit = nil if @teams_limit.to_i <= 0
 
     @starting_round = options[:starting_round] || 0
-    @starting_round = 0 if @starting_round <= 0
+    @starting_round = 0 if @starting_round.to_i <= 0
 
     @created_matches = []
   end
@@ -17,7 +17,7 @@ class TournamentDriver < Tournament::Driver
   attr_reader :created_matches
 
   def division_rosters
-    @division.rosters.limit(@teams_limit)
+    @division.rosters.active.limit(@teams_limit)
   end
 
   def division_matches
@@ -25,7 +25,7 @@ class TournamentDriver < Tournament::Driver
   end
 
   def division_matches_map
-    @matches_map ||= division_matches.map { |match| [match.round, match] }.to_h
+    @matches_map ||= division_matches.group_by(&:round_number)
   end
 
   def matches

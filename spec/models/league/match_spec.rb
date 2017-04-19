@@ -56,38 +56,71 @@ describe League::Match do
     expect(League::Match.new(home_team: roster).status).to eq('confirmed')
   end
 
-  it 'validates winnable matches' do
-    map = build(:map)
-    round = -> { League::Match::Round.new(map: map) }
-    match = build(:league_match, rounds: [round.call, round.call, round.call], has_winner: true)
-    match.league.update!(allow_round_draws: false)
+  context 'winnable' do
+    it 'validates scores' do
+      map = build(:map)
+      round = -> { League::Match::Round.new(map: map) }
+      match = build(:league_match, rounds: [round.call, round.call, round.call], has_winner: true)
+      match.league.update!(allow_round_draws: false)
 
-    expect(match).to be_valid
-    expect(match.winner).to be nil
+      expect(match).to be_valid
+      expect(match.winner).to be nil
 
-    match.rounds[0].home_team_score = 2
-    match.status = :submitted_by_home_team
+      match.rounds[0].home_team_score = 2
+      match.status = :submitted_by_home_team
 
-    expect(match).to be_invalid
-    expect(match.winner).to be nil
+      expect(match).to be_invalid
+      expect(match.winner).to be nil
 
-    match.rounds[1].home_team_score = 2
+      match.rounds[1].home_team_score = 2
 
-    expect(match).to be_valid
-    expect(match.winner).to eq(match.home_team)
+      expect(match).to be_valid
+      expect(match.winner).to eq(match.home_team)
 
-    match.rounds[1].away_team_score = 4
+      match.rounds[1].away_team_score = 4
 
-    expect(match).to be_invalid
-    expect(match.winner).to be nil
+      expect(match).to be_invalid
+      expect(match.winner).to be nil
 
-    match.rounds[2].away_team_score = 4
+      match.rounds[2].away_team_score = 4
 
-    expect(match).to be_valid
-    expect(match.winner).to eq(match.away_team)
+      expect(match).to be_valid
+      expect(match.winner).to eq(match.away_team)
 
-    match.save!
+      match.save!
 
-    expect(match.reload.winner).to eq(match.away_team)
+      expect(match.reload.winner).to eq(match.away_team)
+    end
+
+    it 'validates forfeits' do
+      match = build(:league_match, has_winner: true)
+
+      match.forfeit_by = :away_team_forfeit
+
+      expect(match).to be_valid
+      expect(match.winner).to eq(match.home_team)
+
+      match.forfeit_by = :home_team_forfeit
+
+      expect(match).to be_valid
+      expect(match.winner).to eq(match.away_team)
+
+      match.forfeit_by = :mutual_forfeit
+
+      expect(match).to be_valid
+      expect(match.winner).to be nil
+
+      match.forfeit_by = :technical_forfeit
+
+      expect(match).to be_invalid
+      expect(match.winner).to be nil
+    end
+
+    it 'validates byes' do
+      match = build(:bye_league_match, has_winner: true)
+
+      expect(match).to be_valid
+      expect(match.winner).to eq(match.home_team)
+    end
   end
 end

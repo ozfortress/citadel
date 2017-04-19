@@ -3,6 +3,7 @@ FactoryGirl.define do
     status :pending
     round_number 1
     round_name ''
+    has_winner false
 
     transient do
       division nil

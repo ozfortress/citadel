@@ -45,7 +45,7 @@ class League
 
       def propagate_players!
         if is_joining?
-          leaving_roster.remove_player!(user) if leaving_roster
+          leaving_roster&.remove_player!(user)
           roster.add_player!(user)
         else
           roster.remove_player!(user)
@@ -91,7 +91,7 @@ class League
       def within_roster_size_limits_when_joining
         max_players = league.max_players
 
-        if roster.players.size + 1 > max_players && max_players > 0
+        if roster.players.size + 1 > max_players && max_players.positive?
           errors.add(:base, 'would result in too many players on roster')
         end
       end

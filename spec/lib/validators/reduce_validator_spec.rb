@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe ReduceValidator do
-  let(:reduce_validator) { ReduceValidator.new(attributes: [:name]) }
+describe ReduceErrorsValidator do
+  let(:reduce_validator) { described_class.new(attributes: [:name]) }
 
   subject { User.new }
 

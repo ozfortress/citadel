@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe API::V1::MatchesController, type: :request do
   let(:api_key) { create(:api_key) }
-  let(:match) { create(:league_match) }
+  let(:match) { create(:league_match, status: :confirmed) }
 
   describe 'GET #show' do
     let(:route) { '/api/v1/matches' }

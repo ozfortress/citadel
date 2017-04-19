@@ -1,6 +1,6 @@
 # show only one error message per field
 #
-class ReduceValidator < ActiveModel::EachValidator
+class ReduceErrorsValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, _)
     errors = record.errors
     return until errors.messages.key? attribute
