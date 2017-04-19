@@ -58,7 +58,7 @@ class League
       where(loser: loser).or(for_roster(loser).mutual_forfeit)
     }
 
-    scope :drawn, -> { confirmed.where(winner: nil) }
+    scope :drawn, -> { confirmed.no_forfeit.where(winner: nil) }
 
     after_initialize :set_defaults, unless: :persisted?
 
