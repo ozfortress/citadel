@@ -76,9 +76,7 @@ class League < ApplicationRecord
   end
 
   def roster_for(user)
-    player = players.find_by(user: user)
-
-    player.roster if player
+    players.find_by(user: user)&.roster
   end
 
   def ordered_rosters_by_division

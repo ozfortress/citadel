@@ -149,9 +149,7 @@ class League
     end
 
     def schedule_data=(data)
-      self[:schedule_data] = if league.scheduler
-                               league.scheduler.transform_data(data)
-                             end
+      self[:schedule_data] = league.scheduler&.transform_data(data)
     end
 
     def self.order_keys(league)
@@ -219,7 +217,7 @@ class League
 
       unless league.valid_roster_size?(players.size)
         errors.add(:players, "must have at least #{league.min_players} players" +
-          (league.max_players > 0 ? " and no more than #{league.max_players} players" : ''))
+          (league.max_players.positive? ? " and no more than #{league.max_players} players" : ''))
       end
     end
 

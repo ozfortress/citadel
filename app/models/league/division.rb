@@ -26,7 +26,7 @@ class League
       return unless TOURNAMENT_SYSTEMS.include?(system)
 
       send("generate_#{system}", match_options, options)
-      @driver.created_matches if @driver
+      @driver&.created_matches
     end
 
     private

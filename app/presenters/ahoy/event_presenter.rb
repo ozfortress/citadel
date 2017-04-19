@@ -3,30 +3,14 @@ module Ahoy
     presents :event
 
     delegate :visit, to: :event
-    delegate :name, to: :event
+    delegate :name,  to: :event
 
-    def ip
-      visit.ip if visit
-    end
-
-    def user
-      visit.user if visit
-    end
-
-    def api_key
-      visit.api_key if visit
-    end
+    delegate :ip,      to: :visit, allow_nil: true
+    delegate :user,    to: :visit, allow_nil: true
+    delegate :api_key, to: :visit, allow_nil: true
 
     def client
-      if user
-        user.name
-      elsif api_key
-        if api_key.user
-          api_key.user.name
-        else
-          api_key.name
-        end
-      end
+      user&.name || api_key&.user&.name || api_key&.name
     end
   end
 end

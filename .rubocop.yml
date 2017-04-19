@@ -18,6 +18,8 @@ Style/TrailingCommaInLiteral:
   Enabled: false
 Style/ModuleFunction:
   Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
 
 # 'old' style
 Style/EmptyMethod:
@@ -41,3 +43,4 @@ AllCops:
     - 'config/**/*'
     - 'vendor/**/*'
   DisplayCopNames: true
+  TargetRubyVersion: 2.3

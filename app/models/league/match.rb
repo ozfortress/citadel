@@ -113,7 +113,7 @@ class League
 
     def update_roster_match_counters!
       home_team.update_match_counters!
-      away_team.update_match_counters! if away_team
+      away_team&.update_match_counters!
     end
 
     def forfeit!(roster)

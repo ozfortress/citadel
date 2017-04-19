@@ -100,7 +100,7 @@ module Leagues
 
     def schedule_params
       @params_schedule_data ||= params[:roster].delete(:schedule_data)
-      @params_schedule_data.permit! if @params_schedule_data
+      @params_schedule_data&.permit!
     end
 
     def new_roster_params
