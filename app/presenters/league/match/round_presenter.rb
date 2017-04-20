@@ -51,10 +51,10 @@ class League
       end
 
       def roster_won_round?(roster)
-        winner = round.winner
-        klass = if winner.nil?
+        winner_id = round.winner_id
+        klass = if winner_id.nil?
                   'round-tied'
-                elsif winner == roster
+                elsif winner_id == roster.id
                   'round-won'
                 else
                   'round-loss'
