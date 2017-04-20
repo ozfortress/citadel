@@ -139,7 +139,7 @@
           %ul.list-group
             - roster.users.each do |user|
               %li.list-group-item
-                = render 'users/listing', user: user, team: roster.team
+                = render 'users/listing', user: user, team: @team
           .panel-heading
             Matches:
             = render 'leagues/matches/matches_table', matches: matches, roster: roster

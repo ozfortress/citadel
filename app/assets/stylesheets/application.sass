@@ -233,16 +233,21 @@ a#login
   color: #8ba0b5
   font-size: small
 
-.steam-link-large
+.steam-id-large
   font-family: monospace
+  text-align: right
+  background-color: #695d5d
+  color: white
+  padding: 2px 5px
+  border-radius: 4px
+
+.steam-link-large
+  // font-family: monospace
   text-align: right
   margin-top: -21px
 
   a
-    background-color: #695d5d
-    color: white
-    padding: 2px 5px
-    border-radius: 4px
+    @extend .steam-id-large
 
     .glyphicon:before
       margin-right: 5px

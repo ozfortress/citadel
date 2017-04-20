@@ -3,13 +3,13 @@
 %h1 User Name Change Requests
 
 %ul.list-group
-  - User::NameChange.pending.each do |name_change|
-    - user = present(name_change.user)
+  - @name_changes.each do |name_change|
+    - user_p = present(name_change.user)
 
     %li.list-group-item
-      = user.link
+      = user_p.link
       wants to change their name to
-      = user.link name_change.name
+      = user_p.link name_change.name
 
       .button-group.pull-right
         = button_to handle_user_name_path(name_change.user, name_change, approve: true),

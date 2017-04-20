@@ -26,7 +26,18 @@
 = link_to image_tag('livelogs-logo.png'), "http://livelogs.ozfortress.com/player/#{@user.steam_id}",
           class: 'user-external-link', title: 'livelogs profile', target: '_blank'
 
-%p.steam-link-large= user_p.steam_link
+%p.steam-link-large
+  = user_p.steam_link
+  %span.dropdown
+    - data = { toggle: :collapse, target: '#steam_id_collapse' }
+    %button.btn.btn-link.btn-xs{ type: :button, data: data }
+      %span.caret
+
+.pull-right.collapse#steam_id_collapse
+  .card.small
+    .steam-id-large= @user.steam_32
+    %br
+    .steam-id-large= @user.steam_id
 
 .row
   != present_collection(@titles).map(&:icon).join(' ')

@@ -62,6 +62,7 @@ class UsersController < ApplicationController
   end
 
   def names
+    @name_changes = User::NameChange.pending.includes(:user)
   end
 
   def request_name_change
