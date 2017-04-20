@@ -18,7 +18,17 @@
     - unless @aka.empty?
       %p.group-aka aka #{@aka.map(&:name).join(', ')}
 
-%p.steam-link-large= user_p.steam_link
+%p.steam-link-large
+  = user_p.steam_link
+  %span.dropdown
+    %button.btn.btn-link.btn-xs{ type: :button, data: { toggle: :collapse, target: '#steam_id_collapse' } }
+      %span.caret
+
+.pull-right.collapse#steam_id_collapse
+  .card.small
+    .steam-id-large= @user.steam_32
+    %br
+    .steam-id-large= @user.steam_id
 
 .row
   != present_collection(@titles).map(&:icon).join(' ')
