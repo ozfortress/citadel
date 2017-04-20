@@ -7,12 +7,18 @@ describe 'leagues/matches/show' do
   let(:home_team) { build_stubbed(:league_roster, player_count: 3, division: division) }
   let(:away_team) { build_stubbed(:league_roster, player_count: 3, division: division) }
   let(:match) { build_stubbed(:league_match, home_team: home_team, away_team: away_team) }
-  let(:round1) { build_stubbed(:league_match_round, home_team_score: 3, away_team_score: 2,
-                                                    match: match, map: map) }
-  let(:round2) { build_stubbed(:league_match_round, home_team_score: 2, away_team_score: 3,
-                                                    match: match, map: map) }
-  let(:round3) { build_stubbed(:league_match_round, home_team_score: 1, away_team_score: 1,
-                                                    match: match, map: map) }
+  let(:round1) do
+    build_stubbed(:league_match_round, home_team_score: 3, away_team_score: 2,
+                                       match: match, map: map)
+  end
+  let(:round2) do
+    build_stubbed(:league_match_round, home_team_score: 2, away_team_score: 3,
+                                       match: match, map: map)
+  end
+  let(:round3) do
+    build_stubbed(:league_match_round, home_team_score: 1, away_team_score: 1,
+                                       match: match, map: map)
+  end
   let(:rounds) { [round1, round2, round3] }
   let(:comms) { build_stubbed_list(:league_match_comm, 6) }
 
