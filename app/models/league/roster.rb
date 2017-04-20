@@ -2,11 +2,11 @@ class League
   class Roster < ApplicationRecord
     include MarkdownRenderCaching
 
-    belongs_to :team
+    belongs_to :team, inverse_of: :rosters
     belongs_to :division, inverse_of: :rosters
     delegate :league, to: :division, allow_nil: true
 
-    has_many :players, -> { order(created_at: :desc) },
+    has_many :players, -> { order(created_at: :asc) },
              dependent: :destroy, inverse_of: :roster
     has_many :users, through: :players
 

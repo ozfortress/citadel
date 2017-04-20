@@ -80,7 +80,7 @@ class TeamsController < ApplicationController
 
   def roster_includes_for(rosters)
     rosters.includes(:players, :users, transfers: :user)
-           .merge(League::Roster::Player.order(created_at: :desc))
+           .merge(League::Roster::Player.order(created_at: :asc))
            .merge(League::Roster::Transfer.order(created_at: :desc))
   end
 
@@ -89,8 +89,8 @@ class TeamsController < ApplicationController
   end
 
   def teams_show_includes
-    @players               = @team.players.includes(:user).order(created_at: :asc)
-    @transfers             = @team.transfers.includes(:user).order(created_at: :desc)
+    @players               = @team.players.includes(:user)
+    @transfers             = @team.transfers.includes(:user)
 
     @active_rosters        = roster_includes_for @team.rosters.for_incomplete_league
     @active_roster_matches = @active_rosters.map { |r| match_includes_for r.matches }
