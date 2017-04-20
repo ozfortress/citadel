@@ -21,7 +21,8 @@
 %p.steam-link-large
   = user_p.steam_link
   %span.dropdown
-    %button.btn.btn-link.btn-xs{ type: :button, data: { toggle: :collapse, target: '#steam_id_collapse' } }
+    - data = { toggle: :collapse, target: '#steam_id_collapse' }
+    %button.btn.btn-link.btn-xs{ type: :button, data: data }
       %span.caret
 
 .pull-right.collapse#steam_id_collapse
