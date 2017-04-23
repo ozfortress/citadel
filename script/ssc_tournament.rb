@@ -112,10 +112,19 @@ def book_servers
     end
 
     connect_string = strip_rcon connect_string
-    notice = ACTIVE_MATCH_NOTICE_TEMPLATE.format(connect_string: connect_string)
+    notice = format(ACTIVE_MATCH_NOTICE_TEMPLATE, connect_string: connect_string)
     match.update!(script_state: user, notice: notice)
-    # TODO: Notify Players
+    notify_users(match, 'The server for your match is now available')
     puts "Booked: #{user} for #{match_s(match)} ; #{match_url(match)}"
+  end
+end
+
+def notify_users(match, message)
+  url = match_url(match)
+  users = match.home_team.users.union(match.away_team.users)
+
+  users.find_each do |user|
+    Users::NotificationService.call(user, message, url)
   end
 end
 
