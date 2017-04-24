@@ -1,9 +1,9 @@
 .jumbotron
-  - if @threads
+  - if @topic
     %h1 News
 
     - @threads.each do |thread|
-      - post = thread.posts.first
+      - post = @news_posts[thread]
       %hr
 
       = render 'forums/posts/news_post', post: post

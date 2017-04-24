@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 feature 'User tries to login with steam' do
+  before do
+    # Disable news feed
+    Rails.configuration.news['type'] = 'none'
+  end
+
   scenario 'for the first time' do
     visit teams_path
 
