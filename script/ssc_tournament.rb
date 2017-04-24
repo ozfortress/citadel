@@ -5,14 +5,14 @@
 require 'net/http'
 
 HOST = 'http://localhost:3000'
-LEAGUE_ID = 5
+LEAGUE_ID = 6
 
 MATCH_NOTICE_TEMPLATE = "\
 Foo
 "
 
 ACTIVE_MATCH_NOTICE_TEMPLATE = "\
-Bar %{connect_string}
+Bar `%{connect_string}`
 "
 
 SSC_API_KEY = 'ABC'
@@ -23,6 +23,7 @@ MAX_MATCH_LENGTH = 8
 MAP = Map.first
 
 MATCH_PARAMS = {
+  round_name: '#1',
   has_winner: true,
   rounds_attributes: [
     { map: MAP }
@@ -71,9 +72,13 @@ def unbook_server(user)
 
   user_encoded = ERB::Util.url_encode user
   uri = URI.parse(SSC_ENDPOINT + "/bookings/#{user_encoded}/?#{query.to_query}")
+
   http = Net::HTTP.new(uri.host, uri.port)
+  http.use_ssl = uri.port == 443
   request = Net::HTTP::Delete.new(uri.to_s)
   result = http.request(request)
+
+  return if result.code == '204'
 
   json = JSON.parse result.body
   if result.code == '404' && json['statusMessage'] == 'Booking not found'
@@ -81,10 +86,8 @@ def unbook_server(user)
     return
   end
 
-  if result.code != '204'
-    puts "Error: Failed to unbook for #{user}, #{json['statusMessage']}"
-    fail
-  end
+  puts "Error: Failed to unbook for #{user}, #{json['statusMessage']}"
+  fail
 end
 
 def book_servers

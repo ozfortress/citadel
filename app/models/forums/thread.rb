@@ -42,6 +42,10 @@ module Forums
       !topic || ancestors.empty? || ancestors.isolated.empty?
     end
 
+    def original_post
+      posts.order(created_at: :asc).first
+    end
+
     private
 
     def set_defaults

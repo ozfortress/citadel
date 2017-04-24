@@ -31,6 +31,12 @@ class League
       title
     end
 
+    def listing
+      listing = link
+      listing += disbanded_tag if roster.disbanded?
+      listing
+    end
+
     def score_s
       if disbanded?
         'Disbanded'
