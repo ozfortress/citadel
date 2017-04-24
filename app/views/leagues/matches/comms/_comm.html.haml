@@ -1,25 +1,22 @@
-- if match.home_team.on_roster?(comm.user)
-  - roster = match.home_team
-- elsif match.away_team.on_roster?(comm.user)
-  - roster = match.away_team
+- comm_p = present(comm)
 
 .panel.panel-default
-  %div{ id: "comm_#{comm.id}" }
+  %div{ id: comm_p.id }
   .panel-heading
     - if user_can_edit_comm?(comm)
       .pull-right
-        = link_to edit_comm_path(comm), class: 'btn btn-link btn-sm' do
+        = link_to comm_p.edit_path, class: 'btn btn-link btn-sm' do
           %span.glyphicon.glyphicon-cog
     .pull-right
-      = comm.created_at.strftime('%c')
+      = link_to comm_p.anchor_path do
+        = comm_p.created_at
 
-    = present(roster).link + ':' if roster
-    - team = roster.team if roster
-    = render 'users/listing', user: comm.user, team: team
+    = present(comm_p.user_roster).link + ':' if comm_p.user_roster
+    = render 'users/listing', user: comm.user, team: comm_p.user_team
 
   - if user_can_edit_comm?(comm) && comm.edits.size > 1
     .pull-right
-      = link_to edits_for_comm_path(comm), class: 'btn btn-default btn-sm' do
+      = link_to comm_p.edits_path, class: 'btn btn-default btn-sm' do
         View Edits
 
-.container-fluid.markdown!= comm.content_render_cache
+.container-fluid.markdown= comm_p.content
