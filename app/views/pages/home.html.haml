@@ -1,4 +1,16 @@
 .jumbotron
-  %h1 Welcome to Citadel
+  - if @threads
+    %h1 News
 
-  %p View the source on #{link_to 'Github', 'https://github.com/ozfortress/citadel'}
+    - @threads.each do |thread|
+      - post = thread.posts.first
+      %hr
+
+      = render 'forums/posts/news_post', post: post
+
+    - if @more_threads
+      = link_to 'View Older', forums_topic_path(@topic), class: 'btn btn-default'
+  - else
+    %h1 Welcome to Citadel
+
+    %p View the source on #{link_to 'Github', 'https://github.com/ozfortress/citadel'}

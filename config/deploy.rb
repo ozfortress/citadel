@@ -23,7 +23,7 @@ set :rails_env, 'production'
 set :pty, true
 
 # Files and folders to keep between deployments
-set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml', 'config/news.yml')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp', 'vendor/bundle', 'public/uploads')
 
 # Default value for default_env is {}

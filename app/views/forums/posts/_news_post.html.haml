@@ -1,0 +1,18 @@
+%div{ id: "post_#{post.id}" }
+- if user_can_edit_post?(post)
+  .pull-right
+    = link_to edit_forums_post_path(post), class: 'btn btn-link btn-sm' do
+      %span.glyphicon.glyphicon-cog
+.pull-right
+  = post.created_at.strftime('%c')
+
+%h2= post.thread.title
+
+- if post.edits.size > 1
+  .pull-right
+    = link_to edits_for_forums_post_path(post), class: 'btn btn-default btn-sm' do
+      View Edits
+
+.well.well-lg
+  .container-fluid.markdown!= post.content_render_cache
+  .pull-right= link_to 'comments', forums_thread_path(post.thread)
