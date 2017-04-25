@@ -23,6 +23,9 @@ module Ozfortress
     # Make view helpers, view specific
     config.action_controller.include_all_helpers = false
 
+    # Use dynamic error pages
+    config.exceptions_app = self.routes
+
     # News config file
     config.news = config_for(:news)
   end
