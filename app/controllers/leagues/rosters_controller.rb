@@ -46,13 +46,9 @@ module Leagues
       end
     end
 
-    def show
-      @comment = League::Roster::Comment.new
-      @matches = @roster.matches.order(:created_at).includes(:rounds, :away_team,
-                                                             home_team: :division)
-    end
-
     def edit
+      @comment = League::Roster::Comment.new
+      @comments = @roster.comments.includes(:user)
       @transfer_request ||= @roster.transfer_requests.new
       @users_on_roster    = @roster.users
       @users_off_roster   = @roster.users_off_roster

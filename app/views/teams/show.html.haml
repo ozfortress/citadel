@@ -29,12 +29,22 @@
       .panel-heading
         = roster_p.title
 
-        - if user_can_edit_league?(roster.league)
-          = roster_p.admin_link 'View Details', class: 'btn btn-default pull-right'
-
         - if user_can_manage_transfers?(roster)
           = link_to edit_roster_path(roster), class: 'btn btn-default pull-right' do
             Manage
+
+      - unless roster.approved?
+        .panel-body.alert-warning
+          - if user_can_edit_league?
+            = link_to 'Approve', review_roster_path(roster),
+                                 class: 'btn btn-success pull-right'
+            = button_to 'Decline', roster_path(roster),
+                method: :delete, class: 'btn btn-danger pull-right',
+                data: { confirm: "Are you sure you want to decline this team's sign up?" }
+
+          %span.glyphicon.glyphicon-warning-sign
+          Roster is awaiting approval
+
       %ul.list-group
         - roster.users.each do |user|
           %li.list-group-item
@@ -133,7 +143,8 @@
           %a{ data: { toggle: 'collapse', parent: '.global-collapsible' }, href: "##{id}" }
             %span.pull-right.glyphicon.glyphicon-chevron-down
           - if user_can_edit_league?(roster.league)
-            = roster_p.admin_link 'View Details', class: 'btn btn-default pull-right'
+            = link_to edit_roster_path(roster), class: 'btn btn-default pull-right' do
+              Manage
 
         .panel-collapse.collapse{ id: id }
           %ul.list-group

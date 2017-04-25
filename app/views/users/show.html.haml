@@ -106,9 +106,4 @@
     %ul.list-group
       - present_collection(@rosters).each do |roster|
         - unless roster.league.hidden?
-          %li.list-group-item
-            - league_link = link_to roster.league, league_path(roster.league)
-            - if roster.league.signuppable?
-              signed up to #{league_link} with #{roster.link}
-            - else
-              playing in #{league_link} with #{roster.link}
+          %li.list-group-item= roster.user_listing

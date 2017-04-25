@@ -14,7 +14,7 @@ module Leagues
         params[:user] = current_user
         @comment = @roster.comments.create(params)
 
-        redirect_to roster_path(@roster)
+        redirect_to edit_roster_path(@roster)
       end
 
       private

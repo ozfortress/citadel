@@ -37,7 +37,7 @@ Rails.application.routes.draw do
 
     resources :transfers, controller: 'leagues/transfers', only: [:index, :destroy, :update]
 
-    resources :rosters, controller: 'leagues/rosters', shallow: true do
+    resources :rosters, controller: 'leagues/rosters', except: [:show], shallow: true do
       member do
         get   'review'
         patch 'approve'
