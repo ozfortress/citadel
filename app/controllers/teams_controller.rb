@@ -85,7 +85,8 @@ class TeamsController < ApplicationController
   end
 
   def match_includes_for(matches)
-    matches.includes(:rounds, :home_team, :away_team)
+    matches.order(round_number: :asc, created_at: :desc)
+           .includes(:rounds, :home_team, :away_team)
   end
 
   def teams_show_includes
