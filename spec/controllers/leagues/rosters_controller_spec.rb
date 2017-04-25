@@ -160,34 +160,6 @@ describe Leagues::RostersController do
   context 'existing roster' do
     let(:roster) { create(:league_roster, division: div, team: team) }
 
-    describe 'GET #show' do
-      it 'succeeds for authorized admin' do
-        user.grant(:edit, league)
-        sign_in user
-
-        get :show, params: { id: roster.id }
-
-        expect(response).to have_http_status(:success)
-      end
-
-      it 'redirects for captain' do
-        user.grant(:edit, roster.team)
-        sign_in user
-
-        get :show, params: { id: roster.id }
-
-        expect(response).to redirect_to(team_path(roster.team))
-      end
-
-      it 'redirects for any user' do
-        sign_in user
-
-        get :show, params: { id: roster.id }
-
-        expect(response).to redirect_to(team_path(roster.team))
-      end
-    end
-
     describe 'GET #edit' do
       it 'succeeds for authorized admin' do
         user.grant(:edit, league)

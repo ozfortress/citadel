@@ -12,4 +12,4 @@
       - present_collection(div.rosters).each do |roster|
         - bg = roster.approved? ? 'list-group-item-success' : 'list-group-item-warning'
         %li{ class: "list-group-item #{bg}" }
-          = roster.admin_link
+          = roster.link

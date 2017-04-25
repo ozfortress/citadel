@@ -16,11 +16,6 @@ class League
       link_to(label, team_path(roster.team_id), options, &block)
     end
 
-    def admin_link(label = nil, options = {}, &block)
-      label ||= name
-      link_to(label, roster_path(roster), options, &block)
-    end
-
     def title
       title = if league.signuppable? || !roster.approved?
                 signup_title

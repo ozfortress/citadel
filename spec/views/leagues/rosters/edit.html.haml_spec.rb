@@ -2,12 +2,15 @@ require 'rails_helper'
 
 describe 'leagues/rosters/edit' do
   let(:roster) { build_stubbed(:league_roster) }
+  let(:comments) { build_stubbed_list(:league_roster_comment, 6) }
   let(:users_on_roster) { build_stubbed_list(:user, 6) }
   let(:users_off_roster) { build_stubbed_list(:user, 6) }
 
   before do
     assign(:league, roster.league)
     assign(:roster, roster)
+    assign(:comment, League::Roster::Comment.new)
+    assign(:comments, comments)
     assign(:transfer_request, League::Roster::TransferRequest.new)
     assign(:users_on_roster, users_on_roster)
     assign(:users_off_roster, users_off_roster)
