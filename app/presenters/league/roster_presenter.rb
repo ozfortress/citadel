@@ -17,7 +17,9 @@ class League
     end
 
     def title
-      title = if league.signuppable? || !roster.approved?
+      title = if league.completed?
+                past_title
+              elsif league.signuppable? || !roster.approved?
                 signup_title
               else
                 active_title
@@ -30,6 +32,16 @@ class League
       listing = link
       listing += disbanded_tag if roster.disbanded?
       listing
+    end
+
+    def user_listing
+      if league.completed?
+        safe_join(['Played in ', league_p.link, ' with ', link])
+      elsif league.signuppable? || !roster.approved?
+        safe_join(['Signed up to ', league_p.link, ' with ', link])
+      else
+        safe_join(['Playing in ', league_p.link, ' with ', link])
+      end
     end
 
     def score_s
@@ -66,6 +78,11 @@ class League
 
     def active_title
       text = "Active roster for #{roster.name} playing in #{roster.division.name} for "
+      html_escape(text) + league_p.link
+    end
+
+    def past_title
+      text = "#{roster.name} played in #{roster.division.name} for"
       html_escape(text) + league_p.link
     end
   end
