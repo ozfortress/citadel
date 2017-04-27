@@ -20,20 +20,8 @@ class TournamentDriver < Tournament::Driver
     @division.rosters.active.limit(@teams_limit)
   end
 
-  def division_matches
-    @matches ||= @division.matches.where('round_number >= ?', @starting_round).to_a
-  end
-
-  def division_matches_map
-    @matches_map ||= division_matches.group_by(&:round_number)
-  end
-
   def matches
-    division_matches
-  end
-
-  def matches_for_round(round)
-    division_matches_map[round - @starting_round]
+    @matches ||= @division.matches.where('round_number >= ?', @starting_round).to_a
   end
 
   def seeded_teams
