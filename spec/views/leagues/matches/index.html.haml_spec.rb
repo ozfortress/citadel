@@ -30,7 +30,7 @@ describe 'leagues/matches/index' do
     allow(view).to receive(:user_can_edit_league?).and_return(true)
     assign(:league, div.league)
     assign(:divisions, [div])
-    assign(:matches, { div => @matches })
+    assign(:matches, div => @matches)
 
     render
 
