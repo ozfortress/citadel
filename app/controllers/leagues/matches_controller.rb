@@ -188,7 +188,7 @@ module Leagues
     end
 
     def single_elimination_tournament_params
-      params.require(:single_elimination_tournament).permit(:teams_limit, :round)
+      params.require(:single_elimination_tournament).permit(:teams_limit, :starting_round)
     end
 
     def page_playoffs_tournament_params
