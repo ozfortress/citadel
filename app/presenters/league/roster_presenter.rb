@@ -82,7 +82,7 @@ class League
     end
 
     def past_title
-      text = "#{roster.name} played in #{roster.division.name} for"
+      text = "#{roster.name} played in #{roster.division.name} for "
       html_escape(text) + league_p.link
     end
   end

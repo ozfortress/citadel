@@ -24,14 +24,13 @@ describe 'leagues/matches/index' do
     @matches.each do |match|
       allow(match).to receive(:rounds).and_return(rounds)
     end
-
-    allow(div).to receive(:matches).and_return(@matches)
   end
 
   it 'displays matches' do
     allow(view).to receive(:user_can_edit_league?).and_return(true)
     assign(:league, div.league)
     assign(:divisions, [div])
+    assign(:matches, div => @matches)
 
     render
 

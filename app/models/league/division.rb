@@ -4,8 +4,7 @@ class League
   class Division < ApplicationRecord
     belongs_to :league, inverse_of: :divisions
     has_many :rosters, inverse_of: :division, class_name: 'Roster'
-    has_many :matches, -> { order(round_number: :desc, created_at: :asc) },
-             through: :rosters, source: :home_team_matches, class_name: 'Match'
+    has_many :matches, through: :rosters, source: :home_team_matches, class_name: 'Match'
 
     has_many :transfer_requests, through: :rosters, class_name: 'Roster::TransferRequest'
 
@@ -56,14 +55,9 @@ class League
     end
 
     def generate_single_elimination(match_options, options)
-      teams_limit = (options[:teams_limit] || 0).to_i
-      round = (options[:round] || 0).to_i
-
       match_options[:has_winner] = true
-      driver_options = { teams_limit: teams_limit }
-      tournament_options = { round: round }
-      Tournament::SingleElimination.generate new_driver(match_options, driver_options),
-                                             tournament_options
+      driver_options = options.slice(:teams_limit, :starting_round)
+      Tournament::SingleElimination.generate new_driver(match_options, driver_options)
     end
 
     def generate_page_playoffs(match_options, options)

@@ -39,7 +39,7 @@ class LeaguesController < ApplicationController
     @divisions = @ordered_rosters.map(&:first)
     @roster = @league.roster_for(current_user) if user_signed_in?
     @personal_matches = @roster.matches.pending.includes(:home_team, :away_team) if @roster
-    @top_div_matches = @divisions.first.matches.pending.includes(:home_team, :away_team)
+    @top_div_matches = @divisions.first.matches.pending.ordered.includes(:home_team, :away_team)
   end
 
   def edit

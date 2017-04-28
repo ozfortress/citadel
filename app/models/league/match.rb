@@ -67,7 +67,7 @@ class League
       self.rounds = [] if bye?
     end
 
-    after_validation :update_team_cache!, if: :has_winner?
+    after_validation :update_team_cache!
 
     after_create :update_roster_match_counters!, if: :confirmed?
     after_update :update_roster_match_counters!

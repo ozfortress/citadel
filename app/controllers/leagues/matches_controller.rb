@@ -19,6 +19,9 @@ module Leagues
 
     def index
       @divisions = @league.divisions.includes(matches: [:home_team, :away_team, :rounds])
+                          .merge(League::Match.ordered)
+                          .references(:matches)
+      @matches = @divisions.map { |div| [div, div.matches] }.to_h
     end
 
     def new
@@ -46,7 +49,7 @@ module Leagues
       @tournament_system = :swiss
       @swiss_tournament              = { pairer: :dutch, pair_options: { min_pair_size: 4 } }
       @round_robin_tournament        = {}
-      @single_elimination_tournament = { teams_limit: 0, round: 0 }
+      @single_elimination_tournament = { teams_limit: 0, starting_round: 0 }
       @page_playoffs_tournament      = { starting_round: 0 }
     end
 
