@@ -13,8 +13,8 @@
                      min: 0, class: 'form-control'
 
 .form-group
-  %label.control-label The Round to Generate (Starting at 0)
-  = number_field_tag 'single_elimination_tournament[round]',
-                     single_elimination_tournament[:round],
+  %label.control-label Starting Round (Will ignore any rounds before this)
+  = number_field_tag 'single_elimination_tournament[starting_round]',
+                     single_elimination_tournament[:starting_round],
                      min: 0, class: 'form-control'
 

@@ -5,11 +5,13 @@ class TournamentDriver < Tournament::Driver
     @division = division
     @match_options = match_options
 
-    @teams_limit = options[:teams_limit] || 0
-    @teams_limit = nil if @teams_limit.to_i <= 0
+    @teams_limit = (options[:teams_limit] || 0).to_i
+    @teams_limit = nil if @teams_limit <= 0
 
-    @starting_round = options[:starting_round] || 0
-    @starting_round = 0 if @starting_round.to_i <= 0
+    @starting_round = (options[:starting_round] || 0).to_i
+    @starting_round = 0 if @starting_round <= 0
+
+    @include_disbands = options[:include_disbands]
 
     @created_matches = []
   end
@@ -20,12 +22,20 @@ class TournamentDriver < Tournament::Driver
     @division.rosters.active.limit(@teams_limit)
   end
 
+  def extra_rosters
+    if @include_disbands
+      [nil] * @division.rosters.where(disbanded: true).size
+    else
+      []
+    end
+  end
+
   def matches
-    @matches ||= @division.matches.where('round_number >= ?', @starting_round).to_a
+    @matches ||= @division.matches.order(:id).where('round_number >= ?', @starting_round).to_a
   end
 
   def seeded_teams
-    @seeded_teams ||= division_rosters.seeded.to_a
+    @seeded_teams ||= division_rosters.seeded.to_a + extra_rosters
   end
 
   def ranked_teams
