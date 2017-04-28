@@ -19,4 +19,4 @@
 
     - @divisions.each do |div|
       %h3= div
-      = render 'leagues/matches/matches_table', matches: div.matches, roster: nil
+      = render 'leagues/matches/matches_table', matches: @matches[div], roster: nil
