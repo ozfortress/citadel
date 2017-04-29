@@ -48,11 +48,11 @@ class League
       end
 
       def roster
-        send(team_pick.first)
+        match.send(team_pick.first)
       end
 
       def other_roster
-        send(team_pick.last)
+        match.send(team_pick.last)
       end
 
       def swap_team
