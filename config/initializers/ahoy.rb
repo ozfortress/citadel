@@ -3,11 +3,11 @@ Ahoy.track_visits_immediately = true
 
 class Ahoy::Store < Ahoy::Stores::ActiveRecordTokenStore
   def api_key
-    controller.api_key if controller.respond_to?(:api_key)
+    controller.try(:api_key)
   end
 
   def user
-    controller.current_user if controller.respond_to?(:current_user)
+    controller.try(:current_user)
   end
 
   def exclude?

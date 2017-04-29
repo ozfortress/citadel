@@ -65,6 +65,11 @@ UncommunicativeVariableName:
   # Allow simple ones, usually used for #sort or alike
   accept: [x, y, a, b]
 
+# API versions
+UncommunicativeModuleName:
+  accept:
+    - !ruby/regexp /V[0-9]+/
+
 # db code is messy
 exclude_paths:
   - db
