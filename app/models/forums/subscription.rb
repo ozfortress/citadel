@@ -9,7 +9,7 @@ module Forums
     private
 
     def validates_either_topic_or_thread
-      errors.add(:topic, 'is missing') if !topic.present? && !thread.present?
+      errors.add(:topic, 'is missing') if topic.blank? && thread.blank?
     end
   end
 end

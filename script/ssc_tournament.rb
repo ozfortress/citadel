@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Style/SignalException
-#
+
 # Before running the script change the following constants to what you require
 require 'net/http'
 

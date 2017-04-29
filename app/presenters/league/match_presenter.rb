@@ -95,7 +95,7 @@ class League
 
     def match_s(&block)
       round = round_s
-      round += ':' unless round.blank?
+      round += ':' if round.present?
 
       safe_join([round, match_name(&block)], ' ')
     end

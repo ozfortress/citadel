@@ -20,7 +20,7 @@ class League
       private
 
       def unique_within_league
-        return unless user.present? && roster.present?
+        return if user.blank? || roster.blank?
 
         if league.players.where(user: user).where.not(id: id).exists?
           errors.add(:base, 'can only be in one roster per league')
@@ -28,7 +28,7 @@ class League
       end
 
       def league_permissions
-        return unless user.present?
+        return if user.blank?
 
         errors.add(:base, 'user is banned from leagues') unless user.can?(:use, :leagues)
       end
