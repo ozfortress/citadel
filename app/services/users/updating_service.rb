@@ -7,7 +7,7 @@ module Users
         user.assign_attributes(params)
 
         if user.valid?
-          send_confirmation_email(user, flash) if user.email_changed? && !user.email.blank?
+          send_confirmation_email(user, flash) if user.email_changed? && user.email?
         end
 
         user.save || rollback!

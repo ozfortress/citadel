@@ -79,12 +79,12 @@ class League
         end
 
         wins_needed = match.rounds.size / 2.0
-        !wins.values.any? { |count| count >= wins_needed }
+        wins.values.none? { |count| count >= wins_needed }
       end
 
       def set_defaults
-        self.home_team_score = 0 unless home_team_score.present?
-        self.away_team_score = 0 unless away_team_score.present?
+        self.home_team_score = 0 if home_team_score.blank?
+        self.away_team_score = 0 if away_team_score.blank?
       end
 
       def validate_scores

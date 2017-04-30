@@ -26,14 +26,16 @@ module Leagues
         end
 
         def save_or_approve(request, roster)
+          user = request.user
+
           if roster.league.transfers_require_approval?
             request.save || rollback!
 
-            request_notify_user(request, request.user, roster)
+            request_notify_user(request, user, roster)
           else
             request.approve || rollback!
 
-            transfer_notify_user(request, request.user, roster)
+            transfer_notify_user(request, user, roster)
           end
         end
 

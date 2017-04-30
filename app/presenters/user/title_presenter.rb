@@ -1,5 +1,5 @@
 class User
-  class TitlePresenter < ActionPresenter::Base
+  class TitlePresenter < BasePresenter
     presents :title
 
     delegate :id, to: :title

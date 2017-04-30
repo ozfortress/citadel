@@ -1,5 +1,5 @@
 class League
-  class MatchPresenter < ActionPresenter::Base
+  class MatchPresenter < BasePresenter
     presents :match
 
     delegate :id, to: :match
@@ -95,7 +95,7 @@ class League
 
     def match_s(&block)
       round = round_s
-      round += ':' unless round.blank?
+      round += ':' if round.present?
 
       safe_join([round, match_name(&block)], ' ')
     end

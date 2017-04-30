@@ -30,10 +30,11 @@
     = f.form_group :players, label: { text: 'Players' } do
       / Check box list for players from the team to add to the roster
       = f.fields_for(:players, @team.users) do |user_f|
-        - user = user_f.object
-        - user_p = present(user)
-        - player = @roster.players.first { |pl| pl.user_id == user.id }
-        - has_errors = player && player.errors.any?
+        :ruby
+          user = user_f.object
+          user_p = present(user)
+          player = @roster.players.first { |pl| pl.user_id == user.id }
+          has_errors = player && player.errors.any?
 
         .form-group{ class: ('has-error' if has_errors) }
           - label = safe_join([user_p.link, user_p.league_status(@league)], ', ')

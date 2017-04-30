@@ -20,6 +20,8 @@ Style/ModuleFunction:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
+Style/SymbolArray:
+  Enabled: false
 
 # 'old' style
 Style/EmptyMethod:
@@ -44,3 +46,8 @@ AllCops:
     - 'vendor/**/*'
   DisplayCopNames: true
   TargetRubyVersion: 2.3
+  TargetRailsVersion: 5.0
+
+# TODO: Remove once rubocop releases a new version (bug that's been fixed)
+Lint/AmbiguousBlockAssociation:
+  Enabled: false

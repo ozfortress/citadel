@@ -1,5 +1,5 @@
 module Forums
-  class ThreadPresenter < ActionPresenter::Base
+  class ThreadPresenter < BasePresenter
     presents :thread
 
     def link

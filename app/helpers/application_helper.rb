@@ -30,4 +30,14 @@ module ApplicationHelper
   def bootstrap_paginate(target)
     will_paginate target, renderer: BootstrapPagination::Rails
   end
+
+  def present(object, klass = nil)
+    klass ||= BasePresenter.presenter object
+
+    klass.new(object, self)
+  end
+
+  def present_collection(collection, klass = nil)
+    collection.map { |object| present(object, klass) }
+  end
 end

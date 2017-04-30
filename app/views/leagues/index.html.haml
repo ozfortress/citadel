@@ -31,13 +31,15 @@
       - else
         %ul.list-group
           - leagues.each do |league|
-            - if league.hidden?
-              - next unless user_can_edit_leagues?
-              - klass = 'list-group-item-warning'
-            - elsif league.running?
-              - klass = 'list-group-item-info'
-            - else
-              - klass = 'list-group-item-success'
+            :ruby
+              if league.hidden?
+                next unless user_can_edit_leagues?
+                klass = 'list-group-item-warning'
+              elsif league.running?
+                klass = 'list-group-item-info'
+              else
+                klass = 'list-group-item-success'
+              end
 
             = link_to league_path(league), class: 'list-group-item ' + klass do
               %span.label.label-primary.pull-right

@@ -35,7 +35,12 @@ class TournamentDriver < Tournament::Driver
   end
 
   def seeded_teams
-    @seeded_teams ||= division_rosters.seeded.to_a + extra_rosters
+    # teams_limit means its a playoff driver meaning we should use the ranking as seeds
+    if @teams_limit
+      ranked_teams
+    else
+      @seeded_teams ||= division_rosters.seeded.to_a + extra_rosters
+    end
   end
 
   def ranked_teams

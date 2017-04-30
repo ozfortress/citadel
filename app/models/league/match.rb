@@ -208,7 +208,7 @@ class League
     end
 
     def set_defaults
-      self.status = (bye? && home_team ? :confirmed : :pending) unless status.present?
+      self.status = (bye? && home_team ? :confirmed : :pending) if status.blank?
     end
   end
 end

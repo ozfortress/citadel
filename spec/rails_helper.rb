@@ -34,7 +34,7 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   config.before(type: :view) do
-    view.lookup_context.prefixes = %w(application)
+    view.lookup_context.prefixes = %w[application]
   end
 
   # RSpec Rails can automatically mix in different behaviours to your tests

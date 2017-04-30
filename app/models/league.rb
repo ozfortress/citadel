@@ -141,7 +141,7 @@ class League < ApplicationRecord
   def set_defaults
     self.status ||= :private
     self.signuppable ||= true
-    self.roster_locked = false unless roster_locked.present?
+    self.roster_locked = false if roster_locked.blank?
 
     self.min_players ||= 6
     self.max_players ||= 16

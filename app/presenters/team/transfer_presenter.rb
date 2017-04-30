@@ -1,5 +1,5 @@
 class Team
-  class TransferPresenter < ActionPresenter::Base
+  class TransferPresenter < BasePresenter
     presents :transfer
 
     def listing

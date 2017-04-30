@@ -1,6 +1,6 @@
 class League
   class Match
-    class CommPresenter < ActionPresenter::Base
+    class CommPresenter < BasePresenter
       presents :comm
 
       def id

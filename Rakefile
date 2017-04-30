@@ -26,8 +26,8 @@ begin
   end
 
   Rake::Task['test'].clear # Rails puts minitest on the test task automatically'
-  task lint: %w(rubocop haml_lint rbp reek)
-  task test: %w(rspec lint)
+  task lint: %w[rubocop haml_lint rbp reek]
+  task test: %w[rspec lint]
   task default: [:lint]
 rescue LoadError
   puts 'Test tasks not available'

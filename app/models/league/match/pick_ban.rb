@@ -48,22 +48,26 @@ class League
       end
 
       def roster
-        home_team? ? match.home_team : match.away_team
+        match.send(team_pick.first)
       end
 
       def other_roster
-        home_team? ? match.away_team : match.home_team
+        match.send(team_pick.last)
       end
 
       def swap_team
-        self.team = if home_team?
-                      :away_team
-                    else
-                      :home_team
-                    end
+        self.team = team_pick.last
       end
 
       private
+
+      def team_pick
+        if home_team?
+          [:home_team, :away_team]
+        else
+          [:away_team, :home_team]
+        end
+      end
 
       def map_and_pick_present
         if map

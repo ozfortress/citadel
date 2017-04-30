@@ -205,7 +205,7 @@ class League
     end
 
     def set_defaults
-      self.approved = false unless approved.present?
+      self.approved = false if approved.blank?
 
       if league.present? && league.scheduler && !schedule_data
         self[:schedule_data] = league.scheduler.default_schedule
@@ -213,7 +213,7 @@ class League
     end
 
     def within_roster_size_limits
-      return unless league.present?
+      return if league.blank?
 
       unless league.valid_roster_size?(players.size)
         errors.add(:players, "must have at least #{league.min_players} players" +
@@ -222,7 +222,7 @@ class League
     end
 
     def unique_within_league
-      return unless league.present?
+      return if league.blank?
 
       errors.add(:base, 'can only sign up once') if league.rosters.where(team: team).exists?
     end

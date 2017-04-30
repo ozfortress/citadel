@@ -1,5 +1,5 @@
 class League
-  class TiebreakerPresenter < ActionPresenter::Base
+  class TiebreakerPresenter < BasePresenter
     presents :tiebreaker
 
     NAMES = {

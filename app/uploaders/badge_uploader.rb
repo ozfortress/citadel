@@ -20,7 +20,7 @@ class BadgeUploader < CarrierWave::Uploader::Base
   end
 
   def extension_white_list
-    %w(jpg jpeg png)
+    %w[jpg jpeg png]
   end
 
   def content_type_whitelist

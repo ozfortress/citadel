@@ -40,7 +40,7 @@ class League
 
       # Data validation for schedule_data on rosters
       def transform_data(data)
-        data.select! { |key, _| %w(type availability).include?(key.to_s) }
+        data.select! { |key, _| %w[type availability].include?(key.to_s) }
 
         return unless data['type'] == 'weekly'
 
@@ -84,13 +84,13 @@ class League
       private
 
       def validate_days_length
-        return unless days.present?
+        return if days.blank?
 
         errors.add(:days, 'invalid length') unless days.length == 7
       end
 
       def validate_days_minimum
-        return unless days.present? && minimum_selected.present?
+        return if days.blank? || minimum_selected.blank?
 
         unless minimum_selected.zero? || minimum_selected <= days.count(true)
           errors.add(:days, 'must have more than the minimum required')
@@ -98,7 +98,7 @@ class League
       end
 
       def set_defaults
-        self.start_of_week = 'Sunday' unless start_of_week.present?
+        self.start_of_week = 'Sunday' if start_of_week.blank?
       end
     end
   end

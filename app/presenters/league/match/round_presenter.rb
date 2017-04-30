@@ -1,6 +1,6 @@
 class League
   class Match
-    class RoundPresenter < ActionPresenter::Base
+    class RoundPresenter < BasePresenter
       presents :round
 
       delegate :match, to: :round

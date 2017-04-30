@@ -1,4 +1,4 @@
-class UserPresenter < ActionPresenter::Base
+class UserPresenter < BasePresenter
   presents :user
 
   delegate :id, to: :user
@@ -42,7 +42,7 @@ class UserPresenter < ActionPresenter::Base
 
   def league_status(league)
     elements = [roster_status(league), transfer_status(league)]
-    safe_join(elements.select { |e| !e.empty? })
+    safe_join(elements.reject(&:empty?))
   end
 
   def roster_status(league)
@@ -69,7 +69,7 @@ class UserPresenter < ActionPresenter::Base
     'Email for Notifications ' +
       if user.confirmed?
         '(confirmed!)'
-      elsif !user.email.blank?
+      elsif user.email?
         '(pending confirmation)'
       else
         ''

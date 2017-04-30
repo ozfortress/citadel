@@ -21,8 +21,9 @@
     %tr
       - scheduler.schedule_days.each do |weekday|
         %td
-          - name = "#{f.object_name}[schedule_data][availability][#{weekday}]"
-          - value = false
-          - value = f.object.schedule_data['availability'][weekday] if f.object.schedule_data
+          :ruby
+            name = "#{f.object_name}[schedule_data][availability][#{weekday}]"
+            value = false
+            value = f.object.schedule_data['availability'][weekday] if f.object.schedule_data
           = check_box_tag name, true, value, class: 'checkbox', disabled: league.schedule_locked?
   %span.help-block= f.object.errors.full_messages_for(:schedule_data).first

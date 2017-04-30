@@ -1,5 +1,5 @@
 module Forums
-  class TopicPresenter < ActionPresenter::Base
+  class TopicPresenter < BasePresenter
     presents :topic
 
     def link

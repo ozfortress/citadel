@@ -1,5 +1,5 @@
 class User
-  class NotificationPresenter < ActionPresenter::Base
+  class NotificationPresenter < BasePresenter
     presents :notification
 
     def link(options = {})

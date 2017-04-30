@@ -1,5 +1,5 @@
 module Ahoy
-  class EventPresenter < ActionPresenter::Base
+  class EventPresenter < BasePresenter
     presents :event
 
     delegate :visit, to: :event
