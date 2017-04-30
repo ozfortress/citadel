@@ -1,5 +1,5 @@
 class League
-  class MatchPresenter < ActionPresenter::Base
+  class MatchPresenter < BasePresenter
     presents :match
 
     delegate :id, to: :match

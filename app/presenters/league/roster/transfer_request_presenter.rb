@@ -1,6 +1,6 @@
 class League
   class Roster
-    class TransferRequestPresenter < ActionPresenter::Base
+    class TransferRequestPresenter < BasePresenter
       presents :transfer_request
 
       def user

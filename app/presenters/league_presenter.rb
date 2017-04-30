@@ -1,4 +1,4 @@
-class LeaguePresenter < ActionPresenter::Base
+class LeaguePresenter < BasePresenter
   presents :league
 
   def link

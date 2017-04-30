@@ -1,6 +1,6 @@
 class League
   class Match
-    class PickBanPresenter < ActionPresenter::Base
+    class PickBanPresenter < BasePresenter
       presents :pick_ban
 
       def team

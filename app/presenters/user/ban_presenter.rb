@@ -1,5 +1,5 @@
 class User
-  class BanPresenter < ActionPresenter::Base
+  class BanPresenter < BasePresenter
     presents :ban
 
     def name

@@ -1,4 +1,4 @@
-class UserPresenter < ActionPresenter::Base
+class UserPresenter < BasePresenter
   presents :user
 
   delegate :id, to: :user

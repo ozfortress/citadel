@@ -1,5 +1,5 @@
 class League
-  class RosterPresenter < ActionPresenter::Base
+  class RosterPresenter < BasePresenter
     presents :roster
 
     delegate :id, to: :roster
