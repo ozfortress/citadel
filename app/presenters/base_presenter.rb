@@ -18,7 +18,7 @@ class BasePresenter
 
   private
 
-  def respond_to_missing?(method, include_private = false)
+  def respond_to_missing?(method, _include_private = false)
     view_context.respond_to?(method)
   end
 
