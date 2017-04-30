@@ -1,6 +1,6 @@
 module API
   module V1
-    class APIController < ActionController::Base
+    class APIController < ActionController::API
       def api_key
         key = request.headers['X-Api-Key']
         @api_key ||= APIKey.find_by(key: key)
