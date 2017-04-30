@@ -1,7 +1,9 @@
-- if match.home_team.on_roster?(comm.user)
-  - roster = match.home_team
-- elsif match.away_team.on_roster?(comm.user)
-  - roster = match.away_team
+:ruby
+  if match.home_team.on_roster?(comm.user)
+    roster = match.home_team
+  elsif match.away_team.on_roster?(comm.user)
+    roster = match.away_team
+  end
 
 .panel.panel-default
   .panel-heading

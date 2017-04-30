@@ -68,12 +68,12 @@
   %ul.list-group
     = f.fields_for :pooled_maps do |pooled_map_f|
       = render 'pooled_map_fields', f: pooled_map_f
-    #pooled_maps
+    #pooled-maps
 
   .panel-body
     %div
       = link_to_add_association f, :pooled_maps, class: 'btn btn-default pull-right',
-                                'data-association-insertion-node' => '#pooled_maps' do
+                                'data-association-insertion-node' => '#pooled-maps' do
         %span.glyphicon.glyphicon-plus
         Add Map
 

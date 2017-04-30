@@ -46,8 +46,8 @@ AllCops:
     - 'vendor/**/*'
   DisplayCopNames: true
   TargetRubyVersion: 2.3
+  TargetRailsVersion: 5.0
 
-# TODO: Remove once rubocop is updated
-Style/PercentLiteralDelimiters:
-  PreferredDelimiters:
-    '%w': '[]'
+# TODO: Remove once rubocop releases a new version (bug that's been fixed)
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
