@@ -56,8 +56,17 @@ class PermissionsController < ApplicationController
     end
   end
 
+  def admin_subject
+    if @target
+      @subject.to_s.pluralize.to_sym
+    else
+      @subject
+    end
+  end
+
   def require_permission
     redirect_back unless current_user.can?(:edit, :permissions) ||
+                         current_user.can?(@action, admin_subject) ||
                          current_user.can?(@action, @target)
   end
 
