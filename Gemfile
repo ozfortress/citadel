@@ -48,7 +48,7 @@ gem 'active_model_serializers', '~> 0.10.0'
 # Tournament systems
 gem 'tournament-system'
 
-group :development, :test do
+group :test do
   # Use rspec for tests
   gem 'rspec-rails', '~> 3.5'
 
@@ -68,13 +68,13 @@ group :development, :test do
   gem 'capybara'
 
   # Keep codebase clean
-  gem 'rubocop', '~> 0.47'
-  gem 'haml_lint'
-  gem 'rails_best_practices'
-  gem 'reek'
+  gem 'rubocop', '~> 0.47', require: false
+  gem 'haml_lint', require: false
+  gem 'rails_best_practices', require: false
+  gem 'reek', require: false
 
   # Coveralls
-  gem 'coveralls', require: false
+  gem 'coveralls'
 end
 
 group :development do
@@ -88,9 +88,9 @@ group :development do
   gem 'spring'
 
   # Development scripts
-  gem 'capistrano', '~> 3.1'
-  gem 'capistrano-rvm'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rails'
-  gem 'capistrano-passenger'
+  gem 'capistrano', '~> 3.1', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-passenger', require: false
 end
