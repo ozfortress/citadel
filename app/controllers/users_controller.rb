@@ -12,7 +12,9 @@ class UsersController < ApplicationController
   before_action :require_user_confirmation_not_timed_out, only: :confirm_email
 
   def index
-    @users = User.search(params[:q]).paginate(page: params[:page])
+    @users = User.search(params[:q])
+                 .include_admin_permissions
+                 .paginate(page: params[:page])
   end
 
   def new

@@ -95,7 +95,7 @@ describe PermissionsController do
 
       delete :revoke, params: { action_: :edit, subject: :users, user_id: user.id }
 
-      expect(user.can?(:edit, :users)).to be(false)
+      expect(user.reload.can?(:edit, :users)).to be(false)
     end
 
     it 'succeeds for authorized user with team' do

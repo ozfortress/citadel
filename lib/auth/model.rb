@@ -7,6 +7,23 @@ module Auth
     extend ActiveSupport::Concern
 
     included do
+      scope :include_permission, (lambda do |action, subject|
+        result = all
+        grant = result.model.grant_model_for(action, subject)
+        result = result.includes(grant.association_name) if grant
+        ban = result.model.ban_model_for(action, subject)
+        result = result.includes(ban.association_name) if ban
+        result
+      end)
+
+      scope :include_permissions, (lambda do |*permissions|
+        result = self
+        permissions.each do |permission|
+          result = result.include_permission(permission.first, permission.second)
+        end
+        result
+      end)
+
       def klass
         self.class
       end
@@ -52,7 +69,7 @@ module Auth
       private
 
       def action_state_for(subject, model)
-        result = model.where(klass.actor_name => self)
+        result = send(model.association_name)
 
         if model.subject? && !subject.is_a?(Symbol)
           subject_name = klass.get_subject_name(subject)
