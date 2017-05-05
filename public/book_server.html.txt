@@ -12,4 +12,4 @@
 <li>Demos can be retrieved using both the alias (i.e. obla) or DiscordID (obla3745).</li>
 <li>Logs are provided at <a href="http://livelogs.ozfortress.com/" target="_blank">livelogs.ozfortress.com</a> and <a href="http://logs.tf/" target="_blank">logs.tf</a>.</li>
 <li>Servers will automatically reset after a period of inactivity.</li>
-</ul><p>Discord booker created by smeso. Uses bladez’s IRC booker.</p></div>
+</ul><p>Discord booker created by smeso and /dev/zero.</p></div>
