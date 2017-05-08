@@ -5,6 +5,16 @@ describe 'permissions/users' do
   let(:users_without_permission) { build_stubbed_list(:user, 5) }
   let(:team) { build_stubbed(:team) }
 
+  before do
+    users_with_permission.each do |user|
+      allow(user).to receive(:admin?).and_return(true)
+    end
+
+    users_without_permission.each do |user|
+      allow(user).to receive(:admin?).and_return(false)
+    end
+  end
+
   it 'shows for team permissions' do
     assign(:users_with_permission, users_with_permission)
     assign(:users_without_permission, users_without_permission.paginate(page: 1))
