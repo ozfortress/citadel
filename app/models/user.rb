@@ -156,8 +156,7 @@ class User < ApplicationRecord
 
   def self.admin_grants
     [[:edit, :teams], [:edit, :leagues], [:edit, :games],
-     [:manage_rosters, :leagues], [:edit, :permissions]
-    ]
+     [:manage_rosters, :leagues], [:edit, :permissions]]
   end
 
   def self.admin_associations
