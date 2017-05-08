@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get 'staff', to: 'pages#staff'
   get 'server_configs', to: 'pages#server_configs'
   get 'book_server', to: 'pages#book_server'
+  get 'transfers', to: 'pages#transfers'
 
   get 'admin', to: 'admin#index'
   get 'statistics',  to: 'admin#statistics', as: 'admin_statistics'
