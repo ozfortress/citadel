@@ -81,36 +81,5 @@ describe Leagues::Matches::GenerationService do
       rosters = division.rosters.ordered(league).to_a
       expect(rosters).to eq([team1, team3, team2, team4])
     end
-
-    it 'handles large amount of teams' do
-      division = create(:league_division)
-      # league = division.league
-      map = create(:map)
-
-      create_list(:league_roster, 60, division: division)
-
-      (0...5).each do |round|
-        match_options = {
-          round_number: round, rounds_attributes: [
-            { map: map }
-          ]
-        }
-
-        invalid = described_class.call(division, match_options, :single_elimination, {})
-        expect(invalid).to be nil
-
-        division.matches.pending.find_each do |match|
-          score_options = [
-            { home_team_score: 3, away_team_score: 2 },
-            { home_team_score: 1, away_team_score: 4 },
-          ].sample
-          match.update!(
-            status: :confirmed, rounds_attributes: [
-              { id: match.rounds.first.id }.merge(score_options)
-            ]
-          )
-        end
-      end
-    end
   end
 end

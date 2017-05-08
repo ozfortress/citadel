@@ -82,6 +82,10 @@ class User < ApplicationRecord
       .order('similarity')
   end)
 
+  scope :include_admin_permissions, (lambda do ||
+    include_permissions(User.admin_grants)
+  end)
+
   # TODO: Move to presenter
   def steam_profile_url
     "http://steamcommunity.com/profiles/#{steam_id}"
@@ -111,11 +115,7 @@ class User < ApplicationRecord
   end
 
   def admin?
-    can?(:edit, :teams) ||
-      can?(:edit, :leagues) ||
-      can?(:edit, :games) ||
-      can?(:manage_rosters, :leagues) ||
-      can?(:edit, :permissions)
+    User.admin_grants.any? { |action, subject| can?(action, subject) }
   end
 
   def aka
@@ -152,6 +152,15 @@ class User < ApplicationRecord
   def reset_query_cache!
     update_query_cache
     save!
+  end
+
+  def self.admin_grants
+    [[:edit, :teams], [:edit, :leagues], [:edit, :games],
+     [:manage_rosters, :leagues], [:edit, :permissions]]
+  end
+
+  def self.admin_associations
+    admin_grants.map { |action, subject| grant_model_for(action, subject).association_name }
   end
 
   private
