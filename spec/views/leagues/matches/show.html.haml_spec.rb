@@ -29,6 +29,11 @@ describe 'leagues/matches/show' do
     assign(:rounds, rounds)
     assign(:comm, League::Match::Comm.new(match: match))
     assign(:comms, comms)
+
+    (home_team.users + away_team.users + comms.map(&:user)).each do |user|
+      allow(user).to receive(:admin?).and_return(false)
+      allow(user).to receive(:can?).and_return(true)
+    end
   end
 
   context 'home team has more players' do
