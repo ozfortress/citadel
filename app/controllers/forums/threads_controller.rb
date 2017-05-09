@@ -1,5 +1,6 @@
 module Forums
   class ThreadsController < ApplicationController
+    include Forums::ThreadsCommon
     include Forums::Permissions
 
     before_action only: [:new, :create] do
@@ -31,9 +32,7 @@ module Forums
     end
 
     def show
-      @thread = Forums::Thread.find(params[:id])
-      @posts = @thread.posts.includes(:created_by).paginate(page: params[:page])
-      @post = Post.new
+      threads_show
     end
 
     def toggle_subscription
