@@ -1,5 +1,6 @@
 module Forums
   class PostsController < ApplicationController
+    include Forums::ThreadsCommon
     include Forums::Permissions
 
     before_action only: [:create] { @thread = Forums::Thread.find(params[:thread_id]) }
@@ -18,7 +19,7 @@ module Forums
       if @post.persisted?
         redirect_to path_for(@post)
       else
-        @posts = @thread.posts
+        threads_show
         render 'forums/threads/show'
       end
     end

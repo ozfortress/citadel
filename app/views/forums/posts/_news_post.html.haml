@@ -15,4 +15,5 @@
 
 .well.well-lg
   .container-fluid.markdown!= post.content_render_cache
-  .pull-right= link_to 'comments', forums_thread_path(post.thread)
+  - comments_count = post.thread.posts_count - 1
+  .pull-right= link_to "comments (#{comments_count})", forums_thread_path(post.thread)
