@@ -14,7 +14,7 @@
   %ul.list-group
     - rounds.each do |round|
       %li.list-group-item
-        = link_to round.map, meta_map_path(round.map)
+        = link_to round.map.name, meta_map_path(round.map)
         |#{round.home_team_score} : #{round.away_team_score}|
 
   - if user_can_confirm_score?

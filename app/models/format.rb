@@ -8,8 +8,4 @@ class Format < ApplicationRecord
   validates :description, presence: true
   caches_markdown_render_for :description, escaped: false
   validates :player_count, presence: true, inclusion: 0...16
-
-  def to_s
-    "#{game.name}: #{name}"
-  end
 end

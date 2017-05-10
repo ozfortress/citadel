@@ -15,4 +15,4 @@
   .panel-heading Maps
   %ul.list-group
     - @game.maps.each do |map|
-      = link_to map, meta_map_path(map), class: 'list-group-item'
+      = link_to map.name, meta_map_path(map), class: 'list-group-item'

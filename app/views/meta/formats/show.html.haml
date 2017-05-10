@@ -3,7 +3,7 @@
     Edit
     %span.glyphicon.glyphicon-cog
 
-%h1= link_to @format.game, meta_game_path(@format.game)
+%h1= link_to @format.game.name, meta_game_path(@format.game)
 %h2= @format.name
 
 .panel.panel-default

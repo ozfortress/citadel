@@ -10,8 +10,6 @@ class League
 
     validates :name, presence: true, length: { in: 1..64 }
 
-    alias_attribute :to_s, :name
-
     TOURNAMENT_SYSTEMS = [
       :swiss, :round_robin, :single_elimination, :page_playoffs,
     ].freeze

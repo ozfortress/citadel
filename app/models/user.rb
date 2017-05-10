@@ -66,7 +66,6 @@ class User < ApplicationRecord
   mount_uploader :avatar, AvatarUploader
 
   alias_attribute :steam_64, :steam_id
-  alias_attribute :to_s, :name
 
   before_save :update_query_cache
 
