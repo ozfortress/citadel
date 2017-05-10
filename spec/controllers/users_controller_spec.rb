@@ -81,10 +81,28 @@ describe UsersController do
     it 'updates a user' do
       sign_in user
 
-      patch :update, params: { id: user.id, user: { description: 'D' } }
+      patch :update, params: { id: user.id, user: {
+        description: 'D', badge_name: 'Foo', badge_color: 1,
+      } }
 
       user.reload
       expect(user.description).to eq('D')
+      expect(user.badge_name).to eq('')
+      expect(user.badge_color).to eq(0)
+    end
+
+    it 'allows admins to edit badges' do
+      user.grant(:edit, :users)
+      sign_in user
+
+      patch :update, params: { id: user.id, user: {
+        description: 'D', badge_name: 'Foo', badge_color: 1,
+      } }
+
+      user.reload
+      expect(user.description).to eq('D')
+      expect(user.badge_name).to eq('Foo')
+      expect(user.badge_color).to eq(1)
     end
 
     it 'allows avatar removal' do

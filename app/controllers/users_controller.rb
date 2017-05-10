@@ -109,7 +109,14 @@ class UsersController < ApplicationController
   end
 
   def edit_user_params
-    params.require(:user).permit(:avatar, :remove_avatar, :description, :email)
+    common = [:avatar, :remove_avatar, :description, :email]
+    permitted = if user_can_edit_users?
+                  [:badge_name, :badge_color]
+                else
+                  []
+                end
+
+    params.require(:user).permit(*(common + permitted))
   end
 
   def name_change_params

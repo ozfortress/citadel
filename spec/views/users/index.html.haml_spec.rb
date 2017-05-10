@@ -1,15 +1,19 @@
 require 'rails_helper'
 
 describe 'users/index' do
-  let!(:user1) { create(:user) }
-  let!(:user2) { create(:user) }
+  let(:users) { build_stubbed_list(:user, 3) }
+
+  before do
+    users.first.badge_name = 'Admin'
+  end
 
   it 'shows all users' do
-    assign(:users, User.paginate(page: 1))
+    assign(:users, users.paginate(page: 1))
 
     render
 
-    expect(rendered).to include(user1.name)
-    expect(rendered).to include(user2.name)
+    users.each do |user|
+      expect(rendered).to include(user.name)
+    end
   end
 end

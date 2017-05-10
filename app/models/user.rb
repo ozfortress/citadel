@@ -118,6 +118,10 @@ class User < ApplicationRecord
     User.admin_grants.any? { |action, subject| can?(action, subject) }
   end
 
+  def badge?
+    badge_name.present?
+  end
+
   def aka
     names.approved.where.not(name: name)
   end
