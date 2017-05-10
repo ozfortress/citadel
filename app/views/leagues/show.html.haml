@@ -24,7 +24,7 @@
     - if @personal_matches
       Your Upcoming Matches
     - else
-      Upcoming Matches for #{@divisions.first}
+      Upcoming Matches for #{@divisions.first.name}
 
   - matches = @personal_matches || @top_div_matches
   = render 'leagues/matches/matches_table', matches: matches, roster: nil
