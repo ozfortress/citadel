@@ -8,7 +8,7 @@
 
 %h2= post.thread.title
 
-- if post.edits.size > 1
+- if user_can_edit_post?(post) && post.edits.size > 1
   .pull-right
     = link_to edits_for_forums_post_path(post), class: 'btn btn-default btn-sm' do
       View Edits

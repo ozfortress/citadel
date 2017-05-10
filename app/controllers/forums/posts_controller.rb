@@ -10,7 +10,7 @@ module Forums
     end
     before_action :require_can_view_thread
     before_action :require_can_create_post, only: :create
-    before_action :require_can_edit_post, only: [:edit, :update]
+    before_action :require_can_edit_post, only: [:edit, :update, :edits]
     before_action :require_can_manage_thread, only: :destroy
 
     def create
