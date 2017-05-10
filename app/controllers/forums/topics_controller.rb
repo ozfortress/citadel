@@ -29,7 +29,7 @@ module Forums
 
     def show
       @subtopics = @topic.children
-      @threads = @topic.threads
+      @threads = @topic.threads.ordered
 
       unless user_can_manage_topic?
         @subtopics = @subtopics.visible

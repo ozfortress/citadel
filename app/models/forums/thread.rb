@@ -11,6 +11,8 @@ module Forums
     validates :pinned, inclusion: { in: [true, false] }
     validates :hidden, inclusion: { in: [true, false] }
 
+    scope :ordered, -> { order(created_at: :desc) }
+
     scope :locked,   -> { where(locked: true) }
     scope :unlocked, -> { where(locked: false) }
     scope :pinned,   -> { where(pinend: true) }
