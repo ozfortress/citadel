@@ -19,6 +19,7 @@ module Leagues
 
     def index
       @divisions = @league.divisions.includes(matches: [:home_team, :away_team, :rounds])
+                          .order(:id)
                           .merge(League::Match.ordered)
                           .references(:matches)
       @matches = @divisions.map { |div| [div, div.matches] }.to_h
