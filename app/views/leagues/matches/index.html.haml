@@ -18,5 +18,5 @@
 
 
     - @divisions.each do |div|
-      %h3= div
+      %h3= div.name
       = render 'leagues/matches/matches_table', matches: @matches[div], roster: nil

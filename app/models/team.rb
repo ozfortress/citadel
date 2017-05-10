@@ -20,8 +20,6 @@ class Team < ApplicationRecord
 
   mount_uploader :avatar, AvatarUploader
 
-  alias_attribute :to_s, :name
-
   before_save :update_query_cache
   before_destroy :must_not_have_rosters, prepend: true
 

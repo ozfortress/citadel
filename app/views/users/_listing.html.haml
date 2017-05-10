@@ -1,8 +1,7 @@
 - user = present(user)
 
 .row.slim-gutter
-  .pull-left
-    = user.avatar_link
+  .pull-left= user.avatar_tag
 
   .user-details
     .row.slim-gutter

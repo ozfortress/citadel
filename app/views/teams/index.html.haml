@@ -18,9 +18,7 @@
     .panel-body No teams found...
   - else
     %ul.list-group
-      - @teams.each do |team|
-        %li.list-group-item
-          = link_to team_path(team) do
-            = team.name
+      - present_collection(@teams).each do |teams|
+        %li.list-group-item= teams.link
 
 = bootstrap_paginate @teams

@@ -3,9 +3,11 @@
     Edit
     %span.glyphicon.glyphicon-cog
 
-%h1= link_to @map.game, meta_game_path(@map.game)
+- map_p = present(@map)
+
+%h1= map_p.game.link
 %h2= @map.name
 
 .panel.panel-default
   .panel-heading Information
-  .panel-body.markdown!= @map.description_render_cache
+  .panel-body.markdown= map_p.description

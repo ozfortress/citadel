@@ -7,7 +7,7 @@
     Edit
     %span.glyphicon.glyphicon-cog
 
-%h1 #{present(@league).link}: #{@match.home_team.division}
+%h1 #{present(@league).link}: #{@match.home_team.division.name}
 %h2= match_p.title
 
 - if user_signed_in? && !@match.bye?

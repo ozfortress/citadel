@@ -29,11 +29,11 @@ module Forums
 
     def show
       @subtopics = @topic.children
-      @threads = @topic.threads
+      @threads = @topic.threads.ordered
 
       unless user_can_manage_topic?
         @subtopics = @subtopics.visible
-        @threads   = @threads.visible.or(@topic.threads.where(created_by: current_user))
+        @threads   = @threads.visible.or(@threads.where(created_by: current_user))
       end
     end
 

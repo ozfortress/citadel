@@ -4,15 +4,15 @@
 
 - if match.confirmed?
   %ul.list-group
-    - rounds.each do |round|
+    - present_collection(rounds).each do |round_p|
       %li.list-group-item
-        = link_to round.map, meta_map_path(round.map)
+        = round_p.map.link
 
-        .pull-right= present(round).result_description
+        .pull-right= round_p.result_description
 - else
   %ul.list-group
-    - rounds.each do |round|
+    - present_collection(rounds).each do |round_p|
       %li.list-group-item
-        = link_to round.map, meta_map_path(round.map)
+        = round_p.map.link
 
         .pull-right Results Pending

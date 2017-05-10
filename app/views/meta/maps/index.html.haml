@@ -6,8 +6,9 @@
 
 %ul.list-group
   - @maps.each do |map|
+    - map_p = present(map)
     %li.list-group-item
-      = link_to map, meta_map_path(map)
+      = map_p.link
 
       .button-group.pull-right
         = link_to edit_meta_map_path(map), class: 'btn btn-default' do

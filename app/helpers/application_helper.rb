@@ -20,11 +20,11 @@ module ApplicationHelper
   end
 
   def format_options
-    Format.all.collect { |format| [format.to_s, format.id] }
+    Format.all.collect { |format| [format.name, format.id] }
   end
 
   def divisions_select
-    @league.divisions.all.collect { |div| [div.to_s, div.id] }
+    @league.divisions.all.collect { |div| [div.name, div.id] }
   end
 
   def bootstrap_paginate(target)

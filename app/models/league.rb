@@ -59,8 +59,6 @@ class League < ApplicationRecord
   before_save :update_query_cache
   after_save :update_roster_match_counters
 
-  alias_attribute :to_s, :name
-
   def self.search(query)
     return all if query.blank?
 

@@ -3,7 +3,8 @@
   = f.fields_for :rounds, rounds do |ff|
     .row.form-group
       .form-inline
-        = link_to ff.object.map, meta_map_path(ff.object.map)
+        - round_p = present(ff.object)
+        = round_p.map.link
         \:
         .form-group.pull-right
           = ff.number_field :home_team_score, label: "'#{match.home_team.name}'s score"

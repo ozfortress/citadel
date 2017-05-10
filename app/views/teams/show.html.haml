@@ -5,6 +5,8 @@
     Settings
     %span.glyphicon.glyphicon-cog
 
+- team_p = present(@team)
+
 .clearfix
   = image_tag @team.avatar.icon.url, class: 'pull-left thumbnail' if @team.avatar?
 
@@ -12,7 +14,7 @@
 
 .panel.panel-default
   .panel-heading Info
-  .panel-body.markdown!= @team.description_render_cache
+  .panel-body.markdown= team_p.description
 
 - unless @upcoming_matches.empty?
   .panel.panel-default
