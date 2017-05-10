@@ -4,6 +4,9 @@ class UserPresenter < BasePresenter
   delegate :id, to: :user
   delegate :name, to: :user
 
+  BADGE_COLORS = %w[Green Red Yellow Blue].freeze
+  BADGE_CLASSES = %w[alert-success alert-danger alert-warning alert-info].freeze
+
   def link(label = nil)
     label ||= user.name
     link_to(label, user_path(user))
@@ -29,8 +32,8 @@ class UserPresenter < BasePresenter
     has_captain_label = team && user.can?(:edit, team)
 
     titles = []
-    titles << content_tag(:div, 'captain', class: 'label alert-danger')  if has_captain_label
-    titles << content_tag(:div, 'admin',   class: 'label alert-success') if user.admin?
+    titles << content_tag(:div, 'captain', class: 'label alert-danger') if has_captain_label
+    titles << badge if user.badge?
     safe_join(titles, ' ')
   end
 
@@ -74,5 +77,17 @@ class UserPresenter < BasePresenter
       else
         ''
       end
+  end
+
+  def badge
+    content_tag(:div, user.badge_name, class: "label #{badge_class}")
+  end
+
+  def badge_class
+    if user.badge_color.between?(0, BADGE_COLORS.length)
+      BADGE_CLASSES[user.badge_color]
+    else
+      BADGE_CLASSES.first
+    end
   end
 end

@@ -31,7 +31,6 @@ describe 'leagues/matches/show' do
     assign(:comms, comms)
 
     (home_team.users + away_team.users + comms.map(&:user)).each do |user|
-      allow(user).to receive(:admin?).and_return(false)
       allow(user).to receive(:can?).and_return(true)
     end
   end

@@ -140,8 +140,27 @@ describe Forums::PostsController do
     let!(:post) { create(:forums_post, thread: thread, content: content) }
 
     describe 'GET #edits' do
-      it 'succeeds for any user' do
+      it 'redirects for any user' do
         create_list(:forums_post_edit, 3, post: post)
+        sign_in user
+
+        get :edits, params: { id: post.id }
+
+        expect(response).to redirect_to(forums_path)
+      end
+
+      it 'succeeds for author' do
+        create_list(:forums_post_edit, 3, post: post)
+        sign_in post.created_by
+
+        get :edits, params: { id: post.id }
+
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'succeeds for admin' do
+        create_list(:forums_post_edit, 3, post: post)
+        user.grant(:manage, :forums)
         sign_in user
 
         get :edits, params: { id: post.id }

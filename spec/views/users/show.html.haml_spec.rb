@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'users/show' do
-  let(:user) { build(:user) }
+  let(:user) { build(:user, badge_name: 'Admin') }
   let(:teams) { build_stubbed_list(:team, 3) }
   let(:aka) { build_stubbed_list(:user_name_change, 5) }
   let(:titles) { build_stubbed_list(:user_title, 5) }
@@ -32,6 +32,7 @@ describe 'users/show' do
     render
 
     expect(rendered).to include(user.name)
+    expect(rendered).to include(user.badge_name)
     # TODO: Add more checks for user data
   end
 
@@ -41,6 +42,7 @@ describe 'users/show' do
     render
 
     expect(rendered).to include(user.name)
+    expect(rendered).to include(user.badge_name)
     # TODO: Add more checks for user data
   end
 end

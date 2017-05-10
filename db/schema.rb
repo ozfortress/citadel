@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170427032204) do
+ActiveRecord::Schema.define(version: 20170510024835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -555,6 +555,8 @@ ActiveRecord::Schema.define(version: 20170427032204) do
     t.datetime "confirmation_sent_at"
     t.string   "query_name_cache",         default: "", null: false
     t.text     "description_render_cache", default: "", null: false
+    t.string   "badge_name",               default: "", null: false
+    t.integer  "badge_color",              default: 0,  null: false
     t.index "query_name_cache gist_trgm_ops", name: "index_users_on_query_name_cache", using: :gist
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["name"], name: "index_users_on_name", unique: true, using: :btree
