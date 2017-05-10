@@ -13,6 +13,10 @@ class League
         present(match.away_team)
       end
 
+      def map
+        present(round.map)
+      end
+
       def result_description
         home = home_team.link
         away = away_team.link

@@ -8,11 +8,11 @@
 .panel.panel-default
   .panel-heading Formats
   %ul.list-group
-    - @game.formats.each do |format|
-      = link_to format.name, meta_format_path(format), class: 'list-group-item'
+    - present_collection(@game.formats).each do |format_p|
+      = format_p.link class: 'list-group-item'
 
 .panel.panel-default
   .panel-heading Maps
   %ul.list-group
-    - @game.maps.each do |map|
-      = link_to map.name, meta_map_path(map), class: 'list-group-item'
+    - present_collection(@game.maps).each do |map_p|
+      = map_p.link class: 'list-group-item'

@@ -12,10 +12,10 @@
 
 - if !match.pending? && !match.confirmed? # && !user_can_edit_league?
   %ul.list-group
-    - rounds.each do |round|
+    - present_collection(rounds).each do |round|
       %li.list-group-item
-        = link_to round.map.name, meta_map_path(round.map)
-        |#{round.home_team_score} : #{round.away_team_score}|
+        = round.map.link
+        |#{round_p.score_s}|
 
   - if user_can_confirm_score?
     .panel-body

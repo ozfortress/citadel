@@ -3,9 +3,11 @@
     Edit
     %span.glyphicon.glyphicon-cog
 
-%h1= link_to @format.game.name, meta_game_path(@format.game)
+- format_p = present(@format)
+
+%h1= format_p.game.link
 %h2= @format.name
 
 .panel.panel-default
   .panel-heading Information
-  .panel-body.markdown!= @format.description_render_cache
+  .panel-body.markdown= format_p.description
