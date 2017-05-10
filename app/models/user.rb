@@ -82,10 +82,6 @@ class User < ApplicationRecord
       .order('similarity')
   end)
 
-  scope :include_admin_permissions, (lambda do ||
-    include_permissions(User.admin_grants)
-  end)
-
   # TODO: Move to presenter
   def steam_profile_url
     "http://steamcommunity.com/profiles/#{steam_id}"

@@ -24,12 +24,11 @@ class PermissionsController < ApplicationController
 
   def users
     users_which_can = User.which_can(@action, @target)
-    @users_with_permission = users_which_can.search(params[:q]).include_admin_permissions
+    @users_with_permission = users_which_can.search(params[:q])
 
     excluded_users = users_which_can.select(:id)
     @users_without_permission = target_users.search(params[:q])
                                             .where('users.id NOT IN (?)', excluded_users)
-                                            .include_admin_permissions
                                             .paginate(page: params[:page])
   end
 

@@ -13,7 +13,6 @@ class UsersController < ApplicationController
 
   def index
     @users = User.search(params[:q])
-                 .include_admin_permissions
                  .paginate(page: params[:page])
   end
 
