@@ -12,7 +12,7 @@ class UserPresenter < BasePresenter
     link_to(label, user_path(user))
   end
 
-  def avatar_link
+  def avatar_tag
     image_tag(user.avatar.thumb.url, class: 'avatar center-block')
   end
 
