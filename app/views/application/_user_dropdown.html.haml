@@ -2,8 +2,8 @@
   = current_user.name
   %span.caret
 %ul.navbar-right-menu.dropdown-menu#navbar-user-dropdown
-  - current_user.teams.each do |team|
-    %li= link_to(team.name, team_path(team))
+  - present_collection(current_user.teams).each do |team_p|
+    %li= team_p.link
   %hr.divider
   %li= link_to('Profile', user_path(current_user))
   %li= link_to('Settings', edit_user_path(current_user))

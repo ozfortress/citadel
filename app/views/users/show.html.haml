@@ -43,8 +43,7 @@
   - @team_invites.each do |invite|
     - team = invite.team
     .alert.alert-info
-      You have been invited to join
-      = link_to team, team_path(team)
+      You have been invited to join #{present(team).link}
 
       .button-group.pull-right
         = button_to decline_team_invite_path(team),
@@ -90,8 +89,7 @@
           joined
         - else
           left
-        = link_to transfer.team, team_path(transfer.team)
-        on #{transfer.created_at.strftime('%c')}
+        #{present(transfer.team).link} on #{transfer.created_at.strftime('%c')}
 
 - unless @rosters.empty?
   .panel.panel-default
