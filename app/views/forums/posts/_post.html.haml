@@ -1,3 +1,5 @@
+- post_p = present(post)
+
 .panel.panel-default
   %div{ id: "post_#{post.id}" }
   .panel-heading
@@ -6,7 +8,7 @@
         = link_to edit_forums_post_path(post), class: 'btn btn-link btn-sm' do
           %span.glyphicon.glyphicon-cog
     .pull-right
-      = post.created_at.strftime('%c')
+      = post_p.created_at
 
     = render 'users/listing', user: post.created_by
 
@@ -15,4 +17,4 @@
       = link_to edits_for_forums_post_path(post), class: 'btn btn-default btn-sm' do
         View Edits
 
-.container-fluid.markdown!= post.content_render_cache
+.container-fluid.markdown= post_p.content

@@ -1,10 +1,12 @@
+- post_p = present(post)
+
 %div{ id: "post_#{post.id}" }
 - if user_can_edit_post?(post)
   .pull-right
     = link_to edit_forums_post_path(post), class: 'btn btn-link btn-sm' do
       %span.glyphicon.glyphicon-cog
 .pull-right
-  = post.created_at.strftime('%c')
+  = post_p.created_at
 
 %h2= post.thread.title
 
@@ -14,6 +16,6 @@
       View Edits
 
 .well.well-lg
-  .container-fluid.markdown!= post.content_render_cache
+  .container-fluid.markdown= post_p.content
   - comments_count = post.thread.posts_count - 1
   .pull-right= link_to "comments (#{comments_count})", forums_thread_path(post.thread)
