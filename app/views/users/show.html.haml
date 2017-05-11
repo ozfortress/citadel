@@ -12,9 +12,8 @@
     = image_tag @user.avatar.icon.url, class: 'group-avatar'
 
   .group-title
-    %h2.spaced-letters
-      = @user.name
-      = user_p.badge
+    %h2.spaced-letters= @user.name
+    = user_p.badge
 
     - unless @aka.empty?
       %p.group-aka aka #{@aka.map(&:name).join(', ')}
