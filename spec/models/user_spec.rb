@@ -37,12 +37,6 @@ describe User do
   it { should allow_value('"v.(),:;<>[]\".V.\"v@\\ \"v\".u"@strange.com').for(:email) }
   it { should_not allow_value('foo').for(:email) }
 
-  it 'creates proper steam profile links' do
-    user = create(:user, name: 'Crock Facker', steam_id: '76561198037529561')
-
-    expect(user.steam_profile_url).to eq('http://steamcommunity.com/profiles/76561198037529561')
-  end
-
   it 'has teams' do
     user = create(:user)
     team = create(:team, name: 'A')
