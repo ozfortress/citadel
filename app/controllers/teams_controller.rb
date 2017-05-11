@@ -30,7 +30,8 @@ class TeamsController < ApplicationController
   def show
     @invite = @team.invite_for(current_user) if user_signed_in?
 
-    teams_show_includes
+    teams_show_fetch_teams
+    teams_show_fetch_users
   end
 
   def edit
@@ -79,7 +80,7 @@ class TeamsController < ApplicationController
   private
 
   def roster_includes_for(rosters)
-    rosters.includes(:players, :users, transfers: :user)
+    rosters.includes(:players, :transfers)
            .merge(League::Roster::Player.order(created_at: :asc))
            .merge(League::Roster::Transfer.order(created_at: :desc))
   end
@@ -89,9 +90,9 @@ class TeamsController < ApplicationController
            .includes(:rounds, :home_team, :away_team)
   end
 
-  def teams_show_includes
-    @players               = @team.players.includes(:user)
-    @transfers             = @team.transfers.includes(:user)
+  def teams_show_fetch_teams
+    @players               = @team.players
+    @transfers             = @team.transfers
 
     @active_rosters        = roster_includes_for @team.rosters.for_incomplete_league
     @active_roster_matches = @active_rosters.map { |r| match_includes_for r.matches }
@@ -101,6 +102,22 @@ class TeamsController < ApplicationController
 
     @upcoming_matches = @team.matches.pending.includes(:home_team, :away_team)
                              .order(created_at: :asc)
+  end
+
+  def teams_show_fetch_users
+    rosters = @active_rosters + @past_rosters
+    id_holders = @players + @transfers
+    id_holders += (rosters.map(&:players) + rosters.map(&:transfers)).reduce([], :+)
+
+    user_ids = id_holders.map(&:user_id).uniq
+
+    @users = User.where(id: user_ids).index_by(&:id)
+    prefetch_team_permissions(@users.values)
+    id_holders.each { |h| h.user = @users[h.user_id] }
+  end
+
+  def prefetch_team_permissions(users)
+    User.permissions(users).fetch(:edit, @team) unless users.empty?
   end
 
   def team_params

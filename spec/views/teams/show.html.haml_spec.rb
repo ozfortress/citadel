@@ -45,6 +45,9 @@ describe 'teams/show' do
       allow(match_).to receive(:rounds).and_return(rounds)
     end
 
+    roster_users = (@active_rosters + @past_rosters).map(&:players).reduce([], :+)
+    @users = (players + transfers_in + transfers_out + roster_users).map(&:user).index_by(&:id)
+
     assign(:team, team)
     assign(:invite, invite)
     assign(:players, players)
@@ -54,6 +57,7 @@ describe 'teams/show' do
     assign(:past_rosters, @past_rosters)
     assign(:past_roster_matches, @past_rosters.map { @matches })
     assign(:upcoming_matches, @matches)
+    assign(:users, @users)
   end
 
   it 'shows public team data' do
@@ -84,6 +88,10 @@ describe 'teams/show' do
     @matches.each do |match|
       expect(rendered).to include(match.home_team.name)
       expect(rendered).to include(match.away_team.name) if match.away_team
+    end
+
+    @users.values.each do |user|
+      expect(rendered).to include(user.name)
     end
   end
 end
