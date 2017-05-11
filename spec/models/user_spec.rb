@@ -149,7 +149,7 @@ describe User do
 
         it 'can unban' do
           user.ban(:use, :users, duration: 2.minutes)
-          user.unban(:use, :users)
+          user.unban_all(:use, :users)
 
           expect(user.can?(:user, :users)).to be(true)
         end

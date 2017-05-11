@@ -2,6 +2,17 @@ module Auth
   module ActionState
     extend ActiveSupport::Concern
 
+    included do
+      scope :for, (lambda do |subject|
+        if subject? && !subject.is_a?(Symbol)
+          subject_name = Util.get_subject_name(subject)
+          where(subject_name => subject)
+        else
+          all
+        end
+      end)
+    end
+
     class_methods do
       attr_reader :subject
       attr_reader :association_name

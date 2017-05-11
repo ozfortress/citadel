@@ -1,7 +1,7 @@
 module Auth
   module MigrationHelper
     def add_action_auth(actor, action, subject)
-      name = Auth.grant_name(actor, action, subject)
+      name = Auth::Util.grant_name(actor, action, subject)
 
       subject_s = subject.to_s
       singular = subject_s.singularize == subject_s
@@ -13,11 +13,11 @@ module Auth
     end
 
     def remove_action_auth(actor, action, subject)
-      drop_table Auth.grant_name(actor, action, subject)
+      drop_table Auth::Util.grant_name(actor, action, subject)
     end
 
     def add_action_ban(actor, action, subject)
-      name = Auth.ban_name(actor, action, subject)
+      name = Auth::Util.ban_name(actor, action, subject)
 
       subject_s = subject.to_s
       singular = subject_s.singularize == subject_s
@@ -34,7 +34,7 @@ module Auth
     end
 
     def remove_action_ban(actor, action, subject)
-      drop_table Auth.ban_name(actor, action, subject)
+      drop_table Auth::Util.ban_name(actor, action, subject)
     end
   end
 end
