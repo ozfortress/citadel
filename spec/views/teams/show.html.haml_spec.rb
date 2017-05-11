@@ -6,11 +6,23 @@ describe 'teams/show' do
   let(:players) { build_stubbed_list(:team_player, 6) }
   let(:transfers_in) { build_stubbed_list(:team_transfer, 5, team: team, is_joining: true) }
   let(:transfers_out) { build_stubbed_list(:team_transfer, 5, team: team, is_joining: false) }
-  let(:active_rosters) { build_stubbed_list(:league_roster, 3, team: team) }
-  let(:past_rosters) { build_stubbed_list(:league_roster, 3, team: team) }
+  let(:active_league) { build_stubbed(:league) }
+  let(:signup_league) { build_stubbed(:league, signuppable: true) }
+  let(:completed_league) { build_stubbed(:league, status: :completed) }
 
   before do
-    roster = active_rosters.first
+    @active_rosters = [active_league, signup_league].map do |league|
+      division = build_stubbed(:league_division, league: league)
+      build_stubbed(:league_roster, division: division)
+    end
+    @active_rosters << build_stubbed(:league_roster, disbanded: true)
+
+    past_div = build_stubbed(:league_division, league: completed_league)
+    @past_rosters = []
+    @past_rosters << build_stubbed(:league_roster, division: past_div)
+    @past_rosters << build_stubbed(:league_roster, division: past_div, disbanded: true)
+
+    roster = @active_rosters.first
     @matches = []
     @matches << build_stubbed(:league_match, home_team: roster, status: 'confirmed')
     @matches << build_stubbed(:league_match, home_team: roster, status: 'pending',
@@ -33,15 +45,19 @@ describe 'teams/show' do
       allow(match_).to receive(:rounds).and_return(rounds)
     end
 
+    roster_users = (@active_rosters + @past_rosters).map(&:players).reduce([], :+)
+    @users = (players + transfers_in + transfers_out + roster_users).map(&:user).index_by(&:id)
+
     assign(:team, team)
     assign(:invite, invite)
     assign(:players, players)
     assign(:transfers, transfers_in + transfers_out)
-    assign(:active_rosters, active_rosters)
-    assign(:active_roster_matches, active_rosters.map { @matches })
-    assign(:past_rosters, past_rosters)
-    assign(:past_roster_matches, past_rosters.map { @matches })
+    assign(:active_rosters, @active_rosters)
+    assign(:active_roster_matches, @active_rosters.map { @matches })
+    assign(:past_rosters, @past_rosters)
+    assign(:past_roster_matches, @past_rosters.map { @matches })
     assign(:upcoming_matches, @matches)
+    assign(:users, @users)
   end
 
   it 'shows public team data' do
@@ -61,7 +77,7 @@ describe 'teams/show' do
       expect(rendered).to include(transfer.user.name)
     end
 
-    (active_rosters + past_rosters).each do |roster|
+    (@active_rosters + @past_rosters).each do |roster|
       expect(rendered).to include(roster.name)
 
       roster.users.each do |user|
@@ -72,6 +88,10 @@ describe 'teams/show' do
     @matches.each do |match|
       expect(rendered).to include(match.home_team.name)
       expect(rendered).to include(match.away_team.name) if match.away_team
+    end
+
+    @users.values.each do |user|
+      expect(rendered).to include(user.name)
     end
   end
 end

@@ -95,6 +95,7 @@ describe PermissionsController do
 
       delete :revoke, params: { action_: :edit, subject: :users, user_id: user.id }
 
+      user.reload
       expect(user.reload.can?(:edit, :users)).to be(false)
     end
 
@@ -107,7 +108,7 @@ describe PermissionsController do
       delete :revoke, params: { action_: :edit, subject: :team,
                                 target: team.id, user_id: user.id }
 
-      expect(user.can?(:edit, team)).to be(false)
+      expect(user.reload.can?(:edit, team)).to be(false)
     end
 
     it 'fails for authorized user with team for random user' do

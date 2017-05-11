@@ -16,8 +16,12 @@ class UserPresenter < BasePresenter
     image_tag(user.avatar.thumb.url, class: 'avatar center-block')
   end
 
+  def steam_profile_url
+    "http://steamcommunity.com/profiles/#{user.steam_64}"
+  end
+
   def steam_link
-    link_to(user.steam_profile_url, target: '_blank') do
+    link_to(steam_profile_url, target: '_blank') do
       content = [
         content_tag(:span, '', class: 'glyphicon glyphicon-link small'),
         user.steam_id3,

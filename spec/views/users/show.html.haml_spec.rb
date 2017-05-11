@@ -7,10 +7,20 @@ describe 'users/show' do
   let(:titles) { build_stubbed_list(:user_title, 5) }
   let(:team_transfers) { build_stubbed_list(:team_transfer, 5, user: user) }
   let(:team_invites) { build_stubbed_list(:team_invite, 2, user: user) }
+  let(:active_league) { build_stubbed(:league) }
+  let(:signup_league) { build_stubbed(:league, signuppable: true) }
+  let(:completed_league) { build_stubbed(:league, status: :completed) }
   let(:rosters) { build_stubbed_list(:league_roster, 2) }
   let(:matches) { build_stubbed_list(:league_match, 2) }
 
   before do
+    rosters = [active_league, signup_league, completed_league].map do |league|
+      division = build_stubbed(:league_division, league: league)
+      build_stubbed(:league_roster, division: division)
+    end
+
+    rosters << build_stubbed(:league_roster, disbanded: true)
+
     assign(:user, user)
     assign(:teams, teams)
     assign(:aka, aka)

@@ -48,9 +48,9 @@
           Roster is awaiting approval
 
       %ul.list-group
-        - roster.users.each do |user|
+        - roster.players.map(&:user_id).each do |id|
           %li.list-group-item
-            = render 'users/listing', user: user, team: @team
+            = render 'users/listing', user: @users[id], team: @team
 
       - unless matches.empty?
         - id = "#{dom_id(roster)}-matches"
@@ -99,7 +99,7 @@
     %ul.list-group
       - @players.each do |player|
         %li.list-group-item
-          - user = player.user
+          - user = @users[player.user_id]
 
           - if user == current_user
             .button-group.pull-right
@@ -150,9 +150,9 @@
 
         .panel-collapse.collapse{ id: id }
           %ul.list-group
-            - roster.users.each do |user|
+            - roster.players.map(&:user_id).each do |user_id|
               %li.list-group-item
-                = render 'users/listing', user: user, team: @team
+                = render 'users/listing', user: @users[user_id], team: @team
           .panel-heading
             Matches:
             = render 'leagues/matches/matches_table', matches: matches, roster: roster

@@ -81,11 +81,6 @@ class User < ApplicationRecord
       .order('similarity')
   end)
 
-  # TODO: Move to presenter
-  def steam_profile_url
-    "http://steamcommunity.com/profiles/#{steam_id}"
-  end
-
   def matches
     rosters_sql = rosters.select(:id).to_sql
     League::Match.where("home_team_id IN (#{rosters_sql}) OR away_team_id IN (#{rosters_sql})")
