@@ -26,6 +26,7 @@ describe 'leagues/show' do
     assign(:ordered_rosters, ordered_rosters)
     assign(:divisions, divisions)
     assign(:roster, roster)
+    assign(:matches, {}) # Don't display brackets
   end
 
   context 'hidden league' do
