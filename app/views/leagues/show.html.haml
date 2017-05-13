@@ -49,6 +49,11 @@
 
   - else
     .panel-body.table-responsive
+      / Specifically include brackets here, we don't need them on every page
+      - content_for :head do
+        = javascript_include_tag 'brackets'
+        = stylesheet_link_tag 'brackets', media: 'all'
+
       - @ordered_rosters.each do |div, rosters|
         %h3= div.name
         %table.table
@@ -66,6 +71,11 @@
               %td= roster.points
               - @league.tiebreakers.each do |tiebreaker|
                 %th= tiebreaker.value_for(roster)
+
+        / Render brackets
+        - matches = @matches[div]
+        - if matches && !matches.empty?
+          = render 'leagues/divisions/bracket', division: div, rosters: rosters, matches: matches
 
 - if user_can_edit_league?
   .panel.panel-info

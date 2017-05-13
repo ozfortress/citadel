@@ -66,6 +66,10 @@ class League
       # rubocop:enable Rails/OutputSafety
     end
 
+    def bracket_data
+      { name: html_escape(roster.name), id: roster.id, link: team_path(roster.team_id) }
+    end
+
     private
 
     def disbanded_tag

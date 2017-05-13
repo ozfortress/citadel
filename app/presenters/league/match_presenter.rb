@@ -74,6 +74,18 @@ class League
       forfeit_results('Home', 'Away')
     end
 
+    def bracket_data
+      common = { home: match.home_team_id, link: match_path(match) }
+      return common if match.bye?
+
+      result = common.merge(away: match.away_team_id)
+      if match.confirmed?
+        result[:home_score] = team_score(:home_team)
+        result[:away_score] = team_score(:away_team)
+      end
+      result
+    end
+
     private
 
     def score_results
@@ -105,6 +117,16 @@ class League
         safe_join([yield(match.home_team), 'BYE'], ' ')
       else
         safe_join([yield(match.home_team), 'vs', yield(match.away_team)], ' ')
+      end
+    end
+
+    def team_score(symbol)
+      if match.no_forfeit?
+        match.rounds.map(&"#{symbol}_score".to_sym).join(':')
+      elsif match.send("#{symbol}_forfeit?") || match.mutual_forfeit?
+        'ff'
+      else
+        'w'
       end
     end
   end
