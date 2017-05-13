@@ -159,7 +159,7 @@
             render(container, canvas);
 
             // Scroll to the right of the bracket
-            container.scrollLeft(container.width());
+            container.scrollLeft(canvas.scrollWidth);
         });
     };
 })(jQuery);
