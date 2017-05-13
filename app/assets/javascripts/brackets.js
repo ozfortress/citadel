@@ -94,17 +94,25 @@
         };
     }
 
-    function render(container, canvas) {
+    function render(containerj, canvas) {
         // Use twice the scale for better resolution on high dpi displays
-        var canvasj = $(canvas);
-        canvas.width = container.width() * 2;
-        canvas.height = container.height() * 2;
+        var container = containerj[0];
+        var width = container.scrollWidth;
+        var height = container.scrollHeight;
+        canvas.width = width * 2;
+        canvas.height = height * 2;
+        // Set the canvas style as well
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+
+        // Set up the canvas context
         var context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.scale(2, 2);
         context.lineWidth = 2;
 
-        container.find('.bracket-round').each(function() {
+        var canvasj = $(canvas);
+        containerj.find('.bracket-round').each(function() {
             round = $(this);
             var nextRound = round.next('.bracket-round');
             var nextMatches = nextRound.find('.bracket-match');
