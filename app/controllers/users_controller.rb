@@ -82,6 +82,7 @@ class UsersController < ApplicationController
     @name_change = @user.names.pending.find(params[:id])
     Users::NameChangeHandlingService.call(@name_change, current_user, params[:approve] == 'true')
 
+    names
     render :names
   end
 

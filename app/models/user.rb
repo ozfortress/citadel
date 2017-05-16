@@ -72,18 +72,17 @@ class User < ApplicationRecord
   scope :search, (lambda do |query|
     return order(:id) if query.blank?
 
-    query = Search.transform_query(query)
+    steam_id = connection.quote SteamId.to_64(query)
+    query = connection.quote Search.transform_query(query)
 
-    steam_id = SteamId.to_64(query)
-
-    select('users.*', "(query_name_cache <-> #{sanitize(query)}) AS similarity")
-      .where('steam_id = ? OR (query_name_cache <-> ?) < 0.9', steam_id, query)
+    select('users.*', "(query_name_cache <-> #{query}) AS similarity")
+      .where("steam_id = #{steam_id} OR (query_name_cache <-> #{query}) < 0.9")
+      .order("steam_id = #{steam_id} DESC") # Steam id matches first
       .order('similarity')
   end)
 
   def matches
-    rosters_sql = rosters.select(:id).to_sql
-    League::Match.where("home_team_id IN (#{rosters_sql}) OR away_team_id IN (#{rosters_sql})")
+    League::Match.where(home_team: rosters).or(League::Match.where(away_team: rosters))
   end
 
   def entered?(comp)

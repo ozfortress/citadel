@@ -75,6 +75,7 @@
         / Render brackets
         - matches = @matches[div]
         - if matches && !matches.empty?
+          %hr
           = render 'leagues/divisions/bracket', division: div, rosters: rosters, matches: matches
 
 - if user_can_edit_league?
