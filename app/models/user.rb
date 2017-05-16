@@ -82,8 +82,7 @@ class User < ApplicationRecord
   end)
 
   def matches
-    rosters_sql = rosters.select(:id).to_sql
-    League::Match.where("home_team_id IN (#{rosters_sql}) OR away_team_id IN (#{rosters_sql})")
+    League::Match.where(home_team: rosters).or(League::Match.where(away_team: rosters))
   end
 
   def entered?(comp)
