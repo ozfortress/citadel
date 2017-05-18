@@ -1,4 +1,4 @@
-%a.dropdown-toggle#notifications{ data: { toggle: 'dropdown' } }
+%a.dropdown-toggle#notifications{ data: { toggle: 'dropdown' }, href: '#' }
   %span.glyphicon.glyphicon-bell#notifications-glyph
   - unless notifications.empty?
     %span.badge#notifications-badge= notifications.to_a.count { |n| !n.read }
