@@ -46,7 +46,8 @@ rosters_with_values.each do |roster, value|
 
   puts 'Roster:'
   roster.users.each do |user|
-    puts "\t#{user.name}\t[[#{user.steam_id3}](#{user.steam_profile_url})]"
+    user_p = UserPresenter.new(user, nil)
+    puts "\t#{user.name}\t[[#{user.steam_id3}](#{user_p.steam_profile_url})]"
   end
 
   puts
