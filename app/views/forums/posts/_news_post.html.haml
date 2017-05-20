@@ -8,7 +8,7 @@
 .pull-right
   = post_p.created_at
 
-%h2= post.thread.title
+%h2= link_to post.thread.title, forums_thread_path(post.thread)
 
 - if user_can_edit_post?(post) && post.edits.size > 1
   .pull-right
