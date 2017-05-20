@@ -11,15 +11,15 @@ class League
                 end)
       end
 
-      def map_link
-        link_to pick_ban.map, meta_map_path(pick_ban.map)
+      def map
+        @map ||= present(pick_ban.map)
       end
 
       def status
         team.link + ' ' + if pick_ban.pending?
                             pending_kind
                           else
-                            safe_join([completed_kind, map_link], ' ')
+                            safe_join([completed_kind, map.link], ' ')
                           end
       end
 
