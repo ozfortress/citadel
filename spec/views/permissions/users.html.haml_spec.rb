@@ -20,6 +20,7 @@ describe 'permissions/users' do
     assign(:users_without_permission, users_without_permission.paginate(page: 1))
     assign(:action, :edit)
     assign(:subject, :teams)
+    assign(:target, :teams)
 
     render
   end
