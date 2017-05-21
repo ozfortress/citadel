@@ -116,6 +116,14 @@ describe 'leagues/matches/show' do
     end
   end
 
+  context 'submitted' do
+    before do
+      match.status = :submitted_by_home_team
+    end
+
+    include_examples 'displays matches'
+  end
+
   context 'confirmed' do
     before do
       match.status = :confirmed
