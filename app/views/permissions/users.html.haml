@@ -1,6 +1,11 @@
 - content_for(:title) { 'Permissions' }
 
-%h1 Manage permission to #{@action} #{@target}
+%h1
+  Manage permission to #{@action}
+  - if @target.is_a?(Symbol)
+    = @target
+  - else
+    = present(@target)
 
 .row
   .col-sm-3.col-md-3.pull-right

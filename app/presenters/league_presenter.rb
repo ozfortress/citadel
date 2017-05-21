@@ -1,6 +1,10 @@
 class LeaguePresenter < BasePresenter
   presents :league
 
+  def to_s
+    league.name
+  end
+
   def link
     link_to league.name, league_path(league)
   end
