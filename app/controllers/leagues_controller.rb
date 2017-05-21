@@ -14,6 +14,7 @@ class LeaguesController < ApplicationController
     @leagues = League.search(params[:q])
                      .order(status: :asc, created_at: :desc)
                      .paginate(page: params[:page])
+                     .load
   end
 
   def new

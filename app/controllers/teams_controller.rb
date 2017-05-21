@@ -10,7 +10,9 @@ class TeamsController < ApplicationController
   before_action :require_on_team, only: :leave
 
   def index
-    @teams = Team.search(params[:q]).paginate(page: params[:page])
+    @teams = Team.search(params[:q])
+                 .paginate(page: params[:page])
+                 .load
   end
 
   def new
@@ -46,7 +48,9 @@ class TeamsController < ApplicationController
   end
 
   def recruit
-    @users = User.search(params[:q]).paginate(page: params[:page])
+    @users = User.search(params[:q])
+                 .paginate(page: params[:page])
+                 .load
   end
 
   def invite
