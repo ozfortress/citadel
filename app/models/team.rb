@@ -23,15 +23,14 @@ class Team < ApplicationRecord
   before_save :update_query_cache
   before_destroy :must_not_have_rosters, prepend: true
 
-  def self.search(query)
+  scope :search, (lambda do |query|
     return order(:id) if query.blank?
 
     query = Search.transform_query(query)
 
-    select('teams.*', "(query_name_cache <-> #{sanitize(query)}) AS similarity")
-      .where('(query_name_cache <-> ?) < 0.9', query)
-      .order('similarity')
-  end
+    where('(query_name_cache <-> ?) < 0.9', query)
+      .order(sanitize_sql_for_order(['query_name_cache <-> ?', query]))
+  end)
 
   def matches
     home_team_matches.union(away_team_matches)

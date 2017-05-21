@@ -53,21 +53,20 @@ class League < ApplicationRecord
   validate :validate_players_range
   validate :validate_has_scheduler
 
-  scope :not_hidden, -> { where.not(status: League.statuses[:hidden]) }
-
   after_initialize :set_defaults, unless: :persisted?
   before_save :update_query_cache
   after_save :update_roster_match_counters
 
-  def self.search(query)
+  scope :not_hidden, -> { where.not(status: League.statuses[:hidden]) }
+
+  scope :search, (lambda do |query|
     return all if query.blank?
 
     query = Search.transform_query(query)
 
-    select('leagues.*', "(query_name_cache <-> #{sanitize(query)}) AS similarity")
-      .where('(query_name_cache <-> ?) < 0.9', query)
-      .order('similarity')
-  end
+    where("(query_name_cache <-> ?) < 0.9", query)
+      .order(sanitize_sql_for_order(["query_name_cache <-> ?", query]))
+  end)
 
   def entered?(user)
     players.where(user: user).exists?

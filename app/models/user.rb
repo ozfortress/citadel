@@ -72,13 +72,12 @@ class User < ApplicationRecord
   scope :search, (lambda do |query|
     return order(:id) if query.blank?
 
-    steam_id = connection.quote SteamId.to_64(query)
-    query = connection.quote Search.transform_query(query)
+    steam_id = SteamId.to_64(query)
+    query = Search.transform_query(query)
 
-    select('users.*', "(query_name_cache <-> #{query}) AS similarity")
-      .where("steam_id = #{steam_id} OR (query_name_cache <-> #{query}) < 0.9")
-      .order("steam_id = #{steam_id} DESC") # Steam id matches first
-      .order('similarity')
+    where(steam_id: steam_id).or(where('(query_name_cache <-> ?) < 0.9', query))
+      .order(sanitize_sql_for_order(['steam_id = ? DESC', steam_id]))
+      .order(sanitize_sql_for_order(['query_name_cache <-> ?', query]))
   end)
 
   def matches
