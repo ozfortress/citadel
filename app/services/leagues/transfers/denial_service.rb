@@ -4,9 +4,9 @@ module Leagues
       include BaseService
       extend CompletionMessageServicer
 
-      def call(request)
+      def call(request, user)
         request.transaction do
-          request.deny || rollback!
+          request.deny(user) || rollback!
 
           user   = request.user
           roster = request.roster

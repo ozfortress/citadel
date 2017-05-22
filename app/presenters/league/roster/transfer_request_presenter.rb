@@ -3,14 +3,65 @@ class League
     class TransferRequestPresenter < BasePresenter
       presents :transfer_request
 
+      # rubocop:disable Rails/OutputSafety
+      PENDING_MESSAGE = '%{created_by} requested %{user} be transferred %{direction}'\
+                        '%{roster}%{leaving_message}'.html_safe
+
+      APPROVED_MESSAGE = '%{approved_by} approved %{user}\'s transfer %{direction}'\
+                         '%{roster}%{leaving_message} (requested by %{created_by})'.html_safe
+
+      DENIED_MESSAGE = '%{denied_by} denied %{user}\'s transfer %{direction}'\
+                       '%{roster}%{leaving_message} (requested by %{created_by})'.html_safe
+
+      LEAVING_MESSAGE = ', out of %{leaving_roster}'.html_safe
+      # rubocop:enable Rails/OutputSafety
+
       def user
         @user ||= present(transfer_request.user)
       end
 
+      def created_by
+        @created_by ||= present(transfer_request.created_by)
+      end
+
+      def roster
+        @roster ||= present(transfer_request.roster)
+      end
+
+      def leaving_roster
+        @leaving_roster ||= present(transfer_request.leaving_roster)
+      end
+
+      def approved_by
+        @approved_by ||= present(transfer_request.approved_by)
+      end
+
+      def denied_by
+        @denied_by ||= present(transfer_request.denied_by)
+      end
+
       def listing
-        elements = [transfer_request.created_at.strftime('%c'), user.link,
-                    user.roster_status(transfer_request.league), transfer_message, status_message]
-        safe_join(elements, ' ')
+        safe_join([transfer_request.created_at.strftime('%c'), message], ' ')
+      end
+
+      def message
+        format(message_template, message_params)
+      end
+
+      def leaving_message
+        if transfer_request.leaving_roster
+          format(LEAVING_MESSAGE, leaving_roster: leaving_roster.link)
+        else
+          ''
+        end
+      end
+
+      def direction_message
+        if transfer_request.is_joining?
+          'into'
+        else
+          'out of'
+        end
       end
 
       def transfer_message
@@ -21,14 +72,29 @@ class League
         end
       end
 
-      def status_message
-        return if transfer_request.pending?
+      private
 
-        if transfer_request.approved?
-          content_tag(:div, 'Approved', class: 'label alert-success')
+      def message_template
+        if transfer_request.pending?
+          PENDING_MESSAGE
+        elsif transfer_request.approved?
+          APPROVED_MESSAGE
         else
-          content_tag(:div, 'Denied', class: 'label alert-danger')
+          DENIED_MESSAGE
         end
+      end
+
+      def message_params
+        if transfer_request.approved?
+          { approved_by: approved_by.link }
+        elsif transfer_request.denied?
+          { denied_by: denied_by.link }
+        else
+          {}
+        end.merge(
+          created_by: created_by.link, user: user.link, direction: direction_message,
+          roster: roster.link, leaving_message: leaving_message
+        )
       end
     end
   end

@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :league_roster_transfer_request, class: League::Roster::TransferRequest do
+    association :created_by, factory: :user
     user
     association :roster, factory: :league_roster
     is_joining true
@@ -18,6 +19,14 @@ FactoryGirl.define do
         team = roster.team
         team.add_player!(user) unless team.on_roster?(user)
       end
+    end
+
+    factory :approved_league_roster_transfer_request do
+      association :approved_by, factory: :user
+    end
+
+    factory :denied_league_roster_transfer_request do
+      association :denied_by, factory: :user
     end
   end
 end

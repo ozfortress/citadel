@@ -13,13 +13,12 @@ describe 'leagues/transfers/index' do
       requests += build_stubbed_list(:league_roster_transfer_request, 2, is_joining: false)
       pending_transfer_requests[division] = requests
 
-      requests = []
-      requests << build_stubbed(:league_roster_transfer_request, status: 'approved')
-      requests << build_stubbed(:league_roster_transfer_request, is_joining: false,
-                                                                 status: 'approved')
-      requests << build_stubbed(:league_roster_transfer_request, status: 'denied')
-      requests << build_stubbed(:league_roster_transfer_request, is_joining: false,
-                                                                 status: 'denied')
+      requests = [
+        build_stubbed(:approved_league_roster_transfer_request),
+        build_stubbed(:approved_league_roster_transfer_request, is_joining: false),
+        build_stubbed(:denied_league_roster_transfer_request),
+        build_stubbed(:denied_league_roster_transfer_request, is_joining: false),
+      ]
       old_transfer_requests[division] = requests
     end
 

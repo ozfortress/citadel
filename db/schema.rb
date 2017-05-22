@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170510024835) do
+ActiveRecord::Schema.define(version: 20170522013956) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -359,10 +359,14 @@ ActiveRecord::Schema.define(version: 20170510024835) do
   create_table "league_roster_transfer_requests", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "roster_id"
-    t.boolean  "is_joining",             null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "status",     default: 0, null: false
+    t.boolean  "is_joining",        null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "created_by_id"
+    t.integer  "approved_by_id"
+    t.integer  "denied_by_id"
+    t.integer  "leaving_roster_id"
+    t.index ["approved_by_id", "denied_by_id"], name: "transfer_requests_on_approved_by_id_and_denied_by_id", using: :btree
     t.index ["roster_id"], name: "index_league_roster_transfer_requests_on_roster_id", using: :btree
     t.index ["user_id"], name: "index_league_roster_transfer_requests_on_user_id", using: :btree
   end
@@ -661,6 +665,9 @@ ActiveRecord::Schema.define(version: 20170510024835) do
   add_foreign_key "league_roster_players", "users"
   add_foreign_key "league_roster_transfer_requests", "league_rosters", column: "roster_id"
   add_foreign_key "league_roster_transfer_requests", "users"
+  add_foreign_key "league_roster_transfer_requests", "users", column: "approved_by_id"
+  add_foreign_key "league_roster_transfer_requests", "users", column: "created_by_id"
+  add_foreign_key "league_roster_transfer_requests", "users", column: "denied_by_id"
   add_foreign_key "league_roster_transfers", "league_rosters", column: "roster_id"
   add_foreign_key "league_roster_transfers", "users"
   add_foreign_key "league_rosters", "league_divisions", column: "division_id"

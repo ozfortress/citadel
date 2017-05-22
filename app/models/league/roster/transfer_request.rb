@@ -2,12 +2,17 @@ class League
   class Roster
     class TransferRequest < ApplicationRecord
       belongs_to :roster
-      belongs_to :user
+      belongs_to :leaving_roster, class_name: 'Roster', optional: true
 
-      delegate :league, :division, to: :roster
+      belongs_to :user
+      belongs_to :created_by, class_name: 'User'
+
+      belongs_to :approved_by, class_name: 'User', optional: true
+      belongs_to :denied_by, class_name: 'User', optional: true
+
+      delegate :league, :division, to: :roster, allow_nil: true
 
       validates :is_joining, inclusion: { in: [true, false] }
-      enum status: [:pending, :approved, :denied]
 
       validate :unique_within_league,                         if: :pending?
       validate :on_team,                                      if: :pending?
@@ -17,31 +22,49 @@ class League
       validate :within_roster_size_limits,                    if: :pending?
       validate :within_roster_size_limits_for_leaving_roster, if: :pending?
 
-      def approve
+      scope :pending, -> { where(approved_by: nil, denied_by: nil) }
+      scope :approved, -> { where.not(approved_by: nil) }
+      scope :denied, -> { where.not(denied_by: nil) }
+
+      before_validation :set_leaving_roster, if: :new_record?
+
+      def approve(user)
         transaction do
           validate || raise(ActiveRecord::Rollback)
 
           propagate_players!
 
           if persisted?
-            update(status: 'approved') || raise(ActiveRecord::Rollback)
+            update(approved_by: user) || raise(ActiveRecord::Rollback)
           else
-            self.status = :approved
+            self.approved_by = user
           end
         end
 
         !pending?
       end
 
-      def deny
-        update(status: 'denied')
+      def deny(user)
+        update(denied_by: user)
       end
 
-      def leaving_roster
-        @leaving_roster ||= league.roster_for(user)
+      def pending?
+        approved_by.blank? && denied_by.blank?
+      end
+
+      def approved?
+        approved_by.present?
+      end
+
+      def denied?
+        denied_by.present?
       end
 
       private
+
+      def set_leaving_roster
+        self.leaving_roster = league&.roster_for(user) if leaving_roster.blank? && is_joining?
+      end
 
       def propagate_players!
         if is_joining?
