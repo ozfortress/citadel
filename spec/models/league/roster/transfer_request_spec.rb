@@ -4,19 +4,33 @@ describe League::Roster::TransferRequest do
   before(:all) { create(:league_roster_transfer_request, propagate: true) }
 
   it { should belong_to(:roster) }
-  it { should belong_to(:user) }
+  it { should_not allow_value(nil).for(:roster) }
 
-  it { should define_enum_for(:status).with([:pending, :approved, :denied]) }
+  it { should belong_to(:leaving_roster) }
+  it { should allow_value(nil).for(:leaving_roster) }
+
+  it { should belong_to(:user) }
+  it { should_not allow_value(nil).for(:user) }
+
+  it { should belong_to(:created_by) }
+  it { should_not allow_value(nil).for(:created_by) }
+
+  it { should belong_to(:approved_by) }
+  it { should allow_value(nil).for(:approved_by) }
+
+  it { should belong_to(:denied_by) }
+  it { should allow_value(nil).for(:denied_by) }
 
   describe '#approve' do
     it 'succeeds when joining' do
-      request = create(:league_roster_transfer_request, propagate: true)
-      user = request.user
-      roster = request.roster
-      roster2 = create(:league_roster, division: request.division)
-      roster2.add_player!(request.user)
+      user = create(:user)
+      division = create(:league_division)
+      roster = create(:league_roster, division: division)
+      roster2 = create(:league_roster, division: division)
+      roster2.add_player!(user)
+      request = create(:league_roster_transfer_request, roster: roster, user: user, propagate: true)
 
-      expect(request.approve).to be_truthy
+      expect(request.approve(user)).to be_truthy
       expect(roster.on_roster?(user)).to be(true)
       expect(roster2.on_roster?(user)).to be(false)
       expect(request.reload).to be_approved
@@ -28,7 +42,7 @@ describe League::Roster::TransferRequest do
       request = create(:league_roster_transfer_request,
                        roster: roster, user: user, is_joining: false)
 
-      expect(request.approve).to be_truthy
+      expect(request.approve(user)).to be_truthy
       expect(roster.on_roster?(user)).to be(false)
       expect(request.reload).to be_approved
     end
@@ -42,7 +56,7 @@ describe League::Roster::TransferRequest do
       roster2 = create(:league_roster, division: request.division)
       roster2.add_player!(request.user)
 
-      expect(request.deny).to be_truthy
+      expect(request.deny(user)).to be_truthy
       expect(roster.on_roster?(user)).to be(false)
       expect(roster2.on_roster?(user)).to be(true)
       expect(request.reload).to be_denied
@@ -54,7 +68,7 @@ describe League::Roster::TransferRequest do
       request = create(:league_roster_transfer_request,
                        roster: roster, user: user, is_joining: false)
 
-      expect(request.deny).to be_truthy
+      expect(request.deny(user)).to be_truthy
       expect(roster.on_roster?(user)).to be(true)
       expect(request.reload).to be_denied
     end

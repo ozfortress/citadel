@@ -102,7 +102,7 @@ describe League::Roster do
       expect(home_match.reload.forfeit_by).to eq('home_team_forfeit')
       expect(away_match.reload.forfeit_by).to eq('away_team_forfeit')
       requests.each do |request|
-        expect(request.reload).to be_denied
+        expect { request.reload } .to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
