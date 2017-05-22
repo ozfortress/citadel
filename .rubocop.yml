@@ -22,6 +22,8 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 Style/SymbolArray:
   Enabled: false
+Style/FormatString:
+  Enabled: false
 
 # 'old' style
 Style/EmptyMethod:
