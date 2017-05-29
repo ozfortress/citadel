@@ -23,8 +23,9 @@
       - present_collection(@upcoming_matches).each do |match|
         %li.list-group-item= match.link
 
-- @active_rosters.zip(@active_roster_matches).each do |roster, matches|
+- @active_rosters.each do |roster|
   - roster_p = present(roster)
+  - matches = @active_roster_matches[roster]
 
   .global-collapsible
     .panel.panel-default
@@ -137,9 +138,12 @@
       .panel-heading
         .panel-title Past Rosters
 
-      - @past_rosters.zip(@past_roster_matches).each do |roster, matches|
-        - roster_p = present(roster)
-        - id = dom_id(roster)
+      - @past_rosters.each do |roster|
+        :ruby
+          roster_p = present(roster)
+          matches = @past_roster_matches[roster]
+
+          id = dom_id(roster)
         .panel-heading
           = roster_p.title
           %a{ data: { toggle: 'collapse', parent: '.global-collapsible' }, href: "##{id}" }

@@ -53,9 +53,9 @@ describe 'teams/show' do
     assign(:players, players)
     assign(:transfers, transfers_in + transfers_out)
     assign(:active_rosters, @active_rosters)
-    assign(:active_roster_matches, @active_rosters.map { @matches })
+    assign(:active_roster_matches, @active_rosters.map { |key| [key, @matches] }.to_h)
     assign(:past_rosters, @past_rosters)
-    assign(:past_roster_matches, @past_rosters.map { @matches })
+    assign(:past_roster_matches, @past_rosters.map { |key| [key, @matches] }.to_h)
     assign(:upcoming_matches, @matches)
     assign(:users, @users)
   end

@@ -59,6 +59,10 @@ class League
 
     after_initialize :set_defaults, unless: :persisted?
 
+    def self.matches
+      Match.for_roster(all.map(&:id))
+    end
+
     def matches
       Match.for_roster(self)
     end

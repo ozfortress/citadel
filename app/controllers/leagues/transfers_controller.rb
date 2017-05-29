@@ -14,6 +14,7 @@ module Leagues
       @divisions = @league.divisions
                           .includes(transfer_requests: :user)
                           .references(:transfer_requests)
+                          .order(:id)
                           .merge(League::Roster::TransferRequest.order(:created_at))
 
       @pending_transfer_requests = {}
