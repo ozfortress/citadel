@@ -89,20 +89,29 @@ class TeamsController < ApplicationController
            .merge(League::Roster::Transfer.order(created_at: :desc))
   end
 
-  def match_includes_for(matches)
-    matches.order(round_number: :asc, created_at: :desc)
-           .includes(:rounds, :home_team, :away_team)
+  def matches_for(rosters)
+    matches = rosters.matches
+                     .order(round_number: :asc, created_at: :desc)
+                     .includes(:rounds, :home_team, :away_team)
+
+    matches.group_by do |match|
+      if rosters.include?(match.home_team)
+        match.home_team
+      else
+        match.away_team
+      end
+    end
   end
 
   def teams_show_fetch_teams
     @players               = @team.players
     @transfers             = @team.transfers
 
-    @active_rosters        = roster_includes_for @team.rosters.for_incomplete_league
-    @active_roster_matches = @active_rosters.map { |r| match_includes_for r.matches }
+    @active_rosters        = roster_includes_for(@team.rosters.for_incomplete_league).load
+    @active_roster_matches = matches_for @active_rosters
 
-    @past_rosters          = roster_includes_for @team.rosters.for_completed_league
-    @past_roster_matches   = @past_rosters.map { |r| match_includes_for r.matches }
+    @past_rosters          = roster_includes_for(@team.rosters.for_completed_league).load
+    @past_roster_matches   = matches_for @past_rosters
 
     @upcoming_matches = @team.matches.pending.includes(:home_team, :away_team)
                              .order(created_at: :asc)
