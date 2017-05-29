@@ -1,5 +1,5 @@
 module Ahoy
-  class Event < ActiveRecord::Base
+  class Event < ApplicationRecord
     include CountEstimator
     include Ahoy::Properties
 

@@ -1,5 +1,8 @@
 Rails:
   Enabled: true
+Rails/ApplicationRecord:
+  Exclude:
+    - 'lib/**/*'
 Metrics/LineLength:
   Max: 100
 Metrics/AbcSize:
@@ -24,6 +27,8 @@ Style/SymbolArray:
   Enabled: false
 Style/FormatString:
   Enabled: false
+Style/FormatStringToken:
+  EnforcedStyle: template
 
 # 'old' style
 Style/EmptyMethod:
