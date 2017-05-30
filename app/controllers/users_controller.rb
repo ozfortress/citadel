@@ -41,6 +41,8 @@ class UsersController < ApplicationController
   end
 
   def show
+    @comment        = User::Comment.new
+    @comments       = @user.comments.includes(:created_by)
     @aka            = @user.aka.limit(5).order(created_at: :desc)
     @titles         = @user.titles
     @teams          = @user.teams.order(created_at: :desc)

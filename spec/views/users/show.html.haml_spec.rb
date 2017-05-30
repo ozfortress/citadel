@@ -12,6 +12,7 @@ describe 'users/show' do
   let(:completed_league) { build_stubbed(:league, status: :completed) }
   let(:rosters) { build_stubbed_list(:league_roster, 2) }
   let(:matches) { build_stubbed_list(:league_match, 2) }
+  let(:comments) { build_stubbed_list(:user_comment, 10) }
 
   before do
     rosters = [active_league, signup_league, completed_league].map do |league|
@@ -22,6 +23,8 @@ describe 'users/show' do
     rosters << build_stubbed(:league_roster, disbanded: true)
 
     assign(:user, user)
+    assign(:comment, User::Comment.new)
+    assign(:comments, comments)
     assign(:teams, teams)
     assign(:aka, aka)
     assign(:titles, titles)
