@@ -1,0 +1,4 @@
+= bootstrap_form_for comment, as: :comment, url: user_comments_path(user) do |f|
+  = f.markdown_editor :content, hide_label: true, rows: 3
+
+  = f.submit 'Submit'

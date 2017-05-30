@@ -105,3 +105,19 @@
       - present_collection(@rosters).each do |roster|
         - unless roster.league.hidden?
           %li.list-group-item= roster.user_listing
+
+- if user_can_edit_users?
+  .panel.panel-info
+    .panel-heading Admin Comments
+    %ul.list-group
+      - @comments.each do |comment|
+        %li.list-group-item
+          .panel.panel-default
+            .panel-heading
+              = render 'users/listing', user: comment.created_by
+              .pull-right= comment.created_at.strftime('%c')
+
+          .markdown!= comment.content_render_cache
+
+    .panel-body
+      = render 'users/comments/form', comment: @comment, user: @user

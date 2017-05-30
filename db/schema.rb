@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170522013956) do
+ActiveRecord::Schema.define(version: 20170530075750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -504,6 +504,16 @@ ActiveRecord::Schema.define(version: 20170522013956) do
     t.index ["name"], name: "index_teams_on_name", unique: true, using: :btree
   end
 
+  create_table "user_comments", force: :cascade do |t|
+    t.integer  "user_id",              null: false
+    t.integer  "created_by_id",        null: false
+    t.text     "content",              null: false
+    t.text     "content_render_cache", null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.index ["user_id"], name: "index_user_comments_on_user_id", using: :btree
+  end
+
   create_table "user_name_changes", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "approved_by_id"
@@ -682,6 +692,8 @@ ActiveRecord::Schema.define(version: 20170522013956) do
   add_foreign_key "team_players", "users"
   add_foreign_key "team_transfers", "teams"
   add_foreign_key "team_transfers", "users"
+  add_foreign_key "user_comments", "users"
+  add_foreign_key "user_comments", "users", column: "created_by_id"
   add_foreign_key "user_name_changes", "users"
   add_foreign_key "user_name_changes", "users", column: "approved_by_id"
   add_foreign_key "user_name_changes", "users", column: "denied_by_id"

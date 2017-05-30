@@ -25,6 +25,8 @@ class User < ApplicationRecord
   has_many :roster_transfers,         class_name: 'League::Roster::Transfer'
   has_many :roster_transfer_requests, class_name: 'League::Roster::TransferRequest'
 
+  has_many :comments, class_name: 'User::Comment'
+
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:steam]
 
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
