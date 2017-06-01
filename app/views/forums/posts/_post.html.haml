@@ -17,4 +17,9 @@
       = link_to edits_for_forums_post_path(post), class: 'btn btn-default btn-sm' do
         View Edits
 
-.container-fluid.markdown= post_p.content
+.container-fluid.markdown
+  = post_p.content
+
+  %button.pull-right.btn.btn-default.btn-xs{ data: { quote: { id: quote_id, text: post_p.quote } } }
+    Quote
+

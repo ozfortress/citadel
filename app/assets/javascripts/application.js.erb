@@ -56,4 +56,24 @@ $(function() {
 
     // Most browsers keep form data around, so we need to trigger change on load
     $("select[data-toggle='tab']").trigger('change', null);
+
+    // Quoting for Forums and Comms
+    $("*[data-quote-id]").click(function() {
+        console.log('quote');
+
+        var btn = $(this);
+        var quote = btn.attr("data-quote-text");
+        if (quote[quote.length - 1] != '\n') {
+            quote += '\n';
+        }
+
+        var target = $("#" + btn.attr("data-quote-id"));
+        var text = target.val();
+        if (text[text.length - 1] != '\n' && text.length > 0) {
+            text += '\n';
+        }
+
+        target.val(text + quote);
+        target.focus();
+    });
 });
