@@ -33,7 +33,7 @@ class UserPresenter < BasePresenter
 
   def titles(options = {})
     team = options[:team]
-    has_captain_label = team && user.can?(:edit, team)
+    has_captain_label = team && user.can?(:edit, team) && user.can?(:use, :teams)
 
     titles = []
     titles << content_tag(:div, 'captain', class: 'label alert-danger') if has_captain_label

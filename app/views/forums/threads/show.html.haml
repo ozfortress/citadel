@@ -19,7 +19,7 @@
 
 .panel.panel-default
   - @posts.each do |post|
-    = render post
+    = render post, quote_id: 'wmd-input-new-forums-post'
 
   - if user_can_create_post?
     .container-fluid

@@ -1,6 +1,6 @@
 - match_p = present(@match)
 
-%h1 #{present(@league).link}: #{@match.home_team.division}
+%h1 #{present(@league).link}: #{@match.home_team.division.name}
 %h2= match_p.link
 
 .panel.panel-default

@@ -11,5 +11,12 @@ module Forums
       post.content_render_cache.html_safe
       # rubocop:enable Rails/OutputSafety
     end
+
+    def quote
+      header = "#{post.created_by.name} wrote:"
+      text = post.content.split("\n").map { |line| "> #{line}" }.join("\n")
+
+      [header, text].join("\n")
+    end
   end
 end
