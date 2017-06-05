@@ -37,11 +37,15 @@ describe UsersController do
     it 'creates a user' do
       session['devise.steam_data'] = OmniAuth.mock_auth_hash
 
-      post :create, params: { user: { name: 'A', description: 'B' } }
+      post :create, params: { user: {
+        name: 'A', description: 'B', email: 'foo@bar.com',
+      } }
 
       user = User.find_by(name: 'A')
       expect(user).to_not be_nil
       expect(user.description).to eq('B')
+      expect(user.email).to eq('foo@bar.com')
+      expect(user).to_not be_confirmed
     end
 
     it 'handles existing users' do
@@ -82,13 +86,15 @@ describe UsersController do
       sign_in user
 
       patch :update, params: { id: user.id, user: {
-        description: 'D', badge_name: 'Foo', badge_color: 1,
+        description: 'D', badge_name: 'Foo', badge_color: 1, email: 'foo@bar.com',
       } }
 
       user.reload
       expect(user.description).to eq('D')
       expect(user.badge_name).to eq('')
       expect(user.badge_color).to eq(0)
+      expect(user.email).to eq('foo@bar.com')
+      expect(user).to_not be_confirmed
     end
 
     it 'allows admins to edit badges' do

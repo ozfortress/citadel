@@ -73,7 +73,7 @@ class UserPresenter < BasePresenter
   end
 
   def confirmation_label
-    'Email for Notifications ' +
+    'Optional Email for Notifications ' +
       if user.confirmed?
         '(confirmed!)'
       elsif user.email?

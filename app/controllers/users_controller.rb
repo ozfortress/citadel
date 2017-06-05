@@ -18,8 +18,6 @@ class UsersController < ApplicationController
   end
 
   def new
-    steam_data = session['devise.steam_data']
-
     if steam_data
       @user = User.new(name: params[:name], steam_id: steam_data['uid'])
     else
@@ -28,12 +26,12 @@ class UsersController < ApplicationController
   end
 
   def create
-    steam_data = session['devise.steam_data']
-    @user = User.new(new_user_params.merge(steam_id: steam_data['uid']))
+    @user = Users::CreationService.call(new_user_params, flash)
 
-    if @user.save
-      @user.names.create!(name: @user.name, approved_by: @user)
+    if @user.persisted?
       sign_in @user
+
+      flash.keep
       redirect_to user_path(@user)
     else
       render :new
@@ -107,8 +105,13 @@ class UsersController < ApplicationController
 
   private
 
+  def steam_data
+    session['devise.steam_data']
+  end
+
   def new_user_params
-    params.require(:user).permit(:name, :avatar, :description)
+    params.require(:user).permit(:name, :avatar, :description, :email)
+          .merge(steam_id: steam_data['uid'])
   end
 
   def edit_user_params

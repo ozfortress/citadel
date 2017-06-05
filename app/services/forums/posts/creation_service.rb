@@ -23,7 +23,7 @@ module Forums
 
       def notify_users(users, thread, post)
         message = "#{post.created_by.name} posted on #{thread.title}"
-        url = forums_thread_path(thread, anchor: "post_#{post.id}")
+        url = forums_thread_path(thread, page: Post.page_of(post), anchor: "post_#{post.id}")
 
         users.each do |user|
           Users::NotificationService.call(user, message, url)

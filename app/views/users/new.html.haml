@@ -1,10 +1,12 @@
 - content_for(:title) { 'Register' }
 
+- user_p = present(@user)
+
 %h1 Register with [#{@user.steam_id3}]
 
 = bootstrap_form_for @user, method: :new do |f|
   = f.text_field :name
-  = render 'user_form', f: f
+  = render 'user_form', f: f, user_p: user_p
 
   = f.submit 'Register'
   = link_to 'Cancel', :back, class: 'btn btn-default'
