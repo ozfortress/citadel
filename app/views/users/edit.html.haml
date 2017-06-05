@@ -11,9 +11,7 @@
 
 .panel-body
   = bootstrap_form_for @user, method: :patch do |f|
-    = f.text_field :email, label: user_p.confirmation_label
-
-    = render 'user_form', f: f
+    = render 'user_form', f: f, user_p: user_p
 
     = f.submit 'Save'
     = link_to 'Cancel', user_path(@user), class: 'btn btn-default'
