@@ -20,7 +20,7 @@ module Forums
     end
 
     def edit_path
-      if post == post.thread.posts.first
+      if post.first_post?
         edit_forums_thread_path(post.thread)
       else
         edit_forums_post_path(post)

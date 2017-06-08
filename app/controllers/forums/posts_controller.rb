@@ -44,13 +44,7 @@ module Forums
 
     def destroy
       if @post.destroy
-        path = if @post.previous_post
-                 path_for(@post.previous_post)
-               else
-                 forums_thread_path(@thread)
-               end
-
-        redirect_to path
+        redirect_to path_for(@post.previous_post)
       else
         render :edit
       end
@@ -85,7 +79,7 @@ module Forums
     end
 
     def require_not_first_post
-      redirect_back(fallback_location: forums_path) if @post == @thread.posts.first
+      redirect_back(fallback_location: forums_path) if @post.first_post?
     end
   end
 end
