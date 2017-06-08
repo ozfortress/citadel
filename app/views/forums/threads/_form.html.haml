@@ -4,3 +4,6 @@
   = f.check_box :locked
   = f.check_box :pinned
   = f.check_box :hidden
+
+= f.fields_for post do |post_f|
+  = render 'forums/posts/form', f: post_f

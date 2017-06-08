@@ -18,5 +18,13 @@ module Forums
 
       [header, text].join("\n")
     end
+
+    def edit_path
+      if post == post.thread.posts.first
+        edit_forums_thread_path(post.thread)
+      else
+        edit_forums_post_path(post)
+      end
+    end
   end
 end

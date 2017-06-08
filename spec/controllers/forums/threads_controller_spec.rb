@@ -272,6 +272,10 @@ describe Forums::ThreadsController do
   context 'Existing Thread' do
     let(:thread) { create(:forums_thread, topic: topic) }
 
+    before do
+      create(:forums_post, thread: thread)
+    end
+
     describe 'GET #show' do
       it 'succeeds' do
         get :show, params: { id: thread.id }
@@ -333,7 +337,10 @@ describe Forums::ThreadsController do
         sign_in user
 
         patch :update, params: {
-          id: thread.id, forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true }
+          id: thread.id, forums_thread: {
+            title: 'Test', locked: true, pinned: true, hidden: true,
+            forums_post: { content: content },
+          }
         }
 
         thread.reload
@@ -341,6 +348,7 @@ describe Forums::ThreadsController do
         expect(thread.locked).to be(true)
         expect(thread.pinned).to be(true)
         expect(thread.hidden).to be(true)
+        expect(thread.posts.first.content).to eq(content)
         expect(response).to redirect_to(forums_thread_path(thread))
       end
 
@@ -349,7 +357,10 @@ describe Forums::ThreadsController do
         sign_in user
 
         patch :update, params: {
-          id: thread.id, forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true }
+          id: thread.id, forums_thread: {
+            title: 'Test', locked: true, pinned: true, hidden: true,
+            forums_post: { content: content },
+          }
         }
 
         thread.reload
@@ -357,17 +368,40 @@ describe Forums::ThreadsController do
         expect(thread.locked).to be(false)
         expect(thread.pinned).to be(false)
         expect(thread.hidden).to be(false)
+        expect(thread.posts.first.content).to eq(content)
         expect(response).to redirect_to(forums_thread_path(thread))
       end
 
-      it 'fails for invalid data' do
+      it 'fails for invalid thread data' do
         user.grant(:manage, :forums)
         sign_in user
 
-        patch :update, params: { id: thread.id, forums_thread: { title: '' } }
+        patch :update, params: {
+          id: thread.id, forums_thread: {
+            title: '', forums_post: { content: '' }
+          }
+        }
 
         thread.reload
         expect(thread.title).to_not eq('Test')
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'fails for invalid post data' do
+        user.grant(:manage, :forums)
+        sign_in user
+
+        patch :update, params: {
+          id: thread.id, forums_thread: {
+            title: 'Test', locked: true, pinned: true, hidden: true,
+            forums_post: { content: '' },
+          }
+        }
+
+        thread.reload
+        expect(thread.title).to_not eq('Test')
+        expect(thread.posts.first.content).to_not eq('')
+        expect(response).to have_http_status(:success)
       end
 
       it 'redirects for banned user for forums' do
@@ -375,7 +409,10 @@ describe Forums::ThreadsController do
         sign_in user
 
         patch :update, params: {
-          id: thread.id, forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true }
+          id: thread.id, forums_thread: {
+            title: 'Test', locked: true, pinned: true, hidden: true,
+            forums_post: {},
+          }
         }
 
         thread.reload
@@ -388,7 +425,10 @@ describe Forums::ThreadsController do
         sign_in user
 
         patch :update, params: {
-          id: thread.id, forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true }
+          id: thread.id, forums_thread: {
+            title: 'Test', locked: true, pinned: true, hidden: true,
+            forums_post: {},
+          }
         }
 
         thread.reload
@@ -401,7 +441,10 @@ describe Forums::ThreadsController do
         sign_in user
 
         patch :update, params: {
-          id: thread.id, forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true }
+          id: thread.id, forums_thread: {
+            title: 'Test', locked: true, pinned: true, hidden: true,
+            forums_post: {},
+          }
         }
 
         thread.reload
@@ -412,7 +455,9 @@ describe Forums::ThreadsController do
       it 'redirects for any user' do
         sign_in user
 
-        patch :update, params: { id: thread.id, forums_thread: { title: 'Test' } }
+        patch :update, params: {
+          id: thread.id, forums_thread: { title: 'Test', forums_post: {} }
+        }
 
         thread.reload
         expect(thread.title).to_not eq('Test')
