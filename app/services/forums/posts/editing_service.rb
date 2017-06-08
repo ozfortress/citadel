@@ -5,7 +5,10 @@ module Forums
 
       def call(user, post, params)
         post.transaction do
-          post.update(params) || rollback!
+          post.assign_attributes(params)
+          return post unless post.changed?
+
+          post.save || rollback!
 
           post.create_edit!(user)
         end
