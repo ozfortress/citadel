@@ -9,4 +9,6 @@ mp_timelimit 0
 mp_winlimit 1
 </code></pre><p>Load this configuration using <code>rcon exec ozfortress_golden_cap</code> or simply <code>rcon golden</code> on ozfortress servers.</p><h2 id="other">Other</h2><p>The following formats are also included in the ozfortress server configurations but does not have a respective active competition.</p><h3 id="ultiduo">Ultiduo</h3><p>Ultiduo maps are played with a Soldier and Medic pair on each team. There is no timelimit or winlimit as this format is mostly used for training.</p><pre><code>mp_timelimit 0
 mp_winlimit 1
-</code></pre><p>Load this configuration using <code>rcon exec ultiduo</code> or simply <code>rcon ultiduo</code> on ozfortress servers.</p></div>
+</code></pre><p>Load this configuration using <code>rcon exec ultiduo</code> or simply <code>rcon ultiduo</code> on ozfortress servers.</p><hr><center><a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"></a>
+<p>This work by <a href="http://ozfortress.com" target="_blank">ozfortress</a> is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+</center></div>
