@@ -2,7 +2,10 @@
   .panel-heading Match Comms
 
   - comms.each do |comm|
-    = render 'leagues/matches/comms/comm', match: match, comm: comm
+    - if comm.exists?
+      = render 'leagues/matches/comms/comm', match: match, comm: comm
+    - elsif user_can_edit_league?
+      = render 'leagues/matches/comms/deleted_comm', match: match, comm: comm
 
   - if user_can_comm?
     .container-fluid

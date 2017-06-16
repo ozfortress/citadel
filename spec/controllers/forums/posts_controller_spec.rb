@@ -137,6 +137,7 @@ describe Forums::PostsController do
   end
 
   context 'Existing Post' do
+    let!(:first_post) { create(:forums_post, thread: thread, content: content) }
     let!(:post) { create(:forums_post, thread: thread, content: content) }
 
     describe 'GET #edits' do
@@ -215,6 +216,15 @@ describe Forums::PostsController do
         expect(post.content).to eq(content)
       end
 
+      it 'redirects for first post' do
+        user.grant(:manage, :forums)
+        sign_in user
+
+        patch :update, params: { id: first_post.id, forums_post: { content: content } }
+
+        expect(response).to redirect_to(forums_path)
+      end
+
       it 'redirects for banned author for forums' do
         post.update!(created_by: user)
         user.ban(:use, :forums)
@@ -270,8 +280,9 @@ describe Forums::PostsController do
         delete :destroy, params: { id: post.id }
 
         thread.reload
-        expect(thread.posts).to be_empty
-        expect(response).to redirect_to(forums_thread_path(thread))
+        expect(thread.posts.size).to eq(1)
+        path = forums_thread_path(thread, page: 1, anchor: "post_#{first_post.id}")
+        expect(response).to redirect_to(path)
       end
 
       it 'redirects for any user' do
@@ -281,7 +292,7 @@ describe Forums::PostsController do
         delete :destroy, params: { id: post.id }
 
         thread.reload
-        expect(thread.posts).to_not be_empty
+        expect(thread.posts.size).to eq(2)
         expect(response).to redirect_to(forums_path)
       end
     end

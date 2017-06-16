@@ -197,6 +197,14 @@ describe Leagues::MatchesController do
 
         expect(response).to have_http_status(:success)
       end
+
+      it 'succeeds for bye match' do
+        match.update!(away_team: nil)
+
+        get :show, params: { id: match.id }
+
+        expect(response).to have_http_status(:success)
+      end
     end
 
     describe 'GET #edit' do

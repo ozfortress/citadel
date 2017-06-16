@@ -21,7 +21,7 @@ module Forums
 
     def create
       @thread = Threads::CreationService.call(current_user, @topic, new_thread_params,
-                                              new_thread_post_params)
+                                              thread_post_params)
       @post = @thread.posts.first
 
       if @thread.persisted?
@@ -46,10 +46,14 @@ module Forums
     end
 
     def edit
+      @post = @thread.posts.first
     end
 
     def update
-      if @thread.update(thread_params)
+      @post = @thread.posts.first
+
+      if Threads::EditingService.call(current_user, @thread, thread_params,
+                                      @post, thread_post_params)
         redirect_to forums_thread_path(@thread)
       else
         render :edit
@@ -74,7 +78,7 @@ module Forums
       end
     end
 
-    def new_thread_post_params
+    def thread_post_params
       params.require(:forums_thread).require(:forums_post).permit(:content)
     end
 

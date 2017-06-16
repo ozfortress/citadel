@@ -19,6 +19,7 @@ describe Leagues::Matches::CommsController do
       expect(comm).to_not be nil
       expect(comm.match).to eq(match)
       expect(comm.content).to eq(content)
+      expect(response).to redirect_to(comm.paths.show)
     end
 
     it 'fails with invalid data' do
@@ -30,6 +31,7 @@ describe Leagues::Matches::CommsController do
       }
 
       expect(match.comms).to be_empty
+      expect(response).to have_http_status(:success)
     end
 
     it 'redirects for banned user for leagues' do
@@ -107,7 +109,7 @@ describe Leagues::Matches::CommsController do
 
         get :edit, params: { id: comm.id }
 
-        expect(response).to redirect_to(match_path(match))
+        expect(response).to redirect_to(comm.paths.show)
       end
     end
 
@@ -123,7 +125,7 @@ describe Leagues::Matches::CommsController do
         expect(comm.user).to eq(writer)
         edit = comm.edits.first
         expect(edit.user).to eq(user)
-        expect(response).to redirect_to(match_path(match))
+        expect(response).to redirect_to(comm.paths.show)
       end
 
       it 'succeeds for writer' do
@@ -132,7 +134,7 @@ describe Leagues::Matches::CommsController do
         patch :update, params: { id: comm.id, comm: { content: content } }
 
         expect(comm.reload.content).to eq(content)
-        expect(response).to redirect_to(match_path(match))
+        expect(response).to redirect_to(comm.paths.show)
       end
 
       it 'fails for invalid data' do
@@ -151,7 +153,7 @@ describe Leagues::Matches::CommsController do
         patch :update, params: { id: comm.id, comm: { content: content } }
 
         expect(comm.reload.content).to_not eq(content)
-        expect(response).to redirect_to(match_path(match))
+        expect(response).to redirect_to(comm.paths.show)
       end
 
       it 'redirects for banned user for leagues' do
@@ -161,7 +163,7 @@ describe Leagues::Matches::CommsController do
         patch :update, params: { id: comm.id, comm: { content: content } }
 
         expect(comm.reload.content).to_not eq(content)
-        expect(response).to redirect_to(match_path(match))
+        expect(response).to redirect_to(comm.paths.show)
       end
 
       it 'redirects for banned user for teams' do
@@ -171,7 +173,7 @@ describe Leagues::Matches::CommsController do
         patch :update, params: { id: comm.id, comm: { content: content } }
 
         expect(comm.reload.content).to_not eq(content)
-        expect(response).to redirect_to(match_path(match))
+        expect(response).to redirect_to(comm.paths.show)
       end
 
       it 'redirects for any user' do
@@ -180,14 +182,14 @@ describe Leagues::Matches::CommsController do
         patch :update, params: { id: comm.id, comm: { content: content } }
 
         expect(comm.reload.content).to_not eq(content)
-        expect(response).to redirect_to(match_path(match))
+        expect(response).to redirect_to(comm.paths.show)
       end
 
       it 'redirects for unauthenticated user' do
         patch :update, params: { id: comm.id, comm: { content: content } }
 
         expect(comm.reload.content).to_not eq(content)
-        expect(response).to redirect_to(match_path(match))
+        expect(response).to redirect_to(comm.paths.show)
       end
     end
 
@@ -217,7 +219,7 @@ describe Leagues::Matches::CommsController do
 
         get :edits, params: { id: comm.id }
 
-        expect(response).to redirect_to(match_path(match))
+        expect(response).to redirect_to(comm.paths.show)
       end
     end
 
@@ -228,8 +230,8 @@ describe Leagues::Matches::CommsController do
 
         delete :destroy, params: { id: comm.id }
 
-        expect(match.comms).to be_empty
-        expect(response).to redirect_to(match_path(match))
+        expect(comm.reload.exists?).to be false
+        expect(response).to redirect_to(comm.paths.show)
       end
 
       it 'redirects for writer' do
@@ -237,7 +239,7 @@ describe Leagues::Matches::CommsController do
 
         delete :destroy, params: { id: comm.id }
 
-        expect(match.comms).to_not be_empty
+        expect(comm.reload.exists?).to be true
         expect(response).to redirect_to(match_path(match))
       end
 
@@ -247,7 +249,7 @@ describe Leagues::Matches::CommsController do
 
         delete :destroy, params: { id: comm.id }
 
-        expect(match.comms).to_not be_empty
+        expect(comm.reload.exists?).to be true
         expect(response).to redirect_to(match_path(match))
       end
 
@@ -256,14 +258,88 @@ describe Leagues::Matches::CommsController do
 
         delete :destroy, params: { id: comm.id }
 
-        expect(match.comms).to_not be_empty
+        expect(comm.reload.exists?).to be true
         expect(response).to redirect_to(match_path(match))
       end
 
       it 'redirects for unauthenticated user' do
         delete :destroy, params: { id: comm.id }
 
-        expect(match.comms).to_not be_empty
+        expect(comm.reload.exists?).to be true
+        expect(response).to redirect_to(match_path(match))
+      end
+    end
+
+    describe '#restore' do
+      it 'redirects for authorized user' do
+        user.grant(:edit, league)
+        sign_in user
+
+        patch :restore, params: { id: comm.id }
+
+        expect(comm.reload.exists?).to be true
+        expect(response).to redirect_to(match_path(match))
+      end
+    end
+  end
+
+  context 'deleted comm' do
+    let(:writer) { create(:user) }
+    let(:comm) { create(:league_match_comm, match: match, user: writer, deleted_by: writer) }
+
+    describe '#update' do
+      it 'redirects for authorized admin' do
+        user.grant(:edit, league)
+        sign_in user
+
+        patch :update, params: { id: comm.id, comm: { content: content } }
+
+        comm.reload
+        expect(comm.exists?).to be false
+        expect(comm.content).to_not eq(content)
+        expect(response).to redirect_to(match_path(match))
+      end
+    end
+
+    describe '#destroy' do
+      it 'redirects for authorized user' do
+        user.grant(:edit, league)
+        sign_in user
+
+        delete :destroy, params: { id: comm.id }
+
+        expect(comm.reload.exists?).to be false
+        expect(response).to redirect_to(match_path(match))
+      end
+    end
+
+    describe '#restore' do
+      it 'succeeds for authorized user' do
+        user.grant(:edit, league)
+        sign_in user
+
+        patch :restore, params: { id: comm.id }
+
+        expect(comm.reload.exists?).to be true
+        expect(response).to redirect_to(comm.paths.show)
+      end
+
+      it 'redirects for writer' do
+        sign_in writer
+
+        patch :restore, params: { id: comm.id }
+
+        expect(comm.reload.exists?).to be false
+        expect(response).to redirect_to(match_path(match))
+      end
+
+      it 'redirects for any captain' do
+        user.grant(:edit, match.home_team.team)
+        sign_in user
+
+        patch :restore, params: { id: comm.id }
+
+        expect(comm.reload.exists?).to be false
         expect(response).to redirect_to(match_path(match))
       end
     end

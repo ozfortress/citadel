@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'leagues/matches/show' do
+  let(:user) { build_stubbed(:user) }
   let(:map) { build_stubbed(:map) }
   let(:league) { build_stubbed(:league) }
   let(:division) { build(:league_division, league: league) }
@@ -20,7 +21,10 @@ describe 'leagues/matches/show' do
                                        match: match, map: map)
   end
   let(:rounds) { [round1, round2, round3] }
-  let(:comms) { build_stubbed_list(:league_match_comm, 6) }
+  let(:comms) do
+    build_stubbed_list(:league_match_comm, 3) +
+      build_stubbed_list(:league_match_comm, 3, deleted_by: user)
+  end
 
   before do
     assign(:league, league)
@@ -111,7 +115,13 @@ describe 'leagues/matches/show' do
 
     after do
       comms.each do |comm|
-        expect(rendered).to include(comm.user.name)
+        if view.user_can_edit_league?
+          expect(rendered).to include(comm.user.name)
+        elsif comm.exists?
+          expect(rendered).to include(comm.user.name)
+        else
+          expect(rendered).to_not include(comm.user.name)
+        end
       end
     end
   end

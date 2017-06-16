@@ -11,6 +11,7 @@ module Forums
     before_action :require_can_view_thread
     before_action :require_can_create_post, only: :create
     before_action :require_can_edit_post, only: [:edit, :update, :edits]
+    before_action :require_not_first_post, only: [:edit, :update, :destroy]
     before_action :require_can_manage_thread, only: :destroy
 
     def create
@@ -43,13 +44,7 @@ module Forums
 
     def destroy
       if @post.destroy
-        path = if @post.previous_post
-                 path_for(@post.previous_post)
-               else
-                 forums_thread_path(@thread)
-               end
-
-        redirect_to path
+        redirect_to path_for(@post.previous_post)
       else
         render :edit
       end
@@ -81,6 +76,10 @@ module Forums
 
     def require_can_edit_post
       redirect_back(fallback_location: forums_path) unless user_can_edit_post?
+    end
+
+    def require_not_first_post
+      redirect_back(fallback_location: forums_path) if @post.first_post?
     end
   end
 end

@@ -7,7 +7,8 @@ module Leagues
       @pick_bans = @match.pick_bans.includes(:map)
       @rounds    = @match.rounds.includes(:map)
 
-      @comms = @match.comms.order(:created_at).includes(:user)
+      @comms = @match.comms.ordered.includes(:user)
+      @comms = @comms.existing unless user_can_edit_league?
 
       match_show_permissions_includes
     end
@@ -17,9 +18,11 @@ module Leagues
       home_team_permissions.fetch(:edit, @match.home_team.team)
       home_team_permissions.fetch(:use, @match.home_team.team)
 
-      away_team_permissions = User.permissions(@match.away_team.users.load)
-      away_team_permissions.fetch(:edit, @match.away_team.team)
-      away_team_permissions.fetch(:use, @match.away_team.team)
+      unless @match.bye?
+        away_team_permissions = User.permissions(@match.away_team.users.load)
+        away_team_permissions.fetch(:edit, @match.away_team.team)
+        away_team_permissions.fetch(:use, @match.away_team.team)
+      end
     end
   end
 end

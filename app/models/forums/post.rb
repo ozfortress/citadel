@@ -21,6 +21,10 @@ module Forums
                        content_render_cache: content_render_cache)
     end
 
+    def first_post?
+      self == thread.posts.first
+    end
+
     self.per_page = 8
 
     def self.page_of(post)
