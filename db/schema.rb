@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170530075750) do
+ActiveRecord::Schema.define(version: 20170613082339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -276,6 +276,8 @@ ActiveRecord::Schema.define(version: 20170530075750) do
     t.datetime "updated_at",                        null: false
     t.text     "content_render_cache", default: "", null: false
     t.integer  "edits_count",          default: 0,  null: false
+    t.datetime "deleted_at"
+    t.integer  "deleted_by_id"
     t.index ["match_id"], name: "index_league_match_comms_on_match_id", using: :btree
     t.index ["user_id"], name: "index_league_match_comms_on_user_id", using: :btree
   end
@@ -656,6 +658,7 @@ ActiveRecord::Schema.define(version: 20170530075750) do
   add_foreign_key "league_match_comm_edits", "users"
   add_foreign_key "league_match_comms", "league_matches", column: "match_id"
   add_foreign_key "league_match_comms", "users"
+  add_foreign_key "league_match_comms", "users", column: "deleted_by_id"
   add_foreign_key "league_match_pick_bans", "league_matches", column: "match_id"
   add_foreign_key "league_match_pick_bans", "maps"
   add_foreign_key "league_match_pick_bans", "users", column: "picked_by_id"

@@ -20,20 +20,20 @@ class League
         user_roster&.team
       end
 
-      def anchor_path
-        match_path(comm.match, anchor: id)
-      end
-
-      def edit_path
-        edit_comm_path(comm)
-      end
-
-      def edits_path
-        edits_for_comm_path(comm)
-      end
-
       def created_at
         comm.created_at.strftime('%c')
+      end
+
+      def deleted_at
+        comm.deleted_at.strftime('%c')
+      end
+
+      def created_by
+        @created_by ||= present(comm.user)
+      end
+
+      def deleted_by
+        @deleted_by ||= present(comm.deleted_by)
       end
 
       def content
