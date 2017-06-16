@@ -121,7 +121,7 @@ describe 'leagues/matches/show' do
           expect(rendered).to include(comm.user.name)
         else
           expect(rendered).to_not include(comm.user.name)
-       end
+        end
       end
     end
   end
