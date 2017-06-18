@@ -87,6 +87,18 @@ describe League::Roster::TransferRequest do
       expect(roster.on_roster?(request2.user)).to be true
       expect(request2.reload).to be_approved
     end
+
+    it 'handles roster size above maximum' do
+      roster = create(:league_roster, player_count: 3)
+      roster.league.update!(min_players: 1, max_players: 2)
+      user = roster.users.first
+
+      request = create(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)
+
+      expect(request.approve(user)).to be_truthy
+      expect(roster.on_roster?(user)).to be false
+      expect(request.reload).to be_approved
+    end
   end
 
   describe '#deny' do
@@ -152,6 +164,20 @@ describe League::Roster::TransferRequest do
       expect(request1.deny(user)).to be_truthy
       expect(roster.on_roster?(user)).to be true
       expect(request1.reload).to be_denied
+    end
+
+    it 'handles roster size above maximum' do
+      pending 'Issue #267'
+
+      roster = create(:league_roster, player_count: 3)
+      roster.league.update!(min_players: 1, max_players: 2)
+      user = roster.users.first
+
+      request = create(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)
+
+      expect(request.deny(user)).to be_truthy
+      expect(roster.on_roster?(user)).to be true
+      expect(request.reload).to be_denied
     end
   end
 
