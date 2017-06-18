@@ -150,6 +150,11 @@ class League
       players.where(user: user).exists?
     end
 
+    def tentative_player_count
+      players.size +
+        TransferRequest.joining_roster(self).size - TransferRequest.leaving_roster(self).size
+    end
+
     def schedule_data=(data)
       self[:schedule_data] = league.scheduler&.transform_data(data)
     end
