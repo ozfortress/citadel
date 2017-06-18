@@ -14,23 +14,25 @@ class League
 
       validates :is_joining, inclusion: { in: [true, false] }
 
-      validate :unique_within_league,                         if: :pending?
-      validate :on_team,                                      if: :pending?
-      validate :on_roster,                                    if: :pending?
-      validate :active_roster,                                if: :pending?
-      validate :league_permissions,                           if: :pending?
-      validate :within_roster_size_limits,                    if: :pending?
-      validate :within_roster_size_limits_for_leaving_roster, if: :pending?
+      validate :unique_within_league_check,                  if: :pending?
+      validate :on_team_check,                               if: :pending?
+      validate :on_roster_check,                             if: :pending?
+      validate :active_roster_check,                         if: :pending?
+      validate :league_permissions_check,                    if: :pending?
+      validate :roster_size_limits_check,                    if: :pending?
+      validate :leaving_roster_size_limits_check, if: :pending?
 
       scope :pending, -> { where(approved_by: nil, denied_by: nil) }
       scope :approved, -> { where.not(approved_by: nil) }
       scope :denied, -> { where.not(denied_by: nil) }
+      scope :joining, -> { where(is_joining: true) }
+      scope :leaving, -> { where(is_joining: false) }
 
       before_validation :set_leaving_roster, if: :new_record?
 
       def approve(user)
         transaction do
-          validate || raise(ActiveRecord::Rollback)
+          approval_checks || raise(ActiveRecord::Rollback)
 
           propagate_players!
 
@@ -45,7 +47,16 @@ class League
       end
 
       def deny(user)
-        update(denied_by: user)
+        transaction do
+          update(denied_by: user) || raise(ActiveRecord::Rollback)
+
+          denial_checks || raise(ActiveRecord::Rollback)
+        end
+
+        # Reset updated attributes manually
+        self.denied_by = nil unless errors.empty?
+
+        !pending?
       end
 
       def pending?
@@ -60,10 +71,38 @@ class League
         denied_by.present?
       end
 
+      def self.leaving_roster(roster)
+        pending.where(roster: roster, is_joining: false).or(pending.where(leaving_roster: roster))
+      end
+
+      def self.joining_roster(roster)
+        pending.where(roster: roster, is_joining: true)
+      end
+
       private
 
       def set_leaving_roster
         self.leaving_roster = league&.roster_for(user) if leaving_roster.blank? && is_joining?
+      end
+
+      def approval_checks
+        validate
+        roster_size_limits_check(false)
+        leaving_roster_size_limits_check(false)
+
+        errors.empty?
+      end
+
+      def denial_checks
+        if is_joining?
+          roster_size_limits_when_leaving_check
+        else
+          roster_size_limits_when_joining_check
+        end
+
+        leaving_roster_size_limits_check
+
+        errors.empty?
       end
 
       def propagate_players!
@@ -75,7 +114,15 @@ class League
         end
       end
 
-      def on_team
+      def unique_within_league_check
+        return unless user.present? && roster.present? && is_joining?
+
+        if league.transfer_requests.pending.where(user: user).where.not(id: id).exists?
+          errors.add(:user_id, 'is already pending a transfer')
+        end
+      end
+
+      def on_team_check
         return unless user.present? && roster.present? && is_joining?
 
         unless roster.team.on_roster?(user)
@@ -83,66 +130,63 @@ class League
         end
       end
 
-      def on_roster
-        return unless user.present? && roster.present? && !is_joining?
+      def on_roster_check
+        return unless user.present? && roster.present?
 
-        errors.add(:user_id, 'is not on the roster') unless roster.on_roster?(user)
+        if roster.on_roster?(user)
+          errors.add(:user_id, 'is already on the roster') if is_joining?
+        else
+          errors.add(:user_id, 'is not on the roster') unless is_joining?
+        end
       end
 
-      def active_roster
-        return unless roster.present? && is_joining?
-
-        errors.add(:base, 'cannot join a disbanded roster') if roster.disbanded?
+      def active_roster_check
+        errors.add(:base, 'roster is disbanded') if roster.present? && roster.disbanded?
       end
 
-      def league_permissions
+      def league_permissions_check
         return unless user.present? && is_joining?
 
         errors.add(:base, 'user is banned from leagues') unless user.can?(:use, :leagues)
       end
 
-      def within_roster_size_limits
+      def roster_size_limits_check(tentative = true)
         return unless user.present? && roster.present?
 
         if is_joining?
-          within_roster_size_limits_when_joining
+          roster_size_limits_when_joining_check(tentative)
         else
-          within_roster_size_limits_when_leaving
+          roster_size_limits_when_leaving_check(tentative)
         end
       end
 
-      def within_roster_size_limits_when_joining
+      def roster_size_limits_when_joining_check(tentative = true)
         max_players = league.max_players
 
-        if roster.players.size + 1 > max_players && max_players.positive?
+        if roster_size(roster, 1, tentative) > max_players && max_players.positive?
           errors.add(:base, 'would result in too many players on roster')
         end
       end
 
-      def within_roster_size_limits_when_leaving
-        return if roster.disbanded?
-
-        if roster.players.size - 1 < league.min_players
+      def roster_size_limits_when_leaving_check(tentative = true)
+        if roster_size(roster, -1, tentative) < league.min_players
           errors.add(:base, 'would result in too few players on roster')
         end
       end
 
-      def within_roster_size_limits_for_leaving_roster
+      def leaving_roster_size_limits_check(tentative = true)
         return unless user.present? && roster.present? && leaving_roster.present?
         return if leaving_roster.disbanded?
 
-        new_size = leaving_roster.players.size - 1
-        unless new_size >= league.min_players
+        if roster_size(leaving_roster, -1, tentative) < league.min_players
           errors.add(:base, "would cause #{leaving_roster.name} to have too few players")
         end
       end
 
-      def unique_within_league
-        return unless user.present? && roster.present? && is_joining?
-
-        if league.transfer_requests.pending.where(user: user).where.not(id: id).exists?
-          errors.add(:user_id, 'is already pending a transfer')
-        end
+      def roster_size(roster, diff, tentative)
+        size = tentative ? roster.tentative_player_count : roster.players.size
+        size += diff if (!persisted? || !tentative) && pending?
+        size
       end
     end
   end
