@@ -1,6 +1,8 @@
 linters:
   LineLength:
-    max: 100
+    max: 120
+  ViewLength:
+    max: 200
 
 exclude:
   - 'vendor/**/*'

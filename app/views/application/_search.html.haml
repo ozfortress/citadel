@@ -2,7 +2,7 @@
 = form_for(request.fullpath, method: 'GET', class: 'navbar-form') do
   / Hack for getting params to pass between searches. Don't include rails generates params
   - builtin_params = %w[controller action utf8 q]
-  - params.select { |p| !builtin_params.include?(p) }.each do |param, value|
+  - params.reject { |p| builtin_params.include?(p) }.each do |param, value|
     = hidden_field_tag param, value
 
   .input-group
