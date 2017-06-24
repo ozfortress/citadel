@@ -1,6 +1,6 @@
 - comm_p = present(comm)
 
-.panel.panel-default
+.panel{ class: comm_p.panel_class }
   %div{ id: comm_p.id }
   .panel-heading
     - if user_can_edit_comm?(comm)

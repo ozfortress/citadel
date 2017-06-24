@@ -41,6 +41,14 @@ class League
         comm.content_render_cache.html_safe
         # rubocop:enable Rails/OutputSafety
       end
+
+      def panel_class
+        if comm.user.admin?
+          'panel-warning'
+        else
+          'panel-default'
+        end
+      end
     end
   end
 end
