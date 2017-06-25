@@ -1,0 +1,36 @@
+:ruby
+  categories = leagues.group_by(&:category)
+  categories.delete '' # Ignore empty categories
+
+  category_id = lambda do |category|
+    "#{game.name.parameterize}-#{category.parameterize}"
+  end
+
+.row
+  .col-xs-9.col-sm-10.nopadding.tab-content
+    - (['All'] + categories.keys).each do |category|
+      :ruby
+        categorised = if category == 'All'
+                        leagues
+                      else
+                        categories[category]
+                      end
+
+      .tab-pane.fade.in{ class: category == 'All' ? 'active' : '', id: category_id.call(category) }
+        %ul.list-group
+          - categorised.each do |league|
+            - league_p = present(league)
+
+            = link_to league_path(league), class: league_p.list_group_item_class do
+              %span.label.label-primary.pull-right
+                Teams: #{league.rosters.size}
+
+              %h4.list-group-item-heading
+                = league.name
+
+  .col-xs-3.col-sm-2
+    %ul.list-group
+      - select = (['All'] + categories.keys).map { |category| [category, category_id.call(category)] }
+
+      = select_tag game.name.parameterize, options_for_select(select, select[0][1]),
+                   class: 'form-control', data: { toggle: 'tab' }

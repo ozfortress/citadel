@@ -14,4 +14,14 @@ class LeaguePresenter < BasePresenter
     league.description_render_cache.html_safe
     # rubocop:enable Rails/OutputSafety
   end
+
+  def list_group_item_class
+    if league.hidden?
+      'list-group-item list-group-item-warning'
+    elsif league.running?
+      'list-group-item list-group-item-info'
+    else
+      'list-group-item list-group-item-success'
+    end
+  end
 end

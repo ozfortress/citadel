@@ -7,45 +7,23 @@
 
 %hr
 
-- unless games.empty?
+- unless @games.empty?
   %ul.nav.nav-tabs
-    - games.each_with_index do |game, index|
-      - klass = ''
-      - if index.zero?
-        - klass = 'active'
+    - @games.each_with_index do |game, index|
+      - klass = index.zero? ? 'active' : ''
       %li{ class: klass }
         %a{ data: { toggle: 'tab' }, href: "##{game.name.parameterize}" }
           = game.name
 
 .tab-content
-  - games.each_with_index do |game, index|
+  - @games.each_with_index do |game, index|
     - klass = 'tab-pane fade'
     - if index.zero?
       - klass += ' in active'
 
-    / TODO: Reformat this logic into the controller using group_by
-    - leagues = @leagues.joins(:format).where(formats: { game_id: game.id })
+    - leagues = @leagues[game]
     %div{ id: game.name.parameterize, class: klass }
       - if leagues.empty?
         .panel-body No leagues found...
       - else
-        %ul.list-group
-          - leagues.each do |league|
-            :ruby
-              if league.hidden?
-                next unless user_can_edit_leagues?
-                klass = 'list-group-item-warning'
-              elsif league.running?
-                klass = 'list-group-item-info'
-              else
-                klass = 'list-group-item-success'
-              end
-
-            = link_to league_path(league), class: 'list-group-item ' + klass do
-              %span.label.label-primary.pull-right
-                Teams: #{league.rosters.size}
-
-              %h4.list-group-item-heading
-                = league.name
-
-  = bootstrap_paginate @leagues
+        = render 'league_list', leagues: leagues, game: game

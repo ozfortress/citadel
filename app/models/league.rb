@@ -26,6 +26,8 @@ class League < ApplicationRecord
   validates :description, presence: true
   caches_markdown_render_for :description, escaped: false
 
+  validates :category, length: { in: 0..64, allow_nil: false }
+
   validates :signuppable,                inclusion: { in: [true, false] }
   validates :roster_locked,              inclusion: { in: [true, false] }
   validates :matches_submittable,        inclusion: { in: [true, false] }
@@ -57,7 +59,7 @@ class League < ApplicationRecord
   before_save :update_query_cache
   after_save :update_roster_match_counters
 
-  scope :not_hidden, -> { where.not(status: League.statuses[:hidden]) }
+  scope :visible, -> { where.not(status: League.statuses[:hidden]) }
 
   scope :search, (lambda do |query|
     return all if query.blank?

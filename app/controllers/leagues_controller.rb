@@ -13,8 +13,11 @@ class LeaguesController < ApplicationController
   def index
     @leagues = League.search(params[:q])
                      .order(status: :asc, created_at: :desc)
-                     .paginate(page: params[:page])
-                     .load
+                     .includes(format: :game)
+    @leagues = @leagues.visible unless user_can_edit_leagues?
+    @leagues = @leagues.group_by { |league| league.format.game }
+
+    @games = @leagues.keys
   end
 
   def new
@@ -78,7 +81,7 @@ class LeaguesController < ApplicationController
   private
 
   LEAGUE_PARAMS = [
-    :name, :description, :format_id,
+    :name, :description, :format_id, :category,
     :signuppable, :roster_locked, :matches_submittable, :transfers_require_approval,
     :allow_round_draws, :allow_disbanding,
     :min_players, :max_players,

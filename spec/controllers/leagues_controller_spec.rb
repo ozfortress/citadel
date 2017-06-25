@@ -43,8 +43,8 @@ describe LeaguesController do
       sign_in admin
 
       post :create, params: {
-        league: { name: 'A', description: 'B', format_id: format.id, signuppable: true,
-                  roster_locked: false, matches_submittable: true,
+        league: { name: 'A', description: 'B', format_id: format.id, category: 'foo',
+                  signuppable: true, roster_locked: false, matches_submittable: true,
                   transfers_require_approval: false, allow_round_draws: true,
                   allow_disbanding: true, min_players: 1, max_players: 3,
                   points_per_round_win: 3, points_per_round_draw: 2,
@@ -65,6 +65,7 @@ describe LeaguesController do
       expect(comp.name).to eq('A')
       expect(comp.description).to eq('B')
       expect(comp.format).to eq(format)
+      expect(comp.category).to eq('foo')
       expect(comp.signuppable).to be(true)
       expect(comp.roster_locked).to be(false)
       expect(comp.matches_submittable).to be(true)
