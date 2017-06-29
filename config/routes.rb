@@ -94,6 +94,9 @@ Rails.application.routes.draw do
 
   get 'users/steam_id/:id', to: 'steam#show'
 
+  get 'profile',      to: 'users#profile', as: 'profile'
+  get 'profile/edit', to: 'users#profile'
+
   get   'users/logout',            to: 'users#logout',              as: 'logout_user'
   get   'users/names',             to: 'users#names',               as: 'users_names'
   get   'users/confirm/:token',    to: 'users#confirm_email',       as: 'confirm_user_email'

@@ -23,6 +23,10 @@ describe League do
 
   it { should validate_presence_of(:description) }
 
+  it { should validate_length_of(:category).is_at_least(0) }
+  it { should validate_length_of(:category).is_at_most(64) }
+  it { should_not allow_value(nil).for(:category) }
+
   it { should define_enum_for(:status).with([:hidden, :running, :completed]) }
 
   it { should validate_presence_of(:min_players) }

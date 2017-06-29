@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170613082339) do
+ActiveRecord::Schema.define(version: 20170625030923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -451,6 +451,7 @@ ActiveRecord::Schema.define(version: 20170613082339) do
     t.string   "query_name_cache",           default: "",    null: false
     t.text     "description_render_cache",   default: "",    null: false
     t.integer  "points_per_match_draw",      default: 0,     null: false
+    t.string   "category",                   default: "",    null: false
     t.index "query_name_cache gist_trgm_ops", name: "index_leagues_on_query_name_change", using: :gist
     t.index ["format_id"], name: "index_leagues_on_format_id", using: :btree
   end

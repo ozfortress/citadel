@@ -53,7 +53,7 @@
           %li.list-group-item
             = render 'users/listing', user: @users[id], team: @team
 
-      - unless matches.empty?
+      - if matches.present?
         - id = "#{dom_id(roster)}-matches"
         .panel-heading
           %a{ data: { toggle: 'collapse', parent: '.global-collapsible' }, href: "##{id}" }
