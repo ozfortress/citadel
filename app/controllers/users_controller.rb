@@ -5,7 +5,7 @@ class UsersController < ApplicationController
                        :request_name_change] { @user = User.find(params[:id]) }
   before_action only: [:confirm_email] { @user = User.find_by(confirmation_token: params[:token]) }
 
-  before_action :require_login, only: [:logout]
+  before_action :require_login, only: [:profile, :logout]
   before_action :require_user_permission, only: [:edit, :update, :request_name_change]
   before_action :require_users_permission, only: [:names, :handle_name_change]
   before_action :require_user_confirmation_token, only: :confirm_email
@@ -36,6 +36,14 @@ class UsersController < ApplicationController
     else
       render :new
     end
+  end
+
+  def profile
+    # replace /profile in path with the path to the current user
+    pattern = Regexp.new("^#{Regexp.escape profile_path}")
+    subpath = request.fullpath.sub(pattern, '')
+
+    redirect_to user_path(current_user) + subpath
   end
 
   def show

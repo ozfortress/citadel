@@ -56,6 +56,26 @@ describe UsersController do
     end
   end
 
+  describe 'GET #profile' do
+    let(:user) { create(:user) }
+
+    it 'succeeds for signed in user' do
+      sign_in user
+
+      request.path = '/profile/edit?foo=bar'
+      get :profile
+
+      expect(response).to redirect_to(user_path(user) + '/edit?foo=bar')
+    end
+
+    it 'fails when unauthenticated' do
+      request.path = '/profile/edit?foo=bar'
+      get :profile
+
+      expect(response).to redirect_to(root_path)
+    end
+  end
+
   describe 'GET #show' do
     let(:user) { create(:user) }
 
