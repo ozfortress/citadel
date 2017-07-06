@@ -115,13 +115,14 @@ class League
     end
 
     def forfeit!(roster)
-      if no_forfeit? || technical_forfeit?
+      # Don't override mutual or technical forfeits
+      if no_forfeit?
         if home_team_id == roster.id
           update!(forfeit_by: :home_team_forfeit)
         else
           update!(forfeit_by: :away_team_forfeit)
         end
-      elsif !mutual_forfeit?
+      elsif roster.id == winner_id
         update!(forfeit_by: :mutual_forfeit)
       end
     end
