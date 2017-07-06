@@ -67,18 +67,6 @@ class League
       Match.for_roster(self)
     end
 
-    def won_matches
-      Match.winner(self)
-    end
-
-    def drawn_matches
-      matches.drawn
-    end
-
-    def lost_matches
-      Match.loser(self)
-    end
-
     def rounds
       Match::Round.where(match: matches)
     end
@@ -170,28 +158,32 @@ class League
 
     private
 
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def assign_updated_match_counters
       count = ->(query) { query.reorder(nil).select('COUNT(*)').to_sql }
       query = ActiveRecord::Base.connection.exec_query(%{
-        SELECT (#{calculate_total_scores_query}) AS total_scores,
-               (#{count.call(won_rounds)})       AS won_rounds_count,
-               (#{count.call(drawn_rounds)})     AS drawn_rounds_count,
-               (#{count.call(lost_rounds)})      AS lost_rounds_count,
-               (#{count.call(won_matches)})      AS won_matches_count,
-               (#{count.call(drawn_matches)})    AS drawn_matches_count,
-               (#{count.call(lost_matches)})     AS lost_matches_count
+        SELECT (#{calculate_total_scores_query})            AS total_scores,
+               (#{count.call(won_rounds)})                  AS won_rounds_count,
+               (#{count.call(drawn_rounds)})                AS drawn_rounds_count,
+               (#{count.call(lost_rounds)})                 AS lost_rounds_count,
+               (#{count.call(Match.winner(self))})          AS won_matches_count,
+               (#{count.call(matches.drawn)})               AS drawn_matches_count,
+               (#{count.call(Match.loser(self))})           AS lost_matches_count,
+               (#{count.call(Match.forfeit_winner(self))})  AS forfeit_won_matches_count,
+               (#{count.call(matches.forfeit_drawn)})       AS forfeit_drawn_matches_count,
+               (#{count.call(matches.forfeit_loser(self))}) AS forfeit_lost_matches_count
       })
 
       assign_attributes(query.to_hash[0])
       # Calculate points after assigning aggregates
       self.points = calculate_points
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
     def calculate_points
-      local_counts = [won_rounds_count,  drawn_rounds_count,  lost_rounds_count,
-                      won_matches_count, drawn_matches_count, lost_matches_count]
+      local_counts = [won_rounds_count,          drawn_rounds_count,          lost_rounds_count,
+                      won_matches_count,         drawn_matches_count,         lost_matches_count,
+                      forfeit_won_matches_count, forfeit_drawn_matches_count, forfeit_lost_matches_count]
       comp_counts = league.point_multipliers
 
       local_counts.zip(comp_counts).map { |x, y| x * y }.sum

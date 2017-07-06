@@ -1,6 +1,6 @@
 default: &default
   # topic or none
-  type: none
+  type: topic
   # id of the topic to take news from. Optional if type is none
   id: 2
   # Number of recent threads to display. Optional if type is none

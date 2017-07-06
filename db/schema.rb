@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170625030923) do
+ActiveRecord::Schema.define(version: 20170706072109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -406,6 +406,9 @@ ActiveRecord::Schema.define(version: 20170625030923) do
     t.integer  "won_rounds_against_tied_rosters_count", default: 0,     null: false
     t.text     "description_render_cache",              default: "",    null: false
     t.integer  "drawn_matches_count",                   default: 0,     null: false
+    t.integer  "forfeit_won_matches_count",             default: 0,     null: false
+    t.integer  "forfeit_drawn_matches_count",           default: 0,     null: false
+    t.integer  "forfeit_lost_matches_count",            default: 0,     null: false
     t.index ["division_id"], name: "index_league_rosters_on_division_id", using: :btree
     t.index ["points"], name: "index_league_rosters_on_points", using: :btree
     t.index ["team_id"], name: "index_league_rosters_on_team_id", using: :btree
@@ -452,6 +455,9 @@ ActiveRecord::Schema.define(version: 20170625030923) do
     t.text     "description_render_cache",   default: "",    null: false
     t.integer  "points_per_match_draw",      default: 0,     null: false
     t.string   "category",                   default: "",    null: false
+    t.integer  "points_per_forfeit_win",     default: 2,     null: false
+    t.integer  "points_per_forfeit_draw",    default: 1,     null: false
+    t.integer  "points_per_forfeit_loss",    default: 0,     null: false
     t.index "query_name_cache gist_trgm_ops", name: "index_leagues_on_query_name_change", using: :gist
     t.index ["format_id"], name: "index_leagues_on_format_id", using: :btree
   end

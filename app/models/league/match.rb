@@ -50,15 +50,13 @@ class League
       where(home_team: roster).or(where(away_team: roster))
     }
 
-    scope :winner, lambda { |winner|
-      where(winner: winner).or(for_roster(winner).technical_forfeit)
-    }
-
-    scope :loser, lambda { |loser|
-      where(loser: loser).or(for_roster(loser).mutual_forfeit)
-    }
-
-    scope :drawn, -> { confirmed.no_forfeit.where(winner: nil) }
+    scope :winner, ->(winner) { no_forfeit.where(winner: winner) }
+    scope :drawn, -> { no_forfeit.where(winner: nil) }
+    scope :loser, ->(loser) { no_forfeit.where(loser: loser) }
+    scope :single_forfeit, -> { home_team_forfeit.or(away_team_forfeit) }
+    scope :forfeit_winner, ->(winner) { single_forfeit.where(winner: winner) }
+    scope :forfeit_drawn, -> { technical_forfeit }
+    scope :forfeit_loser, ->(loser) { single_forfeit.where(loser: loser).or(mutual_forfeit) }
 
     after_initialize :set_defaults, unless: :persisted?
 

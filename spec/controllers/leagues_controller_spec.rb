@@ -42,6 +42,7 @@ describe LeaguesController do
     it 'succeeds for authorized user' do
       sign_in admin
 
+      # TODO: Test missing league params
       post :create, params: {
         league: { name: 'A', description: 'B', format_id: format.id, category: 'foo',
                   signuppable: true, roster_locked: false, matches_submittable: true,
