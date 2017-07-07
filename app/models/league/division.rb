@@ -62,8 +62,9 @@ class League
       match_options[:has_winner] = true
       driver_options = options.slice(:starting_round)
       driver_options[:teams_limit] = 4
+      tournament_options = options.slice(:bronze_match)
 
-      Tournament::PagePlayoff.generate new_driver(match_options, driver_options)
+      Tournament::PagePlayoff.generate new_driver(match_options, driver_options), tournament_options
     end
   end
 end
