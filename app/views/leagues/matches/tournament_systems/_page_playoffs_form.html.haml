@@ -1,12 +1,11 @@
-.alert.alert-warning
-  %strong
-    When using this for playoffs in a larger tournament,
-    ensure that the top 4 teams are manually ranked.
-  %br
-  Do do this, set the ranks of the top 4 teams to 1, 2, 3 and 4 respectively.
-
 .form-group
   %label.control-label Starting Round (Will ignore any rounds before this)
   = number_field_tag 'page_playoffs_tournament[starting_round]',
                      page_playoffs_tournament[:starting_round],
                      min: 0, class: 'form-control'
+
+.form-group
+  %label.control-label Bronze Match
+  = check_box_tag 'page_playoffs_tournament[bronze_match]',
+                  checked: page_playoffs_tournament[:bronze_match],
+                  class: 'form-control'

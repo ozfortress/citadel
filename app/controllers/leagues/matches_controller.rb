@@ -51,7 +51,7 @@ module Leagues
       @swiss_tournament              = { pairer: :dutch, pair_options: { min_pair_size: 4 } }
       @round_robin_tournament        = {}
       @single_elimination_tournament = { teams_limit: 0, starting_round: 0 }
-      @page_playoffs_tournament      = { starting_round: 0 }
+      @page_playoffs_tournament      = { starting_round: 0, bronze_match: false }
     end
 
     def create_round
@@ -193,7 +193,7 @@ module Leagues
     end
 
     def page_playoffs_tournament_params
-      params.require(:page_playoffs_tournament).permit(:starting_round)
+      params.require(:page_playoffs_tournament).permit(:starting_round, :bronze_match)
     end
 
     def require_user_can_report_scores

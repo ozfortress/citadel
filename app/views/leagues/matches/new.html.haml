@@ -6,7 +6,7 @@
 
     %li{ class: klass }
       %a{ data: { toggle: 'tab' }, href: "##{div.to_s.parameterize}" }
-        = div
+        = div.name
 
 .tab-content
   - @league.divisions.each do |div|

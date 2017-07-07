@@ -99,22 +99,16 @@
           %span.glyphicon.glyphicon-plus
     %ul.list-group
       - @players.each do |player|
+        - player_p = present(player, Team::PlayerPresenter)
         %li.list-group-item
           - user = @users[player.user_id]
+          - player.user = user # Make sure we don't fetch the user again
 
           - if user == current_user
-            .button-group.pull-right
-              = button_to leave_team_path(@team), method: :patch, class: 'btn btn-danger',
-                          data: { confirm: 'Are you sure you want to leave this team?' } do
-                Leave
-                %span.glyphicon.glyphicon-remove
+            .button-group.pull-right= player_p.leave_button
+
           - elsif user_can_edit_team?
-            .button-group.pull-right
-              = button_to kick_team_path(@team, user_id: user.id),
-                          method: :patch, class: 'btn btn-danger',
-                          data: { confirm: "Are you sure you want to kick #{user.name}?" } do
-                Kick
-                %span.glyphicon.glyphicon-remove
+            .button-group.pull-right= player_p.kick_button
 
           = render 'users/listing', user: user, team: @team
 
