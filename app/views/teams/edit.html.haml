@@ -1,5 +1,8 @@
 - content_for(:title) { "Edit: #{@team.name}" }
 
+%h1
+  Edit #{link_to @team.name, team_path(@team)}
+
 .panel.panel-default
   .panel-heading Information
   .panel-body
