@@ -1,4 +1,4 @@
-require 'tournament'
+require 'tournament_driver'
 
 class League
   class Division < ApplicationRecord
