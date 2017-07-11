@@ -24,16 +24,4 @@ class PagesController < ApplicationController
     @news_posts = @threads.map { |thread| [thread, thread.original_post] }.to_h
     @more_threads = @topic.threads.limit(limit + 1).size > limit
   end
-
-  def rules
-  end
-
-  def staff
-  end
-
-  def server_configs
-  end
-
-  def book_server
-  end
 end
