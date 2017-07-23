@@ -25,7 +25,7 @@ class User
     end
 
     def delete_button
-      content = safe_join(["Expunge ", content_tag(:div, '', class: 'glyphicon glyphicon-remove')])
+      content = safe_join(['Expunge', content_tag(:div, '', class: 'glyphicon glyphicon-remove')], ' ')
       url_params = { action_: model.action, subject: model.subject }
       options = {
         method: :delete, class: 'btn btn-danger',

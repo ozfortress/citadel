@@ -30,13 +30,15 @@ describe Users::BansController do
   end
 
   describe 'POST #create' do
-    let(:terminated_at) { Time.zone.at (Time.zone.now + 2.days).to_i }
+    # Need to round off to the nearest second
+    let(:terminated_at) { Time.zone.at((Time.zone.now + 2.days).to_i) }
 
     it 'succeeds for authorized user' do
       admin.grant(:edit, :users)
       sign_in admin
 
-      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: terminated_at }, action_: :use, subject: :leagues }
+      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: terminated_at },
+                              action_: :use, subject: :leagues }
 
       expect(user.can?(:use, :leagues)).to be false
       bans = user.bans_for(:use, :leagues)
@@ -52,7 +54,8 @@ describe Users::BansController do
       sign_in admin
 
       terminated_at = Time.zone.now - 2.days
-      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: terminated_at }, action_: :use, subject: :leagues }
+      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: terminated_at },
+                              action_: :use, subject: :leagues }
 
       expect(user.can?(:use, :leagues)).to be true
       expect(response).to have_http_status(:success)
@@ -61,13 +64,15 @@ describe Users::BansController do
     it 'redirects for unauthorized user' do
       sign_in admin
 
-      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: terminated_at }, action_: :use, subject: :leagues }
+      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: terminated_at },
+                              action_: :use, subject: :leagues }
 
       expect(response).to redirect_to(user_path(user))
     end
 
     it 'redirects for unauthenticated user' do
-      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: terminated_at }, action_: :use, subject: :leagues }
+      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: terminated_at },
+                              action_: :use, subject: :leagues }
 
       expect(response).to redirect_to(user_path(user))
     end

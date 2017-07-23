@@ -11,17 +11,17 @@ module Users
     before_action :require_user_permissions
 
     def index
-      @ban_models = User.ban_models.map do |action, bans|
-                      bans.map do |subject, model|
-                        next if model.subject? || !current_user.can?(:edit, subject)
+      @ban_models = User.ban_models.map do |_action, bans|
+        bans.map do |subject, model|
+          next if model.subject? || !current_user.can?(:edit, subject)
 
-                        model
-                      end
-                    end.reduce(:+).compact.sort_by(&:association_name)
+          model
+        end
+      end.reduce(:+).compact.sort_by(&:association_name)
 
       @bans = @ban_models.map { |model| model.where(user: @user).to_a }.reduce(:+).sort_by(&:created_at)
 
-      @new_bans = @ban_models.map { |model| model.new }
+      @new_bans = @ban_models.map(&:new)
     end
 
     def create
