@@ -38,7 +38,7 @@ module Auth
       return unless terminated_at
 
       if terminated_at <= started_at
-        errors.add(:base, 'termination time must be after creation time')
+        errors.add(:terminated_at, 'termination time must be after creation time')
       end
     end
   end

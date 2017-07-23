@@ -14,6 +14,7 @@ module Auth
     end
 
     class_methods do
+      attr_reader :action
       attr_reader :subject
       attr_reader :association_name
 
@@ -24,6 +25,7 @@ module Auth
       def init_model(options)
         self.table_name = options[:table_name]
         @association_name = table_name.to_sym
+        @action = options[:action]
         init_actor options[:actor]
         init_subject options[:subject], options[:subject_options]
       end
