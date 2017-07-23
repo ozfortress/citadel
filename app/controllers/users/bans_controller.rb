@@ -38,7 +38,6 @@ module Users
 
     def destroy
       @ban = @model.find(params[:id])
-
       @ban.destroy!
 
       redirect_to user_bans_path(@user)
@@ -51,7 +50,7 @@ module Users
     end
 
     def require_user_permissions
-      redirect_back(fallback_location: user_path(@user)) unless user_can_edit_users? && current_user.can?(:edit, @subject)
+      redirect_back(fallback_location: user_path(@user)) unless user_can_edit_users?
     end
   end
 end
