@@ -99,7 +99,8 @@ Rails.application.routes.draw do
   resources :users, except: [:destroy] do
     post 'name',  on: :member, to: 'users#request_name_change'
 
-    resource :comments, controller: 'users/comments', only: [:create]
+    resources :comments, controller: 'users/comments', only: [:create]
+    resources :bans, controller: 'users/bans', only: [:index, :create, :destroy]
   end
 
   resources :notifications, controller: 'users/notifications', only: [:index, :show, :destroy] do

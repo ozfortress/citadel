@@ -1,0 +1,39 @@
+- content_for(:title) { "Bans: #{@user.name}" }
+
+- user_p = present(@user)
+
+%h1 Bans for #{user_p.link}
+
+%hr
+
+.panel.panel-default
+  .panel-heading Ban History
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Start
+        %th End
+        %th Duration
+        %th Reason
+        %th
+
+    %tbody
+      - @bans.each do |ban|
+        - ban_p = present(ban, User::BanPresenter)
+        %tr
+          %td= ban_p.started_at
+          %td= ban_p.terminated_at
+          %td= ban_p.duration
+          %td= ban.reason
+          %td= ban_p.delete_button
+
+.panel.panel-danger
+  .panel-heading Create Bans
+  .panel-body
+    - @ban_models.zip(@new_bans).each do |ban_model, new_ban|
+      %h3 Ban from #{ban_model.action.to_s.humanize} #{ban_model.subject.to_s.humanize}
+      = render 'form', user: @user, model: ban_model, ban: new_ban
+
+      %hr
+
+    = link_to 'Cancel', edit_user_path(@user), class: 'btn btn-default'

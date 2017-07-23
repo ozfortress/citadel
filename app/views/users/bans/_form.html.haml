@@ -1,0 +1,9 @@
+
+/ TODO: Implement ban targeting, for bans targeted at specific ids
+- url_params = { action_: model.action, subject: model.subject }
+
+= bootstrap_form_for ban, url: user_bans_path(user, url_params), method: :post, as: :ban do |f|
+  = f.text_field :reason
+  = f.datetime_select :terminated_at, label: 'Ban end time'
+
+  = f.submit 'Save'

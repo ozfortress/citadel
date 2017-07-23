@@ -24,3 +24,11 @@
 
       = f.submit 'Save'
       = link_to 'Cancel', user_path(@user), class: 'btn btn-default'
+
+- if user_can_edit_users?
+  .panel.panel-danger
+    .panel-heading Danger Zone
+    .panel-body
+      = link_to user_bans_path(@user), class: 'btn btn-default' do
+        Manage Bans
+        .glyphicon.glyphicon-ban-circle
