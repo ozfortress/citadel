@@ -3,4 +3,4 @@
     - next if ban_cls.subject?
 
     - user.bans_for(action, subject).each do |ban|
-      = render 'ban', user: user, ban: ban
+      = render 'users/bans/ban', user: user, ban: ban
