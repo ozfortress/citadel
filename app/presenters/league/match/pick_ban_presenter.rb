@@ -11,16 +11,20 @@ class League
                 end)
       end
 
+      def picked_by
+        @picked_by ||= present(pick_ban.picked_by)
+      end
+
       def map
         @map ||= present(pick_ban.map)
       end
 
       def status
-        team.link + ' ' + if pick_ban.pending?
-                            pending_kind
-                          else
-                            safe_join([completed_kind, map.link], ' ')
-                          end
+        if pick_ban.pending?
+          safe_join([team.link, pending_kind, deferrable_message], ' ')
+        else
+          safe_join([team.link, ' (', picked_by.link, ') ', completed_kind, ' ', map.link])
+        end
       end
 
       private
@@ -38,6 +42,14 @@ class League
           'picks'
         else
           'bans'
+        end
+      end
+
+      def deferrable_message
+        if pick_ban.deferrable?
+          '(can defer)'
+        else
+          ''
         end
       end
     end

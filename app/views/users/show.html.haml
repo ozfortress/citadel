@@ -42,7 +42,7 @@
 .row
   != present_collection(@titles).map(&:icon).join(' ')
 
-  .pull-right= render 'bans', user: @user
+  .pull-right= render 'users/bans/list', user: @user
 
 %hr
 

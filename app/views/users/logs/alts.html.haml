@@ -1,0 +1,34 @@
+- content_for(:title) { "Logs: #{@user.name}" }
+
+- user_p = present(@user)
+
+%h1 Alternate Accounts for #{user_p.link}
+%h3 #{link_to 'Logs', user_logs_path(@user)} by IP
+
+%hr
+
+- if @alts.empty?
+  No alternate accounts found...
+
+- else
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Alt
+        %th Matching IP
+        %th Signed up
+        %th First Alt Visit
+        %th First User Visit
+    %tbody
+      - @alts.each do |visit|
+        :ruby
+          visit_p = present(visit)
+          matching_visit = @matching_visits[visit.ip]
+          matching_p = present(matching_visit)
+
+        %tr
+          %td= visit_p.user.link
+          %td= visit.ip
+          %td= visit_p.user.created_at
+          %td= visit_p.started_at
+          %td= matching_p.started_at
