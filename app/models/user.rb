@@ -116,6 +116,10 @@ class User < ApplicationRecord
     names.approved.where.not(name: name)
   end
 
+  def distinct_ips
+    Visit.select('DISTINCT ON (ip) ip').reorder('ip').where(user: self)
+  end
+
   def notify!(message, link)
     notifications.create!(message: message, link: link)
   end

@@ -101,6 +101,9 @@ Rails.application.routes.draw do
 
     resources :comments, controller: 'users/comments', only: [:create]
     resources :bans, controller: 'users/bans', only: [:index, :create, :destroy]
+    resource :logs, controller: 'users/logs', only: :show do
+      get :alts, on: :collection
+    end
   end
 
   resources :notifications, controller: 'users/notifications', only: [:index, :show, :destroy] do

@@ -16,6 +16,10 @@ class UserPresenter < BasePresenter
     image_tag(user.avatar.thumb.url, class: 'avatar center-block')
   end
 
+  def created_at
+    user.created_at.strftime('%c')
+  end
+
   def steam_profile_url
     "http://steamcommunity.com/profiles/#{user.steam_64}"
   end
