@@ -8,7 +8,9 @@
         = link_to post_p.edit_path, class: 'btn btn-link btn-sm' do
           %span.glyphicon.glyphicon-cog
     .pull-right
-      = post_p.created_at
+      = link_to "#post_#{post.id}" do
+        %span.glyphicon.glyphicon-link.small
+        post_p.created_at.to_s
 
     = render 'users/listing', user: post.created_by
 
