@@ -6,7 +6,7 @@ set :rvm_ruby_string, 'ruby-2.3.3'
 
 # git settings
 set :repo_url, 'git@github.com:ozfortress/citadel.git'
-set :branch, :master
+set :branch, :ozfortress
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/opt/citadel'

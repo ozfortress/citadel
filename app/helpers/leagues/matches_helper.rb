@@ -31,5 +31,11 @@ module Leagues
 
       options_for_select options, @swiss_tournament[:pairer]
     end
+
+    def verify_rosters_link(match)
+      params = { link: match_url(match) }
+
+      "https://verify.ozfortress.com?#{params.to_param}"
+    end
   end
 end

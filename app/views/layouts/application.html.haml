@@ -4,7 +4,7 @@
     %meta{ content: 'text/html; charset=UTF-8', 'http-equiv' => 'Content-Type' }
     - viewport = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
     %meta{ name: 'viewport', content: viewport }
-    %title= (content_for :title) || 'citadel'
+    %title= (content_for :title) || 'ozfortress'
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = content_for :head
@@ -16,7 +16,7 @@
           = image_tag 'background2.png'
         .banner-logo-citadel
           = link_to pages_home_path do
-            = image_tag 'logo.png'
+            = image_tag 'logo.svg', height: '70px'
 
     %nav.navbar.navbar-citadel.affix-top#navbar{ role: 'navigation',
                                                  data: { spy: 'affix',
@@ -40,7 +40,7 @@
             %span.icon-bar
 
           .visible-xs.pull-left.banner-logo-citadel
-            = image_tag 'logo.png', height: '50px'
+            = image_tag 'logo.svg', height: '30px'
 
           .collapse.navbar-collapse.navbar-left#navbar-collapse
             %ul.nav.navbar-nav= render 'navbar'

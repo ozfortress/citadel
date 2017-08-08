@@ -1,3 +1,7 @@
+/ Discord Widget
+- widget_src = 'https://discordapp.com/widget?id=82651383144120320&theme=dark&voice=false'
+%iframe.panel{ src: widget_src, width: '100%', height: '350', frameborder: 0 }
+
 .panel.panel-default
   .panel-heading External Links
   %ul.list-group
@@ -5,10 +9,6 @@
       = link_to 'http://steamcommunity.com/groups/ozfortress', target: '_blank' do
         = image_tag 'steam/steam-logo.png'
         Join our Steam Group
-    %li.list-group-item
-      = link_to 'https://discord.gg/0Scfe0bjjACAuRJ0', target: '_blank' do
-        = image_tag 'discord-logo.png'
-        Join us on Discord
     %li.list-group-item
       = link_to 'http://twitter.com/ozfortress', target: '_blank' do
         = image_tag 'twitter-logo.png'

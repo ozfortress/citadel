@@ -18,6 +18,12 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   get 'pages/home'
+  get 'rules', to: 'pages#rules'
+  get 'staff', to: 'pages#staff'
+  get 'bans', to: 'pages#bans'
+  get 'server_configs', to: 'pages#server_configs'
+  get 'book_server', to: 'pages#book_server'
+  get 'transfers', to: 'pages#transfers'
 
   get 'admin', to: 'admin#index'
   get 'statistics',  to: 'admin#statistics', as: 'admin_statistics'

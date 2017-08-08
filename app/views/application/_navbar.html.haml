@@ -13,6 +13,39 @@
 %li{ class: navbar_class(:leagues) }
   = link_to('Leagues', :leagues)
 
+%li.dropdown
+  %a.dropdown-toggle{ role: :button, data: { toggle: :dropdown } }
+    About
+    %span.caret
+
+  %ul.dropdown-menu
+    %li{ class: navbar_class(:rules) }
+      = link_to('Rules', :rules)
+
+    %li{ class: navbar_class(:staff) }
+      = link_to('Staff', :staff)
+
+    %li{ class: navbar_class(:bans) }
+      = link_to('Bans', :bans)
+
+%li.dropdown
+  %a.dropdown-toggle{ role: :button, data: { toggle: :dropdown } }
+    Help
+    %span.caret
+
+  %ul.dropdown-menu
+    %li{ class: navbar_class(:server_configs) }
+      = link_to('Server Configs', :server_configs)
+
+    %li{ class: navbar_class(:book_server) }
+      = link_to('Book a Server', :book_server)
+
+    %li{ class: navbar_class(:transfers) }
+      = link_to('Transfers', :transfers)
+
+    %li= link_to('Verify Rosters', 'https://verify.ozfortress.com', target: :_blank)
+    %li= link_to('Demos', 'https://demos.ozfortress.com', target: :_blank)
+
 - if user_signed_in? && current_user.admin?
   %li{ class: navbar_class(:admin) }
     = link_to('Admin', :admin)
