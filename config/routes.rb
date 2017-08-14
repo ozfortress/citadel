@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   get 'server_configs', to: 'pages#server_configs'
   get 'book_server', to: 'pages#book_server'
   get 'transfers', to: 'pages#transfers'
+  get 'newbie_guide', to: 'pages#newbie_guide'
+  get 'community_rules', to: 'pages#community_rules'
 
   get 'admin', to: 'admin#index'
   get 'statistics',  to: 'admin#statistics', as: 'admin_statistics'

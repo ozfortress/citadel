@@ -1,0 +1,5 @@
+- content_for(:title) { 'Community Rules' }
+
+-# rubocop:disable Rails/OutputSafety
+= raw File.read(Rails.root.join('public', 'community_rules.html.txt'))
+-# rubocop:enable Rails/OutputSafety
