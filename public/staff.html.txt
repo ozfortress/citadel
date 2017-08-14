@@ -1,8 +1,9 @@
-<div id="doc" class="markdown-body container-fluid"><h1 id="staff">Staff</h1><h3 id="league-director-oblaozfortresscom">League Director - <a href="mailto:obla@ozfortress.com" target="_blank">obla@ozfortress.com</a></h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a></p><h3 id="league-administrators">League Administrators</h3><p><a href="https://warzone.ozfortress.com/users/15" target="_blank">Fozzlm</a> - Premier<br>
-<a href="https://warzone.ozfortress.com/users/188" target="_blank">yauch</a> - Intermediate<br>
-<a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a> - Open<br>
-<a href="https://warzone.ozfortress.com/users/71" target="_blank">wiggin</a> - Open</p><h3 id="media">Media</h3><p><a href="https://warzone.ozfortress.com/users/15" target="_blank">Fozzlm</a></p><h3 id="anti-cheat-staff">Anti-Cheat Staff</h3><p><a href="http://ozfortress.com/member.php?u=8085" target="_blank">madjack</a></p><h3 id="server-administrators">Server Administrators</h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a><br>
-<a href="https://warzone.ozfortress.com/users/4" target="_blank">shrak</a></p><h3 id="developer">Developer</h3><p><a href="https://warzone.ozfortress.com/users/2" target="_blank">/dev/zero</a></p><h3 id="graphics-artist">Graphics Artist</h3><p><a href="https://warzone.ozfortress.com/users/541" target="_blank">athena</a></p><h3 id="staff-hall-of-fame">Staff Hall of Fame</h3><p>amd<br>
+<div id="doc" class="markdown-body container-fluid"><h1 id="staff" style="">Staff</h1><h3 id="league-director-oblaozfortresscom" style="">League Director - <a href="mailto:obla@ozfortress.com" target="_blank">obla@ozfortress.com</a></h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a></p><h3 id="league-administrators" style="">League Administrators</h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a> - Premier and Intermediate<br>
+<a href="https://warzone.ozfortress.com/users/106" target="_blank">sage</a> - Intermediate<br>
+<a href="https://warzone.ozfortress.com/users/15" target="_blank">Fozzlm</a> - Intermediate and Open<br>
+<a href="https://warzone.ozfortress.com/users/71" target="_blank">catfish</a> - Open</p><h3 id="advisor" style="">Advisor</h3><p><a href="https://warzone.ozfortress.com/users/71" target="_blank">wiggin</a></p><h3 id="media1" style="">Media</h3><p><a href="https://warzone.ozfortress.com/users/15" target="_blank">Fozzlm</a></p><h3 id="anti-cheat-staff" style="">Anti-Cheat Staff</h3><p><a href="http://ozfortress.com/member.php?u=8085" target="_blank">madjack</a></p><h3 id="server-administrators" style="">Server Administrators</h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a><br>
+<a href="https://warzone.ozfortress.com/users/2" target="_blank">/dev/zero</a><br>
+<a href="https://warzone.ozfortress.com/users/4" target="_blank">shrak</a></p><h3 id="developer" style="">Developer</h3><p><a href="https://warzone.ozfortress.com/users/2" target="_blank">/dev/zero</a></p><h3 id="graphics-artist" style="">Graphics Artist</h3><p><a href="https://warzone.ozfortress.com/users/541" target="_blank">athena</a></p><h3 id="staff-hall-of-fame" style="">Staff Hall of Fame</h3><p>amd<br>
 Aragon<br>
 baf<br>
 bladez - Livelogs and ozfortress booker<br>
@@ -40,4 +41,5 @@ ToyotaMan<br>
 Varris<br>
 warbot<br>
 wm<br>
-wolfeh</p></div>
+wolfeh<br>
+yauch</p></div>
