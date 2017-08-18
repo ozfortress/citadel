@@ -3,7 +3,8 @@ module Forums
     extend ActiveSupport::Concern
 
     def threads_show
-      @posts = @thread.posts.includes(:created_by).paginate(page: params[:page])
+      @page = params[:page]
+      @posts = @thread.posts.includes(:created_by).paginate(page: @page)
       @post ||= Post.new
     end
   end

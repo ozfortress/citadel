@@ -24,7 +24,7 @@
   - if user_can_create_post?
     .container-fluid
       %hr
-      = bootstrap_form_for @post, url: forums_thread_posts_path(@thread) do |f|
+      = bootstrap_form_for @post, url: forums_thread_posts_path(@thread, page: @page) do |f|
         = render 'forums/posts/form', f: f
 
         .row

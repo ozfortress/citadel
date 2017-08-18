@@ -9,7 +9,7 @@ module Forums
 
     has_many :edits, class_name: 'PostEdit', inverse_of: :post, dependent: :delete_all
 
-    validates :content, presence: true, length: { in: 10..4_000 }
+    validates :content, presence: true, length: { in: 10..10_000 }
     caches_markdown_render_for :content
 
     def previous_post
@@ -30,7 +30,8 @@ module Forums
     def self.page_of(post)
       return 1 unless post
 
-      post.thread.posts.where('created_at <= ?', post.created_at).count / Post.per_page + 1
+      post_index = post.thread.posts.where('created_at < ?', post.created_at).count
+      post_index / Post.per_page + 1
     end
   end
 end
