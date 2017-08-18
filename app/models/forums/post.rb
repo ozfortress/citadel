@@ -9,7 +9,7 @@ module Forums
 
     has_many :edits, class_name: 'PostEdit', inverse_of: :post, dependent: :delete_all
 
-    validates :content, presence: true, length: { in: 10..4_000 }
+    validates :content, presence: true, length: { in: 10..10_000 }
     caches_markdown_render_for :content
 
     def previous_post
