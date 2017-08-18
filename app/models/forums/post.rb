@@ -30,7 +30,8 @@ module Forums
     def self.page_of(post)
       return 1 unless post
 
-      post.thread.posts.where('created_at <= ?', post.created_at).count / Post.per_page + 1
+      post_index = post.thread.posts.where('created_at < ?', post.created_at).count
+      post_index / Post.per_page + 1
     end
   end
 end
