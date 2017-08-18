@@ -50,24 +50,6 @@
             $('<span class="bracket-team-score"></span>').html(team.score).appendTo(teamDom);
         }
 
-        if (team.id) {
-            var teamSelector = ".bracket-team[data-team-id='" + team.id + "'";
-            teamDom.on({
-                mouseenter: function(event) {
-                    $(teamSelector).addClass('bracket-team-hover');
-                },
-                mouseleave: function(event) {
-                    $(teamSelector).removeClass('bracket-team-hover');
-                },
-                click: function(event) {
-                    if (team.link) {
-                        window.location.href = team.link;
-                        return false;
-                    }
-                },
-            });
-        }
-
         return teamDom;
     }
 
