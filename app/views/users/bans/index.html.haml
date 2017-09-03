@@ -11,6 +11,7 @@
   %table.table.table-striped
     %thead
       %tr
+        %th From
         %th Start
         %th End
         %th Duration
@@ -21,6 +22,7 @@
       - @bans.each do |ban|
         - ban_p = present(ban, User::BanPresenter)
         %tr
+          %td= ban_p.from
           %td= ban_p.started_at
           %td= ban_p.terminated_at
           %td= ban_p.duration

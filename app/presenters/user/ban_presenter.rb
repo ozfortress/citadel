@@ -3,7 +3,11 @@ class User
     presents :ban
 
     def name
-      'Banned from ' + ban.class.subject.to_s.capitalize
+      'Banned from ' + from
+    end
+
+    def from
+      ban.class.subject.to_s.capitalize
     end
 
     def title_text
