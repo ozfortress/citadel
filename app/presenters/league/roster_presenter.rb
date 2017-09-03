@@ -66,6 +66,12 @@ class League
       # rubocop:enable Rails/OutputSafety
     end
 
+    def notice
+      # rubocop:disable Rails/OutputSafety
+      roster.notice_render_cache.html_safe
+      # rubocop:enable Rails/OutputSafety
+    end
+
     def bracket_data
       { name: html_escape(roster.name), id: roster.id, link: team_path(roster.team_id) }
     end

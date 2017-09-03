@@ -28,6 +28,8 @@ class League
     validates :name, presence: true, uniqueness: { scope: :division_id }, length: { in: 1..64 }
     validates :description, presence: true, allow_blank: true, length: { in: 0..500 }
     caches_markdown_render_for :description
+    validates :notice, presence: true, allow_blank: true
+    caches_markdown_render_for :notice
 
     validates :ranking,   numericality: { greater_than: 0 }, allow_nil: true
     validates :seeding,   numericality: { greater_than: 0 }, allow_nil: true

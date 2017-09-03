@@ -31,6 +31,8 @@ describe User do
   it { should allow_value('').for(:description) }
   it { should validate_length_of(:description).is_at_least(0).is_at_most(500) }
 
+  it { should allow_value('').for(:notice) }
+
   it { should allow_value('').for(:email) }
   it { should allow_value('foo@bar.com').for(:email) }
   # Example from Wikipedia

@@ -59,6 +59,11 @@
   .panel-heading Description
   .panel-body.markdown= user_p.description
 
+- if user_p.notice != ''
+  .panel.panel-warning
+    .panel-heading Notice
+    .panel-body.markdown= user_p.notice
+
 - unless @matches.empty?
   .panel.panel-info
     .panel-heading Upcoming Matches

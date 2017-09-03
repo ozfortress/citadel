@@ -134,7 +134,14 @@ class TeamsController < ApplicationController
   end
 
   def team_params
-    params.require(:team).permit(:name, :avatar, :remove_avatar, :description)
+    common = [:name, :avatar, :remove_avatar, :description]
+    permitted = if user_can_edit_teams?
+                  [:notice]
+                else
+                  []
+                end
+
+    params.require(:team).permit(*(common + permitted))
   end
 
   def require_team_create_permission

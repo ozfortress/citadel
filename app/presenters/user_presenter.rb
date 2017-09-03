@@ -51,6 +51,12 @@ class UserPresenter < BasePresenter
     # rubocop:enable Rails/OutputSafety
   end
 
+  def notice
+    # rubocop:disable Rails/OutputSafety
+    user.notice_render_cache.html_safe
+    # rubocop:enable Rails/OutputSafety
+  end
+
   def league_status(league)
     elements = [roster_status(league), transfer_status(league)]
     safe_join(elements.reject(&:empty?))
