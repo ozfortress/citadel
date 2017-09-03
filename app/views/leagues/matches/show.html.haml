@@ -10,7 +10,17 @@
 %h1 #{present(@league).link}: #{@match.home_team.division.name}
 %h2= match_p.title
 
-- unless @match.bye?
+- if @match.bye?
+  %br
+
+  This match is counted as a win for #{match_p.home_team.link}.
+  = @league.points_per_match_win
+  - if @league.points_per_match_win == 1
+    point has been awarded
+  - else
+    points have been awarded
+
+- else
   = render 'leagues/matches/players_table', match: @match, match_p: match_p
 
   .panel.panel-default
