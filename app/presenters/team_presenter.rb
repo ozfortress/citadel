@@ -15,4 +15,10 @@ class TeamPresenter < BasePresenter
     team.description_render_cache.html_safe
     # rubocop:enable Rails/OutputSafety
   end
+
+  def notice
+    # rubocop:disable Rails/OutputSafety
+    team.notice_render_cache.html_safe
+    # rubocop:enable Rails/OutputSafety
+  end
 end

@@ -125,7 +125,7 @@ class UsersController < ApplicationController
   def edit_user_params
     common = [:avatar, :remove_avatar, :description, :email]
     permitted = if user_can_edit_users?
-                  [:badge_name, :badge_color]
+                  [:badge_name, :badge_color, :notice]
                 else
                   []
                 end

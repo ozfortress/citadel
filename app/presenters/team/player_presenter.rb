@@ -30,7 +30,7 @@ class Team
     end
 
     def kick_confirm_message
-      "Are you sure you want to kick #{player.user.name}?"
+      "Are you sure you want to kick #{user.name}?"
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170706072109) do
+ActiveRecord::Schema.define(version: 20170902105039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -409,6 +409,8 @@ ActiveRecord::Schema.define(version: 20170706072109) do
     t.integer  "forfeit_won_matches_count",             default: 0,     null: false
     t.integer  "forfeit_drawn_matches_count",           default: 0,     null: false
     t.integer  "forfeit_lost_matches_count",            default: 0,     null: false
+    t.text     "notice",                                default: "",    null: false
+    t.text     "notice_render_cache",                   default: "",    null: false
     t.index ["division_id"], name: "index_league_rosters_on_division_id", using: :btree
     t.index ["points"], name: "index_league_rosters_on_points", using: :btree
     t.index ["team_id"], name: "index_league_rosters_on_team_id", using: :btree
@@ -509,6 +511,8 @@ ActiveRecord::Schema.define(version: 20170706072109) do
     t.integer  "players_count",            default: 0,  null: false
     t.string   "query_name_cache",         default: "", null: false
     t.text     "description_render_cache", default: "", null: false
+    t.text     "notice",                   default: "", null: false
+    t.text     "notice_render_cache",      default: "", null: false
     t.index "query_name_cache gist_trgm_ops", name: "index_teams_on_query_name_cache", using: :gist
     t.index ["name"], name: "index_teams_on_name", unique: true, using: :btree
   end
@@ -580,6 +584,8 @@ ActiveRecord::Schema.define(version: 20170706072109) do
     t.text     "description_render_cache", default: "", null: false
     t.string   "badge_name",               default: "", null: false
     t.integer  "badge_color",              default: 0,  null: false
+    t.text     "notice",                   default: "", null: false
+    t.text     "notice_render_cache",      default: "", null: false
     t.index "query_name_cache gist_trgm_ops", name: "index_users_on_query_name_cache", using: :gist
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["name"], name: "index_users_on_name", unique: true, using: :btree

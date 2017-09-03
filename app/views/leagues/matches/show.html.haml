@@ -10,16 +10,26 @@
 %h1 #{present(@league).link}: #{@match.home_team.division.name}
 %h2= match_p.title
 
-- if user_signed_in? && !@match.bye?
-  .row
-    .pull-right
-      = link_to verify_rosters_link(@match), target: :blank_, class: 'label label-warning',
-                data: { toggle: :tooltip, placement: :bottom },
-                title: 'Verify the other team is who they say they are.' do
-        verify.ozfortress.com
-        %span.glyphicon.glyphicon-ok
+- if @match.bye?
+  %br
 
-- unless @match.bye?
+  This match is counted as a win for #{match_p.home_team.link}.
+  = @league.points_per_match_win
+  - if @league.points_per_match_win == 1
+    point has been awarded
+  - else
+    points have been awarded
+
+- else
+  - if user_signed_in?
+    .row
+      .pull-right
+        = link_to verify_rosters_link(@match), target: :blank_, class: 'label label-warning',
+                  data: { toggle: :tooltip, placement: :bottom },
+                  title: 'Verify the other team is who they say they are.' do
+          verify.ozfortress.com
+          %span.glyphicon.glyphicon-ok
+
   = render 'leagues/matches/players_table', match: @match, match_p: match_p
 
   .panel.panel-default

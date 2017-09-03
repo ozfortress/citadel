@@ -16,6 +16,11 @@
   .panel-heading Info
   .panel-body.markdown= team_p.description
 
+- if team_p.notice != ''
+  .panel.panel-warning
+    .panel-heading Notice
+    .panel-body.markdown= team_p.notice
+
 - unless @upcoming_matches.empty?
   .panel.panel-default
     .panel-heading Upcoming Matches
@@ -52,6 +57,13 @@
         - roster.players.map(&:user_id).each do |id|
           %li.list-group-item
             = render 'users/listing', user: @users[id], team: @team
+
+      - if roster_p.notice != ''
+        .panel-warning
+          .panel-heading
+            Notice
+
+          .panel-body.markdown= roster_p.notice
 
       - if matches.present?
         - id = "#{dom_id(roster)}-matches"
@@ -151,12 +163,20 @@
             - roster.players.map(&:user_id).each do |user_id|
               %li.list-group-item
                 = render 'users/listing', user: @users[user_id], team: @team
-          .panel-heading
-            Matches:
+
+          - if roster_p.notice != ''
+            .panel-warning
+              .panel-heading Notice
+              .panel-body.markdown= roster_p.notice
+
+          .panel-default
+            .panel-heading
+              Matches:
             = render 'leagues/matches/matches_table', matches: matches, roster: roster
 
-          .panel-heading Transfer History:
-          %ul.list-group
-            - roster.transfers.each do |transfer|
-              %li.list-group-item
-                = present(transfer).listing
+          .panel-default
+            .panel-heading Transfer History:
+            %ul.list-group
+              - roster.transfers.each do |transfer|
+                %li.list-group-item
+                  = present(transfer).listing

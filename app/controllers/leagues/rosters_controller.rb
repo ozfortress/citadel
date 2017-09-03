@@ -55,7 +55,7 @@ module Leagues
     end
 
     def update
-      if @roster.update(roster_params)
+      if @roster.update(edit_roster_params)
         redirect_to team_path(@roster.team)
       else
         edit
@@ -106,11 +106,11 @@ module Leagues
       whitelist_schedule_params(param)
     end
 
-    def roster_params
+    def edit_roster_params
       roster = params.require(:roster)
 
       params = if user_can_edit_league?
-                 roster.permit(:name, :description, :ranking,
+                 roster.permit(:name, :description, :notice, :ranking,
                                :seeding, :division_id)
                else
                  roster.permit(:description)

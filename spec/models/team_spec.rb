@@ -17,6 +17,8 @@ describe Team do
   it { should allow_value('').for(:description) }
   it { should validate_length_of(:description).is_at_least(0).is_at_most(500) }
 
+  it { should allow_value('').for(:notice) }
+
   describe 'players' do
     let(:team) { create(:team) }
     let(:user1) { create(:user) }

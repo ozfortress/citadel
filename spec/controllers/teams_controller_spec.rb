@@ -99,6 +99,21 @@ describe TeamsController do
         expect(response).to redirect_to(team_path(team))
       end
 
+      it 'allows admins to edit teams' do
+        user.grant(:edit, :teams)
+        sign_in user
+
+        patch :update, params: { id: team.id, team: {
+          name: 'C', description: 'D', notice: 'foo'
+        } }
+
+        team.reload
+        expect(team.name).to eq('C')
+        expect(team.description).to eq('D')
+        expect(team.notice).to eq('foo')
+        expect(response).to redirect_to(team_path(team))
+      end
+
       it 'allows avatar removal' do
         team = create(:team_with_avatar)
         user.grant(:edit, team)

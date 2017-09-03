@@ -106,29 +106,33 @@ describe UsersController do
       sign_in user
 
       patch :update, params: { id: user.id, user: {
-        description: 'D', badge_name: 'Foo', badge_color: 1, email: 'foo@bar.com',
+        description: 'D', badge_name: 'Foo', badge_color: 1, email: 'foo@bar.com', notice: 'foo'
       } }
 
       user.reload
       expect(user.description).to eq('D')
       expect(user.badge_name).to eq('')
       expect(user.badge_color).to eq(0)
+      expect(user.notice).to eq('')
       expect(user.email).to eq('foo@bar.com')
       expect(user).to_not be_confirmed
+      expect(response).to redirect_to(user_path(user))
     end
 
-    it 'allows admins to edit badges' do
-      user.grant(:edit, :users)
-      sign_in user
+    it 'allows admins to edit users' do
+      admin.grant(:edit, :users)
+      sign_in admin
 
       patch :update, params: { id: user.id, user: {
-        description: 'D', badge_name: 'Foo', badge_color: 1,
+        description: 'D', badge_name: 'Foo', badge_color: 1, notice: 'foo'
       } }
 
       user.reload
       expect(user.description).to eq('D')
       expect(user.badge_name).to eq('Foo')
       expect(user.badge_color).to eq(1)
+      expect(user.notice).to eq('foo')
+      expect(response).to redirect_to(user_path(user))
     end
 
     it 'allows avatar removal' do

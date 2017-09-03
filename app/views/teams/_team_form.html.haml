@@ -2,6 +2,9 @@
 
 = f.text_field :name
 
+- if user_can_edit_teams?
+  = f.markdown_editor :notice, rows: 3, label: 'Notice (Public)'
+
 .clearfix
   = image_tag team.avatar.icon.url, class: 'pull-left thumbnail' if team.avatar?
 

@@ -198,12 +198,13 @@ describe Leagues::RostersController do
 
         patch :update, params: {
           id: roster.id,
-          roster: { name: 'A', description: 'B', division_id: div2, seeding: 2, ranking: 3 }
+          roster: { name: 'A', description: 'B', division_id: div2, seeding: 2, ranking: 3, notice: 'foo' }
         }
 
         roster.reload
         expect(roster.name).to eq('A')
         expect(roster.description).to eq('B')
+        expect(roster.notice).to eq('foo')
         expect(roster.division).to eq(div2)
         expect(roster.seeding).to eq(2)
         expect(roster.ranking).to eq(3)
@@ -216,11 +217,12 @@ describe Leagues::RostersController do
 
         patch :update, params: {
           id: roster.id,
-          roster: { name: 'A', description: 'B', division_id: div2, seeding: 2, ranking: 3 }
+          roster: { name: 'A', description: 'B', division_id: div2, seeding: 2, ranking: 3, notice: 'foo' }
         }
 
         roster.reload
         expect(roster.description).to eq('B')
+        expect(roster.notice).to eq('')
         expect(roster.division).to eq(div)
         expect(roster.name).to_not eq('A')
         expect(roster.seeding).to_not eq(2)
