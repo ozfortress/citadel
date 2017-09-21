@@ -21,7 +21,7 @@ describe Forums::TopicsController do
       sign_in user
 
       post :create, params: { parent: parent_topic.id, forums_topic: {
-        name: 'Foo', locked: true, pinned: true, hidden: true, isolated: false,
+        name: 'Foo', locked: true, pinned: true, hidden: true, isolated: true,
         default_hidden: true
       } }
 
@@ -43,7 +43,7 @@ describe Forums::TopicsController do
       sign_in user
 
       post :create, params: { parent: parent_topic.id, forums_topic: {
-        name: 'Foo', locked: true, pinned: true, hidden: true, isolated: false,
+        name: 'Foo', locked: true, pinned: true, hidden: true, isolated: true,
         default_hidden: true
       } }
 
@@ -198,7 +198,7 @@ describe Forums::TopicsController do
         expect(topic.locked).to eq(true)
         expect(topic.pinned).to eq(true)
         expect(topic.hidden).to eq(true)
-        expect(topic.isolated).to eq(true)
+        expect(topic.isolated).to eq(false)
         expect(topic.default_hidden).to eq(true)
         expect(response).to redirect_to(forums_topic_path(topic))
       end
@@ -237,6 +237,65 @@ describe Forums::TopicsController do
 
           expect(response).to redirect_to(forums_path)
         end
+      end
+    end
+
+    describe 'PATCH #isolate' do
+      let(:user2) { create(:user) }
+
+      it 'succeeds for authorized user' do
+        user.grant(:manage, :forums)
+        sign_in user
+        user2.grant(:manage, :forums)
+
+        patch :isolate, params: { id: topic.id }
+
+        topic.reload
+        expect(topic.isolated?).to be(true)
+        expect(user.can?(:manage, topic)).to be(true)
+        expect(user2.can?(:manage, topic)).to be(false)
+        expect(response).to redirect_to(forums_topic_path(topic))
+      end
+
+      it 'redirects for unauthorized user' do
+        sign_in user
+
+        patch :isolate, params: { id: topic.id }
+
+        topic.reload
+        expect(topic.isolated?).to be(false)
+        expect(user.can?(:manage, topic)).to be(false)
+        expect(response).to redirect_to(forums_path)
+      end
+    end
+
+    describe 'PATH #unisolate' do
+      let(:user2) { create(:user) }
+
+      it 'succeeds for authorized user' do
+        user.grant(:manage, topic)
+        sign_in user
+        topic.update(isolated: true)
+
+        patch :unisolate, params: { id: topic.id }
+
+        topic.reload
+        expect(topic.isolated?).to be(false)
+        expect(user.can?(:manage, topic)).to be(true)
+        expect(response).to redirect_to(forums_topic_path(topic))
+      end
+
+      it 'redirects for unauthorized user' do
+        user.grant(:manage, :forums)
+        sign_in user
+        topic.update(isolated: true)
+
+        patch :unisolate, params: { id: topic.id }
+
+        topic.reload
+        expect(topic.isolated?).to be(true)
+        expect(user.can?(:manage, topic)).to be(false)
+        expect(response).to redirect_to(forums_path)
       end
     end
 

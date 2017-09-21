@@ -9,7 +9,9 @@ module Forums
     before_action :require_can_manage_parent, only: [:new, :create]
     before_action :require_login, only: :toggle_subscription
     before_action :require_can_view, only: [:show, :toggle_subscription]
-    before_action :require_can_manage, only: [:edit, :update, :destroy]
+    before_action :require_isolated, only: :unisolate
+    before_action :require_not_isolated, only: :isolate
+    before_action :require_can_manage, only: [:edit, :update, :isolate, :unisolate, :destroy]
 
     def new
       @topic = Forums::Topic.new(parent: @parent_topic)
@@ -58,6 +60,22 @@ module Forums
       end
     end
 
+    def isolate
+      if Topics::IsolationService.call(current_user, @topic)
+        redirect_to forums_topic_path(@topic)
+      else
+        render :edit
+      end
+    end
+
+    def unisolate
+      if @topic.update(isolated: false)
+        redirect_to forums_topic_path(@topic)
+      else
+        render :edit
+      end
+    end
+
     def destroy
       if @topic.destroy
         redirect_to topic_parent_path(@topic)
@@ -78,7 +96,7 @@ module Forums
 
     def topic_params
       params.require(:forums_topic).permit(:parent_id, :name, :locked, :pinned,
-                                           :hidden, :isolated, :default_hidden)
+                                           :hidden, :default_hidden)
     end
 
     def require_can_manage_parent
@@ -87,6 +105,14 @@ module Forums
 
     def require_can_view
       redirect_back(fallback_location: forums_path) unless user_can_view_topic?
+    end
+
+    def require_not_isolated
+      redirect_back(fallback_location: forums_path) if @topic.isolated?
+    end
+
+    def require_isolated
+      redirect_back(fallback_location: forums_path) unless @topic.isolated?
     end
 
     def require_can_manage
