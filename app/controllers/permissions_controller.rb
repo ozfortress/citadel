@@ -4,8 +4,7 @@ class PermissionsController < ApplicationController
     @subject = params.require(:subject).to_sym
 
     @target = if subject?
-                User.grant_model_for(@action, @subject).subject_cls.find(params[:target])
-                # @subject.to_s.camelize.constantize.find(params[:target])
+                @subject.to_s.camelize.constantize.find(params[:target])
               else
                 @subject
               end

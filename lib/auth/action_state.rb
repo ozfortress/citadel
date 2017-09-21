@@ -16,7 +16,6 @@ module Auth
     class_methods do
       attr_reader :action
       attr_reader :subject
-      attr_reader :subject_cls
       attr_reader :association_name
 
       def subject?
@@ -48,10 +47,10 @@ module Auth
 
         if subject?
           belongs_to subject, subject_options
-          @subject_cls = reflect_on_all_associations(:belongs_to).second.klass
+          subject_cls = reflect_on_all_associations(:belongs_to).second.klass
 
-          @subject_cls.has_many @association_name, class_name: name, foreign_key: "#{subject}_id",
-                                                   dependent: :delete_all
+          subject_cls.has_many @association_name, class_name: name, foreign_key: "#{subject}_id",
+                                                  dependent: :delete_all
         end
       end
     end
