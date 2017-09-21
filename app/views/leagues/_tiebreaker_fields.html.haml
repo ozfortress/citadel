@@ -4,4 +4,4 @@
     %span.glyphicon.glyphicon-trash
     Delete
 
-  = f.select :kind, League::Tiebreaker.kinds.map { |name, _| [name.humanize, name] }
+  = f.select(:kind, League::Tiebreaker.kinds.map { |name, _| [name.humanize, name] })

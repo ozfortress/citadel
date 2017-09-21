@@ -11,8 +11,8 @@
           = ff.number_field :away_team_score, label: "'#{match.away_team.name}'s score"
 
   - if user_can_edit_league?
-    = f.select :status, League::Match.statuses.keys.map { |s| [s.humanize, s] }
-    = f.select :forfeit_by, League::Match.forfeit_bies.keys.map { |s| [s.humanize, s] }
+    = f.select(:status, League::Match.statuses.keys.map { |s| [s.humanize, s] })
+    = f.select(:forfeit_by, League::Match.forfeit_bies.keys.map { |s| [s.humanize, s] })
 
   - if user_can_edit_league?
     = f.submit 'Update'

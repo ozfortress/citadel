@@ -4,8 +4,8 @@
 
 .panel.panel-default
   %ul.list-group
-    - @grants.keys.each do |action|
-      - @grants[action].keys.each do |subject|
+    - @grants.each_key do |action|
+      - @grants[action].each_key do |subject|
         / TODO: Support object grants
         - next if @grants[action][subject].subject?
 

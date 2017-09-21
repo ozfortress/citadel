@@ -12,7 +12,7 @@ module SteamId
 
   def valid_64?(string)
     Integer(string)
-  rescue
+  rescue ArgumentError
     false
   end
 

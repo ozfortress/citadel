@@ -55,6 +55,6 @@ AllCops:
   TargetRubyVersion: 2.3
   TargetRailsVersion: 5.0
 
-# TODO: Remove once rubocop releases a new version (bug that's been fixed)
-Lint/AmbiguousBlockAssociation:
+# TODO: Remove once rubocop fixes some bugs
+Rails/HasManyOrHasOneDependent:
   Enabled: false

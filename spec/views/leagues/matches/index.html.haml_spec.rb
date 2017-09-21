@@ -12,7 +12,7 @@ describe 'leagues/matches/index' do
     @matches << build_stubbed(:league_match, home_team: home_team, away_team: away_team,
                                              status: 'pending', round_name: 'Finals')
     @matches << build_stubbed(:bye_league_match, home_team: home_team, status: 'confirmed')
-    League::Match.forfeit_bies.each do |ff, _|
+    League::Match.forfeit_bies.each_key do |ff|
       @matches << build_stubbed(:league_match, home_team: home_team, away_team: away_team,
                                                forfeit_by: ff, status: 'confirmed')
     end

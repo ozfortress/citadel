@@ -136,6 +136,8 @@ Rails.application.routes.draw do
   namespace :forums, shallow: true do
     resources :topics, except: :index do
       concerns :subscribable
+      patch :isolate, on: :member
+      patch :unisolate, on: :member
     end
 
     resources :threads, except: :index do

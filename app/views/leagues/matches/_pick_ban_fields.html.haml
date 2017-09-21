@@ -1,7 +1,7 @@
 %li.list-group-item.nested-fields
   .form-inline
-    .col-sm-4= f.select :kind, f.object.class.kinds.map { |key, _| [key.humanize, key] }
-    .col-sm-4= f.select :team, f.object.class.teams.map { |key, _| [key.humanize, key] }
+    .col-sm-4= f.select(:kind, f.object.class.kinds.map { |key, _| [key.humanize, key] })
+    .col-sm-4= f.select(:team, f.object.class.teams.map { |key, _| [key.humanize, key] })
     .col-sm-2= f.check_box :deferrable
 
 
