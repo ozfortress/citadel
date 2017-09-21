@@ -28,7 +28,7 @@ describe 'teams/show' do
     @matches << build_stubbed(:league_match, home_team: roster, status: 'pending',
                                              round_name: 'Finals')
     @matches << build_stubbed(:bye_league_match, home_team: roster, status: 'confirmed')
-    League::Match.forfeit_bies.each do |ff, _|
+    League::Match.forfeit_bies.each_key do |ff|
       @matches << build_stubbed(:league_match, home_team: roster, forfeit_by: ff,
                                                status: 'confirmed')
     end
@@ -90,7 +90,7 @@ describe 'teams/show' do
       expect(rendered).to include(match.away_team.name) if match.away_team
     end
 
-    @users.values.each do |user|
+    @users.each_value do |user|
       expect(rendered).to include(user.name)
     end
   end

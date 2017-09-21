@@ -34,7 +34,7 @@
           user = user_f.object
           user_p = present(user)
           player = @roster.players.first { |pl| pl.user_id == user.id }
-          has_errors = player && player.errors.any?
+          has_errors = player&.errors&.any?
 
         .form-group{ class: ('has-error' if has_errors) }
           - label = safe_join([user_p.link, user_p.league_status(@league)], ', ')
@@ -42,7 +42,7 @@
 
           / Manually display errors.
           - if player && has_errors
-            - player.errors.values.each do |errors|
+            - player.errors.each_value do |errors|
               - errors.each do |error|
                 %span.help-block= error
 
