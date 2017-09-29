@@ -354,7 +354,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.8)
     tins (1.15.0)
-    tournament-system (1.0.0)
+    tournament-system (1.0.2)
       graph_matching (~> 0.1.1)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
