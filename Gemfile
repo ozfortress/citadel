@@ -46,7 +46,7 @@ gem 'ahoy_matey'
 # API Serialization
 gem 'active_model_serializers', '~> 0.10.0'
 # Tournament systems
-gem 'tournament-system'
+gem 'tournament-system', '~> 1.0.0'
 
 group :test do
   # Use rspec for tests
