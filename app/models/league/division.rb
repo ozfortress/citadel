@@ -41,8 +41,10 @@ class League
 
     def generate_swiss_dutch(match_options, options)
       options[:pair_options] ||= {}
-      min_pair_size = (options[:pair_options][:min_pair_size] || 4).to_i
-      pair_options = { min_pair_size: min_pair_size }
+      pair_options = {
+        allow_duplicates: options[:pair_options].fetch(:allow_duplicates, false),
+        push_byes_to:     options[:pair_options].fetch(:push_byes_to, :bottom_half).to_sym,
+      }
 
       tournament_options = { pairer: Tournament::Swiss::Dutch, pair_options: pair_options }
       Tournament::Swiss.generate new_driver(match_options), tournament_options

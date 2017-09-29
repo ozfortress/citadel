@@ -48,7 +48,8 @@ module Leagues
       @match.rounds.new
       @division = @league.divisions.first
       @tournament_system = :swiss
-      @swiss_tournament              = { pairer: :dutch, pair_options: { min_pair_size: 4 } }
+      @swiss_tournament              = { pairer: :dutch, pair_options: { allow_duplicates: false,
+                                                                         push_byes_to: :bottom_half } }
       @round_robin_tournament        = {}
       @single_elimination_tournament = { teams_limit: 0, starting_round: 0 }
       @page_playoffs_tournament      = { starting_round: 0, bronze_match: false }
@@ -181,7 +182,7 @@ module Leagues
     end
 
     def swiss_tournament_params
-      params.require(:swiss_tournament).permit(:pairer, pair_options: [:min_pair_size])
+      params.require(:swiss_tournament).permit(:pairer, pair_options: [:allow_duplicates, :push_byes_to])
     end
 
     def round_robin_tournament_params

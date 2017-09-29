@@ -31,5 +31,15 @@ module Leagues
 
       options_for_select options, @swiss_tournament[:pairer]
     end
+
+    def swiss_push_byes_to_select
+      options = [
+        ['None', :none],
+        ['Bottom Half', :bottom_half],
+        ['Top Half', :top_half],
+      ]
+
+      options_for_select options, @swiss_tournament[:pair_options][:push_byes_to]
+    end
   end
 end

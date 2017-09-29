@@ -2,8 +2,12 @@
   %label.control-label Pairing System
   = select_tag 'swiss_tournament[pairer]', swiss_parer_select, class: 'form-control'
 
+.checkbox
+  %label
+    = check_box_tag 'swiss_tournament[pair_options][allow_duplicates]',
+                    checked: swiss_tournament[:pair_options][:allow_duplicates]
+    Allow Duplicates
+
 .form-group
-  %label.control-label Minimum Pair Size
-  = number_field_tag 'swiss_tournament[pair_options][min_pair_size]',
-                     swiss_tournament[:pair_options][:min_pair_size],
-                     min: 2, step: 2, class: 'form-control'
+  %label.control-label Push BYE Matches to Side
+  = select_tag 'swiss_tournament[pair_options][push_byes_to]', swiss_push_byes_to_select, class: 'form-control'
