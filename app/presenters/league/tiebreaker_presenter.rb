@@ -25,7 +25,7 @@ class League
     end
 
     def name_with_tooltip
-      content_tag(:div, name, data: { toggle: :tooltip, placement: :bottom }, title: title)
+      content_tag(:u, name, data: { toggle: :tooltip, placement: :bottom }, title: title)
     end
   end
 end
