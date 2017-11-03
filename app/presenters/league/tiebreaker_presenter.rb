@@ -12,7 +12,7 @@ class League
     TITLES = {
       'round_wins'                      => 'Total number of rounds won',
       'round_score_difference'          => 'Sum of scores of all rounds',
-      'round_wins_against_tied_rosters' => 'Rounds won against tied teams',
+      'round_wins_against_tied_rosters' => 'Maps won against tied teams',
       'median_bucholz_score'            => 'Median Buchholz score',
     }.freeze
 
