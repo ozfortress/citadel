@@ -7,7 +7,7 @@ module Forums
         topic.transaction do
           topic.update(isolated: true) || rollback!
 
-          user.grant(:manage, topic) || rollback!
+          user.grant(:manage, topic) || rollback! unless user.can?(:manage, topic)
 
           topic
         end
