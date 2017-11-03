@@ -1,16 +1,16 @@
-.jumbotron
-  - if @topic
-    %h1 News
+- if @topic
+  %h1 News
 
-    - @threads.each do |thread|
-      - post = @news_posts[thread]
-      %hr
+  - @threads.each do |thread|
+    - post = @news_posts[thread]
+    %hr
 
-      = render 'forums/posts/news_post', post: post
+    = render 'forums/posts/news_post', post: post
 
-    - if @more_threads
-      = link_to 'View Older', forums_topic_path(@topic), class: 'btn btn-default'
-  - else
+  - if @more_threads
+    = link_to 'View Older', forums_topic_path(@topic), class: 'btn btn-default'
+- else
+  .jumbotron
     %h1 Welcome to Citadel
 
     %p View the source on #{link_to 'Github', 'https://github.com/ozfortress/citadel'}
