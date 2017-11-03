@@ -1,10 +1,14 @@
 class PermissionsController < ApplicationController
+  # Include a bunch of permission models
+  include Forums::Permissions
+  include TeamPermissions
+
   before_action except: :index do
     @action = params.require(:action_).to_sym
     @subject = params.require(:subject).to_sym
 
     @target = if subject?
-                @subject.to_s.camelize.constantize.find(params[:target])
+                User.grant_model_for(@action, @subject).subject_cls.find(params[:target])
               else
                 @subject
               end
@@ -57,7 +61,7 @@ class PermissionsController < ApplicationController
   end
 
   def admin_subject
-    if @target
+    if subject?
       @subject.to_s.pluralize.to_sym
     else
       @subject
@@ -65,13 +69,25 @@ class PermissionsController < ApplicationController
   end
 
   def require_permission
-    redirect_back unless current_user.can?(:edit, :permissions) ||
-                         current_user.can?(@action, admin_subject) ||
-                         current_user.can?(@action, @target)
+    if subject?
+      redirect_back unless user_can_edit_permissions?
+    else
+      redirect_back unless current_user.can?(:edit, :permissions) || current_user.can?(@action, admin_subject)
+    end
+  end
+
+  def user_can_edit_permissions?
+    case @target
+    when Team
+      user_can_edit_team?(@target)
+    when Forums::Topic
+      user_can_manage_topic?(@target)
+    else raise('Unknown permission target')
+    end
   end
 
   def ensure_valid_target
-    redirect_back if subject? && ![:team].include?(@subject)
+    redirect_back if subject? && ![:team, :forums_topic].include?(@subject)
   end
 
   def redirect_back(options = {})
