@@ -21,7 +21,7 @@
   .panel.panel-danger
     .panel-heading Danger Zone
     .panel-body
-      - if @league.hidden?
+      - if @league.hidden? && @league.rosters.empty?
         = button_to league_path(@league), method: :delete, class: 'btn btn-danger',
                     data: { confirm: 'Are you sure you want to delete this League?' } do
           %span.glyphicon.glyphicon-trash
