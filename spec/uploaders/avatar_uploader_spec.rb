@@ -8,7 +8,7 @@ describe AvatarUploader do
 
   context 'User model' do
     let(:user) { build_stubbed(:user) }
-    let(:uploader) { AvatarUploader.new(user) }
+    let(:uploader) { AvatarUploader.new(user, :avatar) }
 
     it 'has fallback' do
       url = ActionController::Base.helpers.asset_path 'fallback/user_avatar_default.png'
@@ -25,12 +25,21 @@ describe AvatarUploader do
 
     it 'handles duplicates' do
       user2 = build_stubbed(:user)
-      uploader2 = AvatarUploader.new(user2)
+      uploader2 = AvatarUploader.new(user2, :avatar)
 
       uploader.store!(avatar_file)
       uploader2.store!(avatar_file)
 
       expect(uploader.url).to_not eq(uploader2.url)
+    end
+
+    it 'changes path for consecutive uploads' do
+      uploader.store!(avatar_file)
+      first_url = uploader.url
+
+      uploader.store!(avatar_file)
+
+      expect(uploader.url).to_not eq(first_url)
     end
   end
 end
