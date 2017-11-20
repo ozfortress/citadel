@@ -50,7 +50,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
     token || model.send(token_field + '=', SecureRandom.hex(12))
   end
 
-  def reset_token(file)
+  def reset_token(_file)
     model.send(token_field + '=', nil)
   end
 end
