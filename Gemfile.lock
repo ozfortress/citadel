@@ -29,6 +29,9 @@ GEM
       activemodel (>= 4.1, < 6)
       case_transform (>= 0.2)
       jsonapi-renderer (>= 0.1.1.beta1, < 0.2)
+    active_record_doctor (1.4.1)
+      activerecord (>= 4.2)
+      railties (>= 4.2)
     active_record_union (1.2.0)
       activerecord (>= 4.0)
     activejob (5.0.6)
@@ -385,6 +388,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
+  active_record_doctor
   active_record_union (~> 1.2.0)
   ahoy_matey
   ancestry
