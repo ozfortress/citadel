@@ -86,7 +86,10 @@ group :development do
   gem 'bullet'
 
   # Faster development
-  gem 'spring'
+  gem 'spring', require: false
+
+  # Tool for database maintenance
+  gem 'active_record_doctor', require: false
 
   # Development scripts
   gem 'capistrano', '~> 3.1', require: false

@@ -38,11 +38,11 @@ Rails/SkipsModelValidations:
   Exclude:
     - 'spec/factories/*'
 
-# None-guard clauses are often clearer for intent
+# None-guard clauses are sometimes clearer
 Style/GuardClause:
   Enabled: false
 
-# It makes much more sense to group them according to purpose
+# It makes much more sense to group them according to purpose than alphabetically
 Bundler/OrderedGems:
   Enabled: false
 
@@ -57,4 +57,8 @@ AllCops:
 
 # TODO: Remove once rubocop fixes some bugs
 Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+# TODO: Remove once rubocop fixes some bugs
+Style/CommentedKeyword:
   Enabled: false

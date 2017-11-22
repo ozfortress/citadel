@@ -15,7 +15,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    "#{model.id}.#{file.extension}" if original_filename
+    "#{model.id}-#{token}.#{file.extension}" if original_filename.present?
   end
 
   process resize_to_fit: [200, 200]
@@ -28,11 +28,29 @@ class AvatarUploader < CarrierWave::Uploader::Base
     process resize_to_fill: [100, 100]
   end
 
+  before :cache, :reset_token
+
   def extension_white_list
     %w[jpg jpeg png]
   end
 
   def content_type_whitelist
     %r{image\/}
+  end
+
+  private
+
+  def token_field
+    "#{mounted_as}_token"
+  end
+
+  def token
+    token = model.send(token_field)
+
+    token || model.send(token_field + '=', SecureRandom.hex(12))
+  end
+
+  def reset_token(_file)
+    model.send(token_field + '=', nil)
   end
 end
