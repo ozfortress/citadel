@@ -56,12 +56,14 @@ class League
 
     def generate_single_elimination(match_options, options)
       match_options[:has_winner] = true
+      match_options[:allow_round_draws] = false
       driver_options = options.slice(:teams_limit, :starting_round)
       Tournament::SingleElimination.generate new_driver(match_options, driver_options)
     end
 
     def generate_page_playoffs(match_options, options)
       match_options[:has_winner] = true
+      match_options[:allow_round_draws] = false
       driver_options = options.slice(:starting_round)
       driver_options[:teams_limit] = 4
       tournament_options = options.slice(:bronze_match)

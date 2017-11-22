@@ -5,7 +5,7 @@ describe Leagues::MatchesController do
     @map = create(:map)
     @map2 = create(:map)
 
-    @league = create(:league, matches_submittable: true, allow_round_draws: false)
+    @league = create(:league, matches_submittable: true)
     @div = create(:league_division, league: @league)
     @div2 = create(:league_division, league: @league)
 
@@ -432,6 +432,18 @@ describe Leagues::MatchesController do
         match.reload
         expect(match.status).to eq('confirmed')
         expect(match.forfeit_by).to eq('away_team_forfeit')
+      end
+
+      it 'fails when match is already forfeit' do
+        sign_in @captain1
+
+        match.update!(forfeit_by: :away_team_forfeit)
+
+        patch :forfeit, params: { id: match.id }
+
+        match.reload
+        expect(match.forfeit_by).to eq('away_team_forfeit')
+        expect(response).to redirect_to(match_path(match))
       end
     end
 

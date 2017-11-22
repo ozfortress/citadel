@@ -165,6 +165,7 @@ class League
       count = ->(query) { query.reorder(nil).select('COUNT(*)').to_sql }
       query = ActiveRecord::Base.connection.exec_query(%{
         SELECT (#{calculate_total_scores_query})            AS total_scores,
+               (#{calculate_total_score_difference_query})  AS total_score_difference,
                (#{count.call(won_rounds)})                  AS won_rounds_count,
                (#{count.call(drawn_rounds)})                AS drawn_rounds_count,
                (#{count.call(lost_rounds)})                 AS lost_rounds_count,
@@ -192,11 +193,17 @@ class League
     end
 
     def calculate_total_scores_query
-      subquery = ->(rounds, col) { rounds.reorder(nil).select("COALESCE(SUM(#{col}), 0)") }
-      rounds = Match::Round.joins(:match).merge(Match.confirmed.no_forfeit).with_outcome
+      home_team_score = home_team_matches.select('SUM(total_home_team_score)')
+      away_team_score = away_team_matches.select('SUM(total_away_team_score)')
 
-      "(#{subquery.call(rounds.merge(home_team_matches), 'home_team_score').to_sql}) + "\
-        "(#{subquery.call(rounds.merge(away_team_matches), 'away_team_score').to_sql})"
+      "COALESCE((#{home_team_score.to_sql}) + (#{away_team_score.to_sql}), 0)"
+    end
+
+    def calculate_total_score_difference_query
+      home_team_diff = home_team_matches.select('SUM(total_score_difference)')
+      away_team_diff = away_team_matches.select('-SUM(total_score_difference)')
+
+      "COALESCE((#{home_team_diff.to_sql}) + (#{away_team_diff.to_sql}), 0)"
     end
 
     def forfeit_all!

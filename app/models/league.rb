@@ -32,7 +32,6 @@ class League < ApplicationRecord
   validates :roster_locked,              inclusion: { in: [true, false] }
   validates :matches_submittable,        inclusion: { in: [true, false] }
   validates :transfers_require_approval, inclusion: { in: [true, false] }
-  validates :allow_round_draws,          inclusion: { in: [true, false] }
   validates :allow_disbanding,           inclusion: { in: [true, false] }
   validates :schedule_locked,            inclusion: { in: [true, false] }
 

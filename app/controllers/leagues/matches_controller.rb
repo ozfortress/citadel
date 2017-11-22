@@ -16,6 +16,7 @@ module Leagues
     before_action :require_user_either_teams, only: [:submit, :confirm]
     before_action :require_user_can_report_scores, only: [:submit, :forfeit]
     before_action :require_match_not_bye, only: [:submit, :confirm, :forfeit]
+    before_action :require_match_not_forfeit, only: [:forfeit]
 
     def index
       @divisions = @league.divisions.includes(matches: [:home_team, :away_team, :rounds])
@@ -59,8 +60,7 @@ module Leagues
       @division = @league.divisions.find(params.delete(:division_id))
       fetch_tournament_params
 
-      @match = Matches::GenerationService.call(@division, create_round_params,
-                                               @tournament_system, tournament_params)
+      @match = Matches::GenerationService.call(@division, create_round_params, @tournament_system, tournament_params)
 
       if @match
         @match.reset_results
@@ -108,7 +108,12 @@ module Leagues
     end
 
     def forfeit
-      @match.forfeit(user_can_home_team?)
+      if user_can_home_team?
+        @match.update!(forfeit_by: :home_team_forfeit)
+      else
+        @match.update!(forfeit_by: :away_team_forfeit)
+      end
+
       show
       render :show
     end
@@ -147,7 +152,7 @@ module Leagues
     end
 
     def match_params
-      params.require(:match).permit(:home_team_id, :away_team_id, :has_winner,
+      params.require(:match).permit(:home_team_id, :away_team_id, :has_winner, :allow_round_draws,
                                     :round_name, :round_number, :notice,
                                     pick_bans_attributes: [:id, :_destroy, :kind,
                                                            :team, :deferrable],
@@ -155,7 +160,7 @@ module Leagues
     end
 
     def create_round_params
-      params.require(:match).permit(:division_id, :generate_kind, :has_winner,
+      params.require(:match).permit(:division_id, :generate_kind, :has_winner, :allow_round_draws,
                                     :round_name, :round_number, :notice,
                                     pick_bans_attributes: [:id, :_destroy, :kind,
                                                            :team, :deferrable],
@@ -211,6 +216,10 @@ module Leagues
 
     def require_match_not_bye
       redirect_to match_path(@match) if @match.bye?
+    end
+
+    def require_match_not_forfeit
+      redirect_to match_path(@match) unless @match.no_forfeit?
     end
   end
 end

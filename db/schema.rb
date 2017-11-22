@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171120042410) do
+ActiveRecord::Schema.define(version: 20171120082216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -298,34 +298,42 @@ ActiveRecord::Schema.define(version: 20171120042410) do
   create_table "league_match_rounds", force: :cascade do |t|
     t.integer  "match_id"
     t.integer  "map_id"
-    t.integer  "home_team_score",                 null: false
-    t.integer  "away_team_score",                 null: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.integer  "home_team_score",                           default: 0,     null: false
+    t.integer  "away_team_score",                           default: 0,     null: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
     t.integer  "loser_id"
     t.integer  "winner_id"
-    t.boolean  "has_outcome",     default: false, null: false
+    t.boolean  "has_outcome",                               default: false, null: false
+    t.decimal  "score_difference", precision: 20, scale: 6, default: "0.0", null: false
+    t.index ["loser_id"], name: "index_league_match_rounds_on_loser_id", using: :btree
     t.index ["map_id"], name: "index_league_match_rounds_on_map_id", using: :btree
     t.index ["match_id"], name: "index_league_match_rounds_on_match_id", using: :btree
+    t.index ["winner_id"], name: "index_league_match_rounds_on_winner_id", using: :btree
   end
 
   create_table "league_matches", force: :cascade do |t|
     t.integer  "home_team_id"
     t.integer  "away_team_id"
-    t.integer  "status",                              null: false
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.integer  "forfeit_by",          default: 0,     null: false
+    t.integer  "status",                                                          null: false
+    t.datetime "created_at",                                                      null: false
+    t.datetime "updated_at",                                                      null: false
+    t.integer  "forfeit_by",                                      default: 0,     null: false
     t.integer  "round_number"
-    t.string   "notice",              default: "",    null: false
-    t.string   "round_name",          default: "",    null: false
-    t.text     "notice_render_cache", default: "",    null: false
-    t.boolean  "has_winner",          default: false, null: false
+    t.string   "notice",                                          default: "",    null: false
+    t.string   "round_name",                                      default: "",    null: false
+    t.text     "notice_render_cache",                             default: "",    null: false
+    t.boolean  "has_winner",                                      default: false, null: false
     t.integer  "winner_id"
     t.integer  "loser_id"
     t.string   "script_state"
+    t.decimal  "total_score_difference", precision: 20, scale: 6, default: "0.0", null: false
+    t.decimal  "total_home_team_score",  precision: 20, scale: 6, default: "0.0", null: false
+    t.decimal  "total_away_team_score",  precision: 20, scale: 6, default: "0.0", null: false
+    t.boolean  "allow_round_draws",                               default: false, null: false
     t.index ["away_team_id"], name: "index_league_matches_on_away_team_id", using: :btree
     t.index ["home_team_id"], name: "index_league_matches_on_home_team_id", using: :btree
+    t.index ["loser_id"], name: "index_league_matches_on_loser_id", using: :btree
     t.index ["winner_id"], name: "index_league_matches_on_winner_id", using: :btree
   end
 
@@ -385,32 +393,33 @@ ActiveRecord::Schema.define(version: 20171120042410) do
   end
 
   create_table "league_rosters", force: :cascade do |t|
-    t.integer  "team_id",                                               null: false
-    t.integer  "division_id",                                           null: false
-    t.boolean  "approved",                              default: false, null: false
-    t.datetime "created_at",                                            null: false
-    t.datetime "updated_at",                                            null: false
-    t.string   "name",                                                  null: false
-    t.text     "description",                                           null: false
-    t.boolean  "disbanded",                             default: false, null: false
+    t.integer  "team_id",                                                                        null: false
+    t.integer  "division_id",                                                                    null: false
+    t.boolean  "approved",                                                       default: false, null: false
+    t.datetime "created_at",                                                                     null: false
+    t.datetime "updated_at",                                                                     null: false
+    t.string   "name",                                                                           null: false
+    t.text     "description",                                                                    null: false
+    t.boolean  "disbanded",                                                      default: false, null: false
     t.integer  "ranking"
     t.integer  "seeding"
-    t.integer  "won_rounds_count",                      default: 0,     null: false
-    t.integer  "drawn_rounds_count",                    default: 0,     null: false
-    t.integer  "lost_rounds_count",                     default: 0,     null: false
-    t.integer  "won_matches_count",                     default: 0,     null: false
-    t.integer  "lost_matches_count",                    default: 0,     null: false
-    t.integer  "points",                                default: 0,     null: false
-    t.integer  "total_scores",                          default: 0,     null: false
+    t.integer  "won_rounds_count",                                               default: 0,     null: false
+    t.integer  "drawn_rounds_count",                                             default: 0,     null: false
+    t.integer  "lost_rounds_count",                                              default: 0,     null: false
+    t.integer  "won_matches_count",                                              default: 0,     null: false
+    t.integer  "lost_matches_count",                                             default: 0,     null: false
+    t.integer  "points",                                                         default: 0,     null: false
+    t.integer  "total_scores",                                                   default: 0,     null: false
     t.json     "schedule_data"
-    t.integer  "won_rounds_against_tied_rosters_count", default: 0,     null: false
-    t.text     "description_render_cache",              default: "",    null: false
-    t.integer  "drawn_matches_count",                   default: 0,     null: false
-    t.integer  "forfeit_won_matches_count",             default: 0,     null: false
-    t.integer  "forfeit_drawn_matches_count",           default: 0,     null: false
-    t.integer  "forfeit_lost_matches_count",            default: 0,     null: false
-    t.text     "notice",                                default: "",    null: false
-    t.text     "notice_render_cache",                   default: "",    null: false
+    t.integer  "won_rounds_against_tied_rosters_count",                          default: 0,     null: false
+    t.text     "description_render_cache",                                       default: "",    null: false
+    t.integer  "drawn_matches_count",                                            default: 0,     null: false
+    t.integer  "forfeit_won_matches_count",                                      default: 0,     null: false
+    t.integer  "forfeit_drawn_matches_count",                                    default: 0,     null: false
+    t.integer  "forfeit_lost_matches_count",                                     default: 0,     null: false
+    t.text     "notice",                                                         default: "",    null: false
+    t.text     "notice_render_cache",                                            default: "",    null: false
+    t.decimal  "total_score_difference",                precision: 20, scale: 6, default: "0.0", null: false
     t.index ["division_id"], name: "index_league_rosters_on_division_id", using: :btree
     t.index ["points"], name: "index_league_rosters_on_points", using: :btree
     t.index ["team_id"], name: "index_league_rosters_on_team_id", using: :btree
@@ -447,7 +456,6 @@ ActiveRecord::Schema.define(version: 20171120042410) do
     t.integer  "points_per_round_loss",      default: 0,     null: false
     t.integer  "points_per_match_loss",      default: 0,     null: false
     t.integer  "points_per_match_win",       default: 1,     null: false
-    t.boolean  "allow_round_draws",          default: true,  null: false
     t.boolean  "allow_disbanding",           default: false, null: false
     t.integer  "status",                     default: 0,     null: false
     t.integer  "rosters_count",              default: 0,     null: false
