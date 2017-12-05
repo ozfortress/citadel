@@ -76,6 +76,10 @@ class League
       { name: html_escape(roster.name), id: roster.id, link: team_path(roster.team_id) }
     end
 
+    def to_s
+      roster.name
+    end
+
     private
 
     def disbanded_tag
