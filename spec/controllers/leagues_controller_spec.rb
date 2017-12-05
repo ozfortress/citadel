@@ -46,8 +46,8 @@ describe LeaguesController do
       post :create, params: {
         league: { name: 'A', description: 'B', format_id: format.id, category: 'foo',
                   signuppable: true, roster_locked: false, matches_submittable: true,
-                  transfers_require_approval: false,
-                  allow_disbanding: true, min_players: 1, max_players: 3,
+                  transfers_require_approval: false, allow_disbanding: true,
+                  forfeit_all_matches_when_roster_disbands: false, min_players: 1, max_players: 3,
                   points_per_round_win: 3, points_per_round_draw: 2,
                   points_per_round_loss: 1, points_per_match_win: 5,
                   points_per_match_draw: 6, points_per_match_loss: 7,
@@ -72,6 +72,7 @@ describe LeaguesController do
       expect(comp.matches_submittable).to be(true)
       expect(comp.transfers_require_approval).to be(false)
       expect(comp.allow_disbanding).to be(true)
+      expect(comp.forfeit_all_matches_when_roster_disbands).to be(false)
       expect(comp.min_players).to eq(1)
       expect(comp.max_players).to eq(3)
       expect(comp.points_per_round_win).to eq(3)

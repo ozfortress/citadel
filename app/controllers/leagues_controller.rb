@@ -83,6 +83,7 @@ class LeaguesController < ApplicationController
   LEAGUE_PARAMS = [
     :name, :description, :format_id, :category,
     :signuppable, :roster_locked, :matches_submittable, :transfers_require_approval, :allow_disbanding,
+    :forfeit_all_matches_when_roster_disbands,
     :min_players, :max_players,
     :schedule_locked, :schedule,
     :points_per_round_win, :points_per_round_draw, :points_per_round_loss,

@@ -28,12 +28,13 @@ class League < ApplicationRecord
 
   validates :category, length: { in: 0..64, allow_nil: false }
 
-  validates :signuppable,                inclusion: { in: [true, false] }
-  validates :roster_locked,              inclusion: { in: [true, false] }
-  validates :matches_submittable,        inclusion: { in: [true, false] }
-  validates :transfers_require_approval, inclusion: { in: [true, false] }
-  validates :allow_disbanding,           inclusion: { in: [true, false] }
-  validates :schedule_locked,            inclusion: { in: [true, false] }
+  validates :signuppable,                          inclusion: { in: [true, false] }
+  validates :roster_locked,                        inclusion: { in: [true, false] }
+  validates :matches_submittable,                  inclusion: { in: [true, false] }
+  validates :transfers_require_approval,           inclusion: { in: [true, false] }
+  validates :allow_disbanding,                     inclusion: { in: [true, false] }
+  validates :schedule_locked,                      inclusion: { in: [true, false] }
+  validates :forfeit_all_matches_when_roster_disbands, inclusion: { in: [true, false] }
 
   validates :min_players, presence: true, numericality: { greater_than: 0 }
   validates :max_players, presence: true, numericality: { greater_than_or_equal_to: 0 }
