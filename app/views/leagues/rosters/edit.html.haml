@@ -47,7 +47,13 @@
   .panel.panel-danger
     .panel-heading Danger Zone
     .panel-body
-      - if user_can_disband_roster?
+      - if @roster.disbanded? && user_can_edit_league?
+        = button_to undisband_roster_path(@roster),
+                    method: :put, class: 'btn btn-danger',
+                    data: { confirm: 'Are you sure you want to Un-disband this Roster?' } do
+          Un-disband
+
+      - elsif !@roster.disbanded? && user_can_disband_roster?
         = button_to disband_roster_path(@roster),
                     method: :delete, class: 'btn btn-danger',
                     data: { confirm: 'Are you sure you want to Disband this Roster?' } do

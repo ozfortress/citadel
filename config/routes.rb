@@ -38,6 +38,7 @@ Rails.application.routes.draw do
         get   'review'
         patch 'approve'
         delete 'disband'
+        put 'undisband'
       end
 
       resource :transfers, controller: 'leagues/rosters/transfers', only: [:create]

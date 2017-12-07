@@ -416,6 +416,58 @@ describe Leagues::RostersController do
       end
     end
 
+    describe 'PUT #undisband' do
+      before do
+        roster.disband
+      end
+
+      it 'succeeds for authorized admin' do
+        user.grant(:edit, league)
+        sign_in user
+
+        put :undisband, params: { id: roster.id }
+
+        expect(roster.reload.disbanded?).to be(false)
+      end
+
+      it 'redirects for authorized captain if league allows disbands' do
+        league.update!(allow_disbanding: true)
+        user.grant(:edit, team)
+        sign_in user
+
+        put :undisband, params: { id: roster.id }
+
+        expect(roster.reload.disbanded?).to be(true)
+        expect(response).to redirect_to(team_path(roster.team))
+      end
+
+      it 'redirects for authorized captain' do
+        user.grant(:edit, team)
+        sign_in user
+
+        put :undisband, params: { id: roster.id }
+
+        expect(roster.reload.disbanded?).to be(true)
+        expect(response).to redirect_to(team_path(roster.team))
+      end
+
+      it 'redirects for unauthorized user' do
+        sign_in user
+
+        put :undisband, params: { id: roster.id }
+
+        expect(roster.reload.disbanded?).to be(true)
+        expect(response).to redirect_to(team_path(roster.team))
+      end
+
+      it 'redirects for unauthenticated user' do
+        put :undisband, params: { id: roster.id }
+
+        expect(roster.reload.disbanded?).to be(true)
+        expect(response).to redirect_to(team_path(roster.team))
+      end
+    end
+
     describe 'DELETE #destroy' do
       it 'succeeds for authorized admin' do
         user.grant(:edit, league)
