@@ -25,11 +25,12 @@ sudo apt-get install postgresql-9.5 libpq-dev
 
 * Create a user to give your application an access to the database:
 
-`CREATE USER citadel_dev WITH password 'foobar';`
+```psql
+CREATE USER citadel_dev WITH password 'foobar';```
 
 We are going to use 3 databases for development, test and producion enviroments, thus we need to create them first, and then grant `citadel_dev`  permissions to manage those databases:
 
-```
+```psql
 CREATE DATABASE citadel_0;
 CREATE DATABASE citadel_1;
 CREATE DATABASE citadel_2;
