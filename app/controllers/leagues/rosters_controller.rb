@@ -48,7 +48,7 @@ module Leagues
 
     def edit
       @comment = League::Roster::Comment.new
-      @comments = @roster.comments.includes(:user)
+      @comments = @roster.comments.ordered.includes(:created_by)
       @transfer_request ||= @roster.transfer_requests.new
       @users_on_roster    = @roster.users
       @users_off_roster   = @roster.users_off_roster

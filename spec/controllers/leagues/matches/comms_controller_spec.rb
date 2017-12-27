@@ -83,7 +83,7 @@ describe Leagues::Matches::CommsController do
 
   context 'existing comm' do
     let(:writer) { create(:user) }
-    let(:comm) { create(:league_match_comm, match: match, user: writer) }
+    let(:comm) { create(:league_match_comm, match: match, created_by: writer) }
 
     describe 'GET #edit' do
       it 'succeeds for authorized user' do
@@ -122,9 +122,9 @@ describe Leagues::Matches::CommsController do
 
         comm.reload
         expect(comm.content).to eq(content)
-        expect(comm.user).to eq(writer)
+        expect(comm.created_by).to eq(writer)
         edit = comm.edits.first
-        expect(edit.user).to eq(user)
+        expect(edit.created_by).to eq(user)
         expect(response).to redirect_to(comm.paths.show)
       end
 
@@ -194,7 +194,7 @@ describe Leagues::Matches::CommsController do
     end
 
     describe 'GET #edits' do
-      let!(:edits) { create_list(:league_match_comm_edit, 3, comm: comm, user: writer) }
+      let!(:edits) { create_list(:league_match_comm_edit, 3, comm: comm, created_by: writer) }
 
       it 'succeeds for authorized user' do
         user.grant(:edit, league)
@@ -285,7 +285,7 @@ describe Leagues::Matches::CommsController do
 
   context 'deleted comm' do
     let(:writer) { create(:user) }
-    let(:comm) { create(:league_match_comm, match: match, user: writer, deleted_by: writer) }
+    let(:comm) { create(:league_match_comm, match: match, created_by: writer, deleted_by: writer) }
 
     describe '#update' do
       it 'redirects for authorized admin' do

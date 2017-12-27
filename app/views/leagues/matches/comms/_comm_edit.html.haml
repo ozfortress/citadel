@@ -1,7 +1,7 @@
 :ruby
-  if match.home_team.on_roster?(comm.user)
+  if match.home_team.on_roster?(comm.created_by)
     roster = match.home_team
-  elsif match.away_team.on_roster?(comm.user)
+  elsif match.away_team.on_roster?(comm.created_by)
     roster = match.away_team
   end
 
@@ -12,6 +12,6 @@
 
     = present(roster).link + ':' if roster
     - team = roster.team if roster
-    = render 'users/listing', user: comm.user, team: team
+    = render 'users/listing', user: comm.created_by, team: team
 
 .container-fluid.markdown!= comm.content_render_cache

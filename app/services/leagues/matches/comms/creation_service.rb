@@ -4,16 +4,15 @@ module Leagues
       module CreationService
         include BaseService
 
-        def call(user, match, params)
-          params[:user] = user
-          comm_params = params.merge(match: match)
+        def call(creator, match, params)
+          comm_params = params.merge(created_by: creator, match: match)
           comm = League::Match::Comm.new(comm_params)
 
           comm.transaction do
             comm.save || rollback!
-            comm.create_edit!(user)
+            comm.create_edit!(creator)
 
-            notify_captains!(user, match)
+            notify_captains!(creator, match)
           end
 
           comm

@@ -45,7 +45,7 @@ module Leagues
       end
 
       def edits
-        @edits = @comm.edits.includes(:user)
+        @edits = @comm.edits.includes(:created_by)
       end
 
       def destroy

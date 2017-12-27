@@ -37,7 +37,7 @@ module Leagues
     end
 
     def user_can_edit_comm?(comm)
-      user_can_edit_league? || (current_user == comm.user && user_not_banned?)
+      user_can_edit_league? || (current_user == comm.created_by && user_not_banned?)
     end
 
     private

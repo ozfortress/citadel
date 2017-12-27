@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'users/show' do
-  let(:user) { build(:user, badge_name: 'Admin') }
+  let(:user) { build_stubbed(:user, badge_name: 'Admin') }
   let(:teams) { build_stubbed_list(:team, 3) }
   let(:aka) { build_stubbed_list(:user_name_change, 5) }
   let(:titles) { build_stubbed_list(:user_title, 5) }
@@ -57,5 +57,11 @@ describe 'users/show' do
     expect(rendered).to include(user.name)
     expect(rendered).to include(user.badge_name)
     # TODO: Add more checks for user data
+  end
+
+  it 'shows for admins' do
+    allow(view).to receive(:user_can_edit_users?).and_return(true)
+
+    render
   end
 end

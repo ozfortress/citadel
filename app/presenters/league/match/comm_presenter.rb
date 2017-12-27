@@ -3,15 +3,11 @@ class League
     class CommPresenter < BasePresenter
       presents :comm
 
-      def id
-        "comm_#{comm.id}"
-      end
-
       def user_roster
         @user_roster ||=
-          if comm.match.home_team.on_roster?(comm.user)
+          if comm.match.home_team.on_roster?(comm.created_by)
             comm.match.home_team
-          elsif comm.match.away_team.on_roster?(comm.user)
+          elsif comm.match.away_team.on_roster?(comm.created_by)
             comm.match.away_team
           end
       end
@@ -29,7 +25,7 @@ class League
       end
 
       def created_by
-        @created_by ||= present(comm.user)
+        @created_by ||= present(comm.created_by)
       end
 
       def deleted_by
@@ -43,7 +39,7 @@ class League
       end
 
       def panel_class
-        if comm.user.admin?
+        if comm.created_by.admin?
           'panel-warning'
         else
           'panel-default'

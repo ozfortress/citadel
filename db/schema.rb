@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171205103239) do
+ActiveRecord::Schema.define(version: 20171213080057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -258,19 +258,19 @@ ActiveRecord::Schema.define(version: 20171205103239) do
   end
 
   create_table "league_match_comm_edits", force: :cascade do |t|
-    t.integer  "user_id",                           null: false
+    t.integer  "created_by_id",                     null: false
     t.integer  "comm_id",                           null: false
     t.text     "content",                           null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.text     "content_render_cache", default: "", null: false
     t.index ["comm_id"], name: "index_league_match_comm_edits_on_comm_id", using: :btree
-    t.index ["user_id"], name: "index_league_match_comm_edits_on_user_id", using: :btree
+    t.index ["created_by_id"], name: "index_league_match_comm_edits_on_created_by_id", using: :btree
   end
 
   create_table "league_match_comms", force: :cascade do |t|
     t.integer  "match_id"
-    t.integer  "user_id"
+    t.integer  "created_by_id"
     t.text     "content",                           null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
@@ -278,8 +278,8 @@ ActiveRecord::Schema.define(version: 20171205103239) do
     t.integer  "edits_count",          default: 0,  null: false
     t.datetime "deleted_at"
     t.integer  "deleted_by_id"
+    t.index ["created_by_id"], name: "index_league_match_comms_on_created_by_id", using: :btree
     t.index ["match_id"], name: "index_league_match_comms_on_match_id", using: :btree
-    t.index ["user_id"], name: "index_league_match_comms_on_user_id", using: :btree
   end
 
   create_table "league_match_pick_bans", force: :cascade do |t|
@@ -346,15 +346,28 @@ ActiveRecord::Schema.define(version: 20171205103239) do
     t.index ["map_id"], name: "index_league_pooled_maps_on_map_id", using: :btree
   end
 
+  create_table "league_roster_comment_edits", force: :cascade do |t|
+    t.integer  "comment_id",                        null: false
+    t.integer  "created_by_id",                     null: false
+    t.string   "content",                           null: false
+    t.text     "content_render_cache", default: "", null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.index ["comment_id"], name: "index_league_roster_comment_edits_on_comment_id", using: :btree
+    t.index ["created_by_id"], name: "index_league_roster_comment_edits_on_created_by_id", using: :btree
+  end
+
   create_table "league_roster_comments", force: :cascade do |t|
     t.integer  "roster_id",                         null: false
-    t.integer  "user_id"
+    t.integer  "created_by_id"
     t.text     "content",                           null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.text     "content_render_cache", default: "", null: false
+    t.datetime "deleted_at"
+    t.integer  "deleted_by_id"
+    t.index ["created_by_id"], name: "index_league_roster_comments_on_created_by_id", using: :btree
     t.index ["roster_id"], name: "index_league_roster_comments_on_roster_id", using: :btree
-    t.index ["user_id"], name: "index_league_roster_comments_on_user_id", using: :btree
   end
 
   create_table "league_roster_players", force: :cascade do |t|
@@ -527,6 +540,17 @@ ActiveRecord::Schema.define(version: 20171205103239) do
     t.index ["name"], name: "index_teams_on_name", unique: true, using: :btree
   end
 
+  create_table "user_comment_edits", force: :cascade do |t|
+    t.integer  "comment_id",                        null: false
+    t.integer  "created_by_id",                     null: false
+    t.string   "content",                           null: false
+    t.text     "content_render_cache", default: "", null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.index ["comment_id"], name: "index_user_comment_edits_on_comment_id", using: :btree
+    t.index ["created_by_id"], name: "index_user_comment_edits_on_created_by_id", using: :btree
+  end
+
   create_table "user_comments", force: :cascade do |t|
     t.integer  "user_id",              null: false
     t.integer  "created_by_id",        null: false
@@ -534,6 +558,8 @@ ActiveRecord::Schema.define(version: 20171205103239) do
     t.text     "content_render_cache", null: false
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.datetime "deleted_at"
+    t.integer  "deleted_by_id"
     t.index ["user_id"], name: "index_user_comments_on_user_id", using: :btree
   end
 
@@ -679,9 +705,9 @@ ActiveRecord::Schema.define(version: 20171205103239) do
   add_foreign_key "forums_topics", "users", column: "created_by_id"
   add_foreign_key "league_divisions", "leagues"
   add_foreign_key "league_match_comm_edits", "league_match_comms", column: "comm_id"
-  add_foreign_key "league_match_comm_edits", "users"
+  add_foreign_key "league_match_comm_edits", "users", column: "created_by_id"
   add_foreign_key "league_match_comms", "league_matches", column: "match_id"
-  add_foreign_key "league_match_comms", "users"
+  add_foreign_key "league_match_comms", "users", column: "created_by_id"
   add_foreign_key "league_match_comms", "users", column: "deleted_by_id"
   add_foreign_key "league_match_pick_bans", "league_matches", column: "match_id"
   add_foreign_key "league_match_pick_bans", "maps"
@@ -696,8 +722,11 @@ ActiveRecord::Schema.define(version: 20171205103239) do
   add_foreign_key "league_matches", "league_rosters", column: "winner_id"
   add_foreign_key "league_pooled_maps", "leagues"
   add_foreign_key "league_pooled_maps", "maps"
+  add_foreign_key "league_roster_comment_edits", "league_roster_comments", column: "comment_id"
+  add_foreign_key "league_roster_comment_edits", "users", column: "created_by_id"
   add_foreign_key "league_roster_comments", "league_rosters", column: "roster_id"
-  add_foreign_key "league_roster_comments", "users"
+  add_foreign_key "league_roster_comments", "users", column: "created_by_id"
+  add_foreign_key "league_roster_comments", "users", column: "deleted_by_id"
   add_foreign_key "league_roster_players", "league_rosters", column: "roster_id"
   add_foreign_key "league_roster_players", "users"
   add_foreign_key "league_roster_transfer_requests", "league_rosters", column: "roster_id"
@@ -719,8 +748,11 @@ ActiveRecord::Schema.define(version: 20171205103239) do
   add_foreign_key "team_players", "users"
   add_foreign_key "team_transfers", "teams"
   add_foreign_key "team_transfers", "users"
+  add_foreign_key "user_comment_edits", "user_comments", column: "comment_id"
+  add_foreign_key "user_comment_edits", "users", column: "created_by_id"
   add_foreign_key "user_comments", "users"
   add_foreign_key "user_comments", "users", column: "created_by_id"
+  add_foreign_key "user_comments", "users", column: "deleted_by_id"
   add_foreign_key "user_name_changes", "users"
   add_foreign_key "user_name_changes", "users", column: "approved_by_id"
   add_foreign_key "user_name_changes", "users", column: "denied_by_id"
