@@ -16,9 +16,7 @@ module API
       protected
 
       def authenticate
-        unless api_key
-          render_error :unauthorized, message: 'Unauthorized API key'
-        end
+        render_error :unauthorized, message: 'Unauthorized API key' unless api_key
       end
 
       def handle_error(error)

@@ -226,9 +226,7 @@ class League
     def set_defaults
       self.approved = false if approved.blank?
 
-      if league.present? && league.scheduler && !schedule_data
-        self[:schedule_data] = league.scheduler.default_schedule
-      end
+      self[:schedule_data] = league.scheduler.default_schedule if league.present? && league.scheduler && !schedule_data
     end
 
     def within_roster_size_limits

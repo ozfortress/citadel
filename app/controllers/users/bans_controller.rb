@@ -3,11 +3,13 @@ module Users
     include ::UsersPermissions
 
     before_action { @user = User.find(params[:user_id]) }
+
     before_action except: :index do
       @action = params.require(:action_).to_sym
       @subject = params.require(:subject).to_sym
       @model = User.ban_model_for(@action, @subject)
     end
+
     before_action :require_user_permissions
 
     def index
