@@ -17,7 +17,7 @@ describe Leagues::Matches::Comms::CreationService do
 
     expect(comm).to be_valid
     expect(comm.content).to eq(content)
-    expect(comm.user).to be(user)
+    expect(comm.created_by).to be(user)
     expect(user.notifications).to be_empty
     expect(home_captain.notifications).to_not be_empty
     expect(away_captain.notifications).to_not be_empty
@@ -28,7 +28,7 @@ describe Leagues::Matches::Comms::CreationService do
 
     expect(comm).to be_valid
     expect(comm.content).to eq(content)
-    expect(comm.user).to be(home_captain)
+    expect(comm.created_by).to be(home_captain)
     expect(user.notifications).to be_empty
     expect(home_captain.notifications).to be_empty
     expect(away_captain.notifications).to_not be_empty

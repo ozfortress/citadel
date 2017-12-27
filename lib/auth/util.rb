@@ -1,8 +1,6 @@
 module Auth
   # :reek:UtilityFunction
   module Util
-    extend self
-
     def grant_name(actor, action, subject)
       "action_#{actor}_#{action}_#{subject}"
     end
@@ -22,5 +20,7 @@ module Auth
 
       subject_cls.name.underscore.sub('/', '_').to_sym
     end
+
+    module_function :grant_name, :ban_name, :get_subject_name
   end
 end

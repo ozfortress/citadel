@@ -1,0 +1,9 @@
+- content_for(:title) { "Comment Edits | #{@roster.name}" }
+
+%h2
+  Comment Edits on
+  = link_to @roster.name, edit_roster_path(@roster)
+
+.panel.panel-default
+  - @edits.each do |comment_edit|
+    = render 'comment_edit', comment_edit: comment_edit

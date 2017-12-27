@@ -66,9 +66,9 @@ class League
 
       def transfer_message
         if transfer_request.is_joining?
-          safe_join(["pending transfer to '", present(transfer_request.roster).link, "'"])
+          safe_join(["pending transfer to '", roster.link, "'"])
         else
-          safe_join(["pending transfer out of '", present(transfer_request.roster).link, "'"])
+          safe_join(["pending transfer out of '", roster.link, "'"])
         end
       end
 

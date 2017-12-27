@@ -14,7 +14,7 @@ module Leagues
 
     before_action :require_can_sign_up, only: [:new, :create]
     before_action :require_league_permission, only: [:index, :review, :approve]
-    before_action :require_roster_league_permission, only: [:show]
+    before_action :require_roster_league_permission, only: [:undisband]
     before_action :require_roster_permission, only: [:edit, :update]
     before_action :require_roster_pending, only: [:review, :approve]
     before_action :require_roster_disbandable, only: :disband
@@ -48,7 +48,7 @@ module Leagues
 
     def edit
       @comment = League::Roster::Comment.new
-      @comments = @roster.comments.includes(:user)
+      @comments = @roster.comments.ordered.includes(:created_by)
       @transfer_request ||= @roster.transfer_requests.new
       @users_on_roster    = @roster.users
       @users_off_roster   = @roster.users_off_roster
@@ -76,6 +76,15 @@ module Leagues
 
     def disband
       if @roster.disband
+        redirect_to team_path(@roster.team)
+      else
+        edit
+        render :edit
+      end
+    end
+
+    def undisband
+      if @roster.update(disbanded: false)
         redirect_to team_path(@roster.team)
       else
         edit

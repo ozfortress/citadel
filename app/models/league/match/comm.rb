@@ -5,7 +5,7 @@ class League
       include MarkdownRenderCaching
       include Users::DeletedBy
 
-      belongs_to :user
+      belongs_to :created_by, class_name: 'User'
       belongs_to :match, class_name: 'Match'
 
       has_many :edits, class_name: 'CommEdit', dependent: :delete_all
@@ -20,7 +20,7 @@ class League
       scope :ordered, -> { order(:created_at) }
 
       def create_edit!(user)
-        CommEdit.create!(user: user, comm: self, content: content,
+        CommEdit.create!(created_by: user, comm: self, content: content,
                          content_render_cache: content_render_cache)
       end
 

@@ -15,19 +15,15 @@ class League
     end
 
     def to_s
-      match_s(&:name)
+      match_s(&:to_s)
     end
 
     def round_s
-      if match.round_name.blank?
-        match.round_number ? "##{match.round_number}" : ''
-      else
-        match.round_name
-      end
+      match.round_name || match.round_number ? "##{match.round_number}" : ''
     end
 
     def title
-      match_s { |team| present(team).link }
+      match_s(&:link)
     end
 
     def link(label = nil, options = {}, &block)
@@ -114,9 +110,9 @@ class League
 
     def match_name
       if bye?
-        safe_join([yield(match.home_team), 'BYE'], ' ')
+        safe_join([yield(home_team), 'BYE'], ' ')
       else
-        safe_join([yield(match.home_team), 'vs', yield(match.away_team)], ' ')
+        safe_join([yield(home_team), 'vs', yield(away_team)], ' ')
       end
     end
 

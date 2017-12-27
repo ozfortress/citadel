@@ -118,7 +118,12 @@ class League
 
     def disband
       transaction do
-        forfeit_all!
+        if league.forfeit_all_matches_when_roster_disbands?
+          forfeit_all!
+        else
+          forfeit_all_non_confirmed!
+        end
+
         transfer_requests.pending.destroy_all
         update!(disbanded: true)
       end
@@ -212,12 +217,16 @@ class League
       end
     end
 
+    def forfeit_all_non_confirmed!
+      matches.where.not(status: :confirmed).find_each do |match|
+        match.forfeit!(self)
+      end
+    end
+
     def set_defaults
       self.approved = false if approved.blank?
 
-      if league.present? && league.scheduler && !schedule_data
-        self[:schedule_data] = league.scheduler.default_schedule
-      end
+      self[:schedule_data] = league.scheduler.default_schedule if league.present? && league.scheduler && !schedule_data
     end
 
     def within_roster_size_limits

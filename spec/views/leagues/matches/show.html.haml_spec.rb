@@ -34,7 +34,7 @@ describe 'leagues/matches/show' do
     assign(:comm, League::Match::Comm.new(match: match))
     assign(:comms, comms)
 
-    (home_team.users + away_team.users + comms.map(&:user)).each do |user|
+    (home_team.users + away_team.users + comms.map(&:created_by)).each do |user|
       allow(user).to receive(:can?).and_return(true)
     end
   end
@@ -116,11 +116,11 @@ describe 'leagues/matches/show' do
     after do
       comms.each do |comm|
         if view.user_can_edit_league?
-          expect(rendered).to include(comm.user.name)
+          expect(rendered).to include(comm.created_by.name)
         elsif comm.exists?
-          expect(rendered).to include(comm.user.name)
+          expect(rendered).to include(comm.created_by.name)
         else
-          expect(rendered).to_not include(comm.user.name)
+          expect(rendered).to_not include(comm.created_by.name)
         end
       end
     end

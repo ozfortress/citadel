@@ -94,4 +94,24 @@ describe 'teams/show' do
       expect(rendered).to include(user.name)
     end
   end
+
+  it 'shows for captain' do
+    # Fake login
+    allow(view).to receive(:user_signed_in?).and_return(true)
+    allow(view).to receive(:current_user).and_return(players[0].user)
+    # Fake captain
+    allow(view).to receive(:user_can_edit_team?).and_return(true)
+
+    render
+  end
+
+  it 'shows for league admin' do
+    # Fake login
+    allow(view).to receive(:user_signed_in?).and_return(true)
+    allow(view).to receive(:current_user).and_return(build(:user))
+    # Fake admin
+    allow(view).to receive(:user_can_edit_teams?).and_return(true)
+
+    render
+  end
 end

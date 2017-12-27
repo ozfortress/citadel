@@ -7,7 +7,7 @@ module Leagues
       @pick_bans = @match.pick_bans.includes(:map)
       @rounds    = @match.rounds.includes(:map)
 
-      @comms = @match.comms.ordered.includes(:user)
+      @comms = @match.comms.ordered.includes(:created_by)
       @comms = @comms.existing unless user_can_edit_league?
 
       match_show_permissions_includes

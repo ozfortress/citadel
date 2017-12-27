@@ -33,9 +33,7 @@ class League
           days_available += 1 if day && availability[name]
         end
 
-        if days_available < minimum_selected
-          roster.errors.add(:schedule_data, 'not enough availability')
-        end
+        roster.errors.add(:schedule_data, 'not enough availability') if days_available < minimum_selected
       end
 
       # Data validation for schedule_data on rosters

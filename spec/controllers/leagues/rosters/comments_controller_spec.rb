@@ -15,7 +15,7 @@ describe Leagues::Rosters::CommentsController do
 
       expect(roster.comments.size).to eq(1)
       comment = roster.comments.first
-      expect(comment.user).to eq(user)
+      expect(comment.created_by).to eq(user)
       expect(comment.roster).to eq(roster)
       expect(comment.content).to eq('Foo')
     end

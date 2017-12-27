@@ -1,16 +1,19 @@
 - comm_p = present(comm)
 
 .panel{ class: comm_p.panel_class }
-  %div{ id: comm_p.id }
+  %div{ id: comm.paths.dom_id }
   .panel-heading
     - if user_can_edit_comm?(comm)
       .pull-right
         = link_to comm.paths.edit, class: 'btn btn-link btn-sm' do
           %span.glyphicon.glyphicon-cog
-    .pull-right= link_to comm_p.created_at, comm.paths.show
+    .pull-right
+      = link_to comm.paths.show do
+        %span.glyphicon.glyphicon-link.small
+        = comm_p.created_at
 
     = present(comm_p.user_roster).link + ':' if comm_p.user_roster
-    = render 'users/listing', user: comm.user, team: comm_p.user_team
+    = render 'users/listing', user: comm.created_by, team: comm_p.user_team
 
   - if user_can_edit_comm?(comm) && comm.edits.size > 1
     .pull-right

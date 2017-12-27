@@ -184,3 +184,5 @@ ActiveRecord::Base.transaction do
     fail 'Invalid Command'
   end
 end
+
+# rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Style/SignalException

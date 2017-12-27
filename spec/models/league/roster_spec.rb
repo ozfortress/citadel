@@ -93,17 +93,41 @@ describe League::Roster do
   describe '#disband' do
     let(:roster) { create(:league_roster) }
 
-    it 'forfeits all matches' do
+    it 'forfeits all matches when enabled in league' do
       home_match = create(:league_match, home_team: roster)
-      away_match = create(:league_match, away_team: roster)
-      requests = create_list(:league_roster_transfer_request, 3, propagate: true, roster: roster)
+      away_match = create(:league_match, away_team: roster, status: :confirmed)
 
       roster.disband
 
       expect(roster.reload.disbanded?).to be(true)
       expect(home_match.reload.forfeit_by).to eq('home_team_forfeit')
       expect(away_match.reload.forfeit_by).to eq('away_team_forfeit')
-      requests.each do |request|
+    end
+
+    it "doesn't forfeit confirmed matches when forfeiting all matches is disabled in league" do
+      roster.league.update!(forfeit_all_matches_when_roster_disbands: false)
+      home_match = create(:league_match, home_team: roster)
+      away_match = create(:league_match, away_team: roster, status: :confirmed)
+
+      roster.disband
+
+      expect(roster.reload.disbanded?).to be(true)
+      expect(home_match.reload.forfeit_by).to eq('home_team_forfeit')
+      expect(away_match.reload.forfeit_by).to eq('no_forfeit')
+    end
+
+    it 'deletes all pending transfer requests' do
+      admin = create(:user)
+      completed_requests = create_list(:league_roster_transfer_request, 3, approved_by: admin)
+      pending_requests = create_list(:league_roster_transfer_request, 3, propagate: true, roster: roster)
+
+      roster.disband
+
+      completed_requests.each do |request|
+        expect(request.reload).to_not be_nil
+      end
+
+      pending_requests.each do |request|
         expect { request.reload } .to raise_error(ActiveRecord::RecordNotFound)
       end
     end

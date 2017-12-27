@@ -114,15 +114,20 @@
 - if user_can_edit_users?
   .panel.panel-info
     .panel-heading Admin Comments
-    %ul.list-group
-      - @comments.each do |comment|
-        %li.list-group-item
-          .panel.panel-default
-            .panel-heading
-              = render 'users/listing', user: comment.created_by
-              .pull-right= comment.created_at.strftime('%c')
 
-          .markdown!= comment.content_render_cache
+    - @comments.each do |comment|
+      - options = { user: @user, comment: comment, quote_id: 'wmd-input-user-comment' }
 
-    .panel-body
-      = render 'users/comments/form', comment: @comment, user: @user
+      - if comment.exists?
+        = render 'users/comments/comment', options
+      - else
+        = render 'users/comments/deleted_comment', options
+
+    .container-fluid
+      %hr
+      = bootstrap_form_for @comment, as: :comment, url: user_comments_path(@user) do |f|
+        = render 'users/comments/form', f: f
+
+        .row
+          = f.submit 'Post', class: 'btn btn-default pull-right'
+      %hr

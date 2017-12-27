@@ -1,6 +1,5 @@
 module Ahoy
   class Event < ApplicationRecord
-    include CountEstimator
     include Ahoy::Properties
 
     self.table_name = :ahoy_events

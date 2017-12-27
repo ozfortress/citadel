@@ -2,9 +2,14 @@ require 'rails_helper'
 
 describe 'leagues/rosters/edit' do
   let(:roster) { build_stubbed(:league_roster) }
-  let(:comments) { build_stubbed_list(:league_roster_comment, 6) }
   let(:users_on_roster) { build_stubbed_list(:user, 6) }
   let(:users_off_roster) { build_stubbed_list(:user, 6) }
+
+  let(:admin) { build_stubbed(:user) }
+  let(:comments) do
+    build_stubbed_list(:league_roster_comment, 3) +
+      build_stubbed_list(:league_roster_comment, 3, deleted_by: admin, deleted_at: Time.zone.now)
+  end
 
   before do
     assign(:league, roster.league)
