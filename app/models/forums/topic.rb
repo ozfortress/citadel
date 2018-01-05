@@ -13,6 +13,7 @@ module Forums
     validates :hidden,         inclusion: { in: [true, false] }
     validates :isolated,       inclusion: { in: [true, false] }
     validates :default_hidden, inclusion: { in: [true, false] }
+    validates :default_locked, inclusion: { in: [true, false] }
 
     scope :locked,   -> { where(locked: true) }
     scope :unlocked, -> { where(locked: false) }
@@ -37,8 +38,8 @@ module Forums
       end
 
       return unless parent
-      self.locked   = parent.locked if locked.nil?
-      self.hidden   = parent.hidden if hidden.nil?
+      self.locked = parent.locked if locked.nil?
+      self.hidden = parent.hidden if hidden.nil?
     end
 
     def cascade_threads_depth!

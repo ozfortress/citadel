@@ -1,5 +1,10 @@
 = f.text_field :name
+
+%label Topic Options
 = f.check_box :locked
 = f.check_box :pinned
 = f.check_box :hidden
+
+%label Thread Options
+= f.check_box :default_locked
 = f.check_box :default_hidden

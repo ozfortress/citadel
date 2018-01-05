@@ -39,6 +39,11 @@
       = f.submit 'Update'
       = link_to 'Cancel', team_path(@roster.team), class: 'btn btn-default'
 
+    = link_to users_permissions_path(action_: :edit, subject: :team, target: @roster.team.id),
+              class: 'pull-right btn btn-default' do
+      Manage Permissions
+      %span.glyphicon.glyphicon-cog
+
 = render 'leagues/rosters/transfers/index',
          league: @league, roster: @roster, transfer_request: @transfer_request,
          users_on_roster: @users_on_roster, users_off_roster: @users_off_roster

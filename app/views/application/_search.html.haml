@@ -1,7 +1,7 @@
 / Its easier to put the bootstrap in manually, than deal with bootstrap-form
-= form_for(request.fullpath, method: 'GET', class: 'navbar-form') do
+= form_for(request.path, method: 'GET', class: 'navbar-form') do
   / Hack for getting params to pass between searches. Don't include rails generates params
-  - builtin_params = %w[controller action utf8 q]
+  - builtin_params = %w[controller action utf8 q page]
   - params.reject { |p| builtin_params.include?(p) }.each do |param, value|
     = hidden_field_tag param, value
 
