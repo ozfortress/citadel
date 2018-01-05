@@ -52,8 +52,9 @@ module Forums
 
     def set_defaults
       return unless topic
-      self.locked = topic.locked? if locked.nil?
-      self.pinned = false         if pinned.nil?
+      self.pinned = false if pinned.nil?
+
+      self.locked = topic.default_locked? if locked.nil?
 
       self.hidden = topic.hidden? || topic.default_hidden? if hidden.nil?
     end

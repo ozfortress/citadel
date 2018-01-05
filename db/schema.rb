@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171213080057) do
+ActiveRecord::Schema.define(version: 20180105133646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -226,18 +226,19 @@ ActiveRecord::Schema.define(version: 20171213080057) do
   end
 
   create_table "forums_topics", force: :cascade do |t|
-    t.integer  "created_by_id",              null: false
-    t.string   "name",                       null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "created_by_id",                  null: false
+    t.string   "name",                           null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.boolean  "locked"
     t.boolean  "pinned"
     t.boolean  "hidden"
     t.boolean  "isolated"
     t.boolean  "default_hidden"
-    t.integer  "ancestry_depth", default: 0, null: false
+    t.integer  "ancestry_depth", default: 0,     null: false
     t.string   "ancestry"
-    t.integer  "threads_count",  default: 0, null: false
+    t.integer  "threads_count",  default: 0,     null: false
+    t.boolean  "default_locked", default: false
     t.index ["ancestry"], name: "index_forums_topics_on_ancestry", using: :btree
     t.index ["created_by_id"], name: "index_forums_topics_on_created_by_id", using: :btree
   end
