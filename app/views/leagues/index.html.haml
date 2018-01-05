@@ -7,6 +7,11 @@
 
 %hr
 
+- if user_can_edit_leagues?
+  = link_to new_league_path, class: 'btn btn-default pull-right' do
+    %span.glyphicon.glyphicon-plus
+    Create New League
+
 - unless @games.empty?
   %ul.nav.nav-tabs
     - @games.each_with_index do |game, index|
