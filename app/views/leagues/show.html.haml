@@ -20,14 +20,20 @@
   = link_to 'All Matches', league_matches_path(@league),
             class: 'btn btn-default pull-right'
 
-  .panel-heading
-    - if @personal_matches
-      Your Upcoming Matches
-    - else
-      Upcoming Matches for #{@divisions.first.name}
-
   - matches = @personal_matches || @top_div_matches
-  = render 'leagues/matches/matches_table', matches: matches, roster: nil
+  - if !matches.empty?
+    .panel-heading
+      - if @personal_matches
+        Your Upcoming Matches
+      - else
+        Upcoming Matches for #{@divisions.first.name}
+
+
+    = render 'leagues/matches/matches_table', matches: matches, roster: nil
+
+  - else
+    .panel-heading
+      There are no upcoming matches...
 
 .panel.panel-default
   .panel-heading Teams
