@@ -33,7 +33,7 @@
         :ruby
           user = user_f.object
           user_p = present(user)
-          player = @roster.players.first { |pl| pl.user_id == user.id }
+          player = @roster.players.find { |pl| pl.user_id == user.id }
           has_errors = player&.errors&.any?
 
         .form-group{ class: ('has-error' if has_errors) }
@@ -42,7 +42,7 @@
 
           / Manually display errors.
           - if player && has_errors
-            - player.errors.each_value do |errors|
+            - player.errors.values.each do |errors|
               - errors.each do |error|
                 %span.help-block= error
 
