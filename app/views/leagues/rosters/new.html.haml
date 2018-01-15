@@ -41,10 +41,11 @@
           = user_f.check_box :user_id, { label: label, checked: !player.nil? }, user.id, nil
 
           / Manually display errors.
+          -# rubocop:disable Performance/HashEachMethods
           - if player && has_errors
-            - player.errors.values.each do |errors|
-              - errors.each do |error|
-                %span.help-block= error
+            - player.errors.each do |_key_, error|
+              %span.help-block= error
+          -# rubocop:enable Performance/HashEachMethods
 
     = f.submit 'Sign up'
     = link_to 'Cancel', league_path(@league), class: 'btn btn-default'
