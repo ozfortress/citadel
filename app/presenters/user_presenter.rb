@@ -59,7 +59,7 @@ class UserPresenter < BasePresenter
 
   def league_status(league)
     elements = [roster_status(league), transfer_status(league)]
-    safe_join(elements.reject(&:empty?))
+    safe_join(elements.reject(&:empty?), ' ')
   end
 
   def roster_status(league)
