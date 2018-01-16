@@ -1,6 +1,6 @@
 <div id="doc" class="markdown-body container-fluid" style="position: relative;"><h1 id="staff">Staff</h1><h3 id="league-director-oblaozfortresscom">League Director - <a href="mailto:obla@ozfortress.com" target="_blank">obla@ozfortress.com</a></h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a></p><h3 id="league-administrators">League Administrators</h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a> - Premier<br>
 <a href="https://warzone.ozfortress.com/users/157" target="_blank">Thermite</a> - Premier<br>
-<a href="https://warzone.ozfortress.com/users/71" target="_blank">catfish</a> - Intermediate<br>
+<a href="https://warzone.ozfortress.com/users/96" target="_blank">catfish</a> - Intermediate<br>
 <a href="https://warzone.ozfortress.com/users/71" target="_blank">wiggin</a> - Intermediate<br>
 <a href="https://warzone.ozfortress.com/users/15" target="_blank">Fozzlm</a> - Open</p><h3 id="advisor">Advisor</h3><p><a href="https://warzone.ozfortress.com/users/71" target="_blank">wiggin</a></p><h3 id="media">Media</h3><p><a href="https://warzone.ozfortress.com/users/15" target="_blank">Fozzlm</a></p><h3 id="anti-cheat-staff">Anti-Cheat Staff</h3><p><a href="http://ozfortress.com/member.php?u=8085" target="_blank">madjack</a></p><h3 id="server-administrators">Server Administrators</h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a><br>
 <a href="https://warzone.ozfortress.com/users/2" target="_blank">/dev/zero</a><br>
