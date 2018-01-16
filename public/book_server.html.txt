@@ -1,7 +1,6 @@
-﻿<div id="doc" class="markdown-body container-fluid"><h1 id="booking-a-server">Booking a Server</h1><p>Bookings are done in the official ozfortress Discord.</p><p>Simply join the <a href="https://discord.gg/5vs4C5C" target="_blank">#bookings</a> channel and say “/book” and server details will be automatically provided to you. See the full list of commands below.</p><p><a href="https://discord.gg/5vs4C5C" target="_blank">Click here to join #bookings!</a></p><h3 id="commands">Commands</h3><pre><code>/book                  -  Book a new server.
+﻿<div id="doc" class="markdown-body container-fluid" style="position: relative;"><h1 id="booking-a-server">Booking a Server</h1><p>Bookings are done in the official ozfortress Discord.</p><p>Simply join the <a href="https://discord.gg/5vs4C5C" target="_blank">#bookings</a> channel and say “/book” and server details will be automatically provided to you. See the full list of commands below.</p><p><a href="https://discord.gg/5vs4C5C" target="_blank">Click here to join #bookings!</a></p><h3 id="commands">Commands</h3><pre><code>/book                  -  Book a new server.
 /unbook                -  Return a server.
 /demos &lt;user&gt;          -  Get STV demo link (user optional).
-/demoslegacy &lt;user&gt;    -  Old IRC style demo search.
 /servers	        -  List the status of all servers.
 /help                  -  List of commands.
 </code></pre><p>Commands can be sent in both the #bookings channel or via PM to the bot.</p><h3 id="additional-information">Additional Information</h3><ul>
@@ -12,4 +11,5 @@
 <li>Demos can be retrieved using both the alias (i.e. obla) or DiscordID (obla3745).</li>
 <li>Logs are provided at <a href="http://livelogs.ozfortress.com/" target="_blank">livelogs.ozfortress.com</a> and <a href="http://logs.tf/" target="_blank">logs.tf</a>.</li>
 <li>Servers will automatically reset after a period of inactivity.</li>
+<li>Demos will be stored for up to 6 months. <strong>Please download all your demos before they expire</strong>.</li>
 </ul><p>Discord booker created by smeso and /dev/zero.</p></div>
