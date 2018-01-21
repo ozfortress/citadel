@@ -17,7 +17,7 @@ module API
         @user = User.find(params[:id])
 
         @ban_models = User.ban_models.map do |_action, bans|
-          bans.map do |subject, model|
+          bans.map do |_subject, model|
             next if model.subject?
 
             model
