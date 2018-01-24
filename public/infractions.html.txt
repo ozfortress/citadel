@@ -1,0 +1,30 @@
+<div id="doc" class="markdown-body container-fluid" style="position: relative;"><h1 id="Infractions">Infractions</h1><p>ozfortress enforces a set of <a href="/community_rules" target="_blank">Community Rules</a> and <a href="/rules" target="_blank">Competitive Rules</a> by a system of infraction points. You are issued infraction points which correspond to specific rule breaches, and carry different points and expiration times. Each player starts with 0 infraction points.</p><p>Bans will be issued at different point levels, and carry different ban lengths and game bans depending on how many points you have accrued. All bans are accompanied by permanent probation.</p><p>Additionally, we list the infractions that can be issued and their corresponding rule.</p><h3 id="Ban-Levels"><strong>Ban Levels</strong></h3><ul>
+<li>40 points = 6 month Community Ban</li>
+<li>70 points = 1 year Community and Competitive Ban</li>
+<li>90 points = 2 year Community and Competitive Ban</li>
+</ul><p>Each <em>specific</em> infraction will be multiplied by the number of times committed.<br>
+Example:<br>
+First offence = 10 points<br>
+Second repeated offence = 20 points<br>
+Third repeated offence = 30 points</p><h3 id="Infractions1"><strong>Infractions</strong></h3><h4 id="Tier-1-Offences---10-points-6-months-expiry">Tier 1 Offences - 10 points (6 months expiry)</h4><p><em>For all initial Tier 1 offences a warning will be given with repeat offences leading to infraction points</em></p><ul>
+<li>Failing to use your ozfortress alias in a casted match from an ozfortress-approved organisation</li>
+<li>Consistent delays in match organisation</li>
+<li>Inappropriate or unrelated posting in match threads</li>
+<li>Inappropriate posting in Discord</li>
+<li>Excessive trash talk (beyond that which can reasonably be considered banter)</li>
+</ul><h4 id="Tiers-2-Offences---20-points-1-year-expiry">Tiers 2 Offences - 20 points (1 year expiry)</h4><ul>
+<li>Any attempt to deceive or mislead administrators</li>
+<li>Any attempt to deceive or mislead players or captains</li>
+<li>Impersonating ozfortress players without permission</li>
+</ul><h4 id="Tier-3-Offences---30-points-2-year-expiry">Tier 3 Offences - 30 points (2 year expiry)</h4><ul>
+<li>Discrimination of any kind (Sexism , Racism etc.)</li>
+<li>Serious or repeated abuse of any kind</li>
+<li>Sharing of sensitive or personal information without permission</li>
+<li>Attempting to impersonate or imply affiliation with members of the ozfortress anti-cheat panel</li>
+<li>Attempting to impersonate ozfortress administrators</li>
+<li>Attempting to deceive community members by impersonating a member of ozfortress staff</li>
+</ul><h3 id="Cheating-Bans"><strong>Cheating Bans</strong></h3><p>Cheating bans do not follow the infraction point system and are given out independently. All bans are accompanied by permanent probation. Cheating Bans are given by ozfortress league administrators as well as the ozfortress anti–cheat panel. The bans and punishments are as follows:</p><ul>
+<li>VAC = 1 year Community and Competitive Ban</li>
+<li>AC Evidence = 2 year Community and Competitive Ban</li>
+<li>Any second offence = Permanent Ban</li>
+</ul><div class="resize-sensor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div class="resize-sensor-expand" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; transition: 0s; width: 100000px; height: 100000px;"></div></div><div class="resize-sensor-shrink" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div></div></div></div>
