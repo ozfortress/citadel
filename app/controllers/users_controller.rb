@@ -1,9 +1,13 @@
 class UsersController < ApplicationController
   include UsersPermissions
 
-  before_action only: [:show, :edit, :update,
-                       :request_name_change] { @user = User.find(params[:id]) }
-  before_action only: [:confirm_email] { @user = User.find_by(confirmation_token: params[:token]) }
+  before_action only: [:show, :edit, :update, :request_name_change] do
+    @user = User.find(params[:id])
+  end
+
+  before_action only: [:confirm_email] do
+    @user = User.find_by(confirmation_token: params[:token])
+  end
 
   before_action :require_login, only: [:profile, :logout]
   before_action :require_user_permission, only: [:edit, :update, :request_name_change]

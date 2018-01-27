@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :league_match, class: League::Match do
     status :pending
     round_number 1

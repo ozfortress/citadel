@@ -15,7 +15,7 @@ describe API::V1::UsersController, type: :request do
 
       get "#{route}/#{user.id}", headers: { 'X-API-Key' => api_key.key }
 
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       user_h = json['user']
       expect(user_h).to_not be_nil
       expect(user_h['name']).to eq(user.name)
@@ -36,7 +36,7 @@ describe API::V1::UsersController, type: :request do
     it 'succeeds for non-existent user' do
       get "#{route}/-1", headers: { 'X-API-Key' => api_key.key }
 
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json['status']).to eq(404)
       expect(json['message']).to eq('Record not found')
       expect(response).to be_not_found
@@ -45,7 +45,7 @@ describe API::V1::UsersController, type: :request do
     it 'fails without authorization' do
       get "#{route}/#{user.id}"
 
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json['status']).to eq(401)
       expect(json['message']).to eq('Unauthorized API key')
     end
@@ -57,7 +57,7 @@ describe API::V1::UsersController, type: :request do
     it 'succeeds for existing user' do
       get "#{route}/#{user.steam_id}", headers: { 'X-API-Key' => api_key.key }
 
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       user_h = json['user']
       expect(user_h).to_not be_nil
       expect(user_h['name']).to eq(user.name)
@@ -69,7 +69,7 @@ describe API::V1::UsersController, type: :request do
     it 'succeeds for non-existent user' do
       get "#{route}/0", headers: { 'X-API-Key' => api_key.key }
 
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json['status']).to eq(404)
       expect(json['message']).to eq('Record not found')
       expect(response).to be_not_found

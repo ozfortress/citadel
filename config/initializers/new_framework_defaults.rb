@@ -19,5 +19,17 @@ ActiveSupport.to_time_preserves_timezone = false
 # Require `belongs_to` associations by default. Previous versions had false.
 ActiveRecord::Base.belongs_to_required_by_default = true
 
-# Do not halt callback chains when a callback returns false. Previous versions had true.
-ActiveSupport.halt_callback_chains_on_return_false = true
+# Rails is changing some things which throw deprecation warnings in dependencies
+# TODO: Remove this when dependencies update
+silenced = [
+  /The behavior of `changed` inside of after callbacks will be changing in the next version of Rails/,
+  /The behavior of `changed_attributes` inside of after callbacks will be changing in the next version of Rails/,
+] # list of warnings you want to silence
+
+silenced_expr = Regexp.new(silenced.join('|'))
+
+ActiveSupport::Deprecation.behavior = lambda do |msg, stack|
+  unless msg =~ silenced_expr
+    ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:stderr].call(msg, stack)
+  end
+end

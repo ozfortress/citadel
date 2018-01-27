@@ -2,7 +2,7 @@
 lock '3.10.1'
 
 set :application, 'citadel'
-set :rvm_ruby_string, 'ruby-2.3.3'
+set :rvm_ruby_string, 'ruby-2.5'
 
 # git settings
 set :repo_url, 'git@github.com:ozfortress/citadel.git'

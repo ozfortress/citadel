@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :league_pooled_map, class: 'League::PooledMap' do
     league
     map

@@ -3,7 +3,9 @@ module Meta
     skip_before_action :require_any_admin_permissions, only: [:show]
     skip_before_action :require_meta, only: [:show]
 
-    before_action except: [:index, :new, :create] { @format = Format.find(params[:id]) }
+    before_action except: [:index, :new, :create] do
+      @format = Format.find(params[:id])
+    end
 
     def index
       @formats = Format.all

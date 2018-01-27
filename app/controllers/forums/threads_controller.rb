@@ -6,7 +6,10 @@ module Forums
     before_action only: [:new, :create] do
       @topic = Forums::Topic.find(params[:topic]) if params[:topic]
     end
-    before_action except: [:new, :create] { @thread = Forums::Thread.find(params[:id]) }
+
+    before_action except: [:new, :create] do
+      @thread = Forums::Thread.find(params[:id])
+    end
 
     before_action :require_can_create_thread, only: [:new, :create]
     before_action :require_login, only: :toggle_subscription

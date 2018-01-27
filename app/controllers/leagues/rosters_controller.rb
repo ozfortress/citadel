@@ -3,14 +3,23 @@ module Leagues
     include RosterPermissions
     include TeamPermissions
 
-    before_action only: [:index, :new, :create] { @league = League.find(params[:league_id]) }
+    before_action only: [:index, :new, :create] do
+      @league = League.find(params[:league_id])
+    end
+
     before_action except: [:index, :new, :create] do
       @roster = League::Roster.find(params[:id])
       @league = @roster.league
     end
+
     # team_id may or may not exist
-    before_action only: [:new] { @team = Team.where(id: params[:team_id]).first }
-    before_action only: [:create] { @team = Team.find(params[:team_id]) }
+    before_action only: [:new] do
+      @team = Team.where(id: params[:team_id]).first
+    end
+
+    before_action only: [:create] do
+      @team = Team.find(params[:team_id])
+    end
 
     before_action :require_can_sign_up, only: [:new, :create]
     before_action :require_league_permission, only: [:index, :review, :approve]

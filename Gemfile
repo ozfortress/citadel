@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
 gem 'rake', '~> 12.0'
-gem 'rails', '~> 5.0.0'
+gem 'rails', '~> 5.1'
 # Use postgres
-gem 'pg'
+gem 'pg', '~> 0.21' # Fix once rails gets fixed
 # Active Record extensions
 gem 'active_record_union', '~> 1.2.0'
 gem 'ancestry'
@@ -62,7 +62,7 @@ group :test do
   gem 'database_cleaner'
 
   # Easy database manipulation
-  gem 'factory_girl_rails', '~> 4.0'
+  gem 'factory_bot_rails', '~> 4'
 
   # Web feature testing
   gem 'capybara'
