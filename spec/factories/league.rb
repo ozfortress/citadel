@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :league do
     sequence(:name) { |n| "OWL #{n}" }
     description "The owl that won't happen"

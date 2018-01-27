@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :league_roster_comment, class: League::Roster::Comment do
     association :created_by, factory: :user
     association :roster, factory: :league_roster

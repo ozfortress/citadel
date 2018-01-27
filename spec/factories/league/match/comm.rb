@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :league_match_comm, class: League::Match::Comm do
     association :created_by, factory: :user
     deleted_at Time.zone.now

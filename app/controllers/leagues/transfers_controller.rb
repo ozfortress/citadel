@@ -2,7 +2,10 @@ module Leagues
   class TransfersController < ApplicationController
     include LeaguePermissions
 
-    before_action only: [:index] { @league = League.find(params[:league_id]) }
+    before_action only: [:index] do
+      @league = League.find(params[:league_id])
+    end
+
     before_action except: [:index] do
       @transfer_request = League::Roster::TransferRequest.find(params[:id])
       @league = @transfer_request.league

@@ -3,7 +3,7 @@ module Meta
     skip_before_action :require_any_admin_permissions, only: [:show]
     skip_before_action :require_meta, only: [:show]
 
-    before_action except: [:index, :new, :create] { @map = Map.find(params[:id]) }
+    before_action(except: [:index, :new, :create]) { @map = Map.find(params[:id]) }
 
     def index
       @maps = Map.all

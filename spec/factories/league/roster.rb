@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :league_roster, class: League::Roster do
     team
     association :division, factory: :league_division

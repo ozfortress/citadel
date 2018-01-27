@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :league_roster_transfer_request, class: League::Roster::TransferRequest do
     association :created_by, factory: :user
     user

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :team_transfer, class: Team::Transfer do
     user
     team

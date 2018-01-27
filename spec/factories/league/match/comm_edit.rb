@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :league_match_comm_edit, class: 'League::Match::CommEdit' do
     association :created_by, factory: :user
     association :comm, factory: :league_match_comm

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :forums_post, class: 'Forums::Post' do
     association :thread, factory: :forums_thread
     association :created_by, factory: :user
