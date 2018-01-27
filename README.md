@@ -15,22 +15,58 @@ Open Source, Web-based league system designed for games such as Team Fortress 2.
 
 ## Dependencies
 
-You will need:
+You will need for running:
 
 * Ruby 2.3.3
 * Bundler
 * Postgres (configured in `config/database.yml`)
 * ImageMagick
 
-To install all other ruby dependencies, run:
+You will also need for testing:
+
+* A js runtime supported by [execjs](https://github.com/rails/execjs)
+
+To configure secrets (ie. steam API key) for development, use
+`config/secrets.local.yml`. Example at `config/secrets.local.yml.example`.
+Or put the secrets in environment variables (`SECRET_KEY_BASE`, `STEAM_API_KEY`)
+
+## Installing
+
+Here are some specific install instructions for operating systems/distributions.
+
+### Ubuntu
+
+Use either [RVM](https://rvm.io/) or [rbenv](https://github.com/rbenv/rbenv) to install Ruby `2.3.3`.
+
+Install postgres with:
+
+```bash
+sudo apt install postgresql
+```
+
+Then install all native dependencies required to install this project's gems:
+
+```bash
+sudo apt install libpq-dev imagemagick
+```
+
+Then install this project's gems:
 
 ```bash
 bundle install
 ```
 
-To configure secrets (ie. steam API key) for development, use
-`config/secrets.local.yml`. Example at `config/secrets.local.yml.example`.
-Or put the secrets in environment variables (`SECRET_KEY_BASE`, `STEAM_API_KEY`)
+Or alternatively, if you don't want any of the test/development dependencies:
+
+```bash
+bundle install --without test development
+```
+
+If you're planning on running the test suite, you will also need to install a js runtime. Install `nodejs` like this:
+
+```bash
+sudo apt install nodejs
+```
 
 ## Tests
 
