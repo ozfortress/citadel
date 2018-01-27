@@ -1,0 +1,5 @@
+- content_for(:title) { 'Infractions' }
+
+-# rubocop:disable Rails/OutputSafety
+= raw File.read(Rails.root.join('public', 'infractions.html.txt'))
+-# rubocop:enable Rails/OutputSafety

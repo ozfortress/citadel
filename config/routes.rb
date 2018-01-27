@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get 'transfers', to: 'pages#transfers'
   get 'newbie_guide', to: 'pages#newbie_guide'
   get 'community_rules', to: 'pages#community_rules'
+  get 'infractions', to: 'pages#infractions'
 
   get 'admin', to: 'admin#index'
   get 'statistics',  to: 'admin#statistics', as: 'admin_statistics'
