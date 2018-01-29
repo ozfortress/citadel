@@ -59,7 +59,7 @@
   .panel-heading Description
   .panel-body.markdown= user_p.description
 
-- if user_p.notice != ''
+- if user_p.notice != '' && (user_can_edit_users? || (current_user? && current_user == @user))
   .panel.panel-warning
     .panel-heading Notice
     .panel-body.markdown= user_p.notice
