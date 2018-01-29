@@ -22,7 +22,6 @@ Third repeated offence = 30 points</p><h3 id="Infractions1"><strong>Infractions<
 <li>Serious or repeated abuse of any kind</li>
 <li>Sharing of sensitive or personal information without permission</li>
 <li>Attempting to impersonate or imply affiliation with members of the ozfortress anti-cheat panel</li>
-<li>Attempting to impersonate ozfortress administrators</li>
 <li>Attempting to deceive community members by impersonating a member of ozfortress staff</li>
 </ul><h3 id="Cheating-Bans"><strong>Cheating Bans</strong></h3><p>Cheating bans do not follow the infraction point system and are given out independently. All bans are accompanied by permanent probation. Cheating Bans are given by ozfortress league administrators as well as the ozfortress anti–cheat panel. The bans and punishments are as follows:</p><ul>
 <li>VAC = 1 year Community and Competitive Ban</li>
