@@ -1,9 +1,9 @@
 = f.text_field :title
 
 - if user_can_manage_thread?
-  = f.check_box :locked, 'Lock this Thread'
-  = f.check_box :pinned, 'Pin this Thread'
-  = f.check_box :hidden, 'Hide this Thread'
+  = f.check_box :locked, label: 'Lock this Thread'
+  = f.check_box :pinned, label: 'Pin this Thread'
+  = f.check_box :hidden, label: 'Hide this Thread'
 
 = f.fields_for post do |post_f|
   = render 'forums/posts/form', f: post_f
