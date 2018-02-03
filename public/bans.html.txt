@@ -1,4 +1,4 @@
-<div id="doc" class="markdown-body container-fluid" style="position: relative;"><h1 id="bans">Bans</h1><p><img src="https://cpcheatsrights.files.wordpress.com/2009/06/banhammer1.jpg" alt=""></p><h3 id="evidence-bans-2-years"><strong>Evidence Bans (2 years)</strong></h3><ul>
+<div id="doc" class="markdown-body container-fluid" style="position: relative;"><h1 id="Bans">Bans</h1><p><img src="https://cpcheatsrights.files.wordpress.com/2009/06/banhammer1.jpg" alt=""></p><h3 id="Evidence-Bans-2-years"><strong>Evidence Bans (2 years)</strong></h3><ul>
 <li><strong>Burning Aces</strong> [Multiple SteamIDs] - <em><strong>Permanent</strong></em></li>
 <li><strong><a href="http://ozfortress.com/member.php?u=23170" target="_blank">dankk/sparke</a></strong> - <a href="https://steamcommunity.com/profiles/76561198179884055" target="_blank">[STEAM_0:1:109809163]</a> <a href="https://steamcommunity.com/profiles/76561198269530918" target="_blank">[STEAM_0:0:154632595]</a> - 02/04/2018</li>
 <li><strong>kaybee</strong> - <a href="https://steamcommunity.com/profiles/76561198010776774" target="_blank">[STEAM_0:0:25255523]</a> - 02/04/2018</li>
@@ -9,15 +9,20 @@
 <li><strong><a href="https://warzone.ozfortress.com/users/470" target="_blank">Lazz</a></strong> - <a href="https://steamcommunity.com/profiles/76561198156033815" target="_blank">[STEAM_0:1:97884043]</a> - 03/12/2019 (Extended by 2 years due VAC on main account during ban)</li>
 <li><strong><a href="https://warzone.ozfortress.com/users/525" target="_blank">aeki</a></strong> - <a href="https://steamcommunity.com/profiles/76561198130521678" target="_blank">[STEAM_0:0:85127975]</a>  <a href="https://steamcommunity.com/profiles/76561198413660438" target="_blank">[STEAM_0:0:226697355]</a> - 28/05/2019 (Extended by 18 months due alternate account usage)</li>
 <li><strong><a href="https://warzone.ozfortress.com/users/816" target="_blank">Mr_YOLO</a></strong> - <a href="https://steamcommunity.com/profiles/76561198146770013" target="_blank">[STEAM_0:1:93252142]</a> - 06/10/2018</li>
-</ul><h3 id="vac-bans-1-year"><strong>VAC Bans (1 Year)</strong></h3><p>No Conclusive Evidence of cheating in TF2. Entering a VAC Secured TF2 server with an administrator can revoke this ban.</p><ul>
+<li>
+<ul>
+<li><strong><a href="https://warzone.ozfortress.com/users/1278" target="_blank">SleepPK</a></strong> - <a href="https://steamcommunity.com/profiles/76561198336404521" target="_blank">[STEAM_0:1:188069396]</a> - 31/01/2020</li>
+</ul>
+</li>
+</ul><h3 id="VAC-Bans-1-Year"><strong>VAC Bans (1 Year)</strong></h3><p>No Conclusive Evidence of cheating in TF2. Entering a VAC Secured TF2 server with an administrator can revoke this ban.</p><ul>
 <li><strong><a href="https://warzone.ozfortress.com/users/683" target="_blank">Phoraw / Waaahhhh</a></strong> - <a href="https://steamcommunity.com/profiles/76561198082688866" target="_blank">[STEAM_0:0:61211569]</a> <a href="https://steamcommunity.com/profiles/76561198213045965" target="_blank">[STEAM_0:1:126390118]</a> - 03/07/2018</li>
 <li><strong><a href="https://warzone.ozfortress.com/users/343" target="_blank">travioli</a></strong> - <a href="https://steamcommunity.com/profiles/76561198166268097" target="_blank">[STEAM_0:1:103001184]</a> - 31/08/2018</li>
 <li><strong><a href="https://warzone.ozfortress.com/users/1048" target="_blank">peace</a></strong> - <a href="https://steamcommunity.com/profiles/76561198382469831" target="_blank">[STEAM_0:1:211102051]</a> - 09/10/2018</li>
 <li><strong><a href="https://warzone.ozfortress.com/users/1065" target="_blank">Trexy</a></strong> - <a href="https://steamcommunity.com/profiles/76561198277218570" target="_blank">[STEAM_0:0:158476421]</a> <a href="https://steamcommunity.com/profiles/76561198440458445" target="_blank">[STEAM_0:1:240096358]</a> - 16/11/2018</li>
-</ul><h3 id="other-bans"><strong>Other Bans</strong></h3><ul>
+</ul><h3 id="Other-Bans"><strong>Other Bans</strong></h3><ul>
 <li><strong><a href="http://ozfortress.com/member.php?u=9605" target="_blank">roymond</a></strong> - <a href="https://steamcommunity.com/profiles/76561198124257739" target="_blank">[STEAM_0:1:81996005]</a> <a href="https://steamcommunity.com/profiles/76561198330212063" target="_blank">[STEAM_0:1:184973167]</a> - 28/01/2019 - Posting Illegal Content</li>
 <li><strong><a href="https://warzone.ozfortress.com/users/425" target="_blank">king carl / redfoo</a></strong> - <a href="https://steamcommunity.com/profiles/76561198048634605" target="_blank">[STEAM_0:1:44184438]</a> - 16/03/2018 - Inappropriate use of photographs</li>
-</ul><h3 id="past-bans"><strong>Past Bans</strong></h3><ul>
+</ul><h3 id="Past-Bans"><strong>Past Bans</strong></h3><ul>
 <li><strong><a href="http://ozfortress.com/member.php?u=5562" target="_blank">Angelessme</a></strong> - <a href="https://steamcommunity.com/profiles/76561197970757627" target="_blank">[STEAM_0:1:5245949]</a></li>
 <li><strong>Clutch</strong> - <a href="https://steamcommunity.com/profiles/76561197970398136" target="_blank">[STEAM_0:0:5066204]</a> - 27/06/2011</li>
 <li><strong><a href="http://ozfortress.com/member.php?u=9727" target="_blank">ecchi</a></strong> - <a href="https://steamcommunity.com/profiles/76561198011366791" target="_blank">[STEAM_0:1:25550531]</a> - 22/07/2011 (Reduced by 1 Month)</li>
