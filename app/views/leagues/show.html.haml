@@ -34,6 +34,8 @@
               class: 'btn btn-default pull-right'
     - if @league.completed?
       This league has been completed
+    - elsif @roster
+      Your team has no upcoming matches...
     - else
       There are no upcoming matches...
 
