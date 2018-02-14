@@ -13,7 +13,7 @@ describe API::V1::TeamsController, type: :request do
 
       get "#{route}/#{team.id}", headers: { 'X-API-Key' => api_key.key }
 
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       team_h = json['team']
       expect(team_h).to_not be_nil
       expect(team_h['name']).to eq(team.name)
@@ -34,7 +34,7 @@ describe API::V1::TeamsController, type: :request do
     it 'succeeds for non-existent team' do
       get "#{route}/-1", headers: { 'X-API-Key' => api_key.key }
 
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json['status']).to eq(404)
       expect(json['message']).to eq('Record not found')
       expect(response).to be_not_found
@@ -43,7 +43,7 @@ describe API::V1::TeamsController, type: :request do
     it 'fails without authorization' do
       get "#{route}/#{team.id}"
 
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json['status']).to eq(401)
       expect(json['message']).to eq('Unauthorized API key')
     end

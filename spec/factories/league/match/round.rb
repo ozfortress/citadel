@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :league_match_round, class: League::Match::Round do
     association :match, factory: :league_match
     map

@@ -1,10 +1,13 @@
 - user = f.object
 
 - if user_can_edit_users?
-  = f.text_field :badge_name
-  = f.select :badge_color, UserPresenter::BADGE_COLORS.each_with_index.to_a
+  .panel.panel-info
+    .panel-heading Admin
+    .panel-body
+      = f.text_field :badge_name
+      = f.select :badge_color, UserPresenter::BADGE_COLORS.each_with_index.to_a
 
-  = f.markdown_editor :notice, row: 3, label: 'Notice (Public)'
+      = f.markdown_editor :notice, row: 3, label: 'Notice (Only visible for user)'
 
 = f.text_field :email, label: user_p.confirmation_label
 

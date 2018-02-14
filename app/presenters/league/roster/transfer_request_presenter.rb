@@ -85,7 +85,9 @@ class League
       end
 
       def user_param
-        if transfer_request.leaving_roster && transfer_request.user.can?(:edit, transfer_request.leaving_roster)
+        roster = transfer_request.leaving_roster
+
+        if roster && transfer_request.user.can?(:edit, roster.team)
           user.link + ' ' + content_tag(:span, 'captain', class: 'label label-warning')
         else
           user.link

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :forums_subscription, class: 'Forums::Subscription' do
     user
     association :topic,  factory: :forums_topic

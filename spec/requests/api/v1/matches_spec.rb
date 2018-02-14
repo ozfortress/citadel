@@ -12,7 +12,7 @@ describe API::V1::MatchesController, type: :request do
 
       get "#{route}/#{match.id}", headers: { 'X-API-Key' => api_key.key }
 
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       match_h = json['match']
       expect(match_h).to_not be_nil
       expect(match_h['forfeit_by']).to eq(match.forfeit_by)
@@ -36,7 +36,7 @@ describe API::V1::MatchesController, type: :request do
     it 'succeeds for non-existent match' do
       get "#{route}/-1", headers: { 'X-API-Key' => api_key.key }
 
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json['status']).to eq(404)
       expect(json['message']).to eq('Record not found')
       expect(response).to be_not_found

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :league_schedulers_weekly, class: League::Schedulers::Weekly do
     league
     start_of_week 'Sunday'

@@ -5,7 +5,11 @@ module Forums
     before_action only: [:new, :create] do
       @parent_topic = Topic.find(params[:parent]) if params[:parent]
     end
-    before_action except: [:new, :create] { @topic = Topic.find(params[:id]) }
+
+    before_action except: [:new, :create] do
+      @topic = Topic.find(params[:id])
+    end
+
     before_action :require_can_manage_parent, only: [:new, :create]
     before_action :require_login, only: :toggle_subscription
     before_action :require_can_view, only: [:show, :toggle_subscription]

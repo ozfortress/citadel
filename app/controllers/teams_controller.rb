@@ -1,11 +1,10 @@
 class TeamsController < ApplicationController
   include TeamPermissions
 
-  before_action except: [:index, :new, :create] { @team = Team.find(params[:id]) }
+  before_action(except: [:index, :new, :create]) { @team = Team.find(params[:id]) }
 
   before_action :require_team_create_permission, only: [:new, :create]
-  before_action :require_team_edit_permission, only: [:edit, :update, :recruit,
-                                                      :invite, :kick, :destroy]
+  before_action :require_team_edit_permission, only: [:edit, :update, :recruit, :invite, :kick, :destroy]
   before_action :require_login, only: :leave
   before_action :require_on_team, only: :leave
 

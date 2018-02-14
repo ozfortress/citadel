@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :user_comment, class: User::Comment do
     association :created_by, factory: :user
     user
