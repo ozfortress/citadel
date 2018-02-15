@@ -35,9 +35,9 @@
     - if @league.completed?
       This league has been completed
     - elsif @roster
-      Your team has no upcoming matches...
+      There are no upcoming matches for your team, #{@roster.name}
     - else
-      There are no upcoming matches...
+      There are no upcoming matches for #{@divisions.first.name}
 
 .panel.panel-default
   .panel-heading Teams
