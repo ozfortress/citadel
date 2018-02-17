@@ -23,9 +23,9 @@
               class: 'btn btn-default pull-right'
     .panel-heading
       - if @personal_matches
-        Your Upcoming Matches
+        Upcoming matches for your team:
       - else
-        Upcoming Matches for #{@divisions.first.name}
+        Upcoming Matches for #{@divisions.first.name}:
     = render 'leagues/matches/matches_table', matches: matches, roster: nil
 
 - else
