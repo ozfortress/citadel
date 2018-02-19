@@ -19,7 +19,7 @@ class League
     def title
       title = if league.completed?
                 past_title
-              elsif league.signuppable? || !roster.approved? || league.private?
+              elsif league.signuppable? || !roster.approved? || league.hidden?
                 signup_title
               else
                 active_title
