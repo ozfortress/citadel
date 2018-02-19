@@ -61,8 +61,12 @@ describe Leagues::Matches::PickBansController do
 
       patch :defer, params: { id: pick_ban.id }
 
-      expect(pick_ban.reload.away_team?).to be(true)
-      expect(match.reload.rounds).to be_empty
+      match.reload
+      expect(match.pick_bans.length).to eq(2)
+      expect(pick_ban.reload.home_team?).to be(true)
+      expect(match.pick_bans[0]).to eq(pick_ban)
+      expect(match.pick_bans[1].away_team?).to be(true)
+      expect(match.rounds).to be_empty
       expect(response).to redirect_to(match_path(match))
     end
 
@@ -72,8 +76,12 @@ describe Leagues::Matches::PickBansController do
 
       patch :defer, params: { id: pick_ban.id }
 
-      expect(pick_ban.reload.away_team?).to be(true)
-      expect(match.reload.rounds).to be_empty
+      match.reload
+      expect(match.pick_bans.length).to eq(2)
+      expect(pick_ban.reload.home_team?).to be(true)
+      expect(match.pick_bans[0]).to eq(pick_ban)
+      expect(match.pick_bans[1].away_team?).to be(true)
+      expect(match.rounds).to be_empty
       expect(response).to redirect_to(match_path(match))
     end
 
@@ -83,8 +91,10 @@ describe Leagues::Matches::PickBansController do
 
       patch :defer, params: { id: pick_ban.id }
 
+      match.reload
       expect(pick_ban.reload.home_team?).to be(true)
-      expect(match.reload.rounds).to be_empty
+      expect(match.pick_bans.length).to eq(1)
+      expect(match.rounds).to be_empty
       expect(response).to redirect_to(match_path(match))
     end
 
@@ -95,8 +105,10 @@ describe Leagues::Matches::PickBansController do
 
       patch :defer, params: { id: pick_ban.id }
 
+      match.reload
       expect(pick_ban.reload.home_team?).to be(true)
-      expect(match.reload.rounds).to be_empty
+      expect(match.pick_bans.length).to eq(1)
+      expect(match.rounds).to be_empty
       expect(response).to redirect_to(match_path(match))
     end
 
@@ -105,16 +117,20 @@ describe Leagues::Matches::PickBansController do
 
       patch :defer, params: { id: pick_ban.id }
 
+      match.reload
       expect(pick_ban.reload.home_team?).to be(true)
-      expect(match.reload.rounds).to be_empty
+      expect(match.pick_bans.length).to eq(1)
+      expect(match.rounds).to be_empty
       expect(response).to redirect_to(match_path(match))
     end
 
     it 'redirects for unauthenticated user' do
       patch :defer, params: { id: pick_ban.id }
 
+      match.reload
       expect(pick_ban.reload.home_team?).to be(true)
-      expect(match.reload.rounds).to be_empty
+      expect(match.pick_bans.length).to eq(1)
+      expect(match.rounds).to be_empty
       expect(response).to redirect_to(match_path(match))
     end
   end

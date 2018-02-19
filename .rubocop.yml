@@ -8,9 +8,9 @@ Metrics/LineLength:
 Metrics/AbcSize:
   Max: 25
 Metrics/ClassLength:
-  Max: 200
+  Max: 250
 Metrics/ModuleLength:
-  Max: 200
+  Max: 250
 Metrics/CyclomaticComplexity:
   Max: 8
 Metrics/BlockLength:

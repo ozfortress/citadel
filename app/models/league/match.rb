@@ -60,6 +60,7 @@ class League
 
     before_validation :update_status
     before_validation :update_round_outcomes
+    before_validation :update_pick_bans_order_numbers
     before_save :update_cache
 
     after_create :update_roster_match_counters!, if: :confirmed?
@@ -84,7 +85,7 @@ class League
     end
 
     def map_pool
-      league.map_pool.where.not(id: pick_bans.completed.select(:map_id))
+      league.map_pool.where.not(id: pick_bans.completed.select(:map_id).where.not(map_id: nil))
     end
 
     def update_roster_match_counters!
@@ -187,6 +188,12 @@ class League
       return rounds.each { |round| round.has_outcome = true } unless has_winner?
 
       update_winnable_match_round_outcomes
+    end
+
+    def update_pick_bans_order_numbers
+      pick_bans.each_with_index do |pick_ban, index|
+        pick_ban.order_number = index
+      end
     end
 
     def update_winnable_match_round_outcomes
