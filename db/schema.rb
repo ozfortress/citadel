@@ -10,662 +10,663 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180105133646) do
+ActiveRecord::Schema.define(version: 20180219072706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pg_trgm"
 
-  create_table "action_user_edit_games", force: :cascade do |t|
+  create_table "action_user_edit_games", id: :serial, force: :cascade do |t|
     t.integer "user_id"
-    t.index ["user_id"], name: "index_action_user_edit_games_on_user_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_edit_games_on_user_id"
   end
 
-  create_table "action_user_edit_league", force: :cascade do |t|
+  create_table "action_user_edit_league", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "league_id"
-    t.index ["league_id"], name: "index_action_user_edit_league_on_league_id", using: :btree
-    t.index ["user_id"], name: "index_action_user_edit_league_on_user_id", using: :btree
+    t.index ["league_id"], name: "index_action_user_edit_league_on_league_id"
+    t.index ["user_id"], name: "index_action_user_edit_league_on_user_id"
   end
 
-  create_table "action_user_edit_leagues", force: :cascade do |t|
+  create_table "action_user_edit_leagues", id: :serial, force: :cascade do |t|
     t.integer "user_id"
-    t.index ["user_id"], name: "index_action_user_edit_leagues_on_user_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_edit_leagues_on_user_id"
   end
 
-  create_table "action_user_edit_permissions", force: :cascade do |t|
+  create_table "action_user_edit_permissions", id: :serial, force: :cascade do |t|
     t.integer "user_id"
-    t.index ["user_id"], name: "index_action_user_edit_permissions_on_user_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_edit_permissions_on_user_id"
   end
 
-  create_table "action_user_edit_team", force: :cascade do |t|
+  create_table "action_user_edit_team", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "team_id"
-    t.index ["team_id"], name: "index_action_user_edit_team_on_team_id", using: :btree
-    t.index ["user_id"], name: "index_action_user_edit_team_on_user_id", using: :btree
+    t.index ["team_id"], name: "index_action_user_edit_team_on_team_id"
+    t.index ["user_id"], name: "index_action_user_edit_team_on_user_id"
   end
 
-  create_table "action_user_edit_teams", force: :cascade do |t|
+  create_table "action_user_edit_teams", id: :serial, force: :cascade do |t|
     t.integer "user_id"
-    t.index ["user_id"], name: "index_action_user_edit_teams_on_user_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_edit_teams_on_user_id"
   end
 
-  create_table "action_user_edit_users", force: :cascade do |t|
+  create_table "action_user_edit_users", id: :serial, force: :cascade do |t|
     t.integer "user_id"
-    t.index ["user_id"], name: "index_action_user_edit_users_on_user_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_edit_users_on_user_id"
   end
 
-  create_table "action_user_manage_forums", force: :cascade do |t|
+  create_table "action_user_manage_forums", id: :serial, force: :cascade do |t|
     t.integer "user_id"
-    t.index ["user_id"], name: "index_action_user_manage_forums_on_user_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_manage_forums_on_user_id"
   end
 
-  create_table "action_user_manage_forums_thread", force: :cascade do |t|
+  create_table "action_user_manage_forums_thread", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "forums_thread_id"
-    t.index ["forums_thread_id"], name: "index_action_user_manage_forums_thread_on_forums_thread_id", using: :btree
-    t.index ["user_id"], name: "index_action_user_manage_forums_thread_on_user_id", using: :btree
+    t.index ["forums_thread_id"], name: "index_action_user_manage_forums_thread_on_forums_thread_id"
+    t.index ["user_id"], name: "index_action_user_manage_forums_thread_on_user_id"
   end
 
-  create_table "action_user_manage_forums_topic", force: :cascade do |t|
+  create_table "action_user_manage_forums_topic", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "forums_topic_id"
-    t.index ["forums_topic_id"], name: "index_action_user_manage_forums_topic_on_forums_topic_id", using: :btree
-    t.index ["user_id"], name: "index_action_user_manage_forums_topic_on_user_id", using: :btree
+    t.index ["forums_topic_id"], name: "index_action_user_manage_forums_topic_on_forums_topic_id"
+    t.index ["user_id"], name: "index_action_user_manage_forums_topic_on_user_id"
   end
 
-  create_table "action_user_manage_rosters_league", force: :cascade do |t|
+  create_table "action_user_manage_rosters_league", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "league_id"
-    t.index ["league_id"], name: "index_action_user_manage_rosters_league_on_league_id", using: :btree
-    t.index ["user_id"], name: "index_action_user_manage_rosters_league_on_user_id", using: :btree
+    t.index ["league_id"], name: "index_action_user_manage_rosters_league_on_league_id"
+    t.index ["user_id"], name: "index_action_user_manage_rosters_league_on_user_id"
   end
 
-  create_table "action_user_manage_rosters_leagues", force: :cascade do |t|
+  create_table "action_user_manage_rosters_leagues", id: :serial, force: :cascade do |t|
     t.integer "user_id"
-    t.index ["user_id"], name: "index_action_user_manage_rosters_leagues_on_user_id", using: :btree
+    t.index ["user_id"], name: "index_action_user_manage_rosters_leagues_on_user_id"
   end
 
-  create_table "action_user_use_forums_bans", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "reason",        default: "", null: false
+  create_table "action_user_use_forums_bans", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.string "reason", default: "", null: false
     t.datetime "terminated_at"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.index ["user_id"], name: "index_action_user_use_forums_bans_on_user_id", using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_action_user_use_forums_bans_on_user_id"
   end
 
-  create_table "action_user_use_forums_thread_bans", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "forums_thread_id"
-    t.string   "reason",           default: "", null: false
+  create_table "action_user_use_forums_thread_bans", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "forums_thread_id"
+    t.string "reason", default: "", null: false
     t.datetime "terminated_at"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.index ["forums_thread_id"], name: "index_action_user_use_forums_thread_bans_on_forums_thread_id", using: :btree
-    t.index ["user_id"], name: "index_action_user_use_forums_thread_bans_on_user_id", using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["forums_thread_id"], name: "index_action_user_use_forums_thread_bans_on_forums_thread_id"
+    t.index ["user_id"], name: "index_action_user_use_forums_thread_bans_on_user_id"
   end
 
-  create_table "action_user_use_forums_topic_bans", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "forums_topic_id"
-    t.string   "reason",          default: "", null: false
+  create_table "action_user_use_forums_topic_bans", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "forums_topic_id"
+    t.string "reason", default: "", null: false
     t.datetime "terminated_at"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.index ["forums_topic_id"], name: "index_action_user_use_forums_topic_bans_on_forums_topic_id", using: :btree
-    t.index ["user_id"], name: "index_action_user_use_forums_topic_bans_on_user_id", using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["forums_topic_id"], name: "index_action_user_use_forums_topic_bans_on_forums_topic_id"
+    t.index ["user_id"], name: "index_action_user_use_forums_topic_bans_on_user_id"
   end
 
-  create_table "action_user_use_leagues_bans", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "reason",        default: "", null: false
+  create_table "action_user_use_leagues_bans", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.string "reason", default: "", null: false
     t.datetime "terminated_at"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.index ["user_id"], name: "index_action_user_use_leagues_bans_on_user_id", using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_action_user_use_leagues_bans_on_user_id"
   end
 
-  create_table "action_user_use_teams_bans", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "reason",        default: "", null: false
+  create_table "action_user_use_teams_bans", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.string "reason", default: "", null: false
     t.datetime "terminated_at"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.index ["user_id"], name: "index_action_user_use_teams_bans_on_user_id", using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_action_user_use_teams_bans_on_user_id"
   end
 
-  create_table "action_user_use_users_bans", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "reason",        default: "", null: false
+  create_table "action_user_use_users_bans", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.string "reason", default: "", null: false
     t.datetime "terminated_at"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.index ["user_id"], name: "index_action_user_use_users_bans_on_user_id", using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_action_user_use_users_bans_on_user_id"
   end
 
-  create_table "ahoy_events", force: :cascade do |t|
-    t.integer  "visit_id"
-    t.string   "name"
-    t.json     "properties"
+  create_table "ahoy_events", id: :serial, force: :cascade do |t|
+    t.integer "visit_id"
+    t.string "name"
+    t.json "properties"
     t.datetime "time"
-    t.index ["name", "time"], name: "index_ahoy_events_on_name_and_time", using: :btree
-    t.index ["visit_id", "name"], name: "index_ahoy_events_on_visit_id_and_name", using: :btree
+    t.index ["name", "time"], name: "index_ahoy_events_on_name_and_time"
+    t.index ["visit_id", "name"], name: "index_ahoy_events_on_visit_id_and_name"
   end
 
-  create_table "api_keys", force: :cascade do |t|
-    t.string   "name"
-    t.string   "key",        null: false
-    t.integer  "user_id"
+  create_table "api_keys", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "key", null: false
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["key"], name: "index_api_keys_on_key", using: :btree
-    t.index ["name"], name: "index_api_keys_on_name", using: :btree
-    t.index ["user_id"], name: "index_api_keys_on_user_id", using: :btree
+    t.index ["key"], name: "index_api_keys_on_key"
+    t.index ["name"], name: "index_api_keys_on_name"
+    t.index ["user_id"], name: "index_api_keys_on_user_id"
   end
 
-  create_table "formats", force: :cascade do |t|
-    t.integer  "game_id"
-    t.string   "name",                                  null: false
-    t.text     "description",                           null: false
-    t.integer  "player_count",                          null: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.text     "description_render_cache", default: "", null: false
-    t.index ["game_id"], name: "index_formats_on_game_id", using: :btree
-    t.index ["name"], name: "index_formats_on_name", unique: true, using: :btree
-  end
-
-  create_table "forums_post_edits", force: :cascade do |t|
-    t.integer  "post_id",                           null: false
-    t.integer  "created_by_id",                     null: false
-    t.string   "content",                           null: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.text     "content_render_cache", default: "", null: false
-    t.index ["created_by_id"], name: "index_forums_post_edits_on_created_by_id", using: :btree
-    t.index ["post_id"], name: "index_forums_post_edits_on_post_id", using: :btree
-  end
-
-  create_table "forums_posts", force: :cascade do |t|
-    t.integer  "thread_id",                         null: false
-    t.integer  "created_by_id",                     null: false
-    t.string   "content",                           null: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.integer  "edits_count",          default: 0,  null: false
-    t.text     "content_render_cache", default: "", null: false
-    t.index ["created_by_id"], name: "index_forums_posts_on_created_by_id", using: :btree
-    t.index ["thread_id"], name: "index_forums_posts_on_thread_id", using: :btree
-  end
-
-  create_table "forums_subscriptions", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "topic_id"
-    t.integer  "thread_id"
+  create_table "formats", id: :serial, force: :cascade do |t|
+    t.integer "game_id"
+    t.string "name", null: false
+    t.text "description", null: false
+    t.integer "player_count", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["thread_id"], name: "index_forums_subscriptions_on_thread_id", using: :btree
-    t.index ["topic_id"], name: "index_forums_subscriptions_on_topic_id", using: :btree
-    t.index ["user_id"], name: "index_forums_subscriptions_on_user_id", using: :btree
+    t.text "description_render_cache", default: "", null: false
+    t.index ["game_id"], name: "index_formats_on_game_id"
+    t.index ["name"], name: "index_formats_on_name", unique: true
   end
 
-  create_table "forums_threads", force: :cascade do |t|
-    t.integer  "topic_id"
-    t.integer  "created_by_id",             null: false
-    t.string   "title",                     null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.boolean  "locked"
-    t.boolean  "pinned"
-    t.boolean  "hidden"
-    t.integer  "depth",         default: 0, null: false
-    t.integer  "posts_count",   default: 0, null: false
-    t.index ["created_by_id"], name: "index_forums_threads_on_created_by_id", using: :btree
-    t.index ["topic_id"], name: "index_forums_threads_on_topic_id", using: :btree
-  end
-
-  create_table "forums_topics", force: :cascade do |t|
-    t.integer  "created_by_id",                  null: false
-    t.string   "name",                           null: false
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.boolean  "locked"
-    t.boolean  "pinned"
-    t.boolean  "hidden"
-    t.boolean  "isolated"
-    t.boolean  "default_hidden"
-    t.integer  "ancestry_depth", default: 0,     null: false
-    t.string   "ancestry"
-    t.integer  "threads_count",  default: 0,     null: false
-    t.boolean  "default_locked", default: false
-    t.index ["ancestry"], name: "index_forums_topics_on_ancestry", using: :btree
-    t.index ["created_by_id"], name: "index_forums_topics_on_created_by_id", using: :btree
-  end
-
-  create_table "games", force: :cascade do |t|
-    t.string   "name",       null: false
+  create_table "forums_post_edits", id: :serial, force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.integer "created_by_id", null: false
+    t.string "content", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_games_on_name", unique: true, using: :btree
+    t.text "content_render_cache", default: "", null: false
+    t.index ["created_by_id"], name: "index_forums_post_edits_on_created_by_id"
+    t.index ["post_id"], name: "index_forums_post_edits_on_post_id"
   end
 
-  create_table "league_divisions", force: :cascade do |t|
-    t.integer  "league_id"
-    t.string   "name",       null: false
+  create_table "forums_posts", id: :serial, force: :cascade do |t|
+    t.integer "thread_id", null: false
+    t.integer "created_by_id", null: false
+    t.string "content", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["league_id"], name: "index_league_divisions_on_league_id", using: :btree
+    t.integer "edits_count", default: 0, null: false
+    t.text "content_render_cache", default: "", null: false
+    t.index ["created_by_id"], name: "index_forums_posts_on_created_by_id"
+    t.index ["thread_id"], name: "index_forums_posts_on_thread_id"
   end
 
-  create_table "league_match_comm_edits", force: :cascade do |t|
-    t.integer  "created_by_id",                     null: false
-    t.integer  "comm_id",                           null: false
-    t.text     "content",                           null: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.text     "content_render_cache", default: "", null: false
-    t.index ["comm_id"], name: "index_league_match_comm_edits_on_comm_id", using: :btree
-    t.index ["created_by_id"], name: "index_league_match_comm_edits_on_created_by_id", using: :btree
-  end
-
-  create_table "league_match_comms", force: :cascade do |t|
-    t.integer  "match_id"
-    t.integer  "created_by_id"
-    t.text     "content",                           null: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.text     "content_render_cache", default: "", null: false
-    t.integer  "edits_count",          default: 0,  null: false
-    t.datetime "deleted_at"
-    t.integer  "deleted_by_id"
-    t.index ["created_by_id"], name: "index_league_match_comms_on_created_by_id", using: :btree
-    t.index ["match_id"], name: "index_league_match_comms_on_match_id", using: :btree
-  end
-
-  create_table "league_match_pick_bans", force: :cascade do |t|
-    t.integer  "match_id",                               null: false
-    t.integer  "picked_by_id"
-    t.integer  "kind",         limit: 2,                 null: false
-    t.integer  "team",         limit: 2,                 null: false
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.integer  "map_id"
-    t.boolean  "deferrable",             default: false, null: false
-    t.index ["map_id"], name: "index_league_match_pick_bans_on_map_id", using: :btree
-    t.index ["match_id"], name: "index_league_match_pick_bans_on_match_id", using: :btree
-  end
-
-  create_table "league_match_rounds", force: :cascade do |t|
-    t.integer  "match_id"
-    t.integer  "map_id"
-    t.integer  "home_team_score",                           default: 0,     null: false
-    t.integer  "away_team_score",                           default: 0,     null: false
-    t.datetime "created_at",                                                null: false
-    t.datetime "updated_at",                                                null: false
-    t.integer  "loser_id"
-    t.integer  "winner_id"
-    t.boolean  "has_outcome",                               default: false, null: false
-    t.decimal  "score_difference", precision: 20, scale: 6, default: "0.0", null: false
-    t.index ["loser_id"], name: "index_league_match_rounds_on_loser_id", using: :btree
-    t.index ["map_id"], name: "index_league_match_rounds_on_map_id", using: :btree
-    t.index ["match_id"], name: "index_league_match_rounds_on_match_id", using: :btree
-    t.index ["winner_id"], name: "index_league_match_rounds_on_winner_id", using: :btree
-  end
-
-  create_table "league_matches", force: :cascade do |t|
-    t.integer  "home_team_id"
-    t.integer  "away_team_id"
-    t.integer  "status",                                                          null: false
-    t.datetime "created_at",                                                      null: false
-    t.datetime "updated_at",                                                      null: false
-    t.integer  "forfeit_by",                                      default: 0,     null: false
-    t.integer  "round_number"
-    t.string   "notice",                                          default: "",    null: false
-    t.string   "round_name",                                      default: "",    null: false
-    t.text     "notice_render_cache",                             default: "",    null: false
-    t.boolean  "has_winner",                                      default: false, null: false
-    t.integer  "winner_id"
-    t.integer  "loser_id"
-    t.string   "script_state"
-    t.decimal  "total_score_difference", precision: 20, scale: 6, default: "0.0", null: false
-    t.decimal  "total_home_team_score",  precision: 20, scale: 6, default: "0.0", null: false
-    t.decimal  "total_away_team_score",  precision: 20, scale: 6, default: "0.0", null: false
-    t.boolean  "allow_round_draws",                               default: false, null: false
-    t.index ["away_team_id"], name: "index_league_matches_on_away_team_id", using: :btree
-    t.index ["home_team_id"], name: "index_league_matches_on_home_team_id", using: :btree
-    t.index ["loser_id"], name: "index_league_matches_on_loser_id", using: :btree
-    t.index ["winner_id"], name: "index_league_matches_on_winner_id", using: :btree
-  end
-
-  create_table "league_pooled_maps", force: :cascade do |t|
-    t.integer  "league_id"
-    t.integer  "map_id"
+  create_table "forums_subscriptions", id: :serial, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "topic_id"
+    t.integer "thread_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["league_id"], name: "index_league_pooled_maps_on_league_id", using: :btree
-    t.index ["map_id"], name: "index_league_pooled_maps_on_map_id", using: :btree
+    t.index ["thread_id"], name: "index_forums_subscriptions_on_thread_id"
+    t.index ["topic_id"], name: "index_forums_subscriptions_on_topic_id"
+    t.index ["user_id"], name: "index_forums_subscriptions_on_user_id"
   end
 
-  create_table "league_roster_comment_edits", force: :cascade do |t|
-    t.integer  "comment_id",                        null: false
-    t.integer  "created_by_id",                     null: false
-    t.string   "content",                           null: false
-    t.text     "content_render_cache", default: "", null: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.index ["comment_id"], name: "index_league_roster_comment_edits_on_comment_id", using: :btree
-    t.index ["created_by_id"], name: "index_league_roster_comment_edits_on_created_by_id", using: :btree
-  end
-
-  create_table "league_roster_comments", force: :cascade do |t|
-    t.integer  "roster_id",                         null: false
-    t.integer  "created_by_id"
-    t.text     "content",                           null: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.text     "content_render_cache", default: "", null: false
-    t.datetime "deleted_at"
-    t.integer  "deleted_by_id"
-    t.index ["created_by_id"], name: "index_league_roster_comments_on_created_by_id", using: :btree
-    t.index ["roster_id"], name: "index_league_roster_comments_on_roster_id", using: :btree
-  end
-
-  create_table "league_roster_players", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "roster_id"
+  create_table "forums_threads", id: :serial, force: :cascade do |t|
+    t.integer "topic_id"
+    t.integer "created_by_id", null: false
+    t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["roster_id"], name: "index_league_roster_players_on_roster_id", using: :btree
-    t.index ["user_id"], name: "index_league_roster_players_on_user_id", using: :btree
+    t.boolean "locked"
+    t.boolean "pinned"
+    t.boolean "hidden"
+    t.integer "depth", default: 0, null: false
+    t.integer "posts_count", default: 0, null: false
+    t.index ["created_by_id"], name: "index_forums_threads_on_created_by_id"
+    t.index ["topic_id"], name: "index_forums_threads_on_topic_id"
   end
 
-  create_table "league_roster_transfer_requests", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "roster_id"
-    t.boolean  "is_joining",        null: false
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.integer  "created_by_id"
-    t.integer  "approved_by_id"
-    t.integer  "denied_by_id"
-    t.integer  "leaving_roster_id"
-    t.index ["approved_by_id", "denied_by_id"], name: "transfer_requests_on_approved_by_id_and_denied_by_id", using: :btree
-    t.index ["roster_id"], name: "index_league_roster_transfer_requests_on_roster_id", using: :btree
-    t.index ["user_id"], name: "index_league_roster_transfer_requests_on_user_id", using: :btree
+  create_table "forums_topics", id: :serial, force: :cascade do |t|
+    t.integer "created_by_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "locked"
+    t.boolean "pinned"
+    t.boolean "hidden"
+    t.boolean "isolated"
+    t.boolean "default_hidden"
+    t.integer "ancestry_depth", default: 0, null: false
+    t.string "ancestry"
+    t.integer "threads_count", default: 0, null: false
+    t.boolean "default_locked", default: false
+    t.index ["ancestry"], name: "index_forums_topics_on_ancestry"
+    t.index ["created_by_id"], name: "index_forums_topics_on_created_by_id"
   end
 
-  create_table "league_roster_transfers", force: :cascade do |t|
-    t.integer  "roster_id",                 null: false
-    t.integer  "user_id",                   null: false
-    t.boolean  "is_joining",                null: false
-    t.boolean  "approved",   default: true, null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.index ["roster_id"], name: "index_league_roster_transfers_on_roster_id", using: :btree
-    t.index ["user_id"], name: "index_league_roster_transfers_on_user_id", using: :btree
+  create_table "games", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_games_on_name", unique: true
   end
 
-  create_table "league_rosters", force: :cascade do |t|
-    t.integer  "team_id",                                                                        null: false
-    t.integer  "division_id",                                                                    null: false
-    t.boolean  "approved",                                                       default: false, null: false
-    t.datetime "created_at",                                                                     null: false
-    t.datetime "updated_at",                                                                     null: false
-    t.string   "name",                                                                           null: false
-    t.text     "description",                                                                    null: false
-    t.boolean  "disbanded",                                                      default: false, null: false
-    t.integer  "ranking"
-    t.integer  "seeding"
-    t.integer  "won_rounds_count",                                               default: 0,     null: false
-    t.integer  "drawn_rounds_count",                                             default: 0,     null: false
-    t.integer  "lost_rounds_count",                                              default: 0,     null: false
-    t.integer  "won_matches_count",                                              default: 0,     null: false
-    t.integer  "lost_matches_count",                                             default: 0,     null: false
-    t.integer  "points",                                                         default: 0,     null: false
-    t.integer  "total_scores",                                                   default: 0,     null: false
-    t.json     "schedule_data"
-    t.integer  "won_rounds_against_tied_rosters_count",                          default: 0,     null: false
-    t.text     "description_render_cache",                                       default: "",    null: false
-    t.integer  "drawn_matches_count",                                            default: 0,     null: false
-    t.integer  "forfeit_won_matches_count",                                      default: 0,     null: false
-    t.integer  "forfeit_drawn_matches_count",                                    default: 0,     null: false
-    t.integer  "forfeit_lost_matches_count",                                     default: 0,     null: false
-    t.text     "notice",                                                         default: "",    null: false
-    t.text     "notice_render_cache",                                            default: "",    null: false
-    t.decimal  "total_score_difference",                precision: 20, scale: 6, default: "0.0", null: false
-    t.index ["division_id"], name: "index_league_rosters_on_division_id", using: :btree
-    t.index ["points"], name: "index_league_rosters_on_points", using: :btree
-    t.index ["team_id"], name: "index_league_rosters_on_team_id", using: :btree
-  end
-
-  create_table "league_schedulers_weeklies", force: :cascade do |t|
-    t.integer "league_id",                                                             null: false
-    t.integer "start_of_week",                                                         null: false
-    t.boolean "days",             default: [true, true, true, true, true, true, true], null: false, array: true
-    t.integer "minimum_selected", default: 0,                                          null: false
-    t.index ["league_id"], name: "index_league_schedulers_weeklies_on_league_id", using: :btree
-  end
-
-  create_table "league_tiebreakers", force: :cascade do |t|
+  create_table "league_divisions", id: :serial, force: :cascade do |t|
     t.integer "league_id"
-    t.integer "kind",      null: false
-    t.index ["league_id"], name: "index_league_tiebreakers_on_league_id", using: :btree
-  end
-
-  create_table "leagues", force: :cascade do |t|
-    t.integer  "format_id"
-    t.string   "name",                                                     null: false
-    t.text     "description",                                              null: false
-    t.datetime "created_at",                                               null: false
-    t.datetime "updated_at",                                               null: false
-    t.boolean  "signuppable",                              default: false, null: false
-    t.boolean  "roster_locked",                            default: false, null: false
-    t.integer  "min_players",                              default: 6,     null: false
-    t.integer  "max_players",                              default: 0,     null: false
-    t.boolean  "matches_submittable",                      default: false, null: false
-    t.boolean  "transfers_require_approval",               default: true,  null: false
-    t.integer  "points_per_round_win",                     default: 2,     null: false
-    t.integer  "points_per_round_draw",                    default: 1,     null: false
-    t.integer  "points_per_round_loss",                    default: 0,     null: false
-    t.integer  "points_per_match_loss",                    default: 0,     null: false
-    t.integer  "points_per_match_win",                     default: 1,     null: false
-    t.boolean  "allow_disbanding",                         default: false, null: false
-    t.integer  "status",                                   default: 0,     null: false
-    t.integer  "rosters_count",                            default: 0,     null: false
-    t.integer  "schedule",                                 default: 0,     null: false
-    t.boolean  "schedule_locked",                          default: false, null: false
-    t.string   "query_name_cache",                         default: "",    null: false
-    t.text     "description_render_cache",                 default: "",    null: false
-    t.integer  "points_per_match_draw",                    default: 0,     null: false
-    t.string   "category",                                 default: "",    null: false
-    t.integer  "points_per_forfeit_win",                   default: 2,     null: false
-    t.integer  "points_per_forfeit_draw",                  default: 1,     null: false
-    t.integer  "points_per_forfeit_loss",                  default: 0,     null: false
-    t.boolean  "forfeit_all_matches_when_roster_disbands", default: true,  null: false
-    t.index "query_name_cache gist_trgm_ops", name: "index_leagues_on_query_name_change", using: :gist
-    t.index ["format_id"], name: "index_leagues_on_format_id", using: :btree
-  end
-
-  create_table "maps", force: :cascade do |t|
-    t.integer  "game_id"
-    t.string   "name",                                  null: false
-    t.text     "description",                           null: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.text     "description_render_cache", default: "", null: false
-    t.index ["game_id"], name: "index_maps_on_game_id", using: :btree
-  end
-
-  create_table "team_invites", force: :cascade do |t|
-    t.integer  "team_id"
-    t.integer  "user_id"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["team_id"], name: "index_team_invites_on_team_id", using: :btree
-    t.index ["user_id"], name: "index_team_invites_on_user_id", using: :btree
+    t.index ["league_id"], name: "index_league_divisions_on_league_id"
   end
 
-  create_table "team_players", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "team_id"
+  create_table "league_match_comm_edits", id: :serial, force: :cascade do |t|
+    t.integer "created_by_id", null: false
+    t.integer "comm_id", null: false
+    t.text "content", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["team_id"], name: "index_team_players_on_team_id", using: :btree
-    t.index ["user_id"], name: "index_team_players_on_user_id", using: :btree
+    t.text "content_render_cache", default: "", null: false
+    t.index ["comm_id"], name: "index_league_match_comm_edits_on_comm_id"
+    t.index ["created_by_id"], name: "index_league_match_comm_edits_on_created_by_id"
   end
 
-  create_table "team_transfers", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "team_id"
-    t.boolean  "is_joining", null: false
+  create_table "league_match_comms", id: :serial, force: :cascade do |t|
+    t.integer "match_id"
+    t.integer "created_by_id"
+    t.text "content", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["team_id"], name: "index_team_transfers_on_team_id", using: :btree
-    t.index ["user_id"], name: "index_team_transfers_on_user_id", using: :btree
-  end
-
-  create_table "teams", force: :cascade do |t|
-    t.string   "name",                                  null: false
-    t.text     "description",                           null: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.string   "avatar"
-    t.integer  "players_count",            default: 0,  null: false
-    t.string   "query_name_cache",         default: "", null: false
-    t.text     "description_render_cache", default: "", null: false
-    t.text     "notice",                   default: "", null: false
-    t.text     "notice_render_cache",      default: "", null: false
-    t.string   "avatar_token"
-    t.index "query_name_cache gist_trgm_ops", name: "index_teams_on_query_name_cache", using: :gist
-    t.index ["name"], name: "index_teams_on_name", unique: true, using: :btree
-  end
-
-  create_table "user_comment_edits", force: :cascade do |t|
-    t.integer  "comment_id",                        null: false
-    t.integer  "created_by_id",                     null: false
-    t.string   "content",                           null: false
-    t.text     "content_render_cache", default: "", null: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.index ["comment_id"], name: "index_user_comment_edits_on_comment_id", using: :btree
-    t.index ["created_by_id"], name: "index_user_comment_edits_on_created_by_id", using: :btree
-  end
-
-  create_table "user_comments", force: :cascade do |t|
-    t.integer  "user_id",              null: false
-    t.integer  "created_by_id",        null: false
-    t.text     "content",              null: false
-    t.text     "content_render_cache", null: false
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.text "content_render_cache", default: "", null: false
+    t.integer "edits_count", default: 0, null: false
     t.datetime "deleted_at"
-    t.integer  "deleted_by_id"
-    t.index ["user_id"], name: "index_user_comments_on_user_id", using: :btree
+    t.integer "deleted_by_id"
+    t.index ["created_by_id"], name: "index_league_match_comms_on_created_by_id"
+    t.index ["match_id"], name: "index_league_match_comms_on_match_id"
   end
 
-  create_table "user_name_changes", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "approved_by_id"
-    t.integer  "denied_by_id"
-    t.string   "name"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.index ["approved_by_id"], name: "index_user_name_changes_on_approved_by_id", using: :btree
-    t.index ["denied_by_id"], name: "index_user_name_changes_on_denied_by_id", using: :btree
-    t.index ["user_id"], name: "index_user_name_changes_on_user_id", using: :btree
+  create_table "league_match_pick_bans", id: :serial, force: :cascade do |t|
+    t.integer "match_id", null: false
+    t.integer "picked_by_id"
+    t.integer "kind", limit: 2, null: false
+    t.integer "team", limit: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "map_id"
+    t.boolean "deferrable", default: false, null: false
+    t.integer "order_number", default: 0
+    t.index ["map_id"], name: "index_league_match_pick_bans_on_map_id"
+    t.index ["match_id"], name: "index_league_match_pick_bans_on_match_id"
   end
 
-  create_table "user_notifications", force: :cascade do |t|
-    t.integer  "user_id",                    null: false
-    t.boolean  "read",       default: false, null: false
-    t.string   "message",                    null: false
-    t.string   "link",                       null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.index ["user_id"], name: "index_user_notifications_on_user_id", using: :btree
+  create_table "league_match_rounds", id: :serial, force: :cascade do |t|
+    t.integer "match_id"
+    t.integer "map_id"
+    t.integer "home_team_score", default: 0, null: false
+    t.integer "away_team_score", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "loser_id"
+    t.integer "winner_id"
+    t.boolean "has_outcome", default: false, null: false
+    t.decimal "score_difference", precision: 20, scale: 6, default: "0.0", null: false
+    t.index ["loser_id"], name: "index_league_match_rounds_on_loser_id"
+    t.index ["map_id"], name: "index_league_match_rounds_on_map_id"
+    t.index ["match_id"], name: "index_league_match_rounds_on_match_id"
+    t.index ["winner_id"], name: "index_league_match_rounds_on_winner_id"
   end
 
-  create_table "user_titles", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "league_id"
-    t.integer  "roster_id"
-    t.string   "name",       null: false
-    t.string   "badge"
+  create_table "league_matches", id: :serial, force: :cascade do |t|
+    t.integer "home_team_id"
+    t.integer "away_team_id"
+    t.integer "status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "forfeit_by", default: 0, null: false
+    t.integer "round_number"
+    t.string "notice", default: "", null: false
+    t.string "round_name", default: "", null: false
+    t.text "notice_render_cache", default: "", null: false
+    t.boolean "has_winner", default: false, null: false
+    t.integer "winner_id"
+    t.integer "loser_id"
+    t.string "script_state"
+    t.decimal "total_score_difference", precision: 20, scale: 6, default: "0.0", null: false
+    t.decimal "total_home_team_score", precision: 20, scale: 6, default: "0.0", null: false
+    t.decimal "total_away_team_score", precision: 20, scale: 6, default: "0.0", null: false
+    t.boolean "allow_round_draws", default: false, null: false
+    t.index ["away_team_id"], name: "index_league_matches_on_away_team_id"
+    t.index ["home_team_id"], name: "index_league_matches_on_home_team_id"
+    t.index ["loser_id"], name: "index_league_matches_on_loser_id"
+    t.index ["winner_id"], name: "index_league_matches_on_winner_id"
+  end
+
+  create_table "league_pooled_maps", id: :serial, force: :cascade do |t|
+    t.integer "league_id"
+    t.integer "map_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["league_id"], name: "index_league_pooled_maps_on_league_id"
+    t.index ["map_id"], name: "index_league_pooled_maps_on_map_id"
+  end
+
+  create_table "league_roster_comment_edits", id: :serial, force: :cascade do |t|
+    t.integer "comment_id", null: false
+    t.integer "created_by_id", null: false
+    t.string "content", null: false
+    t.text "content_render_cache", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_league_roster_comment_edits_on_comment_id"
+    t.index ["created_by_id"], name: "index_league_roster_comment_edits_on_created_by_id"
+  end
+
+  create_table "league_roster_comments", id: :serial, force: :cascade do |t|
+    t.integer "roster_id", null: false
+    t.integer "created_by_id"
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "content_render_cache", default: "", null: false
+    t.datetime "deleted_at"
+    t.integer "deleted_by_id"
+    t.index ["created_by_id"], name: "index_league_roster_comments_on_created_by_id"
+    t.index ["roster_id"], name: "index_league_roster_comments_on_roster_id"
+  end
+
+  create_table "league_roster_players", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "roster_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["roster_id"], name: "index_league_roster_players_on_roster_id"
+    t.index ["user_id"], name: "index_league_roster_players_on_user_id"
+  end
+
+  create_table "league_roster_transfer_requests", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "roster_id"
+    t.boolean "is_joining", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "created_by_id"
+    t.integer "approved_by_id"
+    t.integer "denied_by_id"
+    t.integer "leaving_roster_id"
+    t.index ["approved_by_id", "denied_by_id"], name: "transfer_requests_on_approved_by_id_and_denied_by_id"
+    t.index ["roster_id"], name: "index_league_roster_transfer_requests_on_roster_id"
+    t.index ["user_id"], name: "index_league_roster_transfer_requests_on_user_id"
+  end
+
+  create_table "league_roster_transfers", id: :serial, force: :cascade do |t|
+    t.integer "roster_id", null: false
+    t.integer "user_id", null: false
+    t.boolean "is_joining", null: false
+    t.boolean "approved", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["roster_id"], name: "index_league_roster_transfers_on_roster_id"
+    t.index ["user_id"], name: "index_league_roster_transfers_on_user_id"
+  end
+
+  create_table "league_rosters", id: :serial, force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.integer "division_id", null: false
+    t.boolean "approved", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name", null: false
+    t.text "description", null: false
+    t.boolean "disbanded", default: false, null: false
+    t.integer "ranking"
+    t.integer "seeding"
+    t.integer "won_rounds_count", default: 0, null: false
+    t.integer "drawn_rounds_count", default: 0, null: false
+    t.integer "lost_rounds_count", default: 0, null: false
+    t.integer "won_matches_count", default: 0, null: false
+    t.integer "lost_matches_count", default: 0, null: false
+    t.integer "points", default: 0, null: false
+    t.integer "total_scores", default: 0, null: false
+    t.json "schedule_data"
+    t.integer "won_rounds_against_tied_rosters_count", default: 0, null: false
+    t.text "description_render_cache", default: "", null: false
+    t.integer "drawn_matches_count", default: 0, null: false
+    t.integer "forfeit_won_matches_count", default: 0, null: false
+    t.integer "forfeit_drawn_matches_count", default: 0, null: false
+    t.integer "forfeit_lost_matches_count", default: 0, null: false
+    t.text "notice", default: "", null: false
+    t.text "notice_render_cache", default: "", null: false
+    t.decimal "total_score_difference", precision: 20, scale: 6, default: "0.0", null: false
+    t.index ["division_id"], name: "index_league_rosters_on_division_id"
+    t.index ["points"], name: "index_league_rosters_on_points"
+    t.index ["team_id"], name: "index_league_rosters_on_team_id"
+  end
+
+  create_table "league_schedulers_weeklies", id: :serial, force: :cascade do |t|
+    t.integer "league_id", null: false
+    t.integer "start_of_week", null: false
+    t.boolean "days", default: [true, true, true, true, true, true, true], null: false, array: true
+    t.integer "minimum_selected", default: 0, null: false
+    t.index ["league_id"], name: "index_league_schedulers_weeklies_on_league_id"
+  end
+
+  create_table "league_tiebreakers", id: :serial, force: :cascade do |t|
+    t.integer "league_id"
+    t.integer "kind", null: false
+    t.index ["league_id"], name: "index_league_tiebreakers_on_league_id"
+  end
+
+  create_table "leagues", id: :serial, force: :cascade do |t|
+    t.integer "format_id"
+    t.string "name", null: false
+    t.text "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "signuppable", default: false, null: false
+    t.boolean "roster_locked", default: false, null: false
+    t.integer "min_players", default: 6, null: false
+    t.integer "max_players", default: 0, null: false
+    t.boolean "matches_submittable", default: false, null: false
+    t.boolean "transfers_require_approval", default: true, null: false
+    t.integer "points_per_round_win", default: 2, null: false
+    t.integer "points_per_round_draw", default: 1, null: false
+    t.integer "points_per_round_loss", default: 0, null: false
+    t.integer "points_per_match_loss", default: 0, null: false
+    t.integer "points_per_match_win", default: 1, null: false
+    t.boolean "allow_disbanding", default: false, null: false
+    t.integer "status", default: 0, null: false
+    t.integer "rosters_count", default: 0, null: false
+    t.integer "schedule", default: 0, null: false
+    t.boolean "schedule_locked", default: false, null: false
+    t.string "query_name_cache", default: "", null: false
+    t.text "description_render_cache", default: "", null: false
+    t.integer "points_per_match_draw", default: 0, null: false
+    t.string "category", default: "", null: false
+    t.integer "points_per_forfeit_win", default: 2, null: false
+    t.integer "points_per_forfeit_draw", default: 1, null: false
+    t.integer "points_per_forfeit_loss", default: 0, null: false
+    t.boolean "forfeit_all_matches_when_roster_disbands", default: true, null: false
+    t.index "query_name_cache gist_trgm_ops", name: "index_leagues_on_query_name_change", using: :gist
+    t.index ["format_id"], name: "index_leagues_on_format_id"
+  end
+
+  create_table "maps", id: :serial, force: :cascade do |t|
+    t.integer "game_id"
+    t.string "name", null: false
+    t.text "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description_render_cache", default: "", null: false
+    t.index ["game_id"], name: "index_maps_on_game_id"
+  end
+
+  create_table "team_invites", id: :serial, force: :cascade do |t|
+    t.integer "team_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_team_invites_on_team_id"
+    t.index ["user_id"], name: "index_team_invites_on_user_id"
+  end
+
+  create_table "team_players", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_team_players_on_team_id"
+    t.index ["user_id"], name: "index_team_players_on_user_id"
+  end
+
+  create_table "team_transfers", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "team_id"
+    t.boolean "is_joining", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_team_transfers_on_team_id"
+    t.index ["user_id"], name: "index_team_transfers_on_user_id"
+  end
+
+  create_table "teams", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "avatar"
+    t.integer "players_count", default: 0, null: false
+    t.string "query_name_cache", default: "", null: false
+    t.text "description_render_cache", default: "", null: false
+    t.text "notice", default: "", null: false
+    t.text "notice_render_cache", default: "", null: false
+    t.string "avatar_token"
+    t.index "query_name_cache gist_trgm_ops", name: "index_teams_on_query_name_cache", using: :gist
+    t.index ["name"], name: "index_teams_on_name", unique: true
+  end
+
+  create_table "user_comment_edits", id: :serial, force: :cascade do |t|
+    t.integer "comment_id", null: false
+    t.integer "created_by_id", null: false
+    t.string "content", null: false
+    t.text "content_render_cache", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_user_comment_edits_on_comment_id"
+    t.index ["created_by_id"], name: "index_user_comment_edits_on_created_by_id"
+  end
+
+  create_table "user_comments", id: :serial, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "created_by_id", null: false
+    t.text "content", null: false
+    t.text "content_render_cache", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.integer "deleted_by_id"
+    t.index ["user_id"], name: "index_user_comments_on_user_id"
+  end
+
+  create_table "user_name_changes", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "approved_by_id"
+    t.integer "denied_by_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["approved_by_id"], name: "index_user_name_changes_on_approved_by_id"
+    t.index ["denied_by_id"], name: "index_user_name_changes_on_denied_by_id"
+    t.index ["user_id"], name: "index_user_name_changes_on_user_id"
+  end
+
+  create_table "user_notifications", id: :serial, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.boolean "read", default: false, null: false
+    t.string "message", null: false
+    t.string "link", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_notifications_on_user_id"
+  end
+
+  create_table "user_titles", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "league_id"
+    t.integer "roster_id"
+    t.string "name", null: false
+    t.string "badge"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["league_id"], name: "index_user_titles_on_league_id", using: :btree
-    t.index ["roster_id"], name: "index_user_titles_on_roster_id", using: :btree
-    t.index ["user_id"], name: "index_user_titles_on_user_id", using: :btree
+    t.index ["league_id"], name: "index_user_titles_on_league_id"
+    t.index ["roster_id"], name: "index_user_titles_on_roster_id"
+    t.index ["user_id"], name: "index_user_titles_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "name",                                  null: false
-    t.bigint   "steam_id",                              null: false
+  create_table "users", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "steam_id", null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",            default: 0,  null: false
+    t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.text     "description",              default: "", null: false
-    t.string   "remember_token"
-    t.string   "avatar"
-    t.string   "email"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description", default: "", null: false
+    t.string "remember_token"
+    t.string "avatar"
+    t.string "email"
     t.datetime "confirmed_at"
-    t.string   "confirmation_token"
+    t.string "confirmation_token"
     t.datetime "confirmation_sent_at"
-    t.string   "query_name_cache",         default: "", null: false
-    t.text     "description_render_cache", default: "", null: false
-    t.string   "badge_name",               default: "", null: false
-    t.integer  "badge_color",              default: 0,  null: false
-    t.text     "notice",                   default: "", null: false
-    t.text     "notice_render_cache",      default: "", null: false
-    t.string   "avatar_token"
+    t.string "query_name_cache", default: "", null: false
+    t.text "description_render_cache", default: "", null: false
+    t.string "badge_name", default: "", null: false
+    t.integer "badge_color", default: 0, null: false
+    t.text "notice", default: "", null: false
+    t.text "notice_render_cache", default: "", null: false
+    t.string "avatar_token"
     t.index "query_name_cache gist_trgm_ops", name: "index_users_on_query_name_cache", using: :gist
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-    t.index ["name"], name: "index_users_on_name", unique: true, using: :btree
-    t.index ["steam_id"], name: "index_users_on_steam_id", unique: true, using: :btree
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["name"], name: "index_users_on_name", unique: true
+    t.index ["steam_id"], name: "index_users_on_steam_id", unique: true
   end
 
-  create_table "visits", force: :cascade do |t|
-    t.string   "visit_token"
-    t.string   "visitor_token"
-    t.string   "ip"
-    t.text     "user_agent"
-    t.text     "referrer"
-    t.text     "landing_page"
-    t.integer  "user_id"
-    t.string   "referring_domain"
-    t.string   "search_keyword"
-    t.string   "browser"
-    t.string   "os"
-    t.string   "device_type"
-    t.integer  "screen_height"
-    t.integer  "screen_width"
-    t.string   "country"
-    t.string   "region"
-    t.string   "city"
-    t.string   "postal_code"
-    t.decimal  "latitude"
-    t.decimal  "longitude"
-    t.string   "utm_source"
-    t.string   "utm_medium"
-    t.string   "utm_term"
-    t.string   "utm_content"
-    t.string   "utm_campaign"
+  create_table "visits", id: :serial, force: :cascade do |t|
+    t.string "visit_token"
+    t.string "visitor_token"
+    t.string "ip"
+    t.text "user_agent"
+    t.text "referrer"
+    t.text "landing_page"
+    t.integer "user_id"
+    t.string "referring_domain"
+    t.string "search_keyword"
+    t.string "browser"
+    t.string "os"
+    t.string "device_type"
+    t.integer "screen_height"
+    t.integer "screen_width"
+    t.string "country"
+    t.string "region"
+    t.string "city"
+    t.string "postal_code"
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.string "utm_source"
+    t.string "utm_medium"
+    t.string "utm_term"
+    t.string "utm_content"
+    t.string "utm_campaign"
     t.datetime "started_at"
-    t.integer  "api_key_id"
-    t.index ["api_key_id"], name: "index_visits_on_api_key_id", using: :btree
-    t.index ["browser"], name: "index_visits_on_browser", using: :btree
-    t.index ["ip"], name: "index_visits_on_ip", using: :btree
-    t.index ["os"], name: "index_visits_on_os", using: :btree
-    t.index ["referring_domain"], name: "index_visits_on_referring_domain", using: :btree
-    t.index ["started_at"], name: "index_visits_on_started_at", using: :btree
-    t.index ["user_id"], name: "index_visits_on_user_id", using: :btree
-    t.index ["visit_token"], name: "index_visits_on_visit_token", unique: true, using: :btree
+    t.integer "api_key_id"
+    t.index ["api_key_id"], name: "index_visits_on_api_key_id"
+    t.index ["browser"], name: "index_visits_on_browser"
+    t.index ["ip"], name: "index_visits_on_ip"
+    t.index ["os"], name: "index_visits_on_os"
+    t.index ["referring_domain"], name: "index_visits_on_referring_domain"
+    t.index ["started_at"], name: "index_visits_on_started_at"
+    t.index ["user_id"], name: "index_visits_on_user_id"
+    t.index ["visit_token"], name: "index_visits_on_visit_token", unique: true
   end
 
   add_foreign_key "action_user_edit_games", "users"

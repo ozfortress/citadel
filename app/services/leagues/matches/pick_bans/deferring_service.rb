@@ -4,9 +4,9 @@ module Leagues
       module DeferringService
         include BaseService
 
-        def call(pick_ban)
+        def call(pick_ban, user)
           pick_ban.transaction do
-            pick_ban.defer!
+            pick_ban.defer!(user)
 
             notify_captains!(pick_ban)
           end

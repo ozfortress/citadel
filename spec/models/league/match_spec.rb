@@ -248,6 +248,26 @@ describe League::Match do
     end
   end
 
+  describe 'pick bans' do
+    it 'sets order numbers before validation' do
+      map = build(:map)
+      rounds = [League::Match::Round.new(map: map)]
+      pick_bans = [
+        League::Match::PickBan.new(kind: :pick, team: :home_team, deferrable: true),
+        League::Match::PickBan.new(kind: :ban,  team: :home_team, deferrable: false),
+        League::Match::PickBan.new(kind: :pick, team: :away_team, deferrable: false),
+      ]
+      match = build(:league_match, rounds: rounds, pick_bans: pick_bans, has_winner: false, allow_round_draws: false)
+
+      expect(match.valid?).to be(true)
+
+      expect(match.pick_bans.length).to eq(3)
+      expect(match.pick_bans[0].order_number).to eq(0)
+      expect(match.pick_bans[1].order_number).to eq(1)
+      expect(match.pick_bans[2].order_number).to eq(2)
+    end
+  end
+
   describe '#forfeit!' do
     let(:match) { create(:league_match) }
     it 'forfeits for the home team' do

@@ -10,7 +10,7 @@ describe League::Match::PickBan do
   it { should belong_to(:map).class_name('Map') }
   it { should allow_value(nil).for(:map) }
 
-  it { should define_enum_for(:kind).with([:pick, :ban]) }
+  it { should define_enum_for(:kind).with([:pick, :ban, :deferred]) }
 
   it { should define_enum_for(:team).with([:home_team, :away_team]) }
 
@@ -57,30 +57,35 @@ describe League::Match::PickBan do
   describe '#defer!' do
     let(:map) { create(:map) }
     let(:user) { create(:user) }
+    let(:other_user) { create(:user) }
     let(:match) { create(:league_match) }
 
     before do
-      @picked = create_list(:league_match_pick_ban, 2, match: match, picked_by: user,
-                                                       map: map, team: :home_team)
-      @deferrable = create(:league_match_pick_ban, match: match, deferrable: true, team: :away_team)
-      @pending = create_list(:league_match_pick_ban, 2, match: match, team: :home_team)
+      @picked = create(:league_match_pick_ban, match: match, picked_by: other_user, map: map,
+                                               team: :home_team, order_number: 0)
+      @deferrable = create(:league_match_pick_ban, match: match, deferrable: true, team: :away_team, order_number: 1)
+      @pending = create(:league_match_pick_ban, match: match, team: :home_team, order_number: 2)
     end
 
     it 'successfully defers' do
-      expect(@deferrable.defer!).to be(true)
+      expect(@deferrable.defer!(user)).to be(true)
+      expect(@deferrable.kind).to eq('deferred')
+      expect(@deferrable.picked_by).to be(user)
+      expect(@deferrable.pending?).to be(false)
+      expect(@deferrable.order_number).to eq(1)
 
-      @picked.each do |pick_ban|
-        expect(pick_ban.reload.home_team?).to be(true)
-      end
+      # Make sure it didn't change the old picks
+      expect(@picked.reload.home_team?).to be(true)
+      expect(@picked.order_number).to eq(0)
 
-      @deferrable.reload
-      expect(@deferrable.home_team?).to be(true)
-      expect(@deferrable.pending?).to be(true)
-      expect(@deferrable.deferrable?).to be(false)
+      # Make sure it made new picks for the deferred
+      pending = match.reload.pick_bans.pending.to_a
 
-      @pending.each do |pick_ban|
-        expect(pick_ban.reload.away_team?).to be(true)
-      end
+      expect(pending.length).to eq(2)
+      expect(pending[0].home_team?).to be(true)
+      expect(pending[0].order_number).to eq(2)
+      expect(pending[1].away_team?).to be(true)
+      expect(pending[1].order_number).to eq(3)
     end
   end
 end

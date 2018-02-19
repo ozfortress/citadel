@@ -24,7 +24,7 @@ module Leagues
       end
 
       def defer
-        PickBans::DeferringService.call(@pick_ban)
+        PickBans::DeferringService.call(@pick_ban, current_user)
 
         redirect_to match_path(@match)
       end
