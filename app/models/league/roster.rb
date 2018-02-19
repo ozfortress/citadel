@@ -157,7 +157,7 @@ class League
     def self.order_keys(league)
       orderings = []
       orderings << 'ranking ASC NULLS LAST'
-      orderings << 'CASE WHEN disbanded THEN 0 ELSE points END DESC'
+      orderings << 'CASE WHEN disbanded THEN NULL ELSE points END DESC NULLS LAST'
       orderings += league.tiebreakers.map(&:order)
       orderings << 'seeding ASC'
       orderings
