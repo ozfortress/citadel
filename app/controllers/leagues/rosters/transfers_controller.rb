@@ -10,12 +10,10 @@ module Leagues
       before_action :require_transfer_permissions
 
       def create
-        @transfer_request =
-          Rosters::Transfers::CreationService.call(@roster, current_user, transfer_params)
+        @transfer_request = Rosters::Transfers::CreationService.call(@roster, current_user, transfer_params)
 
-        unless @transfer_request.errors.empty?
-          flash[:error] = @transfer_request.errors.full_messages.first
-        end
+        flash[:error] = @transfer_request.errors.full_messages.first unless @transfer_request.errors.empty?
+
         redirect_to edit_roster_path(@roster)
       end
 

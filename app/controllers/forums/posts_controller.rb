@@ -3,7 +3,7 @@ module Forums
     include Forums::ThreadsCommon
     include Forums::Permissions
 
-    before_action only: [:create] { @thread = Forums::Thread.find(params[:thread_id]) }
+    before_action(only: [:create]) { @thread = Forums::Thread.find(params[:thread_id]) }
     before_action except: [:create] do
       @post = Post.find(params[:id])
       @thread = @post.thread

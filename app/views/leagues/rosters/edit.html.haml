@@ -39,6 +39,11 @@
       = f.submit 'Update'
       = link_to 'Cancel', team_path(@roster.team), class: 'btn btn-default'
 
+    = link_to users_permissions_path(action_: :edit, subject: :team, target: @roster.team.id),
+              class: 'pull-right btn btn-default' do
+      Manage Permissions
+      %span.glyphicon.glyphicon-cog
+
 = render 'leagues/rosters/transfers/index',
          league: @league, roster: @roster, transfer_request: @transfer_request,
          users_on_roster: @users_on_roster, users_off_roster: @users_off_roster
@@ -69,15 +74,20 @@
 - if user_can_edit_league?
   .panel.panel-info
     .panel-heading Admin Comments
-    %ul.list-group
-      - @comments.each do |comment|
-        %li.list-group-item
-          .panel.panel-default
-            .panel-heading
-              = render 'users/listing', user: comment.user
-              .pull-right= comment.created_at.strftime('%c')
 
-          .markdown!= comment.content_render_cache
+    - @comments.each do |comment|
+      - options = { roster: @roster, comment: comment, quote_id: 'wmd-input-new-league-roster-comment' }
 
-    .panel-body
-      = render 'comment_form', roster: @roster, comment: @comment
+      - if comment.exists?
+        = render 'leagues/rosters/comments/comment', options
+      - else
+        = render 'leagues/rosters/comments/deleted_comment', options
+
+    .container-fluid
+      %hr
+      = bootstrap_form_for @comment, as: :comment, url: roster_comments_path(@roster) do |f|
+        = render 'leagues/rosters/comments/form', f: f
+
+        .row
+          = f.submit 'Post', class: 'btn btn-default pull-right'
+      %hr

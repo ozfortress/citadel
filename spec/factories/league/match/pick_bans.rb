@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :league_match_pick_ban, class: 'League::Match::PickBan' do
     association :match, factory: :league_match
     map nil

@@ -10,9 +10,12 @@
       Threads
 
     %ul.list-group
-      - present_collection(threads).each do |thread|
+      - threads.each do |thread|
+        - thread_p = present(thread)
         %li.list-group-item
-          = thread.link
+          = thread_p.link
+
+          .pull-right.label.alert-info= pluralize(thread.posts_count, 'Post')
 
   - if user_can_manage_topic? || !topics.empty?
     .panel-heading
@@ -25,6 +28,9 @@
       Topics
 
     %ul.list-group
-      - present_collection(topics).each do |topic|
+      - topics.each do |topic|
+        - topic_p = present(topic)
         %li.list-group-item
-          = topic.link
+          = topic_p.link
+
+          .pull-right.label.alert-info= pluralize(topic.threads_count, 'Thread')

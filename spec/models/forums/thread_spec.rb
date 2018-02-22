@@ -38,11 +38,11 @@ describe Forums::Thread do
       expect(thread.hidden?).to be(false)
     end
 
-    it 'inherits hidden and locked' do
+    it 'inherits hidden and pinned' do
       topic = build(:forums_topic, hidden: true, locked: true)
 
       thread = Forums::Thread.new(topic: topic)
-      expect(thread.locked?).to be(true)
+      expect(thread.locked?).to be(false)
       expect(thread.pinned?).to be(false)
       expect(thread.hidden?).to be(true)
     end
@@ -54,6 +54,15 @@ describe Forums::Thread do
       expect(thread.locked?).to be(false)
       expect(thread.pinned?).to be(false)
       expect(thread.hidden?).to be(true)
+    end
+
+    it 'respects default locked' do
+      topic = build(:forums_topic, default_locked: true, locked: false)
+
+      thread = Forums::Thread.new(topic: topic)
+      expect(thread.locked?).to be(true)
+      expect(thread.pinned?).to be(false)
+      expect(thread.hidden?).to be(false)
     end
   end
 end

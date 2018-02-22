@@ -1,0 +1,26 @@
+- comment_p = present(comment)
+
+/ TODO: restorability
+.panel.panel-default
+  %div{ id: comment.paths.dom_id }
+  .panel-heading
+    .pull-right
+      = link_to comment.paths.edit, class: 'btn btn-link btn-sm' do
+        %span.glyphicon.glyphicon-cog
+    .pull-right
+      = link_to comment.paths.show do
+        %span.glyphicon.glyphicon-link.small
+        = comment_p.created_at
+
+    = render 'users/listing', user: comment.created_by
+
+  - if comment.edits.size > 1
+    .pull-right
+      = link_to comment.paths.edits, class: 'btn btn-default btn-sm' do
+        View Edits
+
+.container-fluid.markdown
+  = comment_p.content
+
+  %button.pull-right.btn.btn-default.btn-xs{ data: { quote: { id: quote_id, text: comment_p.quote } } }
+    Quote

@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
 gem 'rake', '~> 12.0'
-gem 'rails', '~> 5.0.0'
+gem 'rails', '~> 5.1'
 # Use postgres
-gem 'pg'
+gem 'pg', '~> 0.21' # Fix once rails gets fixed
 # Active Record extensions
 gem 'active_record_union', '~> 1.2.0'
 gem 'ancestry'
@@ -62,13 +62,13 @@ group :test do
   gem 'database_cleaner'
 
   # Easy database manipulation
-  gem 'factory_girl_rails', '~> 4.0'
+  gem 'factory_bot_rails', '~> 4'
 
   # Web feature testing
   gem 'capybara'
 
   # Keep codebase clean
-  gem 'rubocop', '~> 0.47', require: false
+  gem 'rubocop', '~> 0.51', require: false
   gem 'haml_lint', require: false
   gem 'haml', '~> 4.0', require: false # haml_lint is broken for haml 5
   gem 'rails_best_practices', require: false

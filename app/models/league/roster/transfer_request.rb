@@ -125,9 +125,7 @@ class League
       def on_team_check
         return unless user.present? && roster.present? && is_joining?
 
-        unless roster.team.on_roster?(user)
-          errors.add(:user_id, 'must be on the team to get transferred to the roster')
-        end
+        errors.add(:user_id, 'must be on the team to get transferred to the roster') unless roster.team.on_roster?(user)
       end
 
       def on_roster_check

@@ -1,0 +1,8 @@
+.panel.panel-default
+  .panel-heading
+    .pull-right
+      = comment_edit.created_at.strftime('%c')
+
+    = render 'users/listing', user: comment_edit.created_by
+
+.container-fluid.markdown!= comment_edit.content_render_cache

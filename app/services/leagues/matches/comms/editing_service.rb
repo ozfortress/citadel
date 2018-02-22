@@ -4,11 +4,11 @@ module Leagues
       module EditingService
         include BaseService
 
-        def call(user, comm, params)
+        def call(creator, comm, params)
           comm.transaction do
             comm.update(params) || rollback!
 
-            comm.create_edit!(user)
+            comm.create_edit!(creator)
           end
 
           comm

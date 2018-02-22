@@ -84,6 +84,14 @@ class League
         end
       end
 
+      def user_param
+        if transfer_request.leaving_roster && transfer_request.user.can?(:edit, transfer_request.leaving_roster)
+          user.link + ' ' + content_tag(:span, 'captain', class: 'label label-warning')
+        else
+          user.link
+        end
+      end
+
       def message_params
         if transfer_request.approved?
           { approved_by: approved_by.link }
@@ -92,7 +100,7 @@ class League
         else
           {}
         end.merge(
-          created_by: created_by.link, user: user.link, direction: direction_message,
+          created_by: created_by.link, user: user_param, direction: direction_message,
           roster: roster.link, leaving_message: leaving_message
         )
       end

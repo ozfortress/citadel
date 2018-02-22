@@ -10,7 +10,7 @@ describe API::V1::LeaguesController, type: :request do
     it 'succeeds for existing league' do
       get "#{route}/#{league.id}", headers: { 'X-API-Key' => api_key.key }
 
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       league_h = json['league']
       expect(league_h).to_not be_nil
       expect(league_h['name']).to eq(league.name)
@@ -22,7 +22,7 @@ describe API::V1::LeaguesController, type: :request do
     it 'succeeds for non-existent league' do
       get "#{route}/-1", headers: { 'X-API-Key' => api_key.key }
 
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json['status']).to eq(404)
       expect(json['message']).to eq('Record not found')
       expect(response).to be_not_found
@@ -33,7 +33,7 @@ describe API::V1::LeaguesController, type: :request do
 
       get "#{route}/#{league.id}", headers: { 'X-API-Key' => api_key.key }
 
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json['status']).to eq(404)
       expect(json['message']).to eq('Record not found')
       expect(response).to be_not_found

@@ -42,7 +42,7 @@ Rails.application.routes.draw do
       end
 
       resource :transfers, controller: 'leagues/rosters/transfers', only: [:create]
-      resource :comments, controller: 'leagues/rosters/comments', only: [:create]
+      resources :comments, controller: 'leagues/rosters/comments', only: [:create]
     end
 
     resources :matches, controller: 'leagues/matches', shallow: true do
@@ -69,6 +69,13 @@ Rails.application.routes.draw do
           patch 'defer'
         end
       end
+    end
+  end
+
+  resources :rosters, only: [] do
+    resources :comments, controller: 'leagues/rosters/comments', only: [:edit, :update, :destroy] do
+      get :edits, on: :member, as: 'edits_for'
+      patch :restore, on: :member
     end
   end
 
@@ -100,7 +107,11 @@ Rails.application.routes.draw do
   resources :users, except: [:destroy] do
     post 'name',  on: :member, to: 'users#request_name_change'
 
-    resources :comments, controller: 'users/comments', only: [:create]
+    resources :comments, controller: 'users/comments', only: [:create, :edit, :update, :destroy] do
+      get :edits, on: :member, as: 'edits_for'
+      patch :restore, on: :member
+    end
+
     resources :bans, controller: 'users/bans', only: [:index, :create, :destroy]
     resource :logs, controller: 'users/logs', only: :show do
       get :alts, on: :collection

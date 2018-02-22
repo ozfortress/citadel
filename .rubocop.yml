@@ -46,14 +46,18 @@ Style/GuardClause:
 Bundler/OrderedGems:
   Enabled: false
 
+# This doesn't always make sense
+Rails/InverseOf:
+  Enabled: false
+
 AllCops:
   Exclude:
     - 'db/**/*'
     - 'config/**/*'
     - 'vendor/**/*'
   DisplayCopNames: true
-  TargetRubyVersion: 2.3
-  TargetRailsVersion: 5.0
+  TargetRubyVersion: 2.5
+  TargetRailsVersion: 5.1
 
 # TODO: Remove once rubocop fixes some bugs
 Rails/HasManyOrHasOneDependent:
@@ -61,4 +65,16 @@ Rails/HasManyOrHasOneDependent:
 
 # TODO: Remove once rubocop fixes some bugs
 Style/CommentedKeyword:
+  Enabled: false
+
+# TODO: Remove once robocop fixes some bugs
+Style/FormatStringToken:
+  Enabled: false
+
+# TODO: Remove once robocop fixes some bugs
+Style/MixinUsage:
+  Enabled: false
+
+# TODO: Remove once robocop fixes some bugs
+Layout/EmptyLinesAroundArguments:
   Enabled: false
