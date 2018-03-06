@@ -35,7 +35,7 @@
     - if @league.completed?
       This league has been completed
     - elsif @roster
-      There are no upcoming matches for your team, #{@roster.name}
+      There are no upcoming matches for your team, #{present(@roster).link}
     - else
       There are no upcoming matches for #{@divisions.first.name}
 
