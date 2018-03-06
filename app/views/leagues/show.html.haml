@@ -23,12 +23,12 @@
   - matches = @personal_matches || @top_div_matches
 
   .panel-heading
-    - if user_signed_in? && @roster
+    - if @roster
       - if !@personal_matches.empty?
         Upcoming matches for your team:
 
       - else
-        There are no upcoming matches for your team, #{@roster.name}.
+        There are no upcoming matches for your team: #{present(@roster).link}.
 
     - elsif !matches.empty?
       Upcoming matches for #{@divisions.first.name}:
