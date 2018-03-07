@@ -24,7 +24,7 @@
 
   .panel-heading
     - if @roster
-      - if !@personal_matches.empty?
+      - if @personal_matches.present?
         Upcoming matches for your team:
 
       - else
