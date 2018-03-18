@@ -27,8 +27,8 @@ MATCH_PARAMS = {
   round_name: '#1',
   has_winner: true,
   rounds_attributes: [
-    { map: MAP }
-  ]
+    { map: MAP },
+  ],
 }.freeze
 
 def match_s(match)
@@ -153,12 +153,9 @@ def generate(round)
 
   puts 'Generating Matches'
   league.divisions.each do |division|
-    match_params = {
-      round_number: round, notice: MATCH_NOTICE_TEMPLATE,
-    }.merge(MATCH_PARAMS)
+    match_params = { round_number: round, notice: MATCH_NOTICE_TEMPLATE }.merge(MATCH_PARAMS)
 
-    invalid = Leagues::Matches::GenerationService.call(division, match_params,
-                                                       :single_elimination, round: round)
+    invalid = Leagues::Matches::GenerationService.call(division, match_params, :single_elimination, round: round)
 
     if invalid
       p invalid.errors

@@ -10,13 +10,9 @@ class League
 
     validates :name, presence: true, length: { in: 1..64 }
 
-    TOURNAMENT_SYSTEMS = [
-      :swiss, :round_robin, :single_elimination, :page_playoffs,
-    ].freeze
+    TOURNAMENT_SYSTEMS = [:swiss, :round_robin, :single_elimination, :page_playoffs].freeze
 
-    SWISS_PAIRERS = [
-      :dutch
-    ].freeze
+    SWISS_PAIRERS = [:dutch].freeze
 
     # TODO: Replace messy handling here with normal models
     def generate_matches(system, match_options, options = {})

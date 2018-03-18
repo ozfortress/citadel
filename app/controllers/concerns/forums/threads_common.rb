@@ -6,6 +6,8 @@ module Forums
       @page = params[:page]
       @posts = @thread.posts.includes(:created_by).paginate(page: @page)
       @post ||= Post.new
+
+      nil
     end
   end
 end

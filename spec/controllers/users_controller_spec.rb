@@ -37,9 +37,7 @@ describe UsersController do
     it 'creates a user' do
       session['devise.steam_data'] = OmniAuth.mock_auth_hash
 
-      post :create, params: { user: {
-        name: 'A', description: 'B', email: 'foo@bar.com',
-      } }
+      post :create, params: { user: { name: 'A', description: 'B', email: 'foo@bar.com' } }
 
       user = User.find_by(name: 'A')
       expect(user).to_not be_nil

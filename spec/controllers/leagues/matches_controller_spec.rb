@@ -54,7 +54,7 @@ describe Leagues::MatchesController do
           home_team_id: @team1.id, away_team_id: @team2.id, round_name: 'foo',
           round_number: 3, notice: 'B',
           rounds_attributes: [
-            { map_id: @map.id }
+            { map_id: @map.id },
           ]
         }
       }
@@ -81,7 +81,7 @@ describe Leagues::MatchesController do
       post :create, params: {
         league_id: @league.id, division_id: @div.id, match: {
           home_team_id: @team1.id, away_team_id: nil, round_name: 'foo',
-          round_number: 3, notice: 'B',
+          round_number: 3, notice: 'B'
         }
       }
 
@@ -108,7 +108,7 @@ describe Leagues::MatchesController do
 
       post :create, params: {
         league_id: @league.id, division_id: @div.id, match: {
-          home_team_id: @team1.id, away_team_id: @team1.id,
+          home_team_id: @team1.id, away_team_id: @team1.id
         }
       }
 
@@ -179,7 +179,7 @@ describe Leagues::MatchesController do
         tournament_system: :swiss,
         swiss_tournament: { pairer: :dutch, pair_options: { min_pair_size: 2 } },
         single_elimination_tournament: { teams_limit: 0, round: 0 },
-        page_playoffs_tournament: { starting_round: 0 },
+        page_playoffs_tournament: { starting_round: 0 }
       }
 
       @league.reload
@@ -264,7 +264,7 @@ describe Leagues::MatchesController do
         patch :submit, params: {
           id: match.id, match: {
             status: :confirmed, rounds_attributes: {
-              id: round.id, home_team_score: 2, away_team_score: 5,
+              id: round.id, home_team_score: 2, away_team_score: 5
             }
           }
         }
@@ -294,7 +294,7 @@ describe Leagues::MatchesController do
 
         patch :submit, params: {
           id: match.id, match: {
-            rounds_attributes: { id: round.id, home_team_score: 2, away_team_score: 5 }
+            rounds_attributes: { id: round.id, home_team_score: 2, away_team_score: 5 },
           }
         }
 
@@ -312,8 +312,8 @@ describe Leagues::MatchesController do
         patch :submit, params: {
           id: match.id, match: {
             rounds_attributes: {
-              id: round.id, home_team_score: 2, away_team_score: 5,
-            }
+              id: round.id, home_team_score: 2, away_team_score: 5
+            },
           }
         }
 
@@ -331,8 +331,8 @@ describe Leagues::MatchesController do
         patch :submit, params: {
           id: match.id, match: {
             rounds_attributes: {
-              id: round.id, home_team_score: -1, away_team_score: 5,
-            }
+              id: round.id, home_team_score: -1, away_team_score: 5
+            },
           }
         }
 
@@ -346,7 +346,7 @@ describe Leagues::MatchesController do
         patch :submit, params: {
           id: match.id, match: {
             status: :confirmed, rounds_attributes: {
-              id: round.id, home_team_score: 2, away_team_score: 5,
+              id: round.id, home_team_score: 2, away_team_score: 5
             }
           }
         }
@@ -363,8 +363,8 @@ describe Leagues::MatchesController do
         patch :submit, params: {
           id: match.id, match: {
             rounds_attributes: {
-              id: round.id, home_team_score: 2, away_team_score: 5,
-            }
+              id: round.id, home_team_score: 2, away_team_score: 5
+            },
           }
         }
 

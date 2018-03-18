@@ -59,7 +59,7 @@ describe LeaguesController do
                   weekly_scheduler_attributes: {
                     start_of_week: 'Monday', minimum_selected: 2,
                     days_indecies: [0, 1, 3, 5, 6]
-                  } }
+                  } },
       }
 
       comp = League.first
@@ -106,7 +106,7 @@ describe LeaguesController do
       post :create, params: {
         league: { name: 'A', description: 'B', format_id: format.id, signuppable: true,
                   roster_locked: false, matches_submittable: true, min_players: 5,
-                  max_players: 3, divisions_attributes: [{ name: 'PREM' }] }
+                  max_players: 3, divisions_attributes: [{ name: 'PREM' }] },
       }
 
       expect(League.first).to be(nil)
