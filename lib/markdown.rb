@@ -1,13 +1,13 @@
 module MarkdownRenderer
   RENDER_OPTIONS = {
-    hard_wrap: true
+    hard_wrap: true,
   }.freeze
 
   PARSER_OPTIONS = {
     autolink: true,
     strikethrough: true,
     underline: true,
-    no_intra_emphasis: true
+    no_intra_emphasis: true,
   }.freeze
 
   def self.render(source, escaped = true)

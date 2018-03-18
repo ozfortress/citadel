@@ -198,7 +198,7 @@ describe Leagues::RostersController do
 
         patch :update, params: {
           id: roster.id,
-          roster: { name: 'A', description: 'B', division_id: div2, seeding: 2, ranking: 3, notice: 'foo' }
+          roster: { name: 'A', description: 'B', division_id: div2, seeding: 2, ranking: 3, notice: 'foo' },
         }
 
         roster.reload
@@ -217,7 +217,7 @@ describe Leagues::RostersController do
 
         patch :update, params: {
           id: roster.id,
-          roster: { name: 'A', description: 'B', division_id: div2, seeding: 2, ranking: 3, notice: 'foo' }
+          roster: { name: 'A', description: 'B', division_id: div2, seeding: 2, ranking: 3, notice: 'foo' },
         }
 
         roster.reload
@@ -255,7 +255,7 @@ describe Leagues::RostersController do
 
         patch :update, params: {
           id: roster.id,
-          roster: { name: '', description: 'B', division_id: div2 }
+          roster: { name: '', description: 'B', division_id: div2 },
         }
 
         roster.reload
@@ -319,7 +319,7 @@ describe Leagues::RostersController do
 
         patch :approve, params: {
           id: roster.id,
-          roster: { name: 'A', division_id: div2.id, seeding: 2 }
+          roster: { name: 'A', division_id: div2.id, seeding: 2 },
         }
 
         roster.reload
@@ -334,7 +334,7 @@ describe Leagues::RostersController do
 
         patch :approve, params: {
           id: roster.id,
-          roster: { name: '', division_id: div2.id }
+          roster: { name: '', division_id: div2.id },
         }
 
         roster.reload
@@ -348,7 +348,7 @@ describe Leagues::RostersController do
 
         patch :approve, params: {
           id: roster.id,
-          roster: { name: 'A', division_id: div2.id, seeding: 2 }
+          roster: { name: 'A', division_id: div2.id, seeding: 2 },
         }
 
         expect(response).to redirect_to(league_rosters_path(league))

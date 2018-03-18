@@ -190,7 +190,7 @@ describe Forums::TopicsController do
           forums_topic: {
             name: 'Test', locked: true, pinned: true, hidden: true, isolated: true,
             default_hidden: true
-          }
+          },
         }
 
         topic.reload

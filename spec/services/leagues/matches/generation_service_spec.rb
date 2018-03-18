@@ -14,7 +14,7 @@ describe Leagues::Matches::GenerationService do
       map = create(:map)
       match_options = {
         round_number: 1, rounds_attributes: [
-          { map: map }
+          { map: map },
         ]
       }
       match = described_class.call(division, match_options, :single_elimination, {})
@@ -38,14 +38,14 @@ describe Leagues::Matches::GenerationService do
 
       match1.update!(
         status: :confirmed, rounds_attributes: [
-          { id: match1.rounds.first.id, home_team_score: 2, away_team_score: 1 }
+          { id: match1.rounds.first.id, home_team_score: 2, away_team_score: 1 },
         ]
       )
       expect(match1.winner).to eq(team3)
 
       match2.update!(
         status: :confirmed, rounds_attributes: [
-          { id: match2.rounds.first.id, home_team_score: 3, away_team_score: 6 }
+          { id: match2.rounds.first.id, home_team_score: 3, away_team_score: 6 },
         ]
       )
       expect(match2.winner).to eq(team1)
@@ -56,7 +56,7 @@ describe Leagues::Matches::GenerationService do
       map = create(:map)
       match_options = {
         round_number: 2, rounds_attributes: [
-          { map: map }
+          { map: map },
         ]
       }
       match = described_class.call(division, match_options, :single_elimination, round: 1)
@@ -73,7 +73,7 @@ describe Leagues::Matches::GenerationService do
 
       match.update!(
         status: :confirmed, rounds_attributes: [
-          { id: match.rounds.first.id, home_team_score: 2, away_team_score: 3 }
+          { id: match.rounds.first.id, home_team_score: 2, away_team_score: 3 },
         ]
       )
       expect(match.winner).to eq(team1)

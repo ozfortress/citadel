@@ -35,7 +35,7 @@ describe Meta::FormatsController do
       sign_in @admin
 
       post :create, params: {
-        format_: { game_id: @game.id, player_count: 3, name: 'Foo', description: 'Bar' }
+        format_: { game_id: @game.id, player_count: 3, name: 'Foo', description: 'Bar' },
       }
 
       format = Format.first
@@ -50,7 +50,7 @@ describe Meta::FormatsController do
       sign_in @admin
 
       post :create, params: {
-        format_: { game_id: @game.id, player_count: 0, name: '' }
+        format_: { game_id: @game.id, player_count: 0, name: '' },
       }
 
       expect(Format.all).to be_empty
@@ -61,7 +61,7 @@ describe Meta::FormatsController do
       sign_in @user
 
       post :create, params: {
-        format_: { game_id: @game.id, player_count: 0, name: '' }
+        format_: { game_id: @game.id, player_count: 0, name: '' },
       }
 
       expect(Format.all).to be_empty

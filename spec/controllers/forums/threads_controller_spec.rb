@@ -23,10 +23,7 @@ describe Forums::ThreadsController do
 
       post :create, params: {
         topic: topic.id,
-        forums_thread: {
-          title: 'Foo', locked: true, pinned: true, hidden: true,
-          forums_post: { content: content }
-        }
+        forums_thread: { title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: content } },
       }
 
       topic.reload
@@ -50,9 +47,7 @@ describe Forums::ThreadsController do
 
       post :create, params: {
         topic: topic.id,
-        forums_thread: {
-          title: '', forums_post: { content: '' }
-        }
+        forums_thread: { title: '', forums_post: { content: '' } },
       }
 
       topic.reload
@@ -64,10 +59,7 @@ describe Forums::ThreadsController do
 
       post :create, params: {
         topic: topic.id,
-        forums_thread: {
-          title: 'Foo', locked: true, pinned: true, hidden: true,
-          forums_post: { content: content }
-        }
+        forums_thread: { title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: content } },
       }
 
       topic.reload
@@ -91,10 +83,7 @@ describe Forums::ThreadsController do
 
       post :create, params: {
         topic: topic.id,
-        forums_thread: {
-          title: 'Foo', locked: true, pinned: true, hidden: true,
-          forums_post: { content: content }
-        }
+        forums_thread: { title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: content } },
       }
 
       topic.reload
@@ -114,10 +103,7 @@ describe Forums::ThreadsController do
         sign_in user
 
         post :create, params: {
-          forums_thread: {
-            title: 'Foo', locked: true, pinned: true, hidden: true,
-            forums_post: { content: content }
-          }
+          forums_thread: { title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: content } },
         }
 
         expect(Forums::Thread.all).to_not be_empty
@@ -135,10 +121,7 @@ describe Forums::ThreadsController do
         sign_in user
 
         post :create, params: {
-          forums_thread: {
-            title: 'Foo', locked: true, pinned: true, hidden: true,
-            forums_post: { content: content }
-          }
+          forums_thread: { title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: content } },
         }
 
         expect(Forums::Thread.all).to be_empty
@@ -164,9 +147,7 @@ describe Forums::ThreadsController do
         sign_in user
 
         post :create, params: {
-          topic: topic.id, forums_thread: {
-            title: 'Foo', hidden: false, forums_post: { content: content }
-          }
+          topic: topic.id, forums_thread: { title: 'Foo', hidden: false, forums_post: { content: content } }
         }
 
         topic.reload
@@ -250,10 +231,7 @@ describe Forums::ThreadsController do
 
         post :create, params: {
           topic: topic.id,
-          forums_thread: {
-            title: 'Foo', locked: true, pinned: true, hidden: true,
-            forums_post: { content: content }
-          }
+          forums_thread: { title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: content } },
         }
 
         topic.reload
@@ -339,7 +317,7 @@ describe Forums::ThreadsController do
         patch :update, params: {
           id: thread.id, forums_thread: {
             title: 'Test', locked: true, pinned: true, hidden: true,
-            forums_post: { content: content },
+            forums_post: { content: content }
           }
         }
 
@@ -359,7 +337,7 @@ describe Forums::ThreadsController do
         patch :update, params: {
           id: thread.id, forums_thread: {
             title: 'Test', locked: true, pinned: true, hidden: true,
-            forums_post: { content: content },
+            forums_post: { content: content }
           }
         }
 
@@ -392,10 +370,8 @@ describe Forums::ThreadsController do
         sign_in user
 
         patch :update, params: {
-          id: thread.id, forums_thread: {
-            title: 'Test', locked: true, pinned: true, hidden: true,
-            forums_post: { content: '' },
-          }
+          id: thread.id,
+          forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true, forums_post: { content: '' } },
         }
 
         thread.reload
@@ -409,10 +385,8 @@ describe Forums::ThreadsController do
         sign_in user
 
         patch :update, params: {
-          id: thread.id, forums_thread: {
-            title: 'Test', locked: true, pinned: true, hidden: true,
-            forums_post: {},
-          }
+          id: thread.id,
+          forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true, forums_post: {} },
         }
 
         thread.reload
@@ -425,10 +399,8 @@ describe Forums::ThreadsController do
         sign_in user
 
         patch :update, params: {
-          id: thread.id, forums_thread: {
-            title: 'Test', locked: true, pinned: true, hidden: true,
-            forums_post: {},
-          }
+          id: thread.id,
+          forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true, forums_post: {} },
         }
 
         thread.reload
@@ -441,10 +413,8 @@ describe Forums::ThreadsController do
         sign_in user
 
         patch :update, params: {
-          id: thread.id, forums_thread: {
-            title: 'Test', locked: true, pinned: true, hidden: true,
-            forums_post: {},
-          }
+          id: thread.id,
+          forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true, forums_post: {} },
         }
 
         thread.reload
