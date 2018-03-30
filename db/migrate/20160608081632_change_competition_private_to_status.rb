@@ -1,4 +1,4 @@
-class ChangeCompetitionPrivateToStatus < ActiveRecord::Migration
+class ChangeCompetitionPrivateToStatus < ActiveRecord::Migration[4.2]
   def up
     add_column :competitions, :status, :integer, null: false, default: 0
 

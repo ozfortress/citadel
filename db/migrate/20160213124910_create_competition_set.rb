@@ -1,4 +1,4 @@
-class CreateCompetitionSet < ActiveRecord::Migration
+class CreateCompetitionSet < ActiveRecord::Migration[4.2]
   def change
     create_table :competition_sets do |t|
       t.belongs_to :competition_match, index: true, foreign_key: true

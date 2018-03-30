@@ -1,4 +1,4 @@
-class TableNameRefactor < ActiveRecord::Migration
+class TableNameRefactor < ActiveRecord::Migration[4.2]
   def change
     rename_table :competitions,                :leagues
     rename_table :competition_match_comms,     :league_match_comms

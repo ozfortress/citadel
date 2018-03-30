@@ -1,4 +1,4 @@
-class AddCompetitionPointsSettings < ActiveRecord::Migration
+class AddCompetitionPointsSettings < ActiveRecord::Migration[4.2]
   def change
     add_column :competitions, :points_per_set_won, :integer, null: false, default: 2
     add_column :competitions, :points_per_set_drawn, :integer, null: false, default: 1

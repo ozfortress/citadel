@@ -1,4 +1,4 @@
-class CreateCompetitionRostersAuth < ActiveRecord::Migration
+class CreateCompetitionRostersAuth < ActiveRecord::Migration[4.2]
   include Auth::MigrationHelper
 
   def change

@@ -1,4 +1,4 @@
-class RenameLeagueSetsToRounds < ActiveRecord::Migration
+class RenameLeagueSetsToRounds < ActiveRecord::Migration[4.2]
   def change
     rename_column :leagues, :allow_set_draws,      :allow_round_draws
     rename_column :leagues, :points_per_set_won,   :points_per_round_won

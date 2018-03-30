@@ -1,4 +1,4 @@
-class CreateTeams < ActiveRecord::Migration
+class CreateTeams < ActiveRecord::Migration[4.2]
   def change
     create_table :teams do |t|
       t.belongs_to :format, index: true, foreign_key: true

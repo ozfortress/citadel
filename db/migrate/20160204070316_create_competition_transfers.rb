@@ -1,4 +1,4 @@
-class CreateCompetitionTransfers < ActiveRecord::Migration
+class CreateCompetitionTransfers < ActiveRecord::Migration[4.2]
   def change
     create_table :competition_transfers do |t|
       t.belongs_to :competition_roster, index: true, foreign_key: true, null: false

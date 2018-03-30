@@ -1,4 +1,4 @@
-class CreateCompetitions < ActiveRecord::Migration
+class CreateCompetitions < ActiveRecord::Migration[4.2]
   def change
     create_table :competitions do |t|
       t.belongs_to :format, index: true, foreign_key: true
