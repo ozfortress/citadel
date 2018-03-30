@@ -1,6 +1,6 @@
 require 'auth/migration_helper'
 
-class CreateTeamAuth < ActiveRecord::Migration
+class CreateTeamAuth < ActiveRecord::Migration[4.2]
   include Auth::MigrationHelper
 
   def change

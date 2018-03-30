@@ -1,4 +1,4 @@
-class CreateTitles < ActiveRecord::Migration
+class CreateTitles < ActiveRecord::Migration[4.2]
   def change
     create_table :titles do |t|
       t.belongs_to :user,               index: true, foreign_key: true

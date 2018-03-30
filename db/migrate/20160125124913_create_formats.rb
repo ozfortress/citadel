@@ -1,4 +1,4 @@
-class CreateFormats < ActiveRecord::Migration
+class CreateFormats < ActiveRecord::Migration[4.2]
   def change
     create_table :formats do |t|
       t.belongs_to :game, index: true, foreign_key: true

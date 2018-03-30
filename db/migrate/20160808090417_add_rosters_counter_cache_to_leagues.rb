@@ -1,4 +1,4 @@
-class AddRostersCounterCacheToLeagues < ActiveRecord::Migration
+class AddRostersCounterCacheToLeagues < ActiveRecord::Migration[4.2]
   def change
     add_column :leagues, :rosters_count, :integer, default: 0, null: false
 

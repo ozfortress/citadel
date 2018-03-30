@@ -1,4 +1,4 @@
-class CreateAhoyEvents < ActiveRecord::Migration
+class CreateAhoyEvents < ActiveRecord::Migration[4.2]
   def change
     create_table :ahoy_events do |t|
       t.integer :visit_id

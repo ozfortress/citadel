@@ -1,4 +1,4 @@
-class CreateMaps < ActiveRecord::Migration
+class CreateMaps < ActiveRecord::Migration[4.2]
   def change
     create_table :maps do |t|
       t.belongs_to :game, index: true, foreign_key: true

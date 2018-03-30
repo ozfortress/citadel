@@ -1,4 +1,4 @@
-class RemoveCompetitionRestrictions < ActiveRecord::Migration
+class RemoveCompetitionRestrictions < ActiveRecord::Migration[4.2]
   def change
     add_column :competitions, :min_players, :integer, null: false, default: 6
     add_column :competitions, :max_players, :integer, null: false, default: 0

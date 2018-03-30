@@ -1,6 +1,6 @@
 require 'auth/migration_helper'
 
-class CreateMetaAuth < ActiveRecord::Migration
+class CreateMetaAuth < ActiveRecord::Migration[4.2]
   include Auth::MigrationHelper
 
   def change

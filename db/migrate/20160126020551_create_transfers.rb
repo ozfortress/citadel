@@ -1,4 +1,4 @@
-class CreateTransfers < ActiveRecord::Migration
+class CreateTransfers < ActiveRecord::Migration[4.2]
   def change
     create_table :transfers do |t|
       t.belongs_to :user, index: true, foreign_key: true
