@@ -55,4 +55,4 @@
 #   }
 
 # Temporary deploy server
-server '13.70.87.157', roles: [:app, :web, :db], primary: true
+server '139.99.172.28', roles: [:app, :web, :db], primary: true
