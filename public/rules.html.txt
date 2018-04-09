@@ -1,91 +1,93 @@
 <div id="doc" class="markdown-body container-fluid" style="position: relative;"><h1 id="ozfortress-seasonal-league-Ruleset">ozfortress seasonal league Ruleset</h1><p>The following ruleset outlines the organisation and guidelines that players will need to follow for the ozfortress seasonal league. Please have a good working understanding of these rules before entering yourself in the competition.</p><h2 id="Contents">Contents</h2><ul>
-<li><a href="#1-league-format">1. League Format</a>
+<li><a href="#1-League-Format">1. League Format</a>
 <ul>
-<li><a href="#11-regular-season-format">1.1 Regular Season Format</a></li>
-<li><a href="#12-playoffs-format">1.2 Playoffs Format</a></li>
-<li><a href="#13-fixtures">1.3 Fixtures</a></li>
-<li><a href="#14-swiss-system">1.4 Swiss System</a></li>
-<li><a href="#15-match-scoring">1.5 Match Scoring</a></li>
-<li><a href="#16-forfeits">1.6 Forfeits</a>
+<li><a href="#11-Regular-Season-Format">1.1 Regular Season Format</a></li>
+<li><a href="#12-Playoffs-Format">1.2 Playoffs Format</a></li>
+<li><a href="#13-Fixtures">1.3 Fixtures</a></li>
+<li><a href="#14-Swiss-System">1.4 Swiss System</a></li>
+<li><a href="#15-Match-Scoring">1.5 Match Scoring</a></li>
+<li><a href="#16-Forfeits">1.6 Forfeits</a>
 <ul>
-<li><a href="#forfeit-win">Forfeit Win</a></li>
-<li><a href="#mutual-forfeit">Mutual Forfeit</a></li>
-<li><a href="#technical-forfeit">Technical Forfeit</a></li>
+<li><a href="#Forfeit-Win">Forfeit Win</a></li>
+<li><a href="#Mutual-Forfeit">Mutual Forfeit</a></li>
+<li><a href="#Technical-Forfeit">Technical Forfeit</a></li>
 </ul>
 </li>
-<li><a href="#17-draws">1.7 Infractions and Exclusions</a></li>
-<li><a href="#18-administrators">1.8 Administrators</a></li>
-<li><a href="#19-foreign-teams-and-players">1.9 Foreign Teams and Players</a></li>
-<li><a href="#110-sportsmanship">1.10 Sportsmanship</a></li>
+<li><a href="#17-Draws">1.7 Infractions and Exclusions</a></li>
+<li><a href="#18-Administrators">1.8 Administrators</a></li>
+<li><a href="#19-Foreign-Teams-and-Players">1.9 Foreign Teams and Players</a></li>
+<li><a href="#110-Sportsmanship">1.10 Sportsmanship</a></li>
 </ul>
 </li>
-<li><a href="#2-teams">2. Teams</a>
+<li><a href="#2-Teams">2. Teams</a>
 <ul>
-<li><a href="#21-application">2.1 Application</a></li>
-<li><a href="#22-player-eligibility">2.2 Player Eligibility</a></li>
-<li><a href="#23-captains">2.3 Captains</a></li>
-<li><a href="#24-mutiny-rule">2.4 Mutiny Rule</a></li>
-<li><a href="#25-disbanded-or-removed-teams">2.5 Disbanded or Removed Teams</a></li>
-<li><a href="#26-transfers">2.6 Transfers</a></li>
-<li><a href="#27-infractions-warnings-and-exclusions">2.7 Infractions, Warnings, and Exclusions</a></li>
+<li><a href="#21-Application">2.1 Application</a></li>
+<li><a href="#22-Player-Eligibility">2.2 Player Eligibility</a></li>
+<li><a href="#23-Captains">2.3 Captains</a></li>
+<li><a href="#24-Mutiny-Rule">2.4 Mutiny Rule</a></li>
+<li><a href="#25-Disbanded-or-Removed-Teams">2.5 Disbanded or Removed Teams</a></li>
+<li><a href="#26-Transfers">2.6 Transfers</a></li>
+<li><a href="#27-Infractions-Warnings-and-Exclusions">2.7 Infractions, Warnings, and Exclusions</a></li>
 </ul>
 </li>
-<li><a href="#3-match-organisation">3. Match Organisation</a>
+<li><a href="#3-Match-Organisation">3. Match Organisation</a>
 <ul>
-<li><a href="#31-negotiating-match-times">3.1 Negotiating Match Times</a></li>
-<li><a href="#32-match-deadlines">3.2 Match Deadlines</a></li>
-<li><a href="#33-organisational-responsibilities">3.3 Organisational Responsibilities</a></li>
-<li><a href="#34-mercenaries">3.4 Mercenaries</a></li>
-<li><a href="#35-map-selection">3.5 Map Selection</a></li>
-<li><a href="#36-match-disputes">3.6 Match Disputes</a></li>
-<li><a href="#37-fakenicking">3.7 Fakenicking</a></li>
+<li><a href="#31-Negotiating-Match-Times">3.1 Negotiating Match Times</a></li>
+<li><a href="#32-Match-Deadlines">3.2 Match Deadlines</a></li>
+<li><a href="#33-Organisational-Responsibilities">3.3 Organisational Responsibilities</a></li>
+<li><a href="#34-Mercenaries">3.4 Mercenaries</a></li>
+<li><a href="#35-Map-Selection">3.5 Map Selection</a></li>
+<li><a href="#36-Match-Disputes">3.6 Match Disputes</a></li>
+<li><a href="#37-Fakenicking">3.7 Fakenicking</a></li>
 </ul>
 </li>
-<li><a href="#4-match-format">4. Match Format</a>
+<li><a href="#4-Match-Format">4. Match Format</a>
 <ul>
-<li><a href="#41-team-eligibility-requirements">4.1 Team Eligibility Requirements</a></li>
-<li><a href="#42-demo-recording">4.2 Demo Recording</a></li>
-<li><a href="#43-spectators">4.3 Spectators</a></li>
-<li><a href="#44-pausing">4.4 Pausing</a></li>
-<li><a href="#45-casted-games">4.5 Casted Games</a>
+<li><a href="#41-Team-Eligibility-Requirements">4.1 Team Eligibility Requirements</a></li>
+<li><a href="#42-Demo-Recording">4.2 Demo Recording</a></li>
+<li><a href="#43-Spectators">4.3 Spectators</a></li>
+<li><a href="#44-Pausing">4.4 Pausing</a></li>
+<li><a href="#45-Casted-Games">4.5 Casted Games</a>
 <ul>
-<li><a href="#451-approved-ozfortress-casting-organisations">4.5.1 Approved ozfortress Casting Organisations</a></li>
-<li><a href="#452-unapproved-ozfortress-casting-organisations">4.5.2 Unapproved ozfortress Casting Organisations</a></li>
+<li><a href="#451-Approved-ozfortress-Casting-Organisations">4.5.1 Approved ozfortress Casting Organisations</a></li>
+<li><a href="#452-Unapproved-ozfortress-Casting-Organisations">4.5.2 Unapproved ozfortress Casting Organisations</a></li>
 </ul>
 </li>
-<li><a href="#46-submitting-forfeit-wins">4.6 Submitting Forfeit Wins</a></li>
-<li><a href="#47-ozfortress-administrators-as-referees">4.7 ozfortress Administrators as Referees</a></li>
+<li><a href="#46-Submitting-Forfeit-Wins">4.6 Submitting Forfeit Wins</a></li>
+<li><a href="#47-ozfortress-Administrators-as-Referees">4.7 ozfortress Administrators as Referees</a></li>
 </ul>
 </li>
-<li><a href="#5-servers">5. Servers</a>
+<li><a href="#5-Servers">5. Servers</a>
 <ul>
-<li><a href="#51-server-configuration">5.1 Server Configuration</a></li>
-<li><a href="#52-preferred-and-acceptable-servers">5.2 Preferred and Acceptable Servers</a></li>
-<li><a href="#53-third-party-servers">5.3 Third Party Servers</a></li>
-<li><a href="#54-class-restrictions">5.4 Class Restrictions</a></li>
-<li><a href="#55-whitelist">5.5 Whitelist</a></li>
-<li><a href="#56-game-formats">5.6 Game formats</a>
+<li><a href="#51-Server-Configuration">5.1 Server Configuration</a></li>
+<li><a href="#52-Preferred-and-Acceptable-Servers">5.2 Preferred and Acceptable Servers</a></li>
+<li><a href="#53-Third-Party-Servers">5.3 Third Party Servers</a></li>
+<li><a href="#54-Class-Restrictions">5.4 Class Restrictions</a></li>
+<li><a href="#55-Whitelist">5.5 Whitelist</a></li>
+<li><a href="#56-Game-Formats">5.6 Game formats</a>
 <ul>
-<li><a href="#5-control-points">5 Control Points</a></li>
-<li><a href="#king-of-the-hill">King of the Hill</a></li>
-<li><a href="#golden-cap">Golden Cap</a></li>
+<li><a href="#5-Control-Points">5 Control Points</a></li>
+<li><a href="#King-of-the-Hill">King of the Hill</a></li>
+<li><a href="#Golden-Cap">Golden Cap</a></li>
 </ul>
 </li>
+<li><a href="#57-Server-Interuptions">5.7 Server Interruptions</a></li>
 </ul>
 </li>
-<li><a href="#6-cheating-exploits-and-bans">6 Cheating, Exploits and Bans</a>
+<li><a href="#6-Cheating-Exploits-and-Bans">6 Cheating, Exploits and Bans</a>
 <ul>
-<li><a href="#61-exploits">6.1 Exploits</a></li>
-<li><a href="#62-third-party-software">6.2 Third Party Software</a></li>
-<li><a href="#63-malicious-server-administration">6.3 Malicious Server Administration</a></li>
-<li><a href="#64-steam-account-sharing">6.4 Steam Account Sharing</a></li>
-<li><a href="#65-ozfortress-forum-bans">6.5 ozfortress Forum Bans</a></li>
+<li><a href="#61-Exploits">6.1 Exploits</a></li>
+<li><a href="#62-Third-Party-Software">6.2 Third Party Software</a></li>
+<li><a href="#63-Malicious-Server-Administration">6.3 Malicious Server Administration</a></li>
+<li><a href="#64-Steam-Account-Sharing">6.4 Steam Account Sharing</a></li>
+<li><a href="#65-ozfortress-Forum-Bans">6.5 ozfortress Forum Bans</a></li>
+<li><a href="#66-Match-Fixing">6.6 Match Fixing</a></li>
 </ul>
 </li>
-<li><a href="#7-ruleset-information">7 Ruleset Information</a>
+<li><a href="#7-Ruleset-Information">7 Ruleset Information</a>
 <ul>
-<li><a href="#71-rules-are-subject-to-change">7.1 Rules are subject to change</a></li>
-<li><a href="#72-administrative-ruling">7.2 Administrative Ruling</a></li>
+<li><a href="#71-Rules-are-subject-to-change">7.1 Rules are subject to change</a></li>
+<li><a href="#72-Administrative-Ruling">7.2 Administrative Ruling</a></li>
 </ul>
 </li>
 </ul><h1 id="1-League-Format">1 League Format</h1><h2 id="11-Regular-Season-Format">1.1 Regular Season Format</h2><p>The competition will be split into 3 brackets - Premier, Intermediate and Open. Premier will have 8 teams while Intermediate’s bracket size is pending signups. Open will have an unrestricted number of teams.</p><p>The regular season will be played over 7 weeks, with finals rounds lasting approximately 3 weeks. It is a team’s responsibility to commit to the full length of the season when they submit an application.</p><p>Two maps will be played for each regular season match. Matches are expected to last just over an hour.</p><h3 id="Premier">Premier</h3><p>The regular season will be run on a Round Robin system, where each team plays each other once.</p><h3 id="Intermediate-and-Open">Intermediate and Open</h3><p>The regular season will be run on a Swiss system, where each round is seeded based on the previous records of teams.</p><p>See <a href="#14-swiss-system">Rule 1.4</a> for further details on the Swiss system.</p><h2 id="12-Playoffs-Format">1.2 Playoffs Format</h2><p>At the conclusion of the regular season, the top four placing teams of each bracket advance to playoffs.</p><p>Playoffs matches will each be a best of 3 with the exception of the Premier Grand Final, which will be a best of 5.</p><h3 id="Page-Playoffs">Page Playoffs</h3><p>Playoffs for all brackets will be played using the <a href="https://en.wikipedia.org/wiki/Page_playoff_system" target="_blank">page playoff system</a>.</p><p>In the Upper Page Playoff, the first and second placed teams will play against each other. The winner advances directly to the Grand Final.</p><p>In the Lower Page Playoff, the third and fourth placed teams will play against each other. The loser is eliminated.</p><p>The loser of the Upper Page Playoff will compete with the winner of the Lower Page Playoff in the Semi-Final. The loser of the Semi-Final will receive Third Place and the winner will advance to the Grand Final. There is no Bronze Match.</p><p>Open and Intermediate Grand Finals will be played as a best of 3, the Premier Grand Final will be played as a best of 5.</p><h2 id="13-Fixtures">1.3 Fixtures</h2><p>Regular season match fixtures will be posted week to week after each round has been finalised. Fixtures are set at weekly intervals to be played between Sunday and Thursday.</p><p>Match pages will be posted on the Friday prior to that round’s fixtures.</p><h2 id="14-Swiss-System">1.4 Swiss System</h2><p>The Swiss system allows a large number of competitors to compete against each other in a relatively small number of rounds. The first round will be scheduled randomly, and each subsequent round will be generated based on the previous results of teams. Teams with the same or similar records will be paired against each other, with the likelihood of duplicate matches is minimised.</p><h2 id="15-Match-Scoring">1.5 Match Scoring</h2><p>Each match consists of two maps; the winner of each individual map will be awarded 2 league points, while the loser is awarded zero. In the event of a map draw, see <a href="#17-draws">Rule 1.7</a>.</p><p>Rankings will first be determined by these match points. If point draws exist, the following methods will be used to break them:</p><p><strong>Premier</strong></p><ol>
@@ -122,12 +124,12 @@ Booked under name: Paulsen</p><h2 id="34-Mercenaries">3.4 Mercenaries</h2><p>A m
 <li>The first team will select the third map from the remaining pool.</li>
 <li>The second team will select the fourth map from the remaining pool.</li>
 <li>The remaining map will be the tiebreaker map.</li>
-</ol><h2 id="36-Match-Disputes">3.6 Match Disputes</h2><p>To lodge a dispute or report misconduct, please contact an ozfortress administrator as soon as possible. Please do not bring the debate into public as it’s being resolved.</p><h2 id="37-Fakenicking">3.7 Fakenicking</h2><p>Fakenicking is not allowed in any ozfortress matches. Players must use a name similar to their submitted roster name, and hence their forum name, as to be generally recognizable to someone comparing team rosters with those on the server. Clan and sponsorship tags are allowed but must be reasonable. Players are encouraged to carefully choose their submitted roster name.</p><p>Fakenicking rules will be more closely enforced in casted matches.</p><h1 id="4-Match-Format">4. Match Format</h1><h2 id="41-Team-Eligibility-Requirements">4.1 Team Eligibility Requirements</h2><p>Teams must have a minimum of five rostered (does not include any mercenaries) players ready to start or continue a match.</p><h2 id="42-Demo-Recording">4.2 Demo Recording</h2><p>POV demos must be recorded for all ozfortress matches, and must be provided on the request of an ozfortress administrator. We recommend using the demo recording system included in TF2, which can be activated under the advanced options menu in the game settings.</p><p>Demos are required to be stored for the current and past season.</p><p><strong>All players must be able to provide a POV demo within 24 hours from any match if requested by an administrator. If you are unable to provide POV demos for a match you will face a 2 round exclusion. It is the player’s responsibility to ensure that demos are being recorded.</strong></p><h2 id="43-Spectators">4.3 Spectators</h2><p>ozfortress Administrators are the only approved spectators. Spectators are not allowed in any ozfortress match.</p><h2 id="44-Pausing">4.4 Pausing</h2><p>Pausing during a match are allowed where players clearly exhibit technological performance issues. In addition, the match may only be unpaused by the team who initiated the pause. Both teams must give the all-clear to unpause, which is followed by an in-built five second countdown.</p><p>Each team is permitted two pauses per match with a combined total time limit of ten minutes. However, if captains are in agreement, the pause limit can be extended.</p><h2 id="45-Casted-Games">4.5 Casted Games</h2><p>Official matches may be casted by organisations with the approval of the ozfortress administrators.</p><p>Casting organisation representatives may contact the ozfortress Media Coordinator or the ozfortress League Director to receive promotion and become an approved casting organisation. Approval will only be granted once it is determined by ozfortress that the coverage meets approved standards.</p><p>The ozfortress approved casting organisations are as follows:</p><ul>
+</ol><p>In the event of a disagreement, the home team will have preference of team colour.</p><h2 id="36-Match-Disputes">3.6 Match Disputes</h2><p>To lodge a dispute or report misconduct, please contact an ozfortress administrator as soon as possible. Please do not bring the debate into public as it’s being resolved.</p><h2 id="37-Fakenicking">3.7 Fakenicking</h2><p>Fakenicking is not allowed in any ozfortress matches. Players must use a name similar to their submitted roster name, and hence their forum name, as to be generally recognizable to someone comparing team rosters with those on the server. Clan and sponsorship tags are allowed but must be reasonable. Players are encouraged to carefully choose their submitted roster name.</p><p>Fakenicking rules will be more closely enforced in casted matches.</p><h1 id="4-Match-Format">4. Match Format</h1><h2 id="41-Team-Eligibility-Requirements">4.1 Team Eligibility Requirements</h2><p>Teams must have a minimum of five rostered (does not include any mercenaries) players ready to start or continue a match.</p><h2 id="42-Demo-Recording">4.2 Demo Recording</h2><p>POV demos must be recorded for all ozfortress matches, and must be provided on the request of an ozfortress administrator. We recommend using the demo recording system included in TF2, which can be activated under the advanced options menu in the game settings.</p><p>Demos are required to be stored for the current and past season.</p><p><strong>All players must be able to provide a POV demo within 24 hours from any match if requested by an administrator. If you are unable to provide POV demos for a match you will face a 2 round exclusion. It is the player’s responsibility to ensure that demos are being recorded.</strong></p><h2 id="43-Spectators">4.3 Spectators</h2><p>ozfortress Administrators are the only approved spectators. Spectators are not allowed in any ozfortress match.</p><h2 id="44-Pausing">4.4 Pausing</h2><p>Pausing during a match are allowed where players clearly exhibit technological performance issues. In addition, the match may only be unpaused by the team who initiated the pause. Both teams must give the all-clear to unpause, which is followed by an in-built five second countdown.</p><p>Each team is permitted two pauses per match with a combined total time limit of ten minutes. However, if captains are in agreement, the pause limit can be extended.</p><h2 id="45-Casted-Games">4.5 Casted Games</h2><p>Official matches may be casted by organisations with the approval of the ozfortress administrators.</p><p>Casting organisation representatives may contact the ozfortress Media Coordinator or the ozfortress League Director to receive promotion and become an approved casting organisation. Approval will only be granted once it is determined by ozfortress that the coverage meets approved standards.</p><p>The ozfortress approved casting organisations are as follows:</p><ul>
 <li>TFLIVE</li>
-</ul><p>Casting organisations may not directly influence the playing of an official ozfortress match in any way.</p><h3 id="451---Approved-ozfortress-Casting-Organisations">4.5.1 - Approved ozfortress Casting Organisations</h3><p>If your game is to be casted by an approved organisation, your team must provide to the caster(s), streamer or organisation representative:</p><ul>
+</ul><p>Casting organisations may not directly influence the playing of an official ozfortress match in any way.</p><h3 id="451-Approved-ozfortress-Casting-Organisations">4.5.1 Approved ozfortress Casting Organisations</h3><p>If your game is to be casted by an approved organisation, your team must provide to the caster(s), streamer or organisation representative:</p><ul>
 <li>The server connect string.</li>
 <li>An updated list of players and/or any mercenaries participating in the match. This must be provided at least an hour before the set match time.</li>
-</ul><p>The above rules apply to ozfortress approved casting organisations only.</p><p>Fakenicking rules will be more closely enforced in casted matches by ozfortress approved casting organisations.</p><h3 id="452---Unapproved-ozfortress-Casting-Organisations">4.5.2 - Unapproved ozfortress Casting Organisations</h3><p>Casting organisations and individuals that are not approved by ozfortress may still cast official ozfortress matches, however, approved casting organisations will have precedence.</p><p>Unapproved casting organisations must notify an ozfortress server administrator at least 3 hours prior to the scheduled match time of their intention to cast the match. They must also provide the server administrator with the server number at the time of the match such that they may be provided with an STV relay.</p><p>Team captains of the teams being casted may deny unapproved casting organisations from casting their games if they desire. If a team captain wishes to deny such a cast, they should notify a representative from the casting organisation as well as their ozfortress league administrator that they do not wish to be casted.</p><h2 id="46-Submitting-Forfeit-Wins">4.6 Submitting Forfeit Wins</h2><p>Teams are expected to be readied up in the server by 15 minutes past the set match time. If your team is readied up in the server at such time, and the other team is not fully present or is refusing to ready up, please contact an ozfortress administrator to claim a forfeit win.</p><p>If the home team is not communicating, the away team is expected to book an ozfortress server and attempt to provide server details. If at 15 minutes past the home team has not joined the server or provided details to their own booked server, a forfeit win will be distributed.</p><p>If a team is unavailable to compete in a match and has communicated the forfeit, this must be posted with chat logs and confirmed on the match page.</p><h2 id="47-ozfortress-Administrators-as-Referees">4.7 ozfortress Administrators as Referees</h2><p>ozfortress may sometimes require certain matches to be refereed by an ozfortress administrator. In such case, a post will be made in the match thread denoting this, and teams will be provided with a connect string before the match. If this happens, it is no longer the home team’s responsibility to administer the server or report the scores at the end of the round.</p><p>All Grand Final matches will be refereed. Other important matches will be refereed as required.</p><h1 id="5-Servers">5. Servers</h1><h2 id="51-Server-Configuration">5.1 Server Configuration</h2><p><a href="https://github.com/ozfortress/server-configs" target="_blank">Instructions on how to download &amp; install ozfortress seasonal league configs can be found here.</a></p><h2 id="52-Preferred-and-Acceptable-Servers">5.2 Preferred and Acceptable Servers</h2><p>ozfortress bookable servers are considered the standard for matches. However, if both teams agree, an alternative server may be used. See <a href="#53-third-party-servers">Rule 5.3</a> for further details on Third party servers.</p><p>If teams cannot agree on a server, an official ozfortress server must be used.</p><p>Administrators reserve the right to choose which server a match may be played on.</p><h2 id="53-Third-Party-Servers">5.3 Third Party Servers</h2><p>For those who wish to run their own, servers must be running the official ozfortress configuration to be considered match-ready. They must also comply with the following requirements:</p><ul>
+</ul><p>The above rules apply to ozfortress approved casting organisations only.</p><p>Fakenicking rules will be more closely enforced in casted matches by ozfortress approved casting organisations.</p><h3 id="452-Unapproved-ozfortress-Casting-Organisations">4.5.2 Unapproved ozfortress Casting Organisations</h3><p>Casting organisations and individuals that are not approved by ozfortress may still cast official ozfortress matches, however, approved casting organisations will have precedence.</p><p>Unapproved casting organisations must notify an ozfortress server administrator at least 3 hours prior to the scheduled match time of their intention to cast the match. They must also provide the server administrator with the server number at the time of the match such that they may be provided with an STV relay.</p><p>Team captains of the teams being casted may deny unapproved casting organisations from casting their games if they desire. If a team captain wishes to deny such a cast, they should notify a representative from the casting organisation as well as their ozfortress league administrator that they do not wish to be casted.</p><h2 id="46-Submitting-Forfeit-Wins">4.6 Submitting Forfeit Wins</h2><p>Teams are expected to be readied up in the server by 15 minutes past the set match time. If your team is readied up in the server at such time, and the other team is not fully present or is refusing to ready up, please contact an ozfortress administrator to claim a forfeit win.</p><p>If the home team is not communicating, the away team is expected to book an ozfortress server and attempt to provide server details. If at 15 minutes past the home team has not joined the server or provided details to their own booked server, a forfeit win will be distributed.</p><p>If a team is unavailable to compete in a match and has communicated the forfeit, this must be posted with chat logs and confirmed on the match page.</p><h2 id="47-ozfortress-Administrators-as-Referees">4.7 ozfortress Administrators as Referees</h2><p>ozfortress may sometimes require certain matches to be refereed by an ozfortress administrator. In such case, a post will be made in the match thread denoting this, and teams will be provided with a connect string before the match. If this happens, it is no longer the home team’s responsibility to administer the server or report the scores at the end of the round.</p><p>All Grand Final matches will be refereed. Other important matches will be refereed as required.</p><h1 id="5-Servers">5. Servers</h1><h2 id="51-Server-Configuration">5.1 Server Configuration</h2><p><a href="https://github.com/ozfortress/server-configs" target="_blank">Instructions on how to download &amp; install ozfortress seasonal league configs can be found here.</a></p><h2 id="52-Preferred-and-Acceptable-Servers">5.2 Preferred and Acceptable Servers</h2><p>ozfortress bookable servers are considered the standard for matches. However, if both teams agree, an alternative server may be used. See <a href="#53-third-party-servers">Rule 5.3</a> for further details on Third party servers.</p><p>If teams cannot agree on a server, an official ozfortress server must be used.</p><p>Administrators reserve the right to choose which server a match may be played on.</p><h2 id="53-Third-Party-Servers">5.3 Third Party Servers</h2><p>For those who wish to run their own, servers must be running the official ozfortress configuration to be considered match-ready. They must also comply with the following requirements:</p><ul>
 <li>Be hosted on a dedicated, non-residential connection with enough bandwidth for at least 16 players.</li>
 <li>Be running the current ozfortress seasonal league configs and whitelist and be running on sv_pure 2.</li>
 <li>Be physically located in Australia, unless the match is between two New Zealand or two Asia based teams.</li>
@@ -154,15 +156,14 @@ mp_winlimit 3
 </code></pre><p>Load this configuration using <code>rcon exec ozfortress_6v6_koth</code> or simply <code>rcon ozfkoth</code> on ozfortress servers.</p><h4 id="Golden-Cap">Golden Cap</h4><p>In formats where ties are not allowed, a golden cap may be used to determine the winner of a 5CP match tied at 30 minutes. Golden Cap rounds are played till the first capture of the last point with no time limit. The following configuration represents this format:</p><pre><code>mp_windifference 0
 mp_timelimit 0
 mp_winlimit 1
-</code></pre><p>Load this configuration using <code>rcon exec ozfortress_golden_cap</code> or simply <code>rcon golden</code> on ozfortress servers.</p><h1 id="6-Cheating-Exploits-and-Bans">6 Cheating, Exploits and Bans</h1><h2 id="61-Exploits">6.1 Exploits</h2><p>Exploiting game or map bugs or flaws for an unfair advantage, whether they are explicitly listed in the rules or not, is prohibited.</p><p>The following is an incomplete list of known, unfixed exploits:</p><ul>
+</code></pre><p>Load this configuration using <code>rcon exec ozfortress_golden_cap</code> or simply <code>rcon golden</code> on ozfortress servers.</p><h3 id="57-Server-Interuptions">5.7 Server Interuptions</h3><p>In the event of an ongoing match being interrupted, the match must be resumed from the time at which the last round was completed. Any ongoing rounds will be restarted and any rounds that were completed will remain completed.</p><h1 id="6-Cheating-Exploits-and-Bans">6 Cheating, Exploits and Bans</h1><h2 id="61-Exploits">6.1 Exploits</h2><p>Exploiting game or map bugs or flaws for an unfair advantage, whether they are explicitly listed in the rules or not, is prohibited.</p><p>The following is an incomplete list of exploits:</p><ul>
 <li>Exploiting flaws in map design to enter areas that put you underneath or above the map.</li>
 <li>Building Sentry Guns, Dispensers or Teleporters in indestructible areas.</li>
 <li>Using scripts, macros or key combinations that allow you to bypass movement restrictions (e.g. the “Mega Jump” exploit. However, “c-taps” are explicitly legal).</li>
 <li>Any other script which is deemed disruptive to hitboxes or gameplay (e.g. ratehacking).</li>
-<li>Medics changing hat/items/weapons in spawn to back spawn and preserve Uber percentage.</li>
+<li>Demomen, Engineers and Medics changing hat/items/weapons in spawn to back spawn and preserve stickybomb traps, buildings and Über percentage respectively.</li>
 <li>Any other inventory glitch that allows abuse of spawn room mechanics.</li>
-<li>Engineers using an inventory glitch to refill metal in a spawn room without a resupply cabinet.</li>
 <li>Removing the black sniper scope.</li>
-</ul><p>Use of the wait command in scripts is considered an exploit, and will be enforced by <code>sv_allow_wait_command 0</code>.</p><p>If you are unsure if something is considered an exploit, please contact a League Administrator and request a ruling be made.</p><h2 id="62-Third-Party-Software">6.2 Third-Party Software</h2><p>The use of any third-party addons, hooks, programs or wrappers that interact with or alter the Team Fortress 2 client, its appearance or behaviour for the purposes of gaining an unfair advantage is a bannable offence. This includes usage of such programs on alternative accounts not registered with ozfortress.</p><h2 id="63-Malicious-Server-Administration">6.3 Malicious Server Administration</h2><p>The use of any server commands, variables or plugins for the purposes of gaining an unfair advantage or to interfere with an ozfortress match is prohibited. Once the match is underway, the server administrator must let the match run its course and not make any changes without the consent of both teams.</p><h2 id="64-Steam-Accounts">6.4 Steam Accounts</h2><p>Players may only register and play in ozfortress leagues with one Steam account. Use of alternate accounts in official matches is strictly prohibited. If a player wishes to change their registered account they must contact an ozfortress administrator.</p><p>Sharing your login details with a third party for use in an ozfortress match is also strictly prohibited and will result in lengthy bans for all involved parties.</p><h2 id="65-ozfortress-Forum-Bans">6.5 ozfortress Forum Bans</h2><p>Members who are banned on the ozfortress website are also banned from leading teams in ozfortress competitions. Players banned from the ozfortress website may also be subject to competition bans, and are considered under probation. Please contact an ozfortress administrator for further clarification.</p><h1 id="7-Ruleset-Information">7 Ruleset Information</h1><h2 id="71-Rules-are-subject-to-change">7.1 Rules are subject to change</h2><p>The rules set on this page may be updated at any time. It is the responsibility of the player(s) to keep up to date with these rules. Major rule changes during a season will be clearly announced with a front page post, with minor changes being relayed to all players via Discord.</p><h2 id="72-Administrative-Ruling">7.2 Administrative Ruling</h2><p>Administrators reserve the right to change, modify, or adapt all rules as deemed appropriate by ozfortress in order to uphold and maintain a spirit of overall fairness and good sportsmanship. We understand that a ruleset may not cover every situation and therefore we may occasionally deliver judgement based rulings.</p><hr><center><a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"></a>
+</ul><p>Use of the wait command in scripts is considered an exploit, and will be enforced by <code>sv_allow_wait_command 0</code>.</p><p>If you are unsure if something is considered an exploit, please contact a League Administrator and request a ruling be made.</p><h2 id="62-Third-Party-Software">6.2 Third-Party Software</h2><p>The use of any third-party addons, hooks, programs or wrappers that interact with or alter the Team Fortress 2 client, its appearance or behaviour for the purposes of gaining an unfair advantage is a bannable offence. This includes usage of such programs on alternative accounts not registered with ozfortress.</p><h2 id="63-Malicious-Server-Administration">6.3 Malicious Server Administration</h2><p>The use of any server commands, variables or plugins for the purposes of gaining an unfair advantage or to interfere with an ozfortress match is prohibited. Once the match is underway, the server administrator must let the match run its course and not make any changes without the consent of both teams.</p><h2 id="64-Steam-Accounts">6.4 Steam Accounts</h2><p>Players may only register and play in ozfortress leagues with one Steam account. Use of alternate accounts in official matches is strictly prohibited. If a player wishes to change their registered account they must contact an ozfortress administrator.</p><p>Sharing your login details with a third party for use in an ozfortress match is also strictly prohibited and will result in lengthy bans for all involved parties.</p><h2 id="65-ozfortress-Forum-Bans">6.5 ozfortress Forum Bans</h2><p>Members who are banned on the ozfortress website are also banned from leading teams in ozfortress competitions. Players banned from the ozfortress website may also be subject to competition bans, and are considered under probation. Please contact an ozfortress administrator for further clarification.</p><h2 id="66-Match-Fixing">6.6 Match Fixing</h2><p>Any attempt to influence the result of a match through any means other than gameplay is strictly forbidden. If this is found to be happening, all involved parties will receive league punishments.</p><h1 id="7-Ruleset-Information">7 Ruleset Information</h1><h2 id="71-Rules-are-subject-to-change">7.1 Rules are subject to change</h2><p>The rules set on this page may be updated at any time. It is the responsibility of the player(s) to keep up to date with these rules. Major rule changes during a season will be clearly announced with a front page post, with minor changes being relayed to all players via Discord.</p><h2 id="72-Administrative-Ruling">7.2 Administrative Ruling</h2><p>Administrators reserve the right to change, modify, or adapt all rules as deemed appropriate by ozfortress in order to uphold and maintain a spirit of overall fairness and good sportsmanship. We understand that a ruleset may not cover every situation and therefore we may occasionally deliver judgement based rulings.</p><hr><center><a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"></a>
 <p>This work by <a href="http://ozfortress.com" target="_blank">ozfortress</a> is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
 </center><div class="resize-sensor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div class="resize-sensor-expand" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; transition: 0s; width: 100000px; height: 100000px;"></div></div><div class="resize-sensor-shrink" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div></div></div></div>
