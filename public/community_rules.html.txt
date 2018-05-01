@@ -1,7 +1,7 @@
 <div id="doc" class="markdown-body container-fluid" style="position: relative;"><h1 id="ozfortress-Community-Rules">ozfortress Community Rules</h1><ul>
-<li><a href="#1-community-wide">1. Community Wide</a></li>
-<li><a href="#2-forums">2. Forums</a></li>
-<li><a href="#3-discord">3. Discord</a></li>
+<li><a href="#1-Community-Wide">1. Community Wide</a></li>
+<li><a href="#2-Forums">2. Forums</a></li>
+<li><a href="#3-Discord">3. Discord</a></li>
 </ul><h2 id="1-Community-Wide">1. Community Wide</h2><p>ozfortress is a community which caters to any players who want to play Team Fortress competitively and socially. The community is run by administrators who rely heavily on all members for each action they take. The <a href="/staff" target="_blank">administration team</a> is made up of current and past community members who have volunteered their own time to run and oversee the community.</p><p>Each member of ozfortress is held to account by the below standards and each rule is enforced by the administration team.</p><p>As a member of ozfortress how you behave in game is just as important as your actions in other mediums (such as Discord, forums, Steam chat). The administration team values each member’s experience as most important to its continued success. ozfortress is not just about competitive fortress gaming, it is a community that offers a range of social and gaming opportunities to its members.</p><p>The following rules are strictly enforced throughout any media through which ozfortress presents content to its community. Breaking of any of the following rules will result in repercussions that may apply to all ozfortress hosted competitions, message boards and Discord channels regardless of prior standing.</p><p>Community Wide rules:</p><ol>
 <li>Serious or repeated abuse of a sexual, racist or religious nature.</li>
 <li>Serious or repeated abuse of ozfortress staff while carrying out his/her duties.</li>
