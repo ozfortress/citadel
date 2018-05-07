@@ -13,9 +13,6 @@ set :deploy_to, '/opt/citadel'
 
 set :rails_env, 'production'
 
-# Make passenger automagically restart
-set :passenger_restart_with_sudo, true
-
 # Default value for :format is :pretty
 # set :format, :pretty
 
