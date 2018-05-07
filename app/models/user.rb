@@ -141,7 +141,7 @@ class User < ApplicationRecord
   end
 
   def confirmed?
-    !confirmed_at.nil? && !email.empty?
+    !confirmed_at.nil? && email.present?
   end
 
   # Always remember using devise rememberable
