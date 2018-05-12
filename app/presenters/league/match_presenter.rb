@@ -19,7 +19,14 @@ class League
     end
 
     def round_s
-      match.round_name || match.round_number ? "##{match.round_number}" : ''
+      if !match.round_name.empty?
+        match.round_name
+      elsif !match.round_number.nil?
+        "##{match.round_number}"
+      else
+        ''
+      end
+
     end
 
     def title
