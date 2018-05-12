@@ -21,19 +21,23 @@
             class: 'btn btn-default pull-right'
 
   - matches = @personal_matches || @top_div_matches
-  - if !matches.empty?
-    .panel-heading
-      - if @personal_matches
-        Your Upcoming Matches
+
+  .panel-heading
+    - if @roster
+      - if !@personal_matches.empty?
+        Upcoming matches for your team:
+
       - else
-        Upcoming Matches for #{@divisions.first.name}
+        There are no upcoming matches for your team: #{present(@roster).link}.
 
+    - elsif !matches.empty?
+      Upcoming matches for #{@divisions.first.name}:
 
+    - else
+      There are no upcoming matches for #{@divisions.first.name}
+
+  - unless matches.empty?
     = render 'leagues/matches/matches_table', matches: matches, roster: nil
-
-  - else
-    .panel-heading
-      There are no upcoming matches...
 
 .panel.panel-default
   .panel-heading Teams
