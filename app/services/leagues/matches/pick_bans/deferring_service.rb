@@ -6,16 +6,16 @@ module Leagues
 
         def call(pick_ban, user)
           pick_ban.transaction do
-            pick_ban.defer!(user)
-
             notify_captains!(pick_ban)
+
+            pick_ban.defer!(user)
           end
         end
 
         private
 
         def notify_captains!(pick_ban)
-          msg = "#{pick_ban.other_roster.name} deferred their #{pick_ban.kind}"
+          msg = "#{pick_ban.other_roster.name} deferred their map #{pick_ban.kind}"
           link = match_path(pick_ban.match)
 
           User.which_can(:edit, pick_ban.roster.team).each do |captain|
