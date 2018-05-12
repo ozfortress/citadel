@@ -16,26 +16,26 @@
   .panel-heading Info
   .panel-body.markdown= present(@league).description
 
-.panel.panel-info
-  = link_to 'All Matches', league_matches_path(@league),
-            class: 'btn btn-default pull-right'
-
-  - matches = @personal_matches || @top_div_matches
-  - if !matches.empty?
+- matches = @personal_matches || @top_div_matches
+- if !matches.empty?
+  .panel.panel-info
+    = link_to 'All Matches', league_matches_path(@league),
+              class: 'btn btn-default pull-right'
     .panel-heading
       - if @personal_matches
         Your Upcoming Matches
       - else
         Upcoming Matches for #{@divisions.first.name}
-
-
+          
     = render 'leagues/matches/matches_table', matches: matches, roster: nil
 
-  - elsif @league.completed?
-    .panel-heading
+- else
+  .alert.alert-info
+    = link_to 'All Matches', league_matches_path(@league),
+              class: 'btn btn-default pull-right'
+    - if @league.completed?
       This league has been completed
-  - else
-    .panel-heading
+    - else
       There are no upcoming matches...
 
 .panel.panel-default
