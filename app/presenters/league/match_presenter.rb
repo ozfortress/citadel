@@ -26,7 +26,6 @@ class League
       else
         ''
       end
-
     end
 
     def title

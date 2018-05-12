@@ -6,7 +6,6 @@ module Leagues
 
         def call(pick_ban, user)
           old_pick_ban = pick_ban.dup
-          
           pick_ban.transaction do
             pick_ban.defer!(user)
 
