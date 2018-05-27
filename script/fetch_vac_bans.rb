@@ -18,7 +18,7 @@ def get_bans(steam_ids)
                  .map(&:to_i)
 end
 
-User.find_in_batches(batch_size: 10) do |users|
+User.order(:id).find_in_batches(batch_size: 10) do |users|
   steam_ids = users.map(&:steam_id)
   bans = get_bans(steam_ids)
   bans.each do |steam_id|
