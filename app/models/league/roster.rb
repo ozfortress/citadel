@@ -201,14 +201,14 @@ class League
       home_team_score = home_team_matches.select('SUM(total_home_team_score)')
       away_team_score = away_team_matches.select('SUM(total_away_team_score)')
 
-      "COALESCE((#{home_team_score.to_sql}) + (#{away_team_score.to_sql}), 0)"
+      "COALESCE((#{home_team_score.to_sql}), 0) + COALESCE((#{away_team_score.to_sql}), 0)"
     end
 
     def calculate_total_score_difference_query
       home_team_diff = home_team_matches.select('SUM(total_score_difference)')
       away_team_diff = away_team_matches.select('-SUM(total_score_difference)')
 
-      "COALESCE((#{home_team_diff.to_sql}) + (#{away_team_diff.to_sql}), 0)"
+      "COALESCE((#{home_team_diff.to_sql}), 0) + COALESCE((#{away_team_diff.to_sql}), 0)"
     end
 
     def forfeit_all!
