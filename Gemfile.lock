@@ -174,7 +174,8 @@ GEM
       activesupport (>= 4.2.0)
     graph_matching (0.1.1)
       rgl (~> 0.5.0)
-    haml (4.0.7)
+    haml (5.0.4)
+      temple (>= 0.8.0)
       tilt
     haml_lint (0.27.0)
       haml (>= 4.0, < 5.1)
@@ -418,7 +419,7 @@ DEPENDENCIES
   devise
   factory_bot_rails (~> 4)
   font-awesome-rails
-  haml (~> 4.0)
+  haml (~> 5.0)
   haml_lint
   hamlit
   jquery-rails
