@@ -5,7 +5,7 @@ gem 'rails', '= 5.1.5'
 # Use postgres
 gem 'pg', '~> 0.21' # Fix once rails gets fixed
 # Active Record extensions
-gem 'active_record_union', '~> 1.2.0'
+gem 'active_record_union', '~> 1.3.0'
 gem 'ancestry'
 # SASS for stylesheets
 gem 'sass-rails', '~> 5.0'
