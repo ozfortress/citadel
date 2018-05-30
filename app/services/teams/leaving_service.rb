@@ -5,6 +5,8 @@ module Teams
     def call(user, team)
       team.transaction do
         team.remove_player!(user)
+        user.revoke(:edit, team)
+
         notify_captains(user, team)
       end
     end

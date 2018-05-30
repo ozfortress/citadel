@@ -144,7 +144,7 @@ describe PermissionsController do
       expect(user.reload.can?(:edit, team)).to be(false)
     end
 
-    it 'fails for authorized user with team for random user' do
+    it 'succeeds for authorized user with team for random user' do
       team = create(:team)
       user.grant(:edit, team)
       sign_in team_admin

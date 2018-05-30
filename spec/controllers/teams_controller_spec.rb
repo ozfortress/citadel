@@ -238,6 +238,7 @@ describe TeamsController do
       let(:player) { create(:user) }
 
       before do
+        team.add_player!(user)
         team.add_player!(player)
       end
 
@@ -253,6 +254,17 @@ describe TeamsController do
           expect(player.notifications).to_not be_empty
           expect(user.notifications).to be_empty
           expect(response).to redirect_to(team_path(team))
+        end
+
+        it 'revokes captain permissions' do
+          user.grant(:edit, team)
+          sign_in user
+
+          patch :kick, params: { id: team.id, user_id: user.id }
+
+          user.reload
+          expect(team.on_roster?(user)).to be(false)
+          expect(user.can?(:edit, team)).to be(false)
         end
 
         it 'fails for player' do
@@ -291,6 +303,17 @@ describe TeamsController do
           expect(player.notifications).to be_empty
           expect(user.notifications).to_not be_empty
           expect(response).to redirect_to(team_path(team))
+        end
+
+        it 'revokes captain permissions' do
+          user.grant(:edit, team)
+          sign_in user
+
+          patch :leave, params: { id: team.id }
+
+          user.reload
+          expect(team.on_roster?(user)).to be(false)
+          expect(user.can?(:edit, team)).to be(false)
         end
 
         it 'fails for captain' do
