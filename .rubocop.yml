@@ -59,6 +59,11 @@ Bundler/OrderedGems:
 Rails/InverseOf:
   Enabled: false
 
+Rails/HttpPositionalArguments:
+  # Broken for
+  Exclude:
+    - 'spec/requests/api/v1/**/*'
+
 AllCops:
   Exclude:
     - 'db/**/*'
