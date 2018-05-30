@@ -69,7 +69,7 @@ group :test do
   gem 'capybara'
 
   # Keep codebase clean
-  gem 'rubocop', '~> 0.51', require: false
+  gem 'rubocop', '~> 0.56', require: false
   gem 'haml_lint', require: false
   gem 'haml', '~> 4.0', require: false # haml_lint is broken for haml 5
   gem 'rails_best_practices', require: false
