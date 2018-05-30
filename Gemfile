@@ -43,7 +43,7 @@ gem 'redcarpet'
 gem 'carrierwave'
 gem 'mini_magick'
 # Tracking and analytics
-gem 'ahoy_matey', '~> 1.6'
+gem 'ahoy_matey', '~> 2.1'
 # API Serialization
 gem 'active_model_serializers', '~> 0.10.0'
 # Tournament systems
