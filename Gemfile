@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rake', '~> 12.0'
-gem 'rails', '= 5.1.5'
+gem 'rails', '5.2.0'
 # Use postgres
 gem 'pg', '~> 1.0' # Fix once rails gets fixed
 # Active Record extensions
