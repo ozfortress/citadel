@@ -37,7 +37,7 @@ module Auth
     def time_period
       return unless terminated_at
 
-      errors.add(:terminated_at, 'termination time must be after creation time') if terminated_at <= started_at
+      errors.add(:terminated_at, 'Termination time must be after creation time') if terminated_at <= started_at
     end
   end
 end

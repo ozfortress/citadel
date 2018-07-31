@@ -23,14 +23,14 @@ class League
         return if user.blank? || roster.blank?
 
         if league.players.where(user: user).where.not(id: id).exists?
-          errors.add(:base, 'can only be in one roster per league')
+          errors.add(:base, 'Can only be in one roster per league')
         end
       end
 
       def league_permissions
         return if user.blank?
 
-        errors.add(:base, 'user is banned from leagues') unless user.can?(:use, :leagues)
+        errors.add(:base, 'User is banned from leagues') unless user.can?(:use, :leagues)
       end
     end
   end
