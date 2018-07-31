@@ -133,12 +133,12 @@ class League < ApplicationRecord
   def validate_players_range
     if min_players.present? && max_players.present? &&
        min_players > max_players && max_players != 0
-      errors.add(:min_players, "can't be greater than maximum players")
+      errors.add(:min_players, "Can't be greater than maximum players")
     end
   end
 
   def validate_has_scheduler
-    errors.add(:schedule, 'missing scheduler') unless schedule == 'manual' || scheduler.present?
+    errors.add(:schedule, 'Missing scheduler') unless schedule == 'manual' || scheduler.present?
   end
 
   def set_defaults
