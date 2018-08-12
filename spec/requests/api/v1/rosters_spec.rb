@@ -17,7 +17,7 @@ describe API::V1::RostersController, type: :request do
       expect(roster_h['division']).to eq(roster.division.name)
       expect(roster_h['players']).to_not be_empty
       expect(roster_h['matches']).to be_empty
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it 'succeeds for non-existent roster' do

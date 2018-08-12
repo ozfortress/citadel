@@ -30,7 +30,7 @@ describe API::V1::UsersController, type: :request do
         expect(teams.map(&:id)).to include(team['id'])
       end
 
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it 'succeeds for non-existent user' do
@@ -63,7 +63,7 @@ describe API::V1::UsersController, type: :request do
       expect(user_h['name']).to eq(user.name)
       expect(user_h['teams']).to be_empty
       expect(user_h['rosters']).to be_empty
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it 'succeeds for non-existent user' do

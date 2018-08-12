@@ -71,7 +71,7 @@ AllCops:
     - 'vendor/**/*'
   DisplayCopNames: true
   TargetRubyVersion: 2.5
-  TargetRailsVersion: 5.1
+  TargetRailsVersion: 5.2
 
 # TODO: Remove once rubocop fixes some bugs
 Rails/HasManyOrHasOneDependent:

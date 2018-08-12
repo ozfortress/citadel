@@ -31,7 +31,7 @@ class Team < ApplicationRecord
     query = Search.transform_query(query)
 
     where('(query_name_cache <-> ?) < 0.9', query)
-      .order(sanitize_sql_for_order(['query_name_cache <-> ?', query]))
+      .order(sanitize_sql_for_order([Arel.sql('query_name_cache <-> ?'), query]))
   end)
 
   def matches

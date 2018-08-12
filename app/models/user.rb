@@ -80,8 +80,8 @@ class User < ApplicationRecord
     query = Search.transform_query(query)
 
     where(steam_id: steam_id).or(where('(query_name_cache <-> ?) < 0.9', query))
-      .order(sanitize_sql_for_order(['steam_id = ? DESC', steam_id]))
-      .order(sanitize_sql_for_order(['query_name_cache <-> ?', query]))
+      .order(sanitize_sql_for_order([Arel.sql('steam_id = ? DESC'), steam_id]))
+      .order(sanitize_sql_for_order([Arel.sql('query_name_cache <-> ?'), query]))
   end)
 
   def matches
