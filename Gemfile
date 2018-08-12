@@ -31,7 +31,7 @@ gem 'cocoon'
 gem 'jquery-rails'
 # Steam Login
 # TODO: Remove git dependency once upstream is updated.
-gem 'omniauth-steam', git: 'https://github.com/iJJi/omniauth-steam.git', branch: 'master'
+gem 'omniauth-steam'
 # Authentication
 gem 'devise'
 # Use hamlit for ~fast templating
