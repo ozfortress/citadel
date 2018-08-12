@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180530021850) do
+ActiveRecord::Schema.define(version: 2018_05_30_021850) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "pg_trgm"
+  enable_extension "plpgsql"
 
   create_table "action_user_edit_games", id: :serial, force: :cascade do |t|
     t.integer "user_id"
@@ -484,8 +484,8 @@ ActiveRecord::Schema.define(version: 20180530021850) do
     t.integer "points_per_forfeit_draw", default: 1, null: false
     t.integer "points_per_forfeit_loss", default: 0, null: false
     t.boolean "forfeit_all_matches_when_roster_disbands", default: true, null: false
-    t.index "query_name_cache gist_trgm_ops", name: "index_leagues_on_query_name_change", using: :gist
     t.index ["format_id"], name: "index_leagues_on_format_id"
+    t.index ["query_name_cache"], name: "index_leagues_on_query_name_change", opclass: :gist_trgm_ops, using: :gist
   end
 
   create_table "maps", id: :serial, force: :cascade do |t|
@@ -538,8 +538,8 @@ ActiveRecord::Schema.define(version: 20180530021850) do
     t.text "notice", default: "", null: false
     t.text "notice_render_cache", default: "", null: false
     t.string "avatar_token"
-    t.index "query_name_cache gist_trgm_ops", name: "index_teams_on_query_name_cache", using: :gist
     t.index ["name"], name: "index_teams_on_name", unique: true
+    t.index ["query_name_cache"], name: "index_teams_on_query_name_cache", opclass: :gist_trgm_ops, using: :gist
   end
 
   create_table "user_comment_edits", id: :serial, force: :cascade do |t|
@@ -625,9 +625,9 @@ ActiveRecord::Schema.define(version: 20180530021850) do
     t.text "notice", default: "", null: false
     t.text "notice_render_cache", default: "", null: false
     t.string "avatar_token"
-    t.index "query_name_cache gist_trgm_ops", name: "index_users_on_query_name_cache", using: :gist
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
+    t.index ["query_name_cache"], name: "index_users_on_query_name_cache", opclass: :gist_trgm_ops, using: :gist
     t.index ["steam_id"], name: "index_users_on_steam_id", unique: true
   end
 
