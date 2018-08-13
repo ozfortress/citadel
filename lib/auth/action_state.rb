@@ -46,13 +46,14 @@ module Auth
         subject_s = subject.to_s
         @has_subject = subject_s.singularize == subject_s
 
-        if subject?
-          belongs_to subject, subject_options
-          @subject_cls = reflect_on_all_associations(:belongs_to).second.klass
+        init_singular_subject(subject_options) if subject?
+      end
 
-          @subject_cls.has_many @association_name, class_name: name, foreign_key: "#{subject}_id",
-                                                   dependent: :delete_all
-        end
+      def init_singular_subject(options)
+        belongs_to @subject, options
+        @subject_cls = reflect_on_all_associations(:belongs_to).second.klass
+
+        @subject_cls.has_many @association_name, class_name: name, foreign_key: "#{@subject}_id", dependent: :delete_all
       end
     end
   end

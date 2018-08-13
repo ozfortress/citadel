@@ -29,7 +29,9 @@ module Auth
       set_instance_cache(:active_bans, action, subject, ids)
     end
 
+    # rubocop:disable Style/AccessModifierDeclarations
     private(*delegate(:actor_name, :actor_id, to: :model))
+    # rubocop:enable Style/AccessModifierDeclarations
 
     private
 

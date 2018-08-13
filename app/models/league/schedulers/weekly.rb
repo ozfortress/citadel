@@ -47,7 +47,7 @@ class League
 
         availability.each do |week, value|
           return nil unless schedule_days.include?(week)
-          availability[week] = value == 'true' || value == true
+          availability[week] = ['true', true].include? value
         end
 
         data

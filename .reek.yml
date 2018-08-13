@@ -1,0 +1,90 @@
+detectors:
+  IrresponsibleModule:
+    enabled: false
+
+  TooManyStatements:
+    max_statements: 10
+
+  TooManyInstanceVariables:
+    max_instance_variables: 7
+
+  # Kinda broken reek right now
+  ControlParameter:
+    enabled: false
+
+  # Pretty dumb if a parameter is optional
+  BooleanParameter:
+    enabled: false
+
+  # Migration helpers are like db code, but cleaner
+  FeatureEnvy:
+    exclude:
+      - "MigrationHelper"
+  UncommunicativeVariableName:
+    exclude:
+      - "MigrationHelper"
+    # Allow simple ones, usually used for #sort or alike
+    accept: [x, y, a, b]
+
+  # API versions
+  UncommunicativeModuleName:
+    accept:
+      - "/V[0-9]+/"
+
+  #TODO
+  DataClump:
+    exclude:
+      - "Auth::Model"
+      - "MigrationHelper"
+  UtilityFunction:
+    exclude:
+      - "Auth::Model"
+      - "TournamentDriver" # Tournament driver is special
+  TooManyMethods:
+    exclude:
+      - "Leagues::MatchesController"
+
+directories:
+  # PremaDonna methods show intent when it comes to db operations
+  # "models":
+  #   PrimaDonnaMethod:
+  #     enabled: false
+
+  # helpers are always utility functions
+  "helpers":
+    UtilityFunction:
+      enabled: false
+    FeatureEnvy:
+      enabled: false
+
+  # as are concerns
+  "concerns":
+    UtilityFunction:
+      enabled: false
+    FeatureEnvy:
+      enabled: false
+
+  # as are match seeders
+  "match_seeder":
+    UtilityFunction:
+      enabled: false
+    FeatureEnvy:
+      enabled: false
+
+  # as are custom validators
+  "validators":
+    UtilityFunction:
+      enabled: false
+    FeatureEnvy:
+      enabled: false
+
+  # as are services
+  "services":
+    UtilityFunction:
+      enabled: false
+    FeatureEnvy:
+      enabled: false
+
+# db code is messy
+exclude_paths:
+  - db
