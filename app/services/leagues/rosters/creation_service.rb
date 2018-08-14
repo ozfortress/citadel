@@ -19,7 +19,7 @@ module Leagues
       private
 
       def notify_players(roster, league)
-        msg  = "You have been entered in \
+        msg = "You have been entered in \
         #{league.name.truncate(48, separator: ' ')} \
         with \
         #{roster.name.truncate(48, separator: ' ')}."
