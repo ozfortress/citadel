@@ -65,6 +65,9 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  # Set the default host to localhost
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
+
   config.after_initialize do
     # Enable bullet
     Bullet.enable = true
