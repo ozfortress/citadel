@@ -228,7 +228,7 @@ class League
       return if league.blank?
 
       unless league.valid_roster_size?(players.size)
-        errors.add(:players, "must have at least #{league.min_players} players" +
+        errors.add(:players, "Must have at least #{league.min_players} players" +
           (league.max_players.positive? ? " and no more than #{league.max_players} players" : ''))
       end
     end
@@ -236,7 +236,7 @@ class League
     def unique_within_league
       return if league.blank?
 
-      errors.add(:base, 'can only sign up once') if league.rosters.where(team: team).exists?
+      errors.add(:base, 'Can only sign up once') if league.rosters.where(team: team).exists?
     end
 
     def validate_schedule
@@ -245,7 +245,7 @@ class League
       if schedule_data.present?
         league.scheduler.validate_roster(self)
       else
-        errors.add(:schedule_data, 'is required')
+        errors.add(:schedule_data, 'Is required')
       end
     end
   end

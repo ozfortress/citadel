@@ -67,7 +67,7 @@ class League
       def validate_scores
         return if match.blank?
 
-        errors.add(:away_team_score, 'cannot be tied') if has_outcome? && !match.allow_round_draws? && draw?
+        errors.add(:away_team_score, 'Cannot be tied') if has_outcome? && !match.allow_round_draws? && draw?
       end
     end
   end

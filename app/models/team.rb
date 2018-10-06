@@ -81,7 +81,7 @@ class Team < ApplicationRecord
 
   def must_not_have_rosters
     if rosters.exists?
-      errors.add(:id, 'can only destroy teams without any rosters')
+      errors.add(:id, 'Can only destroy teams without any rosters')
 
       throw(:abort)
     end
