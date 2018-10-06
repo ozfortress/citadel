@@ -79,9 +79,9 @@ class League
 
       def map_and_pick_present
         if map
-          errors.add(:picked_by, 'must be present') unless picked_by
+          errors.add(:picked_by, 'Must be present') unless picked_by
         elsif picked_by && !deferred?
-          errors.add(:map, 'must be present')
+          errors.add(:map, 'Must be present')
         end
       end
     end

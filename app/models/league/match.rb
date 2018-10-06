@@ -29,7 +29,7 @@ class League
     enum forfeit_by: [:no_forfeit, :home_team_forfeit, :away_team_forfeit, :mutual_forfeit, :technical_forfeit]
     validates :forfeit_by, presence: true
     validates :round_name, presence: true, allow_blank: true
-    validates :round_number, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
+    validates :round_number, presence: true, numericality: { greater_than_or_equal_to: 0 }
     validates :notice, presence: true, allow_blank: true
     caches_markdown_render_for :notice, escaped: false
 
@@ -49,7 +49,7 @@ class League
     scope :for_roster, ->(roster) { where(home_team: roster).or(where(away_team: roster)) }
 
     scope :winner, ->(winner) { no_forfeit.where(winner: winner) }
-    scope :drawn, -> { no_forfeit.where(winner: nil) }
+    scope :drawn, -> { confirmed.winnable.no_forfeit.where(winner: nil) }
     scope :loser, ->(loser) { no_forfeit.where(loser: loser) }
     scope :single_forfeit, -> { home_team_forfeit.or(away_team_forfeit) }
     scope :forfeit_winner, ->(winner) { single_forfeit.where(winner: winner) }
@@ -219,18 +219,18 @@ class League
       return unless home_team.present? && away_team.present?
 
       unless away_team.division == home_team.division
-        errors.add(:away_team, 'must be in the same division as the home team')
+        errors.add(:away_team, 'Must be in the same division as the home team')
       end
     end
 
     def validate_teams_are_approved
-      errors.add(:home_team, 'must be approved') if home_team.present? && !home_team.approved?
-      errors.add(:away_team, 'must be approved') if away_team.present? && !away_team.approved?
+      errors.add(:home_team, 'Must be approved') if home_team.present? && !home_team.approved?
+      errors.add(:away_team, 'Must be approved') if away_team.present? && !away_team.approved?
     end
 
     def validate_rosters_not_disbanded
-      errors.add(:home_team, 'is disbanded and cannot play') if home_team.present? && home_team.disbanded?
-      errors.add(:away_team, 'is disbanded and cannot play') if away_team.present? && away_team.disbanded?
+      errors.add(:home_team, 'Is disbanded and cannot play') if home_team.present? && home_team.disbanded?
+      errors.add(:away_team, 'Is disbanded and cannot play') if away_team.present? && away_team.disbanded?
     end
 
     def validate_winner
@@ -245,7 +245,7 @@ class League
     end
 
     def validate_no_forfeit_winner
-      errors.add(:base, "scores don't add up, there must be a winner") if winner_id.nil?
+      errors.add(:base, "Scores aren't valid, there must be a winner") if winner_id.nil?
     end
 
     def validate_forfeit_winner

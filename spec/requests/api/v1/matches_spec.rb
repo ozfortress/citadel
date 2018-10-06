@@ -30,7 +30,7 @@ describe API::V1::MatchesController, type: :request do
         expect(round['home_team_score']).to eq(12)
       end
 
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it 'succeeds for non-existent match' do

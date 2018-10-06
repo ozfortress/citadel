@@ -6,15 +6,12 @@ class League
     belongs_to :division, inverse_of: :rosters
     delegate :league, to: :division, allow_nil: true
 
-    has_many :players, -> { order(created_at: :asc) },
-             dependent: :destroy, inverse_of: :roster
+    has_many :players, -> { order(created_at: :asc) }, dependent: :destroy, inverse_of: :roster
     has_many :users, through: :players
 
-    has_many :transfers, -> { order(created_at: :desc) },
-             dependent: :destroy, inverse_of: :roster
+    has_many :transfers, -> { order(created_at: :desc) }, dependent: :destroy, inverse_of: :roster
 
-    has_many :transfer_requests, -> { order(created_at: :desc) },
-             dependent: :destroy, inverse_of: :roster
+    has_many :transfer_requests, -> { order(created_at: :desc) }, dependent: :destroy, inverse_of: :roster
 
     accepts_nested_attributes_for :players, reject_if: proc { |attrs| attrs['user_id'].blank? }
 
@@ -22,8 +19,7 @@ class League
     has_many :away_team_matches, class_name: 'Match', foreign_key: 'away_team_id'
 
     has_many :titles, class_name: 'User::Title'
-    has_many :comments, class_name: 'Roster::Comment', inverse_of: :roster,
-                        dependent: :destroy
+    has_many :comments, class_name: 'Roster::Comment', inverse_of: :roster, dependent: :destroy
 
     validates :name, presence: true, uniqueness: { scope: :division_id }, length: { in: 1..64 }
     validates :description, presence: true, allow_blank: true, length: { in: 0..500 }
@@ -146,8 +142,7 @@ class League
     end
 
     def tentative_player_count
-      players.size +
-        TransferRequest.joining_roster(self).size - TransferRequest.leaving_roster(self).size
+      players.size + TransferRequest.joining_roster(self).size - TransferRequest.leaving_roster(self).size
     end
 
     def schedule_data=(data)
@@ -156,10 +151,10 @@ class League
 
     def self.order_keys(league)
       orderings = []
-      orderings << 'ranking ASC NULLS LAST'
-      orderings << 'CASE WHEN disbanded THEN NULL ELSE points END DESC NULLS LAST'
-      orderings += league.tiebreakers.map(&:order)
-      orderings << 'seeding ASC'
+      orderings << Arel.sql('ranking ASC NULLS LAST')
+      orderings << Arel.sql('CASE WHEN disbanded THEN NULL ELSE points END DESC NULLS LAST')
+      orderings += league.tiebreakers.map { |tiebreaker| Arel.sql tiebreaker.order }
+      orderings << Arel.sql('seeding ASC')
       orderings
     end
 
@@ -233,7 +228,7 @@ class League
       return if league.blank?
 
       unless league.valid_roster_size?(players.size)
-        errors.add(:players, "must have at least #{league.min_players} players" +
+        errors.add(:players, "Must have at least #{league.min_players} players" +
           (league.max_players.positive? ? " and no more than #{league.max_players} players" : ''))
       end
     end
@@ -241,7 +236,7 @@ class League
     def unique_within_league
       return if league.blank?
 
-      errors.add(:base, 'can only sign up once') if league.rosters.where(team: team).exists?
+      errors.add(:base, 'Can only sign up once') if league.rosters.where(team: team).exists?
     end
 
     def validate_schedule
@@ -250,7 +245,7 @@ class League
       if schedule_data.present?
         league.scheduler.validate_roster(self)
       else
-        errors.add(:schedule_data, 'is required')
+        errors.add(:schedule_data, 'Is required')
       end
     end
   end

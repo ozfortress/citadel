@@ -33,7 +33,7 @@ class League
           days_available += 1 if day && availability[name]
         end
 
-        roster.errors.add(:schedule_data, 'not enough availability') if days_available < minimum_selected
+        roster.errors.add(:schedule_data, 'Not enough availability') if days_available < minimum_selected
       end
 
       # Data validation for schedule_data on rosters
@@ -47,7 +47,7 @@ class League
 
         availability.each do |week, value|
           return nil unless schedule_days.include?(week)
-          availability[week] = value == 'true' || value == true
+          availability[week] = ['true', true].include? value
         end
 
         data
@@ -84,14 +84,14 @@ class League
       def validate_days_length
         return if days.blank?
 
-        errors.add(:days, 'invalid length') unless days.length == 7
+        errors.add(:days, 'Invalid length') unless days.length == 7
       end
 
       def validate_days_minimum
         return if days.blank? || minimum_selected.blank?
 
         unless minimum_selected.zero? || minimum_selected <= days.count(true)
-          errors.add(:days, 'must have more than the minimum required')
+          errors.add(:days, 'Must have more than the minimum required')
         end
       end
 

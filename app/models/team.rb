@@ -31,7 +31,7 @@ class Team < ApplicationRecord
     query = Search.transform_query(query)
 
     where('(query_name_cache <-> ?) < 0.9', query)
-      .order(sanitize_sql_for_order(['query_name_cache <-> ?', query]))
+      .order(sanitize_sql_for_order([Arel.sql('query_name_cache <-> ?'), query]))
   end)
 
   def matches
@@ -81,7 +81,7 @@ class Team < ApplicationRecord
 
   def must_not_have_rosters
     if rosters.exists?
-      errors.add(:id, 'can only destroy teams without any rosters')
+      errors.add(:id, 'Can only destroy teams without any rosters')
 
       throw(:abort)
     end

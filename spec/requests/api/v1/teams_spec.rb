@@ -28,7 +28,7 @@ describe API::V1::TeamsController, type: :request do
         expect(rosters.map(&:id)).to include(roster['id'])
       end
 
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it 'succeeds for non-existent team' do

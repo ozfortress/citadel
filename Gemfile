@@ -1,11 +1,13 @@
 source 'https://rubygems.org'
 
 gem 'rake', '~> 12.0'
-gem 'rails', '= 5.1.5'
+gem 'rails', '= 5.2.1'
 # Use postgres
-gem 'pg', '~> 1.0' # Fix once rails gets fixed
+gem 'pg', '~> 1.0'
+# Fast loading
+gem 'bootsnap', '~> 1.3'
 # Active Record extensions
-gem 'active_record_union', '~> 1.3.0'
+gem 'active_record_union', '~> 1.3'
 gem 'ancestry'
 # SASS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -29,7 +31,7 @@ gem 'cocoon'
 gem 'jquery-rails'
 # Steam Login
 # TODO: Remove git dependency once upstream is updated.
-gem 'omniauth-steam', git: 'https://github.com/iJJi/omniauth-steam.git', branch: 'master'
+gem 'omniauth-steam'
 # Authentication
 gem 'devise'
 # Use hamlit for ~fast templating
@@ -47,7 +49,7 @@ gem 'ahoy_matey', '~> 1.6'
 # API Serialization
 gem 'active_model_serializers', '~> 0.10.0'
 # Tournament systems
-gem 'tournament-system', '~> 1.0.0'
+gem 'tournament-system', '~> 2.0'
 
 group :test do
   # Use rspec for tests
@@ -69,11 +71,10 @@ group :test do
   gem 'capybara'
 
   # Keep codebase clean
-  gem 'rubocop', '~> 0.56', require: false
+  gem 'rubocop', '~> 0.58', require: false
   gem 'haml_lint', require: false
-  gem 'haml', '~> 4.0', require: false # haml_lint is broken for haml 5
   gem 'rails_best_practices', require: false
-  gem 'reek', require: false
+  gem 'reek', '~> 5', require: false
 
   # Coveralls
   gem 'coveralls'

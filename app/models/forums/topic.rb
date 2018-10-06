@@ -22,7 +22,7 @@ module Forums
     scope :visible,  -> { where(hidden: false) }
     scope :isolated, -> { where(isolated: true) }
 
-    after_save :cascade_threads_depth!, if: :ancestry_changed?
+    after_save :cascade_threads_depth!
 
     after_initialize :set_defaults, unless: :persisted?
 
@@ -43,6 +43,8 @@ module Forums
     end
 
     def cascade_threads_depth!
+      return unless saved_changes.key? 'ancestry'
+
       threads.update(depth: depth + 1)
     end
   end

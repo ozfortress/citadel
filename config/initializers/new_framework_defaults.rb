@@ -28,8 +28,8 @@ silenced = [
 
 silenced_expr = Regexp.new(silenced.join('|'))
 
-ActiveSupport::Deprecation.behavior = lambda do |msg, stack|
-  unless msg =~ silenced_expr
-    ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:stderr].call(msg, stack)
-  end
-end
+# ActiveSupport::Deprecation.behavior = lambda do |msg, stack|
+#   unless msg =~ silenced_expr
+#     ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:stderr].call(msg, stack)
+#   end
+# end

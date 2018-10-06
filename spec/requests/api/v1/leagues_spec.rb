@@ -16,7 +16,7 @@ describe API::V1::LeaguesController, type: :request do
       expect(league_h['name']).to eq(league.name)
       expect(league_h['rosters']).to be_empty
       expect(league_h['matches']).to be_empty
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it 'succeeds for non-existent league' do
