@@ -1,24 +1,27 @@
-<div id="doc" class="markdown-body container-fluid" style="position: relative;"><h1 id="Staff">Staff</h1><h3 id="League-Director---oblaozfortresscom">League Director - <a href="mailto:obla@ozfortress.com" target="_blank">obla@ozfortress.com</a></h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a></p><h3 id="League-Administrators">League Administrators</h3><p><a href="https://warzone.ozfortress.com/users/96" target="_blank">catfish</a> - Premier<br>
-<a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a> - Intermediate<br>
+<div id="doc" class="markdown-body container-fluid" style="position: relative;"><h1 id="Staff">Staff</h1><h3 id="Head-Administrator---catfishtf2gmailcom">Head Administrator - <a href="mailto:catfishtf2@gmail.com" target="_blank">catfishtf2@gmail.com</a></h3><p><a href="https://warzone.ozfortress.com/users/96" target="_blank">catfish</a></p><h3 id="League-Administrators">League Administrators</h3><p><a href="https://warzone.ozfortress.com/users/157" target="_blank">Thermite</a> - Premier<br>
+<a href="https://warzone.ozfortress.com/users/96" target="_blank">catfish</a> - Intermediate<br>
 <a href="https://warzone.ozfortress.com/users/15" target="_blank">Fozzlm</a> - Open<br>
-<a href="https://warzone.ozfortress.com/users/157" target="_blank">Thermite</a> - Open<br>
-<a href="https://warzone.ozfortress.com/users/71" target="_blank">wiggin</a></p><h3 id="Advisor">Advisor</h3><p><a href="https://warzone.ozfortress.com/users/71" target="_blank">wiggin</a></p><h3 id="Media">Media</h3><p><a href="https://warzone.ozfortress.com/users/15" target="_blank">Fozzlm</a></p><h3 id="Anti-Cheat-Staff">Anti-Cheat Staff</h3><p><a href="http://ozfortress.com/member.php?u=8085" target="_blank">madjack</a></p><h3 id="Server-Administrators">Server Administrators</h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a><br>
+<a href="https://warzone.ozfortress.com/users/96" target="_blank">catfish</a> - Open</p><h3 id="Advisor">Advisor</h3><p><a href="https://warzone.ozfortress.com/users/71" target="_blank">wiggin</a><br>
+<a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a></p><h3 id="Media">Media</h3><p><a href="https://warzone.ozfortress.com/users/15" target="_blank">Fozzlm</a></p><h3 id="Anti-Cheat-Staff">Anti-Cheat Staff</h3><p><a href="https://warzone.ozfortress.com/users/1308" target="_blank">madjack</a></p><h3 id="Server-Administrators">Server Administrators</h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank">obla</a><br>
 <a href="https://warzone.ozfortress.com/users/2" target="_blank">/dev/zero</a><br>
-<a href="https://warzone.ozfortress.com/users/4" target="_blank">shrak</a></p><h3 id="Developer">Developer</h3><p><a href="https://warzone.ozfortress.com/users/2" target="_blank">/dev/zero</a></p><h3 id="Graphics-Artist">Graphics Artist</h3><p><a href="https://warzone.ozfortress.com/users/541" target="_blank">athena</a></p><h3 id="Staff-Hall-of-Fame">Staff Hall of Fame</h3><p>amd<br>
+<a href="https://warzone.ozfortress.com/users/4" target="_blank">shrak</a></p><h3 id="Developer">Developer</h3><p><a href="https://warzone.ozfortress.com/users/2" target="_blank">/dev/zero</a></p><h3 id="Graphics-Artist">Graphics Artist</h3><p><a href="https://warzone.ozfortress.com/users/77" target="_blank">jen</a></p><h3 id="Staff-Hall-of-Fame">Staff Hall of Fame</h3><p>/dev/zero<br>
+amd<br>
 Aragon<br>
 baf<br>
 bladez - Livelogs and ozfortress booker<br>
 blitzen<br>
 Brodogs<br>
+catfish<br>
 Cole<br>
 ferelah<br>
+fozzlm<br>
 gabbo<br>
 hatchet<br>
 Hawk<br>
 hcaz<br>
 Ishanu<br>
 Jump!<br>
-Kenneth - Retired League Director<br>
+Kenneth<br>
 kam<br>
 kocka<br>
 lammy<br>
@@ -27,6 +30,7 @@ micko<br>
 munz<br>
 No Mercy<br>
 nsk<br>
+obla<br>
 OnionS<br>
 Psyfox<br>
 ravelizard<br>
@@ -37,11 +41,13 @@ shrak<br>
 Solus<br>
 stv!<br>
 tempest - Co-Founder<br>
+Thermite<br>
 TomSawyer<br>
 tonberry<br>
 ToyotaMan<br>
 Varris<br>
 warbot<br>
+wiggin<br>
 wm<br>
 wolfeh<br>
-yauch</p><div class="resize-sensor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div class="resize-sensor-expand" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; transition: 0s; width: 100000px; height: 100000px;"></div></div><div class="resize-sensor-shrink" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div></div></div></div>
+yauch</p><div dir="ltr" class="resize-sensor" style="position: absolute; left: -10px; top: -10px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div class="resize-sensor-expand" style="position: absolute; left: -10px; top: -10px; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; transition: all 0s ease 0s; width: 100000px; height: 100000px;"></div></div><div class="resize-sensor-shrink" style="position: absolute; left: -10px; top: -10px; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div></div></div></div>
