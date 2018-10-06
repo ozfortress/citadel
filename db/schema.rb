@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_30_021850) do
+ActiveRecord::Schema.define(version: 2018_10_06_093304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -321,7 +321,7 @@ ActiveRecord::Schema.define(version: 2018_05_30_021850) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "forfeit_by", default: 0, null: false
-    t.integer "round_number"
+    t.integer "round_number", default: 1, null: false
     t.string "notice", default: "", null: false
     t.string "round_name", default: "", null: false
     t.text "notice_render_cache", default: "", null: false

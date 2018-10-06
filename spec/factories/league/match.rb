@@ -33,7 +33,7 @@ FactoryBot.define do
   factory :bye_league_match, class: League::Match do
     status :pending
     away_team nil
-    round_number nil
+    round_number 1
     round_name ''
 
     after(:build) do |match, _|
