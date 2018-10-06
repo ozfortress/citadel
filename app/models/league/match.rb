@@ -49,7 +49,7 @@ class League
     scope :for_roster, ->(roster) { where(home_team: roster).or(where(away_team: roster)) }
 
     scope :winner, ->(winner) { no_forfeit.where(winner: winner) }
-    scope :drawn, -> { confirmed.no_forfeit.where(winner: nil) }
+    scope :drawn, -> { confirmed.winnable.no_forfeit.where(winner: nil) }
     scope :loser, ->(loser) { no_forfeit.where(loser: loser) }
     scope :single_forfeit, -> { home_team_forfeit.or(away_team_forfeit) }
     scope :forfeit_winner, ->(winner) { single_forfeit.where(winner: winner) }
