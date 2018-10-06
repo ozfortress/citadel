@@ -23,9 +23,6 @@
 = link_to image_tag('logs.tf-logo.png'), "http://logs.tf/profile/#{@user.steam_id}",
           title: 'logs.tf profile', target: '_blank', class: 'user-external-link'
 
-= link_to image_tag('livelogs-logo.png'), "http://livelogs.ozfortress.com/player/#{@user.steam_id}",
-          class: 'user-external-link', title: 'livelogs profile', target: '_blank'
-
 %p.steam-link-large
   = user_p.steam_link
   %span.dropdown
