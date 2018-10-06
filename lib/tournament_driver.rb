@@ -1,6 +1,6 @@
-require 'tournament-system'
+require 'tournament_system'
 
-class TournamentDriver < Tournament::Driver
+class TournamentDriver < TournamentSystem::Driver
   def initialize(division, match_options = {}, options = {})
     @division = division
     @match_options = match_options
