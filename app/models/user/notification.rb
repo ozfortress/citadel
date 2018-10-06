@@ -3,7 +3,7 @@ class User
     belongs_to :user
 
     validates :read, inclusion: { in: [true, false] }
-    validates :message, presence: true, length: { in: 1..128 }
-    validates :link, presence: true, length: { in: 1..128 }
+    validates :message, presence: true
+    validates :link, presence: true
   end
 end
