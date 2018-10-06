@@ -29,7 +29,7 @@ class League
     enum forfeit_by: [:no_forfeit, :home_team_forfeit, :away_team_forfeit, :mutual_forfeit, :technical_forfeit]
     validates :forfeit_by, presence: true
     validates :round_name, presence: true, allow_blank: true
-    validates :round_number, allow_nil: true, numericality: { greater_than_or_equal_to: 0 }
+    validates :round_number, allow_nil: false, numericality: { greater_than_or_equal_to: 0 }
     validates :notice, presence: true, allow_blank: true
     caches_markdown_render_for :notice, escaped: false
 
