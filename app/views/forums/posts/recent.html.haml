@@ -1,0 +1,6 @@
+- content_for(:title) { 'Recent Posts | Forums' }
+
+.panel.panel-default
+  - @posts.each do |post|
+    .panel-heading Thread: #{present(post.thread).link}
+    = render post, quote_id: nil

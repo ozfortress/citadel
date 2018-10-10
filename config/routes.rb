@@ -153,6 +153,7 @@ Rails.application.routes.draw do
 
     resource :posts, only: [], controller: 'posts' do
       get :search, on: :collection
+      get :recent, on: :collection
     end
   end
 
