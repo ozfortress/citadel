@@ -1,5 +1,11 @@
 - content_for(:title) { 'Post Search | Forums' }
 
+%h1.tab-header Forum Post Search
+- if @user
+  %br
+  %h3 For #{present(@user).link}
+%hr
+
 .panel.panel-default
   - @posts.each do |post|
     .panel-heading Thread: #{present(post.thread).link}

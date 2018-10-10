@@ -1,5 +1,8 @@
 - content_for(:title) { 'Recent Posts | Forums' }
 
+%h1.tab-header Recent Posts
+%hr
+
 .panel.panel-default
   - @posts.each do |post|
     .panel-heading Thread: #{present(post.thread).link}

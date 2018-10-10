@@ -16,8 +16,8 @@ module Forums
 
     def search
       if params[:user_id]
-        user = User.find(params[:user_id])
-        posts = user == current_user ? user.forums_posts : user.public_forums_posts
+        @user = User.find(params[:user_id])
+        posts = @user == current_user ? @user.forums_posts : @user.public_forums_posts
       else
         posts = Post.all
       end
