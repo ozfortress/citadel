@@ -13,6 +13,7 @@ describe 'users/show' do
   let(:rosters) { build_stubbed_list(:league_roster, 2) }
   let(:matches) { build_stubbed_list(:league_match, 2) }
   let(:comments) { build_stubbed_list(:user_comment, 10) }
+  let(:forums_posts) { build_stubbed_list(:forums_post, 24, created_by: user) }
 
   before do
     rosters = [active_league, signup_league, completed_league].map do |league|
@@ -32,6 +33,7 @@ describe 'users/show' do
     assign(:team_invites, team_invites)
     assign(:rosters, rosters)
     assign(:matches, matches)
+    assign(:forums_posts, forums_posts)
 
     ban_cls = double(subject: 'Foo')
     bans = []

@@ -103,6 +103,19 @@
         - unless roster.league.hidden?
           %li.list-group-item= roster.user_listing
 
+- unless @forums_posts.empty?
+  .panel.panel-default
+    .panel-heading
+      Recent Forum Posts
+      = link_to search_forums_posts_path(user_id: @user.id), class: 'btn btn-default pull-right' do
+        View All
+
+    %ul.list-group
+      - present_collection(@forums_posts).each do |post|
+        %li.list-group-item
+          = post.thread.link
+          .pull-right= post.created_at
+
 - if user_can_edit_users?
   .panel.panel-info
     .panel-heading Admin Comments

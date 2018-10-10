@@ -2,6 +2,10 @@ module Forums
   class PostPresenter < BasePresenter
     presents :post
 
+    def thread
+      @thread ||= present(post.thread)
+    end
+
     def created_at
       post.created_at.strftime('%c')
     end

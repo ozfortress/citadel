@@ -60,6 +60,7 @@ class UsersController < ApplicationController
     @team_invites   = @user.team_invites.includes(:team).order(created_at: :asc)
     @rosters        = @user.rosters.includes(division: :league).order(created_at: :desc)
     @matches        = @user.matches.pending.includes(:home_team, :away_team)
+    @forums_posts   = user_forums_posts.order(:created_at).includes(:thread).limit(10)
   end
 
   def edit
@@ -119,6 +120,14 @@ class UsersController < ApplicationController
 
   def steam_data
     session['devise.steam_data']
+  end
+
+  def user_forums_posts
+    if current_user == @user
+      @user.forums_posts
+    else
+      @user.public_forums_posts
+    end
   end
 
   def new_user_params

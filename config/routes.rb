@@ -150,6 +150,10 @@ Rails.application.routes.draw do
         get :edits, on: :member, as: 'edits_for'
       end
     end
+
+    resource :posts, only: [], controller: 'posts' do
+      get :search, on: :collection
+    end
   end
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
