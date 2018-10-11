@@ -1,7 +1,10 @@
-- presenter = present(object)
+- if object
+  - presenter = present(object)
 
-%h2= presenter
+  %h2= presenter
 
-%br= presenter.path
+  %br= presenter.path
+- else
+  %h1.tab-header Forums
 
 %hr
