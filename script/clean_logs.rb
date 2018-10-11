@@ -16,12 +16,12 @@ Visit.transaction do
   conditions += VISIT_DISTINCT_COLUMNS.map { |name| "visits.#{name} #{op} t2.#{name}" }
   condition = conditions.join(' AND ')
 
-  deleted = Visit.connection.execute("
-              DELETE FROM visits
-              WHERE started_at < #{ActiveRecord::Base.sanitize(keep_time)} AND EXISTS(
-                SELECT 1 FROM visits AS t2
-                WHERE #{condition} AND t2.id > visits.id
-              )").cmd_tuples
+  deleted = Visit.connection.execute(<<-SQL).cmd_tuples
+    DELETE FROM visits
+    WHERE started_at < #{ActiveRecord::Base.sanitize(keep_time)} AND EXISTS(
+      SELECT 1 FROM visits AS t2
+      WHERE #{condition} AND t2.id > visits.id
+  SQL
 
   puts "Deleted #{deleted} duplicate visit records"
 
