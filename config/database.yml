@@ -9,7 +9,7 @@ development:
 
 test:
   <<: *default
-  database: citadel_test
+  database: citadel_test<%= ENV['TEST_ENV_NUMBER'] %>
 
 production:
   <<: *default
