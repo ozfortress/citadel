@@ -73,7 +73,9 @@ sudo apt install nodejs
 This project uses `rspec`, `rubocop`, `haml-lint` and `rails-best-practices` for
 testing and linting.
 
-All of these can be run in one command with rake
+To set up the database for testing, run: `rake parallel:setup`.
+
+All of these can be run in one command with rake:
 
 ```bash
 rake
