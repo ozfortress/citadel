@@ -53,7 +53,10 @@ gem 'tournament-system', '~> 2.0'
 
 group :test do
   # Use rspec for tests
-  gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-rails', '~> 3.8'
+
+  # Parallelize tests
+  gem 'parallel_tests'
 
   # Test coverage
   gem 'simplecov'
