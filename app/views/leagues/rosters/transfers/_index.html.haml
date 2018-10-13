@@ -2,9 +2,11 @@
   .panel-heading Players on Roster
   %ul.list-group
     - users_on_roster.each do |user|
+      - transfer_request = league.transfer_requests.pending.find_by(user: user)
+
       %li.list-group-item
-        = form_for(transfer_request, as: :request, method: :post,
-                              url: roster_transfers_path(roster)) do |f|
+        = form_for(new_transfer_request, as: :request, method: :post,
+                   url: roster_transfers_path(roster)) do |f|
           = f.hidden_field :user_id, value: user.id
           = f.hidden_field :is_joining, value: false
           = button_tag type: 'submit', class: 'btn btn-danger pull-right',
@@ -13,14 +15,22 @@
             %span.glyphicon.glyphicon-remove
 
         = render 'users/listing', user: user, team: roster.team
+        - if transfer_request
+          = form_for(transfer_request, as: :request, method: :delete,
+                     url: roster_transfer_path(roster, transfer_request)) do
+            = button_tag type: 'submit', class: 'btn btn-danger pull-right' do
+              Cancel
+              %span.glyphicon.glyphicon-remove
         = present(user).transfer_status(league)
 
 .panel.panel-default
   .panel-heading Players off Roster
   %ul.list-group
     - users_off_roster.each do |user|
+      - transfer_request = league.transfer_requests.pending.find_by(user: user)
+
       %li.list-group-item
-        = form_for(transfer_request, as: :request, method: :post,
+        = form_for(new_transfer_request, as: :request, method: :post,
                               url: roster_transfers_path(roster)) do |f|
           = f.hidden_field :user_id, value: user.id
           = f.hidden_field :is_joining, value: true
@@ -28,7 +38,14 @@
           = button_tag type: 'submit', class: 'btn btn-success pull-right',
                        disabled: disabled do
             Add
-            %span.glyphicon.glyphicon-remove
+            %span.glyphicon.glyphicon-plus
 
         = render 'users/listing', user: user, team: roster.team
+
+        - if transfer_request
+          = form_for(transfer_request, as: :request, method: :delete,
+                     url: roster_transfer_path(roster, transfer_request)) do
+            = button_tag type: 'submit', class: 'btn btn-danger pull-right' do
+              Cancel
+              %span.glyphicon.glyphicon-remove
         = present(user).league_status(league)

@@ -45,7 +45,7 @@
       %span.glyphicon.glyphicon-cog
 
 = render 'leagues/rosters/transfers/index',
-         league: @league, roster: @roster, transfer_request: @transfer_request,
+         league: @league, roster: @roster, new_transfer_request: @transfer_request,
          users_on_roster: @users_on_roster, users_off_roster: @users_off_roster
 
 - if user_can_disband_roster? || user_can_destroy_roster?

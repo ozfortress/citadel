@@ -122,4 +122,80 @@ describe Leagues::Rosters::TransfersController do
 
     # TODO: player tests, as opposed to bencher
   end
+
+  describe 'DELETE #destroy' do
+    context 'transfer out' do
+      let(:transfer_request) do
+        create(:league_roster_transfer_request, roster: roster, user: player, is_joining: false)
+      end
+
+      it 'succeeds for authorized captain' do
+        user.grant(:edit, team)
+        sign_in user
+
+        delete :destroy, params: { roster_id: roster.id, id: transfer_request.id }
+
+        expect(roster.on_roster?(player)).to be(true)
+        expect(roster.league.transfer_requests.where(user: player)).to_not exist
+        expect(response).to redirect_to(edit_roster_path(roster))
+      end
+
+      it 'succeeds for authorized admin' do
+        user.grant(:edit, roster.league)
+        sign_in user
+
+        delete :destroy, params: { roster_id: roster.id, id: transfer_request.id }
+
+        expect(roster.on_roster?(player)).to be(true)
+        expect(roster.league.transfer_requests.where(user: player)).to_not exist
+        expect(response).to redirect_to(edit_roster_path(roster))
+      end
+
+      it 'fails for unauthorized user' do
+        sign_in user
+
+        delete :destroy, params: { roster_id: roster.id, id: transfer_request.id }
+
+        expect(roster.on_roster?(player)).to be(true)
+        expect(roster.league.transfer_requests.where(user: player)).to exist
+        expect(response).to redirect_to(team_path(team))
+      end
+    end
+
+    context 'transfer in' do
+      let(:transfer_request) { create(:league_roster_transfer_request, roster: roster, user: bencher) }
+
+      it 'succeeds for authorized captain' do
+        user.grant(:edit, team)
+        sign_in user
+
+        delete :destroy, params: { roster_id: roster.id, id: transfer_request.id }
+
+        expect(roster.on_roster?(bencher)).to be(false)
+        expect(roster.league.transfer_requests.where(user: bencher)).to_not exist
+        expect(response).to redirect_to(edit_roster_path(roster))
+      end
+
+      it 'succeeds for authorized admin' do
+        user.grant(:edit, roster.league)
+        sign_in user
+
+        delete :destroy, params: { roster_id: roster.id, id: transfer_request.id }
+
+        expect(roster.on_roster?(bencher)).to be(false)
+        expect(roster.league.transfer_requests.where(user: bencher)).to_not exist
+        expect(response).to redirect_to(edit_roster_path(roster))
+      end
+
+      it 'fails for unauthorized user' do
+        sign_in user
+
+        delete :destroy, params: { roster_id: roster.id, id: transfer_request.id }
+
+        expect(roster.on_roster?(bencher)).to be(false)
+        expect(roster.league.transfer_requests.where(user: bencher)).to exist
+        expect(response).to redirect_to(team_path(team))
+      end
+    end
+  end
 end

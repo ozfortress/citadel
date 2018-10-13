@@ -17,6 +17,14 @@ module Leagues
         redirect_to edit_roster_path(@roster)
       end
 
+      def destroy
+        @transfer_request = @roster.transfer_requests.pending.find(params[:id])
+
+        Rosters::Transfers::CancellationService.call(@transfer_request, @roster)
+
+        redirect_to edit_roster_path(@roster)
+      end
+
       private
 
       def transfer_params
