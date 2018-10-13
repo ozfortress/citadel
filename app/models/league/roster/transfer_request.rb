@@ -59,6 +59,16 @@ class League
         !pending?
       end
 
+      def cancel
+        transaction do
+          destroy || raise(ActiveRecord::Rollback)
+
+          denial_checks || raise(ActiveRecord::Rollback)
+        end
+
+        destroyed?
+      end
+
       def pending?
         approved_by.blank? && denied_by.blank?
       end

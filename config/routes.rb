@@ -41,7 +41,7 @@ Rails.application.routes.draw do
         put 'undisband'
       end
 
-      resource :transfers, controller: 'leagues/rosters/transfers', only: [:create]
+      resources :transfers, controller: 'leagues/rosters/transfers', only: [:create]
       resources :comments, controller: 'leagues/rosters/comments', only: [:create]
     end
 
@@ -73,6 +73,8 @@ Rails.application.routes.draw do
   end
 
   resources :rosters, only: [] do
+    resources :transfers, controller: 'leagues/rosters/transfers', only: :destroy
+
     resources :comments, controller: 'leagues/rosters/comments', only: [:edit, :update, :destroy] do
       get :edits, on: :member, as: 'edits_for'
       patch :restore, on: :member
