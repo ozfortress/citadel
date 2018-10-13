@@ -7,6 +7,7 @@ Rails.application.load_tasks
 # Load test tasks
 begin
   require 'rspec/core/rake_task'
+  require 'parallel_tests/tasks'
   require 'haml_lint/rake_task'
   require 'rubocop/rake_task'
   require 'reek/rake/task'
@@ -27,8 +28,12 @@ begin
 
   Rake::Task['test'].clear # Rails puts minitest on the test task automatically'
   task lint: %w[rubocop haml_lint rbp reek]
-  task test: %w[rspec lint]
-  task default: [:lint]
+  task test: %w[parallel:spec lint]
+  task default: [:test]
 rescue LoadError
   puts 'Test tasks not available'
+end
+
+task :log do
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
 end

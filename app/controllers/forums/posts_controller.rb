@@ -4,15 +4,31 @@ module Forums
     include Forums::Permissions
 
     before_action(only: [:create]) { @thread = Forums::Thread.find(params[:thread_id]) }
-    before_action except: [:create] do
+    before_action except: [:search, :recent, :create] do
       @post = Post.find(params[:id])
       @thread = @post.thread
     end
-    before_action :require_can_view_thread
+    before_action :require_can_view_thread, except: [:search, :recent]
     before_action :require_can_create_post, only: :create
     before_action :require_can_edit_post, only: [:edit, :update, :edits]
     before_action :require_not_first_post, only: [:edit, :update, :destroy]
     before_action :require_can_manage_thread, only: :destroy
+
+    def search
+      if params[:user_id]
+        @user = User.find(params[:user_id])
+        posts = @user == current_user ? @user.forums_posts : @user.public_forums_posts
+      else
+        posts = Post.all
+      end
+
+      @page = params[:page]
+      @posts = posts.includes(:created_by, :thread).paginate(page: @page)
+    end
+
+    def recent
+      @posts = Post.publicly_viewable.reorder(updated_at: :desc).includes(:created_by).limit(20)
+    end
 
     def create
       @post = Posts::CreationService.call(current_user, @thread, post_params)

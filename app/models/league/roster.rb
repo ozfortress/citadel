@@ -163,7 +163,7 @@ class League
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def assign_updated_match_counters
       count = ->(query) { query.reorder(nil).select('COUNT(*)').to_sql }
-      query = ActiveRecord::Base.connection.exec_query(%{
+      query = ActiveRecord::Base.connection.exec_query(<<-SQL)
         SELECT (#{calculate_total_scores_query})            AS total_scores,
                (#{calculate_total_score_difference_query})  AS total_score_difference,
                (#{count.call(won_rounds)})                  AS won_rounds_count,
@@ -175,7 +175,7 @@ class League
                (#{count.call(Match.forfeit_winner(self))})  AS forfeit_won_matches_count,
                (#{count.call(matches.forfeit_drawn)})       AS forfeit_drawn_matches_count,
                (#{count.call(matches.forfeit_loser(self))}) AS forfeit_lost_matches_count
-      })
+      SQL
 
       assign_attributes(query.to_hash[0])
       # Calculate points after assigning aggregates

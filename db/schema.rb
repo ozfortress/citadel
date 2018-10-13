@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_06_093304) do
+ActiveRecord::Schema.define(version: 2018_10_10_231149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -239,6 +239,7 @@ ActiveRecord::Schema.define(version: 2018_10_06_093304) do
     t.string "ancestry"
     t.integer "threads_count", default: 0, null: false
     t.boolean "default_locked", default: false
+    t.integer "isolated_by_id"
     t.index ["ancestry"], name: "index_forums_topics_on_ancestry"
     t.index ["created_by_id"], name: "index_forums_topics_on_created_by_id"
   end
@@ -625,6 +626,8 @@ ActiveRecord::Schema.define(version: 2018_10_06_093304) do
     t.text "notice", default: "", null: false
     t.text "notice_render_cache", default: "", null: false
     t.string "avatar_token"
+    t.integer "forums_posts_count", default: 0, null: false
+    t.integer "public_forums_posts_count", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["query_name_cache"], name: "index_users_on_query_name_cache", opclass: :gist_trgm_ops, using: :gist
@@ -704,6 +707,7 @@ ActiveRecord::Schema.define(version: 2018_10_06_093304) do
   add_foreign_key "forums_subscriptions", "users"
   add_foreign_key "forums_threads", "forums_topics", column: "topic_id"
   add_foreign_key "forums_threads", "users", column: "created_by_id"
+  add_foreign_key "forums_topics", "forums_topics", column: "isolated_by_id"
   add_foreign_key "forums_topics", "users", column: "created_by_id"
   add_foreign_key "league_divisions", "leagues"
   add_foreign_key "league_match_comm_edits", "league_match_comms", column: "comm_id"

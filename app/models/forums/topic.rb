@@ -1,6 +1,7 @@
 module Forums
   class Topic < ApplicationRecord
     has_ancestry cache_depth: true
+    belongs_to :isolated_by, optional: true, class_name: 'Topic'
 
     belongs_to :created_by, class_name: 'User'
 
@@ -22,12 +23,15 @@ module Forums
     scope :visible,  -> { where(hidden: false) }
     scope :isolated, -> { where(isolated: true) }
 
-    after_save :cascade_threads_depth!
-
     after_initialize :set_defaults, unless: :persisted?
 
+    before_save :update_isolated_by
+
+    after_save :cascade_isolated_by!
+    after_save :cascade_threads_depth!
+
     def not_isolated?
-      !isolated && (!parent || ancestors.empty? || ancestors.isolated.empty?)
+      isolated_by.nil?
     end
 
     private
@@ -46,6 +50,20 @@ module Forums
       return unless saved_changes.key? 'ancestry'
 
       threads.update(depth: depth + 1)
+    end
+
+    def cascade_isolated_by!
+      return if persisted? || !isolated_changed? || !children?
+
+      descendants.where(isolated_by: isolated_by_was).update(isolated_by: self)
+    end
+
+    def update_isolated_by
+      if isolated?
+        self.isolated_by = self
+      elsif persisted? || ancestry_changed?
+        self.isolated_by = ancestors.where.not(isolated_by: nil).first
+      end
     end
   end
 end

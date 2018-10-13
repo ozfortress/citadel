@@ -237,6 +237,8 @@ GEM
     pagedown-bootstrap-rails (2.1.4)
       railties (> 3.1)
     parallel (1.12.1)
+    parallel_tests (2.23.0)
+      parallel
     parser (2.5.1.2)
       ast (~> 2.4.0)
     pg (1.0.0)
@@ -433,13 +435,14 @@ DEPENDENCIES
   momentjs-rails (>= 2.9.0)
   omniauth-steam
   pagedown-bootstrap-rails
+  parallel_tests
   pg (~> 1.0)
   rails (= 5.2.1)
   rails_best_practices
   rake (~> 12.0)
   redcarpet
   reek (~> 5)
-  rspec-rails (~> 3.5)
+  rspec-rails (~> 3.8)
   rubocop (~> 0.58)
   sass-rails (~> 5.0)
   shoulda-matchers

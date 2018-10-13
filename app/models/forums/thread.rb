@@ -1,11 +1,13 @@
 module Forums
   class Thread < ApplicationRecord
     belongs_to :topic, optional: true, inverse_of: :threads, counter_cache: true
+    belongs_to :isolated_by, optional: true, class_name: 'Topic'
     belongs_to :created_by, class_name: 'User'
 
     has_many :posts,         dependent: :destroy
     has_many :subscriptions, dependent: :destroy
 
+    has_many :post_creators, through: :posts, source: :created_by
     validates :title, presence: true, length: { in: 1..128 }
     validates :locked, inclusion: { in: [true, false] }
     validates :pinned, inclusion: { in: [true, false] }
@@ -24,6 +26,20 @@ module Forums
 
     after_initialize :set_defaults, unless: :persisted?
 
+    before_update do
+      if hidden_changed?
+        sign = hidden? ? :- : :+
+        ActiveRecord::Base.connection.exec_update(<<-SQL, 'SQL', [[nil, id]])
+          UPDATE users
+          SET public_forums_posts_count = public_forums_posts_count #{sign} (
+            SELECT COUNT(1) FROM forums_posts WHERE thread_id = $1 AND created_by_id = users.id)
+          WHERE id IN (SELECT DISTINCT users.id FROM users
+                       INNER JOIN forums_posts ON users.id = forums_posts.created_by_id
+                       WHERE thread_id = $1)
+        SQL
+      end
+    end
+
     def ancestors
       if topic
         Topic.where(id: topic.id).union(topic.ancestors)
@@ -40,9 +56,7 @@ module Forums
       end
     end
 
-    def not_isolated?
-      !topic || ancestors.empty? || ancestors.isolated.empty?
-    end
+    delegate :not_isolated?, to: :topic
 
     def original_post
       posts.order(created_at: :asc).first
