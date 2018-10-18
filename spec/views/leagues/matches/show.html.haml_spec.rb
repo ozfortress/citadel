@@ -7,7 +7,7 @@ describe 'leagues/matches/show' do
   let(:division) { build(:league_division, league: league) }
   let(:home_team) { build_stubbed(:league_roster, player_count: 3, division: division) }
   let(:away_team) { build_stubbed(:league_roster, player_count: 3, division: division) }
-  let(:match) { build_stubbed(:league_match, home_team: home_team, away_team: away_team) }
+  let(:match) { build_stubbed(:league_match, home_team: home_team, away_team: away_team, notice: 'Foo') }
   let(:round1) do
     build_stubbed(:league_match_round, home_team_score: 3, away_team_score: 2,
                                        match: match, map: map)
@@ -103,6 +103,7 @@ describe 'leagues/matches/show' do
   context 'BYE match' do
     before do
       match.away_team = nil
+      match.status = :confirmed
     end
 
     it 'displays' do
@@ -200,7 +201,15 @@ describe 'leagues/matches/show' do
   end
 
   context 'with pending pick bans' do
-    let(:pick_bans) { build_stubbed_list(:league_match_pick_ban, 3, match: match) }
+    let(:pick_bans) do
+      [
+        build_stubbed(:league_match_pick_ban, match: match, deferrable: true),
+        build_stubbed(:league_match_pick_ban, match: match, team: :away_team, kind: :ban),
+        build_stubbed(:league_match_pick_ban, match: match, team: :home_team, kind: :ban),
+        build_stubbed(:league_match_pick_ban, match: match, team: :away_team, kind: :pick),
+        build_stubbed(:league_match_pick_ban, match: match, team: :home_team, kind: :pick),
+      ]
+    end
     let(:map_pool) { build_stubbed_list(:map, 3) }
 
     before do
@@ -217,7 +226,13 @@ describe 'leagues/matches/show' do
     let(:map) { build_stubbed(:map) }
     let(:user) { build_stubbed(:user) }
     let(:pick_bans) do
-      build_stubbed_list(:league_match_pick_ban, 3, match: match, map: map, picked_by: user)
+      [
+        build_stubbed(:league_match_pick_ban, match: match, picked_by: user, team: :home_team, kind: :deferred),
+        build_stubbed(:league_match_pick_ban, match: match, map: map, picked_by: user, team: :away_team, kind: :ban),
+        build_stubbed(:league_match_pick_ban, match: match, map: map, picked_by: user, team: :home_team, kind: :ban),
+        build_stubbed(:league_match_pick_ban, match: match, map: map, picked_by: user, team: :away_team, kind: :pick),
+        build_stubbed(:league_match_pick_ban, match: match, map: map, picked_by: user, team: :home_team, kind: :pick),
+      ]
     end
     let(:map_pool) { build_stubbed_list(:map, 3) }
 

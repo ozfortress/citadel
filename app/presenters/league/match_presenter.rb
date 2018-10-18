@@ -54,18 +54,6 @@ class League
       match.status.humanize
     end
 
-    def results
-      return unless match.confirmed?
-
-      if match.bye?
-        'BYE'
-      elsif match.no_forfeit?
-        score_results
-      else
-        forfeit_results(home_team.name, away_team.name)
-      end
-    end
-
     def forfeit_s
       forfeit_results('Home', 'Away')
     end

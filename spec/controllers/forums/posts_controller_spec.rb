@@ -6,6 +6,31 @@ describe Forums::PostsController do
   let(:user) { create(:user) }
   let(:content) { 'ABCDEFGHIJKLMNOP' }
 
+  describe 'GET #search' do
+    context 'user search' do
+      it 'succeeds for the users own posts' do
+        create(:forums_post, created_by: user)
+        sign_in user
+
+        get :search, params: { user_id: user.id }
+      end
+
+      it 'succeeds for any user' do
+        create(:forums_post, created_by: user)
+
+        get :search, params: { user_id: user.id }
+      end
+    end
+  end
+
+  describe 'GET #recent' do
+    it 'succeeds for any user' do
+      create_list(:forums_post, 30)
+
+      get :recent
+    end
+  end
+
   describe 'POST #create' do
     it 'succeeds for authorized user' do
       user.grant(:manage, :forums)
