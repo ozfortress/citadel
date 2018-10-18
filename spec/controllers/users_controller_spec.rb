@@ -151,6 +151,15 @@ describe UsersController do
       expect(ActionMailer::Base.deliveries).to_not be_empty
     end
 
+    it 'fails with invalid data' do
+      sign_in user
+
+      patch :update, params: { id: user.id, user: { email: 'foo' } }
+
+      user.reload
+      expect(user.email).to be_blank
+    end
+
     it 'redirects for unauthorized user' do
       sign_in user
 
