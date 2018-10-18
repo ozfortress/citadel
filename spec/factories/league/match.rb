@@ -49,7 +49,7 @@ FactoryBot.define do
       div = if match.home_team
               match.home_team.division
             else
-              build_stubbed(:league_division)
+              evaluator.division || build_stubbed(:league_division)
             end
       match.home_team = build_stubbed(:league_roster, division: div) unless match.home_team
     end
