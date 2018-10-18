@@ -4,7 +4,16 @@ describe 'leagues/show' do
   let(:league) { build_stubbed(:league) }
   let(:divisions) { build_stubbed_list(:league_division, 3) }
   let(:roster) { build_stubbed(:league_roster) }
-  let(:matches) { build_stubbed_list(:league_match, 3) }
+  let(:matches) do
+    [
+      build_stubbed(:league_match, status: :confirmed),
+      build_stubbed(:league_match, status: :confirmed, forfeit_by: :home_team_forfeit),
+      build_stubbed(:league_match, status: :confirmed, forfeit_by: :away_team_forfeit),
+      build_stubbed(:league_match, status: :confirmed, forfeit_by: :mutual_forfeit),
+      build_stubbed(:league_match, status: :confirmed, forfeit_by: :technical_forfeit),
+      build_stubbed(:bye_league_match),
+    ]
+  end
 
   before do
     all_rosters = []

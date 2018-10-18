@@ -31,7 +31,7 @@ FactoryBot.define do
   end
 
   factory :bye_league_match, class: League::Match do
-    status :pending
+    status :confirmed
     away_team nil
     round_number 1
     round_name ''
@@ -43,6 +43,15 @@ FactoryBot.define do
               create(:league_division)
             end
       match.home_team = create(:league_roster, division: div) unless match.home_team
+    end
+
+    after(:stub) do |match, evaluator|
+      div = if match.home_team
+              match.home_team.division
+            else
+              build_stubbed(:league_division)
+            end
+      match.home_team = build_stubbed(:league_roster, division: div) unless match.home_team
     end
   end
 end
