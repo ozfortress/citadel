@@ -11,11 +11,21 @@ describe Leagues::Rosters::Transfers::CreationService do
 
   before { ActionMailer::Base.deliveries.clear }
 
-  it 'successfully creates a transfer request' do
+  it 'successfully creates a transfer request to join' do
     transfer_request = subject.call(roster, admin, user: user, is_joining: true)
 
     expect(transfer_request).to be_valid
     expect(roster.transfer_requests).to_not be_empty
+    expect(user.notifications).to_not be_empty
+  end
+
+  it 'successfully creates a transfer request to leave' do
+    roster.add_player!(user)
+    transfer_request = subject.call(roster, admin, user: user, is_joining: false)
+
+    expect(transfer_request).to be_valid
+    expect(roster.transfer_requests).to_not be_empty
+    expect(user.notifications).to_not be_empty
   end
 
   it 'successfully overrides a transfer request when leaving' do

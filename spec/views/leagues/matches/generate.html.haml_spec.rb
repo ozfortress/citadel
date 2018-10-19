@@ -11,6 +11,7 @@ describe 'leagues/matches/generate' do
     assign(:swiss_tournament, pairer: :dutch, pair_options: { min_pair_size: 6 })
     assign(:round_robin_tournament, {})
     assign(:single_elimination_tournament, teams_limit: 4, round: 2)
+    assign(:double_elimination_tournament, teams_limit: 4, round: 2)
     assign(:page_playoffs_tournament, starting_round: 2)
 
     render

@@ -154,6 +154,7 @@ describe Leagues::MatchesController do
         tournament_system: :swiss,
         swiss_tournament: { pairer: :dutch, pair_options: { min_pair_size: 2 } },
         single_elimination_tournament: { teams_limit: 0, round: 0 },
+        double_elimination_tournament: { teams_limit: 0, round: 0 },
         page_playoffs_tournament: { starting_round: 0 },
       }
 
@@ -179,6 +180,7 @@ describe Leagues::MatchesController do
         tournament_system: :swiss,
         swiss_tournament: { pairer: :dutch, pair_options: { min_pair_size: 2 } },
         single_elimination_tournament: { teams_limit: 0, round: 0 },
+        double_elimination_tournament: { teams_limit: 0, round: 0 },
         page_playoffs_tournament: { starting_round: 0 }
       }
 
