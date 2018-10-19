@@ -10,7 +10,7 @@ class League
 
     validates :name, presence: true, length: { in: 1..64 }
 
-    TOURNAMENT_SYSTEMS = [:swiss, :round_robin, :single_elimination, :page_playoffs].freeze
+    TOURNAMENT_SYSTEMS = [:swiss, :round_robin, :single_elimination, :double_elimination, :page_playoffs].freeze
 
     SWISS_PAIRERS = [:dutch].freeze
 
@@ -55,6 +55,13 @@ class League
       match_options[:allow_round_draws] = false
       driver_options = options.slice(:teams_limit, :starting_round)
       TournamentSystem::SingleElimination.generate new_driver(match_options, driver_options)
+    end
+
+    def generate_double_elimination(match_options, options)
+      match_options[:has_winner] = true
+      match_options[:allow_round_draws] = false
+      driver_options = options.slice(:teams_limit, :starting_round)
+      TournamentSystem::DoubleElimination.generate new_driver(match_options, driver_options)
     end
 
     def generate_page_playoffs(match_options, options)
