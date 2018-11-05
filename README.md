@@ -19,7 +19,7 @@ You will need for running:
 
 * Ruby 2.5
 * Bundler
-* Postgres (configured in `config/database.yml`)
+* Postgres 9.5 (configured in `config/database.yml`)
 * ImageMagick
 
 You will also need for testing:
