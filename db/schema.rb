@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_10_231149) do
+ActiveRecord::Schema.define(version: 2018_11_05_081426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -436,6 +436,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_231149) do
     t.text "notice", default: "", null: false
     t.text "notice_render_cache", default: "", null: false
     t.decimal "total_score_difference", precision: 20, scale: 6, default: "0.0", null: false
+    t.integer "placement"
     t.index ["division_id"], name: "index_league_rosters_on_division_id"
     t.index ["points"], name: "index_league_rosters_on_points"
     t.index ["team_id"], name: "index_league_rosters_on_team_id"

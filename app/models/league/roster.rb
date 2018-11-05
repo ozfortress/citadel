@@ -100,6 +100,12 @@ class League
       # Update tied counts on relevant rosters (from old and new points)
       Roster.update_tied_match_counters!(division, points)
       Roster.update_tied_match_counters!(division, old_points) if old_points != points
+
+      # Update roster placements
+      ordered_rosters_query = division.rosters.ordered(league).select(:id).to_sql
+      # rubocop:disable Rails/SkipsModelValidations
+      division.rosters.update_all("placement = array_position(ARRAY(#{ordered_rosters_query}), id)")
+      # rubocop:enable Rails/SkipsModelValidations
     end
 
     def self.update_tied_match_counters!(division, points)
