@@ -34,7 +34,11 @@ module Forums
         url = forums_thread_path(thread)
 
         users.each do |user|
-          Users::NotificationService.call(user, message, url)
+          # TODO: Remove duplicate permission logic
+          if !thread.hidden || (thread.not_isolated? && user.can?(:manage, :forums)) ||
+             (thread.isolated? && user.can?(:manage, thread.isolated_by))
+            Users::NotificationService.call(user, message, url)
+          end
         end
       end
     end

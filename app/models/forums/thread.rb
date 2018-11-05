@@ -56,7 +56,7 @@ module Forums
       end
     end
 
-    delegate :not_isolated?, to: :topic
+    delegate :not_isolated?, :isolated?, to: :topic
 
     def original_post
       posts.order(created_at: :asc).first

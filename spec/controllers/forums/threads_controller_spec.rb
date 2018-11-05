@@ -144,6 +144,8 @@ describe Forums::ThreadsController do
       end
 
       it 'creates hidden threads for any user' do
+        subscriber = create(:user)
+        topic.subscriptions.create!(user: subscriber)
         sign_in user
 
         post :create, params: {
@@ -157,6 +159,7 @@ describe Forums::ThreadsController do
         expect(thread.created_by).to eq(user)
         expect(thread.hidden).to eq(true)
         expect(response).to redirect_to(forums_thread_path(thread))
+        expect(subscriber.notifications).to be_empty
       end
     end
 
