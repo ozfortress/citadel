@@ -37,12 +37,47 @@ class League
       'won_rounds_against_tied_rosters_count DESC'
     end
 
+    def buchholz_helper_get_opponent_score(match, roster)
+      (away_team.won_rounds_count if match.home_team_id == roster.id) ||
+        (home_team.won_rounds_count if match.away_team_id == roster.id) || 0
+    end
+
+    def buchholz_helper_new_min_score(min_score, opponent_score)
+      opponent_score unless min_score.negative? || opponent_score < min_score
+    end
+
+    def buchholz_helper_new_max_score(max_score, opponent_score)
+      opponent_score unless max_score.negative? || opponent_score > max_score
+    end
+
+    def buchholz_helper_median(buchholz, min_score, max_score)
+      buchholz - min_score + max_score unless min_score.negative? || max_score.negative?
+    end
+
     def median_bucholz_score_value_for(roster)
-      roster.won_rounds_count * 1.0 + roster.drawn_rounds_count * 0.5
+      buchholz = 0
+      min_score = max_score = -1
+      roster.matches.each do |match|
+        next if match.status.confirmed?
+        opponent_score = buchholz_helper_get_opponent_score(match, roster)
+        min_score = buchholz_helper_new_min_score(min_score, opponent_score)
+        min_score = buchholz_helper_new_max_score(max_score, opponent_score)
+        buchholz += opponent_score
+      end
+      buchholz_helper_median(buchholz, min_score, max_score)
     end
 
     def median_bucholz_score_order
-      '(won_rounds_count * 1.0 + drawn_rounds_count * 0.5) DESC'
+      '(median_buchholz = 0
+      min_score = max_score = -1
+      roster.matches.each do |match|
+        next if match.status.confirmed?
+        opponent_score = buchholz_helper_get_opponent_score(match, roster)
+        min_score = buchholz_helper_new_min_score(min_score, opponent_score)
+        min_score = buchholz_helper_new_max_score(max_score, opponent_score)
+        median_buchholz += opponent_score
+      end
+      buchholz_helper_median(buchholz, min_score, max_score)) DESC'
     end
 
     def round_score_difference_value_for(roster)
