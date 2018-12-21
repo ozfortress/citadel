@@ -3,10 +3,10 @@ FactoryBot.define do
     association :created_by, factory: :user
     user
     association :roster, factory: :league_roster
-    is_joining true
+    is_joining { true }
 
     transient do
-      propagate false
+      propagate { false }
     end
 
     after(:build) do |transfer, evaluator|

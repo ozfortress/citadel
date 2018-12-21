@@ -83,6 +83,7 @@ class League < ApplicationRecord
 
   def ordered_rosters_by_division
     return divisions.map { |div| [div, []] } if rosters.approved.empty?
+
     rosters.includes(:division).order(:division_id).approved.ordered(self).group_by(&:division)
   end
 
