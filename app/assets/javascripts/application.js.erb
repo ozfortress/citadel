@@ -36,7 +36,9 @@ $(function() {
         var url = "/notifications"
         $.ajax(url);
     }
-    setInterval(updateNotifications, 20000);
+    if ($.cookie('signed_in')) {
+        setInterval(updateNotifications, 20000);
+    }
 
     // Tab toggling for select tags
     $("select[data-toggle='tab']").on('change', function(e) {
