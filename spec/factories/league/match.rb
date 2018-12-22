@@ -1,12 +1,12 @@
 FactoryBot.define do
   factory :league_match, class: League::Match do
-    status :pending
-    round_number 1
-    round_name ''
-    has_winner false
+    status { :pending }
+    round_number { 1 }
+    round_name { '' }
+    has_winner { false }
 
     transient do
-      division nil
+      division { nil }
     end
 
     after(:build) do |match, evaluator|
@@ -31,10 +31,10 @@ FactoryBot.define do
   end
 
   factory :bye_league_match, class: League::Match do
-    status :confirmed
-    away_team nil
-    round_number 1
-    round_name ''
+    status { :confirmed }
+    away_team { nil }
+    round_number { 1 }
+    round_name { '' }
 
     after(:build) do |match, _|
       div = if match.home_team

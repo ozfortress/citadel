@@ -35,9 +35,13 @@ Style/MixinUsage:
   Exclude:
     - 'bin/setup'
     - 'bin/update'
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
 
 Naming/UncommunicativeMethodParamName:
-  AllowedNames: [_] # rubocop bug workaround
+  MinNameLength: 2
+  AllowedNames:
+    - _
 
 # 'old' style
 Style/EmptyMethod:
@@ -75,4 +79,8 @@ AllCops:
 
 # TODO: Remove once rubocop fixes some bugs
 Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+# TODO: Remove once rubocop fixes some bugs
+Layout/AlignHash:
   Enabled: false

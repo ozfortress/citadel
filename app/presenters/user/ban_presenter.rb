@@ -20,11 +20,13 @@ class User
 
     def terminated_at
       return 'N/A' unless ban.terminated_at
+
       ban.terminated_at.strftime('%c')
     end
 
     def duration
       return 'Indefinite' unless ban.terminated_at
+
       distance_of_time_in_words(ban.terminated_at - Time.zone.now)
     end
 

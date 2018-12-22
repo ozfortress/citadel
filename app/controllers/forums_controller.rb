@@ -6,6 +6,7 @@ class ForumsController < ApplicationController
     @threads = Forums::Thread.where(topic: nil)
 
     return if user_can_manage_forums?
+
     @topics  = @topics.visible
     @threads = @threads.visible
   end

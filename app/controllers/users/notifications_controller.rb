@@ -5,7 +5,6 @@ module Users
     before_action only: [:show, :destroy] do
       @notification = current_user.notifications.find(params[:id])
     end
-    skip_after_action :track_action, only: :index
 
     def index
       render :index, formats: [:js]

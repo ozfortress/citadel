@@ -30,7 +30,9 @@ class User < ApplicationRecord
   has_many :forums_posts, class_name: 'Forums::Post', inverse_of: :created_by, foreign_key: :created_by
   has_many :public_forums_posts, -> { publicly_viewable }, class_name: 'Forums::Post', foreign_key: :created_by
 
-  devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:steam]
+  has_many :logs, class_name: 'User::Log'
+
+  devise :rememberable, :omniauthable, omniauth_providers: [:steam]
 
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
   validates :steam_id, presence: true, uniqueness: true,
@@ -119,10 +121,6 @@ class User < ApplicationRecord
 
   def aka
     names.approved.where.not(name: name)
-  end
-
-  def distinct_ips
-    Visit.select('DISTINCT ON (ip) ip').reorder('ip').where(user: self)
   end
 
   def notify!(message, link)

@@ -42,6 +42,7 @@ module Forums
       end
 
       return unless parent
+
       self.locked = parent.locked if locked.nil?
       self.hidden = parent.hidden if hidden.nil?
     end

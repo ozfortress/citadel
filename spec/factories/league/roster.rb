@@ -3,12 +3,12 @@ FactoryBot.define do
     team
     association :division, factory: :league_division
     sequence(:name) { |n| "Immunity #{n}" }
-    description 'We beat everyone'
-    approved true
+    description { 'We beat everyone' }
+    approved { true }
 
     transient do
-      player_count 1
-      players nil
+      player_count { 1 }
+      players { nil }
     end
 
     after(:build) do |roster, evaluator|

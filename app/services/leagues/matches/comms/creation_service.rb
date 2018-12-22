@@ -32,6 +32,7 @@ module Leagues
         def notify_captains(roster, user, message, link)
           User.which_can(:edit, roster.team).each do |captain|
             next if captain == user
+
             Users::NotificationService.call(captain, message, link)
           end
         end

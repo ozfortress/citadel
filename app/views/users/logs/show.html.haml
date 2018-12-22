@@ -18,14 +18,11 @@
     %tr
       %th IP Address
       %th First Seen
-      %th Browser
-      %th Operating System
+      %th Last Seen
   %tbody
-    - @visits.each do |visit|
-      - visit_p = present(visit)
+    - @logs.each do |log|
+      - log_p = present(log)
       %tr
-        %td= visit.ip
-        %td= visit_p.started_at
-        %td= visit.browser
-        %td= visit.os
-
+        %td= log.ip
+        %td= log_p.first_seen_at
+        %td= log_p.last_seen_at

@@ -5,9 +5,6 @@ class AdminController < ApplicationController
   end
 
   def statistics
-    @timeframe = (params[:t] || 30.minutes).to_i.seconds
-    events_in_timeframe = Ahoy::Event.where(time: @timeframe.ago..Time.current)
-    @events_per_second = events_in_timeframe.count / @timeframe.to_f
     @users_count = User.count
     @api_keys_count = APIKey.count
     @teams_count = Team.count

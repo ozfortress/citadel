@@ -235,6 +235,7 @@ class League
 
     def validate_winner
       return if home_team.blank? || away_team.blank? || pending? || !has_winner?
+
       update_team_cache
 
       if no_forfeit?
