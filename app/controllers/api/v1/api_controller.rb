@@ -6,7 +6,6 @@ module API
         @api_key ||= APIKey.find_by(key: key)
       end
 
-      before_action :track_action
       before_action :authenticate
 
       rescue_from Exception do |error|
@@ -44,10 +43,6 @@ module API
         options[:message] ||= 'Record not found'
 
         render_error :not_found, options
-      end
-
-      def track_action
-        ahoy.track "#{request.method} #{request.fullpath}", request.filtered_parameters.to_s
       end
     end
   end

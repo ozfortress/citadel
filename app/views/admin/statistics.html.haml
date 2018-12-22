@@ -3,19 +3,8 @@
 %h2 Statistics
 
 .panel.panel-default
-  .panel-heading Statistics
-  .panel-body
-    - times = [5.minutes, 10.minutes, 30.minutes, 2.hours]
-    - times.each do |timeframe|
-      - cls = timeframe == @timeframe ? 'active' : ''
-      = link_to timeframe.inspect, admin_statistics_path(t: timeframe),
-                class: "#{cls} btn btn-default"
-
-  %table.table
+  %table.table.table-striped
     %tbody
-      %tr
-        %td Requests per Second
-        %td= @events_per_second.round(4)
       %tr
         %td Number of Users
         %td= @users_count

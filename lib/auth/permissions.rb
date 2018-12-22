@@ -51,7 +51,7 @@ module Auth
     end
 
     def instance_map
-      @instance_map ||= @instances.map { |inst| [inst.id, inst] }.to_h
+      @instance_map ||= @instances.index_by(&:id)
     end
 
     def get_actions_relation(action_model, subject)

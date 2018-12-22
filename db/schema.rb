@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_05_081426) do
+ActiveRecord::Schema.define(version: 2018_12_22_113254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -142,15 +142,6 @@ ActiveRecord::Schema.define(version: 2018_11_05_081426) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_action_user_use_users_bans_on_user_id"
-  end
-
-  create_table "ahoy_events", id: :serial, force: :cascade do |t|
-    t.integer "visit_id"
-    t.string "name"
-    t.json "properties"
-    t.datetime "time"
-    t.index ["name", "time"], name: "index_ahoy_events_on_name_and_time"
-    t.index ["visit_id", "name"], name: "index_ahoy_events_on_visit_id_and_name"
   end
 
   create_table "api_keys", id: :serial, force: :cascade do |t|
@@ -567,6 +558,16 @@ ActiveRecord::Schema.define(version: 2018_11_05_081426) do
     t.index ["user_id"], name: "index_user_comments_on_user_id"
   end
 
+  create_table "user_logs", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.inet "ip", null: false
+    t.datetime "first_seen_at", null: false
+    t.datetime "last_seen_at", null: false
+    t.index ["ip"], name: "index_user_logs_on_ip"
+    t.index ["user_id", "ip"], name: "index_user_logs_on_user_id_and_ip", unique: true
+    t.index ["user_id"], name: "index_user_logs_on_user_id"
+  end
+
   create_table "user_name_changes", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "approved_by_id"
@@ -606,11 +607,6 @@ ActiveRecord::Schema.define(version: 2018_11_05_081426) do
     t.string "name", null: false
     t.bigint "steam_id", null: false
     t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip"
-    t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description", default: "", null: false
@@ -633,44 +629,6 @@ ActiveRecord::Schema.define(version: 2018_11_05_081426) do
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["query_name_cache"], name: "index_users_on_query_name_cache", opclass: :gist_trgm_ops, using: :gist
     t.index ["steam_id"], name: "index_users_on_steam_id", unique: true
-  end
-
-  create_table "visits", id: :serial, force: :cascade do |t|
-    t.string "visit_token"
-    t.string "visitor_token"
-    t.string "ip"
-    t.text "user_agent"
-    t.text "referrer"
-    t.text "landing_page"
-    t.integer "user_id"
-    t.string "referring_domain"
-    t.string "search_keyword"
-    t.string "browser"
-    t.string "os"
-    t.string "device_type"
-    t.integer "screen_height"
-    t.integer "screen_width"
-    t.string "country"
-    t.string "region"
-    t.string "city"
-    t.string "postal_code"
-    t.decimal "latitude"
-    t.decimal "longitude"
-    t.string "utm_source"
-    t.string "utm_medium"
-    t.string "utm_term"
-    t.string "utm_content"
-    t.string "utm_campaign"
-    t.datetime "started_at"
-    t.integer "api_key_id"
-    t.index ["api_key_id"], name: "index_visits_on_api_key_id"
-    t.index ["browser"], name: "index_visits_on_browser"
-    t.index ["ip"], name: "index_visits_on_ip"
-    t.index ["os"], name: "index_visits_on_os"
-    t.index ["referring_domain"], name: "index_visits_on_referring_domain"
-    t.index ["started_at"], name: "index_visits_on_started_at"
-    t.index ["user_id"], name: "index_visits_on_user_id"
-    t.index ["visit_token"], name: "index_visits_on_visit_token", unique: true
   end
 
   add_foreign_key "action_user_edit_games", "users"
@@ -760,6 +718,7 @@ ActiveRecord::Schema.define(version: 2018_11_05_081426) do
   add_foreign_key "user_comments", "users"
   add_foreign_key "user_comments", "users", column: "created_by_id"
   add_foreign_key "user_comments", "users", column: "deleted_by_id"
+  add_foreign_key "user_logs", "users"
   add_foreign_key "user_name_changes", "users"
   add_foreign_key "user_name_changes", "users", column: "approved_by_id"
   add_foreign_key "user_name_changes", "users", column: "denied_by_id"

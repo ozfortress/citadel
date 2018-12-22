@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     @notifications = current_user.notifications.order(created_at: :desc).load if user_signed_in?
   end
 
-  after_action :track_action
+  after_action :track_user
 
   protected
 
@@ -17,7 +17,15 @@ class ApplicationController < ActionController::Base
     redirect_back(fallback_location: root_path) unless user_signed_in?
   end
 
-  def track_action
-    ahoy.track "#{request.method} #{request.fullpath}", request.filtered_parameters.to_s
+  def track_user
+    return unless user_signed_in?
+
+    ip = request.remote_ip
+
+    # Track ip address changes
+    return unless session[:ip] != ip
+
+    User::Log.log_user!(current_user, ip)
+    session[:ip] = ip
   end
 end

@@ -44,8 +44,6 @@ gem 'redcarpet'
 # File Uploads
 gem 'carrierwave'
 gem 'mini_magick'
-# Tracking and analytics
-gem 'ahoy_matey', '~> 1.6'
 # API Serialization
 gem 'active_model_serializers', '~> 0.10.0'
 # Tournament systems

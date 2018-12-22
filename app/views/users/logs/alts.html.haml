@@ -7,28 +7,32 @@
 
 %hr
 
-- if @alts.empty?
+- if @alt_logs.empty?
   No alternate accounts found...
 
 - else
   %table.table.table-striped
     %thead
       %tr
-        %th Alt
+        %th Account
         %th Matching IP
         %th Signed up
-        %th First Alt Visit
-        %th First User Visit
+        %th Alt First Seen
+        %th Alt Last Seen
+        %th User First Seen
+        %th User Last Seen
     %tbody
-      - @alts.each do |visit|
+      - @alt_logs.each do |alt_log|
         :ruby
-          visit_p = present(visit)
-          matching_visit = @matching_visits[visit.ip]
-          matching_p = present(matching_visit)
+          alt_log_p = present(alt_log)
+          user_log = @logs_map[alt_log.ip]
+          user_log_p = present(user_log)
 
         %tr
-          %td= visit_p.user.link
-          %td= visit.ip
-          %td= visit_p.user.created_at
-          %td= visit_p.started_at
-          %td= matching_p.started_at
+          %td= alt_log_p.user.link
+          %td= alt_log.ip
+          %td= alt_log_p.user.created_at
+          %td= alt_log_p.first_seen_at
+          %td= alt_log_p.last_seen_at
+          %td= user_log_p.first_seen_at
+          %td= user_log_p.last_seen_at
