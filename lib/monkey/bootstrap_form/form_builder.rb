@@ -6,7 +6,7 @@ module BootstrapForm
       id = options[:id] || method
 
       form_group_builder(method, options, html_options) do
-        prepend_and_append_input('editor', options) do
+        prepend_and_append_input(options) do
           out = content_tag(:div, '', id: "wmd-button-bar-#{id}")
           html_options = { class: 'wmd-input form-control', id: "wmd-input-#{id}" }
           out += text_area_without_bootstrap(method, options.merge(html_options))
