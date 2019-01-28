@@ -14,10 +14,6 @@ class PermissionsController < ApplicationController
               end
   end
 
-  before_action only: [:grant, :revoke] do
-    @user = target_users.find(params.require(:user_id))
-  end
-
   before_action :require_login
   before_action :ensure_valid_target, except: :index
   before_action :require_permission, except: :index
@@ -37,12 +33,14 @@ class PermissionsController < ApplicationController
   end
 
   def grant
-    @user.grant(@action, @target)
+    user = target_users.find(params.require(:user_id))
+    user.grant(@action, @target)
     redirect_back
   end
 
   def revoke
-    @user.revoke(@action, @target)
+    user = User.find(params.require(:user_id))
+    user.revoke(@action, @target)
     redirect_back
   end
 
