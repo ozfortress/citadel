@@ -31,15 +31,6 @@ $(function() {
     // Enable all tooltips
     $("[data-toggle='tooltip']").tooltip();
 
-    // Start periodic checks for notifications
-    function updateNotifications() {
-        var url = "/notifications"
-        $.ajax(url);
-    }
-    if ($.cookie('signed_in')) {
-        setInterval(updateNotifications, 20000);
-    }
-
     // Tab toggling for select tags
     $("select[data-toggle='tab']").on('change', function(e) {
         var self = $(this);
