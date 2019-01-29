@@ -48,7 +48,7 @@
           = form_for(transfer_request, as: :request, method: :delete,
                      url: roster_transfer_path(roster, transfer_request)) do
             = button_tag type: 'submit', class: 'btn btn-danger pull-right',
-                         data: { confirm: 'Are you sure you want to cancel this transfer?' }  do
+                         data: { confirm: 'Are you sure you want to cancel this transfer?' } do
               Cancel
               %span.glyphicon.glyphicon-remove
         = present(user).league_status(league)
