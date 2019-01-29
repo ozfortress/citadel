@@ -56,7 +56,17 @@ module Forums
       end
     end
 
-    delegate :not_isolated?, :isolated?, to: :topic
+    def isolated?
+      if topic.nil?
+        false
+      else
+        topic.isolated?
+      end
+    end
+
+    def not_isolated?
+      !isolated?
+    end
 
     def original_post
       posts.order(created_at: :asc).first

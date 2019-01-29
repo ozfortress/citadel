@@ -25,7 +25,7 @@ class UserPresenter < BasePresenter
   end
 
   def steam_link
-    link_to(steam_profile_url, target: '_blank') do
+    link_to(steam_profile_url, target: '_blank', rel: 'noopener') do
       content = [
         content_tag(:span, '', class: 'glyphicon glyphicon-link small'),
         user.steam_id3,

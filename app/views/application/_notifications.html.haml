@@ -14,3 +14,9 @@
   %ul.list-group#notifications-list
     - notifications.each do |notification|
       = render 'notification', notification: notification
+/ Periodic notification checks
+:javascript
+  setInterval(function() {
+    var url = "/notifications"
+    $.ajax(url);
+  }, 20000);

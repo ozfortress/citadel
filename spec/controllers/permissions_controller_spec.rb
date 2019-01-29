@@ -149,10 +149,10 @@ describe PermissionsController do
       user.grant(:edit, team)
       sign_in team_admin
 
-      expect do
-        delete :revoke, params: { action_: :edit, subject: :team,
-                                  target: team.id, user_id: user.id }
-      end.to raise_error(ActiveRecord::RecordNotFound)
+      delete :revoke, params: { action_: :edit, subject: :team,
+                                target: team.id, user_id: user.id }
+
+      expect(user.reload.can?(:edit, team)).to be(false)
     end
 
     it 'redirects for admin without authorization with team' do

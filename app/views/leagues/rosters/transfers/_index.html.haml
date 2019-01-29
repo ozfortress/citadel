@@ -10,7 +10,8 @@
           = f.hidden_field :user_id, value: user.id
           = f.hidden_field :is_joining, value: false
           = button_tag type: 'submit', class: 'btn btn-danger pull-right',
-                       disabled: league.transfer_requests.pending.exists?(user: user) do
+                       disabled: league.transfer_requests.pending.exists?(user: user),
+                       data: { confirm: "Are you sure you want to transfer #{user.name} out of the active roster?" } do
             Remove
             %span.glyphicon.glyphicon-remove
 
@@ -18,7 +19,8 @@
         - if transfer_request
           = form_for(transfer_request, as: :request, method: :delete,
                      url: roster_transfer_path(roster, transfer_request)) do
-            = button_tag type: 'submit', class: 'btn btn-danger pull-right' do
+            = button_tag type: 'submit', class: 'btn btn-danger pull-right',
+                         data: { confirm: 'Are you sure you want to cancel this transfer?' } do
               Cancel
               %span.glyphicon.glyphicon-remove
         = present(user).transfer_status(league)
@@ -35,8 +37,8 @@
           = f.hidden_field :user_id, value: user.id
           = f.hidden_field :is_joining, value: true
           - disabled = league.transfer_requests.pending.exists?(user: user, is_joining: true)
-          = button_tag type: 'submit', class: 'btn btn-success pull-right',
-                       disabled: disabled do
+          = button_tag type: 'submit', class: 'btn btn-success pull-right', disabled: disabled,
+                       data: { confirm: "Are you sure you want to transfer #{user.name} into the active roster?" } do
             Add
             %span.glyphicon.glyphicon-plus
 
@@ -45,7 +47,8 @@
         - if transfer_request
           = form_for(transfer_request, as: :request, method: :delete,
                      url: roster_transfer_path(roster, transfer_request)) do
-            = button_tag type: 'submit', class: 'btn btn-danger pull-right' do
+            = button_tag type: 'submit', class: 'btn btn-danger pull-right',
+                         data: { confirm: 'Are you sure you want to cancel this transfer?' } do
               Cancel
               %span.glyphicon.glyphicon-remove
         = present(user).league_status(league)

@@ -96,8 +96,6 @@ Rails.application.routes.draw do
       patch 'invite'
       patch 'leave'
       patch 'kick'
-      patch 'grant'
-      patch 'revoke'
     end
 
     resource :invite, controller: 'teams/invite', only: [] do

@@ -84,3 +84,7 @@ Rails/HasManyOrHasOneDependent:
 # TODO: Remove once rubocop fixes some bugs
 Layout/AlignHash:
   Enabled: false
+
+# TODO: Fix
+Rails/LinkToBlank:
+  Enabled: false

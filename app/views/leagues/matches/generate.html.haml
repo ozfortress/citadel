@@ -3,6 +3,8 @@
 %h2 Generate Matches for #{present(@league).link}
 
 = bootstrap_form_for @match, as: :match, url: generate_league_matches_path(@league) do |f|
+  = f.errors_on :base
+
   .panel.panel-info
     .panel-heading Generation Settings
     .panel-body
