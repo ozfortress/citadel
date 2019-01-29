@@ -134,10 +134,11 @@ describe League::Match do
     end
 
     it 'validates that matches with winners cannot have draws' do
-      expect(build(:league_match, has_winner: false, allow_round_draws: false)).to be_valid
-      expect(build(:league_match, has_winner: false, allow_round_draws: true)).to be_valid
-      expect(build(:league_match, has_winner: true, allow_round_draws: false)).to be_valid
-      expect(build(:league_match, has_winner: true, allow_round_draws: true)).to be_invalid
+      rounds = build_list(:league_match_round, 3)
+      expect(build(:league_match, rounds: rounds, has_winner: false, allow_round_draws: false)).to be_valid
+      expect(build(:league_match, rounds: rounds, has_winner: false, allow_round_draws: true)).to be_valid
+      expect(build(:league_match, rounds: rounds, has_winner: true, allow_round_draws: false)).to be_valid
+      expect(build(:league_match, rounds: rounds, has_winner: true, allow_round_draws: true)).to be_invalid
     end
 
     it 'validates scores' do
@@ -182,7 +183,7 @@ describe League::Match do
     end
 
     it 'validates forfeits' do
-      match = build(:league_match, has_winner: true)
+      match = build(:league_match, has_winner: true, rounds: [build(:league_match_round)])
 
       match.forfeit_by = :away_team_forfeit
 

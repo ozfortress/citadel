@@ -39,6 +39,7 @@ class League
     validate :validate_rosters_not_disbanded, on: :create
     validate :validate_winner
     validate :validate_draws_not_allowed_when_winnable
+    validate :validate_odd_number_of_rounds_when_winnable
 
     scope :ordered, -> { order(round_number: :desc, created_at: :asc) }
     scope :bye, -> { where(away_team: nil) }
@@ -256,6 +257,12 @@ class League
     def validate_draws_not_allowed_when_winnable
       if has_winner && allow_round_draws
         errors.add(:allow_round_draws, "Match rounds can't draw when match has a winner")
+      end
+    end
+
+    def validate_odd_number_of_rounds_when_winnable
+      if has_winner && !bye? && rounds.size.even?
+        errors.add(:base, 'Match cannot be winnable with an even number of sets')
       end
     end
 
