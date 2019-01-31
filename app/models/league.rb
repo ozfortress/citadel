@@ -60,7 +60,7 @@ class League < ApplicationRecord
 
   after_initialize :set_defaults, unless: :persisted?
   before_save :update_query_cache
-  after_save :update_roster_match_counters
+  after_save :trigger_scores_update!
 
   scope :visible, -> { where.not(status: League.statuses[:hidden]) }
 
@@ -84,7 +84,7 @@ class League < ApplicationRecord
   def ordered_rosters_by_division
     return divisions.map { |div| [div, []] } if rosters.approved.empty?
 
-    rosters.includes(:division).order(:division_id).approved.ordered(self).group_by(&:division)
+    rosters.includes(:division).order(:division_id).approved.ordered.group_by(&:division)
   end
 
   def valid_roster_size?(size)
@@ -121,14 +121,14 @@ class League < ApplicationRecord
     save!
   end
 
+  def trigger_scores_update!
+    divisions.find_each { |div| Leagues::Rosters::ScoreUpdatingService.call(self, div) }
+  end
+
   private
 
   def update_query_cache
     self.query_name_cache = Search.transform_query(name)
-  end
-
-  def update_roster_match_counters
-    rosters.approved.find_each(&:update_match_counters!)
   end
 
   def validate_players_range

@@ -4,7 +4,6 @@ describe Leagues::Matches::GenerationService do
   describe 'single elimination' do
     it 'works' do
       division = create(:league_division)
-      league = division.league
 
       team1 = create(:league_roster, division: division, seeding: 3)
       team2 = create(:league_roster, division: division, seeding: 2)
@@ -50,7 +49,7 @@ describe Leagues::Matches::GenerationService do
       )
       expect(match2.winner).to eq(team1)
 
-      rosters = division.rosters.ordered(league).to_a
+      rosters = division.rosters.ordered.to_a
       expect(rosters).to eq([team3, team1, team2, team4])
 
       map = create(:map)
@@ -78,7 +77,7 @@ describe Leagues::Matches::GenerationService do
       )
       expect(match.winner).to eq(team1)
 
-      rosters = division.rosters.ordered(league).to_a
+      rosters = division.rosters.ordered.to_a
       expect(rosters).to eq([team1, team3, team2, team4])
     end
   end

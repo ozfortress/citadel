@@ -19,15 +19,18 @@ class League
 
       validate :validate_scores
 
-      scope :with_outcome, -> { where(has_outcome: true) }
-      scope :winner, ->(winner) { with_outcome.where(winner: winner) }
-      scope :loser, ->(loser) { with_outcome.where(loser: loser) }
-      scope :drawn, -> { with_outcome.where(winner: nil) }
-
       before_save :update_cache
 
       def draw?
         home_team_score == away_team_score
+      end
+
+      def home_team_won?
+        home_team_score > away_team_score
+      end
+
+      def away_team_won?
+        away_team_score > home_team_score
       end
 
       def reset_cache!
@@ -36,14 +39,12 @@ class League
       end
 
       def calculate_winner_id
-        if home_team_score > away_team_score
+        if home_team_won?
           match.home_team_id
-        elsif away_team_score > home_team_score
+        elsif away_team_won?
           match.away_team_id
         end
       end
-
-      private
 
       def update_cache
         self.score_difference = home_team_score - away_team_score
@@ -51,11 +52,13 @@ class League
         update_wl_cache
       end
 
+      private
+
       def update_wl_cache
-        if home_team_score > away_team_score && has_outcome
+        if home_team_won? && has_outcome?
           self.winner_id = match.home_team_id
           self.loser_id  = match.away_team_id
-        elsif away_team_score > home_team_score && has_outcome
+        elsif away_team_won? && has_outcome?
           self.winner_id = match.away_team_id
           self.loser_id  = match.home_team_id
         else

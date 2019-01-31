@@ -5,17 +5,21 @@ class League
     NAMES = {
       'round_wins'                      => 'Wins',
       'round_score_sum'                 => 'Total Score',
-      'round_wins_against_tied_rosters' => 'Tied Wins',
-      'median_bucholz_score'            => 'Buchholz',
+      'round_wins_against_tied_rosters' => 'Direct Encounter',
+      'normalized_round_score'          => 'Norm. Score',
       'round_score_difference'          => 'Score Difference',
+      'buchholz'                        => 'Buchholz',
+      'median_buchholz'                 => 'Median Buchholz',
     }.freeze
 
     TITLES = {
       'round_wins'                      => 'Total number of rounds won',
       'round_score_sum'                 => 'Sum of scores of all rounds',
-      'round_wins_against_tied_rosters' => 'Maps won against tied teams',
-      'median_bucholz_score'            => 'Median Buchholz score',
+      'round_wins_against_tied_rosters' => 'Rounds won against currently tied teams',
+      'normalized_round_score'          => 'Normalized score based on round wins/draws',
       'round_score_difference'          => 'Total score difference of all rounds',
+      'buchholz'                        => 'Sum of opponent scores times your score',
+      'median_buchholz'                 => 'Sum or opponent scores times your score, ignoring the highest and lowest',
     }.freeze
 
     def name
