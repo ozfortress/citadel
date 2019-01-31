@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_29_232424) do
+ActiveRecord::Schema.define(version: 2019_01_31_230242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -418,8 +418,8 @@ ActiveRecord::Schema.define(version: 2019_01_29_232424) do
     t.integer "lost_rounds_count", default: 0, null: false
     t.integer "won_matches_count", default: 0, null: false
     t.integer "lost_matches_count", default: 0, null: false
-    t.integer "points", default: 0, null: false
-    t.integer "total_scores", default: 0, null: false
+    t.decimal "points", default: "0.0", null: false
+    t.decimal "total_scores", default: "0.0", null: false
     t.json "schedule_data"
     t.integer "won_rounds_against_tied_rosters_count", default: 0, null: false
     t.text "description_render_cache", default: "", null: false
@@ -466,11 +466,11 @@ ActiveRecord::Schema.define(version: 2019_01_29_232424) do
     t.integer "max_players", default: 0, null: false
     t.boolean "matches_submittable", default: false, null: false
     t.boolean "transfers_require_approval", default: true, null: false
-    t.integer "points_per_round_win", default: 2, null: false
-    t.integer "points_per_round_draw", default: 1, null: false
-    t.integer "points_per_round_loss", default: 0, null: false
-    t.integer "points_per_match_loss", default: 0, null: false
-    t.integer "points_per_match_win", default: 1, null: false
+    t.decimal "points_per_round_win", default: "2.0", null: false
+    t.decimal "points_per_round_draw", default: "1.0", null: false
+    t.decimal "points_per_round_loss", default: "0.0", null: false
+    t.decimal "points_per_match_loss", default: "0.0", null: false
+    t.decimal "points_per_match_win", default: "1.0", null: false
     t.boolean "allow_disbanding", default: false, null: false
     t.integer "status", default: 0, null: false
     t.integer "rosters_count", default: 0, null: false
@@ -478,11 +478,11 @@ ActiveRecord::Schema.define(version: 2019_01_29_232424) do
     t.boolean "schedule_locked", default: false, null: false
     t.string "query_name_cache", default: "", null: false
     t.text "description_render_cache", default: "", null: false
-    t.integer "points_per_match_draw", default: 0, null: false
+    t.decimal "points_per_match_draw", default: "0.0", null: false
     t.string "category", default: "", null: false
-    t.integer "points_per_forfeit_win", default: 2, null: false
-    t.integer "points_per_forfeit_draw", default: 1, null: false
-    t.integer "points_per_forfeit_loss", default: 0, null: false
+    t.decimal "points_per_forfeit_win", default: "2.0", null: false
+    t.decimal "points_per_forfeit_draw", default: "1.0", null: false
+    t.decimal "points_per_forfeit_loss", default: "0.0", null: false
     t.boolean "forfeit_all_matches_when_roster_disbands", default: true, null: false
     t.index ["format_id"], name: "index_leagues_on_format_id"
     t.index ["query_name_cache"], name: "index_leagues_on_query_name_change", opclass: :gist_trgm_ops, using: :gist

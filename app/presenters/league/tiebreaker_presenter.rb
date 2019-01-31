@@ -33,5 +33,12 @@ class League
     def name_with_tooltip
       content_tag(:u, name, data: { toggle: :tooltip, placement: :bottom }, title: title)
     end
+
+    def value_for(roster)
+      number_with_precision(
+        tiebreaker.value_for(roster),
+        strip_insignificant_zeros: true
+      )
+    end
   end
 end

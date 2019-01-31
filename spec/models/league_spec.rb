@@ -36,22 +36,11 @@ describe League do
   it { should validate_numericality_of(:max_players).is_greater_than_or_equal_to(0) }
 
   it { should validate_presence_of(:points_per_round_win) }
-  it { should validate_numericality_of(:points_per_round_win).only_integer }
-
   it { should validate_presence_of(:points_per_round_draw) }
-  it { should validate_numericality_of(:points_per_round_draw).only_integer }
-
   it { should validate_presence_of(:points_per_round_loss) }
-  it { should validate_numericality_of(:points_per_round_loss).only_integer }
-
   it { should validate_presence_of(:points_per_match_win) }
-  it { should validate_numericality_of(:points_per_match_win).only_integer }
-
   it { should validate_presence_of(:points_per_match_draw) }
-  it { should validate_numericality_of(:points_per_match_draw).only_integer }
-
   it { should validate_presence_of(:points_per_match_loss) }
-  it { should validate_numericality_of(:points_per_match_loss).only_integer }
 
   it { should define_enum_for(:schedule).with([:manual, :weeklies]) }
 
