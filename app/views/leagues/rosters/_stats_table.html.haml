@@ -1,0 +1,32 @@
+%table.table.table-responsive
+  %tbody
+    %tr
+      %th League Points
+      %td= roster_p.points_s
+    - if roster.placement
+      %tr
+        %th League Rank
+        %td ##{roster.placement + 1}
+    - if roster.seeding
+      %tr
+        %th Seed
+        %td ##{roster.seeding}
+    %tr
+    %tr
+      %th Rounds Won
+      %td= roster.won_rounds_count
+    %tr
+      %th Rounds Lost
+      %td= roster.lost_rounds_count
+    %tr
+      %th Rounds Drawn
+      %td= roster.drawn_rounds_count
+    %tr
+      %th Points Scored
+      %td= roster.total_scores
+    %tr
+      %th Points Scored Difference
+      %td= roster.total_score_difference
+    %tr
+      %th Bye Matches
+      %td= roster.bye_matches_count
