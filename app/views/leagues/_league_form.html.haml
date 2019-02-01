@@ -18,6 +18,7 @@
   .panel-heading State
   .panel-body
     = f.check_box :signuppable
+    = f.check_box :hide_rosters
     = f.check_box :roster_locked
     = f.check_box :matches_submittable
     = f.check_box :transfers_require_approval
@@ -27,15 +28,15 @@
 .panel.panel-default
   .panel-heading Points
   .panel-body
-    = f.number_field :points_per_round_win,  label: 'Points per set won'
-    = f.number_field :points_per_round_draw, label: 'Points per set drawn'
-    = f.number_field :points_per_round_loss, label: 'Points per set lost'
-    = f.number_field :points_per_match_win,  label: 'Points per match won'
-    = f.number_field :points_per_match_draw, label: 'Points per match drawn'
-    = f.number_field :points_per_match_loss, label: 'Points per match lost'
-    = f.number_field :points_per_forfeit_win, label: 'Points per match won by forfeit'
-    = f.number_field :points_per_forfeit_draw, label: 'Points per match drawn by forfeit'
-    = f.number_field :points_per_forfeit_loss, label: 'Points per match lost by forfeit'
+    = f.number_field :points_per_round_win,  label: 'Points per set won', step: :any
+    = f.number_field :points_per_round_draw, label: 'Points per set drawn', step: :any
+    = f.number_field :points_per_round_loss, label: 'Points per set lost', step: :any
+    = f.number_field :points_per_match_win,  label: 'Points per match won', step: :any
+    = f.number_field :points_per_match_draw, label: 'Points per match drawn', step: :any
+    = f.number_field :points_per_match_loss, label: 'Points per match lost', step: :any
+    = f.number_field :points_per_forfeit_win, label: 'Points per match won by forfeit', step: :any
+    = f.number_field :points_per_forfeit_draw, label: 'Points per match drawn by forfeit', step: :any
+    = f.number_field :points_per_forfeit_loss, label: 'Points per match lost by forfeit', step: :any
 
 .panel.panel-default
   .panel-heading Tiebreaking

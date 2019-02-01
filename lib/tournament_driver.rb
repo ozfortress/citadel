@@ -44,7 +44,7 @@ class TournamentDriver < TournamentSystem::Driver
   end
 
   def ranked_teams
-    @ranked_teams ||= division_rosters.ordered(@division.league).to_a
+    @ranked_teams ||= division_rosters.ordered.to_a
   end
 
   def get_match_winner(match)

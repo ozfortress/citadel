@@ -75,6 +75,15 @@
         .panel-collapse.collapse{ id: id }
           = render 'leagues/matches/matches_table', matches: matches, roster: roster
 
+        - id = "#{dom_id(roster)}-statistics"
+        .panel-heading
+          %a{ data: { toggle: 'collapse', parent: '.global-collapsible' }, href: "##{id}" }
+            Statistics
+            %span.pull-right.glyphicon.glyphicon-chevron-down
+
+        .panel-collapse.collapse{ id: id }
+          = render 'leagues/rosters/stats_table', roster: roster, roster_p: roster_p
+
       - id = "#{dom_id(roster)}-transfers"
       .panel-heading
         %a{ data: { toggle: 'collapse', parent: '.global-collapsible' }, href: "##{id}" }
@@ -173,6 +182,11 @@
             .panel-heading
               Matches:
             = render 'leagues/matches/matches_table', matches: matches, roster: roster
+
+          .panel-default
+            .panel-heading
+              Statistics:
+            = render 'leagues/rosters/stats_table', roster: roster, roster_p: roster_p
 
           .panel-default
             .panel-heading Transfer History:

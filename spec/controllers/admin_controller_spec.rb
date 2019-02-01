@@ -30,7 +30,6 @@ describe AdminController do
 
   describe 'GET #statistics' do
     let(:user) { create(:user) }
-    let(:visit) { create(:visit, user: user) }
 
     it 'succeeds for authorized' do
       user.grant(:edit, :games)

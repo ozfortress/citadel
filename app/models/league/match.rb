@@ -42,20 +42,10 @@ class League
     validate :validate_odd_number_of_rounds_when_winnable
 
     scope :ordered, -> { order(round_number: :desc, created_at: :asc) }
-    scope :bye, -> { where(away_team: nil) }
-    scope :not_bye, -> { where.not(away_team: nil) }
+
     scope :round, ->(round) { where(round_number: round) }
-    scope :winnable, -> { where(has_winner: true) }
 
     scope :for_roster, ->(roster) { where(home_team: roster).or(where(away_team: roster)) }
-
-    scope :winner, ->(winner) { no_forfeit.where(winner: winner) }
-    scope :drawn, -> { confirmed.winnable.no_forfeit.where(winner: nil) }
-    scope :loser, ->(loser) { no_forfeit.where(loser: loser) }
-    scope :single_forfeit, -> { home_team_forfeit.or(away_team_forfeit) }
-    scope :forfeit_winner, ->(winner) { single_forfeit.where(winner: winner) }
-    scope :forfeit_drawn, -> { technical_forfeit }
-    scope :forfeit_loser, ->(loser) { single_forfeit.where(loser: loser).or(mutual_forfeit) }
 
     after_initialize :set_defaults, unless: :persisted?
 
@@ -64,9 +54,9 @@ class League
     before_validation :update_pick_bans_order_numbers
     before_save :update_cache
 
-    after_create :update_roster_match_counters!, if: :confirmed?
-    after_update :update_roster_match_counters!
-    after_destroy :update_roster_match_counters!
+    after_create :trigger_score_update!, if: :confirmed?
+    after_update :trigger_score_update!
+    after_destroy :trigger_score_update!
 
     def confirm_scores(confirm)
       update(status: confirm ? :confirmed : :pending)
@@ -89,14 +79,13 @@ class League
       league.map_pool.where.not(id: pick_bans.completed.select(:map_id).where.not(map_id: nil))
     end
 
-    def update_roster_match_counters!
-      home_team.update_match_counters!
-      away_team&.update_match_counters!
-    end
-
+    # Update cache without triggering callbacks
     def reset_cache!
       update_cache
-      save!
+
+      # rubocop:disable Rails/SkipsModelValidations
+      update_columns(changes.map { |key, values| [key, values[1]] }.to_h) if changed?
+      # rubocop:enable Rails/SkipsModelValidations
     end
 
     def forfeit!(roster)
@@ -114,9 +103,14 @@ class League
 
     private
 
+    def trigger_score_update!
+      Leagues::Rosters::ScoreUpdatingService.call(league, division)
+    end
+
     def update_cache
       update_team_cache
       update_score_cache
+      update_round_cache
     end
 
     def update_team_cache
@@ -144,9 +138,13 @@ class League
       end
     end
 
+    def rounds_with_outcome
+      rounds.select(&:has_outcome)
+    end
+
     def update_outcome_team_cache
       wins = Hash.new 0
-      rounds.select(&:has_outcome).each { |round| wins[round.calculate_winner_id] += 1 }
+      rounds_with_outcome.each { |round| wins[round.calculate_winner_id] += 1 }
 
       wins_needed = rounds.size / 2.0
       self.winner_id, = wins.find { |_, count| count >= wins_needed }
@@ -160,13 +158,25 @@ class League
 
     def update_score_cache
       if !bye? && confirmed? && no_forfeit?
-        self.total_home_team_score = rounds.map(&:home_team_score).sum
-        self.total_away_team_score = rounds.map(&:away_team_score).sum
-        self.total_score_difference = rounds.map(&:score_difference).sum
+        self.total_home_team_score = rounds_with_outcome.map(&:home_team_score).sum
+        self.total_away_team_score = rounds_with_outcome.map(&:away_team_score).sum
+        self.total_score_difference = rounds_with_outcome.map(&:score_difference).sum
       else
         self.total_home_team_score = 0
         self.total_away_team_score = 0
         self.total_score_difference = 0
+      end
+    end
+
+    def update_round_cache
+      if !bye? && confirmed? && no_forfeit?
+        self.total_home_team_round_wins = rounds_with_outcome.count(&:home_team_won?)
+        self.total_away_team_round_wins = rounds_with_outcome.count(&:away_team_won?)
+        self.total_round_draws = rounds_with_outcome.count(&:draw?)
+      else
+        self.total_home_team_round_wins = 0
+        self.total_away_team_round_wins = 0
+        self.total_round_draws = 0
       end
     end
 

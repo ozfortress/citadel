@@ -44,6 +44,13 @@ class League
       end
     end
 
+    def points_s
+      number_with_precision(
+        roster.points,
+        strip_insignificant_zeros: true
+      )
+    end
+
     def score_s
       if disbanded?
         'Disbanded'

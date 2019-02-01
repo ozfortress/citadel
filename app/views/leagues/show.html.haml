@@ -51,7 +51,7 @@
       .panel-body
         = present(@roster).link 'View My Team', class: 'btn btn-default pull-right'
 
-  - if @league.signuppable?
+  - if @league.signuppable? || @league.hide_rosters?
     %ul.list-group
       - present_collection(@rosters).each do |roster|
         %li.list-group-item
@@ -64,6 +64,8 @@
         = javascript_include_tag 'brackets'
         = stylesheet_link_tag 'brackets', media: 'all'
 
+      - tiebreakers = present_collection(@league.tiebreakers)
+
       - @ordered_rosters.each do |div, rosters|
         %h3= div.name
         %table.table
@@ -71,15 +73,16 @@
             %th #
             %th Team
             %th Points
-            - present_collection(@league.tiebreakers).each do |tiebreaker|
+            - tiebreakers.each do |tiebreaker|
               %th= tiebreaker.name_with_tooltip
 
           - rosters.each_with_index do |roster, rank|
+            - roster_p = present(roster)
             %tr
               %th{ scope: 'row' }= rank + 1
-              %td= present(roster).listing
-              %td= roster.points
-              - @league.tiebreakers.each do |tiebreaker|
+              %td= roster_p.listing
+              %td= roster_p.points_s
+              - tiebreakers.each do |tiebreaker|
                 %th= tiebreaker.value_for(roster)
 
         / Render brackets

@@ -45,7 +45,7 @@ describe LeaguesController do
       # TODO: Test missing league params
       post :create, params: {
         league: { name: 'A', description: 'B', format_id: format.id, category: 'foo',
-                  signuppable: true, roster_locked: false, matches_submittable: true,
+                  signuppable: true, hide_rosters: true, roster_locked: false, matches_submittable: true,
                   transfers_require_approval: false, allow_disbanding: true,
                   forfeit_all_matches_when_roster_disbands: false, min_players: 1, max_players: 3,
                   points_per_round_win: 3, points_per_round_draw: 2,
@@ -68,6 +68,7 @@ describe LeaguesController do
       expect(comp.format).to eq(format)
       expect(comp.category).to eq('foo')
       expect(comp.signuppable).to be(true)
+      expect(comp.hide_rosters).to be(true)
       expect(comp.roster_locked).to be(false)
       expect(comp.matches_submittable).to be(true)
       expect(comp.transfers_require_approval).to be(false)
@@ -173,7 +174,7 @@ describe LeaguesController do
 
       patch :update, params: {
         id: comp.id, league: {
-          name: 'A', description: 'B', format_id: format2.id, signuppable: true,
+          name: 'A', description: 'B', format_id: format2.id, signuppable: true, hide_rosters: true,
           roster_locked: false, matches_submittable: true, transfers_require_approval: false,
           min_players: 1, max_players: 3, divisions_attributes: [{ name: 'PREM' }]
         }
@@ -184,6 +185,7 @@ describe LeaguesController do
       expect(comp.description).to eq('B')
       expect(comp.format).to eq(format2)
       expect(comp.signuppable).to be(true)
+      expect(comp.hide_rosters).to be(true)
       expect(comp.roster_locked).to be(false)
       expect(comp.matches_submittable).to be(true)
       expect(comp.transfers_require_approval).to be(false)
