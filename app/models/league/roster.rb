@@ -54,6 +54,11 @@ class League
     after_destroy { League.decrement_counter(:rosters_count, league.id) }
     # rubocop:enable Rails/SkipsModelValidations
 
+    after_create :trigger_score_update!, if: :approved?
+    after_save do
+      trigger_score_update! if [:ranking, :seeding, :approved, :disbanded].any? { |a| saved_change_to_attribute?(a) }
+    end
+
     after_initialize :set_defaults, unless: :persisted?
 
     def self.matches
@@ -109,6 +114,10 @@ class League
     end
 
     private
+
+    def trigger_score_update!
+      Leagues::Rosters::ScoreUpdatingService.call(league, division)
+    end
 
     def forfeit_all!
       matches.find_each do |match|
