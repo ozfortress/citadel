@@ -103,7 +103,7 @@ class League
     end
 
     def past_title
-      verb = object.placement ? "placed #{object.placement.ordinalize}" : 'played'
+      verb = object.placement ? "placed #{(object.placement + 1).ordinalize}" : 'played'
       text = "#{roster.name} #{verb} in #{roster.division.name} for "
       html_escape(text) + league_p.link
     end
