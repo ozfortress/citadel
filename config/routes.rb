@@ -4,9 +4,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :leagues, shallow: true, only: [:index, :show] do
-        resources :matches, only: [:index, :show]
-        resources :rosters, only: [:index, :show]
+      resources :leagues, shallow: true, only: [:show] do
+        resources :matches, only: [:show]
+        resources :rosters, only: [:show]
       end
 
       get 'users/steam_id/:id', to: 'users#steam_id'
