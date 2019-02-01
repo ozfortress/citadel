@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_31_230242) do
+ActiveRecord::Schema.define(version: 2019_02_01_073123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -484,6 +484,7 @@ ActiveRecord::Schema.define(version: 2019_01_31_230242) do
     t.decimal "points_per_forfeit_draw", default: "1.0", null: false
     t.decimal "points_per_forfeit_loss", default: "0.0", null: false
     t.boolean "forfeit_all_matches_when_roster_disbands", default: true, null: false
+    t.boolean "hide_rosters", default: false, null: false
     t.index ["format_id"], name: "index_leagues_on_format_id"
     t.index ["query_name_cache"], name: "index_leagues_on_query_name_change", opclass: :gist_trgm_ops, using: :gist
   end

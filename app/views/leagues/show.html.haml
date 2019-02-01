@@ -51,7 +51,7 @@
       .panel-body
         = present(@roster).link 'View My Team', class: 'btn btn-default pull-right'
 
-  - if @league.signuppable?
+  - if @league.signuppable? || @league.hide_rosters?
     %ul.list-group
       - present_collection(@rosters).each do |roster|
         %li.list-group-item
