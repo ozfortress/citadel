@@ -178,10 +178,11 @@
               .panel-heading Notice
               .panel-body.markdown= roster_p.notice
 
-          .panel-default
-            .panel-heading
-              Matches:
-            = render 'leagues/matches/matches_table', matches: matches, roster: roster
+          - unless matches.nil?
+            .panel-default
+              .panel-heading
+                Matches:
+              = render 'leagues/matches/matches_table', matches: matches, roster: roster
 
           .panel-default
             .panel-heading
