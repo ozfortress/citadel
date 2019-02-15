@@ -56,7 +56,8 @@ class TournamentDriver < TournamentSystem::Driver
   end
 
   def get_team_score(team)
-    team.points
+    # to_f as a workaround for graph_matching (dependency of tournament-system) not supporting BigDecimal
+    team.points.to_f
   end
 
   def build_match(home_team, away_team)
