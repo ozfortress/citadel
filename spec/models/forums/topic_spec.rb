@@ -6,7 +6,6 @@ describe Forums::Topic do
   it { should allow_value(nil).for(:parent) }
 
   it { should belong_to(:created_by).class_name('User') }
-  it { should_not allow_value(nil).for(:created_by) }
 
   it { should have_many(:threads).dependent(:destroy) }
 

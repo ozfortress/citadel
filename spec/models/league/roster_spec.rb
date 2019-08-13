@@ -4,10 +4,8 @@ describe League::Roster do
   before(:all) { create(:league_roster) }
 
   it { should belong_to(:team) }
-  it { should_not allow_value(nil).for(:team) }
 
   it { should belong_to(:division) }
-  it { should_not allow_value(nil).for(:division) }
 
   it { should have_many(:transfers).class_name('League::Roster::Transfer') }
   it { should have_many(:home_team_matches).class_name('League::Match') }

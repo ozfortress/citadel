@@ -24,7 +24,7 @@
   = bootstrap_form_for @roster, as: :roster,
       url: league_rosters_path(@league, team_id: @team.id) do |f|
     = f.text_field :name
-    = f.select :division_id, divisions_select, label: 'Desired Division'
+    = f.select :division_id, divisions_select(@league), label: 'Desired Division'
     = render 'form', f: f
 
     = f.form_group :players, label: { text: 'Players' } do

@@ -4,16 +4,12 @@ describe League::Match do
   before(:all) { create(:league_match) }
 
   it { should belong_to(:home_team).class_name('League::Roster') }
-  it { should_not allow_value(nil).for(:home_team) }
 
-  it { should belong_to(:away_team).class_name('League::Roster') }
-  it { should allow_value(nil).for(:away_team) }
+  it { should belong_to(:away_team).class_name('League::Roster').optional }
 
-  it { should belong_to(:winner).class_name('League::Roster') }
-  it { should allow_value(nil).for(:winner) }
+  it { should belong_to(:winner).class_name('League::Roster').optional }
 
-  it { should belong_to(:loser).class_name('League::Roster') }
-  it { should allow_value(nil).for(:loser) }
+  it { should belong_to(:loser).class_name('League::Roster').optional }
 
   it { should have_many(:rounds).class_name('Match::Round').dependent(:destroy) }
   it { should accept_nested_attributes_for(:rounds) }
@@ -33,12 +29,13 @@ describe League::Match do
   it { should validate_length_of(:notice).is_at_least(0) }
 
   it do
-    should define_enum_for(:status).with([:pending, :submitted_by_home_team, :submitted_by_away_team, :confirmed])
+    should define_enum_for(:status).with_values([:pending, :submitted_by_home_team, :submitted_by_away_team,
+                                                 :confirmed])
   end
 
   it do
-    should define_enum_for(:forfeit_by).with([:no_forfeit, :home_team_forfeit, :away_team_forfeit, :mutual_forfeit,
-                                              :technical_forfeit])
+    should define_enum_for(:forfeit_by).with_values([:no_forfeit, :home_team_forfeit, :away_team_forfeit,
+                                                     :mutual_forfeit, :technical_forfeit])
   end
 
   describe 'validation' do

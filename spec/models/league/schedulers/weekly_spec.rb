@@ -4,9 +4,8 @@ describe League::Schedulers::Weekly do
   before(:all) { create(:league_schedulers_weekly) }
 
   it { should belong_to(:league) }
-  it { should_not allow_value(nil).for(:league) }
 
-  it { should define_enum_for(:start_of_week).with(Date::DAYNAMES) }
+  it { should define_enum_for(:start_of_week).with_values(Date::DAYNAMES) }
 
   it { should validate_presence_of(:minimum_selected) }
   it { should validate_numericality_of(:minimum_selected).is_greater_than_or_equal_to(0) }

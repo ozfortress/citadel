@@ -2,17 +2,14 @@ require 'rails_helper'
 
 describe League::Match::PickBan do
   it { should belong_to(:match).class_name('League::Match') }
-  it { should_not allow_value(nil).for(:match) }
 
-  it { should belong_to(:picked_by).class_name('User') }
-  it { should allow_value(nil).for(:picked_by) }
+  it { should belong_to(:picked_by).class_name('User').optional }
 
-  it { should belong_to(:map).class_name('Map') }
-  it { should allow_value(nil).for(:map) }
+  it { should belong_to(:map).class_name('Map').optional }
 
-  it { should define_enum_for(:kind).with([:pick, :ban, :deferred]) }
+  it { should define_enum_for(:kind).with_values([:pick, :ban, :deferred]) }
 
-  it { should define_enum_for(:team).with([:home_team, :away_team]) }
+  it { should define_enum_for(:team).with_values([:home_team, :away_team]) }
 
   describe '#map_and_pick_present' do
     let(:map) { build(:map) }

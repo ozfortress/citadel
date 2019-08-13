@@ -4,22 +4,16 @@ describe League::Roster::TransferRequest do
   before(:all) { create(:league_roster_transfer_request, propagate: true) }
 
   it { should belong_to(:roster) }
-  it { should_not allow_value(nil).for(:roster) }
 
-  it { should belong_to(:leaving_roster) }
-  it { should allow_value(nil).for(:leaving_roster) }
+  it { should belong_to(:leaving_roster).optional }
 
   it { should belong_to(:user) }
-  it { should_not allow_value(nil).for(:user) }
 
   it { should belong_to(:created_by) }
-  it { should_not allow_value(nil).for(:created_by) }
 
-  it { should belong_to(:approved_by) }
-  it { should allow_value(nil).for(:approved_by) }
+  it { should belong_to(:approved_by).optional }
 
-  it { should belong_to(:denied_by) }
-  it { should allow_value(nil).for(:denied_by) }
+  it { should belong_to(:denied_by).optional }
 
   describe '#approve' do
     it 'succeeds when joining' do

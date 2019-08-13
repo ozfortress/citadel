@@ -3,7 +3,7 @@
 = bootstrap_form_for @roster, as: :roster,
     url: approve_roster_path(@roster) do |f|
   = f.text_field :name
-  = f.select :division_id, divisions_select, label: 'Desired Division'
+  = f.select :division_id, divisions_select(@league), label: 'Desired Division'
   = f.number_field :seeding
 
   = f.submit 'Approve', class: 'btn btn-success'

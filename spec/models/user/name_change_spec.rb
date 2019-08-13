@@ -4,13 +4,10 @@ describe User::NameChange do
   before(:all) { create(:user_name_change) }
 
   it { should belong_to(:user) }
-  it { should_not allow_value(nil).for(:user) }
 
-  it { should belong_to(:approved_by).class_name('User') }
-  it { should allow_value(nil).for(:approved_by) }
+  it { should belong_to(:approved_by).class_name('User').optional }
 
-  it { should belong_to(:denied_by).class_name('User') }
-  it { should allow_value(nil).for(:denied_by) }
+  it { should belong_to(:denied_by).class_name('User').optional }
 
   it { should validate_presence_of(:name) }
   it { should validate_length_of(:name).is_at_least(1) }
