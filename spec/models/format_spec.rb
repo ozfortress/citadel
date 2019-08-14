@@ -4,7 +4,6 @@ describe Format do
   before(:all) { create(:format) }
 
   it { should belong_to(:game) }
-  it { should_not allow_value(nil).for(:game) }
 
   it { should have_many(:leagues) }
 

@@ -4,7 +4,6 @@ describe League::Division do
   before(:all) { create(:league_division) }
 
   it { should belong_to(:league) }
-  it { should_not allow_value(nil).for(:league) }
 
   it { should have_many(:rosters).class_name('Roster') }
   it { should have_many(:matches).class_name('Match').through(:rosters).source(:home_team_matches) }

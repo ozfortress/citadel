@@ -23,8 +23,8 @@ module ApplicationHelper
     Format.all.collect { |format| [format.name, format.id] }
   end
 
-  def divisions_select
-    @league.divisions.all.collect { |div| [div.name, div.id] }
+  def divisions_select(league)
+    league.divisions.all.collect { |div| [div.name, div.id] }
   end
 
   def bootstrap_paginate(target)

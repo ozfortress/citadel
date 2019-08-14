@@ -4,7 +4,6 @@ describe Map do
   before(:all) { create(:map) }
 
   it { should belong_to(:game) }
-  it { should_not allow_value(nil).for(:game) }
 
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }

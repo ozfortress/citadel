@@ -4,7 +4,6 @@ describe League do
   before(:all) { create(:league) }
 
   it { should belong_to(:format) }
-  it { should_not allow_value(nil).for(:format) }
 
   it { should have_many(:divisions).dependent(:destroy) }
   it { should accept_nested_attributes_for(:divisions).allow_destroy(true) }
@@ -27,7 +26,7 @@ describe League do
   it { should validate_length_of(:category).is_at_most(64) }
   it { should_not allow_value(nil).for(:category) }
 
-  it { should define_enum_for(:status).with([:hidden, :running, :completed]) }
+  it { should define_enum_for(:status).with_values([:hidden, :running, :completed]) }
 
   it { should validate_presence_of(:min_players) }
   it { should validate_numericality_of(:min_players).is_greater_than(0) }
@@ -42,7 +41,7 @@ describe League do
   it { should validate_presence_of(:points_per_match_draw) }
   it { should validate_presence_of(:points_per_match_loss) }
 
-  it { should define_enum_for(:schedule).with([:manual, :weeklies]) }
+  it { should define_enum_for(:schedule).with_values([:manual, :weeklies]) }
 
   it { should have_one(:weekly_scheduler).class_name('League::Schedulers::Weekly') }
 

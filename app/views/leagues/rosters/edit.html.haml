@@ -29,7 +29,7 @@
 
       - if user_can_edit_league?
         = f.text_field :name
-        = f.select :division_id, divisions_select, label: 'Division'
+        = f.select :division_id, divisions_select(@league), label: 'Division'
         = f.number_field :seeding
         = f.number_field :ranking
         = f.markdown_editor :notice, rows: 3, label: 'Notice (Public)'

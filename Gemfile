@@ -71,6 +71,7 @@ group :test do
 
   # Keep codebase clean
   gem 'rubocop', '~> 0.58', require: false
+  gem 'rubocop-rails', '~> 2.2.1', require: false
   gem 'haml_lint', require: false
   gem 'rails_best_practices', require: false
   gem 'reek', '~> 5', require: false

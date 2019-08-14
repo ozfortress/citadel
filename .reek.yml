@@ -40,6 +40,7 @@ detectors:
     exclude:
       - "Auth::Model"
       - "TournamentDriver" # Tournament driver is special
+      - "ReduceErrorsValidator"
   TooManyMethods:
     exclude:
       - "Leagues::MatchesController"
