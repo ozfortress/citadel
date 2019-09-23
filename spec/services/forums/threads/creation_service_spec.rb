@@ -50,4 +50,22 @@ describe Forums::Threads::CreationService do
     expect(thread.posts.first).to be_invalid
     expect(subscribed.notifications).to be_empty
   end
+
+  it 'handles notifications on hidden isolated topic' do
+    topic.update(isolated: true, default_hidden: true)
+
+    subscribed = create(:user)
+    topic.subscriptions.create!(user: subscribed)
+
+    admin_subscribed = create(:user)
+    admin_subscribed.grant(:manage, topic)
+    topic.subscriptions.create!(user: admin_subscribed)
+
+    thread = subject.call(user, topic, { title: 'Bar' }, content: content)
+
+    expect(thread).to be_valid
+    expect(thread).to be_isolated
+    expect(subscribed.notifications).to be_empty
+    expect(admin_subscribed.notifications).to_not be_empty
+  end
 end
