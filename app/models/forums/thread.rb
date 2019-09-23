@@ -67,6 +67,10 @@ module Forums
       !isolated?
     end
 
+    def isolated_by
+      topic&.isolated_by
+    end
+
     def original_post
       posts.order(created_at: :asc).first
     end
