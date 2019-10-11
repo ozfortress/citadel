@@ -24,11 +24,17 @@ class League
 
     private
 
+    def ensure_all_matches_confirmed!
+      raise 'Not all matches confirmed' unless matches.where.not(status: :confirmed).empty?
+    end
+
     def new_driver(match_options, options = {})
       @driver = ::TournamentDriver.new(self, match_options, options)
     end
 
     def generate_swiss(match_options, options)
+      ensure_all_matches_confirmed!
+
       pairer = options[:pairer].to_sym
       return unless SWISS_PAIRERS.include?(pairer)
 
