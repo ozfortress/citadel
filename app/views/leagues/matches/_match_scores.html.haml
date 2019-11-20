@@ -3,7 +3,7 @@
 
   .panel-body
     - if match.picking_completed? || user_can_edit_league?
-      = render 'leagues/matches/match_scores_form', match: match, rounds: rounds
+      = render 'leagues/matches/match_scores_form', match: match
 
     - unless user_can_edit_league?
       = button_to 'Forfeit', forfeit_match_path(match),
@@ -12,7 +12,7 @@
 
 - if !match.pending? && !match.confirmed? # && !user_can_edit_league?
   %ul.list-group
-    - present_collection(rounds).each do |round_p|
+    - present_collection(match.rounds).each do |round_p|
       %li.list-group-item
         = round_p.map.link
         |#{round_p.score_s}|

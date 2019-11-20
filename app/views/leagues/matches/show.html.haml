@@ -37,10 +37,10 @@
 
     - can_view_scores = !@match.confirmed? && user_can_either_teams? && @league.matches_submittable?
     - if can_view_scores || user_can_edit_league?
-      = render 'leagues/matches/match_scores', match: @match, pick_bans: @pick_bans, rounds: @rounds
+      = render 'leagues/matches/match_scores', match: @match, pick_bans: @pick_bans
     - else
       = render 'leagues/matches/match_results',
-               match: @match, pick_bans: @pick_bans, rounds: @rounds
+               match: @match, pick_bans: @pick_bans
 
   - if @match.notice.present? && (user_on_either_teams? || user_can_edit_league?)
     .panel.panel-default
