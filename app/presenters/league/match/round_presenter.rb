@@ -4,6 +4,7 @@ class League
       presents :round
 
       delegate :match, to: :round
+      delegate :has_outcome?, to: :round
 
       def home_team
         present(match.home_team)

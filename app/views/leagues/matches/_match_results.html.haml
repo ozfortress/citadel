@@ -5,10 +5,11 @@
 - if match.confirmed?
   %ul.list-group
     - present_collection(match.rounds).each do |round_p|
-      %li.list-group-item
-        = round_p.map.link
+      - if round_p.has_outcome?
+        %li.list-group-item
+          = round_p.map.link
 
-        .pull-right= round_p.result_description
+          .pull-right= round_p.result_description
 - else
   %ul.list-group
     - present_collection(match.rounds).each do |round_p|
