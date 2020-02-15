@@ -13,7 +13,7 @@ class League
       DENIED_MESSAGE = '%{denied_by} denied %{user}\'s transfer %{direction} '\
                        '%{roster}%{leaving_message} (requested by %{created_by})'.html_safe
 
-      LEAVING_MESSAGE = ', out of %{leaving_roster}'.html_safe
+      LEAVING_MESSAGE = ', out of %{leaving_roster} in %{division}'.html_safe
       # rubocop:enable Rails/OutputSafety
 
       def user
@@ -50,7 +50,7 @@ class League
 
       def leaving_message
         if transfer_request.leaving_roster
-          LEAVING_MESSAGE % { leaving_roster: leaving_roster.link }
+          LEAVING_MESSAGE % { leaving_roster: leaving_roster.link, division: leaving_roster.division.name }
         else
           ''
         end
