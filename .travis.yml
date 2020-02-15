@@ -9,6 +9,7 @@ before_install:
   - gem install bundler
 bundler_args: --without development
 before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
   - export SECRET_KEY_BASE=`bundle exec rake secret`
   - cp config/database.yml.travis config/database.yml
   - python -c 'import multiprocessing;print(multiprocessing.cpu_count())'
