@@ -2,19 +2,16 @@ language: ruby
 cache: bundler
 rvm: 2.5.0
 addons:
-  postgresql: '9.5'
+  postgresql: '10.10'
 env:
   - RAILS_ENV=test
-install:
-  - gem update --system
-  - gem install bundler -v "~>1.0"
-  - bundle install --jobs=3 --retry=3 --deployment --path=${BUNDLE_PATH:-vendor/bundle} --without development
+before_install:
+  - gem install bundler
+bundler_args: --without development
 before_script:
   - export SECRET_KEY_BASE=`bundle exec rake secret`
   - cp config/database.yml.travis config/database.yml
   - python -c 'import multiprocessing;print(multiprocessing.cpu_count())'
-  - psql -c 'create database travis_ci_test;' -U postgres
-  - bundle exec rake db:schema:load
   - bundle exec rake "parallel:setup[2]"
 script:
   - bundle exec rake "parallel:spec[2]" lint

@@ -23,8 +23,8 @@ module Forums
     counter_culture :topic,
                     column_name: proc { |model| model.visible? ? 'visible_threads_count' : nil },
                     column_names: {
-                      Thread.visible => 'visible_threads_count',
-                      Thread.hidden => nil,
+                      'NOT forums_threads.hidden' => 'visible_threads_count',
+                      'forums_threads.hidden' => nil,
                     }
 
     before_create :update_depth
