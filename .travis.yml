@@ -2,7 +2,7 @@ language: ruby
 cache: bundler
 rvm: 2.5.1
 addons:
-  postgresql: '10.10'
+  postgresql: '9.5'
 env:
   - RAILS_ENV=test
 before_install:
