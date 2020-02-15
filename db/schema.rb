@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_01_085058) do
+ActiveRecord::Schema.define(version: 2020_02_15_103408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -228,7 +228,7 @@ ActiveRecord::Schema.define(version: 2019_02_01_085058) do
     t.boolean "default_hidden"
     t.integer "ancestry_depth", default: 0, null: false
     t.string "ancestry"
-    t.integer "threads_count", default: 0, null: false
+    t.integer "visible_threads_count", default: 0, null: false
     t.boolean "default_locked", default: false
     t.integer "isolated_by_id"
     t.index ["ancestry"], name: "index_forums_topics_on_ancestry"

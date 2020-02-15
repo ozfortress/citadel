@@ -46,6 +46,8 @@ gem 'carrierwave'
 gem 'mini_magick'
 # API Serialization
 gem 'active_model_serializers', '~> 0.10.0'
+# Simplified counter caches
+gem 'counter_culture', '~> 2.0'
 # Tournament systems
 gem 'tournament-system', '~> 2.0'
 
