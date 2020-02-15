@@ -12,7 +12,7 @@ before_script:
   - cp config/database.yml.travis config/database.yml
   - python -c 'import multiprocessing;print(multiprocessing.cpu_count())'
   - psql -c 'create database travis_ci_test;' -U postgres
-  - RAILS_ENV=test rake test:prepare
+  - RAILS_ENV=test bundle exec rake test:prepare
   - bundle exec rake "parallel:setup[2]"
 script:
   - bundle exec rake "parallel:spec[2]" lint
