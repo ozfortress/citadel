@@ -1,6 +1,7 @@
 module MarkdownRenderer
   RENDER_OPTIONS = {
     hard_wrap: true,
+    tables: true,
   }.freeze
 
   PARSER_OPTIONS = {
