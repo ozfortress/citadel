@@ -15,7 +15,7 @@ describe Team do
   it { should validate_length_of(:name).is_at_most(64) }
 
   it { should allow_value('').for(:description) }
-  it { should validate_length_of(:description).is_at_least(0).is_at_most(500) }
+  it { should validate_length_of(:description).is_at_least(0).is_at_most(1_000) }
 
   it { should allow_value('').for(:notice) }
 
