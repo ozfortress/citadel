@@ -14,6 +14,9 @@ class League
 
     SWISS_PAIRERS = [:dutch].freeze
 
+    class GenerationError < StandardError
+    end
+
     # TODO: Replace messy handling here with normal models
     def generate_matches(system, match_options, options = {})
       return unless TOURNAMENT_SYSTEMS.include?(system)
@@ -24,19 +27,16 @@ class League
 
     private
 
-    def ensure_all_matches_confirmed!
-      raise 'Not all matches confirmed' unless matches.where.not(status: :confirmed).empty?
-    end
-
     def new_driver(match_options, options = {})
       @driver = ::TournamentDriver.new(self, match_options, options)
     end
 
     def generate_swiss(match_options, options)
-      ensure_all_matches_confirmed!
+      raise GenerationError, 'Not all matches in division confirmed' unless matches.where.not(status: :confirmed).empty?
 
       pairer = options[:pairer].to_sym
-      return unless SWISS_PAIRERS.include?(pairer)
+
+      raise GenerationError, 'Unknown pairing system' unless SWISS_PAIRERS.include?(pairer)
 
       send("generate_swiss_#{pairer}", match_options, options)
     end

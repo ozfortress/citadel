@@ -1,6 +1,6 @@
 module Forums
   class Thread < ApplicationRecord
-    belongs_to :topic, optional: true, inverse_of: :threads, counter_cache: true
+    belongs_to :topic, optional: true, inverse_of: :threads
     belongs_to :created_by, class_name: 'User'
 
     has_many :posts,         dependent: :destroy
@@ -19,6 +19,13 @@ module Forums
     scope :pinned,   -> { where(pinend: true) }
     scope :hidden,   -> { where(hidden: true) }
     scope :visible,  -> { where(hidden: false) }
+
+    counter_culture :topic,
+                    column_name: proc { |model| model.visible? ? 'visible_threads_count' : nil },
+                    column_names: {
+                      'NOT forums_threads.hidden' => 'visible_threads_count',
+                      'forums_threads.hidden' => nil,
+                    }
 
     before_create :update_depth
     before_update :update_depth, if: :topic_id_changed?
@@ -69,6 +76,10 @@ module Forums
 
     def isolated_by
       topic&.isolated_by
+    end
+
+    def visible?
+      !hidden?
     end
 
     def original_post

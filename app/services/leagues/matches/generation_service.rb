@@ -11,12 +11,27 @@ module Leagues
           invalid_match = matches.find { |match| !match.save }
           rollback! if invalid_match
 
-          matches.each do |mat|
-            CreationService.notify_for_match!(mat)
-          end
+          create_notifications_for_matches(matches)
+        rescue League::Division::GenerationError => e
+          return invalid_match(match_params, e)
         end
 
         invalid_match
+      end
+
+      private
+
+      def invalid_match(params, error)
+        match = League::Match.new(params)
+        match.valid? && raise
+        match.errors.add(:base, error.message)
+        match
+      end
+
+      def create_notifications_for_matches(matches)
+        matches.each do |match|
+          CreationService.notify_for_match!(match)
+        end
       end
     end
   end

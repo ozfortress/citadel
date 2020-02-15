@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Forums::Thread do
   before(:all) { create(:forums_thread) }
 
-  it { should belong_to(:topic).inverse_of(:threads).counter_cache(true).optional }
+  it { should belong_to(:topic).inverse_of(:threads).optional }
 
   it { should belong_to(:created_by).class_name('User') }
 

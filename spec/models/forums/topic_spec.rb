@@ -52,4 +52,19 @@ describe Forums::Topic do
     expect(gc_thread.reload.depth).to eq(3)
     expect(gc_topic.reload.depth).to eq(3)
   end
+
+  describe '#visible_threads_count' do
+    it 'updates' do
+      topic = create(:forums_topic)
+
+      expect(topic.visible_threads_count).to eq(0)
+
+      create(:forums_thread, topic: topic, hidden: true)
+      create(:forums_thread, topic: topic)
+
+      topic.reload
+
+      expect(topic.visible_threads_count).to eq(1)
+    end
+  end
 end

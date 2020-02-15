@@ -15,7 +15,7 @@ class Team < ApplicationRecord
                                foreign_key: 'away_team_id'
 
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
-  validates :description, presence: true, allow_blank: true, length: { in: 0..500 }
+  validates :description, presence: true, allow_blank: true, length: { in: 0..1_000 }
   caches_markdown_render_for :description
   validates :notice, presence: true, allow_blank: true
   caches_markdown_render_for :notice
