@@ -5,7 +5,7 @@ gem 'rails', '= 5.2.1'
 # Use postgres
 gem 'pg', '~> 1.0'
 # Fast loading
-# gem 'bootsnap', '~> 1.3'
+gem 'bootsnap', '~> 1.3'
 # Active Record extensions
 gem 'active_record_union', '~> 1.3'
 gem 'ancestry'
