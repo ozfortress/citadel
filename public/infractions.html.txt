@@ -2,7 +2,7 @@
 <li>40 points = 3 round match ban</li>
 <li>70 points = 1 year Community and Competitive Ban</li>
 <li>90 points = 2 year Community and Competitive Ban</li>
-</ul><p>The 3 round match ban carries across from the offseason, so if it is received during the offseason, it will begin at the start of the next regular season for rounds one, two &amp; three.</p><p>Each <em>specific</em> infraction in Tier 1 and Tier 2 will be multiplied by the number of times committed. However, <em>all Tier 3 infractions</em> will be will be multiplied by the number of times committed, regardless of the individual offense committed.<br>
+</ul><p>The 3 round match ban carries across from the offseason, so if it is received during the offseason, it will begin at the start of the next regular season for rounds one, two &amp; three.</p><p>Each <em>specific</em> infraction in Tier 1 and Tier 2 will be multiplied by the number of times committed. However, <em>all Tier 3 infractions</em> will be multiplied by the number of times committed, regardless of the individual offense committed.<br>
 Example:<br>
 First offence = 10 points<br>
 Second repeated offence = 20 points<br>
