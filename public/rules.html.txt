@@ -136,7 +136,7 @@ Booked under name: Paulsen</p><h2 id="34-Mercenaries">3.4 Mercenaries</h2><p>A m
 <li>Be running the current ozfortress seasonal league configs and whitelist and be running on sv_pure 2.</li>
 <li>Be physically located in Australia, unless the match is between two New Zealand or two Asia based teams.</li>
 <li>Running a logging system which uploads to <a href="http://logs.tf" target="_blank" rel="noopener">logs.tf</a>.</li>
-<li>Not running any gameplay altering modifications.</li>
+<li>Not running any gameplay altering modifications (excluding select <a href="https://github.com/ldesgoui/tf2-comp-fixes">TF2 Comp Fixes settings</a>).</li>
 <li>Sourcemod plugins are not required but may be loaded as long as they are not considered gameplay altering modifications.</li>
 <li>Must have configured SourceTV to allow recording of STV demos and relay attachment.</li>
 </ul><p>If desired, an ozfortress administrator will review your server configs to determine if you have configured it to match-ready standard.</p><p>rcon for third party servers must be provided to ozfortress administrators on request.</p><p>ozfortress administrators reserve the right to force a match to be played on an ozfortress server.</p><h2 id="54-Class-Restrictions">5.4 Class Restrictions</h2><p>The ozfortress seasonal league runs on the following class restrictions:</p><ul>
