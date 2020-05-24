@@ -1,12 +1,14 @@
-<div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true" style="position: relative;"><h1 id="Staff">Staff</h1><h3 id="Head-Administrator">Head Administrator</h3><p><a href="https://warzone.ozfortress.com/users/96" target="_blank" rel="noopener">catfish</a> - <a href="mailto:catfishtf2@gmail.com" target="_blank" rel="noopener">catfishtf2@gmail.com</a></p><h3 id="League-Administrators">League Administrators</h3><p><a href="https://warzone.ozfortress.com/users/713" target="_blank" rel="noopener">arnold</a><br>
-<a href="https://warzone.ozfortress.com/users/96" target="_blank" rel="noopener">catfish</a><br>
-<a href="https://warzone.ozfortress.com/users/491" target="_blank" rel="noopener">core</a><br>
-<a href="https://warzone.ozfortress.com/users/15" target="_blank" rel="noopener">Fozzlm</a><br>
-<a href="https://warzone.ozfortress.com/users/154" target="_blank" rel="noopener">skaz</a><br>
-<a href="https://warzone.ozfortress.com/users/157" target="_blank" rel="noopener">Thermite</a></p><h3 id="Advisors">Advisors</h3><p><a href="https://warzone.ozfortress.com/users/71" target="_blank" rel="noopener">wiggin</a><br>
-<a href="https://warzone.ozfortress.com/users/3" target="_blank" rel="noopener">obla</a></p><h3 id="Media">Media</h3><p><a href="https://warzone.ozfortress.com/users/15" target="_blank" rel="noopener">Fozzlm</a></p><h3 id="Anti-Cheat-Staff">Anti-Cheat Staff</h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank" rel="noopener">obla</a></p><h3 id="Server-Administrators">Server Administrators</h3><p><a href="https://warzone.ozfortress.com/users/3" target="_blank" rel="noopener">obla</a><br>
-<a href="https://warzone.ozfortress.com/users/2" target="_blank" rel="noopener">/dev/zero</a><br>
-<a href="https://warzone.ozfortress.com/users/96" target="_blank" rel="noopener">catfish</a></p><h3 id="Developer">Developer</h3><p><a href="https://warzone.ozfortress.com/users/2" target="_blank" rel="noopener">/dev/zero</a></p><h3 id="Graphics-Artist">Graphics Artist</h3><p><a href="https://warzone.ozfortress.com/users/77" target="_blank" rel="noopener">jen</a></p><h3 id="Staff-Hall-of-Fame">Staff Hall of Fame</h3><p>/dev/zero<br>
+<div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true" style="position: relative;"><h1 id="Staff">Staff</h1><h3 id="Head-Administrator">Head Administrator</h3><p><a href="https://ozfortress.com/users/96" target="_blank" rel="noopener">catfish</a> - <a href="mailto:catfishtf2@gmail.com" target="_blank" rel="noopener">catfishtf2@gmail.com</a></p><h3 id="League-Administrators">League Administrators</h3><p><a href="https://ozfortress.com/users/96" target="_blank" rel="noopener">catfish</a><br>
+<a href="https://ozfortress.com/users/491" target="_blank" rel="noopener">Connor</a><br>
+<a href="https://ozfortress.com/users/233" target="_blank" rel="noopener">Hawk</a><br>
+<a href="https://ozfortress.com/users/205" target="_blank" rel="noopener">samson</a><br>
+<a href="https://ozfortress.com/users/154" target="_blank" rel="noopener">skaz</a><br>
+<a href="https://ozfortress.com/users/157" target="_blank" rel="noopener">Thermite</a></p><h3 id="Advisors">Advisors</h3><p><a href="https://ozfortress.com/users/713" target="_blank" rel="noopener">arnold</a><br>
+<a href="https://ozfortress.com/users/15" target="_blank" rel="noopener">Fozzlm</a><br>
+<a href="https://ozfortress.com/users/3" target="_blank" rel="noopener">obla</a><br>
+<a href="https://ozfortress.com/users/71" target="_blank" rel="noopener">wiggin</a></p><h3 id="Media">Media</h3><p><a href="https://ozfortress.com/users/15" target="_blank" rel="noopener">Fozzlm</a></p><h3 id="Anti-Cheat-Staff">Anti-Cheat Staff</h3><p><a href="https://ozfortress.com/users/3" target="_blank" rel="noopener">obla</a></p><h3 id="Server-Administrators">Server Administrators</h3><p><a href="https://ozfortress.com/users/3" target="_blank" rel="noopener">obla</a><br>
+<a href="https://ozfortress.com/users/2" target="_blank" rel="noopener">/dev/zero</a><br>
+<a href="https://ozfortress.com/users/96" target="_blank" rel="noopener">catfish</a></p><h3 id="Developer">Developer</h3><p><a href="https://ozfortress.com/users/2" target="_blank" rel="noopener">/dev/zero</a></p><h3 id="Graphics-Artist">Graphics Artist</h3><p><a href="https://ozfortress.com/users/77" target="_blank" rel="noopener">jen</a></p><h3 id="Staff-Hall-of-Fame">Staff Hall of Fame</h3><p>/dev/zero<br>
 amd<br>
 Aragon<br>
 arnold<br>
