@@ -1,9 +1,10 @@
 - content_for(:title) { 'Forums' }
 
-%h1.tab-header Forums
-%hr
+= render 'head', object: nil
+
 .row
-  = link_to recent_forums_posts_path, class: 'btn btn-secondary' do
-    Recent Posts
-%br
+  .col-12.mb-3
+    = link_to recent_forums_posts_path, class: 'btn btn-secondary' do
+      Recent Posts
+
 = render 'page', topics: @topics, threads: @threads, parent_topic: nil

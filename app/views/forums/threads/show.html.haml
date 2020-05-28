@@ -1,34 +1,36 @@
 - content_for(:title) { "#{@thread.title} | Forums" }
 
-- if user_can_edit_thread?
-  .pull-right
-    = link_to edit_forums_thread_path(@thread), class: 'btn btn-secondary' do
-      Edit
-      %span.glyphicon.glyphicon-cog
+/ TODO: consider moving these action buttons into forums/head instead
+.row.no-gutters.justify-content-end.float-right.mt-2
+  - if user_can_edit_thread?
+    = link_to edit_forums_thread_path(@thread), class: 'btn btn-sm btn-link ml-2' do
+      Edit Thread
 
-- if user_signed_in?
-  .pull-right
-    = button_to toggle_subscription_for_forums_thread_path(@thread),
-                method: :patch, class: 'btn btn-secondary' do
-      - if current_user.forums_subscriptions.where(thread: @thread).exists?
+  - if user_signed_in?
+    / TODO: make these button conditionals better - Bryan
+    - if current_user.forums_subscriptions.where(thread: @thread).exists?
+      = button_to toggle_subscription_for_forums_thread_path(@thread), method: :patch,
+                  class: 'btn btn-sm btn-danger centered ml-2' do
         = render 'forums/unsubscribe_btn'
-      - else
+    - else
+      = button_to toggle_subscription_for_forums_thread_path(@thread), method: :patch,
+                  class: 'btn btn-sm btn-primary centered ml-2' do
         = render 'forums/subscribe_btn'
 
 = render 'forums/head', object: @thread
 
-.panel.panel-default
-  - @posts.each do |post|
-    = render post, quote_id: 'wmd-input-new-forums-post'
 
-  - if user_can_create_post?
-    .container-fluid
-      %hr
-      = bootstrap_form_for @post, url: forums_thread_posts_path(@thread, page: @page) do |f|
-        = render 'forums/posts/form', f: f
+- @posts.each do |post|
+  = render post, quote_id: 'wmd-input-new-forums-post'
 
-        .row
-          = f.submit 'Post', class: 'btn btn-secondary pull-right'
-      %hr
+- if user_can_create_post?
+  .container-fluid
+    %hr
+    = bootstrap_form_for @post, url: forums_thread_posts_path(@thread, page: @page) do |f|
+      = render 'forums/posts/form', f: f
+
+      .row
+        = f.submit 'Post', class: 'btn btn-secondary pull-right'
+    %hr
 
 = bootstrap_paginate @posts

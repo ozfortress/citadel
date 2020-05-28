@@ -10,6 +10,12 @@ module Forums
       html_escape(PATH_SEP) + safe_join(path_topics, PATH_SEP)
     end
 
+    def breadcrumbs
+      crumbs = []
+      path_topics.each { |path| crumbs << content_tag(:li, path, class: 'breadcrumb-item') }
+      safe_join(crumbs, '')
+    end
+
     def to_s
       topic.name
     end

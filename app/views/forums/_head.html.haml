@@ -1,10 +1,17 @@
-- if object
-  - presenter = present(object)
+%nav
+  %ol.breadcrumb
+    - if object
+      - presenter = present(object)
 
-  %h2= presenter
+      %li.breadcrumb-item
+        = link_to forums_path(nil) do
+          Forums
 
-  %br= presenter.path
-- else
-  %h1.tab-header Forums
+      = presenter.breadcrumbs
 
-%hr
+      %li.breadcrumb-item.active
+        = presenter
+
+    - else
+      %li.breadcrumb-item.active
+        Forums
