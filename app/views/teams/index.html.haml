@@ -1,24 +1,21 @@
 - content_for(:title) { 'Teams' }
 
-%h1.tab-header Teams
+- if user_signed_in?
+  = link_to new_team_path, class: 'btn btn-secondary pull-right', type: 'button' do
+    Start Team
+    = inline_svg_tag 'open_iconic/plus.svg', class: 'icon ml-1', size: '16'
 
-.col-sm-3.col-md-3.searchbox.pull-right
-  = render 'search'
+%h1 Teams
 
-%hr
+= render 'search'
 
-.panel.panel-default
-  - if user_signed_in?
-    .panel-body
-      = link_to new_team_path, class: 'btn btn-default pull-right', type: 'button' do
-        Start Team
-        %span.glyphicon.glyphicon-plus
+- if @teams.empty?
+  %p.mt-2
+    No users found...
+- else
+  %ul.list-group.mt-2
+    - @teams.each do |team|
+      %li.list-group-item
+        = render 'teams/listing', team: team
 
-  - if @teams.empty?
-    .panel-body No teams found...
-  - else
-    %ul.list-group
-      - present_collection(@teams).each do |teams|
-        %li.list-group-item= teams.link
-
-= bootstrap_paginate @teams
+= bootstrap_paginate @teams, list_classes: ['pagination justify-content-center mt-4']

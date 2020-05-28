@@ -17,7 +17,7 @@
 
   - if user_can_edit_comm?(comm) && comm.edits.size > 1
     .pull-right
-      = link_to comm.paths.edits, class: 'btn btn-default btn-sm' do
+      = link_to comm.paths.edits, class: 'btn btn-secondary btn-sm' do
         View Edits
 
 .container-fluid.markdown= comm_p.content

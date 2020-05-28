@@ -16,11 +16,11 @@
 
   - if comment.edits.size > 1
     .pull-right
-      = link_to comment.paths.edits, class: 'btn btn-default btn-sm' do
+      = link_to comment.paths.edits, class: 'btn btn-secondary btn-sm' do
         View Edits
 
 .container-fluid.markdown
   = comment_p.content
 
-  %button.pull-right.btn.btn-default.btn-xs{ data: { quote: { id: quote_id, text: comment_p.quote } } }
+  %button.pull-right.btn.btn-secondary.btn-xs{ data: { quote: { id: quote_id, text: comment_p.quote } } }
     Quote

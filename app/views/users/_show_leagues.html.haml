@@ -1,0 +1,15 @@
+%p
+  #{user.name} has played in
+  %span.badge.badge-pill.badge-primary= roster_transfers.length
+  leagues:
+
+%hr
+
+- roster_transfers.each do |league, transfers|
+  - league_p = present(league)
+  = league_p.link
+
+  %ul.list-group.list-group-flush.mb-4
+    - present_collection(transfers).each do |transfer_p|
+      %li.list-group-item= transfer_p.listing_with_implied_user
+

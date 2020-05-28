@@ -1,19 +1,22 @@
-%a.dropdown-toggle#notifications{ data: { toggle: 'dropdown' }, href: '#' }
-  %span.glyphicon.glyphicon-bell#notifications-glyph
-  - unless notifications.empty?
-    %span.badge#notifications-badge= notifications.to_a.count { |n| !n.read }
-%ul.dropdown-menu.navbar-right-menu#notifications-dropdown
-  %li.row.dropdown-header
-    = button_to clear_notifications_path, class: 'btn btn-default pull-right',
-                method: :delete, remote: true,
-                data: { confirm: 'Are you sure you want to clear all notifications?' } do
-      Clear
-      .span.glyphicon.glyphicon-remove
-    %h5 Notifications
+%li.nav-item.dropdown
+  %a#notifications-dropdown{ href: '#', data: { toggle: 'dropdown' } }
+    = inline_svg_tag 'open_iconic/bell.svg', class: 'icon', size: '20'
+    - unless notifications.empty?
+      %span.badge.badge-primary.badge-overlap#notifications-badge= notifications.to_a.count { |n| !n.read }
 
-  %ul.list-group#notifications-list
-    - notifications.each do |notification|
-      = render 'notification', notification: notification
+  .dropdown-menu.dropdown-menu-right{ aria: { labelledby: 'notifications-dropdown' } }
+    .dropdown-header
+      = button_to clear_notifications_path, class: 'btn btn-secondary pull-right',
+                  method: :delete, remote: true,
+                  data: { confirm: 'Are you sure you want to clear all notifications?' } do
+        Clear
+        .span.glyphicon.glyphicon-remove
+      %h5 Notifications
+
+    %ul#notifications-list
+      - notifications.each do |notification|
+        = render 'notification', notification: notification
+
 / Periodic notification checks
 :javascript
   setInterval(function() {

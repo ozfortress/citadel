@@ -1,10 +1,11 @@
 - user = present(user)
 
-.row.slim-gutter
-  .pull-left= user.avatar_tag
+.row.ml-0
+  = user.avatar_tag width: 46, height: 46, class: 'text-center'
 
-  .user-details
-    .row.slim-gutter
+  .ml-2.d-flex.flex-column
+    %span.p-0.mb-1
       = user.link
       = user.titles team: local_assigns[:team]
-      .steam-link= user.steam_link
+    .p-0.steam-link
+      = user.steam_link

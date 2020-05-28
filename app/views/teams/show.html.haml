@@ -1,7 +1,7 @@
 - content_for(:title) { @team.name }
 
 - if user_can_edit_team?
-  = link_to edit_team_path(@team), class: 'btn btn-default pull-right', type: 'button' do
+  = link_to edit_team_path(@team), class: 'btn btn-secondary pull-right', type: 'button' do
     Settings
     %span.glyphicon.glyphicon-cog
 
@@ -38,7 +38,7 @@
         = roster_p.title
 
         - if user_can_manage_transfers?(roster)
-          = link_to edit_roster_path(roster), class: 'btn btn-default pull-right' do
+          = link_to edit_roster_path(roster), class: 'btn btn-secondary pull-right' do
             Manage
 
       - unless roster.approved?
@@ -115,7 +115,7 @@
 
     - if user_can_edit_team?
       .panel-body
-        = link_to recruit_team_path(@team), class: 'btn btn-default' do
+        = link_to recruit_team_path(@team), class: 'btn btn-secondary' do
           Invite
           %span.glyphicon.glyphicon-plus
     %ul.list-group
@@ -164,7 +164,7 @@
           %a{ data: { toggle: 'collapse', parent: '.global-collapsible' }, href: "##{id}" }
             %span.pull-right.glyphicon.glyphicon-chevron-down
           - if user_can_edit_league?(roster.league)
-            = link_to edit_roster_path(roster), class: 'btn btn-default pull-right' do
+            = link_to edit_roster_path(roster), class: 'btn btn-secondary pull-right' do
               Manage
 
         .panel-collapse.collapse{ id: id }

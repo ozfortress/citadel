@@ -2,14 +2,14 @@
 
 - if user_can_edit_thread?
   .pull-right
-    = link_to edit_forums_thread_path(@thread), class: 'btn btn-default' do
+    = link_to edit_forums_thread_path(@thread), class: 'btn btn-secondary' do
       Edit
       %span.glyphicon.glyphicon-cog
 
 - if user_signed_in?
   .pull-right
     = button_to toggle_subscription_for_forums_thread_path(@thread),
-                method: :patch, class: 'btn btn-default' do
+                method: :patch, class: 'btn btn-secondary' do
       - if current_user.forums_subscriptions.where(thread: @thread).exists?
         = render 'forums/unsubscribe_btn'
       - else
@@ -28,7 +28,7 @@
         = render 'forums/posts/form', f: f
 
         .row
-          = f.submit 'Post', class: 'btn btn-default pull-right'
+          = f.submit 'Post', class: 'btn btn-secondary pull-right'
       %hr
 
 = bootstrap_paginate @posts

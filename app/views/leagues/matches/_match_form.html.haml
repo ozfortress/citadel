@@ -27,7 +27,7 @@
       %div{ id: "#{div.id}_pick_bans" }
 
     .panel-body
-      = link_to_add_association f, :pick_bans, class: 'btn btn-default pull-right',
+      = link_to_add_association f, :pick_bans, class: 'btn btn-secondary pull-right',
                                 render_options: { locals: { league: div.league } },
                                 'data-association-insertion-node' => "##{div.id}_pick_bans" do
         %span.glyphicon.glyphicon-plus
@@ -44,7 +44,7 @@
       %div{ id: "#{div.id}_rounds" }
 
     .panel-body
-      = link_to_add_association f, :rounds, class: 'btn btn-default pull-right',
+      = link_to_add_association f, :rounds, class: 'btn btn-secondary pull-right',
                                 render_options: { locals: { league: div.league } },
                                 'data-association-insertion-node' => "##{div.id}_rounds" do
         %span.glyphicon.glyphicon-plus

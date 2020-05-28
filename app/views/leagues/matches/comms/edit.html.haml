@@ -10,7 +10,7 @@
       = render 'form', f: f
 
       = f.submit 'Update'
-      = link_to 'Cancel', match_path(@match), class: 'btn btn-default'
+      = link_to 'Cancel', match_path(@match), class: 'btn btn-secondary'
 
 - if user_can_edit_league?
   .panel.panel-danger

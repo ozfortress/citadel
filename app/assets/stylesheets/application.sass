@@ -11,334 +11,363 @@
  * file per style scope.
  */
 
-@import 'bootstrap-sprockets'
 @import 'bootstrap'
-@import 'bootstrap-datetimepicker'
 @import 'rails_bootstrap_forms'
 @import 'pagedown_bootstrap'
 @import 'font-awesome'
 @import 'markdown'
 
-html
-  overflow-y: scroll
+body
+  padding-top: 66px
 
-blockquote
-  font-size: 14px
+// html
+//   overflow-y: scroll
 
-a:hover
-  text-decoration: none
+// blockquote
+//   font-size: 14px
 
-.banner-citadel
-  background-color: #C9C9C9
+// a:hover
+//   text-decoration: none
 
-.banner-container-citadel
-  @extend .container
-  position: relative
-  left: 0
-  top: 0
+// .banner-citadel
+//   background-color: #C9C9C9
 
-.banner-logo-citadel
-  position: relative
-  left: 0
-  top: 0
+// .banner-container-citadel
+//   @extend .container
+//   position: relative
+//   left: 0
+//   top: 0
 
-.banner-background-citadel
+// .banner-logo-citadel
+//   position: relative
+//   left: 0
+//   top: 0
+
+// .banner-background-citadel
+//   position: absolute
+//   right: 0
+//   top: 0
+
+// #navbar.navbar-citadel
+//   // @extend .navbar-inverse
+//   background-color: #324752
+//   border-style: solid
+//   border-color: #557381 // #425763
+//   border-width: 4px 0 4px 0
+//   border-radius: 0
+//   box-shadow: 0 0 5px black
+
+// #navbar
+//   max-height: 100%
+
+// #navbar.affix
+//   top: 0
+//   width: 100%
+//   z-index: 100
+
+// .affix + .container
+//   padding-top: 78px
+
+// @media (max-width: 768px)
+//   .navbar-toggle
+//     float: left
+//     margin-right: 5px
+//   .navbar-right
+//     float: right
+//   #content
+//     padding-top: 78px
+//   #navbar-collapse
+//     width: 100%
+//     max-height: 320px
+//     overflow-y: auto
+//   .affix-top
+//     position: fixed
+//     top: 0
+//     width: 100%
+//     z-index: 100
+
+//   .container
+//     padding-left: 5px
+//     padding-right: 5px
+
+//   [class*="col-md"]
+//     padding-left: 5px
+//     padding-right: 5px
+
+// textarea
+//   resize: vertical
+
+// li.list-group-item
+//   border-radius: 0
+//   line-height: 34px
+
+// .row
+//   margin-left: 0
+//   margin-right: 0
+
+// a#login
+//   padding-top: 11.8px
+
+// .navbar-right-menu
+//   right: 0
+//   left: auto
+
+// .navbar-header a.dropdown-toggle
+//   // from navbar-nav
+//   color: #9d9d9d
+//   background-color: transparent
+
+// .navbar-header > li > a:hover, .navbar-header > li > a:focus, .navbar-header .open > a
+//   color: white
+//   background-color: transparent !important
+
+// #notifications
+//   position: relative
+//   padding-left: 0
+//   padding-top: 10px
+//   padding-bottom: auto
+
+// #notifications-glyph
+//   font-size: 1.8em
+
+.badge-overlap
   position: absolute
-  right: 0
-  top: 0
+  bottom: -6px
+  right: -13px
 
-#navbar.navbar-citadel
-  @extend .navbar-inverse
-  background-color: #324752
-  border-style: solid
-  border-color: #557381 // #425763
-  border-width: 4px 0 4px 0
-  border-radius: 0
-  box-shadow: 0 0 5px black
+// #notifications-dropdown
+//   width: 400px
+//   @media (max-width: 768px)
+//     position: fixed
+//     top: 55px
+//     width: 100%
 
-#navbar
-  max-height: 100%
+// #notifications-list
+//   margin-bottom: 0
+//   margin-top: 2px
+//   overflow-y: auto
+//   max-height: 205px
 
-#navbar.affix
-  top: 0
-  width: 100%
-  z-index: 100
+// .notification
+//   border-radius: 0 !important
+//   // margin-top: -0.333333px
+//   padding-top: 5px
+//   padding-bottom: 5px
+//   background-color: #e7e7e7
 
-.affix + .container
-  padding-top: 78px
+// .notification-read
+//   background-color: white
 
-@media (max-width: 768px)
-  .navbar-toggle
-    float: left
-    margin-right: 5px
-  .navbar-right
-    float: right
-  #content
-    padding-top: 78px
-  #navbar-collapse
-    width: 100%
-    max-height: 320px
-    overflow-y: auto
-  .affix-top
-    position: fixed
-    top: 0
-    width: 100%
-    z-index: 100
+// .notification-button
+//   position: relative
+//   z-index: 100
+//   padding: 4px 6px 4px 6px
+//   background-color: transparent
 
-  .container
-    padding-left: 5px
-    padding-right: 5px
+//   &:hover
+//     color: grey
 
-  [class*="col-md"]
-    padding-left: 5px
-    padding-right: 5px
+// #navbar-user
+//   padding-left: 5px
+//   padding-right: 5px
+//   // from navbar-nav > li > a
+//   padding-top: 15px
+//   padding-bottom: 15px
 
-textarea
-  resize: vertical
+// #navbar-user-dropdown
 
-li.list-group-item
-  border-radius: 0
-  line-height: 34px
+// .panel
+//   border-radius: 0
 
-.row
-  margin-left: 0
-  margin-right: 0
+// .panel-default .panel-heading
+//   border-radius: 0
 
-a#login
-  padding-top: 11.8px
+// .spaced-header
+//   letter-spacing: 3px
+//   margin: 0 5px
+//   display: inline-flex
 
-.navbar-right-menu
-  right: 0
-  left: auto
+// .user-details
+//   padding-left: 45px
+//   height: 34px
+//   line-height: 19px
+//   overflow: visible
+//   text-overflow: ellipsis
+//   white-space: nowrap
 
-.navbar-header a.dropdown-toggle
-  // from navbar-nav
-  color: #9d9d9d
-  background-color: transparent
-
-.navbar-header > li > a:hover, .navbar-header > li > a:focus, .navbar-header .open > a
-  color: white
-  background-color: transparent !important
-
-#notifications
-  position: relative
-  padding-left: 0
-  padding-top: 10px
-  padding-bottom: auto
-
-#notifications-glyph
-  font-size: 1.8em
-
-#notifications-badge
-  position: absolute
-  top: 5px
-  right: 5px
-  background-color: #729AAD
-
-#notifications-dropdown
-  width: 400px
-  @media (max-width: 768px)
-    position: fixed
-    top: 55px
-    width: 100%
-
-#notifications-list
-  margin-bottom: 0
-  margin-top: 2px
-  overflow-y: auto
-  max-height: 205px
-
-.notification
-  border-radius: 0 !important
-  // margin-top: -0.333333px
-  padding-top: 5px
-  padding-bottom: 5px
-  background-color: #e7e7e7
-
-.notification-read
-  background-color: white
-
-.notification-button
-  position: relative
-  z-index: 100
-  padding: 4px 6px 4px 6px
-  background-color: transparent
-
-  &:hover
-    color: grey
-
-#navbar-user
-  padding-left: 5px
-  padding-right: 5px
-  // from navbar-nav > li > a
-  padding-top: 15px
-  padding-bottom: 15px
-
-#navbar-user-dropdown
-
-.panel
-  border-radius: 0
-
-.panel-default .panel-heading
-  border-radius: 0
-
-.spaced-header
-  letter-spacing: 3px
-  margin: 0 5px
-  display: inline-flex
-
-.user-details
-  padding-left: 45px
-  height: 34px
-  line-height: 19px
-  overflow: visible
-  text-overflow: ellipsis
-  white-space: nowrap
-
-.steam-link a
-  color: #06ace2
+.steam-link
+  $color: #06ace2
+  color: $color
   font-family: monospace
-  font-size: x-small
+  font-size: 10px
   text-decoration: none
   padding: 0 10px 0 0
 
-  .glyphicon:before
-    margin-right: 3px
-
-.avatar
-  border: #e8e5dc 1px solid
-
-.group-avatar
-  margin: 3px 8px
-  max-height: 77px
-  border: 2px #bfb1b3 solid
-
-.group-title
-  margin-top: 3px
-
-  h2
-    display: inline
-  div
-    vertical-align: text-top
-
-.group-aka
-  margin-bottom: 6px
-  font-style: italic
-  color: #8ba0b5
-  font-size: small
-
-.steam-id-large
-  font-family: monospace
-  text-align: right
-  background-color: #695d5d
-  color: white
-  padding: 2px 5px
-  border-radius: 4px
-
-.steam-link-large
-  // font-family: monospace
-  text-align: right
-  margin-top: -21px
-
   a
-    @extend .steam-id-large
+    color: $color
 
-    .glyphicon:before
-      margin-right: 5px
+  svg
+    fill: $color
+    margin-right: -3px
+    vertical-align: sub
 
-.spaced-letters
-  letter-spacing: 2px
-  margin: 0
+// .avatar
+//   border: #e8e5dc 1px solid
 
-// AVATAR ICONS
-.icon-small
-  font-size: small
-  margin-right: -6px
-  color: #a3acb1
+// .group-avatar
+//   margin: 3px 8px
+//   max-height: 77px
+//   border: 2px #bfb1b3 solid
 
-.icon-xxsmall
-  font-size: smaller
-  margin-right: -6px
-  color: #a3acb1
+// .group-title
+//   margin-top: 3px
 
-\:target:before
-  z-index: 0
-  display: block
-  content: " "
-  margin-top: -75px
-  height: 75px
-  visibility: hidden
+//   h2
+//     display: inline
+//   div
+//     vertical-align: text-top
 
-.tab-header
-  display: inline-flex
-  margin: 0
+// .group-aka
+//   margin-bottom: 6px
+//   font-style: italic
+//   color: #8ba0b5
+//   font-size: small
 
-.searchbox
-  margin-top: 5px
+// .steam-id-large
+//   font-family: monospace
+//   text-align: right
+//   background-color: #695d5d
+//   color: white
+//   padding: 2px 5px
+//   border-radius: 4px
 
-.matches-table
-  overflow: auto
-  border-left: none
-  border-right: none
-  margin-bottom: 0
+// .steam-link-large
+//   // font-family: monospace
+//   text-align: right
+//   margin-top: -21px
 
-.matches-table td
-  padding: 4px 8px !important
-  vertical-align: middle
+//   a
+//     @extend .steam-id-large
 
-.match-round
-  width: 60px
-  font-size: 0.85em
-  text-align: left
+//     .glyphicon:before
+//       margin-right: 5px
 
-.match-home-team
-  text-align: right
+// .spaced-letters
+//   letter-spacing: 2px
+//   margin: 0
 
-.match-vs
-  text-align: center
-  width: 60px
-  font-family: monospace
+// // AVATAR ICONS
+// .icon-small
+//   font-size: small
+//   margin-right: -6px
+//   color: #a3acb1
 
-.match-away-team
-  text-align: left
+// .icon-xxsmall
+//   font-size: smaller
+//   margin-right: -6px
+//   color: #a3acb1
 
-.match-view
-  width: 50px
-  font-size: 0.85em
-  text-align: left
+// \:target:before
+//   z-index: 0
+//   display: block
+//   content: " "
+//   margin-top: -75px
+//   height: 75px
+//   visibility: hidden
 
-.round-score
-  display: inline-block
-  float: right
-  width: 70px
-  text-align: center
-  border-left: 1px solid white
-  line-height: calc(100% + 2px)
-  outline: 1px solid white
-  background-color: #d9d9d9
-  border-radius: 15px
+// .tab-header
+//   display: inline-flex
+//   margin: 0
 
-.round-score div
-  display: inline-block
-  width: 20px
-  height: 20px
-  line-height: 20px
-  border-radius: 50%
+// .searchbox
+//   margin-top: 5px
 
-.round-won
-  background-color: #89c789
-  color: white
-  border-radius: 10px
+// .matches-table
+//   overflow: auto
+//   border-left: none
+//   border-right: none
+//   margin-bottom: 0
 
-.round-loss
-  background-color: #f16161
-  color: white
-  border-radius: 10px
+// .matches-table td
+//   padding: 4px 8px !important
+//   vertical-align: middle
 
-.round-tied
-  //background-color: white
-  border-radius: 10px
+// .match-round
+//   width: 60px
+//   font-size: 0.85em
+//   text-align: left
 
-.nopadding
-  padding: 0 !important
-  margin: 0 !important
+// .match-home-team
+//   text-align: right
+
+// .match-vs
+//   text-align: center
+//   width: 60px
+//   font-family: monospace
+
+// .match-away-team
+//   text-align: left
+
+// .match-view
+//   width: 50px
+//   font-size: 0.85em
+//   text-align: left
+
+// .round-score
+//   display: inline-block
+//   float: right
+//   width: 70px
+//   text-align: center
+//   border-left: 1px solid white
+//   line-height: calc(100% + 2px)
+//   outline: 1px solid white
+//   background-color: #d9d9d9
+//   border-radius: 15px
+
+// .round-score div
+//   display: inline-block
+//   width: 20px
+//   height: 20px
+//   line-height: 20px
+//   border-radius: 50%
+
+// .round-won
+//   background-color: #89c789
+//   color: white
+//   border-radius: 10px
+
+// .round-loss
+//   background-color: #f16161
+//   color: white
+//   border-radius: 10px
+
+// .round-tied
+//   //background-color: white
+//   border-radius: 10px
+
+// .nopadding
+//   padding: 0 !important
+//   margin: 0 !important
+
+// Make dropdowns in navbar non-responsive
+.navbar-nav .dropdown-menu.dropdown-non-responsive
+  position: absolute
+
+.icon-dark
+  fill: black
+.icon-light
+  fill: white
+.icon
+  @extend .icon-dark
+
+.navbar-dark
+  .icon
+    @extend .icon-light
+
+  .dropdown-menu
+    .icon
+      @extend .icon-dark
+
+.btn-primary, .btn-secondary, .btn-success, .btn-danger, .btn-info, .btn-dark
+  .icon
+    @extend .icon-light

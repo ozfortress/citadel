@@ -1,10 +1,14 @@
-.notification-group{ id: "notification_#{notification.id}" }
+- cls = 'notification'
+- if notification.read
+  - cls += ' notification-read'
+
+%li{ class: "dropdown-item #{cls}", id: "notification_#{notification.id}" }
   = button_to notification_path(notification.id), method: :delete, remote: true,
-              class: 'btn pull-right notification-button' do
-    .span.glyphicon.glyphicon-remove
+              class: 'btn ben-default float-right' do
+    .span.glyphicon.glyphicon-remove R
 
-  - cls = 'notification'
-  - if notification.read
-    - cls += ' notification-read'
+  = present(notification).link
+  / = distance_of_time_in_words(notification.created_at)
+  / ago
 
-  = present(notification).link(class: "list-group-item #{cls}")
+

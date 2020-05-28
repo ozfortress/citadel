@@ -3,7 +3,7 @@
 %h1.tab-header Forums
 %hr
 .row
-  = link_to recent_forums_posts_path, class: 'btn btn-default' do
+  = link_to recent_forums_posts_path, class: 'btn btn-secondary' do
     Recent Posts
 %br
 = render 'page', topics: @topics, threads: @threads, parent_topic: nil

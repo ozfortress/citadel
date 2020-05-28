@@ -1,16 +1,13 @@
 - content_for(:title) { 'Leagues' }
 
-%h1.tab-header Leagues
-
-.col-sm-3.col-md-3.searchbox.pull-right
-  = render 'search'
-
-%hr
-
 - if user_can_edit_leagues?
-  = link_to new_league_path, class: 'btn btn-default pull-right' do
-    %span.glyphicon.glyphicon-plus
-    Create New League
+  = link_to new_league_path, class: 'btn btn-secondary pull-right' do
+    Start League
+    = inline_svg_tag 'open_iconic/plus.svg', class: 'icon ml-1', size: '16'
+
+%h1 Leagues
+
+= render 'search'
 
 - unless @games.empty?
   %ul.nav.nav-tabs

@@ -3,7 +3,7 @@
     .panel-heading
       - if user_can_create_thread?
         .pull-right
-          = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-default' do
+          = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-secondary' do
             Create
             %span.glyphicon.glyphicon-plus
 
@@ -21,7 +21,7 @@
     .panel-heading
       - if user_can_manage_topic?
         .pull-right
-          = link_to new_forums_topic_path(parent: parent_topic), class: 'btn btn-default' do
+          = link_to new_forums_topic_path(parent: parent_topic), class: 'btn btn-secondary' do
             Create
             %span.glyphicon.glyphicon-plus
 

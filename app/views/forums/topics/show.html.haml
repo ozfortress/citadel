@@ -2,14 +2,14 @@
 
 - if user_can_manage_topic?
   .pull-right
-    = link_to edit_forums_topic_path(@topic), class: 'btn btn-default' do
+    = link_to edit_forums_topic_path(@topic), class: 'btn btn-secondary' do
       Edit
       %span.glyphicon.glyphicon-cog
 
 - if user_signed_in?
   .pull-right
     = button_to toggle_subscription_for_forums_topic_path(@topic),
-                method: :patch, class: 'btn btn-default' do
+                method: :patch, class: 'btn btn-secondary' do
       - if current_user.forums_subscriptions.where(topic: @topic).exists?
         = render 'forums/unsubscribe_btn'
       - else

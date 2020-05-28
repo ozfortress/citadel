@@ -51,16 +51,16 @@ class UsersController < ApplicationController
   end
 
   def show
-    @comment        = User::Comment.new
-    @comments       = @user.comments.ordered.includes(:created_by)
-    @aka            = @user.aka.limit(5).order(created_at: :desc)
-    @titles         = @user.titles
-    @teams          = @user.teams.order(created_at: :desc)
-    @team_transfers = @user.team_transfers.includes(:team).order(created_at: :desc)
-    @team_invites   = @user.team_invites.includes(:team).order(created_at: :asc)
-    @rosters        = @user.rosters.includes(division: :league).order(created_at: :desc)
-    @matches        = @user.matches.pending.includes(:home_team, :away_team)
-    @forums_posts   = user_forums_posts.order(:created_at).includes(:thread).limit(10)
+    @comment          = User::Comment.new
+    @comments         = @user.comments.ordered.includes(:created_by)
+    @aka              = @user.aka.limit(5).order(created_at: :desc)
+    @titles           = @user.titles
+    @teams            = @user.teams.order(created_at: :desc)
+    @team_transfers   = @user.team_transfers.includes(:team).order(created_at: :desc)
+    @roster_transfers = roster_transfers_by_league
+    @team_invites     = @user.team_invites.includes(:team).order(created_at: :asc)
+    @matches          = @user.matches.pending.includes(:home_team, :away_team)
+    @forums_posts     = user_forums_posts.order(:created_at).includes(:thread).limit(10)
   end
 
   def edit
@@ -120,6 +120,15 @@ class UsersController < ApplicationController
 
   def steam_data
     session['devise.steam_data']
+  end
+
+  def roster_transfers_by_league
+    @user.roster_transfers
+         .includes(roster: { division: :league })
+         .joins(roster: { division: :league })
+         .order('leagues.created_at desc', created_at: :desc)
+         .chunk(&:league)
+         .to_a
   end
 
   def user_forums_posts

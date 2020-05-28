@@ -10,10 +10,10 @@
       = render 'team_form', f: f
 
       = f.submit 'Save'
-      = link_to 'Cancel', team_path(@team), class: 'btn btn-default'
+      = link_to 'Cancel', team_path(@team), class: 'btn btn-secondary'
 
     = link_to users_permissions_path(action_: :edit, subject: :team, target: @team.id),
-              class: 'pull-right btn btn-default' do
+              class: 'pull-right btn btn-secondary' do
       Manage Permissions
       %span.glyphicon.glyphicon-cog
 

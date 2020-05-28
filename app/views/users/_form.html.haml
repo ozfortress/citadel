@@ -1,0 +1,10 @@
+= f.text_field :email, label: user_p.confirmation_label
+
+= f.file_field :avatar, accept: 'image/png,image/jpeg'
+= f.hidden_field :avatar_cache
+- if user.avatar.file
+  = f.form_group :remove_avatar, help: 'Check this to remove your custom avatar.' do
+    = f.check_box :remove_avatar
+
+= f.markdown_editor :description, rows: 10
+

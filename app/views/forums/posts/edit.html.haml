@@ -9,7 +9,7 @@
       = render 'form', f: f
 
       = f.submit 'Update'
-      = link_to 'Cancel', :back, class: 'btn btn-default'
+      = link_to 'Cancel', :back, class: 'btn btn-secondary'
 
 - if user_can_manage_thread?(@thread)
   .panel.panel-danger

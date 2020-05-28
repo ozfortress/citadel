@@ -15,7 +15,7 @@
                 class: 'list-group-item' do
         = team.name
 
-  = link_to 'Cancel', league_path(@league), class: 'btn btn-default'
+  = link_to 'Cancel', league_path(@league), class: 'btn btn-secondary'
 
 - else
   %h4
@@ -46,4 +46,4 @@
               %span.help-block= error
 
     = f.submit 'Sign up'
-    = link_to 'Cancel', league_path(@league), class: 'btn btn-default'
+    = link_to 'Cancel', league_path(@league), class: 'btn btn-secondary'

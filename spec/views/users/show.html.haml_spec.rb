@@ -10,28 +10,29 @@ describe 'users/show' do
   let(:active_league) { build_stubbed(:league) }
   let(:signup_league) { build_stubbed(:league, signuppable: true) }
   let(:completed_league) { build_stubbed(:league, status: :completed) }
-  let(:rosters) { build_stubbed_list(:league_roster, 2) }
   let(:matches) { build_stubbed_list(:league_match, 2) }
   let(:comments) { build_stubbed_list(:user_comment, 10) }
   let(:forums_posts) { build_stubbed_list(:forums_post, 24, created_by: user) }
 
   before do
-    rosters = [active_league, signup_league, completed_league].map do |league|
+    roster_transfers = [active_league, signup_league, completed_league].map do |league|
       division = build_stubbed(:league_division, league: league)
-      build_stubbed(:league_roster, division: division)
+      roster = build_stubbed(:league_roster, division: division)
+      build_stubbed(:league_roster_transfer, roster: roster, user: user)
     end
 
-    rosters << build_stubbed(:league_roster, disbanded: true)
+    disbanded_roster = build_stubbed(:league_roster, disbanded: true)
+    roster_transfers << build_stubbed(:league_roster_transfer, roster: disbanded_roster, user: user)
 
     assign(:user, user)
     assign(:comment, User::Comment.new)
     assign(:comments, comments)
-    assign(:teams, teams)
     assign(:aka, aka)
     assign(:titles, titles)
+    assign(:teams, teams)
     assign(:team_transfers, team_transfers)
+    assign(:roster_transfers, roster_transfers.chunk(&:league).to_a)
     assign(:team_invites, team_invites)
-    assign(:rosters, rosters)
     assign(:matches, matches)
     assign(:forums_posts, forums_posts)
 

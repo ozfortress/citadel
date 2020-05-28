@@ -37,10 +37,10 @@
       = render 'form', f: f
 
       = f.submit 'Update'
-      = link_to 'Cancel', team_path(@roster.team), class: 'btn btn-default'
+      = link_to 'Cancel', team_path(@roster.team), class: 'btn btn-secondary'
 
     = link_to users_permissions_path(action_: :edit, subject: :team, target: @roster.team.id),
-              class: 'pull-right btn btn-default' do
+              class: 'pull-right btn btn-secondary' do
       Manage Permissions
       %span.glyphicon.glyphicon-cog
 
@@ -89,5 +89,5 @@
         = render 'leagues/rosters/comments/form', f: f
 
         .row
-          = f.submit 'Post', class: 'btn btn-default pull-right'
+          = f.submit 'Post', class: 'btn btn-secondary pull-right'
       %hr

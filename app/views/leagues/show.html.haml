@@ -6,7 +6,7 @@
     Private
 
 - if user_can_edit_league?
-  = link_to edit_league_path(@league), class: 'btn btn-default pull-right', type: 'button' do
+  = link_to edit_league_path(@league), class: 'btn btn-secondary pull-right', type: 'button' do
     Manage
     %span.glyphicon.glyphicon-cog
 
@@ -20,7 +20,7 @@
 - if !matches.empty?
   .panel.panel-info
     = link_to 'All Matches', league_matches_path(@league),
-              class: 'btn btn-default pull-right'
+              class: 'btn btn-secondary pull-right'
     .panel-heading
       - if @personal_matches
         Upcoming matches for your team:
@@ -31,7 +31,7 @@
 - else
   .alert.alert-info
     = link_to 'All Matches', league_matches_path(@league),
-              class: 'btn btn-default pull-right'
+              class: 'btn btn-secondary pull-right'
     - if @league.completed?
       This league has been completed
     - elsif @roster
@@ -49,7 +49,7 @@
 
     - elsif @roster
       .panel-body
-        = present(@roster).link 'View My Team', class: 'btn btn-default pull-right'
+        = present(@roster).link 'View My Team', class: 'btn btn-secondary pull-right'
 
   - if @league.signuppable? || @league.hide_rosters?
     %ul.list-group
@@ -95,7 +95,7 @@
   .panel.panel-info
     .panel-heading Admin
     .panel-body
-      - klass = 'btn btn-default pull-right'
+      - klass = 'btn btn-secondary pull-right'
 
       = link_to 'Transfers', league_transfers_path(@league), class: klass
       = link_to 'Signups', league_rosters_path(@league), class: klass

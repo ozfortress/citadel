@@ -2,37 +2,37 @@
 
 - user_p = present(@user)
 
-%h1 Setting for #{user_p.link}
+%h1 Settings for #{user_p.link}
 
 %hr
 
-.panel.panel-default
-  .panel-heading Name
-  .panel-body
+.card.mb-3
+  .card-header Change Name
+  .card-body
     = bootstrap_form_for @name_change, url: name_user_path(@user),
-                         method: :post, as: :name_change, layout: :horizontal do |f|
-      .col-xs-8.pull-left= f.text_field :name, hide_label: true
+                         method: :post, as: :name_change do |f|
+      = f.text_field :name, hide_label: true
 
-      .col-xs-4
-        .pull-right= f.submit 'Request Name Change'
+      = f.primary 'Request Name Change'
 
-.panel.panel-default
-  .panel-heading Information
-  .panel-body
+.card.mb-3
+  .card-header General
+  .card-body
     = bootstrap_form_for @user, method: :patch do |f|
-      = render 'user_form', f: f, user_p: user_p
+      = render 'form', f: f, user: @user, user_p: user_p
 
-      = f.submit 'Save'
-      = link_to 'Cancel', user_path(@user), class: 'btn btn-default'
+      = f.primary 'Save'
+      = link_to 'Cancel', user_path(@user), class: 'btn btn-secondary'
 
 - if user_can_edit_users?
-  .panel.panel-danger
-    .panel-heading Danger Zone
-    .panel-body
-      = link_to user_bans_path(@user), class: 'btn btn-default' do
-        Manage Bans
-        .glyphicon.glyphicon-ban-circle
+  .card.border-danger
+    .card-header.text-white.bg-danger Admin Only
+    .card-body
+      = bootstrap_form_for @user, method: :patch do |f|
+        = render 'admin_form', f: f, user: @user, user_p: user_p
 
-      = link_to user_logs_path(@user), class: 'btn btn-default' do
-        Logs
-        .glyphicon.glyphicon-list
+        = f.primary 'Save'
+        = link_to 'Cancel', user_path(@user), class: 'btn btn-secondary'
+        = link_to 'Manage Bans', user_bans_path(@user), class: 'btn btn-warning'
+        = link_to 'Logs', user_logs_path(@user), class: 'btn btn-warning'
+

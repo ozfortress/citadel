@@ -8,7 +8,7 @@
       = render 'form', f: f
 
       = f.submit 'Update'
-      = link_to 'Cancel', :back, class: 'btn btn-default'
+      = link_to 'Cancel', :back, class: 'btn btn-secondary'
 
 .panel.panel-danger
   .panel-heading Danger Zone
@@ -24,7 +24,7 @@
         Isolate
 
     = link_to users_permissions_path(action_: :manage, subject: :forums_topic, target: @topic.id),
-              class: 'pull-right btn btn-default' do
+              class: 'pull-right btn btn-secondary' do
       Manage Permissions
       %span.glyphicon.glyphicon-cog
 
