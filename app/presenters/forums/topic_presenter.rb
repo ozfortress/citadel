@@ -6,13 +6,9 @@ module Forums
       link_to(to_s, forums_topic_path(topic))
     end
 
-    def path
-      html_escape(PATH_SEP) + safe_join(path_topics, PATH_SEP)
-    end
-
     def breadcrumbs
-      crumbs = []
-      path_topics.each { |path| crumbs << content_tag(:li, path, class: 'breadcrumb-item') }
+      crumbs = path_topics.map { |path| content_tag(:li, path, class: 'breadcrumb-item') }
+      crumbs << content_tag(:li, topic.name, class: 'breadcrumb-item active')
       safe_join(crumbs, '')
     end
 
