@@ -21,26 +21,25 @@
 
               %span.badge.badge-primary.pull-right= pluralize(topic.visible_threads_count, 'Thread')
 
-- if user_can_create_thread? || !threads.empty?
-  .card.mb-3
-    .card-header.d-flex.justify-content-between.align-items-center
-      Threads
+.card.mb-3
+  .card-header.d-flex.justify-content-between.align-items-center
+    Threads
 
-      - if user_can_create_thread?
-        = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-secondary btn-sm centered pull-right' do
-          = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2', size: '10'
-          Create
+    - if user_can_create_thread?
+      = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-secondary btn-sm centered pull-right' do
+        = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2', size: '10'
+        Create
 
-    .card-body.p-0
-      %ul.list-group.list-group-flush
-        - if threads.empty?
+  .card-body.p-0
+    %ul.list-group.list-group-flush
+      - if threads.empty?
+        %li.list-group-item.d-flex.justify-content-between.align-items-center
+          No threads founds...
+
+      - else
+        - threads.each do |thread|
+          - thread_p = present(thread)
           %li.list-group-item.d-flex.justify-content-between.align-items-center
-            No threads founds...
+            = thread_p.link
 
-        - else
-          - threads.each do |thread|
-            - thread_p = present(thread)
-            %li.list-group-item.d-flex.justify-content-between.align-items-center
-              = thread_p.link
-
-              %span.badge.badge-primary.pull-right= pluralize(thread.posts_count, 'Post')
+            %span.badge.badge-primary.pull-right= pluralize(thread.posts_count, 'Post')

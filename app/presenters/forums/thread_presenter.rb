@@ -8,7 +8,6 @@ module Forums
 
     def breadcrumbs
       crumbs = path_objects.map { |path| content_tag(:li, path, class: 'breadcrumb-item') }
-      crumbs << content_tag(:li, thread.title, class: 'breadcrumb-item active')
       safe_join(crumbs, '')
     end
 

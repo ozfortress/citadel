@@ -1,10 +1,10 @@
 - content_for(:title) { 'Forums' }
 
-= render 'head', object: nil
-
-.row
-  .col-12.mb-3
-    = link_to recent_forums_posts_path, class: 'btn btn-secondary' do
+.mt-2
+  .row.no-gutters.justify-content-end.float-lg-right
+    = link_to recent_forums_posts_path, class: 'btn btn-sm btn-secondary' do
       Recent Posts
+
+  = render 'head', object: nil
 
 = render 'page', topics: @topics, threads: @threads, parent_topic: nil

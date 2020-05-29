@@ -1,14 +1,22 @@
-%nav
-  %ol.breadcrumb
-    - if object
-      - presenter = present(object)
+- if object
+  - presenter = present(object)
 
+  %nav.mb-3
+    %ol.breadcrumb.bg-transparent.pl-0.py-1.mb-0
       %li.breadcrumb-item
         = link_to forums_path(nil) do
-          Forums
+          Home
 
       = presenter.breadcrumbs
 
-    - else
+    %h3
+      = presenter
+
+- else
+  %nav.mb-3
+    %ol.breadcrumb.bg-transparent.pl-0.py-1.mb-0
       %li.breadcrumb-item.active
-        Forums
+        Home
+
+    %h3
+      Forums
