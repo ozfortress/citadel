@@ -4,19 +4,19 @@
       Topics
 
       - if user_can_manage_topic?
-        = link_to new_forums_topic_path(parent: parent_topic), class: 'btn btn-secondary btn-sm centered pull-right' do
+        = link_to new_forums_topic_path(parent: parent_topic), class: 'btn btn-secondary btn-sm pull-right' do
           = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2', size: '10'
           Create
 
     .card-body.p-0
       %ul.list-group.list-group-flush
         - if topics.empty?
-          %li.list-group-item.d-flex.justify-content-between.align-items-center
+          %li.list-group-item.d-flex.justify-content-between.align-items-start
             No topics found...
         - else
           - topics.each do |topic|
             - topic_p = present(topic)
-            %li.list-group-item.d-flex.justify-content-between.align-items-center
+            %li.list-group-item.d-flex.justify-content-between.align-items-start
               = topic_p.link
 
               %span.badge.badge-primary.pull-right= pluralize(topic.visible_threads_count, 'Thread')
@@ -26,20 +26,20 @@
     Threads
 
     - if user_can_create_thread?
-      = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-secondary btn-sm centered pull-right' do
+      = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-secondary btn-sm pull-right' do
         = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2', size: '10'
         Create
 
   .card-body.p-0
     %ul.list-group.list-group-flush
       - if threads.empty?
-        %li.list-group-item.d-flex.justify-content-between.align-items-center
+        %li.list-group-item.d-flex.justify-content-between.align-items-start
           No threads founds...
 
       - else
         - threads.each do |thread|
           - thread_p = present(thread)
-          %li.list-group-item.d-flex.justify-content-between.align-items-center
+          %li.list-group-item.d-flex.justify-content-between.align-items-start
             = thread_p.link
 
             %span.badge.badge-primary.pull-right= pluralize(thread.posts_count, 'Post')
