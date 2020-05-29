@@ -1,3 +1,5 @@
+- subheading ||= nil
+
 - if object
   - presenter = present(object)
 
@@ -12,6 +14,10 @@
     %h3
       = presenter
 
+      - if subheading
+        %small.text-muted.ml-2
+          = subheading
+
 - else
   %nav.mt-2.mb-3.my-lg-3
     %ol.breadcrumb.bg-transparent.pl-0.py-1.mb-1
@@ -20,3 +26,7 @@
 
     %h3
       Forums
+
+      - if subheading
+        %small.text-muted.ml-2
+          = subheading

@@ -1,20 +1,24 @@
 - content_for(:title) { "Edit: #{@thread.title} | Forums" }
 
-= render 'forums/head', object: @thread
+= render 'forums/head', object: @thread, subheading: 'Editing thread'
 
-.panel.panel-default
-  .panel-body
+.card.bg-light.mb-3
+  .card-body
     = bootstrap_form_for @thread do |f|
       = render 'form', f: f, post: @post
 
-      = f.submit 'Update'
-      = link_to 'Cancel', :back, class: 'btn btn-secondary'
+      .d-flex.justify-content-end
+        = link_to 'Cancel', :back, class: 'btn btn-link mr-2'
+        = f.primary 'Update'
 
 - if user_can_manage_thread?
-  .panel.panel-danger
-    .panel-heading Danger Zone
-    .panel-body
-      = button_to forums_thread_path(@thread), method: :delete, class: 'btn btn-danger',
+  .alert.alert-danger.mb-3
+
+    %label.font-weight-bold.alert-heading
+      Danger Zone
+
+    .d-flex.flex-column.flex-md-row
+      = button_to forums_thread_path(@thread), method: :delete, class: 'btn btn-sm btn-danger',
                   data: { confirm: 'Are you sure you want to delete this Thread?' } do
-        %span.glyphicon.glyphicon-trash
+        = inline_svg_tag 'open_iconic/trash.svg', class: 'icon mr-2', size: '16'
         Delete
