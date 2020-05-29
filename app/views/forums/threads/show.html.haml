@@ -1,6 +1,6 @@
 - content_for(:title) { "#{@thread.title} | Forums" }
 
-.mt-2
+.clearfix
   .row.no-gutters.justify-content-end.float-lg-right
     - if user_can_edit_thread?
       = link_to edit_forums_thread_path(@thread), class: 'btn btn-sm btn-link ml-2' do

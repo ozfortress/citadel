@@ -1,7 +1,7 @@
 - content_for(:title) { "#{@topic.name} | Forums" }
 
-.mt-2
-  .row.no-gutters.justify-content-end.float-lg-right
+.clearfix
+  .row.no-gutters.justify-content-end.float-right
     - if user_can_manage_topic?
       = link_to edit_forums_topic_path(@topic), class: 'btn btn-sm btn-link ml-2' do
         Edit Topic
@@ -12,7 +12,6 @@
       = button_to toggle_subscription_for_forums_topic_path(@topic), method: :patch,
                   class: "btn btn-sm #{subscribed ? 'btn-danger' : 'btn-primary'} centered ml-2" do
         = render subscribed ? 'forums/unsubscribe_btn' : 'forums/subscribe_btn'
-
 
   = render 'forums/head', object: @topic
 
