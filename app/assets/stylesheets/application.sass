@@ -11,14 +11,18 @@
  * file per style scope.
  */
 
+// External styles
 @import 'bootstrap'
 @import 'rails_bootstrap_forms'
 @import 'pagedown_bootstrap'
 @import 'font-awesome'
+
+// Project styles
 @import 'markdown'
+@import 'navbar'
 
 body
-  padding-top: 66px
+  padding-top: $navbar-height
 
 // html
 //   overflow-y: scroll
@@ -130,10 +134,17 @@ body
 // #notifications-glyph
 //   font-size: 1.8em
 
-.badge-overlap
-  position: absolute
-  bottom: -6px
-  right: -13px
+.badge
+
+  &.anchor-top-right
+    position: absolute
+    top: -0.25rem
+    right: -0.25rem
+
+  &.anchor-bottom-right
+    position: absolute
+    bottom: -0.25rem
+    right: -0.25rem
 
 // #notifications-dropdown
 //   width: 400px

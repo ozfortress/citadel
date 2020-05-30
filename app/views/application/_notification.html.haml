@@ -1,13 +1,15 @@
 - cls = 'notification'
 - if notification.read
-  - cls += ' notification-read'
+  - cls += ' read'
 
-%li{ class: "dropdown-item #{cls}", id: "notification_#{notification.id}" }
+%li.list-group-item.d-flex.p-0{ class: cls,
+                                     id: "notification_#{notification.id}" }
+  = present(notification).link(class: 'p-2 pl-4')
+
   = button_to notification_path(notification.id), method: :delete, remote: true,
-              class: 'btn ben-default float-right' do
-    .span.glyphicon.glyphicon-remove R
+              class: 'btn delete px-2 py-1 pull-right' do
+    = inline_svg_tag 'open_iconic/x.svg', class: 'icon', size: '10'
 
-  = present(notification).link
   / = distance_of_time_in_words(notification.created_at)
   / ago
 

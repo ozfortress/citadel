@@ -9,22 +9,23 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = content_for :head
     = csrf_meta_tags
+
   %body
-    %nav.navbar.navbar-dark.bg-dark.fixed-top.navbar-expand-lg
-      %button.navbar-toggler.order-0{ type: :button, data: { toggle: 'collapse', target: '#main-menu' },
+    %nav.navbar.navbar-dark.bg-dark.fixed-top.align-items-stretch.navbar-expand-lg
+      %button.navbar-toggler.mr-2.order-0{ type: :button, data: { toggle: 'collapse', target: '#main-menu' },
                                       area: { controls: 'main-menu', expanded: 'false', label: 'Toggle main menu' } }
         %span.navbar-toggler-icon
       = link_to('/', class: 'navbar-brand order-2') do
         = image_tag 'logo.png', height: '40px', width: '95px'
 
       - if user_signed_in?
-        %ul.navbar-nav.ml-auto.order-4
+        .d-flex.align-items-center.position-relative.ml-auto.order-4
           = render 'notifications', notifications: @notifications
-        %ul.navbar-nav.ml-3.order-5
+        .d-flex.align-items-center.position-relative.ml-3.order-5
           = render 'user_dropdown'
       - else
-        %ul.navbar-nav.ml-auto.order-4
-          %li.nav-item= render 'user_signin'
+        .d-flex.align-items-center.position-relative.ml-auto.order-4
+          = render 'user_signin'
 
       .collapse.navbar-collapse.order-6.order-lg-3#main-menu
         %ul.navbar-nav= render 'navbar'

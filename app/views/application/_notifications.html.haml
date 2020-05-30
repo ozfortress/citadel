@@ -1,19 +1,24 @@
-%li.nav-item.dropdown
-  %a#notifications-dropdown{ href: '#', data: { toggle: 'dropdown' } }
-    = inline_svg_tag 'open_iconic/bell.svg', class: 'icon', size: '20'
-    - unless notifications.empty?
-      %span.badge.badge-primary.badge-overlap#notifications-badge= notifications.to_a.count { |n| !n.read }
+%a.position-relative.d-block.p-2.pr-0#notifications-dropdown{ href: '#', data: { toggle: 'dropdown' } }
+  = inline_svg_tag 'open_iconic/bell.svg', class: 'icon', size: '20'
 
-  .dropdown-menu.dropdown-menu-right{ aria: { labelledby: 'notifications-dropdown' } }
-    .dropdown-header
-      = button_to clear_notifications_path, class: 'btn btn-secondary pull-right',
-                  method: :delete, remote: true,
-                  data: { confirm: 'Are you sure you want to clear all notifications?' } do
-        Clear
-        .span.glyphicon.glyphicon-remove
-      %h5 Notifications
+  - unless notifications.empty?
+    %span.badge.badge-primary.anchor-bottom-right#notifications-badge= notifications.to_a.count { |n| !n.read }
 
-    %ul#notifications-list
+#notifications-dropdown-menu{ aria: { labelledby: 'notifications-dropdown' },
+                              class: 'dropdown-menu dropdown-menu-right p-0' }
+  .card
+    .card-header
+      .row.flex-nowrap.align-items-center
+        .col-auto
+          Notifications
+
+        .col-auto.ml-auto
+          = button_to clear_notifications_path, class: 'btn btn-sm btn-secondary',
+                      method: :delete, remote: true,
+                      data: { confirm: 'Are you sure you want to clear all notifications?' } do
+            Clear
+
+    %ul.list-group.list-group-flush#notifications-list
       - notifications.each do |notification|
         = render 'notification', notification: notification
 
@@ -22,4 +27,4 @@
   setInterval(function() {
     var url = "/notifications"
     $.ajax(url);
-  }, 20000);
+  }, 20000111);
