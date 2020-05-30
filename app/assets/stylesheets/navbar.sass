@@ -63,10 +63,12 @@ $notification-hover-background-color: #eeeeee
 
 .dropdown-menu-animated
   display: block
+  visibility: hidden
   opacity: 0
   transform: translateY(-0.5rem)
   transition: 0.3s ease all
 
   &.show
-    transform: translateY(0)
+    visibility: visible
     opacity: 1
+    transform: translateY(0)
