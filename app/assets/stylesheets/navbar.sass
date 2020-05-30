@@ -8,10 +8,23 @@ $notification-hover-background-color: #eeeeee
 
 // Temporary solution for minimum acceptable display on mobile
 // TODO: perhaps see if theres a better solution for navbar/notifications layout
+
+.dropdown-menu-animated
+  display: block
+  opacity: 0
+  transform: translateY(-0.5rem)
+  transition: 0.3s ease all
+
+  &.show
+    transform: translateY(0)
+    opacity: 1
+
 #user-dropdown-menu
+  @extend .dropdown-menu-animated
   margin-top: 1rem
 
 #notifications-dropdown-menu
+  @extend .dropdown-menu-animated
   width: 500px
 
   @include media-breakpoint-down(sm)
