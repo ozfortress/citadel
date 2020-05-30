@@ -1,4 +1,7 @@
-
+// Currently navbar uses a fixed height value, which can break if there
+// are wrapping elements at smaller dimensions (<350px).
+// This is because body relies on this value for padding-top.
+// TODO: Make navbar / body not reliant of a fixed value
 $navbar-height: 66px
 
 $notification-font-size: 1rem
@@ -6,20 +9,7 @@ $notification-unread-background-color: #f5f5f5
 $notification-read-background-color: #ffffff
 $notification-hover-background-color: #eeeeee
 
-// Temporary solution for minimum acceptable display on mobile
-// TODO: perhaps see if theres a better solution for navbar/notifications layout
-
-.dropdown-menu-animated
-  display: block
-  opacity: 0
-  transform: translateY(-0.5rem)
-  transition: 0.3s ease all
-
-  &.show
-    transform: translateY(0)
-    opacity: 1
-
-// User dropdown menu
+// User dropdown button / menu -------------------- //
 
 #user-dropdown
   & > .avatar
@@ -29,6 +19,10 @@ $notification-hover-background-color: #eeeeee
 #user-dropdown-menu
   @extend .dropdown-menu-animated
   margin-top: 1rem
+
+// Notifications dropdown button / menu -------------------- //
+
+#notifications-dropdown
 
 #notifications-dropdown-menu
   @extend .dropdown-menu-animated
@@ -64,3 +58,15 @@ $notification-hover-background-color: #eeeeee
 
       &:hover
         background-color: $notification-hover-background-color
+
+// Misc -------------------- //
+
+.dropdown-menu-animated
+  display: block
+  opacity: 0
+  transform: translateY(-0.5rem)
+  transition: 0.3s ease all
+
+  &.show
+    transform: translateY(0)
+    opacity: 1
