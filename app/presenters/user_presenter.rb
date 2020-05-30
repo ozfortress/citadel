@@ -24,14 +24,15 @@ class UserPresenter < BasePresenter
     "http://steamcommunity.com/profiles/#{user.steam_64}"
   end
 
-  def steam_link
+  def steam_id_link
     link_to(steam_profile_url, target: '_blank', rel: 'noopener') do
-      content = [
-        inline_svg_tag('open_iconic/link-intact.svg', class: 'icon', size: '10'),
-        user.steam_id3,
-      ]
+      user.steam_id3
+    end
+  end
 
-      safe_join(content, '')
+  def steam_icon_link(options = { size: 16 })
+    link_to(steam_profile_url, target: '_blank', rel: 'noopener') do
+      image_tag('steam/steam-logo.png', options)
     end
   end
 

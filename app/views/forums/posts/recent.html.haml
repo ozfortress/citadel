@@ -1,9 +1,12 @@
 - content_for(:title) { 'Recent Posts | Forums' }
 
-%h1.tab-header Recent Posts
+= render 'forums/head', object: nil, subheading: 'Recent Posts', root_navigable: true
+
 %hr
 
-.panel.panel-default
-  - @posts.each do |post|
-    .panel-heading Thread: #{present(post.thread).link}
+- @posts.each do |post|
+  .mb-4
+    .mb-2
+      Thread: #{present(post.thread).link}
+
     = render post, quote_id: nil

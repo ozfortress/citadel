@@ -12,6 +12,6 @@
   %ul.list-group.mt-2
     - @users.each do |user|
       %li.list-group-item
-        = render 'users/listing', user: user
+        = render 'users/listing', user: user, show_steam_id: true
 
 = bootstrap_paginate @users, list_classes: ['pagination justify-content-center mt-4']

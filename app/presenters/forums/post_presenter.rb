@@ -10,6 +10,18 @@ module Forums
       post.created_at.strftime('%c')
     end
 
+    def created_at_in_words
+      "#{time_ago_in_words(post.created_at).gsub('about', '')} ago"
+    end
+
+    def last_edited
+      post.updated_at.strftime('%c')
+    end
+
+    def last_edited_in_words
+      "#{time_ago_in_words(post.updated_at).gsub('about', '')} ago"
+    end
+
     def content
       # rubocop:disable Rails/OutputSafety
       post.content_render_cache.html_safe
