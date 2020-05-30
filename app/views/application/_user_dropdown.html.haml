@@ -5,13 +5,13 @@
   .dropdown-menu.dropdown-menu-right.dropdown-non-responsive{ aria: { labelledby: 'user-dropdown' } }
     = link_to(user_path(current_user), class: 'dropdown-item') do
       Profile
-      %span.pull-right= inline_svg_tag 'open_iconic/person.svg', class: 'icon', size: '16'
+      %span.pull-right= inline_svg_tag 'open_iconic/person.svg', class: 'icon'
     = link_to(edit_user_path(current_user), class: 'dropdown-item') do
       Settings
-      %span.pull-right= inline_svg_tag 'open_iconic/cog.svg', class: 'icon', size: '16'
+      %span.pull-right= inline_svg_tag 'open_iconic/cog.svg', class: 'icon'
     = link_to(logout_user_path, class: 'dropdown-item') do
       Logout
-      %span.pull-right= inline_svg_tag 'open_iconic/power-standby.svg', class: 'icon', size: '16'
+      %span.pull-right= inline_svg_tag 'open_iconic/power-standby.svg', class: 'icon'
     %hr.divider
     .dropdown-header Teams
     - present_collection(current_user.teams).each do |team_p|

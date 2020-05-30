@@ -1,6 +1,6 @@
 %li.nav-item.dropdown
   %a#notifications-dropdown{ href: '#', data: { toggle: 'dropdown' } }
-    = inline_svg_tag 'open_iconic/bell.svg', class: 'icon', size: '20'
+    = inline_svg_tag 'open_iconic/bell.svg', class: 'icon'
     - unless notifications.empty?
       %span.badge.badge-primary.badge-overlap#notifications-badge= notifications.to_a.count { |n| !n.read }
 

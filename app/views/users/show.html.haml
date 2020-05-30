@@ -5,7 +5,7 @@
 - if user_can_edit_user?
   = link_to edit_user_path(@user), class: 'btn btn-secondary pull-right', type: 'button' do
     Settings
-    = inline_svg_tag 'open_iconic/cog.svg', class: 'icon ml-1', size: '16'
+    = inline_svg_tag 'open_iconic/cog.svg', class: 'icon ml-1'
 
 .d-flex.align-items-start.flex-wrap.mb-4
   = image_tag @user.avatar.icon.url, class: 'group-avatar mr-3', width: '100', height: '100'
