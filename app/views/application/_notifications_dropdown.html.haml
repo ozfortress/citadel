@@ -1,8 +1,12 @@
-%a.position-relative.d-block.p-2.pr-0#notifications-dropdown{ href: '#', data: { toggle: 'dropdown' } }
-  = inline_svg_tag 'open_iconic/bell.svg', class: 'icon', size: '20'
+%a#notifications-dropdown{ href: '#',
+                           class: 'position-relative d-block p-2 pr-0',
+                           data: { toggle: 'dropdown' } }
+  = inline_svg_tag 'open_iconic/bell.svg', class: 'icon'
 
   - unless notifications.empty?
-    %span.badge.badge-primary.anchor-bottom-right#notifications-badge= notifications.to_a.count { |n| !n.read }
+    %span#notifications-badge{ class: 'badge badge-primary anchor-bottom-right' }
+      = notifications.to_a.count { |n| !n.read }
+
 
 #notifications-dropdown-menu{ aria: { labelledby: 'notifications-dropdown' },
                               class: 'dropdown-menu dropdown-menu-right p-0' }
@@ -18,7 +22,7 @@
                       data: { confirm: 'Are you sure you want to clear all notifications?' } do
             Clear
 
-    %ul.list-group.list-group-flush#notifications-list
+    %ul#notifications-list{ class: 'list-group list-group-flush' }
       - notifications.each do |notification|
         = render 'notification', notification: notification
 

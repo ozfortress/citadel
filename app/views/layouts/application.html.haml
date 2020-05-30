@@ -20,7 +20,7 @@
 
       - if user_signed_in?
         .d-flex.align-items-center.position-relative.ml-auto.order-4
-          = render 'notifications', notifications: @notifications
+          = render 'notifications_dropdown', notifications: @notifications
         .d-flex.align-items-center.position-relative.ml-3.order-5
           = render 'user_dropdown'
       - else
