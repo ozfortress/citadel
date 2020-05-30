@@ -2,14 +2,15 @@
   user = present(user)
   show_steam_icon ||= false
   show_steam_id ||= false
+  avatar_size ||= 32
 
-.row.no-gutters.flex-nowrap
+.row.no-gutters.flex-nowrap.align-items-start.align-items-sm-center
   .col-auto
-    = user.avatar_tag(size: 30, class: 'rounded')
+    = user.avatar_tag(size: avatar_size, class: 'rounded')
 
   .col
     .d-flex.flex-column.flex-sm-row
-      %span.p-0.mb-1.ml-2
+      %span.p-0.my-1.ml-3
         %b.mr-2
           = user.link
 
