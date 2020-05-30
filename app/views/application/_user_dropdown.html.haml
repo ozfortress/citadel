@@ -2,14 +2,14 @@
                   class: 'nav-link active dropdown-toggle text-white px-2',
                   data: { toggle: 'dropdown' } }
 
-  = present(current_user).avatar_tag(class: 'rounded-circle nav-avatar mr-1')
+  = present(current_user).avatar_tag(class: 'avatar rounded-circle mr-1')
 
   %span.d-none.d-lg-inline-block
     = current_user.name.truncate(16)
 
 
 #user-dropdown-menu{ aria: { labelledby: 'user-dropdown' },
-                     class: 'dropdown-menu dropdown-menu-right dropdown-non-responsive mt-3' }
+                     class: 'dropdown-menu dropdown-menu-right mt-3' }
   .dropdown-header.d-inline-block.d-lg-none
     = current_user.name.truncate(16)
 
