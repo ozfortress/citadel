@@ -1,10 +1,5 @@
 - content_for(:title) { 'Forums' }
 
-.clearfix
-  .row.no-gutters.justify-content-end.float-lg-right
-    = link_to recent_forums_posts_path, class: 'btn btn-sm btn-secondary' do
-      Recent Posts
-
-  = render 'head', object: nil
+= render 'head', object: nil
 
 = render 'page', topics: @topics, threads: @threads, parent_topic: nil

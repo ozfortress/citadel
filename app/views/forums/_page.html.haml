@@ -1,45 +1,44 @@
-.row.no-gutters.mb-3
-  - if user_can_create_thread?
-    = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-sm btn-primary' do
+.row.no-gutters.mb-2
+  - if user_can_create_thread? && !parent_topic.nil?
+    = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-sm btn-primary mr-2 mb-2' do
       = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
       New thread
 
   - if user_can_manage_topic?
-    = link_to new_forums_topic_path(parent: parent_topic), class: 'btn btn-sm btn-secondary ml-2' do
+    = link_to new_forums_topic_path(parent: parent_topic), class: 'btn btn-sm btn-admin mr-2 mb-2' do
       = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
-      New topic
+      Create topic
 
     - unless parent_topic.nil?
-      = link_to edit_forums_topic_path(parent: parent_topic), class: 'btn btn-sm btn-secondary ml-2' do
+      = link_to edit_forums_topic_path(parent: parent_topic), class: 'btn btn-sm btn-admin mr-2 mb-2' do
         = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon mr-2'
-        %span
-          Edit this topic
+        Edit this topic
 
   - if user_signed_in? && !parent_topic.nil?
     - subscribed = current_user.forums_subscriptions.where(topic: parent_topic).exists?
-    .ml-2.ml-md-auto
+    .ml-0.ml-md-auto
       = button_to toggle_subscription_for_forums_topic_path(parent_topic), method: :patch,
-                  class: "btn btn-sm #{subscribed ? 'btn-danger' : 'btn-primary'}" do
+                  class: "btn btn-sm #{subscribed ? 'btn-danger' : 'btn-primary'} mb-2" do
         = render subscribed ? 'forums/unsubscribe_btn' : 'forums/subscribe_btn'
+
+  - if parent_topic.nil?
+    .col-auto
+      = link_to recent_forums_posts_path, class: 'btn btn-sm btn-outline-primary' do
+        View recent posts
 
 
 - unless topics.empty?
-  %ul.list-group.mb-3
+  %ul.list-group.mb-3#forum-topics-list
     - topics.each do |topic|
       %li.list-group-item.bg-light
         = render 'forums/topics/listing', topic: topic
 
 
-- if threads.empty?
-  %ul.list-group.mb-3
-    %li.list-group-item.border-dashed
-      .d-flex.flex-column.p-5.justify-content-center.align-items-center
-        = inline_svg_tag 'svgrepo/smile.svg', size: '60', class: 'opacity-10 mb-3'
-
-        %h5.opacity-30
-          No threads found
-- else
-  %ul.list-group.mb-3
-    - threads.each do |thread|
-      %li.list-group-item
-        = render 'forums/threads/listing', thread: thread
+- unless parent_topic.nil?
+  - if threads.empty?
+    = render 'forums/threads/empty'
+  - else
+    %ul.list-group.mb-3#forum-threads-list
+      - threads.each do |thread|
+        %li.list-group-item
+          = render 'forums/threads/listing', thread: thread

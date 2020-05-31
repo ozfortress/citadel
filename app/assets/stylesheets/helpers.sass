@@ -41,3 +41,19 @@
 
 .border-dashed
   border-style: dashed
+
+// Buttons -------------------- //
+
+.btn
+  // Additional "admin" style to indicate non-standard-user interactions
+  &.btn-admin
+    $text-color: #31708f
+    $background-color: #daecf7
+    background-color: $background-color
+    color: $text-color
+
+    .icon
+      fill: $text-color
+
+    &:hover
+      background-color: darken($background-color, 10%)
