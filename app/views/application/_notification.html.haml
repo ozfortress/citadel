@@ -2,15 +2,19 @@
 - if notification.read
   - cls += ' read'
 
-%li.list-group-item.d-flex.p-0{ class: cls,
-                                     id: "notification_#{notification.id}" }
-  = present(notification).link(class: 'p-2 pl-4')
+%li.list-group-item.d-flex.flex-column.p-2{ class: cls,
+                                            id: "notification_#{notification.id}" }
 
-  = button_to notification_path(notification.id), method: :delete, remote: true,
-              class: 'btn delete px-2 py-1 pull-right' do
-    = inline_svg_tag 'open_iconic/x.svg', class: 'icon', size: '10'
+  .row.no-gutters
+    .col.pl-2
+      .row.no-gutters
+        = present(notification).link(class: '')
 
-  / = distance_of_time_in_words(notification.created_at)
-  / ago
+      .row.no-gutters
+        %small.text-muted
+          = present(notification).created_at_in_words
 
-
+    .col-auto
+      = button_to notification_path(notification.id), method: :delete, remote: true,
+                  class: 'btn delete px-1 py-0' do
+        = inline_svg_tag 'open_iconic/x.svg', class: 'icon'

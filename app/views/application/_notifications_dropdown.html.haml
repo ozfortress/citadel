@@ -26,9 +26,15 @@
       - notifications.each do |notification|
         = render 'notification', notification: notification
 
-/ Periodic notification checks
+
 :javascript
+  // Prevent inside clicks from dismissing dropdown
+  $("#notifications-dropdown-menu").click(function(e) {
+    e.stopPropagation()
+  })
+
+  // Periodic notification checks
   setInterval(function() {
     var url = "/notifications"
     $.ajax(url);
-  }, 20000111);
+  }, 20000);

@@ -36,3 +36,10 @@
   - else
     %div{ class: 'dropdown-item disabled' }
       None
+
+
+:javascript
+  // Prevent inside clicks from dismissing dropdown
+  $("#user-dropdown-menu").click(function(e) {
+    e.stopPropagation()
+  })
