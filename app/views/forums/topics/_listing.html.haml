@@ -1,0 +1,18 @@
+- topic_p = present(topic)
+
+%a{ href: forums_topic_path(topic) }
+  .row.align-items-center
+    .col
+      .container
+        %small.row.text-muted
+          Topic
+
+        .row.text-dark
+          %b= topic_p.to_s
+
+    .col-auto.text-dark
+      = pluralize(topic.visible_threads_count, 'Thread')
+
+    .col-auto.pl-0
+      = inline_svg_tag 'open_iconic/chevron-right.svg', class: 'icon'
+

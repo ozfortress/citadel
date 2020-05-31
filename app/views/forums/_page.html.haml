@@ -1,45 +1,45 @@
-- if user_can_manage_topic? || !topics.empty?
-  .card.mb-3
-    .card-header.d-flex.justify-content-between.align-items-center
-      Topics
+.row.no-gutters.mb-3
+  - if user_can_create_thread?
+    = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-sm btn-primary' do
+      = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
+      New thread
 
-      - if user_can_manage_topic?
-        = link_to new_forums_topic_path(parent: parent_topic), class: 'btn btn-secondary btn-sm pull-right' do
-          = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2', size: '10'
-          Create
+  - if user_can_manage_topic?
+    = link_to new_forums_topic_path(parent: parent_topic), class: 'btn btn-sm btn-secondary ml-2' do
+      = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
+      New topic
 
-    .card-body.p-0
-      %ul.list-group.list-group-flush
-        - if topics.empty?
-          %li.list-group-item.d-flex.justify-content-between.align-items-start
-            No topics found...
-        - else
-          - topics.each do |topic|
-            - topic_p = present(topic)
-            %li.list-group-item.d-flex.justify-content-between.align-items-start
-              = topic_p.link
+    - unless parent_topic.nil?
+      = link_to edit_forums_topic_path(parent: parent_topic), class: 'btn btn-sm btn-secondary ml-2' do
+        = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon mr-2'
+        %span
+          Edit this topic
 
-              %span.badge.badge-primary.pull-right= pluralize(topic.visible_threads_count, 'Thread')
+  - if user_signed_in? && !parent_topic.nil?
+    - subscribed = current_user.forums_subscriptions.where(topic: parent_topic).exists?
+    .ml-2.ml-md-auto
+      = button_to toggle_subscription_for_forums_topic_path(parent_topic), method: :patch,
+                  class: "btn btn-sm #{subscribed ? 'btn-danger' : 'btn-primary'}" do
+        = render subscribed ? 'forums/unsubscribe_btn' : 'forums/subscribe_btn'
 
-.card.mb-3
-  .card-header.d-flex.justify-content-between.align-items-center
-    Threads
 
-    - if user_can_create_thread?
-      = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-secondary btn-sm pull-right' do
-        = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2', size: '10'
-        Create
+- unless topics.empty?
+  %ul.list-group.mb-3
+    - topics.each do |topic|
+      %li.list-group-item.bg-light
+        = render 'forums/topics/listing', topic: topic
 
-  .card-body.p-0
-    %ul.list-group.list-group-flush
-      - if threads.empty?
-        %li.list-group-item.d-flex.justify-content-between.align-items-start
-          No threads founds...
 
-      - else
-        - threads.each do |thread|
-          - thread_p = present(thread)
-          %li.list-group-item.d-flex.justify-content-between.align-items-start
-            = thread_p.link
+- if threads.empty?
+  %ul.list-group.mb-3
+    %li.list-group-item.border-dashed
+      .d-flex.flex-column.p-5.justify-content-center.align-items-center
+        = inline_svg_tag 'svgrepo/smile.svg', size: '60', class: 'opacity-10 mb-3'
 
-            %span.badge.badge-primary.pull-right= pluralize(thread.posts_count, 'Post')
+        %h5.opacity-30
+          No threads found
+- else
+  %ul.list-group.mb-3
+    - threads.each do |thread|
+      %li.list-group-item
+        = render 'forums/threads/listing', thread: thread

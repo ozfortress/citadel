@@ -1,20 +1,5 @@
 - content_for(:title) { "#{@topic.name} | Forums" }
 
-.clearfix
-  .row.no-gutters.justify-content-end.float-lg-right
-    - if user_can_manage_topic?
-      = link_to edit_forums_topic_path(@topic), class: 'btn btn-sm btn-primary ml-2' do
-        = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon mr-2', size: '16'
-        %span
-          Edit
-
-    - if user_signed_in?
-      - subscribed = current_user.forums_subscriptions.where(topic: @topic).exists?
-
-      = button_to toggle_subscription_for_forums_topic_path(@topic), method: :patch,
-                  class: "btn btn-sm #{subscribed ? 'btn-danger' : 'btn-primary'} ml-2" do
-        = render subscribed ? 'forums/unsubscribe_btn' : 'forums/subscribe_btn'
-
-  = render 'forums/head', object: @topic
+= render 'forums/head', object: @topic
 
 = render 'forums/page', topics: @subtopics, threads: @threads, parent_topic: @topic

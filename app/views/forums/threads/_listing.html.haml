@@ -1,0 +1,35 @@
+- thread_p = present(thread)
+- thread_creator_p = present(thread.created_by)
+
+.row{ class: !thread.pinned && thread.locked ? 'opacity-50' : '' }
+  .col-12.col-md-9
+    .row
+      .col-12
+        = thread_p.status_icons
+
+        %b= thread_p.link(class: thread.pinned ? 'text-success' : '')
+
+      .col-12.small.mt-1
+        %b= pluralize(thread.posts_count, 'post')
+        %span= ' · '
+        %span{ title: thread.created_at.strftime('%c') }
+          created
+          = distance_of_time_in_words_to_now(thread.created_at).gsub('about', '')
+          ago by
+        = thread_creator_p.avatar_tag(size: 12, class: 'rounded')
+        = thread_creator_p.link
+
+
+  .d-none.d-md-block.col-12.col-md-3.mt-3.mt-md-0
+    .row.no-gutters.justify-content-end
+      .col-auto.col-md.small.text-right
+        = thread_creator_p.avatar_tag(size: 12, class: 'rounded')
+        = thread_creator_p.link
+
+      .col-auto.ml-1
+        .small.text-right
+          posted
+
+      .col-auto.col-md-12.small.text-muted.text-right.ml-1{ title: thread.created_at.strftime('%c') }
+        = distance_of_time_in_words_to_now(thread.created_at).gsub('about', '')
+        ago

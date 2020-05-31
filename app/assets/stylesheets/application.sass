@@ -22,6 +22,10 @@
 @import 'users'
 @import 'forums'
 @import 'markdown'
+@import 'helpers'
+
+html
+  font-size: 14px
 
 body
   padding-top: $navbar-height
@@ -357,6 +361,16 @@ body
   position: relative
   top: .125em
   vertical-align: baseline
+
+  &.icon-locked
+    fill: #5a5a5a
+
+  &.icon-pinned
+    fill: #65bc71
+    transform: rotateZ(45deg)
+
+  &.icon-hidden
+    fill: #c3c3f3
 
 .navbar-dark
   .icon
