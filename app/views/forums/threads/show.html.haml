@@ -12,12 +12,10 @@
           Edit thread
 
     .status.mx-2.mb-2
+
     - if user_signed_in?
-      - subscribed = current_user.forums_subscriptions.where(thread: @thread).exists?
       .ml-auto
-        = button_to toggle_subscription_for_forums_thread_path(@thread), method: :patch,
-                    class: "btn btn-sm #{subscribed ? 'btn-danger' : 'btn-primary'} mb-2" do
-          = render subscribed ? 'forums/unsubscribe_btn' : 'forums/subscribe_btn'
+        = render 'subscribe_btn', thread: @thread
 
   .d-flex.justify-content-end
     = bootstrap_paginate @posts

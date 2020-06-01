@@ -15,11 +15,8 @@
         Edit this topic
 
   - if user_signed_in? && !parent_topic.nil?
-    - subscribed = current_user.forums_subscriptions.where(topic: parent_topic).exists?
     .ml-0.ml-md-auto
-      = button_to toggle_subscription_for_forums_topic_path(parent_topic), method: :patch,
-                  class: "btn btn-sm #{subscribed ? 'btn-danger' : 'btn-primary'} mb-2" do
-        = render subscribed ? 'forums/unsubscribe_btn' : 'forums/subscribe_btn'
+      = render 'subscribe_btn', topic: parent_topic
 
   - if parent_topic.nil?
     .col-auto
