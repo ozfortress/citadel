@@ -17,7 +17,7 @@
     .col.d-none.d-md-block
 
   - if user_signed_in? && !parent_topic.nil?
-    = render 'subscribe_btn', topic: parent_topic
+    = render 'forums/topics/subscribe_btn', topic: parent_topic
 
   - if parent_topic.nil?
     = link_to recent_forums_posts_path, class: 'btn btn-sm btn-outline-primary' do

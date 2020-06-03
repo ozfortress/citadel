@@ -13,7 +13,7 @@
       .col.d-none.d-md-block
 
     - if user_signed_in?
-      = render 'subscribe_btn', thread: @thread
+      = render 'forums/threads/subscribe_btn', thread: @thread
 
   .d-flex.justify-content-end
     = bootstrap_paginate @posts
