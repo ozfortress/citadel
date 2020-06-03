@@ -4,22 +4,23 @@
 
 %hr
 
-.d-flex.align-items-center
+.btn-toolbar.guttered.mb-3
   - if @user
-    .card.mb-3.px-3.py-2
-      %b.text-muted
+    .card.bg-dark.px-3.py-2.m-1
+      %b.text-white
         %span
           Showing posts by
 
         = present(@user).link
 
-  .ml-auto
-    = bootstrap_paginate @posts
+  .col
+
+  = bootstrap_paginate @posts, list_classes: ['pagination m-1']
 
 - if @posts.size.positive?
   - @posts.each do |post|
     .mb-4
-      .mb-2
+      %small.font-weight-bold
         Thread: #{present(post.thread).link}
 
       = render post, quote_id: nil
