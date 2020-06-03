@@ -1,5 +1,9 @@
 .btn-toolbar.guttered.mb-2
   - if user_can_manage_topic?
+    = link_to new_forums_thread_path(parent: nil), class: 'btn btn-sm btn-admin' do
+      = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
+      Create thread
+
     = link_to new_forums_topic_path(parent: nil), class: 'btn btn-sm btn-admin' do
       = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
       Create topic
