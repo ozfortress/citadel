@@ -44,7 +44,7 @@
 
         = render 'users/listing', user: user, team: roster.team
 
-        - if transfer_request
+        - if transfer_request && transfer_request.roster == roster
           = form_for(transfer_request, as: :request, method: :delete,
                      url: roster_transfer_path(roster, transfer_request)) do
             = button_tag type: 'submit', class: 'btn btn-danger pull-right',
