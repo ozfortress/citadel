@@ -14,7 +14,7 @@
         = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon mr-2'
         Edit this topic
 
-    .col.d-none.d-md-block
+  .col.d-none.d-md-block
 
   - if user_signed_in? && !parent_topic.nil?
     = render 'forums/topics/subscribe_btn', topic: parent_topic

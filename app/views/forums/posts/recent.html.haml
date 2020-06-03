@@ -4,9 +4,12 @@
 
 %hr
 
-- @posts.each do |post|
-  .mb-4
-    .mb-2
-      Thread: #{present(post.thread).link}
+- if @posts.nil?
+  = render 'forums/posts/empty'
+- else
+  - @posts.each do |post|
+    .mb-4
+      %small.font-weight-bold
+        Thread: #{present(post.thread).link}
 
-    = render post, quote_id: nil
+      = render post, quote_id: nil

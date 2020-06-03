@@ -17,15 +17,15 @@
 
   = bootstrap_paginate @posts, list_classes: ['pagination m-1']
 
-- if @posts.size.positive?
+- if @posts.nil?
+  = render 'forums/posts/empty'
+- else
   - @posts.each do |post|
     .mb-4
       %small.font-weight-bold
         Thread: #{present(post.thread).link}
 
       = render post, quote_id: nil
-- else
-  = render 'forums/posts/empty'
 
 .d-flex.justify-content-end
   = bootstrap_paginate @posts
