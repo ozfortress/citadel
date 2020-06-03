@@ -3,7 +3,7 @@
 .mb-5#forum-thread
   = render 'forums/head', object: @thread, subheading: present(@thread).status_icons
 
-  .row.btn-toolbar.mb-2
+  .btn-toolbar.mb-2
     - if user_can_edit_thread?
       = link_to edit_forums_thread_path(@thread), class: 'btn btn-sm btn-admin' do
         = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon mr-2'
