@@ -11,7 +11,7 @@ module Forums
     end
 
     def created_at_in_words
-      "#{time_ago_in_words(post.created_at).gsub('about', '')} ago"
+      "#{distance_of_time_in_words(post.created_at - Time.zone.now).gsub('about', '')} ago"
     end
 
     def last_edited
@@ -19,7 +19,7 @@ module Forums
     end
 
     def last_edited_in_words
-      "#{time_ago_in_words(post.updated_at).gsub('about', '')} ago"
+      "#{distance_of_time_in_words(post.updated_at - Time.zone.now).gsub('about', '')} ago"
     end
 
     def content

@@ -11,7 +11,7 @@ class User
     end
 
     def created_at_in_words
-      "#{time_ago_in_words(notification.created_at).gsub('about', '')} ago"
+      "#{distance_of_time_in_words(notification.created_at - Time.zone.now).gsub('about', '')} ago"
     end
   end
 end

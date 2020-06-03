@@ -12,10 +12,10 @@
       .col-12.small.mt-1
         %b= pluralize(thread.posts_count, 'post')
         %span= ' · '
-        %span{ title: thread.created_at.strftime('%c') }
+        %span{ title: thread_p.created_at }
           created
-          = distance_of_time_in_words_to_now(thread.created_at).gsub('about', '')
-          ago by
+          = thread_p.created_at_in_words
+          by
         = thread_creator_p.avatar_tag(size: 12, class: 'rounded')
         = thread_creator_p.link
 
@@ -24,8 +24,7 @@
   .d-none.d-md-flex.col-12.col-sm-3.mt-3.mt-md-0.align-items-end.justify-content-end
     .row.no-gutters.justify-content-end
       .col-auto.col-md.small.text-right
-        = distance_of_time_in_words_to_now(thread.created_at).gsub('about', '')
-        ago
+        = thread_p.created_at_in_words
 
       .col-auto.col-md-12.small.text-muted.text-right.ml-1{ title: thread.created_at.strftime('%c') }
         = thread_creator_p.avatar_tag(size: 12, class: 'rounded')

@@ -11,6 +11,14 @@ module Forums
       safe_join(crumbs, '')
     end
 
+    def created_at
+      thread.created_at.strftime('%c')
+    end
+
+    def created_at_in_words
+      "#{distance_of_time_in_words(thread.created_at - Time.zone.now).gsub('about', '')} ago"
+    end
+
     def status_icons
       icons = []
       icons << locked_icon if thread.locked
