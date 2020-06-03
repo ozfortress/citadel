@@ -1,4 +1,4 @@
-.btn-toolbar.mb-2
+.btn-toolbar.guttered.mb-2
   - if user_can_create_thread? && !parent_topic.nil?
     = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-sm btn-primary' do
       = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'

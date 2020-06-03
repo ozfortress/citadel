@@ -15,7 +15,7 @@
   %label.font-weight-bold.alert-heading
     Danger Zone
 
-  .btn-toolbar
+  .btn-toolbar.guttered
     = button_to forums_topic_path(@topic), method: :delete, class: 'btn btn-sm btn-danger',
                 data: { confirm: 'Are you sure you want to delete this Topic?' } do
       = inline_svg_tag 'open_iconic/trash.svg', class: 'icon mr-2'
