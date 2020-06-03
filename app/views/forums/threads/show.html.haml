@@ -3,19 +3,17 @@
 .mb-5#forum-thread
   = render 'forums/head', object: @thread, subheading: present(@thread).status_icons
 
-  .row.no-gutters.align-items-center.mb-2
-
+  .row.btn-toolbar.mb-2
     - if user_can_edit_thread?
-      = link_to edit_forums_thread_path(@thread), class: 'btn btn-sm btn-admin mr-2 mb-2' do
+      = link_to edit_forums_thread_path(@thread), class: 'btn btn-sm btn-admin' do
         = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon mr-2'
         %span
           Edit thread
 
-    .status.mx-2.mb-2
+      .col.d-none.d-md-block
 
     - if user_signed_in?
-      .ml-auto
-        = render 'subscribe_btn', thread: @thread
+      = render 'subscribe_btn', thread: @thread
 
   .d-flex.justify-content-end
     = bootstrap_paginate @posts

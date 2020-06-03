@@ -44,6 +44,13 @@
 
 // Buttons -------------------- //
 
+// This helps ensure consistent spacing & friendly wrapping of buttons for smaller dimensions
+.btn-toolbar
+  margin: $spacer * -0.25
+
+  .btn
+    margin: $spacer * 0.25
+
 .btn
   // Additional "admin" style to indicate non-standard-user interactions
   &.btn-admin

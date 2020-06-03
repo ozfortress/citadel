@@ -1,27 +1,27 @@
-.row.no-gutters.mb-2
+.row.btn-toolbar.mb-2
   - if user_can_create_thread? && !parent_topic.nil?
-    = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-sm btn-primary mr-2 mb-2' do
+    = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-sm btn-primary' do
       = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
       New thread
 
   - if user_can_manage_topic?
-    = link_to new_forums_topic_path(parent: parent_topic), class: 'btn btn-sm btn-admin mr-2 mb-2' do
+    = link_to new_forums_topic_path(parent: parent_topic), class: 'btn btn-sm btn-admin' do
       = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
       Create topic
 
     - unless parent_topic.nil?
-      = link_to edit_forums_topic_path(parent: parent_topic), class: 'btn btn-sm btn-admin mr-2 mb-2' do
+      = link_to edit_forums_topic_path(parent: parent_topic), class: 'btn btn-sm btn-admin' do
         = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon mr-2'
         Edit this topic
 
+    .col.d-none.d-md-block
+
   - if user_signed_in? && !parent_topic.nil?
-    .ml-0.ml-md-auto
-      = render 'subscribe_btn', topic: parent_topic
+    = render 'subscribe_btn', topic: parent_topic
 
   - if parent_topic.nil?
-    .col-auto
-      = link_to recent_forums_posts_path, class: 'btn btn-sm btn-outline-primary' do
-        View recent posts
+    = link_to recent_forums_posts_path, class: 'btn btn-sm btn-outline-primary' do
+      View recent posts
 
 
 - unless topics.empty?
