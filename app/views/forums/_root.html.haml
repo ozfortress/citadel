@@ -1,0 +1,24 @@
+.btn-toolbar.guttered.mb-2
+  - if user_can_manage_topic?
+    = link_to new_forums_topic_path(parent: nil), class: 'btn btn-sm btn-admin' do
+      = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
+      Create topic
+
+    .col.d-none.d-md-block
+
+  = link_to recent_forums_posts_path, class: 'btn btn-sm btn-outline-primary' do
+    View recent posts
+
+
+- unless topics.empty?
+  %ul.list-group.mb-3#forum-topics-list
+    - topics.each do |topic|
+      %li.list-group-item.bg-light
+        = render 'forums/topics/listing', topic: topic
+
+
+- unless threads.empty?
+  %ul.list-group.mb-3#forum-threads-list
+    - threads.each do |thread|
+      %li.list-group-item
+        = render 'forums/threads/listing', thread: thread

@@ -1,5 +1,5 @@
 .btn-toolbar.guttered.mb-2
-  - if user_can_create_thread? && !parent_topic.nil?
+  - if user_can_create_thread?
     = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-sm btn-primary' do
       = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
       New thread
@@ -9,19 +9,14 @@
       = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
       Create topic
 
-    - unless parent_topic.nil?
-      = link_to edit_forums_topic_path(parent: parent_topic), class: 'btn btn-sm btn-admin' do
-        = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon mr-2'
-        Edit this topic
+    = link_to edit_forums_topic_path(parent: parent_topic), class: 'btn btn-sm btn-admin' do
+      = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon mr-2'
+      Edit this topic
 
   .col.d-none.d-md-block
 
-  - if user_signed_in? && !parent_topic.nil?
+  - if user_signed_in?
     = render 'forums/topics/subscribe_btn', topic: parent_topic
-
-  - if parent_topic.nil?
-    = link_to recent_forums_posts_path, class: 'btn btn-sm btn-outline-primary' do
-      View recent posts
 
 
 - unless topics.empty?
@@ -31,11 +26,10 @@
         = render 'forums/topics/listing', topic: topic
 
 
-- unless parent_topic.nil?
-  - if threads.empty?
-    = render 'forums/threads/empty'
-  - else
-    %ul.list-group.mb-3#forum-threads-list
-      - threads.each do |thread|
-        %li.list-group-item
-          = render 'forums/threads/listing', thread: thread
+- if threads.empty?
+  = render 'forums/threads/empty'
+- else
+  %ul.list-group.mb-3#forum-threads-list
+    - threads.each do |thread|
+      %li.list-group-item
+        = render 'forums/threads/listing', thread: thread
