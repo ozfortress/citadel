@@ -2,7 +2,7 @@
 - thread_creator_p = present(thread.created_by)
 
 .row{ class: !thread.pinned && thread.locked ? 'opacity-50' : '' }
-  .col-12.col-md-9
+  .col-12.col-sm-9
     .row
       .col-12
         = thread_p.status_icons
@@ -21,16 +21,13 @@
 
   // TODO: Figure out how to retrieve the "last posted" item in the thread so we
   // can display who / when was the most recent post (currently using thread creator)
-  .d-none.d-md-block.col-12.col-md-3.mt-3.mt-md-0
+  .d-none.d-md-flex.col-12.col-sm-3.mt-3.mt-md-0.align-items-end.justify-content-end
     .row.no-gutters.justify-content-end
       .col-auto.col-md.small.text-right
-        = thread_creator_p.avatar_tag(size: 12, class: 'rounded')
-        = thread_creator_p.link
-
-      .col-auto.ml-1
-        .small.text-right
-          posted
-
-      .col-auto.col-md-12.small.text-muted.text-right.ml-1{ title: thread.created_at.strftime('%c') }
         = distance_of_time_in_words_to_now(thread.created_at).gsub('about', '')
         ago
+
+      .col-auto.col-md-12.small.text-muted.text-right.ml-1{ title: thread.created_at.strftime('%c') }
+        = thread_creator_p.avatar_tag(size: 12, class: 'rounded')
+        = thread_creator_p.link
+        posted
