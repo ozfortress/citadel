@@ -29,7 +29,7 @@ module Forums
     end
 
     def quote
-      header = "#{post.created_by.name} wrote:"
+      header = "> **#{post.created_by.name}**"
       text = post.content.split("\n").map { |line| "> #{line}" }.join("\n")
 
       [header, text].join("\n")
