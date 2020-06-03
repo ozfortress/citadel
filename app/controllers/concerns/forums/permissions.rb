@@ -26,7 +26,7 @@ module Forums
       topic ||= @topic
 
       user_signed_in? && current_user.can?(:use, :forums) &&
-        current_user.can?(:use, topic) && user_can_use_topics?(topic.ancestors)
+        current_user.can?(:use, topic) && (topic.nil? || user_can_use_topics?(topic.ancestors))
     end
 
     def user_can_create_thread?(topic = nil)
@@ -63,7 +63,7 @@ module Forums
     def user_can_use_thread?(thread = nil)
       thread ||= @thread
 
-      user_signed_in? && current_user.can?(:use, thread) && thread.topic && user_can_use_topic?(thread.topic)
+      user_signed_in? && current_user.can?(:use, thread) && user_can_use_topic?(thread.topic)
     end
 
     def user_can_create_post?(thread = nil)
