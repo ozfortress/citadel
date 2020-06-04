@@ -8,7 +8,7 @@ describe 'forums/topics/show' do
   it 'displays data' do
     allow(view).to receive(:user_can_manage_topic?).and_return(true)
     assign(:topic, topic)
-    assign(:threads, threads)
+    assign(:threads, threads.paginate(page: 1))
     assign(:subtopics, subtopics)
 
     render
