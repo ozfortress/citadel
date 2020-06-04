@@ -34,6 +34,13 @@
 .opacity-100
   opacity: 1
 
+.hover-opacity
+  opacity: 0.5
+
+  &:hover
+    opacity: 1
+    transition: $transition-fade
+
 // Borders -------------------- //
 
 .border-dotted
@@ -55,17 +62,3 @@
 
   .btn
     margin: $spacer * 0.25
-
-.btn
-  // Additional "admin" style to indicate non-standard-user interactions
-  &.btn-admin
-    $text-color: #31708f
-    $background-color: #daecf7
-    background-color: $background-color
-    color: $text-color
-
-    .icon
-      fill: $text-color
-
-    &:hover
-      background-color: darken($background-color, 10%)
