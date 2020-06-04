@@ -34,4 +34,6 @@
       %li.list-group-item{ class: present(thread).status_classes }
         = render 'forums/threads/listing', thread: thread
 
-= bootstrap_paginate threads
+
+.d-flex.justify-content-end
+  = bootstrap_paginate threads

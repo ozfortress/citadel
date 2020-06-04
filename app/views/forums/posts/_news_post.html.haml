@@ -23,7 +23,7 @@
           Edit thread
 
       - if user_can_edit_post?(post) && post.edits.size > 1
-        = link_to edits_for_forums_post_path(post), class: 'btn btn-sm btn-admin mr-3' do
+        = link_to edits_for_forums_post_path(post), class: 'btn btn-sm btn-admin' do
           = inline_svg_tag 'open_iconic/timer.svg', class: 'icon mr-1'
           View edit history
 

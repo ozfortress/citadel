@@ -29,6 +29,5 @@
     = bootstrap_form_for @post, url: forums_thread_posts_path(@thread, page: @page) do |f|
       = render 'forums/posts/form', f: f
 
-      .row.justify-content-end
-        .col-auto
-          = f.submit 'Post', class: 'btn btn-primary'
+      .d-flex.justify-content-end
+        = f.submit 'Post', class: 'btn btn-primary'
