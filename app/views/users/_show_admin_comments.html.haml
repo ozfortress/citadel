@@ -4,17 +4,17 @@
 
   %hr.mt-0
 
-  - comments.each do |comment|
-    - options = { user: user, comment: comment, quote_id: 'wmd-input-new-user-comment' }
+  - comments.each do |c|
+    - options = { user: user, comment: c, quote_id: 'wmd-input-new-user-comment' }
 
-    - if comment.exists?
+    - if c.exists?
       = render 'users/comments/comment', options
     - else
       = render 'users/comments/deleted_comment', options
 
     %hr
 
-  = bootstrap_form_for @comment, as: :comment, url: user_comments_path(user) do |f|
+  = bootstrap_form_for comment, as: :comment, url: user_comments_path(user) do |f|
     = render 'users/comments/form', f: f
 
     .d-flex.justify-content-end

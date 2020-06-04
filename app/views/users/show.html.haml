@@ -79,7 +79,7 @@
   .tab-pane#forums{ role: 'tabpanel', aria: { kabekkedby: 'forums-tab' } }
     = render 'users/show_forums', user: @user, forums_posts: @forums_posts
 
-%hr
 
 - if user_can_edit_users?
-  = render 'users/show_admin_comments', user: @user, comments: @comments
+  %hr
+  = render 'users/show_admin_comments', user: @user, comments: @comments, comment: @comment
