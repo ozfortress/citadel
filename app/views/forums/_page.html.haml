@@ -31,7 +31,7 @@
 - else
   %ul.list-group.mb-3#forum-threads-list
     - threads.each do |thread|
-      %li.list-group-item
+      %li.list-group-item{ class: present(thread).status_classes }
         = render 'forums/threads/listing', thread: thread
 
 = bootstrap_paginate threads

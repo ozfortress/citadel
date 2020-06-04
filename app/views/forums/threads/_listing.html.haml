@@ -1,13 +1,13 @@
 - thread_p = present(thread)
 - thread_creator_p = present(thread.created_by)
 
-.row{ class: !thread.pinned && thread.locked ? 'opacity-50' : '' }
+.row
   .col-12.col-sm-9
     .row
       .col-12
         = thread_p.status_icons
 
-        %b= thread_p.link(class: thread.pinned ? 'text-success' : '')
+        %b= thread_p.link
 
       .col-12.small.mt-1
         %b= pluralize(thread.posts_count, 'post')
