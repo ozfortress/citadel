@@ -82,22 +82,4 @@
 %hr
 
 - if user_can_edit_users?
-  .card
-    .card-header Admin Comments
-
-    - @comments.each do |comment|
-      - options = { user: @user, comment: comment, quote_id: 'wmd-input-user-comment' }
-
-      - if comment.exists?
-        = render 'users/comments/comment', options
-      - else
-        = render 'users/comments/deleted_comment', options
-
-    .container-fluid
-      %hr
-      = bootstrap_form_for @comment, as: :comment, url: user_comments_path(@user) do |f|
-        = render 'users/comments/form', f: f
-
-        .row
-          = f.submit 'Post', class: 'btn btn-secondary pull-right'
-      %hr
+  = render 'users/show_admin_comments', user: @user, comments: @comments

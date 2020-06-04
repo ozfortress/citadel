@@ -25,7 +25,7 @@ class User
     end
 
     def quote
-      header = "#{created_by.name} wrote:"
+      header = "> **#{created_by.name}**"
       text = comment.content.split("\n").map { |line| "> #{line}" }.join("\n")
 
       [header, text].join("\n")
