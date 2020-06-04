@@ -33,3 +33,5 @@
     - threads.each do |thread|
       %li.list-group-item
         = render 'forums/threads/listing', thread: thread
+
+= bootstrap_paginate threads

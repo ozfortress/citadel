@@ -35,12 +35,14 @@ module Forums
 
     def show
       @subtopics = @topic.children
-      @threads = @topic.threads.ordered
+      @threads = @topic.threads.order(pinned: :desc).ordered
 
       unless user_can_manage_topic?
         @subtopics = @subtopics.visible
         @threads   = @threads.visible.or(@threads.where(created_by: current_user))
       end
+
+      @threads = @threads.paginate(page: params[:page])
     end
 
     def toggle_subscription

@@ -16,7 +16,7 @@ module Forums
 
     scope :locked,   -> { where(locked: true) }
     scope :unlocked, -> { where(locked: false) }
-    scope :pinned,   -> { where(pinend: true) }
+    scope :pinned,   -> { where(pinned: true) }
     scope :hidden,   -> { where(hidden: true) }
     scope :visible,  -> { where(hidden: false) }
 
@@ -85,6 +85,8 @@ module Forums
     def original_post
       posts.order(created_at: :asc).first
     end
+
+    self.per_page = 20
 
     private
 
