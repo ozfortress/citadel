@@ -2,31 +2,36 @@
 - thread_creator_p = present(thread.created_by)
 
 .row
-  .col-12.col-sm-9
+  .col
     .row
-      .col-12
-        = thread_p.status_icons
+      .col-12.col-sm-9
+        .row
+          .col-12
+            = thread_p.status_icons
 
-        %b= thread_p.link
+            %b= thread_p.link
 
-      .col-12.small.mt-1
-        %b= pluralize(thread.posts_count, 'post')
-        %span= ' · '
-        %span{ title: thread_p.created_at }
-          created
-          = thread_p.created_at_in_words
-          by
-        = thread_creator_p.avatar_tag(size: 12, class: 'rounded')
-        = thread_creator_p.link
+          .col-12.small.mt-1
+            %span{ title: thread_p.created_at }
+              created
+              = thread_p.created_at_in_words
+              by
+            = thread_creator_p.avatar_tag(size: 12, class: 'rounded')
+            = thread_creator_p.link
 
-  // TODO: Figure out how to retrieve the "last posted" item in the thread so we
-  // can display who / when was the most recent post (currently using thread creator)
-  .d-none.d-sm-flex.col-sm-3.align-items-end.justify-content-end
-    .row.no-gutters.justify-content-end
-      .col-auto.col-md.small.text-right
-        = thread_p.created_at_in_words
+      // TODO: Figure out how to retrieve the "last posted" item in the thread so we
+      // can display who / when was the most recent post (currently using thread creator)
+      .d-none.d-sm-flex.col-sm-3.align-items-end.justify-content-end.pl-0
+        .row.no-gutters.justify-content-end
+          .col-auto.col-md.small.text-right
+            = thread_creator_p.avatar_tag(size: 12, class: 'rounded')
+            = thread_creator_p.link
 
-      .col-auto.col-md-12.small.text-muted.text-right.ml-1{ title: thread.created_at.strftime('%c') }
-        = thread_creator_p.avatar_tag(size: 12, class: 'rounded')
-        = thread_creator_p.link
-        posted
+          .col-auto.col-md-12.small.text-muted.text-right.ml-1{ title: thread.created_at.strftime('%c') }
+            posted
+            = thread_p.created_at_in_words
+
+
+  .col-2.col-sm-1.d-flex.flex-column.justify-content-center.align-items-center.border-left
+    %b= thread.posts_count
+    %small= 'post'.pluralize(thread.posts_count)

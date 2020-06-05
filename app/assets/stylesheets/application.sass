@@ -402,3 +402,12 @@ blockquote
   border: 1px solid $blockquote-border-color
   border-left: 5px solid $blockquote-border-color
   padding: 1rem
+
+// Alternative to using .col or .ml-auto as method to space elements apart
+// (because those have margin / padding annoyances)
+.spacer
+  flex: 1
+
+// Long pagination doesn't wrap by default on small dimensions
+.pagination
+  flex-flow: wrap

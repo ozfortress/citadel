@@ -15,13 +15,13 @@
     - if user_signed_in?
       = render 'forums/threads/subscribe_btn', thread: @thread
 
-  .d-flex.justify-content-end
+  .d-flex.justify-content-center
     = bootstrap_paginate @posts
 
   - @posts.each do |post|
     = render post, quote_id: 'wmd-input-new-forums-post'
 
-  .d-flex.justify-content-end
+  .d-flex.justify-content-center
     = bootstrap_paginate @posts
 
 

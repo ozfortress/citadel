@@ -31,7 +31,7 @@
                   data: { confirm: Forums::TopicsHelper::UNISOLATE_CONFIRM_MESSAGE } do
         Isolate
 
-    .col.d-none.d-md-block
+    .spacer.d-none.d-md-block
 
     = link_to users_permissions_path(action_: :manage, subject: :forums_topic, target: @topic.id),
               class: 'btn btn-sm btn-secondary' do
