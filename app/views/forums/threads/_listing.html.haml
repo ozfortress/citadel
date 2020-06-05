@@ -32,6 +32,7 @@
             = thread_p.created_at_in_words
 
 
-  .col-2.col-sm-1.d-flex.flex-column.justify-content-center.align-items-center.border-left
-    %b= thread.posts_count
-    %small= 'post'.pluralize(thread.posts_count)
+  .col-2.col-sm-1.d-flex.justify-content-center.align-items-center.border-left
+    = link_to forums_thread_path(thread), class: 'd-flex flex-column text-center' do
+      %b= thread.posts_count
+      %small= 'post'.pluralize(thread.posts_count)
