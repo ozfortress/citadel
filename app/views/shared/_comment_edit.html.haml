@@ -1,0 +1,10 @@
+.comment-edit{ class: local_assigns[:class] }
+  %small.font-weight-bold
+    Edited by
+    = present(comment_edit.created_by).link
+    on
+    = comment_edit.created_at.strftime('%c')
+
+  .card.bg-light
+    .card-body.markdown
+      != comment_edit.content_render_cache

@@ -16,14 +16,7 @@
   = bootstrap_paginate @edits, list_classes: ['pagination m-1']
 
 - @edits.each do |post_edit|
-  .mb-4
-    %small.font-weight-bold
-      Edited by
-      = present(post_edit.created_by).link
-      on
-      = post_edit.created_at.strftime('%c')
-
-    = render 'post_edit', post_edit: post_edit
+  = render 'post_edit', post_edit: post_edit, class: 'mb-3'
 
 .d-flex.justify-content-end
   = bootstrap_paginate @edits

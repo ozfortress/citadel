@@ -1,7 +1,7 @@
 - comment_p = present(comment)
 - collapse_id = comment.paths.dom_id('collapse')
 
-.admin-comment.deleted
+.comment-deleted{ class: local_assigns['class'] }
   .row.no-gutters.align-items-center.cursor-pointer{ data: { toggle: :collapse, target: "##{collapse_id}" } }
     .col-auto
       = render 'users/listing', user: comment.deleted_by, avatar_size: 20
@@ -12,4 +12,4 @@
         on #{comment_p.deleted_at}
 
   .alert.alert-danger.collapse.mt-2{ id: collapse_id }
-    = render 'users/comments/comment', user: user, comment: comment, quote_id: quote_id
+    = render 'shared/comment', comment: comment, quote_id: quote_id

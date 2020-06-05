@@ -1,3 +1,10 @@
-.card.bg-light
-  .card-body.markdown
-    != post_edit.content_render_cache
+.post-edit{ class: local_assigns[:class] }
+  %small.font-weight-bold
+    Edited by
+    = present(post_edit.created_by).link
+    on
+    = post_edit.created_at.strftime('%c')
+
+  .card.bg-light
+    .card-body.markdown
+      != post_edit.content_render_cache

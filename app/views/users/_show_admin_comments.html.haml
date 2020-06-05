@@ -8,9 +8,9 @@
     - options = { user: user, comment: c, quote_id: 'wmd-input-new-user-comment' }
 
     - if c.exists?
-      = render 'users/comments/comment', options
+      = render 'shared/comment', options
     - else
-      = render 'users/comments/deleted_comment', options
+      = render 'shared/comment_deleted', options
 
     %hr
 
