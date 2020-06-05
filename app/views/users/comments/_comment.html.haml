@@ -16,7 +16,7 @@
     .col.d-none.d-lg-block.order-3
 
     .col-12.btn-toolbar.guttered.justify-content-end.order-4.col-lg-auto.order-lg-3
-      - btn_cls = 'btn btn-sm hover-opacity'
+      - btn_cls = 'btn btn-xs hover-opacity'
 
       - if comment.edits.size > 1
         = link_to comment.paths.edits, class: btn_cls, title: 'History' do
