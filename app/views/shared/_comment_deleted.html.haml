@@ -1,7 +1,7 @@
 - comment_p = present(comment)
 - collapse_id = comment.paths.dom_id('collapse')
 
-.comment-deleted{ class: local_assigns['class'] }
+.comment-deleted{ class: local_assigns[:class] }
   .row.no-gutters.align-items-center.cursor-pointer{ data: { toggle: :collapse, target: "##{collapse_id}" } }
     .col-auto
       = render 'users/listing', user: comment.deleted_by, avatar_size: 20
