@@ -20,6 +20,18 @@ class League
         comm.created_at.strftime('%c')
       end
 
+      def created_at_in_words
+        "#{distance_of_time_in_words(comm.created_at - Time.zone.now).gsub('about', '')} ago"
+      end
+
+      def last_edited
+        comm.updated_at.strftime('%c')
+      end
+
+      def last_edited_in_words
+        "#{distance_of_time_in_words(comm.updated_at - Time.zone.now).gsub('about', '')} ago"
+      end
+
       def deleted_at
         comm.deleted_at.strftime('%c')
       end
@@ -36,14 +48,6 @@ class League
         # rubocop:disable Rails/OutputSafety
         comm.content_render_cache.html_safe
         # rubocop:enable Rails/OutputSafety
-      end
-
-      def panel_class
-        if comm.created_by.admin?
-          'panel-warning'
-        else
-          'panel-default'
-        end
       end
     end
   end

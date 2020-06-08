@@ -1,23 +1,36 @@
 - comm_p = present(comm)
 
-.panel{ class: comm_p.panel_class }
+.comm{ class: "#{local_assigns[:class]} #{comm.created_by.admin? ? 'comm-admin' : ''}" }
   %div{ id: comm.paths.dom_id }
-  .panel-heading
-    - if user_can_edit_comm?(comm)
-      .pull-right
-        = link_to comm.paths.edit, class: 'btn btn-link btn-sm' do
-          %span.glyphicon.glyphicon-cog
-    .pull-right
-      = link_to comm.paths.show do
-        %span.glyphicon.glyphicon-link.small
-        = comm_p.created_at
 
-    = present(comm_p.user_roster).link + ':' if comm_p.user_roster
-    = render 'users/listing', user: comm.created_by, team: comm_p.user_team
+  .card-header
+    .row.no-gutters.flex-nowrap.align-items-center
+      = render 'users/listing', user: comm.created_by, team: comm_p.user_team, show_team_name: true
 
-  - if user_can_edit_comm?(comm) && comm.edits.size > 1
-    .pull-right
-      = link_to comm.paths.edits, class: 'btn btn-secondary btn-sm' do
-        View Edits
+      .spacer
 
-.container-fluid.markdown= comm_p.content
+      .dropdown
+        .btn.hover-darken.opacity-30{ data: { toggle: 'dropdown' } }
+          = inline_svg_tag 'open_iconic/ellipses.svg', class: 'icon'
+
+        .dropdown-menu.dropdown-menu-right
+          = link_to 'Link', comm.paths.show, class: 'dropdown-item'
+
+          - if user_can_edit_comm?(comm)
+            = link_to 'Edit', comm.paths.edit, class: 'dropdown-item'
+
+          - if user_can_edit_comm?(comm) && comm.edits.size > 1
+            = link_to 'History', comm.paths.edits, class: 'dropdown-item'
+
+  .card-body
+    .markdown.pb-3
+      = comm_p.content
+
+    .footer.row.no-gutters.align-items-center.pt-2
+      .created-at{ 'data-toggle': 'tooltip', title: comm_p.created_at }
+        Posted
+        = comm_p.created_at_in_words
+
+      - if comm.edits.size > 1
+        %span.edited-at.ml-1{ 'data-toggle': 'tooltip', title: comm_p.last_edited }
+          = "- edited #{comm_p.last_edited_in_words}"
