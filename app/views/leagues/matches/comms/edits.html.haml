@@ -1,5 +1,6 @@
-%h2 Post Edits for #{present(@match).link}
+= render 'shared/head', heading: present(@match).link, subheading: 'Match comm edits'
 
-.panel.panel-default
-  - @edits.each do |comm_edit|
-    = render 'comm_edit', match: @match, comm: comm_edit
+%hr
+
+- @edits.each do |comm_edit|
+  = render 'comm_edit', match: @match, comm: comm_edit, class: 'mb-3'

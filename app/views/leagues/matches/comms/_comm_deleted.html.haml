@@ -1,7 +1,7 @@
 - comm_p = present(comm)
 - collapse_id = comm.paths.dom_id('collapse')
 
-.comm.comm-deleted{ class: local_assigns[:class] }
+.comm-deleted{ class: local_assigns[:class] }
   .card-header
     .row.no-gutters.align-items-center.cursor-pointer{ data: { toggle: :collapse, target: "##{collapse_id}" } }
       .col-auto
