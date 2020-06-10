@@ -17,7 +17,7 @@
 
   = bootstrap_paginate @posts, list_classes: ['pagination m-1']
 
-- if @posts.nil?
+- if @posts.empty?
   = render 'forums/posts/empty'
 - else
   - @posts.each do |post|

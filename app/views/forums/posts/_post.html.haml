@@ -20,7 +20,7 @@
           = "- edited #{post_p.last_edited_in_words}"
 
       .actions.ml-auto
-        - if user_can_edit_post?(post)
+        - if defined? user_can_edit_post? && user_can_edit_post?(post)
           - if post.edits.size > 1
             = link_to 'History', edits_for_forums_post_path(post), class: 'action p-1'
             %span ·
