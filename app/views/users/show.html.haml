@@ -3,7 +3,7 @@
 - user_p = present(@user)
 
 - if user_can_edit_user?
-  = link_to edit_user_path(@user), class: 'btn btn-secondary pull-right', type: 'button' do
+  = link_to edit_user_path(@user), class: 'btn btn-secondary pull-right ml-3', type: 'button' do
     Settings
     = inline_svg_tag 'open_iconic/cog.svg', class: 'icon ml-1'
 
