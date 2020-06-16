@@ -50,7 +50,7 @@ module Forums
     end
 
     def hidden_icon
-      inline_svg_tag('svgrepo/hide.svg', title: 'Hidden', class: 'icon icon-hidden mr-1')
+      inline_svg_tag('eye-hide.svg', title: 'Hidden', class: 'icon icon-hidden mr-1')
     end
 
     def pinned_icon
