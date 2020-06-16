@@ -35,5 +35,4 @@
         = render 'forums/threads/listing', thread: thread
 
 
-.d-flex.justify-content-end
-  = bootstrap_paginate threads
+= bootstrap_paginate threads, list_classes: ['pagination justify-content-center mt-4']

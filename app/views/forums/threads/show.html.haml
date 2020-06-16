@@ -15,15 +15,10 @@
     - if user_signed_in?
       = render 'forums/threads/subscribe_btn', thread: @thread
 
-  .d-flex.justify-content-center
-    = bootstrap_paginate @posts
-
   - @posts.each do |post|
     = render post, quote_id: 'wmd-input-new-forums-post'
 
-  .d-flex.justify-content-center
-    = bootstrap_paginate @posts
-
+  = bootstrap_paginate @posts, list_classes: ['pagination justify-content-center mt-4']
 
   - if user_can_create_post?
     = bootstrap_form_for @post, url: forums_thread_posts_path(@thread, page: @page) do |f|

@@ -13,10 +13,6 @@
 
         = present(@user).link
 
-  .spacer
-
-  = bootstrap_paginate @posts, list_classes: ['pagination m-1']
-
 - if @posts.empty?
   = render 'forums/posts/empty'
 - else
@@ -27,5 +23,4 @@
 
       = render post, quote_id: nil
 
-.d-flex.justify-content-end
-  = bootstrap_paginate @posts
+= bootstrap_paginate @posts, list_classes: ['pagination justify-content-center mt-4']

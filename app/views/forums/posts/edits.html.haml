@@ -11,12 +11,7 @@
         Posted in thread
       = present(@thread).link
 
-  .spacer
-
-  = bootstrap_paginate @edits, list_classes: ['pagination m-1']
-
 - @edits.each do |post_edit|
   = render 'post_edit', post_edit: post_edit, class: 'mb-3'
 
-.d-flex.justify-content-end
-  = bootstrap_paginate @edits
+= bootstrap_paginate @edits, list_classes: ['pagination justify-content-center mt-4']
