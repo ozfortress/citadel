@@ -1,6 +1,7 @@
-- thread_p = present(thread)
-- thread_creator_p = present(thread.created_by)
-- latest_thread_creator_p = present(thread.latest_post.created_by)
+:ruby
+  thread_p = present(thread)
+  thread_creator_p = present(thread.created_by)
+  latest_thread_creator_p = present(thread.latest_post.created_by)
 
 .row
   .col
