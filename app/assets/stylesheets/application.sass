@@ -11,14 +11,29 @@
  * file per style scope.
  */
 
+@import 'bootstrap_theme'
+
+// External styles
 @import 'bootstrap'
 @import 'rails_bootstrap_forms'
 @import 'pagedown_bootstrap'
 @import 'font-awesome'
+
+// Project styles
+@import 'navbar'
+@import 'users'
+@import 'forums'
+@import 'leagues'
 @import 'markdown'
 
+html
+  font-size: 14px
+
 body
-  padding-top: 66px
+  padding-top: $navbar-height
+
+h1, h2, h3, h4, h5
+  word-break: break-all
 
 // html
 //   overflow-y: scroll
@@ -130,10 +145,16 @@ body
 // #notifications-glyph
 //   font-size: 1.8em
 
-.badge-overlap
-  position: absolute
-  bottom: -6px
-  right: -13px
+.badge
+  &.anchor-top-right
+    position: absolute
+    top: -0.25rem
+    right: -0.25rem
+
+  &.anchor-bottom-right
+    position: absolute
+    bottom: -0.25rem
+    right: -0.25rem
 
 // #notifications-dropdown
 //   width: 400px
@@ -194,21 +215,6 @@ body
 //   overflow: visible
 //   text-overflow: ellipsis
 //   white-space: nowrap
-
-.steam-link
-  $color: #06ace2
-  color: $color
-  font-family: monospace
-  font-size: 10px
-  text-decoration: none
-  padding: 0 10px 0 0
-
-  a
-    color: $color
-
-  .icon
-    fill: $color
-    margin-right: -3px
 
 // .avatar
 //   border: #e8e5dc 1px solid
@@ -348,9 +354,30 @@ body
 //   padding: 0 !important
 //   margin: 0 !important
 
-// Make dropdowns in navbar non-responsive
-.navbar-nav .dropdown-menu.dropdown-non-responsive
-  position: absolute
+.border-dotted
+  border-style: dotted
+
+.border-dashed
+  border-style: dashed
+
+.cursor-pointer
+  cursor: pointer
+
+// This helps ensure consistent spacing & friendly wrapping of buttons for smaller dimensions
+.btn-toolbar.guttered
+  margin: $spacer * -0.25
+
+  .btn
+    margin: $spacer * 0.25
+
+.fill-success
+  fill: $success !important
+
+.fill-secondary
+  fill: $secondary !important
+
+.fill-light
+  fill: $light !important
 
 .icon-dark
   fill: black
@@ -373,6 +400,32 @@ body
     .icon
       @extend .icon-dark
 
+.btn-xs
+  @extend .btn-sm
+  font-size: 0.7rem
+  padding: 0.2rem 0.4rem
+
 .btn-primary, .btn-secondary, .btn-success, .btn-danger, .btn-info, .btn-dark
   .icon
     @extend .icon-light
+
+.form-group > label
+  font-weight: bold
+
+blockquote
+  $blockquote-border-color: rgba(0, 0, 0, 0.07)
+  $blockquote-background-color: rgba(0, 0, 0, 0.03)
+  font-size: 0.8rem
+  background: $blockquote-background-color
+  border: 1px solid $blockquote-border-color
+  border-left: 5px solid $blockquote-border-color
+  padding: 1rem
+
+// Alternative to using .col or .ml-auto as method to space elements apart
+// (because those have margin / padding annoyances)
+.spacer
+  flex: 1
+
+// Long pagination doesn't wrap by default on small dimensions
+.pagination
+  flex-flow: wrap

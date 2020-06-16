@@ -1,10 +1,37 @@
+- subheading ||= nil
+- root_navigable ||= false
+
 - if object
   - presenter = present(object)
 
-  %h2= presenter
+  %nav.mb-3{ aria: { label: 'breadcrumb' } }
+    %ol.breadcrumb.bg-transparent.pl-0.py-1.mb-1
+      %li.breadcrumb-item
+        = link_to forums_path(nil) do
+          Home
 
-  %br= presenter.path
+      = presenter.breadcrumbs
+
+    %h3{ aria: { current: 'page' } }
+      = presenter
+
+      - if subheading
+        %small.text-muted.ml-2
+          = subheading
+
 - else
-  %h1.tab-header Forums
+  %nav.mb-3{ aria: { label: 'breadcrumb' } }
+    %ol.breadcrumb.bg-transparent.pl-0.py-1.mb-1
+      %li.breadcrumb-item.active
+        - if root_navigable
+          = link_to forums_path(nil) do
+            Home
+        - else
+          Home
 
-%hr
+    %h3{ aria: { current: 'page' } }
+      Forums
+
+      - if subheading
+        %small.text-muted.ml-2
+          = subheading

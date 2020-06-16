@@ -1,18 +1,18 @@
-.panel.panel-default
-  .panel-heading Match Comms
+.card#match-comms
+  .card-header
+    Match Comms
 
-  - comms.each do |comm|
-    - if comm.exists?
-      = render 'leagues/matches/comms/comm', match: match, comm: comm
-    - elsif user_can_edit_league?
-      = render 'leagues/matches/comms/deleted_comm', match: match, comm: comm
+  .card-body.p-0
+    - comms.each do |comm|
+      - if comm.exists?
+        = render 'leagues/matches/comms/comm', match: match, comm: comm
+      - elsif user_can_edit_league?
+        = render 'leagues/matches/comms/comm_deleted', match: match, comm: comm
 
   - if user_can_comm?
-    .container-fluid
-      %hr
+    .p-3
       = bootstrap_form_for comm, as: :comm, url: match_comms_path(match) do |f|
         = render 'leagues/matches/comms/form', f: f
 
-        .row
-          = f.submit 'Post', class: 'btn btn-secondary pull-right'
-      %hr
+        .d-flex.justify-content-end
+          = f.primary 'Post'

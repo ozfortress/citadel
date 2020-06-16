@@ -1,0 +1,74 @@
+// Currently navbar uses a fixed height value, which can break if there
+// are wrapping elements at smaller dimensions (<350px).
+// This is because body relies on this value for padding-top.
+// TODO: Make navbar / body not reliant of a fixed value
+$navbar-height: 66px
+
+$notification-font-size: 1rem
+$notification-unread-background-color: #f5f5f5
+$notification-read-background-color: #ffffff
+$notification-hover-background-color: #eeeeee
+
+// User dropdown button / menu -------------------- //
+
+#user-dropdown
+  & > .avatar
+    width: 1.75rem
+    height: 1.75rem
+
+#user-dropdown-menu
+  @extend .dropdown-menu-animated
+  margin-top: 1rem
+
+// Notifications dropdown button / menu -------------------- //
+
+#notifications-dropdown
+
+#notifications-dropdown-menu
+  @extend .dropdown-menu-animated
+  width: 500px
+
+  @include media-breakpoint-down(sm)
+    position: fixed
+    top: $navbar-height
+    left: 0
+    right: 0
+    width: unset
+
+  #notifications-list
+    max-height: 320px
+    overflow-y: auto
+
+    .notification
+      background-color: $notification-unread-background-color
+
+      & > a
+        width: 100%
+        color: inherit
+        text-decoration: none
+
+      .btn.delete
+        opacity: 0.4
+
+        &:hover
+          opacity: 0.8
+
+      &.read
+        background-color: $notification-read-background-color
+
+      &:hover
+        background-color: $notification-hover-background-color
+
+// Misc -------------------- //
+
+.dropdown-menu-animated
+  display: block
+  visibility: hidden
+  opacity: 0
+  transform: translateY(-0.5rem)
+  transition: 0.3s ease all
+
+  &.show
+    visibility: visible
+    opacity: 1
+    transform: translateY(0)

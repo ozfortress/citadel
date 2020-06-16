@@ -1,27 +1,36 @@
 - post_p = present(post)
 
-.panel.panel-default
+.forum-post.card.mb-3
   %div{ id: "post_#{post.id}" }
-  .panel-heading
-    - if user_can_edit_post?(post)
-      .pull-right
-        = link_to post_p.edit_path, class: 'btn btn-link btn-sm' do
-          %span.glyphicon.glyphicon-cog
-    .pull-right
-      = link_to "#post_#{post.id}" do
-        %span.glyphicon.glyphicon-link.small
-        = post_p.created_at
 
-    = render 'users/listing', user: post.created_by
+  .card-header
+    .user
+      = render 'users/listing', user: post.created_by
 
-  - if user_can_edit_post?(post) && post.edits.size > 1
-    .pull-right
-      = link_to edits_for_forums_post_path(post), class: 'btn btn-secondary btn-sm' do
-        View Edits
+  .card-body
+    .content.markdown.pb-3
+      = post_p.content
 
-.container-fluid.markdown
-  = post_p.content
+    .footer.row.no-gutters.align-items-center.pt-2
+      .created-at{ 'data-toggle': 'tooltip', title: post_p.created_at }
+        Posted #{post_p.created_at_in_words}
 
-  %button.pull-right.btn.btn-secondary.btn-xs{ data: { quote: { id: quote_id, text: post_p.quote } } }
-    Quote
+      - if post.edits.size > 1
+        .edited-at.text-muted.ml-1{ 'data-toggle': 'tooltip', title: post_p.last_edited }
+          = "- edited #{post_p.last_edited_in_words}"
 
+      .actions.ml-auto
+        - if defined? user_can_edit_post? && user_can_edit_post?(post)
+          - if post.edits.size > 1
+            = link_to 'History', edits_for_forums_post_path(post), class: 'action p-1'
+            %span ·
+
+          = link_to 'Edit', post_p.edit_path, class: 'action p-1'
+          %span ·
+
+        - if quote_id
+          %a{ class: 'action p-1', data: { quote: { id: quote_id, text: post_p.quote } } }
+            Quote
+          %span ·
+
+        = link_to 'Link', "#post_#{post.id}", class: 'action p-1'

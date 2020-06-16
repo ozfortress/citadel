@@ -3,27 +3,32 @@
 - user_p = present(@user)
 
 - if user_can_edit_user?
-  = link_to edit_user_path(@user), class: 'btn btn-secondary pull-right', type: 'button' do
+  = link_to edit_user_path(@user), class: 'btn btn-secondary pull-right ml-3', type: 'button' do
     Settings
     = inline_svg_tag 'open_iconic/cog.svg', class: 'icon ml-1'
 
-.d-flex.align-items-start.flex-wrap.mb-4
-  = image_tag @user.avatar.icon.url, class: 'group-avatar mr-3', width: '100', height: '100'
+.d-flex.align-items-start.mb-4
+  = image_tag @user.avatar.icon.url, class: 'rounded mr-3', width: '100', height: '100'
 
-  .d-flex.flex-column.ml-3
-    .row.align-items-center
-      %h2.spaced-letters.mr-2
-        = @user.name
-      = user_p.badge
+  .d-flex.flex-column.align-self-stretch.ml-3
+    .d-flex.flex-column.justify-content-center.h-100
+      .row.align-items-center
+        %h2.spaced-letters.mr-2.mb-0
+          = @user.name
+        = user_p.badge
 
-    - unless @aka.empty?
-      .row
-        .text-secondary aka #{@aka.map(&:name).join(', ')}
+      - unless @aka.empty?
+        .row
+          .text-secondary aka #{@aka.map(&:name).join(', ')}
 
-    .row.align-items-center.steam-link
-      = user_p.steam_link
-      %span.ml-2= @user.steam_32
-      %span.ml-2= @user.steam_id
+    .row.align-items-center.steam-link.mt-2
+      = user_p.steam_icon_link
+      %span.mx-1
+      = user_p.steam_id_link
+      %span.mx-2= '/'
+      %span= @user.steam_32
+      %span.mx-2= '/'
+      %span= @user.steam_id
 
 .row
   != present_collection(@titles).map(&:icon).join(' ')
@@ -74,25 +79,7 @@
   .tab-pane#forums{ role: 'tabpanel', aria: { kabekkedby: 'forums-tab' } }
     = render 'users/show_forums', user: @user, forums_posts: @forums_posts
 
-%hr
 
 - if user_can_edit_users?
-  .card
-    .card-header Admin Comments
-
-    - @comments.each do |comment|
-      - options = { user: @user, comment: comment, quote_id: 'wmd-input-user-comment' }
-
-      - if comment.exists?
-        = render 'users/comments/comment', options
-      - else
-        = render 'users/comments/deleted_comment', options
-
-    .container-fluid
-      %hr
-      = bootstrap_form_for @comment, as: :comment, url: user_comments_path(@user) do |f|
-        = render 'users/comments/form', f: f
-
-        .row
-          = f.submit 'Post', class: 'btn btn-secondary pull-right'
-      %hr
+  %hr
+  = render 'users/show_admin_comments', user: @user, comments: @comments, comment: @comment

@@ -60,7 +60,7 @@ class UsersController < ApplicationController
     @roster_transfers = roster_transfers_by_league
     @team_invites     = @user.team_invites.includes(:team).order(created_at: :asc)
     @matches          = @user.matches.pending.includes(:home_team, :away_team)
-    @forums_posts     = user_forums_posts.order(:created_at).includes(:thread).limit(10)
+    @forums_posts     = user_forums_posts.reorder(created_at: :desc).includes(:thread, :created_by).limit(10)
   end
 
   def edit

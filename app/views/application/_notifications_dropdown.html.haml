@@ -1,0 +1,40 @@
+%a#notifications-dropdown{ href: '#',
+                           class: 'position-relative d-block p-2 pr-0',
+                           data: { toggle: 'dropdown' } }
+  = inline_svg_tag 'open_iconic/bell.svg', class: 'icon'
+
+  - unless notifications.empty?
+    %span#notifications-badge{ class: 'badge badge-primary anchor-bottom-right' }
+      = notifications.to_a.count { |n| !n.read }
+
+
+#notifications-dropdown-menu{ aria: { labelledby: 'notifications-dropdown' },
+                              class: 'dropdown-menu dropdown-menu-right p-0 mt-2 mt-md-3' }
+  .card.border-0
+    .card-header
+      .row.flex-nowrap.align-items-center
+        .col-auto
+          Notifications
+
+        .col-auto.ml-auto
+          = button_to clear_notifications_path, class: 'btn btn-sm btn-secondary',
+                      method: :delete, remote: true,
+                      data: { confirm: 'Are you sure you want to clear all notifications?' } do
+            Clear
+
+    %ul#notifications-list{ class: 'list-group list-group-flush' }
+      - notifications.each do |notification|
+        = render 'notification', notification: notification
+
+
+:javascript
+  // Prevent inside clicks from dismissing dropdown
+  $("#notifications-dropdown-menu").click(function(e) {
+    e.stopPropagation()
+  })
+
+  // Periodic notification checks
+  setInterval(function() {
+    var url = "/notifications"
+    $.ajax(url);
+  }, 20000);

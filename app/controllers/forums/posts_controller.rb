@@ -23,7 +23,7 @@ module Forums
       end
 
       @page = params[:page]
-      @posts = posts.includes(:created_by, :thread).paginate(page: @page)
+      @posts = posts.reorder(created_at: :desc).includes(:created_by, :thread).paginate(page: @page)
     end
 
     def recent

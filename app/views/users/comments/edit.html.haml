@@ -1,27 +1,40 @@
 - content_for(:title) { "Edit Comment | #{@user.name}" }
 
-%h1= link_to @user.name, user_path(@user)
+= render 'shared/head', heading: 'Users', subheading: 'Editing admin comment'
 
 %hr
 
-.panel.panel-default
-  .panel-body
+.alert.alert-admin.d-inline-flex.px-3.py-2.mb-3
+  %b
+    Editing
+    = link_to "admin comment ##{@comment.id}", user_path(@user) + "##{@comment.paths.dom_id}"
+    of
+    = link_to @user.name, user_path(@user)
+
+
+.card.bg-light.mb-3
+  .card-body
     = bootstrap_form_for @comment, as: :comment, url: user_comment_path(@user, @comment) do |f|
       = render 'form', f: f
 
-      = f.submit 'Update'
-      = link_to 'Cancel', :back, class: 'btn btn-secondary'
+      .d-flex.justify-content-end
+        = link_to 'Cancel', :back, class: 'btn btn-link mr-2'
+        = f.primary 'Update'
 
-.panel.panel-danger
-  .panel-heading Danger Zone
-  .panel-body
+
+.alert.alert-danger.mb-3
+  %label.font-weight-bold.alert-heading
+    Danger Zone
+
+  .btn-toolbar.guttered
     - if @comment.exists?
-      = button_to @comment.paths.destroy, method: :delete, class: 'btn btn-danger',
+      = button_to @comment.paths.destroy, method: :delete, class: 'btn btn-sm btn-danger',
                   data: { confirm: 'Are you sure you want to delete this Comment?' } do
-        %span.glyphicon.glyphicon-trash
+        = inline_svg_tag 'open_iconic/trash.svg', class: 'icon mr-2'
         Delete
 
     - else
-      = button_to @comment.paths.restore, method: :patch, class: 'btn btn-warning',
+      = button_to @comment.paths.restore, method: :patch, class: 'btn btn-sm btn-warning',
                     data: { confirm: 'Are you sure you want to restore this Comment?' } do
+        = inline_svg_tag 'open_iconic/pulse.svg', class: 'icon mr-2'
         Restore

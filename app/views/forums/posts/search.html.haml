@@ -1,14 +1,26 @@
-- content_for(:title) { 'Post Search | Forums' }
+- content_for(:title) { 'Search Posts | Forums' }
 
-%h1.tab-header Forum Post Search
-- if @user
-  %br
-  %h3 For #{present(@user).link}
+= render 'forums/head', object: nil, subheading: 'Search posts', root_navigable: true
+
 %hr
 
-.panel.panel-default
-  - @posts.each do |post|
-    .panel-heading Thread: #{present(post.thread).link}
-    = render post, quote_id: nil
+.btn-toolbar.guttered.mb-3
+  - if @user
+    .card.bg-dark.px-3.py-2.m-1
+      %b.text-white
+        %span
+          Showing posts by
 
-= bootstrap_paginate @posts
+        = present(@user).link
+
+- if @posts.empty?
+  = render 'forums/posts/empty'
+- else
+  - @posts.each do |post|
+    .mb-4
+      %small.font-weight-bold
+        Thread: #{present(post.thread).link}
+
+      = render post, quote_id: nil
+
+= bootstrap_paginate @posts, list_classes: ['pagination justify-content-center mt-4']

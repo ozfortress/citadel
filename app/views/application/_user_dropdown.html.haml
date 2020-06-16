@@ -1,18 +1,45 @@
-%li.nav-item.dropdown
-  %a.nav-link.active.dropdown-toggle#user-dropdown{ href: '#', data: { toggle: 'dropdown' } }
+%a#user-dropdown{ href: '#',
+                  class: 'nav-link active dropdown-toggle text-white px-2',
+                  data: { toggle: 'dropdown' } }
+
+  = present(current_user).avatar_tag(class: 'avatar rounded-circle mr-1')
+
+  %span.d-none.d-lg-inline-block
     = current_user.name.truncate(16)
-    %span.caret
-  .dropdown-menu.dropdown-menu-right.dropdown-non-responsive{ aria: { labelledby: 'user-dropdown' } }
-    = link_to(user_path(current_user), class: 'dropdown-item') do
-      Profile
-      %span.pull-right= inline_svg_tag 'open_iconic/person.svg', class: 'icon'
-    = link_to(edit_user_path(current_user), class: 'dropdown-item') do
-      Settings
-      %span.pull-right= inline_svg_tag 'open_iconic/cog.svg', class: 'icon'
-    = link_to(logout_user_path, class: 'dropdown-item') do
-      Logout
-      %span.pull-right= inline_svg_tag 'open_iconic/power-standby.svg', class: 'icon'
-    %hr.divider
-    .dropdown-header Teams
+
+
+#user-dropdown-menu{ aria: { labelledby: 'user-dropdown' },
+                     class: 'dropdown-menu dropdown-menu-right mt-3' }
+  .dropdown-header.d-inline-block.d-lg-none
+    = current_user.name.truncate(16)
+
+  = link_to(user_path(current_user), class: 'dropdown-item') do
+    Profile
+    %span.pull-right= inline_svg_tag 'open_iconic/person.svg', class: 'icon'
+
+  = link_to(edit_user_path(current_user), class: 'dropdown-item') do
+    Settings
+    %span.pull-right= inline_svg_tag 'open_iconic/cog.svg', class: 'icon'
+
+  = link_to(logout_user_path, class: 'dropdown-item') do
+    Logout
+    %span.pull-right= inline_svg_tag 'open_iconic/power-standby.svg', class: 'icon'
+
+  .dropdown-divider
+
+  .dropdown-header
+    Teams
+
+  - if current_user.teams.size >= 1
     - present_collection(current_user.teams).each do |team_p|
       %a= team_p.link(team_p.to_s.truncate(20), class: 'dropdown-item')
+  - else
+    %div{ class: 'dropdown-item disabled' }
+      None
+
+
+:javascript
+  // Prevent inside clicks from dismissing dropdown
+  $("#user-dropdown-menu").click(function(e) {
+    e.stopPropagation()
+  })

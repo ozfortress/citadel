@@ -1,0 +1,16 @@
+- comm_p = present(comm)
+- collapse_id = comm.paths.dom_id('collapse')
+
+.comm-deleted{ class: local_assigns[:class] }
+  .card-header
+    .row.no-gutters.align-items-center.cursor-pointer{ data: { toggle: :collapse, target: "##{collapse_id}" } }
+      .col-auto
+        = render 'users/listing', user: comm.deleted_by
+
+      .col-auto.ml-2
+        %span.small
+          deleted a message
+          on #{comm_p.deleted_at}
+
+    .collapse.mt-2{ id: collapse_id }
+      = render 'leagues/matches/comms/comm', match: match, comm: comm

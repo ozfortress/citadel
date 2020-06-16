@@ -1,21 +1,32 @@
 - post_p = present(post)
+- comments_count = post.thread.posts_count - 1
 
 %div{ id: "post_#{post.id}" }
-- if user_can_edit_post?(post)
-  .pull-right
-    = link_to post_p.edit_path, class: 'btn btn-link btn-sm' do
-      %span.glyphicon.glyphicon-cog
-.pull-right
-  = post_p.created_at
 
-%h2= link_to post.thread.title, forums_thread_path(post.thread)
+.row
+  .col
+    %span= post_p.created_at
+    %span.small.text-muted.ml-1= post_p.created_at_in_words
 
-- if user_can_edit_post?(post) && post.edits.size > 1
-  .pull-right
-    = link_to edits_for_forums_post_path(post), class: 'btn btn-secondary btn-sm' do
-      View Edits
+    %h2.mb-3
+      = link_to post.thread.title, forums_thread_path(post.thread)
 
-.well.well-lg
-  .container-fluid.markdown= post_p.content
-  - comments_count = post.thread.posts_count - 1
-  .pull-right= link_to "comments (#{comments_count})", forums_thread_path(post.thread)
+.card.bg-light
+  .card-body.markdown
+    = post_p.content
+
+  .card-footer
+    .btn-toolbar.guttered.align-items-center
+      - if user_can_edit_post?(post)
+        = link_to post_p.edit_path, class: 'btn btn-admin btn-sm' do
+          = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon'
+          Edit thread
+
+      - if user_can_edit_post?(post) && post.edits.size > 1
+        = link_to edits_for_forums_post_path(post), class: 'btn btn-sm btn-admin' do
+          = inline_svg_tag 'open_iconic/timer.svg', class: 'icon mr-1'
+          View edit history
+
+      .spacer
+
+      = link_to "comments (#{comments_count})", forums_thread_path(post.thread)

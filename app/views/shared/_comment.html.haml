@@ -1,0 +1,34 @@
+- comment_p = present(comment)
+
+.comment{ class: local_assigns[:class] }
+  %div{ id: comment.paths.dom_id }
+
+  .row.no-gutters.align-items-center
+    .col-auto.order-1
+      = render 'users/listing', user: comment.created_by, avatar_size: 20
+
+    .col-auto.ml-2.order-2
+      %span.small
+        commented on
+        = comment_p.created_at
+
+    .col.d-none.d-lg-block.order-3
+
+    .col-12.btn-toolbar.guttered.justify-content-end.order-4.col-lg-auto.order-lg-3
+      - btn_cls = 'btn btn-xs hover-opacity'
+
+      - if comment.edits.size > 1
+        = link_to comment.paths.edits, class: btn_cls, title: 'History' do
+          = inline_svg_tag 'open_iconic/timer.svg', class: 'icon'
+
+      = link_to comment.paths.edit, class: btn_cls, title: 'Edit' do
+        = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon'
+
+      %button{ class: btn_cls, title: 'Quote', data: { quote: { id: quote_id, text: comment_p.quote } } }
+        = inline_svg_tag 'open_iconic/double-quote-serif-left.svg', class: 'icon'
+
+      = link_to comment.paths.show, class: btn_cls, title: 'Link' do
+        = inline_svg_tag 'open_iconic/link-intact.svg', class: 'icon'
+
+    .col-12.markdown.m-2.order-3
+      = comment_p.content

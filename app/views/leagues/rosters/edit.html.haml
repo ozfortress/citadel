@@ -71,23 +71,28 @@
           %span.glyphicon.glyphicon-trash
           Destroy
 
+
 - if user_can_edit_league?
-  .panel.panel-info
-    .panel-heading Admin Comments
+  %hr
+
+  .alert.alert-admin.mb-3
+    %label.font-weight-bold.alert-heading
+      Admin Comments
+
+    %hr.mt-0
 
     - @comments.each do |comment|
-      - options = { roster: @roster, comment: comment, quote_id: 'wmd-input-new-league-roster-comment' }
+      - options = { comment: comment, quote_id: 'wmd-input-new-league-roster-comment' }
 
       - if comment.exists?
-        = render 'leagues/rosters/comments/comment', options
+        = render 'shared/comment', options
       - else
-        = render 'leagues/rosters/comments/deleted_comment', options
+        = render 'shared/comment_deleted', options
 
-    .container-fluid
       %hr
-      = bootstrap_form_for @comment, as: :comment, url: roster_comments_path(@roster) do |f|
-        = render 'leagues/rosters/comments/form', f: f
 
-        .row
-          = f.submit 'Post', class: 'btn btn-secondary pull-right'
-      %hr
+    = bootstrap_form_for @comment, as: :comment, url: roster_comments_path(@roster) do |f|
+      = render 'leagues/rosters/comments/form', f: f
+
+      .d-flex.justify-content-end
+        = f.primary 'Post'

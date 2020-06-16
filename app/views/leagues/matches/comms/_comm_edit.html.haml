@@ -5,13 +5,17 @@
     roster = match.away_team
   end
 
-.panel.panel-default
-  .panel-heading
-    .pull-right
-      = comm.created_at.strftime('%c')
+.comm-edit{ class: local_assigns[:class] }
+  %small.font-weight-bold
+    Edited by
+    = present(comm.created_by).link
+    - if roster
+      (
+      = present(roster).link
+      )
+    on
+    = comm.created_at.strftime('%c')
 
-    = present(roster).link + ':' if roster
-    - team = roster.team if roster
-    = render 'users/listing', user: comm.created_by, team: team
-
-.container-fluid.markdown!= comm.content_render_cache
+  .card.bg-light
+    .card-body.markdown
+      != comm.content_render_cache
