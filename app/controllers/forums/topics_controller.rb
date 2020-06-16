@@ -35,7 +35,7 @@ module Forums
 
     def show
       @subtopics = @topic.children
-      @threads = @topic.threads.order(pinned: :desc).ordered
+      @threads = @topic.threads.ordered
 
       unless user_can_manage_topic?
         @subtopics = @subtopics.visible

@@ -1,19 +1,15 @@
 = f.text_field :name
 
 .form-group
-  %label
-    Status
+  %label Status
 
   .row
-    .px-3.py-1= f.check_box :locked, label: 'Locked', label_class: 'cursor-pointer'
-    .border-right.d-none.d-md-block
-    .px-3.py-1= f.check_box :pinned, label: 'Pinned', label_class: 'cursor-pointer'
-    .border-right.d-none.d-md-block
-    .px-3.py-1= f.check_box :hidden, label: 'Hidden', label_class: 'cursor-pointer'
+    .px-3.py-1= f.check_box :locked, label: 'Locked', label_class: 'pl-1'
+    .px-3.py-1= f.check_box :pinned, label: 'Pinned', label_class: 'pl-1'
+    .px-3.py-1= f.check_box :hidden, label: 'Hidden', label_class: 'pl-1'
 
 .form-group
-  %label
-    Options
+  %label Options
 
-  = f.check_box :default_locked, label: 'Default new threads to "Locked"', label_class: 'cursor-pointer'
-  = f.check_box :default_hidden, label: 'Default new threads to "Hidden"', label_class: 'cursor-pointer'
+  = f.check_box :default_locked, label: 'Default new threads to "Locked"', label_class: 'pl-1'
+  = f.check_box :default_hidden, label: 'Default new threads to "Hidden"', label_class: 'pl-1'

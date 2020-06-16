@@ -16,7 +16,7 @@ module Forums
     end
 
     def created_at_in_words
-      "#{distance_of_time_in_words(thread.created_at - Time.zone.now).gsub('about', '')} ago"
+      time_ago_in_words thread.created_at
     end
 
     def status_classes
