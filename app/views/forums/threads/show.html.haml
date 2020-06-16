@@ -1,6 +1,6 @@
 - content_for(:title) { "#{@thread.title} | Forums" }
 
-.mb-5#forum-thread
+.mb-5
   = render 'forums/head', object: @thread, subheading: present(@thread).status_icons
 
   .btn-toolbar.guttered.mb-2

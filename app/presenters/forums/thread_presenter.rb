@@ -21,9 +21,9 @@ module Forums
 
     def status_classes
       cls = []
-      cls << 'locked' if thread.locked
-      cls << 'hidden' if thread.hidden
-      cls << 'pinned' if thread.pinned
+      cls << 'locked-thread' if thread.locked
+      cls << 'hidden-thread' if thread.hidden
+      cls << 'pinned-thread' if thread.pinned
       safe_join(cls, ' ')
     end
 
@@ -46,15 +46,15 @@ module Forums
     end
 
     def locked_icon
-      inline_svg_tag('open_iconic/lock-locked.svg', title: 'Locked', class: 'icon icon-locked mr-1')
+      inline_svg_tag('open_iconic/lock-locked.svg', title: 'Locked', class: 'icon fill-secondary mr-1')
     end
 
     def hidden_icon
-      inline_svg_tag('eye-hide.svg', title: 'Hidden', class: 'icon icon-hidden mr-1')
+      inline_svg_tag('eye-hide.svg', title: 'Hidden', class: 'icon fill-secondary mr-1')
     end
 
     def pinned_icon
-      inline_svg_tag('open_iconic/pin.svg', title: 'Pinned', class: 'icon icon-pinned mr-1')
+      inline_svg_tag('open_iconic/pin.svg', title: 'Pinned', class: 'icon fill-success mr-1')
     end
   end
 end

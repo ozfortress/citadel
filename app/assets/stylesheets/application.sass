@@ -25,7 +25,6 @@
 @import 'forums'
 @import 'leagues'
 @import 'markdown'
-@import 'helpers'
 
 html
   font-size: 14px
@@ -352,6 +351,31 @@ body
 //   padding: 0 !important
 //   margin: 0 !important
 
+.border-dotted
+  border-style: dotted
+
+.border-dashed
+  border-style: dashed
+
+.cursor-pointer
+  cursor: pointer
+
+// This helps ensure consistent spacing & friendly wrapping of buttons for smaller dimensions
+.btn-toolbar.guttered
+  margin: $spacer * -0.25
+
+  .btn
+    margin: $spacer * 0.25
+
+.fill-success
+  fill: $success !important
+
+.fill-secondary
+  fill: $secondary !important
+
+.fill-light
+  fill: $light !important
+
 .icon-dark
   fill: black
 .icon-light
@@ -364,16 +388,6 @@ body
   position: relative
   top: .125em
   vertical-align: baseline
-
-  &.icon-locked
-    fill: #5a5a5a
-
-  &.icon-pinned
-    fill: #65bc71
-    transform: rotateZ(45deg)
-
-  &.icon-hidden
-    fill: #c3c3f3
 
 .navbar-dark
   .icon

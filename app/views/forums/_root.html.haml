@@ -15,14 +15,14 @@
 
 
 - unless topics.empty?
-  %ul.list-group.mb-3#forum-topics-list
+  %ul.list-group.mb-3
     - topics.each do |topic|
       %li.list-group-item.bg-light
         = render 'forums/topics/listing', topic: topic
 
 
 - unless threads.empty?
-  %ul.list-group.mb-3#forum-threads-list
+  %ul.list-group.mb-3
     - threads.each do |thread|
       %li.list-group-item{ class: present(thread).status_classes }
         = render 'forums/threads/listing', thread: thread
