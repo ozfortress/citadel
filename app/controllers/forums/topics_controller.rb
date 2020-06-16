@@ -42,7 +42,7 @@ module Forums
         @threads   = @threads.visible.or(@threads.where(created_by: current_user))
       end
 
-      @threads = @threads.paginate(page: params[:page])
+      @threads = @threads.includes(:created_by).paginate(page: params[:page])
     end
 
     def toggle_subscription
