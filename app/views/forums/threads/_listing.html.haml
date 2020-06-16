@@ -1,5 +1,6 @@
 - thread_p = present(thread)
 - thread_creator_p = present(thread.created_by)
+- latest_thread_creator_p = present(thread.latest_post.created_by)
 
 .row
   .col
@@ -19,13 +20,11 @@
             = thread_creator_p.avatar_tag(size: 12, class: 'rounded')
             = thread_creator_p.link
 
-      // TODO: Figure out how to retrieve the "last posted" item in the thread so we
-      // can display who / when was the most recent post (currently using thread creator)
       .d-none.d-sm-flex.col-sm-3.align-items-end.justify-content-end.pl-0
         .row.no-gutters.justify-content-end
           .col-auto.col-md.small.text-right
-            = thread_creator_p.avatar_tag(size: 12, class: 'rounded')
-            = thread_creator_p.link
+            = latest_thread_creator_p.avatar_tag(size: 12, class: 'rounded')
+            = latest_thread_creator_p.link
 
           .col-auto.col-md-12.small.text-muted.text-right.ml-1{ title: thread.created_at.strftime('%c') }
             posted

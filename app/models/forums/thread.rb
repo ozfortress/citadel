@@ -83,7 +83,11 @@ module Forums
     end
 
     def original_post
-      posts.order(created_at: :asc).first
+      posts.reorder(created_at: :asc).first
+    end
+
+    def latest_post
+      posts.reorder(created_at: :desc).first
     end
 
     self.per_page = 20
