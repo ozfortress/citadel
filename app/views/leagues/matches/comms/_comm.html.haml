@@ -28,9 +28,8 @@
 
     .footer.row.no-gutters.align-items-center.pt-2
       .created-at{ 'data-toggle': 'tooltip', title: comm_p.created_at }
-        Posted
-        = comm_p.created_at_in_words
+        Posted #{comm_p.created_at_in_words} ago
 
       - if comm.edits.size > 1
         %span.edited-at.ml-1{ 'data-toggle': 'tooltip', title: comm_p.last_edited }
-          = "- edited #{comm_p.last_edited_in_words}"
+          \- edited #{comm_p.last_edited_in_words} ago

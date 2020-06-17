@@ -6,7 +6,7 @@
 .row
   .col
     %span= post_p.created_at
-    %span.small.text-muted.ml-1= post_p.created_at_in_words
+    %span.small.text-muted.ml-1 #{post_p.created_at_in_words} ago
 
     %h2.mb-3
       = link_to post.thread.title, forums_thread_path(post.thread)

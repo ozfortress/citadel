@@ -2,17 +2,18 @@
 - if notification.read
   - cls += ' read'
 
+- notification_p = present(notification)
+
 %li.list-group-item.d-flex.flex-column.p-2{ class: cls,
                                             id: "notification_#{notification.id}" }
 
   .row.no-gutters
     .col.pl-2
       .row.no-gutters
-        = present(notification).link(class: '')
+        = notification_p.link(class: '')
 
       .row.no-gutters
-        %small.text-muted
-          = present(notification).created_at_in_words
+        %small.text-muted #{notification_p.created_at_in_words} ago
 
     .col-auto
       = button_to notification_path(notification.id), method: :delete, remote: true,

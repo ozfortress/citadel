@@ -2,6 +2,10 @@ module Forums
   class ThreadPresenter < BasePresenter
     presents :thread
 
+    def created_by
+      @created_by ||= present(thread.created_by)
+    end
+
     def link(options = {})
       link_to(thread.title, forums_thread_path(thread), options)
     end

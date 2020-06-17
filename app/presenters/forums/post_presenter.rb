@@ -2,6 +2,10 @@ module Forums
   class PostPresenter < BasePresenter
     presents :post
 
+    def created_by
+      @created_by ||= present(post.created_by)
+    end
+
     def thread
       @thread ||= present(post.thread)
     end

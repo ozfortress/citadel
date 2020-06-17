@@ -13,11 +13,11 @@
 
     .footer.row.no-gutters.align-items-center.pt-2
       .created-at{ 'data-toggle': 'tooltip', title: post_p.created_at }
-        Posted #{post_p.created_at_in_words}
+        Posted #{post_p.created_at_in_words} ago
 
       - if post.edits.size > 1
         .edited-at.text-muted.ml-1{ 'data-toggle': 'tooltip', title: post_p.last_edited }
-          = "- edited #{post_p.last_edited_in_words}"
+          \- edited #{post_p.last_edited_in_words} ago
 
       .actions.ml-auto
         - if defined? user_can_edit_post? && user_can_edit_post?(post)

@@ -27,7 +27,7 @@ class User
     def duration
       return 'Indefinite' unless ban.terminated_at
 
-      distance_of_time_in_words(ban.terminated_at - Time.zone.now)
+      time_ago_in_words ban.terminated_at
     end
 
     def delete_button
