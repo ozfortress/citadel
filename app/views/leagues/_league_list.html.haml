@@ -7,28 +7,28 @@
   end
 
 .row
-  .col-xs-9.col-sm-10.nopadding.tab-content
-    - (['All'] + categories.keys).each do |category|
-      :ruby
-        categorised = if category == 'All'
-                        leagues
-                      else
-                        categories[category]
-                      end
+  .league-categories.tab-content.col-12.col-sm-10.order-2.order-sm-1
+    - (['All'] + categories.keys).each_with_index do |category, index|
+      - klass = "tab-pane #{index.zero? ? 'show active' : ''} "
+      - categorised = index.zero? ? leagues : categories[category]
 
-      .tab-pane.fade.in{ class: category == 'All' ? 'active' : '', id: category_id.call(category) }
+      .league-category{ id: category_id.call(category), class: klass }
         %ul.list-group
           - categorised.each do |league|
             - league_p = present(league)
 
             = link_to league_path(league), class: league_p.list_group_item_class do
-              %span.label.label-primary.pull-right
-                Teams: #{league.rosters.size}
+              .d-flex.align-items-start
+                %h4.mb-0.list-group-item-heading
+                  = league.name
 
-              %h4.list-group-item-heading
-                = league.name
+                .spacer
 
-  .col-xs-3.col-sm-2
+                .badge.badge-primary
+                  Teams: #{league.rosters.size}
+
+
+  .col-12.col-sm-2.order-1.order-sm-2.mb-2
     %ul.list-group
       - select = (['All'] + categories.keys).map { |category| [category, category_id.call(category)] }
 
