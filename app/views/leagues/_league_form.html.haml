@@ -1,4 +1,5 @@
-.card.mb-4
+/ Info
+.card.mb-3
   .card-header Info
   .card-body
     = f.select :format_id, format_options
@@ -6,7 +7,9 @@
     = f.markdown_editor :description, rows: 10
     = f.text_field :category
 
-.card.mb-4
+
+/ Players
+.card.mb-3
   .card-header Players
   .card-body
     .form-group
@@ -14,7 +17,9 @@
     .form-group
       = f.number_field :max_players, min: 0, label: 'Maximum (0 for unlimited)'
 
-.card.mb-4
+
+/ State
+.card.mb-3
   .card-header State
   .card-body
     = f.check_box :signuppable
@@ -25,7 +30,9 @@
     = f.check_box :allow_disbanding
     = f.check_box :forfeit_all_matches_when_roster_disbands
 
-.card.mb-4
+
+/ Points
+.card.mb-3
   .card-header Points
   .card-body
     = f.number_field :points_per_round_win,  label: 'Points per set won', step: :any
@@ -38,8 +45,20 @@
     = f.number_field :points_per_forfeit_draw, label: 'Points per match drawn by forfeit', step: :any
     = f.number_field :points_per_forfeit_loss, label: 'Points per match lost by forfeit', step: :any
 
-.card.mb-2
-  .card-header Tiebreaking
+
+/ Tiebreaking
+.card.mb-3
+  .card-header
+    .row.no-gutters.flex-nowrap.align-items-center
+      .mr-2 Tiebreaking
+
+      .spacer
+
+      = link_to_add_association f, :tiebreakers, class: 'btn btn-sm btn-success',
+                                'data-association-insertion-node' => '#tiebreakers' do
+        = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
+        Add Tiebreaker
+
   %ul.list-group
     = f.fields_for :tiebreakers do |tiebreaker_f|
       = render 'tiebreaker_fields', f: tiebreaker_f
@@ -47,16 +66,18 @@
     #tiebreakers
 
 
-.btn-toolbar.guttered.mb-4
-  .spacer
-  = link_to_add_association f, :tiebreakers, class: 'btn btn-sm btn-primary',
-                            'data-association-insertion-node' => '#tiebreakers' do
-    = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
-    Add Tiebreaker
+/ Divisions
+.card.mb-3
+  .card-header
+    .row.no-gutters.flex-nowrap.align-items-center
+      .mr-2 Divisions
 
+      .spacer
 
-.card.mb-2
-  .card-header Divisions
+      = link_to_add_association f, :divisions, class: 'btn btn-sm btn-success',
+                                'data-association-insertion-node' => '#divisions' do
+        = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
+        Add Division
 
   %ul.list-group
     = f.fields_for :divisions do |division_f|
@@ -64,16 +85,19 @@
 
     #divisions
 
-.btn-toolbar.guttered.mb-4
-  .spacer
-  = link_to_add_association f, :divisions, class: 'btn btn-sm btn-primary',
-                            'data-association-insertion-node' => '#divisions' do
-    = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
-    Add Division
 
+/ Map pool
+.card.mb-3
+  .card-header
+    .row.no-gutters.flex-nowrap.align-items-center
+      .mr-2 Map Pool (Leave empty for all maps)
 
-.card.mb-2
-  .card-header Map Pool (Leave empty for all maps)
+      .spacer
+
+      = link_to_add_association f, :pooled_maps, class: 'btn btn-sm btn-success',
+                                'data-association-insertion-node' => '#pooled-maps' do
+        = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
+        Add Map
 
   %ul.list-group
     = f.fields_for :pooled_maps do |pooled_map_f|
@@ -81,15 +105,9 @@
 
     #pooled-maps
 
-.btn-toolbar.guttered.mb-4
-  .spacer
-  = link_to_add_association f, :pooled_maps, class: 'btn btn-sm btn-primary',
-                            'data-association-insertion-node' => '#pooled-maps' do
-    = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
-    Add Map
 
-
-.card.mb-4
+/ Scheduling
+.card.mb-3
   .card-header Scheduling
   .card-body
     = f.check_box :schedule_locked
