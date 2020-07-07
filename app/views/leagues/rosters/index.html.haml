@@ -8,13 +8,13 @@
 - @divisions.each do |div|
   .card.mb-3
     .card-header= div.name
-    %ul.list-group.list-group-flush
-      - rosters = present_collection(div.rosters)
 
-      - if rosters.empty?
-        %li.list-group-item No rosters...
+    - rosters = present_collection(div.rosters)
+    - if rosters.empty?
+      .card-body.text-muted No rosters signed up
 
-      - else
+    - else
+      %ul.list-group.list-group-flush
         - rosters.each do |roster|
           - klass = roster.approved? ? 'list-group-item-success' : 'list-group-item-warning'
           %li{ class: "list-group-item #{klass}" }

@@ -9,15 +9,13 @@
   .card.mb-3
     .card-header= division.name
 
-
     - pending_transfer_requests = @pending_transfer_requests[division]
     - if pending_transfer_requests.empty?
-      .card-body.border-bottom No pending transfers...
+      .card-body.text-muted No pending transfers
     - else
       %ul.list-group
         - pending_transfer_requests.each do |request|
           %li.list-group-item.list-group-flush
-
             .d-flex.flex-wrap.align-items-center
               .m-2
                 = present(request).listing
@@ -33,7 +31,7 @@
     - unless old_transfer_requests.empty?
       - id = dom_id(division)
       %a.text-dark{ data: { toggle: 'collapse' }, href: "##{id}" }
-        .card-header
+        .card-header.border-top
           = inline_svg_tag 'open_iconic/timer.svg', class: 'icon'
           Transfer History
 
