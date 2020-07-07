@@ -13,9 +13,9 @@
     - if pending_transfer_requests.empty?
       .card-body.text-muted No pending transfers
     - else
-      %ul.list-group
+      %ul.list-group.list-group-flush
         - pending_transfer_requests.each do |request|
-          %li.list-group-item.list-group-flush
+          %li.list-group-item
             .d-flex.flex-wrap.align-items-center
               .m-2
                 = present(request).listing
