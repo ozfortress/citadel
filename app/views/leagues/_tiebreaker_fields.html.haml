@@ -1,8 +1,7 @@
 %li.list-group-item.nested-fields
-  .d-flex
-    = f.select(:kind, League::Tiebreaker.kinds.map { |name, _| [name.humanize, name] },
-              hide_label: true, wrapper: { class: 'w-100 mr-3 mb-0' })
+  = f.select(:kind, League::Tiebreaker.kinds.map { |name, _| [name.humanize, name] },
+              label_class: 'mr-3', wrapper: { class: 'mr-3 mb-0' })
 
-    = link_to_remove_association f, class: 'btn btn-danger',
-        data: { confirm: 'Are you sure you want to delete this Tirbreaker?' } do
-      = inline_svg_tag 'open_iconic/trash.svg', class: 'icon'
+  = link_to_remove_association f, class: 'btn btn-danger',
+      data: { confirm: 'Are you sure you want to delete this Tirbreaker?' } do
+    = inline_svg_tag 'open_iconic/trash.svg', class: 'icon'

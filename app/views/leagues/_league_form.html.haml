@@ -59,7 +59,7 @@
         = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
         Add Tiebreaker
 
-  %ul.list-group
+  %ul.list-group.list-group-flush.list-dynamic-add.form-inline
     = f.fields_for :tiebreakers do |tiebreaker_f|
       = render 'tiebreaker_fields', f: tiebreaker_f
 
@@ -79,7 +79,7 @@
         = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
         Add Division
 
-  %ul.list-group
+  %ul.list-group.list-group-flush.list-dynamic-add.form-inline
     = f.fields_for :divisions do |division_f|
       = render 'division_fields', f: division_f
 
@@ -99,7 +99,7 @@
         = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
         Add Map
 
-  %ul.list-group
+  %ul.list-group.list-group-flush.list-dynamic-add.form-inline
     = f.fields_for :pooled_maps do |pooled_map_f|
       = render 'pooled_map_fields', f: pooled_map_f
 

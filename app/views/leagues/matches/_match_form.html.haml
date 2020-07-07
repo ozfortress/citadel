@@ -41,7 +41,7 @@
         Add Pick / Ban
 
   - if f.object.pending?
-    %ul.list-group.list-group-flush
+    %ul.list-group.list-group-flush.list-dynamic-add.form-inline
       = f.fields_for :pick_bans do |pick_bans_f|
         = render 'pick_ban_fields', f: pick_bans_f
       %div{ id: "#{div.id}_pick_bans" }
@@ -65,7 +65,7 @@
 
 
   - if f.object.pending?
-    %ul.list-group.list-group-flush
+    %ul.list-group.list-group-flush.list-dynamic-add.form-inline
       = f.fields_for :rounds do |rounds_f|
         = render 'round_fields', f: rounds_f, league: div.league
       %div{ id: "#{div.id}_rounds" }
