@@ -6,10 +6,14 @@
   Signups
 
 - @divisions.each do |div|
-  .card.mb-3
-    .card-header= div.name
+  - rosters = present_collection(div.rosters)
 
-    - rosters = present_collection(div.rosters)
+  .card.mb-3
+    .card-header
+      %span.mr-2= div.name
+      %span.badge.badge-primary
+        #{rosters.size} teams
+
     - if rosters.empty?
       .card-body.text-muted No rosters signed up
 
