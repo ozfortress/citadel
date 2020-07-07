@@ -1,18 +1,19 @@
-.table-responsive
-  %table.table.matches-table
-    %thead
-      %th
-      %th.home-team Home Team
-      %th.vs vs
-      %th.away-team Away Team
-      %th
 
-    %tbody
-      - if matches.empty?
-        %tr
-          %td.text-center{ colspan: 5 } None
+- if matches.empty?
+  .py-2.text-muted
+    No matches scheduled
 
-      - else
+- else
+  .table-responsive
+    %table.table.matches-table
+      %thead
+        %th
+        %th.home-team Home Team
+        %th.vs vs
+        %th.away-team Away Team
+        %th
+
+      %tbody
         - matches.each do |match|
           - match_p = present(match)
           %tr
