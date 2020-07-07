@@ -31,7 +31,7 @@
     - leagues = @leagues[game]
 
     .game{ id: game.name.parameterize, class: klass }
-      - if !leagues.empty?
+      - if leagues.empty?
         .container.text-muted.p-3
           No leagues found
       - else
