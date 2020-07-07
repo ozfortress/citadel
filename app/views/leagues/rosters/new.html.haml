@@ -39,7 +39,6 @@
 
         = f.form_group :players, label: { text: 'Players' } do
           / Check box list for players from the team to add to the roster
-
           = f.fields_for(:players, @team.users) do |user_f|
             :ruby
               user = user_f.object
@@ -48,14 +47,12 @@
               has_errors = player&.errors&.any?
 
             .form-group{ class: ('has-error' if has_errors) }
-              -# - label = safe_join([user_p.link, user_p.league_status(@league)], ' ')
-              - lab = user_p.avatar_tag size: 20, class: 'rounded mx-1'
+              - label = user_p.avatar_tag size: 20, class: 'rounded mx-1'
               = user_f.check_box :user_id, { checked: !player.nil?, label_class: 'cursor-pointer' }, user.id, nil do
-                = user_p.link lab
+                = user_p.link label
                 = user.name
-              
 
-              / Manually display errors.
+              -# Manually display errors.
               - if player && has_errors
                 - player.errors.each do |_key_, error|
                   %span.help-block= error
