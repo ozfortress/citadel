@@ -1,11 +1,15 @@
 - content_for(:title) { "Sign up | #{@league.name}" }
 
-%h1= @league.name
+- league_p = present(@league)
+
+%h1.mb-4
+  = league_p.link
+  Sign up
 
 - if @team.nil?
   %h4 Which team do you want to sign up with?
 
-  %ul.list-group
+  %ul.list-group.mb-3
     - if @teams.empty?
       %li.list-group-item
         You must have at least #{@league.min_players} players on a team to sign up.
@@ -15,35 +19,47 @@
                 class: 'list-group-item' do
         = team.name
 
-  = link_to 'Cancel', league_path(@league), class: 'btn btn-secondary'
+  = link_to league_path(@league), class: 'btn btn-light' do
+    = inline_svg_tag 'open_iconic/chevron-left.svg', class: 'icon mr-2'
+    Back
+
 
 - else
   %h4
     Sign up with #{@team.name}
 
-  = bootstrap_form_for @roster, as: :roster,
-      url: league_rosters_path(@league, team_id: @team.id) do |f|
-    = f.text_field :name
-    = f.select :division_id, divisions_select(@league), label: 'Desired Division'
-    = render 'form', f: f
 
-    = f.form_group :players, label: { text: 'Players' } do
-      / Check box list for players from the team to add to the roster
-      = f.fields_for(:players, @team.users) do |user_f|
-        :ruby
-          user = user_f.object
-          user_p = present(user)
-          player = @roster.players.find { |pl| pl.user_id == user.id }
-          has_errors = player&.errors&.any?
+  .card
+    .card-body
+      = bootstrap_form_for @roster, as: :roster,
+          url: league_rosters_path(@league, team_id: @team.id) do |f|
+        = f.text_field :name
+        = f.select :division_id, divisions_select(@league), label: 'Desired Division'
+        = render 'form', f: f
 
-        .form-group{ class: ('has-error' if has_errors) }
-          - label = safe_join([user_p.link, user_p.league_status(@league)], ', ')
-          = user_f.check_box :user_id, { label: label, checked: !player.nil? }, user.id, nil
+        = f.form_group :players, label: { text: 'Players' } do
+          / Check box list for players from the team to add to the roster
 
-          / Manually display errors.
-          - if player && has_errors
-            - player.errors.each do |_key_, error|
-              %span.help-block= error
+          = f.fields_for(:players, @team.users) do |user_f|
+            :ruby
+              user = user_f.object
+              user_p = present(user)
+              player = @roster.players.find { |pl| pl.user_id == user.id }
+              has_errors = player&.errors&.any?
 
-    = f.submit 'Sign up'
-    = link_to 'Cancel', league_path(@league), class: 'btn btn-secondary'
+            .form-group{ class: ('has-error' if has_errors) }
+              -# - label = safe_join([user_p.link, user_p.league_status(@league)], ' ')
+              - lab = user_p.avatar_tag size: 20, class: 'rounded mx-1'
+              = user_f.check_box :user_id, { checked: !player.nil?, label_class: 'cursor-pointer' }, user.id, nil do
+                = user_p.link lab
+                = user.name
+              
+
+              / Manually display errors.
+              - if player && has_errors
+                - player.errors.each do |_key_, error|
+                  %span.help-block= error
+
+        .d-flex.justify-content-end
+          = link_to 'Cancel', league_path(@league), class: 'btn btn-link'
+          = f.primary 'Sign up'
