@@ -8,26 +8,31 @@
       %th
 
     %tbody
-      - matches.each do |match|
-        - match_p = present(match)
+      - if matches.empty?
         %tr
-          %td.name
-            = match_p.round_s
+          %td.text-center{ colspan: 5 } None
 
-          %td.home-team
-            = match_p.home_team.link
+      - else
+        - matches.each do |match|
+          - match_p = present(match)
+          %tr
+            %td.name
+              = match_p.round_s
 
-          %td.vs
-            - if match.confirmed?
-              - if match.no_forfeit?
-                - present_collection(match.rounds).each do |round_p|
-                  = round_p.result(roster)
-              - else
-                = match_p.forfeit_s
+            %td.home-team
+              = match_p.home_team.link
 
-          %td.away-team
-            = match.bye? ? 'BYE' : match_p.away_team.link
+            %td.vs
+              - if match.confirmed?
+                - if match.no_forfeit?
+                  - present_collection(match.rounds).each do |round_p|
+                    = round_p.result(roster)
+                - else
+                  = match_p.forfeit_s
 
-          %td.match-page
-            = match_p.link('Match Page')
+            %td.away-team
+              = match.bye? ? 'BYE' : match_p.away_team.link
+
+            %td.match-page
+              = match_p.link('Match Page')
 

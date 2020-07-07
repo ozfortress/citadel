@@ -94,9 +94,13 @@
 
   - if @league.signuppable? || @league.hide_rosters?
     %ul.list-group.list-group-flush
-      - present_collection(@rosters).each do |roster|
+      - if present_collection(@rosters).empty?
         %li.list-group-item
-          = roster.link
+          None
+      - else
+        - present_collection(@rosters).each do |roster|
+          %li.list-group-item
+            = roster.link
 
   - else
     .card-body.table-responsive
