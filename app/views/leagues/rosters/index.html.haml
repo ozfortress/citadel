@@ -6,9 +6,9 @@
   Signups
 
 - @divisions.each do |div|
-  .panel.panel-default
-    .panel-heading= div.name
-    %ul.list-group
+  .card
+    .card-header= div.name
+    %ul.list-group.list-group-flush
       - present_collection(div.rosters).each do |roster|
         - bg = roster.approved? ? 'list-group-item-success' : 'list-group-item-warning'
         %li{ class: "list-group-item #{bg}" }
