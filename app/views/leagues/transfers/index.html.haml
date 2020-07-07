@@ -4,33 +4,41 @@
   = link_to @league.name, league_path(@league)
   Transfers
 
+
 - @divisions.each do |division|
-  .panel.panel-default
-    .panel-heading= division.name
+  .card.mb-3
+    .card-header= division.name
+
+
     - pending_transfer_requests = @pending_transfer_requests[division]
     - if pending_transfer_requests.empty?
-      .panel-body No pending transfers...
+      .card-body.border-bottom No pending transfers...
+    - else
+      %ul.list-group
+        - pending_transfer_requests.each do |request|
+          %li.list-group-item.list-group-flush
 
-    %ul.list-group
-      - pending_transfer_requests.each do |request|
-        %li.list-group-item
-          = button_to 'Approve', league_transfer_path(@league, request), method: :patch,
-                      class: 'pull-right btn btn-success'
-          = button_to 'Deny', league_transfer_path(@league, request), method: :delete,
-                      class: 'pull-right btn btn-danger'
+            .d-flex.flex-wrap.align-items-center
+              .m-2
+                = present(request).listing
 
-          = present(request).listing
+              .btn-toolbar.guttered.ml-auto
+                = button_to 'Approve', league_transfer_path(@league, request), method: :patch,
+                            class: 'btn btn-success'
+                = button_to 'Deny', league_transfer_path(@league, request), method: :delete,
+                            class: 'btn btn-danger'
+
 
     - old_transfer_requests = @old_transfer_requests[division]
     - unless old_transfer_requests.empty?
       - id = dom_id(division)
-      .panel-heading
-        %a{ data: { toggle: 'collapse' }, href: "##{id}" }
+      %a.text-dark{ data: { toggle: 'collapse' }, href: "##{id}" }
+        .card-header
+          = inline_svg_tag 'open_iconic/timer.svg', class: 'icon'
           Transfer History
-          %span.pull-right.glyphicon.glyphicon-chevron-down
 
-      .panel-collapse.collapse{ id: id }
-        %ul.list-group
+      .collapse{ id: id }
+        %ul.list-group.list-group-flush
           - old_transfer_requests.each do |request|
             %li.list-group-item
               = present(request).listing
