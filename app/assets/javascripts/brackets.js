@@ -110,6 +110,7 @@
                     nextMatches.find("*[data-team-id='" + teamId + "']").each(function (nextTeam) {
                         var nextTeam = $(this);
                         var leftPos = leftPosition(canvasj, nextTeam);
+                        leftPos.x = leftPosition(canvasj, nextTeam.parent()).x;
 
                         // Draw lines between teams
                         context.beginPath();
