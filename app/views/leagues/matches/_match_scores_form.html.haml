@@ -21,7 +21,13 @@
     = f.select(:status, League::Match.statuses.keys.map { |s| [s.humanize, s] })
     = f.select(:forfeit_by, League::Match.forfeit_bies.keys.map { |s| [s.humanize, s] })
 
-  - if user_can_edit_league?
-    = f.primary 'Update'
-  - else
-    = f.primary 'Submit Score'
+  .d-flex.justify-content-end
+    - unless user_can_edit_league?
+      = button_to 'Forfeit', forfeit_match_path(match),
+                  class: 'btn btn-danger mr-2', method: :patch,
+                  data: { confirm: 'Are you sure you want to forfeit this match?' }
+
+    - if user_can_edit_league?
+      = f.primary 'Update'
+    - else
+      = f.primary 'Submit Score'
