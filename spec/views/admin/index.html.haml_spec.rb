@@ -1,24 +1,6 @@
 require 'rails_helper'
 
 describe 'admin/index' do
-  context 'when leagues authorized' do
-    let(:user) { create(:user) }
-
-    before do
-      user.grant(:edit, :leagues)
-    end
-
-    it 'displays username' do
-      sign_in user
-
-      render
-
-      expect(rendered).to include('Leagues')
-      expect(rendered).to_not include('Meta')
-      expect(rendered).to_not include('Name Changes')
-    end
-  end
-
   context 'when meta authorized' do
     let(:user) { create(:user) }
 

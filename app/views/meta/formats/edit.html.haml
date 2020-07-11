@@ -1,16 +1,16 @@
-.panel.panel-default
-  .panel-heading Information
-  .panel-body
+.card.mb-3
+  .card-header Information
+  .card-body
     = bootstrap_form_for @format, as: :format_, url: meta_format_path(@format) do |f|
       = render 'format_form', f: f
 
-      = f.submit 'Update'
       = link_to 'Cancel', meta_format_path(@format), class: 'btn btn-secondary'
+      = f.primary 'Update'
 
-.panel.panel-danger
-  .panel-heading Danger Zone!
-  .panel-body
+.alert.alert-danger.mb-3
+  %label.font-weight-bold.alert-heading Danger Zone!
+  .btn-toolbar.guttered
     = button_to meta_format_path(@format), method: :delete, class: 'btn btn-danger',
                 data: { confirm: 'Are you sure you want to delete this Format?' } do
-      %span.glyphicon.glyphicon-trash
+      = inline_svg_tag 'open_iconic/trash.svg', class: 'icon mr-2'
       Delete

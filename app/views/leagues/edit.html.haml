@@ -32,9 +32,7 @@
 
 - if user_can_edit_leagues?
   .alert.alert-danger.mb-3
-    %label.font-weight-bold.alert-heading
-      Danger Zone
-
+    %label.font-weight-bold.alert-heading Danger Zone
     .btn-toolbar.guttered
       - if @league.hidden? && @league.rosters.empty?
         = button_to league_path(@league), method: :delete, class: 'btn btn-danger',
