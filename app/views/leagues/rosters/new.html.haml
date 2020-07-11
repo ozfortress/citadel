@@ -52,7 +52,7 @@
                 = user_p.link label
                 = user.name
 
-              -# Manually display errors.
+              / Manually display errors.
               - if player && has_errors
                 - player.errors.each do |_key_, error|
                   %span.help-block= error

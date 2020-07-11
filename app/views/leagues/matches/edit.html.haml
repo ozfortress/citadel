@@ -2,19 +2,22 @@
 
 - content_for(:title) { "Edit: #{match_p} | #{@league.name}" }
 
-.panel.panel-default
-  .panel-heading Info
-  .panel-body
-    = bootstrap_form_for @match, as: :match, url: match_path(@match) do |f|
-      = f.errors_on :base
-      = render 'match_form', f: f, div: @match.division
+%h1 Edit Match
+%h2= match_p.link
 
-      = f.submit 'Update'
-      = link_to 'Cancel', match_path(@match), class: 'btn btn-secondary'
+.mb-5
+  = bootstrap_form_for @match, as: :match, url: match_path(@match) do |f|
+    = f.errors_on :base
+    = render 'match_form', f: f, div: @match.division
 
-.panel.panel-danger
-  .panel-heading Danger Zone
-  .panel-body
+    .d-flex.justify-content-end
+      = link_to 'Cancel', match_path(@match), class: 'btn btn-link mr-2'
+      = f.primary 'Update'
+
+.alert.alert-danger.mb-3
+  %label.font-weight-bold.alert-heading Danger Zone
+
+  .btn-toolbar.guttered
     = button_to match_path(@match), method: :delete, class: 'btn btn-danger',
                     data: { confirm: 'Are you sure you want to delete this Match?' } do
       %span.glyphicon.glyphicon-trash

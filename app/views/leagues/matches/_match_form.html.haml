@@ -1,6 +1,5 @@
 - no_team_fields = false if local_assigns[:no_team_fields].nil?
 
--# General info
 .card.mb-3
   .card-header Match Settings
   .card-body
@@ -18,15 +17,13 @@
 
     .form-group
       %label Options
-      = f.check_box :has_winner, label: 'Has a Distinct Winner'
-      = f.check_box :allow_round_draws, label: 'Allow set draws'
+      = f.check_box :has_winner, label: 'Has a Distinct Winner', label_class: 'pl-1'
+      = f.check_box :allow_round_draws, label: 'Allow set draws', label_class: 'pl-1'
 
     = f.number_field :round_number, label: 'Round Number (Used for ordering)'
     = f.text_field :round_name, label: 'Round Name (Display Name)'
     = f.markdown_editor :notice, id: dom_id(div), rows: 6
 
-
--# Picks & Bans
 .card.mb-3
   .card-header
     .row.no-gutters.flex-nowrap.align-items-center
@@ -48,8 +45,6 @@
   - else
     .card-body Can't edit picks & bans unless scores are pending
 
-
--# Sets
 .card.mb-3
   .card-header
     .row.no-gutters.flex-nowrap.align-items-center
@@ -62,7 +57,6 @@
                                 'data-association-insertion-node' => "##{div.id}_rounds" do
         = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
         Add Set
-
 
   - if f.object.pending?
     %ul.list-group.list-group-flush.list-dynamic-add.form-inline

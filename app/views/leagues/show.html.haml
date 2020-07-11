@@ -2,7 +2,7 @@
 
 - matches = @personal_matches || @top_div_matches
 
--# Header
+/ Header
 .row.no-gutters.align-items-start
   .col-auto.mr-2
     %h1
@@ -12,12 +12,10 @@
     %h4
       - if @league.hidden?
         %span.badge.badge-warning Private
-      - elsif @league.running?
-        %span.badge.badge-info Running
-      - else
+      - elsif @league.completed?
         %span.badge.badge-success Completed
 
--# Admin actions
+/ Admin actions
 - if user_can_edit_league?
   .btn-toolbar.guttered.mb-2
     = link_to league_matches_path(@league), class: 'btn btn-admin' do
@@ -38,100 +36,89 @@
       = inline_svg_tag 'open_iconic/cog.svg', class: 'icon mr-2'
       Manage
 
+.markdown.mb-3= present(@league).description
 
--# League info
-.card.mb-3
-  .card-header Info
-  .card-body.markdown= present(@league).description
-
-
--# League upcoming matches
-.card.alert-info.mb-3
-  .card-header
-    .row.no-gutters.flex-nowrap.align-items-center
-      .mr-2
-        - if !matches.empty?
+/ Upcoming matches
+- if @league.running?
+  .card.alert-info.mb-3
+    .card-header
+      .row.no-gutters.flex-nowrap.align-items-center
+        .mr-2
           - if @personal_matches
-            Upcoming matches for your team #{present(@roster).link}
+            Your Upcoming Matches
           - else
             Upcoming Matches for #{@divisions.first.name}
-        - elsif @league.completed?
-          This league has been completed
-        - elsif @roster
+
+        .spacer
+
+        = link_to league_matches_path(@league), class: 'btn btn-sm btn-info' do
+          All Matches
+          = inline_svg_tag 'open_iconic/chevron-right.svg', class: 'icon ml-2'
+
+    - if matches.empty?
+      %li.list-group-item
+        - if @personal_matches
           No upcoming matches for your team #{present(@roster).link}
         - else
           No upcoming matches for #{@divisions.first.name}
+    - else
+      = render 'leagues/matches/matches_table', matches: matches, roster: nil
+- else
+  = link_to league_matches_path(@league), class: 'btn btn-info mb-3' do
+    All Matches
 
-      .spacer
+/ Signup
+- if user_signed_in?
+  - if current_user.can?(:edit, :team) && @league.signuppable?
+    = link_to new_league_roster_path(@league), class: 'btn btn-sm btn-success' do
+      = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
+      Sign up
 
-      = link_to league_matches_path(@league), class: 'btn btn-sm btn-info' do
-        All matches
-        = inline_svg_tag 'open_iconic/chevron-right.svg', class: 'icon ml-2'
+  - elsif @roster
+    = link_to team_path(@roster.team_id), class: 'btn btn-sm btn-secondary' do
+      View my team
+      = inline_svg_tag 'open_iconic/chevron-right.svg', class: 'icon ml-2'
 
-  - unless matches.empty?
-    = render 'leagues/matches/matches_table', matches: matches, roster: nil
+/ League table or signups
+- if @league.signuppable? || @league.hide_rosters?
+  %ul.list-group.list-group-flush
+    - if present_collection(@rosters).empty?
+      %li.list-group-item.text-muted
+        No teams registered
+    - else
+      - present_collection(@rosters).each do |roster|
+        %li.list-group-item
+          = roster.link
 
+- else
+  / Specifically include brackets here, we don't need them on every page
+  - content_for :head do
+    = javascript_include_tag 'brackets'
+    = stylesheet_link_tag 'brackets', media: 'all'
 
--# League teams
-.card.mb-3
-  .card-header.py-s
-    .row.no-gutters.align-items-center
-      .mr-2 Teams
+  - tiebreakers = present_collection(@league.tiebreakers)
 
-      .spacer
+  - @ordered_rosters.each do |div, rosters|
+    %h3.px-3.py-2.mb-0= div.name
 
-      - if user_signed_in?
-        - if current_user.can?(:edit, :team) && @league.signuppable?
-          = link_to new_league_roster_path(@league), class: 'btn btn-sm btn-success' do
-            = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
-            Sign up
+    %table.table.mb-3.border-bottom
+      %tr
+        %th #
+        %th Team
+        %th Points
+        - tiebreakers.each do |tiebreaker|
+          %th= tiebreaker.name_with_tooltip
 
-        - elsif @roster
-          = link_to team_path(@roster.team_id), class: 'btn btn-sm btn-secondary' do
-            View my team
-            = inline_svg_tag 'open_iconic/chevron-right.svg', class: 'icon ml-2'
+      - rosters.each_with_index do |roster, rank|
+        - roster_p = present(roster)
+        %tr
+          %th{ scope: 'row' }= rank + 1
+          %td= roster_p.listing
+          %td= roster_p.points_s
+          - tiebreakers.each do |tiebreaker|
+            %th= tiebreaker.value_for(roster)
 
-
-  - if @league.signuppable? || @league.hide_rosters?
-    %ul.list-group.list-group-flush
-      - if present_collection(@rosters).empty?
-        %li.list-group-item.text-muted
-          No teams registered
-      - else
-        - present_collection(@rosters).each do |roster|
-          %li.list-group-item
-            = roster.link
-
-  - else
-    .card-body.table-responsive
-      -# Specifically include brackets here, we don't need them on every page
-      - content_for :head do
-        = javascript_include_tag 'brackets'
-        = stylesheet_link_tag 'brackets', media: 'all'
-
-      - tiebreakers = present_collection(@league.tiebreakers)
-
-      - @ordered_rosters.each do |div, rosters|
-        %h3.px-3.py-2.mb-0= div.name
-
-        %table.table.mb-0.border-bottom
-          %tr
-            %th #
-            %th Team
-            %th Points
-            - tiebreakers.each do |tiebreaker|
-              %th= tiebreaker.name_with_tooltip
-
-          - rosters.each_with_index do |roster, rank|
-            - roster_p = present(roster)
-            %tr
-              %th{ scope: 'row' }= rank + 1
-              %td= roster_p.listing
-              %td= roster_p.points_s
-              - tiebreakers.each do |tiebreaker|
-                %th= tiebreaker.value_for(roster)
-
-        -# Render brackets
-        - matches = @matches[div]
-        - if matches.present?
-          = render 'leagues/divisions/bracket', division: div, rosters: rosters, matches: matches
+    / Render brackets
+    - matches = @matches[div]
+    - if matches.present?
+      = render 'leagues/divisions/bracket', division: div, rosters: rosters, matches: matches
