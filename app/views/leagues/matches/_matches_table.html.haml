@@ -7,7 +7,7 @@
   .table-responsive
     %table.table.matches-table
       %thead
-        %th
+        %th Round
         %th.home-team Home Team
         %th.vs vs
         %th.away-team Away Team
@@ -18,21 +18,25 @@
           - match_p = present(match)
           %tr
             %td.name
-              = match_p.round_s
+              = match_p.short_round_s
 
             %td.home-team
               = match_p.home_team.link
 
-            %td.vs
-              - if match.confirmed?
-                - if match.no_forfeit?
-                  - present_collection(match.rounds).each do |round_p|
-                    = round_p.result(roster)
-                - else
-                  = match_p.forfeit_s
+            - if match.bye?
+              %td.vs BYE
+              %td.away-team
+            - else
+              %td.vs
+                - if match.confirmed?
+                  - if match.no_forfeit?
+                    - present_collection(match.rounds).each do |round_p|
+                      = round_p.result(roster)
+                  - else
+                    = match_p.forfeit_s
 
-            %td.away-team
-              = match.bye? ? 'BYE' : match_p.away_team.link
+              %td.away-team
+                = match_p.away_team.link
 
             %td.match-page
               = match_p.link('Match Page')

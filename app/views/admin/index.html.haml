@@ -2,34 +2,23 @@
 
 %h2 For all your admin needs
 
-- if current_user.can?(:edit, :leagues)
-  .panel.panel-default
-    .panel-heading Leagues
-    .panel-body
-      = link_to new_league_path, class: 'btn btn-secondary' do
-        %span.glyphicon.glyphicon-plus
-        Create New League
-    %ul.list-group
-      - leagues.order(created_at: :desc).each do |league|
-        = link_to league.name, league_path(league), class: 'list-group-item'
-
 - if current_user.can?(:edit, :users)
-  .panel.panel-default
-    .panel-heading Community
-    .panel-body
-      = link_to 'Name Changes', users_names_path
+  .card.mt-3
+    .card-header Community
+    %ul.list-group.list-group-flush
+      %li.list-group-item= link_to 'Name Changes', users_names_path
 
-.panel.panel-default
-  .panel-heading Admin
-  %li.list-group-item= link_to 'Permissions', permissions_path
-  %li.list-group-item= link_to 'Statistics', admin_statistics_path
+.card.mt-3
+  .card-header Admin
+  %ul.list-group.list-group-flush
+    %li.list-group-item= link_to 'Permissions', permissions_path
+    %li.list-group-item= link_to 'Statistics', admin_statistics_path
 
 
 - if current_user.can?(:edit, :games)
-  .panel.panel-default
-    .panel-heading Meta Data
-    .panel-body
-      %ul.list-group
-        = link_to 'Games', meta_games_path, class: 'list-group-item'
-        = link_to 'Formats', meta_formats_path, class: 'list-group-item'
-        = link_to 'Maps', meta_maps_path, class: 'list-group-item'
+  .card.mt-3
+    .card-header Meta Data
+    %ul.list-group.list-group-flush
+      = link_to 'Games', meta_games_path, class: 'list-group-item'
+      = link_to 'Formats', meta_formats_path, class: 'list-group-item'
+      = link_to 'Maps', meta_maps_path, class: 'list-group-item'

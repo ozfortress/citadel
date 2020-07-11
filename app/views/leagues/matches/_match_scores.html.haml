@@ -1,7 +1,7 @@
 - if match.pending? || user_can_edit_league?
   = render 'leagues/matches/match_pick_bans_form', match: match, pick_bans: pick_bans
 
-  .panel-body
+  .card-body
     - if match.picking_completed? || user_can_edit_league?
       = render 'leagues/matches/match_scores_form', match: match
 

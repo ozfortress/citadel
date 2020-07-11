@@ -1,20 +1,27 @@
 = bootstrap_form_for match, as: :match, url: submit_match_path(match) do |f|
   = f.errors_on :base
-  = f.fields_for :rounds, match.rounds do |ff|
-    .row.form-group
-      .form-inline
+
+  .form-group
+    %label{ for: 'scores-table' } Scores
+    %table.table#scores-table
+      %tr
+        %th Map
+        %th= match.home_team.name
+        %th= match.away_team.name
+
+      = f.fields_for :rounds, match.rounds do |ff|
         - round_p = present(ff.object)
-        = round_p.map.link
-        \:
-        .form-group.pull-right
-          = ff.number_field :home_team_score, label: "'#{match.home_team.name}'s score"
-          = ff.number_field :away_team_score, label: "'#{match.away_team.name}'s score"
+
+        %tr
+          %td= round_p.map.link
+          %td= ff.number_field :home_team_score, hide_label: true, wrapper: false
+          %td= ff.number_field :away_team_score, hide_label: true, wrapper: false
 
   - if user_can_edit_league?
     = f.select(:status, League::Match.statuses.keys.map { |s| [s.humanize, s] })
     = f.select(:forfeit_by, League::Match.forfeit_bies.keys.map { |s| [s.humanize, s] })
 
   - if user_can_edit_league?
-    = f.submit 'Update'
+    = f.primary 'Update'
   - else
-    = f.submit 'Submit Score'
+    = f.primary 'Submit Score'
