@@ -19,7 +19,7 @@ class League
       'normalized_round_score'          => 'Normalized score based on round wins/draws',
       'round_score_difference'          => 'Total score difference of all rounds',
       'buchholz'                        => 'Sum of opponent scores times your score',
-      'median_buchholz'                 => 'Sum or opponent scores times your score, ignoring the highest and lowest',
+      'median_buchholz'                 => 'Sum of opponent scores times your score, ignoring the highest and lowest',
     }.freeze
 
     def name
