@@ -64,7 +64,7 @@
         var pos = position(origin, element);
         return {
             x: pos.x,
-            y: pos.y  + element.outerHeight() / 2
+            y: pos.y + element.outerHeight() / 2
         };
     }
 
@@ -72,7 +72,7 @@
         var pos = position(origin, element);
         return {
             x: pos.x + element.outerWidth(),
-            y: pos.y  + element.outerHeight() / 2
+            y: pos.y + element.outerHeight() / 2
         };
     }
 
@@ -115,7 +115,7 @@
                         // Draw lines between teams
                         context.beginPath();
                         context.moveTo(rightPos.x, rightPos.y);
-                        context.lineTo(leftPos.x,   leftPos.y);
+                        context.lineTo(leftPos.x, leftPos.y);
                         context.stroke();
                     });
                 });
