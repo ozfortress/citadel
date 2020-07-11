@@ -1,26 +1,43 @@
-%table.table.table-responsive.matches-table
-  %thead
-    %th
-    %th.match-home-team Home Team
-    %th.match-vs vs
-    %th.match-away-team Away Team
-    %th
-  %tbody
-    - matches.each do |match|
-      - match_p = present(match)
-      %tr
-        %td.match-round= match_p.round_s
-        %td.match-home-team= match_p.home_team.link
-        %td.match-vs
-          - if match.confirmed?
-            - if match.no_forfeit?
-              - present_collection(match.rounds).each do |round_p|
-                = round_p.result(roster)
+
+- if matches.empty?
+  .py-2.text-muted
+    No matches scheduled
+
+- else
+  .table-responsive
+    %table.table.matches-table
+      %thead
+        %th Round
+        %th.home-team Home Team
+        %th.vs vs
+        %th.away-team Away Team
+        %th
+
+      %tbody
+        - matches.each do |match|
+          - match_p = present(match)
+          %tr
+            %td.name
+              = match_p.short_round_s
+
+            %td.home-team
+              = match_p.home_team.link
+
+            - if match.bye?
+              %td.vs BYE
+              %td.away-team
             - else
-              = match_p.forfeit_s
-        - if match.bye?
-          %td.match-away-team= 'BYE'
-        - else
-          %td.match-away-team= match_p.away_team.link
-        %td.match-view= match_p.link('Match Page')
+              %td.vs
+                - if match.confirmed?
+                  - if match.no_forfeit?
+                    - present_collection(match.rounds).each do |round_p|
+                      = round_p.result(roster)
+                  - else
+                    = match_p.forfeit_s
+
+              %td.away-team
+                = match_p.away_team.link
+
+            %td.match-page
+              = match_p.link('Match Page')
 

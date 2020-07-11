@@ -35,7 +35,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   def content_type_whitelist
-    %r{image\/}
+    %r{image/}
   end
 
   private

@@ -1,10 +1,15 @@
 = f.text_field :name
 
-%label Topic Options
-= f.check_box :locked, label: 'Lock this Topic'
-= f.check_box :pinned, label: 'Pin this Topic'
-= f.check_box :hidden, label: 'Hide this Topic'
+.form-group
+  %label Status
 
-%label Thread Options
-= f.check_box :default_locked, label: 'Default new threads to Locked'
-= f.check_box :default_hidden, label: 'Default new threads to Hidden'
+  .row
+    .px-3.py-1= f.check_box :locked, label: 'Locked', label_class: 'pl-1'
+    .px-3.py-1= f.check_box :pinned, label: 'Pinned', label_class: 'pl-1'
+    .px-3.py-1= f.check_box :hidden, label: 'Hidden', label_class: 'pl-1'
+
+.form-group
+  %label Options
+
+  = f.check_box :default_locked, label: 'Default new threads to "Locked"', label_class: 'pl-1'
+  = f.check_box :default_hidden, label: 'Default new threads to "Hidden"', label_class: 'pl-1'

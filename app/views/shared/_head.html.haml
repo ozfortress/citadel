@@ -1,0 +1,10 @@
+- heading ||= 'Heading'
+- subheading ||= nil
+
+%nav.mb-3
+  %h3
+    = heading
+
+    - if subheading
+      %small.text-muted.ml-2
+        = subheading

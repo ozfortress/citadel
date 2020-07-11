@@ -34,13 +34,13 @@ class League
       listing
     end
 
-    def user_listing
+    def team_listing
       if league.completed?
-        safe_join(['Played in ', division.name, ' for ', league_p.link, ' with ', link])
+        safe_join(['Played in ', division.name, ' for ', league_p.link, ' as ', link])
       elsif league.signuppable? || !roster.approved?
-        safe_join(['Signed up to ', league_p.link, ' with ', link])
+        safe_join(['Signed up to ', league_p.link, ' as ', link])
       else
-        safe_join(['Playing in ', division.name, ' for ', league_p.link, ' with ', link])
+        safe_join(['Playing in ', division.name, ' for ', league_p.link, ' as ', link])
       end
     end
 

@@ -27,8 +27,9 @@ module ApplicationHelper
     league.divisions.all.collect { |div| [div.name, div.id] }
   end
 
-  def bootstrap_paginate(target)
-    will_paginate target, renderer: BootstrapPagination::Rails
+  def bootstrap_paginate(target, options = {})
+    will_paginate target, { renderer: WillPaginate::ActionView::BootstrapLinkRenderer,
+                            outer_window: 1, inner_window: 1 }.merge(options)
   end
 
   def present(object, klass = nil)

@@ -7,11 +7,13 @@ class League
       matches = matches.group_by(&:round_number)
       rounds  = matches.keys.sort
 
+      # rubocop:disable Rails/OutputSafety
       {
         rounds:  rounds.map { |round| html_escape present(matches[round].first).round_s },
         matches: rounds.map { |round| present_collection(matches[round]).map(&:bracket_data) },
         teams:   rosters.map { |k, roster| [k, present(roster).bracket_data] }.to_h,
-      }.to_json
+      }.to_json.html_safe
+      # rubocop:enable Rails/OutputSafety
     end
   end
 end

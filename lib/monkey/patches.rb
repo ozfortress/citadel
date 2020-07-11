@@ -1,1 +1,1 @@
-require 'monkey/bootstrap_form/form_builder'
+require 'monkey/bootstrap_form/markdown_editor'

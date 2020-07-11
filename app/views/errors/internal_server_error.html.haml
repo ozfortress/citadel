@@ -1,7 +1,5 @@
-.panel.panel-danger
-  .panel-heading
-    %h1
-      %span.glyphicon.glyphicon-warning-sign
-      <strong>500</strong> Internal Server Error!
-  .panel-body
-    %p This is a bug, please report it to your administrator!
+%h1
+  = inline_svg_tag 'open_iconic/warning.svg', class: 'icon mr-1'
+  <strong>500</strong> Internal Server Error!
+
+%p This is a bug, please report it to your administrator!

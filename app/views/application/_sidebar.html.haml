@@ -1,28 +1,23 @@
-.panel.panel-default
-  .panel-heading External Links
-  %ul.list-group
+.card
+  .card-header External Links
+  %ul.list-group.list-group-flush
     %li.list-group-item
-      = image_tag 'discord-logo.png'
-
-      = link_to 'https://discord.gg/7E6kC2H', target: '_blank', rel: 'noopener', class: 'btn btn-success pull-right' do
+      = link_to 'https://discord.gg/7E6kC2H', target: '_blank', rel: 'noopener' do
+        = image_tag 'discord-logo.png', width: 32
         Join our Discord
     %li.list-group-item
-      = image_tag 'patreon-logo.png'
-
-      = link_to 'https://www.patreon.com/ozfortress/', target: '_blank', rel: 'noopener', class: 'pull-right' do
+      = link_to 'https://www.patreon.com/ozfortress/', target: '_blank', rel: 'noopener' do
+        = image_tag 'patreon-logo.png', width: 32
         Support us on Patreon
     %li.list-group-item
-      = image_tag 'steam/steam-logo.png'
-
-      = link_to 'http://steamcommunity.com/groups/ozfortress', target: '_blank', rel: 'noopener', class: 'pull-right' do
+      = link_to 'http://steamcommunity.com/groups/ozfortress', target: '_blank', rel: 'noopener' do
+        = image_tag 'steam/steam-logo.png', width: 32
         Join our Steam Group
     %li.list-group-item
-      = image_tag 'twitter-logo.png'
-
-      = link_to 'http://twitter.com/ozfortress', target: '_blank', rel: 'noopener', class: 'pull-right' do
+      = link_to 'http://twitter.com/ozfortress', target: '_blank', rel: 'noopener' do
+        = image_tag 'twitter-logo.png', width: 32
         Follow us on Twitter
     %li.list-group-item
-      = image_tag 'facebook-logo.png'
-
-      = link_to 'http://facebook.com/ozfortress', target: '_blank', rel: 'noopener', class: 'pull-right' do
+      = link_to 'http://facebook.com/ozfortress', target: '_blank', rel: 'noopener' do
+        = image_tag 'facebook-logo.png', width: 32
         Like us on Facebook

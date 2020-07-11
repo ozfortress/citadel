@@ -1,34 +1,37 @@
-- content_for(:title) { "Generate Matches | #{@league.name}" }
+- content_for(:title) { "Generate Round | #{@league.name}" }
 
-%h2 Generate Matches for #{present(@league).link}
+- league_p = present(@league)
 
-= bootstrap_form_for @match, as: :match, url: generate_league_matches_path(@league) do |f|
-  = f.errors_on :base
+%h1
+  = league_p.link
+  Generate Round
 
-  .panel.panel-info
-    .panel-heading Generation Settings
-    .panel-body
-      .form-group
-        %label.control-label Division
-        = select_tag 'division_id', division_select, class: 'form-control'
+.mb-5
+  = bootstrap_form_for @match, as: :match, url: generate_league_matches_path(@league) do |f|
+    = f.errors_on :base
 
-      .form-group
-        %label.control-label Tournament System
-        = select_tag 'tournament_system', tournament_system_select, class: 'form-control',
-                                                 data: { toggle: 'tab' }
+    .card.mb-3
+      .card-header Generation Settings
+      .card-body
+        .form-group
+          %label.control-label Division
+          = select_tag 'division_id', division_select, class: 'form-control'
 
-      .tab-content
-        - tournament_systems.each do |system|
-          - klass = system == @tournament_system ? 'active' : ''
-          .tab-pane{ id: system, class: klass }
-            - data_name = "#{system}_tournament".to_sym
-            - value = instance_variable_get("@#{data_name}")
-            = render "leagues/matches/tournament_systems/#{system}_form", f: f, data_name => value
+        .form-group
+          %label.control-label Tournament System
+          = select_tag 'tournament_system', tournament_system_select, class: 'form-control',
+                                            data: { toggle: 'tab' }
 
-  .panel.panel-default
-    .panel-heading Match Settings
-    .panel-body
-      = render 'match_form', f: f, div: @division, no_team_fields: true
+        .tab-content
+          - tournament_systems.each do |system|
+            - klass = system == @tournament_system ? 'active' : ''
+            .tab-pane{ id: system, class: klass }
+              - data_name = "#{system}_tournament".to_sym
+              - value = instance_variable_get("@#{data_name}")
+              = render "leagues/matches/tournament_systems/#{system}_form", f: f, data_name => value
 
-  = f.submit 'Create Round'
-  = link_to 'Cancel', league_matches_path(@league), class: 'btn btn-default'
+    = render 'match_form', f: f, div: @division, no_team_fields: true
+
+    .d-flex.justify-content-end
+      = link_to 'Cancel', league_matches_path(@league), class: 'btn btn-link mr-2'
+      = f.primary 'Generate'

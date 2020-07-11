@@ -1,7 +1,7 @@
 %li.list-group-item.nested-fields
-  = link_to_remove_association f, class: 'btn btn-default pull-right',
-      data: { confirm: 'Are you sure you want to remove this Map?' } do
-    %span.glyphicon.glyphicon-trash
-    Remove
+  = f.collection_select :map_id, Map.all, :id, :name, label_class: 'mr-3', wrapper: { class: 'mr-3 mb-0' }
 
-  = f.collection_select :map_id, Map.all, :id, :name
+  = link_to_remove_association f, class: 'btn btn-danger',
+      data: { confirm: 'Are you sure you want to remove this Map?' } do
+    = inline_svg_tag 'open_iconic/trash.svg', class: 'icon'
+

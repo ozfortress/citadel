@@ -3,141 +3,86 @@
 - user_p = present(@user)
 
 - if user_can_edit_user?
-  = link_to edit_user_path(@user), class: 'btn btn-default pull-right', type: 'button' do
+  = link_to edit_user_path(@user), class: 'btn btn-secondary pull-right ml-3', type: 'button' do
     Settings
-    %span.glyphicon.glyphicon-cog
+    = inline_svg_tag 'open_iconic/cog.svg', class: 'icon ml-1'
 
-.row
-  .pull-left
-    = image_tag @user.avatar.icon.url, class: 'group-avatar'
+.d-flex.align-items-start.mb-4
+  = image_tag @user.avatar.icon.url, class: 'rounded mr-3', width: '100', height: '100'
 
-  .group-title
-    %h2.spaced-letters= @user.name
-    = user_p.badge
+  .d-flex.flex-column.align-self-stretch.ml-3
+    .d-flex.flex-column.justify-content-center.h-100
+      .row.align-items-center
+        %h2.spaced-letters.mr-2.mb-0
+          = @user.name
+        = user_p.badge
 
-    - unless @aka.empty?
-      %p.group-aka aka #{@aka.map(&:name).join(', ')}
+      - unless @aka.empty?
+        .row
+          .text-secondary aka #{@aka.map(&:name).join(', ')}
 
-    %hr
+    .row.align-items-center.steam-link.mt-2
+      = user_p.steam_icon_link
+      %span.mx-1
+      = user_p.steam_id_link
+      %span.mx-2= '/'
+      %span= @user.steam_32
+      %span.mx-2= '/'
+      %span= @user.steam_id
 
-= link_to image_tag('logs.tf-logo.png'), "http://logs.tf/profile/#{@user.steam_id}",
-          title: 'logs.tf profile', target: '_blank', class: 'user-external-link'
+    .row.mt-2
+      = link_to image_tag('logs.tf-logo.png', height: '30px'), "http://logs.tf/profile/#{@user.steam_id}",
+                title: 'logs.tf profile', target: '_blank'
 
-%p.steam-link-large
-  = user_p.steam_link
-  %span.dropdown
-    - data = { toggle: :collapse, target: '#steam-id-collapse' }
-    %button.btn.btn-link.btn-xs{ type: :button, data: data }
-      %span.caret
-
-.pull-right.collapse#steam-id-collapse
-  .card.small
-    .steam-id-large= @user.steam_32
-    %br
-    .steam-id-large= @user.steam_id
-
-.row
+.row.mb-3
   != present_collection(@titles).map(&:icon).join(' ')
 
   .pull-right= render 'users/bans/list', user: @user
 
-%hr
-
 - if current_user? && !@team_invites.empty?
   - @team_invites.each do |invite|
     - team = invite.team
-    .alert.alert-info
+
+    .alert.alert-primary.mb-3
       You have been invited to join #{present(team).link}
 
-      .button-group.pull-right
-        = button_to decline_team_invite_path(team),
-                    method: :delete, class: 'btn btn-danger' do
+      .btn-toolbar
+        .spacer
+        = button_to decline_team_invite_path(team), method: :delete, class: 'btn btn-danger ml-2' do
           Decline
-          %span.glyphicon.glyphicon-remove
-      .button-group.pull-right
-        = button_to accept_team_invite_path(team),
-                    method: :post, class: 'btn btn-success' do
+          = inline_svg_tag 'open_iconic/x.svg', class: 'icon ml-2'
+        = button_to accept_team_invite_path(team), method: :post, class: 'btn btn-success ml-2' do
           Accept
-          %span.glyphicon.glyphicon-ok
-
-.panel.panel-default
-  .panel-heading Description
-  .panel-body.markdown= user_p.description
+          = inline_svg_tag 'open_iconic/check.svg', class: 'icon ml-2'
 
 - if user_p.notice != '' && (user_can_edit_users? || (current_user? && current_user == @user))
-  .panel.panel-warning
-    .panel-heading Notice
-    .panel-body.markdown= user_p.notice
+  .card.mb-3
+    .card-header.bg-warning Notice
+    .card-body.markdown= user_p.notice
 
-- unless @matches.empty?
-  .panel.panel-info
-    .panel-heading Upcoming Matches
-    %ul.list-group
-      - present_collection(@matches).each do |match|
-        %li.list-group-item
-          = match.link
+.nav.nav-tabs#tabs{ role: 'tablist' }
+  %a.nav-item.nav-link.active#info-tab{ href: '#info', role: 'tab', data: { toggle: 'tab' },
+                                        aria: { controls: 'info', selected: 'true' } }
+    Info
+  - unless @roster_transfers.empty?
+    %a.nav-item.nav-link#leagues-tab{ href: '#leagues', role: 'tab', data: { toggle: 'tab' },
+                                      aria: { controls: 'leagues', selected: 'false' } }
+      Leagues
+  %a.nav-item.nav-link#forums-tab{ href: '#forums', role: 'tab', data: { toggle: 'tab' },
+                                   aria: { controls: 'forums', selected: 'false' } }
+    Forums
 
-.panel.panel-default
-  .panel-heading Teams
-  %ul.list-group
-    - @teams.each do |team|
-      %li.list-group-item
-        = link_to team.name, team_path(team)
-        - if current_user?
-          .button-group.pull-right
-            = button_to leave_team_path(team), method: :patch, class: 'btn btn-danger' do
-              Leave
-              %span.glyphicon.glyphicon-remove
+.tab-content.mt-3#tab-content
+  .tab-pane.show.active#info{ role: 'tabpanel', aria: { labelledby: 'info-tab' } }
+    = render 'users/show_info', user: @user, user_p: user_p, matches: @matches,
+                                teams: @teams, team_transfers: @team_transfers
+  - unless @roster_transfers.empty?
+    .tab-pane#leagues{ role: 'tabpanel', aria: { labelledby: 'leagues-tab' } }
+      = render 'users/show_leagues', user: @user, roster_transfers: @roster_transfers
+  .tab-pane#forums{ role: 'tabpanel', aria: { labelledby: 'forums-tab' } }
+    = render 'users/show_forums', user: @user, forums_posts: @forums_posts
 
-.panel.panel-default
-  .panel-heading Transfers
-  %ul.list-group
-    - @team_transfers.each do |transfer|
-      %li.list-group-item
-        - if transfer.is_joining?
-          joined
-        - else
-          left
-        #{present(transfer.team).link} on #{transfer.created_at.strftime('%c')}
-
-- unless @rosters.empty?
-  .panel.panel-default
-    .panel-heading Leagues
-    %ul.list-group
-      - present_collection(@rosters).each do |roster|
-        - unless roster.league.hidden?
-          %li.list-group-item= roster.user_listing
-
-- unless @forums_posts.empty?
-  .panel.panel-default
-    .panel-heading
-      Recent Forum Posts
-      = link_to search_forums_posts_path(user_id: @user.id), class: 'btn btn-default pull-right' do
-        View All
-
-    %ul.list-group
-      - present_collection(@forums_posts).each do |post|
-        %li.list-group-item
-          = post.thread.link
-          .pull-right= post.created_at
 
 - if user_can_edit_users?
-  .panel.panel-info
-    .panel-heading Admin Comments
-
-    - @comments.each do |comment|
-      - options = { user: @user, comment: comment, quote_id: 'wmd-input-user-comment' }
-
-      - if comment.exists?
-        = render 'users/comments/comment', options
-      - else
-        = render 'users/comments/deleted_comment', options
-
-    .container-fluid
-      %hr
-      = bootstrap_form_for @comment, as: :comment, url: user_comments_path(@user) do |f|
-        = render 'users/comments/form', f: f
-
-        .row
-          = f.submit 'Post', class: 'btn btn-default pull-right'
-      %hr
+  %hr
+  = render 'users/show_admin_comments', user: @user, comments: @comments, comment: @comment

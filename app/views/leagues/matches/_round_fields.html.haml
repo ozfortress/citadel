@@ -1,6 +1,6 @@
 %li.list-group-item.nested-fields
-  = f.collection_select :map_id, league.map_pool, :id, :name
+  = f.collection_select :map_id, league.map_pool, :id, :name,
+                        label_class: 'mr-3', wrapper: { class: 'mr-3 mb-0' }
 
-  = link_to_remove_association f, class: 'btn btn-default' do
-    %span.glyphicon.glyphicon-trash
-    Delete
+  = link_to_remove_association f, class: 'btn btn-danger' do
+    = inline_svg_tag 'open_iconic/trash.svg', class: 'icon'

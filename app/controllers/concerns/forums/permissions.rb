@@ -63,7 +63,7 @@ module Forums
     def user_can_use_thread?(thread = nil)
       thread ||= @thread
 
-      user_signed_in? && current_user.can?(:use, thread) && user_can_use_topic?(thread.topic)
+      user_signed_in? && current_user.can?(:use, thread) && (thread.topic.nil? || user_can_use_topic?(thread.topic))
     end
 
     def user_can_create_post?(thread = nil)

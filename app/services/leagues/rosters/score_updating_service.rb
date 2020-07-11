@@ -1,7 +1,7 @@
 module Leagues
   module Rosters
     module ScoreUpdatingService
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
       include BaseService
 
       SCORE_ATTRIBUTES = [
@@ -156,7 +156,7 @@ module Leagues
 
         scores.sum - scores.min - scores.max
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
     end
   end
 end

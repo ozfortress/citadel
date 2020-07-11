@@ -1,36 +1,38 @@
-.panel.panel-default
-  - if user_can_create_thread? || !threads.empty?
-    .panel-heading
-      - if user_can_create_thread?
-        .pull-right
-          = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-default' do
-            Create
-            %span.glyphicon.glyphicon-plus
+.btn-toolbar.guttered.mb-2
+  - if user_can_create_thread?
+    = link_to new_forums_thread_path(topic: parent_topic), class: 'btn btn-sm btn-primary' do
+      = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
+      New thread
 
-      Threads
+  - if user_can_manage_topic?
+    = link_to new_forums_topic_path(parent: parent_topic), class: 'btn btn-sm btn-admin' do
+      = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
+      Create topic
 
-    %ul.list-group
-      - threads.each do |thread|
-        - thread_p = present(thread)
-        %li.list-group-item
-          = thread_p.link
+    = link_to edit_forums_topic_path(parent_topic), class: 'btn btn-sm btn-admin' do
+      = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon mr-2'
+      Edit this topic
 
-          .pull-right.label.alert-info= pluralize(thread.posts_count, 'Post')
+  .spacer.d-none.d-md-block
 
-  - if user_can_manage_topic? || !topics.empty?
-    .panel-heading
-      - if user_can_manage_topic?
-        .pull-right
-          = link_to new_forums_topic_path(parent: parent_topic), class: 'btn btn-default' do
-            Create
-            %span.glyphicon.glyphicon-plus
+  - if user_signed_in?
+    = render 'forums/topics/subscribe_btn', topic: parent_topic
 
-      Topics
 
-    %ul.list-group
-      - topics.each do |topic|
-        - topic_p = present(topic)
-        %li.list-group-item
-          = topic_p.link
+- unless topics.empty?
+  %ul.list-group.mb-3
+    - topics.each do |topic|
+      %li.list-group-item.bg-light
+        = render 'forums/topics/listing', topic: topic
 
-          .pull-right.label.alert-info= pluralize(topic.visible_threads_count, 'Thread')
+
+- if threads.empty?
+  = render 'forums/threads/empty'
+- else
+  %ul.list-group.mb-3
+    - threads.each do |thread|
+      %li.list-group-item{ class: present(thread).status_classes }
+        = render 'forums/threads/listing', thread: thread
+
+
+= bootstrap_paginate threads, list_classes: ['pagination justify-content-center mt-4']

@@ -1,10 +1,21 @@
-.notification-group{ id: "notification_#{notification.id}" }
-  = button_to notification_path(notification.id), method: :delete, remote: true,
-              class: 'btn pull-right notification-button' do
-    .span.glyphicon.glyphicon-remove
+- cls = 'notification'
+- if notification.read
+  - cls += ' read'
 
-  - cls = 'notification'
-  - if notification.read
-    - cls += ' notification-read'
+- notification_p = present(notification)
 
-  = present(notification).link(class: "list-group-item #{cls}")
+%li.list-group-item.d-flex.flex-column.p-2{ class: cls,
+                                            id: "notification_#{notification.id}" }
+
+  .row.no-gutters
+    .col.pl-2
+      .row.no-gutters
+        = notification_p.link(class: '')
+
+      .row.no-gutters
+        %small.text-muted #{notification_p.created_at_in_words} ago
+
+    .col-auto
+      = button_to notification_path(notification.id), method: :delete, remote: true,
+                  class: 'btn delete px-1 py-0' do
+        = inline_svg_tag 'open_iconic/x.svg', class: 'icon'

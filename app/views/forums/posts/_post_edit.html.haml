@@ -1,8 +1,10 @@
-.panel.panel-default
-  .panel-heading
-    .pull-right
-      = post_edit.created_at.strftime('%c')
+.post-edit{ class: local_assigns[:class] }
+  %small.font-weight-bold
+    Edited by
+    = present(post_edit.created_by).link
+    on
+    = post_edit.created_at.strftime('%c')
 
-    = render 'users/listing', user: post_edit.created_by
-
-.container-fluid.markdown!= post_edit.content_render_cache
+  .card.bg-light
+    .card-body.markdown
+      != post_edit.content_render_cache

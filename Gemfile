@@ -14,12 +14,11 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2.0'
 # Easy styling
-gem 'bootstrap-sass', '~> 3.3.6'
-# Bootstrap datetime picker
-gem 'momentjs-rails', '>= 2.9.0'
-gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
+gem 'bootstrap', '~> 4.5.0'
 # Easy bootstrap forms
-gem 'bootstrap_form', '~> 2'
+gem 'bootstrap_form', '~> 4.5'
+# Inline svgs
+gem 'inline_svg'
 # Bootstrap markdown editor
 gem 'pagedown-bootstrap-rails'
 gem 'font-awesome-rails'
@@ -35,8 +34,8 @@ gem 'devise'
 # Use hamlit for ~fast templating
 gem 'hamlit'
 # Forum Pages
-gem 'will_paginate', '~> 3.1.0'
-gem 'will_paginate-bootstrap'
+gem 'will_paginate', '~> 3.3.0'
+gem 'will_paginate-bootstrap4'
 # Forum markdown formatting
 gem 'redcarpet'
 # File Uploads

@@ -18,8 +18,12 @@ class League
       match_s(&:to_s)
     end
 
-    def round_s
+    def short_round_s
       match.round_name.presence || "##{match.round_number}"
+    end
+
+    def round_s
+      match.round_name.presence || "Round ##{match.round_number}"
     end
 
     def title
@@ -90,7 +94,7 @@ class League
     end
 
     def match_s(&block)
-      round = round_s
+      round = short_round_s
       round += ':' if round.present?
 
       safe_join([round, match_name(&block)], ' ')

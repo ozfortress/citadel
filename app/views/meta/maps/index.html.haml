@@ -1,16 +1,15 @@
-= link_to new_meta_map_path, class: 'btn btn-default pull-right', type: 'button' do
+= link_to new_meta_map_path, class: 'btn btn-secondary pull-right', type: 'button' do
   Add Map
-  %span.glyphicon.glyphicon-plus
+  = inline_svg_tag 'open_iconic/plus.svg', class: 'icon ml-1'
 
 %h1 Maps
 
-%ul.list-group
+%ul.list-group.mb-3
   - @maps.each do |map|
     - map_p = present(map)
     %li.list-group-item
       = map_p.link
 
-      .button-group.pull-right
-        = link_to edit_meta_map_path(map), class: 'btn btn-default' do
-          Edit
-          %span.glyphicon.glyphicon-cog
+      = link_to edit_meta_map_path(map), class: 'btn btn-secondary btn-sm pull-right' do
+        Edit
+        = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon ml-1'

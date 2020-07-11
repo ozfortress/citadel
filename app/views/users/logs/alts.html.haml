@@ -5,10 +5,8 @@
 %h1 Alternate Accounts for #{user_p.link}
 %h3 #{link_to 'Logs', user_logs_path(@user)} by IP
 
-%hr
-
 - if @alt_logs.empty?
-  No alternate accounts found...
+  %p No alternate accounts found...
 
 - else
   %table.table.table-striped

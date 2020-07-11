@@ -1,10 +1,30 @@
-- user = present(user)
+:ruby
+  user_p = present(user)
+  team = local_assigns[:team]
+  show_team_name ||= false
+  show_steam_icon ||= false
+  show_steam_id ||= false
+  avatar_size ||= 32
 
-.row.slim-gutter
-  .pull-left= user.avatar_tag
+.user.row.no-gutters.flex-nowrap.align-items-center
+  .col-auto
+    = user_p.avatar_tag(size: avatar_size, class: 'rounded')
 
-  .user-details
-    .row.slim-gutter
-      = user.link
-      = user.titles team: local_assigns[:team]
-      .steam-link= user.steam_link
+  .col.ml-3
+    .d-flex.flex-column.flex-sm-row
+      .d-flex.flex-column
+        %b.p-0
+          %span.name= user_p.link
+          %span.titles= user_p.titles team: team
+
+        - if show_team_name && team.present?
+          %small.team
+            = present(team).link
+
+
+      .p-0.steam-link.ml-auto
+        - if show_steam_icon
+          = user_p.steam_icon_link
+
+        - if show_steam_id
+          = user_p.steam_id_link

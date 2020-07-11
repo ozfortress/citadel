@@ -1,60 +1,43 @@
-%li{ class: navbar_class(:home) }
-  = link_to('Home', :pages_home)
+%li.nav-item{ class: navbar_class(:home) }
+  = link_to('Home', :pages_home, class: 'nav-link')
 
-%li{ class: navbar_class(:users) }
-  = link_to('Users', :users)
+%li.nav-item{ class: navbar_class(:users) }
+  = link_to('Users', :users, class: 'nav-link')
 
-%li{ class: navbar_class(:teams) }
-  = link_to('Teams', :teams)
+%li.nav-item{ class: navbar_class(:teams) }
+  = link_to('Teams', :teams, class: 'nav-link')
 
-%li{ class: navbar_class(:forums) }
-  = link_to('Forums', :forums)
+%li.nav-item{ class: navbar_class(:forums) }
+  = link_to('Forums', :forums, class: 'nav-link')
 
-%li{ class: navbar_class(:leagues) }
-  = link_to('Leagues', :leagues)
+%li.nav-item{ class: navbar_class(:leagues) }
+  = link_to('Leagues', :leagues, class: 'nav-link')
 
-%li.dropdown
-  %a.dropdown-toggle{ role: :button, data: { toggle: :dropdown } }
+%li.nav-item.dropdown
+  %a.nav-link.dropdown-toggle{ role: :button, data: { toggle: :dropdown } }
     About
     %span.caret
 
-  %ul.dropdown-menu
-    %li{ class: navbar_class(:rules) }
-      = link_to('Rules', :rules)
+  .dropdown-menu
+    = link_to('Rules', :rules, class: 'dropdown-item')
+    = link_to('Community Rules', :community_rules, class: 'dropdown-item')
+    = link_to('Infractions', :infractions, class: 'dropdown-item')
+    = link_to('Staff', :staff, class: 'dropdown-item')
+    = link_to('Bans', :bans, class: 'dropdown-item')
 
-    %li{ class: navbar_class(:community_rules) }
-      = link_to('Community Rules', :community_rules)
-
-    %li{ class: navbar_class(:infractions) }
-      = link_to('Infractions', :infractions)
-
-    %li{ class: navbar_class(:staff) }
-      = link_to('Staff', :staff)
-
-    %li{ class: navbar_class(:bans) }
-      = link_to('Bans', :bans)
-
-%li.dropdown
-  %a.dropdown-toggle{ role: :button, data: { toggle: :dropdown } }
+%li.nav-item.dropdown
+  %a.nav-link.dropdown-toggle{ role: :button, data: { toggle: :dropdown } }
     Help
     %span.caret
 
-  %ul.dropdown-menu
-    %li{ class: navbar_class(:server_configs) }
-      = link_to('Server Configs', :server_configs)
-
-    %li{ class: navbar_class(:book_server) }
-      = link_to('Book a Server', :book_server)
-
-    %li{ class: navbar_class(:newbie_guide) }
-      = link_to('Newbie Guide', :newbie_guide)
-
-    %li{ class: navbar_class(:transfers) }
-      = link_to('Transfers', :transfers)
-
-    %li= link_to('Verify Rosters', 'https://verify.ozfortress.com', target: :_blank)
-    %li= link_to('Demos', 'https://demos.ozfortress.com', target: :_blank)
+  .dropdown-menu
+    = link_to('Server Configs', :server_configs, class: 'dropdown-item')
+    = link_to('Book a Server', :book_server, class: 'dropdown-item')
+    = link_to('Newbie Guide', :newbie_guide, class: 'dropdown-item')
+    = link_to('Transfers', :transfers, class: 'dropdown-item')
+    = link_to('Verify Rosters', 'https://verify.ozfortress.com', target: :_blank, class: 'dropdown-item')
+    = link_to('Demos', 'https://demos.ozfortress.com', target: :_blank, class: 'dropdown-item')
 
 - if user_signed_in? && current_user.admin?
-  %li{ class: navbar_class(:admin) }
-    = link_to('Admin', :admin)
+  %li.nav-item{ class: navbar_class(:admin) }
+    = link_to('Admin', :admin, class: 'nav-link')

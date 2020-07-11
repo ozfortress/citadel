@@ -1,9 +1,17 @@
 - content_for(:title) { "Post Edits | #{@thread.title}" }
 
-%h2 Post Edits
+= render 'forums/head', object: nil, subheading: 'Post edits', root_navigable: true
 
-.panel.panel-default
-  - @edits.each do |post_edit|
-    = render 'post_edit', post_edit: post_edit
+%hr
 
-= bootstrap_paginate @edits
+.btn-toolbar.guttered.mb-3
+  .card.bg-dark.px-3.py-2.m-1
+    %b.text-white
+      %span
+        Posted in thread
+      = present(@thread).link
+
+- @edits.each do |post_edit|
+  = render 'post_edit', post_edit: post_edit, class: 'mb-3'
+
+= bootstrap_paginate @edits, list_classes: ['pagination justify-content-center mt-4']

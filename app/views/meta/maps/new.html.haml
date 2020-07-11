@@ -2,5 +2,6 @@
                      url: { controller: 'meta/maps', action: 'create' } do |f|
   = render 'map_form', f: f
 
-  = f.submit 'Create'
-  = link_to 'Cancel', meta_maps_path, class: 'btn btn-default'
+  .d-flex.justify-content-end
+    = link_to 'Cancel', meta_maps_path, class: 'btn btn-link mr-2'
+    = f.submit 'Create'

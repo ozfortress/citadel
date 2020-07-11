@@ -1,0 +1,6 @@
+- subscribed = current_user.forums_subscriptions.where(thread: thread).exists?
+
+= button_to toggle_subscription_for_forums_thread_path(thread), method: :patch,
+            class: "btn btn-sm #{subscribed ? 'btn-danger' : 'btn-primary'}" do
+  = inline_svg_tag 'open_iconic/bell.svg', class: 'icon mr-1'
+  = subscribed ? 'Unsubscribe' : 'Subscribe'

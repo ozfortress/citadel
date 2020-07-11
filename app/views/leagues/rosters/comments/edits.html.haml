@@ -1,9 +1,19 @@
 - content_for(:title) { "Comment Edits | #{@roster.name}" }
 
-%h2
-  Comment Edits on
-  = link_to @roster.name, edit_roster_path(@roster)
+= render 'shared/head', heading: 'Leagues / Roster', subheading: 'Admin comment edit history'
 
-.panel.panel-default
-  - @edits.each do |comment_edit|
-    = render 'comment_edit', comment_edit: comment_edit
+%hr
+
+.alert.alert-admin.d-inline-flex.px-3.py-2.mb-3
+  %b
+    Past edits for
+    = link_to "admin comment ##{@comment.id}", edit_roster_path(@roster) + "##{@comment.paths.dom_id}"
+    of roster
+    = link_to @roster.name, edit_roster_path(@roster)
+    for league
+    = link_to @league.name, league_path(@league)
+
+
+- @edits.each do |comment_edit|
+  = render 'shared/comment_edit', comment_edit: comment_edit, class: 'mb-4'
+

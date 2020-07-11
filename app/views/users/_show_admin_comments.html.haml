@@ -1,0 +1,21 @@
+.alert.alert-admin.mb-3
+  %label.font-weight-bold.alert-heading
+    Admin Comments
+
+  %hr.mt-0
+
+  - comments.each do |c|
+    - options = { user: user, comment: c, quote_id: 'wmd-input-new-user-comment' }
+
+    - if c.exists?
+      = render 'shared/comment', options
+    - else
+      = render 'shared/comment_deleted', options
+
+    %hr
+
+  = bootstrap_form_for comment, as: :comment, url: user_comments_path(user) do |f|
+    = render 'users/comments/form', f: f
+
+    .d-flex.justify-content-end
+      = f.primary 'Post'

@@ -1,10 +1,7 @@
-%li.list-group-item.nested-fields
-  .form-inline
-    .col-sm-4= f.select(:kind, f.object.class.kinds.map { |key, _| [key.humanize, key] })
-    .col-sm-4= f.select(:team, f.object.class.teams.map { |key, _| [key.humanize, key] })
-    .col-sm-2= f.check_box :deferrable
-
-
-  = link_to_remove_association f, class: 'btn btn-default' do
-    %span.glyphicon.glyphicon-trash
-    Delete
+%li.list-group-item.nested-fields.flex-wrap.align-items-center
+  .mr-4= f.select(:kind, f.object.class.kinds.map { |key, _| [key.humanize, key] }, label_class: 'mr-2')
+  .mr-5= f.select(:team, f.object.class.teams.map { |key, _| [key.humanize, key] }, label_class: 'mr-2')
+  .mr-3= f.check_box :deferrable
+  .ml-auto
+    = link_to_remove_association f, class: 'btn btn-danger' do
+      = inline_svg_tag 'open_iconic/trash.svg', class: 'icon'

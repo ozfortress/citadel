@@ -5,15 +5,15 @@ class UserPresenter < BasePresenter
   delegate :name, to: :user
 
   BADGE_COLORS = %w[Green Red Yellow Blue].freeze
-  BADGE_CLASSES = %w[alert-success alert-danger alert-warning alert-info].freeze
+  BADGE_CLASSES = %w[badge-success badge-danger badge-warning badge-info].freeze
 
-  def link(label = nil)
+  def link(label = nil, options = {})
     label ||= user.name
-    link_to(label, user_path(user))
+    link_to(label, user_path(user), options)
   end
 
-  def avatar_tag
-    image_tag(user.avatar.thumb.url, class: 'avatar center-block')
+  def avatar_tag(options = {})
+    image_tag(user.avatar.thumb.url, options)
   end
 
   def created_at
@@ -24,14 +24,15 @@ class UserPresenter < BasePresenter
     "http://steamcommunity.com/profiles/#{user.steam_64}"
   end
 
-  def steam_link
+  def steam_id_link
     link_to(steam_profile_url, target: '_blank', rel: 'noopener') do
-      content = [
-        content_tag(:span, '', class: 'glyphicon glyphicon-link small'),
-        user.steam_id3,
-      ]
+      user.steam_id3
+    end
+  end
 
-      safe_join(content, '')
+  def steam_icon_link(options = { size: 16 })
+    link_to(steam_profile_url, target: '_blank', rel: 'noopener') do
+      image_tag('steam/steam-logo.png', options)
     end
   end
 
@@ -40,7 +41,7 @@ class UserPresenter < BasePresenter
     has_captain_label = team && user.can?(:edit, team) && user.can?(:use, :teams)
 
     titles = []
-    titles << content_tag(:div, 'captain', class: 'label alert-danger') if has_captain_label
+    titles << content_tag(:span, 'captain', class: 'badge badge-danger') if has_captain_label
     titles << badge if user.badge?
     safe_join(titles, ' ')
   end
@@ -94,7 +95,7 @@ class UserPresenter < BasePresenter
   end
 
   def badge
-    content_tag(:div, user.badge_name, class: "label #{badge_class}")
+    content_tag(:span, user.badge_name, class: "badge #{badge_class}")
   end
 
   def badge_class

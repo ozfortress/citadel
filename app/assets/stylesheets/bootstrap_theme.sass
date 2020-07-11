@@ -1,0 +1,24 @@
+/*
+ * You can add any overrides to the default Bootstrap theme variables in this file.
+ * References:
+ * - https://getbootstrap.com/docs/4.0/getting-started/theming/
+ * - https://github.com/twbs/bootstrap/tree/master/scss
+ */
+
+// Additional "admin" style to indicate non-standard-user interactions
+$admin-text-color: #31708f
+$admin-background-color: #daecf7
+
+.btn.btn-admin
+  background-color: $admin-background-color
+  color: $admin-text-color
+
+  .icon
+    fill: $admin-text-color
+
+  &:hover
+    background-color: darken($admin-background-color, 10%)
+
+.alert.alert-admin
+  background-color: scale-color($admin-background-color,$lightness: -7.5%, $saturation: -30%)
+  color: darken($admin-text-color, 10%)

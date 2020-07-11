@@ -3,25 +3,28 @@
 %h1
   Edit #{link_to @team.name, team_path(@team)}
 
-.panel.panel-default
-  .panel-heading Information
-  .panel-body
+.card.mb-3
+  .card-header Info
+  .card-body
     = bootstrap_form_for @team, method: :patch do |f|
       = render 'team_form', f: f
 
-      = f.submit 'Save'
-      = link_to 'Cancel', team_path(@team), class: 'btn btn-default'
+      .d-flex.justify-content-end
+        = link_to users_permissions_path(action_: :edit, subject: :team, target: @team.id),
+                  class: 'btn btn-warning mr-2' do
+          Manage Permissions
+          = inline_svg_tag 'open_iconic/cog.svg', class: 'icon ml-1'
 
-    = link_to users_permissions_path(action_: :edit, subject: :team, target: @team.id),
-              class: 'pull-right btn btn-default' do
-      Manage Permissions
-      %span.glyphicon.glyphicon-cog
+        = link_to 'Cancel', team_path(@team), class: 'btn btn-link mr-2'
+
+        = f.primary 'Save'
+
 
 - unless @team.rosters.exists?
-  .panel.panel-danger
-    .panel-heading Danger Zone
-    .panel-body
+  .alert.alert-danger.mb-3
+    %label.font-weight-bold.alert-heading Danger Zone
+    .btn-toolbar.guttered
       = button_to team_path(@team), method: :delete, class: 'btn btn-danger',
                   data: { confirm: 'Are you sure you want to delete this Team?' } do
-        %span.glyphicon.glyphicon-trash
+        = inline_svg_tag 'open_iconic/trash.svg', class: 'icon mr-2'
         Delete Team

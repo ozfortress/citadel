@@ -1,6 +1,9 @@
 - content_for(:title) { "Edit: #{@roster.name} | #{@league.name}" }
 
-%h1= present(@league).link
+%h1
+  = present(@league).link
+  Editing roster
+
 
 %h4
   - if @league.signuppable?
@@ -9,24 +12,26 @@
     Edit
   = link_to @roster.name, team_path(@roster.team)
 
+
 - unless @roster.approved?
   .alert.alert-warning
-    - if user_can_edit_league?
-      = link_to 'Approve', review_roster_path(@roster),
-                           class: 'btn btn-success pull-right'
-      = button_to 'Decline', roster_path(@roster),
-          method: :delete, class: 'btn btn-danger pull-right',
-          data: { confirm: "Are you sure you want to decline this team's sign up?" }
+    .d-flex.flex-wrap.align-items-center
+      = inline_svg_tag 'open_iconic/warning.svg', class: 'icon mr-2'
+      Roster is awaiting approval
 
-    %span.glyphicon.glyphicon-warning-sign
-    Roster is awaiting approval
+      - if user_can_edit_league?
+        .btn-toolbar.guttered.ml-auto
+          = link_to 'Approve', review_roster_path(@roster),
+                              class: 'btn btn-success'
+          = button_to 'Decline', roster_path(@roster),
+              method: :delete, class: 'btn btn-danger',
+              data: { confirm: "Are you sure you want to decline this team's sign up?" }
 
-.panel.panel-default
-  .panel-heading Info
-  .panel-body
-    = bootstrap_form_for @roster, as: :roster,
-        url: roster_path(@roster) do |f|
 
+.card.mb-3
+  .card-header Info
+  .card-body
+    = bootstrap_form_for @roster, as: :roster, url: roster_path(@roster) do |f|
       - if user_can_edit_league?
         = f.text_field :name
         = f.select :division_id, divisions_select(@league), label: 'Division'
@@ -36,22 +41,30 @@
 
       = render 'form', f: f
 
-      = f.submit 'Update'
-      = link_to 'Cancel', team_path(@roster.team), class: 'btn btn-default'
+      .btn-toolbar.guttered
+        = link_to users_permissions_path(action_: :edit, subject: :team, target: @roster.team.id),
+                  class: 'btn btn-secondary' do
+          = inline_svg_tag 'open_iconic/people.svg', class: 'icon mr-2'
+          Manage Permissions
 
-    = link_to users_permissions_path(action_: :edit, subject: :team, target: @roster.team.id),
-              class: 'pull-right btn btn-default' do
-      Manage Permissions
-      %span.glyphicon.glyphicon-cog
+        .spacer
+
+        .ml-auto
+          = link_to 'Cancel', team_path(@roster.team), class: 'btn btn-link mr-2'
+          = f.primary 'Update'
+
 
 = render 'leagues/rosters/transfers/index',
          league: @league, roster: @roster, new_transfer_request: @transfer_request,
          users_on_roster: @users_on_roster, users_off_roster: @users_off_roster
 
+
 - if user_can_disband_roster? || user_can_destroy_roster?
-  .panel.panel-danger
-    .panel-heading Danger Zone
-    .panel-body
+  .alert.alert-danger.mb-3
+    %label.font-weight-bold.alert-heading
+      Danger Zone
+
+    .btn-toolbar.guttered
       - if @roster.disbanded? && user_can_edit_league?
         = button_to undisband_roster_path(@roster),
                     method: :put, class: 'btn btn-danger',
@@ -68,26 +81,31 @@
         = button_to roster_path(@roster),
                         method: :delete, class: 'btn btn-danger',
                         data: { confirm: 'Are you sure you want to Delete this Roster?' } do
-          %span.glyphicon.glyphicon-trash
+          = inline_svg_tag 'open_iconic/trash.svg', class: 'icon mr-2'
           Destroy
 
+
 - if user_can_edit_league?
-  .panel.panel-info
-    .panel-heading Admin Comments
+  %hr
+
+  .alert.alert-admin.mb-3
+    %label.font-weight-bold.alert-heading
+      Admin Comments
+
+    %hr.mt-0
 
     - @comments.each do |comment|
-      - options = { roster: @roster, comment: comment, quote_id: 'wmd-input-new-league-roster-comment' }
+      - options = { comment: comment, quote_id: 'wmd-input-new-league-roster-comment' }
 
       - if comment.exists?
-        = render 'leagues/rosters/comments/comment', options
+        = render 'shared/comment', options
       - else
-        = render 'leagues/rosters/comments/deleted_comment', options
+        = render 'shared/comment_deleted', options
 
-    .container-fluid
       %hr
-      = bootstrap_form_for @comment, as: :comment, url: roster_comments_path(@roster) do |f|
-        = render 'leagues/rosters/comments/form', f: f
 
-        .row
-          = f.submit 'Post', class: 'btn btn-default pull-right'
-      %hr
+    = bootstrap_form_for @comment, as: :comment, url: roster_comments_path(@roster) do |f|
+      = render 'leagues/rosters/comments/form', f: f
+
+      .d-flex.justify-content-end
+        = f.primary 'Post'

@@ -3,5 +3,6 @@
 = bootstrap_form_for @team, method: :post do |f|
   = render 'team_form', f: f
 
-  = f.submit 'Create Team'
-  = link_to 'Cancel', teams_path, class: 'btn btn-default'
+  .d-flex.justify-content-end
+    = link_to 'Cancel', teams_path, class: 'btn btn-link mr-2'
+    = f.primary 'Create Team'
