@@ -1,0 +1,24 @@
+- unless team.description.empty?
+  .markdown= team_p.description
+
+%hr
+
+- unless upcoming_matches.empty?
+  %h5 Upcoming Matches
+  %ul.list-group.list-group-flush.mb-3
+    - present_collection(upcoming_matches).each do |match|
+      %li.list-group-item
+        = match.link
+
+- unless active_rosters.empty?
+  %h5 Active Rosters
+  %ul.list-group.list-group-flush.mb-3
+    - present_collection(active_rosters).each do |roster|
+      %li.list-group-item
+        = roster.team_listing
+
+        = link_to edit_roster_path(roster), class: 'btn btn-secondary pull-right' do
+          Manage
+          = inline_svg_tag 'open_iconic/cog.svg', class: 'icon ml-1'
+
+
