@@ -1,7 +1,15 @@
 - content_for(:title) { 'Create League' }
 
-= bootstrap_form_for @league, url: leagues_path(@league) do |f|
-  = render 'league_form', f: f, weekly_scheduler: @weekly_scheduler
 
-  = f.submit 'Create'
-  = link_to 'Cancel', admin_path, class: 'btn btn-secondary'
+.row.no-gutters.align-items-start
+  .col-auto.mr-2
+    %h1
+      Create League
+
+.mb-5
+  = bootstrap_form_for @league, url: leagues_path(@league) do |f|
+    = render 'league_form', f: f, weekly_scheduler: @weekly_scheduler
+
+    .d-flex.justify-content-end
+      = link_to 'Cancel', admin_path, class: 'btn btn-link mr-2'
+      = f.primary 'Create'

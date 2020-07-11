@@ -48,23 +48,22 @@ class League
       def highlight_winner
         home_score = round.home_team_score
         away_score = round.away_team_score
-        home_div = content_tag(:div, home_score,
-                               class: ('round-won' if home_score > away_score))
-        away_div = content_tag(:div, away_score,
-                               class: ('round-won' if home_score < away_score))
-        content_tag(:div, home_div + ' : ' + away_div, class: 'round-score')
+        home_div = content_tag(:div, home_score, class: "score #{home_score > away_score ? 'won' : ''}")
+        away_div = content_tag(:div, away_score, class: "score #{home_score < away_score ? 'won' : ''}")
+        sep_div = content_tag(:div, ':', class: 'separator')
+        content_tag(:div, home_div + sep_div + away_div, class: 'round')
       end
 
       def roster_won_round?(roster)
         winner_id = round.winner_id
         klass = if winner_id.nil?
-                  'round-tied'
+                  'tied'
                 elsif winner_id == roster.id
-                  'round-won'
+                  'won'
                 else
-                  'round-loss'
+                  'loss'
                 end
-        content_tag(:div, score_s, class: "round-scores #{klass}")
+        content_tag(:div, score_s, class: "roster-round #{klass}")
       end
 
       def non_forfeit_results(home, away)

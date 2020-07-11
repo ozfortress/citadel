@@ -1,31 +1,38 @@
 - content_for(:title) { 'Leagues' }
 
-- if user_can_edit_leagues?
-  = link_to new_league_path, class: 'btn btn-secondary pull-right' do
-    Start League
-    = inline_svg_tag 'open_iconic/plus.svg', class: 'icon ml-1'
 
 %h1 Leagues
 
-= render 'search'
+
+- if user_can_edit_leagues?
+  .btn-toolbar.guttered.mb-3
+    .spacer
+    = link_to new_league_path, class: 'btn btn-admin' do
+      = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
+      Start League
+
+
+.mb-3
+  = render 'search'
 
 - unless @games.empty?
-  %ul.nav.nav-tabs
+  %ul.nav.nav-tabs.mb-2
     - @games.each_with_index do |game, index|
       - klass = index.zero? ? 'active' : ''
-      %li{ class: klass }
-        %a{ data: { toggle: 'tab' }, href: "##{game.name.parameterize}" }
+
+      %li.nav-item
+        %a.nav-link{ class: klass, data: { toggle: 'tab' }, href: "##{game.name.parameterize}" }
           = game.name
 
-.tab-content
-  - @games.each_with_index do |game, index|
-    - klass = 'tab-pane fade'
-    - if index.zero?
-      - klass += ' in active'
 
+.games.tab-content
+  - @games.each_with_index do |game, index|
+    - klass = "tab-pane fade #{index.zero? ? 'show active' : ''} "
     - leagues = @leagues[game]
-    %div{ id: game.name.parameterize, class: klass }
+
+    .game{ id: game.name.parameterize, class: klass }
       - if leagues.empty?
-        .panel-body No leagues found...
+        .container.text-muted.p-3
+          No leagues found
       - else
         = render 'league_list', leagues: leagues, game: game

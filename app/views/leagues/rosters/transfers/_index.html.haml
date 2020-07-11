@@ -1,54 +1,82 @@
-.panel.panel-default
-  .panel-heading Players on Roster
-  %ul.list-group
-    - users_on_roster.each do |user|
-      - transfer_request = league.transfer_requests.pending.find_by(user: user)
+.row
+  .col-lg-6
+    .card.mb-3
+      .card-header Players on Roster
 
-      %li.list-group-item
-        = form_for(new_transfer_request, as: :request, method: :post,
-                   url: roster_transfers_path(roster)) do |f|
-          = f.hidden_field :user_id, value: user.id
-          = f.hidden_field :is_joining, value: false
-          = button_tag type: 'submit', class: 'btn btn-danger pull-right',
-                       disabled: league.transfer_requests.pending.exists?(user: user),
-                       data: { confirm: "Are you sure you want to transfer #{user.name} out of the active roster?" } do
-            Remove
-            %span.glyphicon.glyphicon-remove
+      - if users_on_roster.empty?
+        .card-body.text-muted
+          None
 
-        = render 'users/listing', user: user, team: roster.team
-        - if transfer_request
-          = form_for(transfer_request, as: :request, method: :delete,
-                     url: roster_transfer_path(roster, transfer_request)) do
-            = button_tag type: 'submit', class: 'btn btn-danger pull-right',
-                         data: { confirm: 'Are you sure you want to cancel this transfer?' } do
-              Cancel
-              %span.glyphicon.glyphicon-remove
-        = present(user).transfer_status(league)
+      - else
+        %ul.list-group.list-group-flush
+          - users_on_roster.each do |user|
+            - transfer_request = league.transfer_requests.pending.find_by(user: user)
 
-.panel.panel-default
-  .panel-heading Players off Roster
-  %ul.list-group
-    - users_off_roster.each do |user|
-      - transfer_request = league.transfer_requests.pending.find_by(user: user)
+            %li.list-group-item
+              .d-flex.flex-wrap.align-items-center
+                .mr-2
+                  = render 'users/listing', user: user, team: roster.team
 
-      %li.list-group-item
-        = form_for(new_transfer_request, as: :request, method: :post,
-                              url: roster_transfers_path(roster)) do |f|
-          = f.hidden_field :user_id, value: user.id
-          = f.hidden_field :is_joining, value: true
-          - disabled = league.transfer_requests.pending.exists?(user: user, is_joining: true)
-          = button_tag type: 'submit', class: 'btn btn-success pull-right', disabled: disabled,
-                       data: { confirm: "Are you sure you want to transfer #{user.name} into the active roster?" } do
-            Add
-            %span.glyphicon.glyphicon-plus
+                = present(user).transfer_status(league)
 
-        = render 'users/listing', user: user, team: roster.team
+                .btn-toolbar.guttered.ml-auto
+                  - if transfer_request
+                    = form_for(transfer_request, as: :request, method: :delete,
+                              url: roster_transfer_path(roster, transfer_request)) do
+                      = button_tag type: 'submit', class: 'btn btn-sm btn-warning',
+                                  data: { confirm: 'Are you sure you want to cancel this transfer?' } do
+                        Cancel
 
-        - if transfer_request && transfer_request.roster == roster
-          = form_for(transfer_request, as: :request, method: :delete,
-                     url: roster_transfer_path(roster, transfer_request)) do
-            = button_tag type: 'submit', class: 'btn btn-danger pull-right',
-                         data: { confirm: 'Are you sure you want to cancel this transfer?' } do
-              Cancel
-              %span.glyphicon.glyphicon-remove
-        = present(user).league_status(league)
+                  = form_for(new_transfer_request, as: :request, method: :post,
+                            url: roster_transfers_path(roster)) do |f|
+                    = f.hidden_field :user_id, value: user.id
+                    = f.hidden_field :is_joining, value: false
+
+                    - confirmation = ['Are you sure you want to transfer',
+                                      user.name,
+                                      'out of the active roster?'].join(' ')
+                    = button_tag type: 'submit', class: 'btn btn-sm btn-danger',
+                                disabled: league.transfer_requests.pending.exists?(user: user),
+                                data: { confirm: confirmation } do
+                      Remove
+
+  .col-lg-6
+    .card.mb-3
+      .card-header Players off Roster
+
+      - if users_off_roster.empty?
+        .card-body.text-muted
+          None
+
+      - else
+        %ul.list-group.list-group-flush
+          - users_off_roster.each do |user|
+            - transfer_request = league.transfer_requests.pending.find_by(user: user)
+
+            %li.list-group-item
+              .d-flex.flex-wrap.align-items-center
+                .mr-2
+                  = render 'users/listing', user: user, team: roster.team
+
+
+                = present(user).league_status(league)
+
+                .btn-toolbar.guttered.ml-auto
+                  - if transfer_request && transfer_request.roster == roster
+                    = form_for(transfer_request, as: :request, method: :delete,
+                              url: roster_transfer_path(roster, transfer_request)) do
+                      = button_tag type: 'submit', class: 'btn btn-sm btn-warning',
+                                  data: { confirm: 'Are you sure you want to cancel this transfer?' } do
+                        Cancel
+
+                  = form_for(new_transfer_request, as: :request, method: :post,
+                                        url: roster_transfers_path(roster)) do |f|
+                    = f.hidden_field :user_id, value: user.id
+                    = f.hidden_field :is_joining, value: true
+                    - disabled = league.transfer_requests.pending.exists?(user: user, is_joining: true)
+                    - confirmation = ['Are you sure you want to transfer',
+                                      user.name,
+                                      'into the active roster'].join(' ')
+                    = button_tag type: 'submit', class: 'btn btn-sm btn-success', disabled: disabled,
+                                data: { confirm: confirmation } do
+                      Add

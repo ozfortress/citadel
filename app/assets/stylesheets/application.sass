@@ -429,3 +429,18 @@ blockquote
 // Long pagination doesn't wrap by default on small dimensions
 .pagination
   flex-flow: wrap
+
+// Custom list class that handles rows which can be dynamically added / removed
+// which will typically have input or select fields
+ul.list-group.list-dynamic-add
+  li
+    display: flex
+    justify-content: stretch
+    align-items: flex-end
+    width: 100%
+
+    .form-group
+      flex: 1
+
+      input, select
+        flex: 1

@@ -1,22 +1,27 @@
-.panel.panel-default
-  .panel-heading Info
-  .panel-body
+/ Info
+.card.mb-3
+  .card-header Info
+  .card-body
     = f.select :format_id, format_options
     = f.text_field :name
     = f.markdown_editor :description, rows: 10
     = f.text_field :category
 
-.panel.panel-default
-  .panel-heading  Players
-  .panel-body
+
+/ Players
+.card.mb-3
+  .card-header Players
+  .card-body
     .form-group
       = f.number_field :min_players, min: 1, label: 'Minimum'
     .form-group
       = f.number_field :max_players, min: 0, label: 'Maximum (0 for unlimited)'
 
-.panel.panel-default
-  .panel-heading State
-  .panel-body
+
+/ State
+.card.mb-3
+  .card-header State
+  .card-body
     = f.check_box :signuppable
     = f.check_box :hide_rosters
     = f.check_box :roster_locked
@@ -25,9 +30,11 @@
     = f.check_box :allow_disbanding
     = f.check_box :forfeit_all_matches_when_roster_disbands
 
-.panel.panel-default
-  .panel-heading Points
-  .panel-body
+
+/ Points
+.card.mb-3
+  .card-header Points
+  .card-body
     = f.number_field :points_per_round_win,  label: 'Points per set won', step: :any
     = f.number_field :points_per_round_draw, label: 'Points per set drawn', step: :any
     = f.number_field :points_per_round_loss, label: 'Points per set lost', step: :any
@@ -38,53 +45,71 @@
     = f.number_field :points_per_forfeit_draw, label: 'Points per match drawn by forfeit', step: :any
     = f.number_field :points_per_forfeit_loss, label: 'Points per match lost by forfeit', step: :any
 
-.panel.panel-default
-  .panel-heading Tiebreaking
-  %ul.list-group
-    = f.fields_for :tiebreakers do |tiebreaker_f|
-      = render 'tiebreaker_fields', f: tiebreaker_f
-    #tiebreakers
 
-  .panel-body
-    %div
-      = link_to_add_association f, :tiebreakers, class: 'btn btn-secondary pull-right',
+/ Tiebreaking
+.card.mb-3
+  .card-header
+    .row.no-gutters.flex-nowrap.align-items-center
+      .mr-2 Tiebreaking
+
+      .spacer
+
+      = link_to_add_association f, :tiebreakers, class: 'btn btn-sm btn-success',
                                 'data-association-insertion-node' => '#tiebreakers' do
-        %span.glyphicon.glyphicon-plus
+        = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
         Add Tiebreaker
 
-.panel.panel-default
-  .panel-heading Divisions
+  %ul.list-group.list-group-flush.list-dynamic-add.form-inline
+    = f.fields_for :tiebreakers do |tiebreaker_f|
+      = render 'tiebreaker_fields', f: tiebreaker_f
 
-  %ul.list-group
-    = f.fields_for :divisions do |division_f|
-      = render 'division_fields', f: division_f
-    #divisions
+    #tiebreakers
 
-  .panel-body
-    %div
-      = link_to_add_association f, :divisions, class: 'btn btn-secondary pull-right',
+
+/ Divisions
+.card.mb-3
+  .card-header
+    .row.no-gutters.flex-nowrap.align-items-center
+      .mr-2 Divisions
+
+      .spacer
+
+      = link_to_add_association f, :divisions, class: 'btn btn-sm btn-success',
                                 'data-association-insertion-node' => '#divisions' do
-        %span.glyphicon.glyphicon-plus
+        = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
         Add Division
 
-.panel.panel-default
-  .panel-heading Map Pool (Leave empty for all maps)
+  %ul.list-group.list-group-flush.list-dynamic-add.form-inline
+    = f.fields_for :divisions do |division_f|
+      = render 'division_fields', f: division_f
 
-  %ul.list-group
-    = f.fields_for :pooled_maps do |pooled_map_f|
-      = render 'pooled_map_fields', f: pooled_map_f
-    #pooled-maps
+    #divisions
 
-  .panel-body
-    %div
-      = link_to_add_association f, :pooled_maps, class: 'btn btn-secondary pull-right',
+
+/ Map pool
+.card.mb-3
+  .card-header
+    .row.no-gutters.flex-nowrap.align-items-center
+      .mr-2 Map Pool (Leave empty for all maps)
+
+      .spacer
+
+      = link_to_add_association f, :pooled_maps, class: 'btn btn-sm btn-success',
                                 'data-association-insertion-node' => '#pooled-maps' do
-        %span.glyphicon.glyphicon-plus
+        = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
         Add Map
 
-.panel.panel-default
-  .panel-heading Scheduling
-  .panel-body
+  %ul.list-group.list-group-flush.list-dynamic-add.form-inline
+    = f.fields_for :pooled_maps do |pooled_map_f|
+      = render 'pooled_map_fields', f: pooled_map_f
+
+    #pooled-maps
+
+
+/ Scheduling
+.card.mb-3
+  .card-header Scheduling
+  .card-body
     = f.check_box :schedule_locked
     = f.select(:schedule, League.schedules.map { |name, _| [name.humanize, name] })
 

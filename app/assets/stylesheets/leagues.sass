@@ -33,3 +33,91 @@
     .card-header
       padding: 0.3rem
       border-bottom: 0
+
+table.matches-table
+  background: #ffffff
+  margin-bottom: 0
+
+  th
+    border-top: none
+
+    &.home-team
+      text-align: right
+
+    &.vs
+      text-align: center
+
+    &.away-team
+      text-align: left
+
+  td
+    &.name
+      width: 4%
+      font-size: 0.8rem
+
+    &.home-team
+      width: 45%
+      text-align: right
+
+    &.vs
+      width: 2%
+      text-align: center
+
+    &.away-team
+      width: 45%
+      text-align: left
+
+    &.match-page
+      width: 4%
+      font-size: 0.8rem
+
+  $pill-size: 1.4rem
+  $font-size: 0.85rem
+
+  .round
+    display: flex
+    flex-flow: row nowrap
+    white-space: nowrap
+    background: #d9d9d9
+    color: #6c757c
+    border-radius: 1rem
+    margin: 2px 0
+    font-size: $font-size
+    line-height: $pill-size
+
+    .score
+      width: $pill-size
+      height: $pill-size
+      border-radius: 50%
+
+      &.won
+        font-weight: bold
+        color: #ffffff
+        background: #89c789
+
+    .separator
+      padding: 0 0.3rem
+
+  .roster-round
+    display: flex
+    flex-flow: row nowrap
+    white-space: nowrap
+    height: $pill-size
+    line-height: $pill-size
+    font-size: $font-size
+    font-weight: bold
+    letter-spacing: 2px
+    padding-left: calc(#{$pill-size * 0.5} + 2px) // Account for letter-spacing
+    padding-right: $pill-size * 0.5
+    color: #ffffff
+    border-radius: 1rem
+    margin: 2px 0
+
+    &.won
+      background: #89c789
+
+    &.loss
+      background: #f16161
+
+    &.tied
+      background: #c1c1c1

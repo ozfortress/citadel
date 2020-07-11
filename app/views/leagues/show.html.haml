@@ -1,65 +1,110 @@
 - content_for(:title) { @league.name }
 
-- if @league.hidden?
-  .alert.alert-warning
-    %span.glyphicon.glyphicon-lock
-    Private
-
-- if user_can_edit_league?
-  = link_to edit_league_path(@league), class: 'btn btn-secondary pull-right', type: 'button' do
-    Manage
-    %span.glyphicon.glyphicon-cog
-
-%h1= @league.name
-
-.panel.panel-default
-  .panel-heading Info
-  .panel-body.markdown= present(@league).description
-
 - matches = @personal_matches || @top_div_matches
-- if !matches.empty?
-  .panel.panel-info
-    = link_to 'All Matches', league_matches_path(@league),
-              class: 'btn btn-secondary pull-right'
-    .panel-heading
-      - if @personal_matches
-        Upcoming matches for your team:
+
+-# Header
+.row.no-gutters.align-items-start
+  .col-auto.mr-2
+    %h1
+      = @league.name
+
+  .col-auto
+    %h4
+      - if @league.hidden?
+        %span.badge.badge-warning Private
+      - elsif @league.running?
+        %span.badge.badge-info Running
       - else
-        Upcoming Matches for #{@divisions.first.name}:
+        %span.badge.badge-success Completed
+
+-# Admin actions
+- if user_can_edit_league?
+  .btn-toolbar.guttered.mb-2
+    = link_to league_matches_path(@league), class: 'btn btn-admin' do
+      = inline_svg_tag 'open_iconic/list.svg', class: 'icon mr-2'
+      Matches
+
+    = link_to league_transfers_path(@league), class: 'btn btn-admin' do
+      = inline_svg_tag 'open_iconic/transfer.svg', class: 'icon mr-2'
+      Transfers
+
+    = link_to league_rosters_path(@league), class: 'btn btn-admin' do
+      = inline_svg_tag 'open_iconic/people.svg', class: 'icon mr-2'
+      Signups
+
+    .spacer.d-none.d-md-block
+
+    = link_to edit_league_path(@league), class: 'btn btn-admin', type: 'button' do
+      = inline_svg_tag 'open_iconic/cog.svg', class: 'icon mr-2'
+      Manage
+
+
+-# League info
+.card.mb-3
+  .card-header Info
+  .card-body.markdown= present(@league).description
+
+
+-# League upcoming matches
+.card.alert-info.mb-3
+  .card-header
+    .row.no-gutters.flex-nowrap.align-items-center
+      .mr-2
+        - if !matches.empty?
+          - if @personal_matches
+            Upcoming matches for your team #{present(@roster).link}
+          - else
+            Upcoming Matches for #{@divisions.first.name}
+        - elsif @league.completed?
+          This league has been completed
+        - elsif @roster
+          No upcoming matches for your team #{present(@roster).link}
+        - else
+          No upcoming matches for #{@divisions.first.name}
+
+      .spacer
+
+      = link_to league_matches_path(@league), class: 'btn btn-sm btn-info' do
+        All matches
+        = inline_svg_tag 'open_iconic/chevron-right.svg', class: 'icon ml-2'
+
+  - unless matches.empty?
     = render 'leagues/matches/matches_table', matches: matches, roster: nil
 
-- else
-  .alert.alert-info
-    = link_to 'All Matches', league_matches_path(@league),
-              class: 'btn btn-secondary pull-right'
-    - if @league.completed?
-      This league has been completed
-    - elsif @roster
-      There are no upcoming matches for your team, #{present(@roster).link}
-    - else
-      There are no upcoming matches for #{@divisions.first.name}
 
-.panel.panel-default
-  .panel-heading Teams
-  - if user_signed_in?
-    - if current_user.can?(:edit, :team) && @league.signuppable?
-      .panel-body
-        = link_to 'Sign up', new_league_roster_path(@league),
-                             class: 'btn btn-success pull-right'
+-# League teams
+.card.mb-3
+  .card-header.py-s
+    .row.no-gutters.align-items-center
+      .mr-2 Teams
 
-    - elsif @roster
-      .panel-body
-        = present(@roster).link 'View My Team', class: 'btn btn-secondary pull-right'
+      .spacer
+
+      - if user_signed_in?
+        - if current_user.can?(:edit, :team) && @league.signuppable?
+          = link_to new_league_roster_path(@league), class: 'btn btn-sm btn-success' do
+            = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
+            Sign up
+
+        - elsif @roster
+          = link_to team_path(@roster.team_id), class: 'btn btn-sm btn-secondary' do
+            View my team
+            = inline_svg_tag 'open_iconic/chevron-right.svg', class: 'icon ml-2'
+
 
   - if @league.signuppable? || @league.hide_rosters?
-    %ul.list-group
-      - present_collection(@rosters).each do |roster|
-        %li.list-group-item
-          = roster.link
+    %ul.list-group.list-group-flush
+      - if present_collection(@rosters).empty?
+        %li.list-group-item.text-muted
+          No teams registered
+      - else
+        - present_collection(@rosters).each do |roster|
+          %li.list-group-item
+            = roster.link
 
   - else
-    .panel-body.table-responsive
-      / Specifically include brackets here, we don't need them on every page
+    .card-body.table-responsive
+      -# Specifically include brackets here, we don't need them on every page
       - content_for :head do
         = javascript_include_tag 'brackets'
         = stylesheet_link_tag 'brackets', media: 'all'
@@ -67,8 +112,9 @@
       - tiebreakers = present_collection(@league.tiebreakers)
 
       - @ordered_rosters.each do |div, rosters|
-        %h3= div.name
-        %table.table
+        %h3.px-3.py-2.mb-0= div.name
+
+        %table.table.mb-0.border-bottom
           %tr
             %th #
             %th Team
@@ -85,18 +131,7 @@
               - tiebreakers.each do |tiebreaker|
                 %th= tiebreaker.value_for(roster)
 
-        / Render brackets
+        -# Render brackets
         - matches = @matches[div]
         - if matches.present?
-          %hr
           = render 'leagues/divisions/bracket', division: div, rosters: rosters, matches: matches
-
-- if user_can_edit_league?
-  .panel.panel-info
-    .panel-heading Admin
-    .panel-body
-      - klass = 'btn btn-secondary pull-right'
-
-      = link_to 'Transfers', league_transfers_path(@league), class: klass
-      = link_to 'Signups', league_rosters_path(@league), class: klass
-      = link_to 'Matches', league_matches_path(@league), class: klass

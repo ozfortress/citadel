@@ -1,23 +1,34 @@
 - content_for(:title) { "Create Match | #{@league.name}" }
 
-%ul.nav.nav-tabs
-  - @league.divisions.each do |div|
-    - klass = div == @division ? 'active' : ''
+- league_p = present(@league)
 
-    %li{ class: klass }
-      %a{ data: { toggle: 'tab' }, href: "##{div.to_s.parameterize}" }
-        = div.name
+%h1
+  = league_p.link
+  Create Single Match
 
-.tab-content
-  - @league.divisions.each do |div|
-    - klass = div == @division ? ' in active' : ''
+.mb-5
+  .card.bg-light.mb-3
+    .p-2
+      .nav.nav-pills.justify-content-center
+        - @league.divisions.each do |div|
+          - klass = div == @division ? 'active' : ''
 
-    %div{ id: div.to_s.parameterize, class: 'tab-pane fade' + klass }
-      = bootstrap_form_for @match, as: :match, url: league_matches_path(@league) do |f|
-        = hidden_field_tag :division_id, div.id
+          %a.nav-item.nav-link{ data: { toggle: 'tab' }, href: "##{div.to_s.parameterize}", class: klass }
+            %h6.m-0
+              = div.name
 
-        = f.errors_on :base
-        = render 'match_form', f: f, div: div
 
-        = f.submit 'Create'
-        = link_to 'Cancel', league_matches_path(@league), class: 'btn btn-secondary'
+  .tab-content
+    - @league.divisions.each do |div|
+      - klass = div == @division ? 'active' : ''
+
+      %div{ id: div.to_s.parameterize, class: 'tab-pane ' + klass }
+        = bootstrap_form_for @match, as: :match, url: league_matches_path(@league) do |f|
+          = hidden_field_tag :division_id, div.id
+
+          = f.errors_on :base
+          = render 'match_form', f: f, div: div
+
+          .d-flex.justify-content-end
+            = link_to 'Cancel', league_matches_path(@league), class: 'btn btn-link'
+            = f.primary 'Create'
