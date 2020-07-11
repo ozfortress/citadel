@@ -4,7 +4,7 @@
 = f.hidden_field :avatar_cache
 - if user.avatar.file
   = f.form_group :remove_avatar, help: 'Check this to remove your custom avatar.' do
-    = f.check_box :remove_avatar
+    = f.check_box :remove_avatar, label_class: 'ml-1'
 
 = f.markdown_editor :description, rows: 10
 
