@@ -6,5 +6,6 @@
   = f.select :division_id, divisions_select(@league), label: 'Desired Division'
   = f.number_field :seeding
 
-  = f.submit 'Approve', class: 'btn btn-success'
-  = link_to 'Cancel', team_path(@roster.team), class: 'btn btn-secondary'
+  .d-flex.justify-content-end
+    = link_to 'Cancel', team_path(@roster.team), class: 'btn btn-link mr-2'
+    = f.submit 'Approve', class: 'btn btn-success'

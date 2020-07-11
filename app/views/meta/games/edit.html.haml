@@ -4,8 +4,9 @@
     = bootstrap_form_for @game, url: meta_game_path(@game) do |f|
       = render 'game_form', f: f
 
-      = link_to 'Cancel', meta_game_path(@game), class: 'btn btn-secondary'
-      = f.primary 'Update'
+      .d-flex.justify-content-end
+        = link_to 'Cancel', meta_game_path(@game), class: 'btn btn-link mr-2'
+        = f.primary 'Update'
 
 .alert.alert-danger.mb-3
   %label.font-weight-bold.alert-heading Danger Zone!

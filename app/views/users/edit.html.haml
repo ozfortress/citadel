@@ -21,8 +21,9 @@
     = bootstrap_form_for @user, method: :patch do |f|
       = render 'form', f: f, user: @user, user_p: user_p
 
-      = f.primary 'Save'
-      = link_to 'Cancel', user_path(@user), class: 'btn btn-secondary'
+      .d-flex.justify-content-end
+        = link_to 'Cancel', user_path(@user), class: 'btn btn-link mr-2'
+        = f.primary 'Save'
 
 - if user_can_edit_users?
   .card.border-danger
@@ -31,8 +32,9 @@
       = bootstrap_form_for @user, method: :patch do |f|
         = render 'admin_form', f: f, user: @user, user_p: user_p
 
-        = f.primary 'Save'
-        = link_to 'Cancel', user_path(@user), class: 'btn btn-secondary'
-        = link_to 'Manage Bans', user_bans_path(@user), class: 'btn btn-warning'
-        = link_to 'Logs', user_logs_path(@user), class: 'btn btn-warning'
+        .d-flex.justify-content-end
+          = link_to 'Manage Bans', user_bans_path(@user), class: 'btn btn-warning mr-2'
+          = link_to 'Logs', user_logs_path(@user), class: 'btn btn-warning mr-2'
+          = link_to 'Cancel', user_path(@user), class: 'btn btn-link mr-2'
+          = f.primary 'Save'
 

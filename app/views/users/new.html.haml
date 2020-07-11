@@ -8,5 +8,6 @@
   = f.text_field :name
   = render 'form', f: f, user: @user, user_p: user_p
 
-  = f.submit 'Register'
-  = link_to 'Cancel', :back, class: 'btn btn-secondary'
+  .d-flex.justify-content-end
+    = link_to 'Cancel', :back, class: 'btn btn-link mr-2'
+    = f.submit 'Register'

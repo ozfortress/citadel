@@ -2,5 +2,6 @@
                      url: { controller: 'meta/formats', action: 'create' } do |f|
   = render 'format_form', f: f
 
-  = f.submit 'Create'
-  = link_to 'Cancel', meta_formats_path, class: 'btn btn-secondary'
+  .d-flex.justify-content-end
+    = link_to 'Cancel', meta_formats_path, class: 'btn btn-link mr-2'
+    = f.submit 'Create'

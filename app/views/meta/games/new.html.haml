@@ -1,5 +1,6 @@
 = bootstrap_form_for @game, url: { controller: 'meta/games', action: 'create' } do |f|
   = render 'game_form', f: f
 
-  = f.submit 'Create'
-  = link_to 'Cancel', meta_games_path, class: 'btn btn-secondary'
+  .d-flex.justify-content-end
+    = link_to 'Cancel', meta_games_path, class: 'btn btn-link mr-2'
+    = f.submit 'Create'
