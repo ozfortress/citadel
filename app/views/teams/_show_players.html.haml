@@ -6,10 +6,10 @@
       .spacer
       = button_to decline_team_invite_path(team), method: :delete, class: 'btn btn-danger ml-2' do
         Decline
-        %span.glyphicon.glyphicon-remove
+        = inline_svg_tag 'open_iconic/x.svg', class: 'icon ml-2'
       = button_to accept_team_invite_path(team), method: :post, class: 'btn btn-success ml-2' do
         Accept
-        %span.glyphicon.glyphicon-ok
+        = inline_svg_tag 'open_iconic/check.svg', class: 'icon ml-2'
 
 - if user_can_edit_team?
   .d-flex.mb-3

@@ -1,6 +1,6 @@
 - if flash[:error]
   .alert.alert-danger
-    %span.glyphicon.glyphicon-warning-sign
+    = inline_svg_tag 'open_iconic/warning.svg', class: 'icon mr-1'
     = flash[:error]
 
 - if flash[:notice]

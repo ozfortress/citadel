@@ -20,5 +20,5 @@
   .btn-toolbar.guttered
     = button_to match_path(@match), method: :delete, class: 'btn btn-danger',
                     data: { confirm: 'Are you sure you want to delete this Match?' } do
-      %span.glyphicon.glyphicon-trash
       Delete
+      = inline_svg_tag 'open_iconic/trash.svg', class: 'icon ml-2'
