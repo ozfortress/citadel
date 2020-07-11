@@ -19,13 +19,6 @@
       = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
       Create Single Match
 
-
-.card
-  .card-header
-    Matches
-
-  .card-body
-
-    - @divisions.each do |div|
-      %h3= div.name
-      = render 'leagues/matches/matches_table', matches: @matches[div], roster: nil
+- @divisions.each do |div|
+  %h3= div.name
+  = render 'leagues/matches/matches_table', matches: @matches[div], roster: nil

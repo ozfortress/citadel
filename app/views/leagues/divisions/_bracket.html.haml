@@ -1,9 +1,9 @@
 - id = "#{dom_id(division)}-bracket"
-%div.mb-4{ id: id }
+.mb-4{ id: id }
 
 - data = present(division).bracket_data(rosters, matches)
 
 :javascript
   $(function() {
-    $("##{id}").bracket(#{raw data});
+    $("##{id}").bracket(#{data});
   });
