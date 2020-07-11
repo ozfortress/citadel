@@ -7,36 +7,34 @@
   - else
     = present(@target)
 
-.row
-  .col-sm-3.col-md-3.pull-right
-    = render 'search'
+= render 'search'
 
-.panel.panel-default
-  - if @users_with_permission.empty? && @users_without_permission.empty?
-    .panel-body No users found...
-  - else
-    - url_params = { action_: @action, subject: @subject, target: @target }
-    %ul.list-group
-      - @users_with_permission.each do |user|
-        %li.list-group-item
+- if @users_with_permission.empty? && @users_without_permission.empty?
+  %p.mt-2
+    No users found...
+
+- else
+  - url_params = { action_: @action, subject: @subject, target: @target }
+  %table.table.mt-2
+    - @users_with_permission.each do |user|
+      %tr
+        %td= render 'users/listing', user: user
+        %td
           - url_params = url_params.merge(user_id: user.id)
-          .button-group.pull-right
-            = button_to revoke_permissions_path(url_params), method: :delete,
-                                                             class: 'btn btn-danger' do
-              Revoke
+          = button_to revoke_permissions_path(url_params), method: :delete,
+                                                           class: 'btn btn-danger' do
+            Revoke
 
-          = render 'users/listing', user: user
+  %hr
 
-      %hr
-
-      - @users_without_permission.each do |user|
-        %li.list-group-item
+  %table.table.mt-2
+    - @users_without_permission.each do |user|
+      %tr
+        %td= render 'users/listing', user: user
+        %td
           - url_params = url_params.merge(user_id: user.id)
-          .button-group.pull-right
-            = button_to grant_permissions_path(url_params), method: :post,
-                                                            class: 'btn btn-success' do
-              Grant
+          = button_to grant_permissions_path(url_params), method: :post,
+                                                          class: 'btn btn-success' do
+            Grant
 
-          = render 'users/listing', user: user
-
-= bootstrap_paginate @users_without_permission
+= bootstrap_paginate @users_without_permission, list_classes: ['pagination justify-content-center mt-4']
