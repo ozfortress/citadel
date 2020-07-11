@@ -22,7 +22,7 @@
         %td
           - url_params = url_params.merge(user_id: user.id)
           = button_to revoke_permissions_path(url_params), method: :delete,
-                                                           class: 'btn btn-danger' do
+                                                           class: 'btn btn-danger pull-right' do
             Revoke
 
   %hr
@@ -34,7 +34,7 @@
         %td
           - url_params = url_params.merge(user_id: user.id)
           = button_to grant_permissions_path(url_params), method: :post,
-                                                          class: 'btn btn-success' do
+                                                          class: 'btn btn-success pull-right' do
             Grant
 
 = bootstrap_paginate @users_without_permission, list_classes: ['pagination justify-content-center mt-4']

@@ -30,7 +30,7 @@
       %span.mx-2= '/'
       %span= @user.steam_id
 
-.row
+.row.mb-3
   != present_collection(@titles).map(&:icon).join(' ')
 
   .pull-right= render 'users/bans/list', user: @user
@@ -38,17 +38,16 @@
 - if current_user? && !@team_invites.empty?
   - @team_invites.each do |invite|
     - team = invite.team
-    .alert.alert-info
+
+    .alert.alert-primary.mb-3
       You have been invited to join #{present(team).link}
 
-      .button-group.pull-right
-        = button_to decline_team_invite_path(team),
-                    method: :delete, class: 'btn btn-danger' do
+      .btn-toolbar
+        .spacer
+        = button_to decline_team_invite_path(team), method: :delete, class: 'btn btn-danger ml-2' do
           Decline
           %span.glyphicon.glyphicon-remove
-      .button-group.pull-right
-        = button_to accept_team_invite_path(team),
-                    method: :post, class: 'btn btn-success' do
+        = button_to accept_team_invite_path(team), method: :post, class: 'btn btn-success ml-2' do
           Accept
           %span.glyphicon.glyphicon-ok
 

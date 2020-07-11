@@ -4,14 +4,12 @@
 
 %h1 Logs for #{user_p.link}
 
-%hr
-
-.panel.panel-info
-  .panel-heading Tools
-  .panel-body
+.card.card-info.mb-3
+  .card-header Tools
+  .card-body
     = link_to alts_user_logs_path(@user), class: 'btn btn-secondary' do
       Alternate Accounts
-      .glyphicon.glyphicon-user
+      = inline_svg_tag 'open_iconic/people.svg', class: 'icon ml-1'
 
 %table.table.table-striped
   %thead

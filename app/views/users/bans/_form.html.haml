@@ -6,4 +6,6 @@
   = f.text_field :reason
   = f.datetime_select :terminated_at, label: 'Ban end time'
 
-  = f.submit 'Save'
+  .d-flex.justify-content-end
+    = link_to 'Cancel', edit_user_path(user), class: 'btn btn-link mr-2'
+    = f.primary 'Save'
