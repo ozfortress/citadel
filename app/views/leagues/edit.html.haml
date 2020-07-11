@@ -1,30 +1,43 @@
 - content_for(:title) { "Edit: #{@league.name}" }
 
+- league_p = present(@league)
+
+.row.no-gutters.align-items-start
+  .col-auto.mr-2
+    %h1
+      = league_p.link
+      Editing League
+
+
 .alert.alert-warning
-  - if !@league.hidden?
-    %span.glyphicon.glyphicon-warning-sign
+  - if @league.hidden?
+    = inline_svg_tag 'open_iconic/lock-locked.svg', class: 'icon mr-2'
+    %b Private
+    Only visible to admins with permission.
+
+  - else
+    = inline_svg_tag 'open_iconic/warning.svg', class: 'icon mr-2'
     %b Public
     All changes are visible to everyone.
-  - else
-    %span.glyphicon.glyphicon-lock
-    Private
 
-= bootstrap_form_for @league, url: league_path(@league) do |f|
-  = render 'league_form', f: f, weekly_scheduler: @weekly_scheduler
 
-  = f.submit 'Update'
-  = link_to 'Cancel', league_path(@league), class: 'btn btn-default'
+.mb-5
+  = bootstrap_form_for @league, url: league_path(@league) do |f|
+    = render 'league_form', f: f, weekly_scheduler: @weekly_scheduler
 
-%hr
+    .d-flex.justify-content-end
+      = link_to 'Cancel', league_path(@league), class: 'btn btn-link mr-2'
+      = f.primary 'Update'
+
 
 - if user_can_edit_leagues?
-  .panel.panel-danger
-    .panel-heading Danger Zone
-    .panel-body
+  .alert.alert-danger.mb-3
+    %label.font-weight-bold.alert-heading Danger Zone
+    .btn-toolbar.guttered
       - if @league.hidden? && @league.rosters.empty?
         = button_to league_path(@league), method: :delete, class: 'btn btn-danger',
                     data: { confirm: 'Are you sure you want to delete this League?' } do
-          %span.glyphicon.glyphicon-trash
+          = inline_svg_tag 'open_iconic/trash.svg', class: 'icon mr-2'
           Delete
 
       - if @league.hidden?

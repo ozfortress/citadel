@@ -3,14 +3,19 @@
 
   - @threads.each do |thread|
     - post = @news_posts[thread]
+
     %hr
 
-    = render 'forums/posts/news_post', post: post
+    .mb-4
+      = render 'forums/posts/news_post', post: post
 
   - if @more_threads
-    = link_to 'View Older', forums_topic_path(@topic), class: 'btn btn-default'
+    .row.justify-content-center.my-5
+      = link_to 'View Older', forums_topic_path(@topic), class: 'btn btn-primary'
 - else
   .jumbotron
     %h1 Welcome to Citadel
 
+    %p.lead ESports League Framework
+    %hr
     %p View the source on #{link_to 'Github', 'https://github.com/ozfortress/citadel'}

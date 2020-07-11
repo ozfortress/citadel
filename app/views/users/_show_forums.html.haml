@@ -1,0 +1,20 @@
+.card.bg-light
+  .card-header
+    .d-flex.align-items-center
+      Recent Forum Posts
+
+      .spacer
+
+      = link_to search_forums_posts_path(user_id: user.id), class: 'btn btn-sm btn-secondary' do
+        View All
+        = inline_svg_tag 'open_iconic/chevron-right.svg', class: 'icon ml-2'
+
+  .card-body
+    - if forums_posts.empty?
+      = render 'forums/posts/empty'
+    - else
+      - forums_posts.each do |post|
+        %small.font-weight-bold
+          Thread: #{present(post).thread.link}
+
+        = render 'forums/posts/post', post: post, quote_id: nil

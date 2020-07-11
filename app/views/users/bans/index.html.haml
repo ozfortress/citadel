@@ -4,11 +4,9 @@
 
 %h1 Bans for #{user_p.link}
 
-%hr
-
-.panel.panel-default
-  .panel-heading Ban History
-  %table.table.table-striped
+- unless @bans.empty?
+  %h5 Ban History
+  %table.table.table-striped.mb-3
     %thead
       %tr
         %th From
@@ -29,13 +27,11 @@
           %td= ban.reason
           %td= ban_p.delete_button
 
-.panel.panel-danger
-  .panel-heading Create Bans
-  .panel-body
-    - @ban_models.zip(@new_bans).each do |ban_model, new_ban|
-      %h3 Ban from #{ban_model.action.to_s.humanize} #{ban_model.subject.to_s.humanize}
-      = render 'form', user: @user, model: ban_model, ban: new_ban
+%h5 Create Bans
+- @ban_models.zip(@new_bans).each do |ban_model, new_ban|
+  .card.mb-3
+    .card-header
+      Ban from
+      %strong #{ban_model.action.to_s.humanize} #{ban_model.subject.to_s.humanize}
 
-      %hr
-
-    = link_to 'Cancel', edit_user_path(@user), class: 'btn btn-default'
+    .card-body= render 'form', user: @user, model: ban_model, ban: new_ban

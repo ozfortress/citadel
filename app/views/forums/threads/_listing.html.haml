@@ -1,0 +1,31 @@
+- thread_p = present(thread)
+- latest_thread_p = present(thread.latest_post)
+
+.row
+  .col
+    .row
+      .col-12.col-sm-9
+        .row
+          .col-12
+            = thread_p.status_icons
+
+            %b= thread_p.link
+
+          .col-12.small.mt-1
+            %span{ title: thread_p.created_at } created #{thread_p.created_at_in_words} ago by
+            = thread_p.created_by.avatar_tag(size: 12, class: 'rounded')
+            = thread_p.created_by.link
+
+      .d-none.d-sm-flex.col-sm-3.align-items-end.justify-content-end.pl-0
+        .row.no-gutters.justify-content-end
+          .col-auto.col-md.small.text-right
+            = latest_thread_p.created_by.avatar_tag(size: 12, class: 'rounded')
+            = latest_thread_p.created_by.link
+
+          .col-auto.col-md-12.small.text-muted.text-right.ml-1{ title: thread.created_at.strftime('%c') }
+            posted #{latest_thread_p.created_at_in_words} ago
+
+  .col-2.col-sm-1.d-flex.justify-content-center.align-items-center.border-left
+    = link_to forums_thread_path(thread), class: 'd-flex flex-column text-center' do
+      %b= thread.posts_count
+      %small= 'post'.pluralize(thread.posts_count)

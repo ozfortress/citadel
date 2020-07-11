@@ -1,19 +1,16 @@
-%ul.list-group
-  - pick_bans.each do |pick_ban|
-    %li.list-group-item= present(pick_ban).status
+- pick_bans.each do |pick_ban|
+  %li.list-group-item= present(pick_ban).status
 
 - if match.confirmed?
-  %ul.list-group
-    - present_collection(match.rounds).each do |round_p|
-      - if round_p.has_outcome?
-        %li.list-group-item
-          = round_p.map.link
-
-          .pull-right= round_p.result_description
-- else
-  %ul.list-group
-    - present_collection(match.rounds).each do |round_p|
+  - present_collection(match.rounds).each do |round_p|
+    - if round_p.has_outcome?
       %li.list-group-item
         = round_p.map.link
 
-        .pull-right Results Pending
+        .pull-right= round_p.result_description
+- else
+  - present_collection(match.rounds).each do |round_p|
+    %li.list-group-item
+      = round_p.map.link
+
+      .pull-right Results Pending

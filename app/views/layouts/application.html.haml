@@ -9,43 +9,30 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = content_for :head
     = csrf_meta_tags
+
   %body
-    %header.hidden-xs.banner-citadel#banner
-      .banner-container-citadel
-        .banner-background-citadel
-          = image_tag 'background2.png'
-        .banner-logo-citadel
-          = link_to pages_home_path do
-            = image_tag 'logo.png'
+    %nav.navbar.navbar-dark.bg-dark.fixed-top.align-items-stretch.navbar-expand-lg
+      %button.navbar-toggler{ type: :button, data: { toggle: 'collapse', target: '#main-menu' },
+                              class: 'btn border-0 mr-2 p-2 order-0',
+                              area: { controls: 'main-menu', expanded: 'false', label: 'Toggle main menu' } }
+        %span.navbar-toggler-icon
 
-    %nav.navbar.navbar-citadel.affix-top#navbar{ role: 'navigation',
-                                                 data: { spy: 'affix',
-                                                         'offset-top' => 106 } }
-      .container
-        .row
-          - if user_signed_in?
-            %ul.nav.navbar-header.navbar-right
-              %li= render 'user_dropdown'
-            %ul.nav.navbar-header.navbar-right
-              %li= render 'notifications', notifications: @notifications
-          - else
-            %ul.nav.navbar-header.navbar-right
-              %li= render 'user_signin'
+      = link_to('/', class: 'navbar-brand order-2') do
+        = image_tag 'logo.png', height: '40px', width: '95px'
 
-          %button.navbar-toggle.collapsed.navbar-left{ type: 'button',
-                                                       data: { toggle: 'collapse',
-                                                               target: '#navbar-collapse' } }
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
+      - if user_signed_in?
+        .d-flex.align-items-center.position-relative.ml-auto.order-4
+          = render 'notifications_dropdown', notifications: @notifications
+        .d-flex.align-items-center.position-relative.ml-3.order-5
+          = render 'user_dropdown'
+      - else
+        .d-flex.align-items-center.position-relative.ml-auto.order-4
+          = render 'user_signin'
 
-          .visible-xs.pull-left.banner-logo-citadel
-            = image_tag 'logo.png', height: '50px'
+      .collapse.navbar-collapse.order-6.order-lg-3#main-menu
+        %ul.navbar-nav= render 'navbar'
 
-          .collapse.navbar-collapse.navbar-left#navbar-collapse
-            %ul.nav.navbar-nav= render 'navbar'
-
-    .container#content
+    .container.my-3#content
       .row
         .col-md-9
           = render 'flashes'

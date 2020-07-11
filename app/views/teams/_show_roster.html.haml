@@ -1,0 +1,50 @@
+.card.rounded-0
+  .card-header
+    .row.no-gutters.flex-nowrap.align-items-center
+      .mr-2= roster_p.title
+      .spacer
+      - if user_can_manage_transfers?(roster)
+        = link_to edit_roster_path(roster), class: 'btn btn-secondary pull-right' do
+          Manage
+          = inline_svg_tag 'open_iconic/cog.svg', class: 'icon ml-1'
+
+  - roster.players.map(&:user_id).each do |id|
+    %li.list-group-item
+      = render 'users/listing', user: users[id], team: team
+
+- accordion_id = "roster_#{roster.id}_accordion"
+.mb-3{ id: accordion_id }
+  .card.rounded-0
+    - matches_id = "#{accordion_id}_matches"
+    - header_id = "#{matches_id}_header"
+    .card-header{ id: header_id }
+      %button.btn.btn-link{ data: { toggle: :collapse, target: "##{matches_id}" },
+                            area: { expanded: 'false', controls: matches_id } }
+        Matches
+
+    .collapse{ id: matches_id, data: { parent: "##{accordion_id}" }, area: { labelledby: header_id } }
+      = render 'leagues/matches/matches_table', matches: matches, roster: roster
+
+  .card.rounded-0
+    - statistics_id = "#{accordion_id}_statistics"
+    - header_id = "#{statistics_id}_header"
+    .card-header{ id: header_id }
+      %button.btn.btn-link{ data: { toggle: :collapse, target: "##{statistics_id}" },
+                            area: { expanded: 'false', controls: statistics_id } }
+        Statistics
+
+    .collapse{ id: statistics_id, data: { parent: "##{accordion_id}" }, area: { labelledby: header_id } }
+      = render 'leagues/rosters/stats_table', roster: roster, roster_p: roster_p
+
+  .card.rounded-0
+    - transfers_id = "#{accordion_id}_transfers"
+    - header_id = "#{transfers_id}_header"
+    .card-header{ id: header_id }
+      %button.btn.btn-link{ data: { toggle: :collapse, target: "##{transfers_id}" },
+                            area: { expanded: 'false', controls: transfers_id } }
+        Transfer History
+
+    .collapse{ id: transfers_id, data: { parent: "##{accordion_id}" }, area: { labelledby: header_id } }
+      - roster.transfers.each do |transfer|
+        %li.list-group-item
+          = present(transfer).listing

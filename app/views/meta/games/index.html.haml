@@ -1,10 +1,14 @@
-= link_to new_meta_game_path, class: 'btn btn-default pull-right', type: 'button' do
+= link_to new_meta_game_path, class: 'btn btn-secondary pull-right', type: 'button' do
   Add Game
-  %span.glyphicon.glyphicon-plus
+  = inline_svg_tag 'open_iconic/plus.svg', class: 'icon ml-1'
 
 %h1 Games
 
-%ul.list-group
+%ul.list-group.mb-3
   - @games.each do |game|
     %li.list-group-item
       = link_to game.name, meta_game_path(game)
+
+      = link_to edit_meta_game_path(game), class: 'btn btn-secondary btn-sm pull-right' do
+        Edit
+        = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon ml-1'

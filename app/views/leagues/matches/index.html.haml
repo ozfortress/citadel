@@ -1,22 +1,24 @@
 - content_for(:title) { "Matches | #{@league.name}" }
 
 - league_p = present(@league)
+
 %h1
   = league_p.link
   Matches
 
-.panel.panel-default
-  .panel-heading Matches
-  .panel-body
-    - if user_can_edit_league?
-      = link_to generate_league_matches_path(@league), class: 'btn btn-default pull-right' do
-        %span.glyphicon.glyphicon-plus
-        Generate Round
-      = link_to new_league_match_path(@league), class: 'btn btn-default pull-right' do
-        %span.glyphicon.glyphicon-plus
-        Create Single Match
 
+- if user_can_edit_league?
+  .btn-toolbar.guttered.mb-2
+    .spacer
 
-    - @divisions.each do |div|
-      %h3= div.name
-      = render 'leagues/matches/matches_table', matches: @matches[div], roster: nil
+    = link_to generate_league_matches_path(@league), class: 'btn btn-admin' do
+      = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
+      Generate Round
+
+    = link_to new_league_match_path(@league), class: 'btn btn-admin' do
+      = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
+      Create Single Match
+
+- @divisions.each do |div|
+  %h3= div.name
+  = render 'leagues/matches/matches_table', matches: @matches[div], roster: nil

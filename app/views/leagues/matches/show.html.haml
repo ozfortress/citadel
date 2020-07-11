@@ -3,12 +3,12 @@
 - content_for(:title) { safe_join([match_p, @league.name], ' | ') }
 
 - if user_can_edit_league?
-  = link_to edit_match_path(@match), class: 'btn btn-default pull-right' do
+  = link_to edit_match_path(@match), class: 'btn btn-secondary pull-right' do
     Edit
-    %span.glyphicon.glyphicon-cog
+    = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon ml-1'
 
-%h1 #{present(@league).link}: #{@match.home_team.division.name}
-%h2= match_p.title
+%h1= present(@league).link
+%h2= match_p.round_s
 
 - if @match.bye?
   %br
@@ -21,10 +21,26 @@
     points have been awarded
 
 - else
-  = render 'leagues/matches/players_table', match: @match, match_p: match_p
+  %table.table.mb-2
+    %thead
+      %tr
+        %th
+          %h5.mb-0= present(@match.home_team).link
+          %small Home Team
+        %th.text-center.align-middle vs
+        %th
+          %h5.mb-0= present(@match.away_team).link
+          %small Home Team
+    %tbody
+      - match_p.players do |home_user, away_user|
+        %tr
+          %td= render 'users/listing', user: home_user, team: @match.home_team.team if home_user
+          %td
+          %td= render 'users/listing', user: away_user, team: @match.away_team.team if away_user
 
-  .panel.panel-default
-    .panel-heading Results #{match_p.status}
+
+  .card.mb-3
+    .card-header Results #{match_p.status}
 
     - can_view_scores = !@match.confirmed? && user_can_either_teams? && @league.matches_submittable?
     - if can_view_scores || user_can_edit_league?
@@ -34,9 +50,9 @@
                match: @match, pick_bans: @pick_bans
 
   - if @match.notice.present? && (user_on_either_teams? || user_can_edit_league?)
-    .panel.panel-default
-      .panel-heading Match Notice
-      .panel-body.markdown= match_p.notice
+    .card.mb-3
+      .card-header Match Notice
+      .card-body.markdown= match_p.notice
 
   - if @match.home_team.schedule_data && @match.away_team.schedule_data
     = render 'leagues/matches/schedule', match: @match, league: @league

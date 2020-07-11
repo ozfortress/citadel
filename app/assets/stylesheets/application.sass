@@ -11,334 +11,128 @@
  * file per style scope.
  */
 
-@import 'bootstrap-sprockets'
+@import 'bootstrap_theme'
+
+// External styles
 @import 'bootstrap'
-@import 'bootstrap-datetimepicker'
 @import 'rails_bootstrap_forms'
 @import 'pagedown_bootstrap'
 @import 'font-awesome'
+
+// Project styles
+@import 'navbar'
+@import 'users'
+@import 'forums'
+@import 'leagues'
 @import 'markdown'
 
 html
-  overflow-y: scroll
-
-blockquote
   font-size: 14px
 
-a:hover
-  text-decoration: none
+body
+  padding-top: $navbar-height
 
-.banner-citadel
-  background-color: #C9C9C9
+h1, h2, h3, h4, h5
+  word-break: break-all
 
-.banner-container-citadel
-  @extend .container
+.badge
+  &.anchor-top-right
+    position: absolute
+    top: -0.25rem
+    right: -0.25rem
+
+  &.anchor-bottom-right
+    position: absolute
+    bottom: -0.25rem
+    right: -0.25rem
+
+.border-dotted
+  border-style: dotted
+
+.border-dashed
+  border-style: dashed
+
+.cursor-pointer
+  cursor: pointer
+
+// This helps ensure consistent spacing & friendly wrapping of buttons for smaller dimensions
+.btn-toolbar.guttered
+  margin: $spacer * -0.25
+
+  .btn
+    margin: $spacer * 0.25
+
+.fill-success
+  fill: $success !important
+
+.fill-secondary
+  fill: $secondary !important
+
+.fill-light
+  fill: $light !important
+
+.icon-dark
+  fill: black
+.icon-light
+  fill: white
+.icon
+  @extend .icon-dark
+
+  width: 1em
+  height: 1em
   position: relative
-  left: 0
-  top: 0
+  top: .125em
+  vertical-align: baseline
 
-.banner-logo-citadel
-  position: relative
-  left: 0
-  top: 0
+.navbar-dark
+  .icon
+    @extend .icon-light
 
-.banner-background-citadel
-  position: absolute
-  right: 0
-  top: 0
+  .dropdown-menu
+    .icon
+      @extend .icon-dark
 
-#navbar.navbar-citadel
-  @extend .navbar-inverse
-  background-color: #324752
-  border-style: solid
-  border-color: #557381 // #425763
-  border-width: 4px 0 4px 0
-  border-radius: 0
-  box-shadow: 0 0 5px black
+.btn-xs
+  @extend .btn-sm
+  font-size: 0.7rem
+  padding: 0.2rem 0.4rem
 
-#navbar
-  max-height: 100%
+.btn-primary, .btn-secondary, .btn-success, .btn-danger, .btn-info, .btn-dark
+  .icon
+    @extend .icon-light
 
-#navbar.affix
-  top: 0
-  width: 100%
-  z-index: 100
+.form-group > label
+  font-weight: bold
 
-.affix + .container
-  padding-top: 78px
+blockquote
+  $blockquote-border-color: rgba(0, 0, 0, 0.07)
+  $blockquote-background-color: rgba(0, 0, 0, 0.03)
+  font-size: 0.8rem
+  background: $blockquote-background-color
+  border: 1px solid $blockquote-border-color
+  border-left: 5px solid $blockquote-border-color
+  padding: 1rem
 
-@media (max-width: 768px)
-  .navbar-toggle
-    float: left
-    margin-right: 5px
-  .navbar-right
-    float: right
-  #content
-    padding-top: 78px
-  #navbar-collapse
-    width: 100%
-    max-height: 320px
-    overflow-y: auto
-  .affix-top
-    position: fixed
-    top: 0
-    width: 100%
-    z-index: 100
+// Alternative to using .col or .ml-auto as method to space elements apart
+// (because those have margin / padding annoyances)
+.spacer
+  flex: 1
 
-  .container
-    padding-left: 5px
-    padding-right: 5px
+// Long pagination doesn't wrap by default on small dimensions
+.pagination
+  flex-flow: wrap
 
-  [class*="col-md"]
-    padding-left: 5px
-    padding-right: 5px
-
-textarea
-  resize: vertical
-
-li.list-group-item
-  border-radius: 0
-  line-height: 34px
-
-.row
-  margin-left: 0
-  margin-right: 0
-
-a#login
-  padding-top: 11.8px
-
-.navbar-right-menu
-  right: 0
-  left: auto
-
-.navbar-header a.dropdown-toggle
-  // from navbar-nav
-  color: #9d9d9d
-  background-color: transparent
-
-.navbar-header > li > a:hover, .navbar-header > li > a:focus, .navbar-header .open > a
-  color: white
-  background-color: transparent !important
-
-#notifications
-  position: relative
-  padding-left: 0
-  padding-top: 10px
-  padding-bottom: auto
-
-#notifications-glyph
-  font-size: 1.8em
-
-#notifications-badge
-  position: absolute
-  top: 5px
-  right: 5px
-  background-color: #729AAD
-
-#notifications-dropdown
-  width: 400px
-  @media (max-width: 768px)
-    position: fixed
-    top: 55px
+// Custom list class that handles rows which can be dynamically added / removed
+// which will typically have input or select fields
+ul.list-group.list-dynamic-add
+  li
+    display: flex
+    justify-content: stretch
+    align-items: flex-end
     width: 100%
 
-#notifications-list
-  margin-bottom: 0
-  margin-top: 2px
-  overflow-y: auto
-  max-height: 205px
+    .form-group
+      flex: 1
 
-.notification
-  border-radius: 0 !important
-  // margin-top: -0.333333px
-  padding-top: 5px
-  padding-bottom: 5px
-  background-color: #e7e7e7
-
-.notification-read
-  background-color: white
-
-.notification-button
-  position: relative
-  z-index: 100
-  padding: 4px 6px 4px 6px
-  background-color: transparent
-
-  &:hover
-    color: grey
-
-#navbar-user
-  padding-left: 5px
-  padding-right: 5px
-  // from navbar-nav > li > a
-  padding-top: 15px
-  padding-bottom: 15px
-
-#navbar-user-dropdown
-
-.panel
-  border-radius: 0
-
-.panel-default .panel-heading
-  border-radius: 0
-
-.spaced-header
-  letter-spacing: 3px
-  margin: 0 5px
-  display: inline-flex
-
-.user-details
-  padding-left: 45px
-  height: 34px
-  line-height: 19px
-  overflow: visible
-  text-overflow: ellipsis
-  white-space: nowrap
-
-.steam-link a
-  color: #06ace2
-  font-family: monospace
-  font-size: x-small
-  text-decoration: none
-  padding: 0 10px 0 0
-
-  .glyphicon:before
-    margin-right: 3px
-
-.avatar
-  border: #e8e5dc 1px solid
-
-.group-avatar
-  margin: 3px 8px
-  max-height: 77px
-  border: 2px #bfb1b3 solid
-
-.group-title
-  margin-top: 3px
-
-  h2
-    display: inline
-  div
-    vertical-align: text-top
-
-.group-aka
-  margin-bottom: 6px
-  font-style: italic
-  color: #8ba0b5
-  font-size: small
-
-.steam-id-large
-  font-family: monospace
-  text-align: right
-  background-color: #695d5d
-  color: white
-  padding: 2px 5px
-  border-radius: 4px
-
-.steam-link-large
-  // font-family: monospace
-  text-align: right
-  margin-top: -21px
-
-  a
-    @extend .steam-id-large
-
-    .glyphicon:before
-      margin-right: 5px
-
-.spaced-letters
-  letter-spacing: 2px
-  margin: 0
-
-// AVATAR ICONS
-.icon-small
-  font-size: small
-  margin-right: -6px
-  color: #a3acb1
-
-.icon-xxsmall
-  font-size: smaller
-  margin-right: -6px
-  color: #a3acb1
-
-\:target:before
-  z-index: 0
-  display: block
-  content: " "
-  margin-top: -75px
-  height: 75px
-  visibility: hidden
-
-.tab-header
-  display: inline-flex
-  margin: 0
-
-.searchbox
-  margin-top: 5px
-
-.matches-table
-  overflow: auto
-  border-left: none
-  border-right: none
-  margin-bottom: 0
-
-.matches-table td
-  padding: 4px 8px !important
-  vertical-align: middle
-
-.match-round
-  width: 60px
-  font-size: 0.85em
-  text-align: left
-
-.match-home-team
-  text-align: right
-
-.match-vs
-  text-align: center
-  width: 60px
-  font-family: monospace
-
-.match-away-team
-  text-align: left
-
-.match-view
-  width: 50px
-  font-size: 0.85em
-  text-align: left
-
-.round-score
-  display: inline-block
-  float: right
-  width: 70px
-  text-align: center
-  border-left: 1px solid white
-  line-height: calc(100% + 2px)
-  outline: 1px solid white
-  background-color: #d9d9d9
-  border-radius: 15px
-
-.round-score div
-  display: inline-block
-  width: 20px
-  height: 20px
-  line-height: 20px
-  border-radius: 50%
-
-.round-won
-  background-color: #89c789
-  color: white
-  border-radius: 10px
-
-.round-loss
-  background-color: #f16161
-  color: white
-  border-radius: 10px
-
-.round-tied
-  //background-color: white
-  border-radius: 10px
-
-.nopadding
-  padding: 0 !important
-  margin: 0 !important
+      input, select
+        flex: 1

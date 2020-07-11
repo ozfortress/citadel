@@ -1,35 +1,39 @@
 - content_for(:title) { "Edit: #{present(@topic)} | Forums" }
 
-= render 'forums/head', object: @topic
+= render 'forums/head', object: @topic, subheading: 'Editing topic'
 
-.panel.panel-default
-  .panel-body
+.card.bg-light.mb-3
+  .card-body
     = bootstrap_form_for @topic do |f|
       = render 'form', f: f
 
-      = f.submit 'Update'
-      = link_to 'Cancel', :back, class: 'btn btn-default'
+      .d-flex.justify-content-end
+        = link_to 'Cancel', :back, class: 'btn btn-link mr-2'
+        = f.primary 'Update'
 
-.panel.panel-danger
-  .panel-heading Danger Zone
-  .panel-body
+.alert.alert-danger.mb-3
+  %label.font-weight-bold.alert-heading
+    Danger Zone
+
+  .btn-toolbar.guttered
+    = button_to forums_topic_path(@topic), method: :delete, class: 'btn btn-sm btn-danger',
+                data: { confirm: 'Are you sure you want to delete this Topic?' } do
+      = inline_svg_tag 'open_iconic/trash.svg', class: 'icon mr-2'
+      Delete
+
     - if @topic.isolated?
-      = button_to unisolate_forums_topic_path(@topic), method: :patch, class: 'btn btn-warning',
+      = button_to unisolate_forums_topic_path(@topic), method: :patch, class: 'btn btn-sm btn-warning',
                   data: { confirm: Forums::TopicsHelper::ISOLATE_CONFIRM_MESSAGE } do
         Un-Isolate
 
     - else
-      = button_to isolate_forums_topic_path(@topic), method: :patch, class: 'btn btn-warning',
+      = button_to isolate_forums_topic_path(@topic), method: :patch, class: 'btn btn-sm btn-warning',
                   data: { confirm: Forums::TopicsHelper::UNISOLATE_CONFIRM_MESSAGE } do
         Isolate
 
+    .spacer.d-none.d-md-block
+
     = link_to users_permissions_path(action_: :manage, subject: :forums_topic, target: @topic.id),
-              class: 'pull-right btn btn-default' do
+              class: 'btn btn-sm btn-secondary' do
+      = inline_svg_tag 'open_iconic/people.svg', class: 'icon mr-2'
       Manage Permissions
-      %span.glyphicon.glyphicon-cog
-
-
-    = button_to forums_topic_path(@topic), method: :delete, class: 'btn btn-danger',
-                data: { confirm: 'Are you sure you want to delete this Topic?' } do
-      %span.glyphicon.glyphicon-trash
-      Delete

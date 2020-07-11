@@ -2,14 +2,13 @@
 
 %h1 Select a permission to manage
 
-.panel.panel-default
-  %ul.list-group
-    - @grants.each_key do |action|
-      - @grants[action].each_key do |subject|
-        / TODO: Support object grants
-        - next if @grants[action][subject].subject?
+%ul.list-group.mb-3
+  - @grants.each_key do |action|
+    - @grants[action].each_key do |subject|
+      / TODO: Support object grants
+      - next if @grants[action][subject].subject?
 
-        - if current_user.can?(action, subject) || current_user.can?(:edit, :permissions)
-          %li.list-group-item
-            = link_to users_permissions_path(action_: action.to_s, subject: subject.to_s) do
-              Permission to #{action.to_s.humanize} #{subject.to_s.humanize}
+      - if current_user.can?(action, subject) || current_user.can?(:edit, :permissions)
+        %li.list-group-item
+          = link_to users_permissions_path(action_: action.to_s, subject: subject.to_s) do
+            Permission to #{action.to_s.humanize} #{subject.to_s.humanize}

@@ -1,13 +1,11 @@
 - if user_can_meta?
-  = link_to edit_meta_format_path(@format), class: 'btn btn-default pull-right', type: 'button' do
+  = link_to edit_meta_format_path(@format), class: 'btn btn-secondary pull-right', type: 'button' do
     Edit
-    %span.glyphicon.glyphicon-cog
+    = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon ml-1'
 
 - format_p = present(@format)
 
 %h1= format_p.game.link
 %h2= @format.name
 
-.panel.panel-default
-  .panel-heading Information
-  .panel-body.markdown= format_p.description
+.markdown.mb-3= format_p.description

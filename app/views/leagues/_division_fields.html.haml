@@ -1,7 +1,6 @@
 %li.list-group-item.nested-fields
-  = link_to_remove_association f, class: 'btn btn-default pull-right',
-      data: { confirm: 'Are you sure you want to delete this Division?' } do
-    %span.glyphicon.glyphicon-trash
-    Delete
+  = f.text_field :name, label_class: 'mr-3', wrapper: { class: 'mr-3 mb-0' }
 
-  = f.text_field :name
+  = link_to_remove_association f, class: 'btn btn-danger',
+      data: { confirm: 'Are you sure you want to delete this Division?' } do
+    = inline_svg_tag 'open_iconic/trash.svg', class: 'icon'

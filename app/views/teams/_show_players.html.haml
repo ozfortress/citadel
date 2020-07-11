@@ -1,0 +1,42 @@
+- if invite
+  .alert.alert-primary.mb-3
+    You have been invited to join this team
+
+    .btn-toolbar
+      .spacer
+      = button_to decline_team_invite_path(team), method: :delete, class: 'btn btn-danger ml-2' do
+        Decline
+        %span.glyphicon.glyphicon-remove
+      = button_to accept_team_invite_path(team), method: :post, class: 'btn btn-success ml-2' do
+        Accept
+        %span.glyphicon.glyphicon-ok
+
+- if user_can_edit_team?
+  .d-flex.mb-3
+    .spacer
+    = link_to recruit_team_path(team), class: 'btn btn-secondary pull-right' do
+      Invite
+      = inline_svg_tag 'open_iconic/plus.svg', class: 'icon ml-1'
+
+%ul.list-group.list-group-flush.mb-3
+  - players.each do |player|
+    - player_p = present(player, Team::PlayerPresenter)
+    %li.list-group-item
+      - user = users[player.user_id]
+      - player.user = user # Make sure we don't fetch the user again
+
+      - if user == current_user
+        .button-group.pull-right= player_p.leave_button
+
+      - elsif user_can_edit_team?
+        .button-group.pull-right= player_p.kick_button
+
+      = render 'users/listing', user: user, team: team
+
+- unless transfers.empty?
+  %h5 Transfer History
+
+  %ul.list-group.list-group-flush.mb-3
+    - transfers.each do |transfer|
+      %li.list-group-item
+        = present(transfer).listing

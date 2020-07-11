@@ -28,7 +28,8 @@ class User < ApplicationRecord
   has_many :comments, class_name: 'User::Comment'
 
   has_many :forums_posts, class_name: 'Forums::Post', inverse_of: :created_by, foreign_key: :created_by
-  has_many :public_forums_posts, -> { publicly_viewable }, class_name: 'Forums::Post', foreign_key: :created_by
+  has_many :public_forums_posts, -> { publicly_viewable }, class_name: 'Forums::Post', inverse_of: :created_by,
+                                                           foreign_key: :created_by
 
   has_many :logs, class_name: 'User::Log'
 

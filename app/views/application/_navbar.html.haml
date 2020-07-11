@@ -1,18 +1,18 @@
-%li{ class: navbar_class(:home) }
-  = link_to('Home', :pages_home)
+%li.nav-item{ class: navbar_class(:home) }
+  = link_to('Home', :pages_home, class: 'nav-link')
 
-%li{ class: navbar_class(:users) }
-  = link_to('Users', :users)
+%li.nav-item{ class: navbar_class(:users) }
+  = link_to('Users', :users, class: 'nav-link')
 
-%li{ class: navbar_class(:teams) }
-  = link_to('Teams', :teams)
+%li.nav-item{ class: navbar_class(:teams) }
+  = link_to('Teams', :teams, class: 'nav-link')
 
-%li{ class: navbar_class(:forums) }
-  = link_to('Forums', :forums)
+%li.nav-item{ class: navbar_class(:forums) }
+  = link_to('Forums', :forums, class: 'nav-link')
 
-%li{ class: navbar_class(:leagues) }
-  = link_to('Leagues', :leagues)
+%li.nav-item{ class: navbar_class(:leagues) }
+  = link_to('Leagues', :leagues, class: 'nav-link')
 
 - if user_signed_in? && current_user.admin?
-  %li{ class: navbar_class(:admin) }
-    = link_to('Admin', :admin)
+  %li.nav-item{ class: navbar_class(:admin) }
+    = link_to('Admin', :admin, class: 'nav-link')

@@ -6,10 +6,20 @@
   Signups
 
 - @divisions.each do |div|
-  .panel.panel-default
-    .panel-heading= div.name
-    %ul.list-group
-      - present_collection(div.rosters).each do |roster|
-        - bg = roster.approved? ? 'list-group-item-success' : 'list-group-item-warning'
-        %li{ class: "list-group-item #{bg}" }
-          = roster.link
+  - rosters = present_collection(div.rosters)
+
+  .card.mb-3
+    .card-header
+      %span.mr-2= div.name
+      %span.badge.badge-primary
+        #{rosters.size} teams
+
+    - if rosters.empty?
+      .card-body.text-muted No rosters signed up
+
+    - else
+      %ul.list-group.list-group-flush
+        - rosters.each do |roster|
+          - klass = roster.approved? ? 'list-group-item-success' : 'list-group-item-warning'
+          %li{ class: "list-group-item #{klass}" }
+            = roster.link

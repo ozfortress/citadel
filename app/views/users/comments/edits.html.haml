@@ -1,9 +1,16 @@
 - content_for(:title) { "Comment Edits | #{@user.name}" }
 
-%h2
-  Comment Edits on
-  = link_to @user.name, user_path(@user)
+= render 'shared/head', heading: 'User', subheading: 'Admin comment edit history'
 
-.panel.panel-default
-  - @edits.each do |comment_edit|
-    = render 'comment_edit', comment_edit: comment_edit
+%hr
+
+.alert.alert-admin.d-inline-flex.px-3.py-2.mb-3
+  %b
+    Past edits for
+    = link_to "admin comment ##{@comment.id}", user_path(@user) + "##{@comment.paths.dom_id}"
+    of user
+    = link_to @user.name, user_path(@user)
+
+
+- @edits.each do |comment_edit|
+  = render 'shared/comment_edit', comment_edit: comment_edit, class: 'mb-4'
