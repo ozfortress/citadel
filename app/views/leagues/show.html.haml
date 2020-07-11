@@ -98,7 +98,7 @@
 
   - tiebreakers = present_collection(@league.tiebreakers)
 
-  - @ordered_rosters.each do |div, rosters|
+  - @ordered_rosters.each.with_index do |(div, rosters), i|
     %h3.px-3.py-2.mb-0= div.name
 
     %table.table.mb-3.border-bottom
@@ -122,3 +122,6 @@
     - matches = @matches[div]
     - if matches.present?
       = render 'leagues/divisions/bracket', division: div, rosters: rosters, matches: matches
+
+    - if i != @ordered_rosters.size - 1
+      %hr.mb-5
