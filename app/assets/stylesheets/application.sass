@@ -84,9 +84,10 @@ h1, h2, h3, h4, h5
   top: .125em
   vertical-align: baseline
 
-.navbar-collapse
-  max-height: 80vh
-  overflow: auto
+@include media-breakpoint-down(md)
+  .navbar-collapse
+    max-height: 80vh
+    overflow: auto
 
 .navbar-dark
   .icon
