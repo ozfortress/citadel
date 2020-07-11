@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.12.0'
+lock '3.14.1'
 
 set :application, 'citadel'
 set :rvm_ruby_string, 'ruby-2.5.0'
