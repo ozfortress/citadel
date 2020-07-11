@@ -1,16 +1,11 @@
 - content_for(:title) { 'Leagues' }
 
+- if user_can_edit_leagues?
+  = link_to new_league_path, class: 'btn btn-secondary pull-right' do
+    = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
+    Start League
 
 %h1 Leagues
-
-
-- if user_can_edit_leagues?
-  .btn-toolbar.guttered.mb-3
-    .spacer
-    = link_to new_league_path, class: 'btn btn-admin' do
-      = inline_svg_tag 'open_iconic/plus.svg', class: 'icon mr-2'
-      Start League
-
 
 .mb-3
   = render 'search'
