@@ -20,7 +20,7 @@
           \- edited #{post_p.last_edited_in_words} ago
 
       .actions.ml-auto
-        - if defined? user_can_edit_post? && user_can_edit_post?(post)
+        - if defined?(user_can_edit_post?) && user_can_edit_post?(post)
           - if post.edits.size > 1
             = link_to 'History', edits_for_forums_post_path(post), class: 'action p-1'
             %span ·
@@ -28,7 +28,7 @@
           = link_to 'Edit', post_p.edit_path, class: 'action p-1'
           %span ·
 
-        - if quote_id
+        - if quote_id && user_signed_in?
           %a{ class: 'action p-1', data: { quote: { id: quote_id, text: post_p.quote } } }
             Quote
           %span ·
