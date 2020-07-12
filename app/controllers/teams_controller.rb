@@ -109,7 +109,7 @@ class TeamsController < ApplicationController
     @active_rosters        = roster_includes_for(@team.rosters.for_incomplete_league).load
     @active_roster_matches = matches_for @active_rosters
 
-    @past_rosters          = roster_includes_for(@team.rosters.for_completed_league).load
+    @past_rosters          = roster_includes_for(@team.rosters.for_completed_league.order(created_at: :desc)).load
     @past_roster_matches   = matches_for @past_rosters
 
     @upcoming_matches = @team.matches.pending.includes(:home_team, :away_team)
