@@ -80,7 +80,7 @@ group :test do
   gem 'rubocop-rails', '~> 2.2.1', require: false
 
   # Coveralls
-  gem 'coveralls'
+  gem 'coveralls_reborn', '~> 0.16.0', require: false
 end
 
 group :development do
