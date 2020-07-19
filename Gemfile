@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rake', '~> 12.0'
-gem 'rails', '= 5.2.1'
+gem 'rails', '~> 5.2.1'
 # Use postgres
 gem 'pg', '~> 1.0'
 # Fast loading
