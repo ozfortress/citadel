@@ -26,7 +26,7 @@ module Leagues
         link = team_path(roster.team)
 
         roster.players.each do |player|
-          Users::NotificationService.call(player.user, msg, link)
+          Users::NotificationService.call(player.user, message: msg, link: link)
         end
       end
     end

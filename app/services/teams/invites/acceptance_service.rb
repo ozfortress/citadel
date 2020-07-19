@@ -17,7 +17,7 @@ module Teams
         message = "'#{user.name}' has accepted the invitation to join '#{team.name}'!"
 
         User.which_can(:edit, team).each do |captain|
-          Users::NotificationService.call(captain, message, user_path(user))
+          Users::NotificationService.call(captain, message: message, link: user_path(user))
         end
       end
     end

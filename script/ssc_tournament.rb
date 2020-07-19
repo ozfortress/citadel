@@ -126,7 +126,7 @@ def notify_users(match, message)
   users = match.home_team.users.union(match.away_team.users)
 
   users.find_each do |user|
-    Users::NotificationService.call(user, message, url)
+    Users::NotificationService.call(user, message: message, link: url)
   end
 end
 

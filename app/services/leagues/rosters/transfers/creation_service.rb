@@ -53,7 +53,7 @@ module Leagues
                 "#{roster.name} for #{roster.league.name}"
           link = team_path(roster.team)
 
-          Users::NotificationService.call(user, msg, link)
+          Users::NotificationService.call(user, message: msg, link: link)
         end
 
         def transfer_notify_user(request, user, roster)
@@ -61,7 +61,7 @@ module Leagues
                 "#{roster.name} for #{roster.league.name}"
           link = team_path(roster.team)
 
-          Users::NotificationService.call(user, msg, link)
+          Users::NotificationService.call(user, message: msg, link: link)
         end
       end
     end

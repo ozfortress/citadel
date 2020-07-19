@@ -20,7 +20,7 @@ module Leagues
           link = match_path(pick_ban.match)
 
           User.which_can(:edit, pick_ban.roster.team).each do |captain|
-            Users::NotificationService.call(captain, msg, link)
+            Users::NotificationService.call(captain, message: msg, link: link)
           end
         end
       end

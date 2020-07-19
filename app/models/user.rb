@@ -125,10 +125,6 @@ class User < ApplicationRecord
     names.approved.where.not(name: name)
   end
 
-  def notify!(message, link)
-    notifications.create!(message: message, link: link)
-  end
-
   def confirm
     update(confirmed_at: Time.current)
   end
