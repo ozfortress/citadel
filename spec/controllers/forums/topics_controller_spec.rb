@@ -22,7 +22,7 @@ describe Forums::TopicsController do
 
       post :create, params: { parent: parent_topic.id, forums_topic: {
         name: 'Foo', locked: true, pinned: true, hidden: true, isolated: true,
-        default_hidden: true
+        default_hidden: true, description: '*foo*'
       } }
 
       expect(parent_topic.children).to_not be_empty
@@ -44,7 +44,7 @@ describe Forums::TopicsController do
 
       post :create, params: { parent: parent_topic.id, forums_topic: {
         name: 'Foo', locked: true, pinned: true, hidden: true, isolated: true,
-        default_hidden: true
+        default_hidden: true, description: '*foo*'
       } }
 
       expect(parent_topic.children).to_not be_empty
@@ -189,7 +189,7 @@ describe Forums::TopicsController do
           id:           topic.id,
           forums_topic: {
             name: 'Test', locked: true, pinned: true, hidden: true, isolated: true,
-            default_hidden: true
+            default_hidden: true, description: 'test123'
           },
         }
 
@@ -200,6 +200,7 @@ describe Forums::TopicsController do
         expect(topic.hidden).to eq(true)
         expect(topic.isolated).to eq(false)
         expect(topic.default_hidden).to eq(true)
+        expect(topic.description).to eq('test123')
         expect(response).to redirect_to(forums_topic_path(topic))
       end
 

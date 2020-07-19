@@ -41,7 +41,8 @@
     .card-body
       %h5 Send Notification
       - notification = @user.notifications.new
-      = bootstrap_form_for notification, url: user_notifications_path(user_id: @user.id), as: :notification, method: :post do |f|
+      = bootstrap_form_for notification, url: user_notifications_path(user_id: @user.id), as: :notification,
+                                         method: :post do |f|
         = render 'users/notifications/form', f: f
 
         .d-flex.justify-content-end

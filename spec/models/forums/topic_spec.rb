@@ -15,6 +15,8 @@ describe Forums::Topic do
   it { should validate_length_of(:name).is_at_least(1) }
   it { should validate_length_of(:name).is_at_most(128) }
 
+  it { should validate_length_of(:description) }
+
   it 'sets depth of root topic' do
     topic = create(:forums_topic)
     expect(topic.reload.depth).to eq(0)

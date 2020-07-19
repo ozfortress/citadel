@@ -7,6 +7,7 @@ FactoryBot.define do
     hidden { false }
     isolated { false }
     default_hidden { false }
+    description { 'a *sample* description' }
     name { 'General Discussions' }
   end
 end
