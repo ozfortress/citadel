@@ -146,8 +146,7 @@ describe Leagues::MatchesController do
       sign_in @admin
 
       post :create_round, params: {
-        league_id: @league.id,
-        division_id: @div.id,
+        league_id: @league.id, division_id: @div.id,
         match: {
           round_name: 'foo', round_number: 3, notice: 'B', rounds_attributes: [{ map_id: @map.id }]
         },
@@ -155,7 +154,7 @@ describe Leagues::MatchesController do
         swiss_tournament: { pairer: :dutch, pair_options: { min_pair_size: 2 } },
         single_elimination_tournament: { teams_limit: 0, round: 0 },
         double_elimination_tournament: { teams_limit: 0, round: 0 },
-        page_playoffs_tournament: { starting_round: 0 },
+        page_playoffs_tournament: { starting_round: 0 }
       }
 
       expect(@league.matches.size).to eq(1)

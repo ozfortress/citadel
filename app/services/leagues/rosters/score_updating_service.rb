@@ -100,18 +100,18 @@ module Leagues
           stats = roster_results[roster]
 
           roster.assign_attributes(
-            total_scores: stats.sum(&:score),
-            total_score_difference: stats.sum(&:score_difference),
-            won_rounds_count: stats.sum(&:round_wins),
-            drawn_rounds_count: stats.sum(&:round_draws),
-            lost_rounds_count: stats.sum(&:round_losses),
-            won_matches_count: stats.count { |s| s.result == :win },
-            drawn_matches_count: stats.count { |s| s.result == :draw },
-            lost_matches_count: stats.count { |s| s.result == :loss },
-            bye_matches_count: stats.count(&:bye),
-            forfeit_won_matches_count: stats.count { |s| s.result == :ff_win },
+            total_scores:                stats.sum(&:score),
+            total_score_difference:      stats.sum(&:score_difference),
+            won_rounds_count:            stats.sum(&:round_wins),
+            drawn_rounds_count:          stats.sum(&:round_draws),
+            lost_rounds_count:           stats.sum(&:round_losses),
+            won_matches_count:           stats.count { |s| s.result == :win },
+            drawn_matches_count:         stats.count { |s| s.result == :draw },
+            lost_matches_count:          stats.count { |s| s.result == :loss },
+            bye_matches_count:           stats.count(&:bye),
+            forfeit_won_matches_count:   stats.count { |s| s.result == :ff_win },
             forfeit_drawn_matches_count: stats.count { |s| s.result == :ff_draw },
-            forfeit_lost_matches_count: stats.count { |s| s.result == :ff_loss }
+            forfeit_lost_matches_count:  stats.count { |s| s.result == :ff_loss }
           )
           roster.points = calculate_points(league, roster)
           points_map[roster.points].push roster

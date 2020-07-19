@@ -22,7 +22,7 @@ describe Forums::ThreadsController do
       sign_in user
 
       post :create, params: {
-        topic: topic.id,
+        topic:         topic.id,
         forums_thread: { title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: content } },
       }
 
@@ -46,7 +46,7 @@ describe Forums::ThreadsController do
       sign_in user
 
       post :create, params: {
-        topic: topic.id,
+        topic:         topic.id,
         forums_thread: { title: '', forums_post: { content: '' } },
       }
 
@@ -58,7 +58,7 @@ describe Forums::ThreadsController do
       sign_in user
 
       post :create, params: {
-        topic: topic.id,
+        topic:         topic.id,
         forums_thread: { title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: content } },
       }
 
@@ -82,7 +82,7 @@ describe Forums::ThreadsController do
       sign_in user
 
       post :create, params: {
-        topic: topic.id,
+        topic:         topic.id,
         forums_thread: { title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: content } },
       }
 
@@ -233,7 +233,7 @@ describe Forums::ThreadsController do
         sign_in user
 
         post :create, params: {
-          topic: topic.id,
+          topic:         topic.id,
           forums_thread: { title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: content } },
         }
 
@@ -373,7 +373,7 @@ describe Forums::ThreadsController do
         sign_in user
 
         patch :update, params: {
-          id: thread.id,
+          id:            thread.id,
           forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true, forums_post: { content: '' } },
         }
 
@@ -388,7 +388,7 @@ describe Forums::ThreadsController do
         sign_in user
 
         patch :update, params: {
-          id: thread.id,
+          id:            thread.id,
           forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true, forums_post: {} },
         }
 
@@ -402,7 +402,7 @@ describe Forums::ThreadsController do
         sign_in user
 
         patch :update, params: {
-          id: thread.id,
+          id:            thread.id,
           forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true, forums_post: {} },
         }
 
@@ -416,7 +416,7 @@ describe Forums::ThreadsController do
         sign_in user
 
         patch :update, params: {
-          id: thread.id,
+          id:            thread.id,
           forums_thread: { title: 'Test', locked: true, pinned: true, hidden: true, forums_post: {} },
         }
 

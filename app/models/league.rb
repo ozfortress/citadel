@@ -18,7 +18,8 @@ class League < ApplicationRecord
   has_many :players,           through: :rosters,   class_name: 'Roster::Player'
   has_many :transfer_requests, through: :rosters,   class_name: 'Roster::TransferRequest'
   has_many :matches,           through: :divisions, class_name: 'Match'
-  has_many :titles,                                 class_name: 'User::Title'
+
+  has_many :titles, class_name: 'User::Title', dependent: :destroy
 
   enum status: [:hidden, :running, :completed]
 

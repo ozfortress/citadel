@@ -15,10 +15,10 @@ class League
 
     accepts_nested_attributes_for :players, reject_if: proc { |attrs| attrs['user_id'].blank? }
 
-    has_many :home_team_matches, class_name: 'Match', foreign_key: 'home_team_id'
-    has_many :away_team_matches, class_name: 'Match', foreign_key: 'away_team_id'
+    has_many :home_team_matches, class_name: 'Match', foreign_key: 'home_team_id', dependent: :restrict_with_error
+    has_many :away_team_matches, class_name: 'Match', foreign_key: 'away_team_id', dependent: :restrict_with_error
 
-    has_many :titles, class_name: 'User::Title'
+    has_many :titles, class_name: 'User::Title', dependent: :destroy
     has_many :comments, class_name: 'Roster::Comment', inverse_of: :roster, dependent: :destroy
 
     validates :name, presence: true, uniqueness: { scope: :division_id }, length: { in: 1..64 }

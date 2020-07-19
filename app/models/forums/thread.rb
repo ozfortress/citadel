@@ -21,10 +21,10 @@ module Forums
     scope :visible,  -> { where(hidden: false) }
 
     counter_culture :topic,
-                    column_name: proc { |model| model.visible? ? 'visible_threads_count' : nil },
+                    column_name:  proc { |model| model.visible? ? 'visible_threads_count' : nil },
                     column_names: {
                       'NOT forums_threads.hidden' => 'visible_threads_count',
-                      'forums_threads.hidden' => nil,
+                      'forums_threads.hidden'     => nil,
                     }
 
     before_create :update_depth

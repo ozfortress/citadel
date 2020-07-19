@@ -1,13 +1,13 @@
 module MarkdownRenderer
   RENDER_OPTIONS = {
     hard_wrap: true,
-    tables: true,
+    tables:    true,
   }.freeze
 
   PARSER_OPTIONS = {
-    autolink: true,
-    strikethrough: true,
-    underline: true,
+    autolink:          true,
+    strikethrough:     true,
+    underline:         true,
     no_intra_emphasis: true,
   }.freeze
 

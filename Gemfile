@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rake', '~> 12.0'
 gem 'rails', '~> 5.2.1'
+gem 'rake', '~> 12.0'
 # Use postgres
 gem 'pg', '~> 1.0'
 # Fast loading
@@ -22,8 +22,8 @@ gem 'bootstrap_form', '~> 4.5'
 # Inline svgs
 gem 'inline_svg'
 # Bootstrap markdown editor
-gem 'pagedown-bootstrap-rails'
 gem 'font-awesome-rails'
+gem 'pagedown-bootstrap-rails'
 # Nested Forms
 gem 'cocoon'
 # Use jquery as the JavaScript library
@@ -73,11 +73,11 @@ group :test do
   gem 'capybara'
 
   # Keep codebase clean
-  gem 'rubocop', '~> 0.58', require: false
-  gem 'rubocop-rails', '~> 2.2.1', require: false
   gem 'haml_lint', require: false
   gem 'rails_best_practices', require: false
   gem 'reek', '~> 5', require: false
+  gem 'rubocop', '~> 0.58', require: false
+  gem 'rubocop-rails', '~> 2.2.1', require: false
 
   # Coveralls
   gem 'coveralls'
@@ -98,8 +98,8 @@ group :development do
 
   # Development scripts
   gem 'capistrano', '~> 3.1', require: false
-  gem 'capistrano-rvm', require: false
   gem 'capistrano-bundler', require: false
-  gem 'capistrano-rails', require: false
   gem 'capistrano-passenger', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
 end

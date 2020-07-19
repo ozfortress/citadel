@@ -24,11 +24,9 @@ MAX_MATCH_LENGTH = 8
 MAP = Map.first
 
 MATCH_PARAMS = {
-  round_name: '#1',
-  has_winner: true,
-  rounds_attributes: [
-    { map: MAP },
-  ],
+  round_name:        '#1',
+  has_winner:        true,
+  rounds_attributes: [{ map: MAP }],
 }.freeze
 
 def match_s(match)
@@ -51,8 +49,8 @@ end
 # Book a server using SSC
 def book_server(user)
   query = {
-    key: SSC_API_KEY,
-    user: user,
+    key:   SSC_API_KEY,
+    user:  user,
     hours: MAX_MATCH_LENGTH,
   }
   result = Net::HTTP.post_form(URI.parse(SSC_ENDPOINT + "/bookings/?#{query.to_query}"), {})

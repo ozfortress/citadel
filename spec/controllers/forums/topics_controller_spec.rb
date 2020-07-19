@@ -186,7 +186,7 @@ describe Forums::TopicsController do
         sign_in user
 
         patch :update, params: {
-          id: topic.id,
+          id:           topic.id,
           forums_topic: {
             name: 'Test', locked: true, pinned: true, hidden: true, isolated: true,
             default_hidden: true
