@@ -37,7 +37,7 @@ module Forums
           # TODO: Remove duplicate permission logic
           if !thread.hidden || (thread.not_isolated? && user.can?(:manage, :forums)) ||
              (thread.isolated? && user.can?(:manage, thread.isolated_by))
-            Users::NotificationService.call(user, message, url)
+            Users::NotificationService.call(user, message: message, link: url)
           end
         end
       end

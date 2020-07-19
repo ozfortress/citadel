@@ -1,5 +1,7 @@
 module Forums
   class Topic < ApplicationRecord
+    include MarkdownRenderCaching
+
     has_ancestry cache_depth: true
     belongs_to :isolated_by, optional: true, class_name: 'Topic'
 
@@ -9,6 +11,10 @@ module Forums
     has_many :subscriptions, dependent: :destroy
 
     validates :name, presence: true, length: { in: 1..128 }
+
+    validates :description, presence: true
+    caches_markdown_render_for :description
+
     validates :locked,         inclusion: { in: [true, false] }
     validates :pinned,         inclusion: { in: [true, false] }
     validates :hidden,         inclusion: { in: [true, false] }

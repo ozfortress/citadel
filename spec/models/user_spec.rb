@@ -53,17 +53,6 @@ describe User do
     expect(team.on_roster?(user)).to be(true)
   end
 
-  it 'can be notified' do
-    user = create(:user)
-    expect(user.notifications).to eq([])
-
-    notification = user.notify!('foo', '/bar')
-
-    expect(notification.read).to be false
-    expect(notification).to be_persisted
-    expect(user.notifications).to eq([notification])
-  end
-
   it 'has avatar' do
     image = File.open(Rails.root.join('spec', 'support', 'avatar.png'))
     expect(build(:user, avatar: image)).to be_valid

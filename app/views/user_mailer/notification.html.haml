@@ -2,7 +2,7 @@
 
 %p You have received the following notification:
 
-%p= link_to @message, @link, target: '_blank'
+%p= link_to @message, @link, target: '_blank', rel: :noopener
 
 %p
   Cheers,
@@ -11,5 +11,5 @@
 
 %p
   If you wish to stop receiving these emails, please
-  = link_to @unsubscribe_link, target: '_blank' do
+  = link_to @unsubscribe_link, target: '_blank', rel: :noopener do
     unsubscribe by removing your email

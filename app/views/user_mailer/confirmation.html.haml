@@ -5,7 +5,7 @@
   Please follow this link to activate your email:
 
 %p
-  = link_to confirm_user_email_url(token: @user.confirmation_token), target: '_blank' do
+  = link_to confirm_user_email_url(token: @user.confirmation_token), target: '_blank', rel: :noopener do
     Confirmation Link
 
 %p If you received this email by mistake, simply ignore and/or delete it.

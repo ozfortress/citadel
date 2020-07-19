@@ -125,6 +125,8 @@ Rails.application.routes.draw do
     resource :logs, controller: 'users/logs', only: :show do
       get :alts, on: :collection
     end
+
+    resources :notifications, controller: 'users/notifications', only: [:create]
   end
 
   resources :notifications, controller: 'users/notifications', only: [:index, :show, :destroy] do

@@ -10,8 +10,7 @@ class PagesController < ApplicationController
 
     if config['type'] == 'topic'
       read_news_topic_config config
-    elsif config['type'] == 'none'
-    else
+    elsif config['type'] != 'none'
       throw 'Invalid news type: config/news.yml'
     end
   end

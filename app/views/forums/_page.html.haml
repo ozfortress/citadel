@@ -25,6 +25,8 @@
       %li.list-group-item.bg-light
         = render 'forums/topics/listing', topic: topic
 
+- unless topic.description.empty?
+  .markdown.mb-3= present(topic).description
 
 - if threads.empty?
   = render 'forums/threads/empty'

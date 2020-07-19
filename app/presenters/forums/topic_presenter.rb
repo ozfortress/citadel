@@ -11,6 +11,12 @@ module Forums
       safe_join(crumbs, '')
     end
 
+    def description
+      # rubocop:disable Rails/OutputSafety
+      topic.description_render_cache.html_safe
+      # rubocop:enable Rails/OutputSafety
+    end
+
     def to_s
       topic.name
     end

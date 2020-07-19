@@ -4,10 +4,10 @@ EMAIL = ARGV.second
 
 class Mailer < ApplicationMailer
   def deliver_team
-    mail(to: EMAIL,
-         body: params[:body],
+    mail(to:           EMAIL,
+         body:         params[:body],
          content_type: 'text/plain',
-         subject: params[:subject])
+         subject:      params[:subject])
   end
 end
 

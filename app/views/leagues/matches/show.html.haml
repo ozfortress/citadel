@@ -8,7 +8,10 @@
     = inline_svg_tag 'open_iconic/pencil.svg', class: 'icon ml-1'
 
 %h1= present(@league).link
-%h2= match_p.round_s
+%h2
+  - if @league.divisions.size > 1
+    #{@match.division.name} -
+  = match_p.round_s
 
 - if @match.bye?
   %br

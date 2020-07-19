@@ -126,7 +126,7 @@ describe League::Roster do
       end
 
       pending_requests.each do |request|
-        expect { request.reload } .to raise_error(ActiveRecord::RecordNotFound)
+        expect { request.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

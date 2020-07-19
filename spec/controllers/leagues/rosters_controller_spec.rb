@@ -197,7 +197,7 @@ describe Leagues::RostersController do
         sign_in user
 
         patch :update, params: {
-          id: roster.id,
+          id:     roster.id,
           roster: { name: 'A', description: 'B', division_id: div2, seeding: 2, ranking: 3, notice: 'foo' },
         }
 
@@ -216,7 +216,7 @@ describe Leagues::RostersController do
         sign_in user
 
         patch :update, params: {
-          id: roster.id,
+          id:     roster.id,
           roster: { name: 'A', description: 'B', division_id: div2, seeding: 2, ranking: 3, notice: 'foo' },
         }
 
@@ -239,8 +239,7 @@ describe Leagues::RostersController do
         sign_in user
 
         patch :update, params: {
-          id: roster.id,
-          roster: { description: 'B', division_id: div2, schedule_data: { foo: 'bar' } },
+          id: roster.id, roster: { description: 'B', division_id: div2, schedule_data: { foo: 'bar' } }
         }
 
         roster.reload
@@ -254,8 +253,7 @@ describe Leagues::RostersController do
         sign_in user
 
         patch :update, params: {
-          id: roster.id,
-          roster: { name: '', description: 'B', division_id: div2 },
+          id: roster.id, roster: { name: '', description: 'B', division_id: div2 }
         }
 
         roster.reload
@@ -318,8 +316,7 @@ describe Leagues::RostersController do
         sign_in user
 
         patch :approve, params: {
-          id: roster.id,
-          roster: { name: 'A', division_id: div2.id, seeding: 2 },
+          id: roster.id, roster: { name: 'A', division_id: div2.id, seeding: 2 }
         }
 
         roster.reload
@@ -333,8 +330,7 @@ describe Leagues::RostersController do
         sign_in user
 
         patch :approve, params: {
-          id: roster.id,
-          roster: { name: '', division_id: div2.id },
+          id: roster.id, roster: { name: '', division_id: div2.id }
         }
 
         roster.reload
@@ -347,8 +343,7 @@ describe Leagues::RostersController do
         sign_in user
 
         patch :approve, params: {
-          id: roster.id,
-          roster: { name: 'A', division_id: div2.id, seeding: 2 },
+          id: roster.id, roster: { name: 'A', division_id: div2.id, seeding: 2 }
         }
 
         expect(response).to redirect_to(league_rosters_path(league))

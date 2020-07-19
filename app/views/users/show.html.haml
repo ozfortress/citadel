@@ -32,7 +32,7 @@
 
     .row.mt-2
       = link_to image_tag('logs.tf-logo.png', height: '30px'), "http://logs.tf/profile/#{@user.steam_id}",
-                title: 'logs.tf profile', target: '_blank'
+                title: 'logs.tf profile', target: :_blank, rel: :noopener
 
 .row.mb-3
   != present_collection(@titles).map(&:icon).join(' ')

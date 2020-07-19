@@ -89,10 +89,12 @@ class LeaguesController < ApplicationController
     :points_per_round_win, :points_per_round_draw, :points_per_round_loss,
     :points_per_match_win, :points_per_match_draw, :points_per_match_loss,
     :points_per_forfeit_win, :points_per_forfeit_draw, :points_per_forfeit_loss,
-    weekly_scheduler_attributes: [:id, :start_of_week, :minimum_selected, days_indecies: []],
-    tiebreakers_attributes:      [:id, :kind, :_destroy],
-    divisions_attributes:        [:id, :name, :_destroy],
-    pooled_maps_attributes:      [:id, :map_id, :_destroy]
+    {
+      weekly_scheduler_attributes: [:id, :start_of_week, :minimum_selected, { days_indecies: [] }],
+      tiebreakers_attributes:      [:id, :kind, :_destroy],
+      divisions_attributes:        [:id, :name, :_destroy],
+      pooled_maps_attributes:      [:id, :map_id, :_destroy],
+    }
   ].freeze
 
   def league_params

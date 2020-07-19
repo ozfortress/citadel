@@ -8,30 +8,31 @@ class User < ApplicationRecord
 
   EMAIL_CONFIRMATION_TIMEOUT = 1.hour
 
-  has_many :titles, -> { order(created_at: :desc) }
-  has_many :names, -> { order(created_at: :desc) }, class_name: 'NameChange'
-  has_many :notifications, -> { order(created_at: :desc) }, inverse_of: :user
-  has_many :forums_subscriptions, class_name: 'Forums::Subscription'
+  has_many :titles, -> { order(created_at: :desc) }, dependent: :destroy
+  has_many :names, -> { order(created_at: :desc) }, class_name: 'NameChange', dependent: :destroy
+  has_many :notifications, -> { order(created_at: :desc) }, inverse_of: :user, dependent: :destroy
+  has_many :forums_subscriptions, class_name: 'Forums::Subscription', dependent: :destroy
 
-  has_many :team_players, class_name: 'Team::Player'
+  has_many :team_players, class_name: 'Team::Player', dependent: :destroy
   private :team_players, :team_players=
   has_many :teams, through: :team_players
-  has_many :team_invites, class_name: 'Team::Invite'
+  has_many :team_invites, class_name: 'Team::Invite', dependent: :destroy
   has_many :team_transfers, -> { order(created_at: :desc) }, class_name: 'Team::Transfer'
 
-  has_many :roster_players, class_name: 'League::Roster::Player'
+  has_many :roster_players, class_name: 'League::Roster::Player', dependent: :restrict_with_exception
   private :roster_players, :roster_players=
   has_many :rosters, through: :roster_players, class_name: 'League::Roster'
-  has_many :roster_transfers,         class_name: 'League::Roster::Transfer'
-  has_many :roster_transfer_requests, class_name: 'League::Roster::TransferRequest'
+  has_many :roster_transfers,         class_name: 'League::Roster::Transfer', dependent: :restrict_with_exception
+  has_many :roster_transfer_requests, class_name: 'League::Roster::TransferRequest', dependent: :restrict_with_exception
 
-  has_many :comments, class_name: 'User::Comment'
+  has_many :comments, class_name: 'User::Comment', dependent: :destroy
 
-  has_many :forums_posts, class_name: 'Forums::Post', inverse_of: :created_by, foreign_key: :created_by
+  has_many :forums_posts, class_name: 'Forums::Post', inverse_of: :created_by, foreign_key: :created_by,
+                                                      dependent: :destroy
   has_many :public_forums_posts, -> { publicly_viewable }, class_name: 'Forums::Post', inverse_of: :created_by,
                                                            foreign_key: :created_by
 
-  has_many :logs, class_name: 'User::Log'
+  has_many :logs, class_name: 'User::Log', dependent: :destroy
 
   devise :rememberable, :omniauthable, omniauth_providers: [:steam]
 
@@ -122,10 +123,6 @@ class User < ApplicationRecord
 
   def aka
     names.approved.where.not(name: name)
-  end
-
-  def notify!(message, link)
-    notifications.create!(message: message, link: link)
   end
 
   def confirm

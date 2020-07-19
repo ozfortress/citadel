@@ -3,8 +3,8 @@ require 'tournament_driver'
 class League
   class Division < ApplicationRecord
     belongs_to :league, inverse_of: :divisions
-    has_many :rosters, inverse_of: :division, class_name: 'Roster'
-    has_many :matches, through: :rosters, source: :home_team_matches, class_name: 'Match'
+    has_many :rosters, inverse_of: :division, class_name: 'Roster', dependent: :destroy
+    has_many :matches, through: :rosters, source: :home_team_matches, class_name: 'Match', dependent: :destroy
 
     has_many :transfer_requests, through: :rosters, class_name: 'Roster::TransferRequest'
 

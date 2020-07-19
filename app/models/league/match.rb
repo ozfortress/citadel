@@ -84,7 +84,7 @@ class League
       update_cache
 
       # rubocop:disable Rails/SkipsModelValidations
-      update_columns(changes.map { |key, values| [key, values[1]] }.to_h) if changed?
+      update_columns(changes.transform_values { |values| values[1] }) if changed?
       # rubocop:enable Rails/SkipsModelValidations
     end
 

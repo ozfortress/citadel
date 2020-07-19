@@ -3,6 +3,42 @@ require 'rails_helper'
 describe Users::NotificationsController do
   let(:user) { create(:user) }
 
+  describe 'POST #create' do
+    let(:admin) { create(:user) }
+
+    it 'succeeds for admin' do
+      admin.grant(:edit, :users)
+      sign_in admin
+
+      post :create, params: {
+        user_id: user.id, notification: { message: 'Test Notify', link: 'http://example.com/test' }
+      }
+
+      expect(user.notifications).to_not be_empty
+      notification = user.notifications.first
+      expect(notification.message).to eq('Test Notify')
+      expect(notification.link).to eq('http://example.com/test')
+    end
+
+    it 'fails for non-admin' do
+      sign_in admin
+
+      post :create, params: {
+        user_id: user.id, notification: { message: 'Test Notify', link: 'http://example.com/test' }
+      }
+
+      expect(user.notifications).to be_empty
+    end
+
+    it 'fails for unauthenticated user' do
+      post :create, params: {
+        user_id: user.id, notification: { message: 'Test Notify', link: 'http://example.com/test' }
+      }
+
+      expect(user.notifications).to be_empty
+    end
+  end
+
   context 'single notification' do
     let!(:notification) { create(:user_notification, user: user) }
 

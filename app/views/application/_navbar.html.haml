@@ -35,8 +35,9 @@
     = link_to('Book a Server', :book_server, class: 'dropdown-item')
     = link_to('Newbie Guide', :newbie_guide, class: 'dropdown-item')
     = link_to('Transfers', :transfers, class: 'dropdown-item')
-    = link_to('Verify Rosters', 'https://verify.ozfortress.com', target: :_blank, class: 'dropdown-item')
-    = link_to('Demos', 'https://demos.ozfortress.com', target: :_blank, class: 'dropdown-item')
+    = link_to('Verify Rosters', 'https://verify.ozfortress.com', target: :_blank, rel: :noopener,
+                                                                 class: 'dropdown-item')
+    = link_to('Demos', 'https://demos.ozfortress.com', target: :_blank, rel: :noopener, class: 'dropdown-item')
 
 - if user_signed_in? && current_user.admin?
   %li.nav-item{ class: navbar_class(:admin) }

@@ -154,16 +154,14 @@ module Leagues
     def match_params
       params.require(:match).permit(:home_team_id, :away_team_id, :has_winner, :allow_round_draws,
                                     :round_name, :round_number, :notice,
-                                    pick_bans_attributes: [:id, :_destroy, :kind,
-                                                           :team, :deferrable],
+                                    pick_bans_attributes: [:id, :_destroy, :kind, :team, :deferrable],
                                     rounds_attributes:    [:id, :_destroy, :map_id])
     end
 
     def create_round_params
       params.require(:match).permit(:division_id, :generate_kind, :has_winner, :allow_round_draws,
                                     :round_name, :round_number, :notice,
-                                    pick_bans_attributes: [:id, :_destroy, :kind,
-                                                           :team, :deferrable],
+                                    pick_bans_attributes: [:id, :_destroy, :kind, :team, :deferrable],
                                     rounds_attributes:    [:id, :_destroy, :map_id])
     end
 

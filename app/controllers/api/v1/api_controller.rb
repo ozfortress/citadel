@@ -19,9 +19,10 @@ module API
       end
 
       def handle_error(error)
-        if error.is_a? ActiveRecord::RecordNotFound
+        case error
+        when ActiveRecord::RecordNotFound
           render_not_found
-        elsif error.is_a? ActionController::RoutingError
+        when ActionController::RoutingError
           render_not_found message: 'Unknown route'
         else
           throw error if Rails.env.test?

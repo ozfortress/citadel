@@ -26,7 +26,7 @@
         = f.primary 'Save'
 
 - if user_can_edit_users?
-  .card.border-danger
+  .card.border-danger.mb-3
     .card-header.text-white.bg-danger Admin Only
     .card-body
       = bootstrap_form_for @user, method: :patch do |f|
@@ -37,4 +37,15 @@
           = link_to 'Logs', user_logs_path(@user), class: 'btn btn-warning mr-2'
           = link_to 'Cancel', user_path(@user), class: 'btn btn-link mr-2'
           = f.primary 'Save'
+
+    .card-body
+      %h5 Send Notification
+      - notification = @user.notifications.new
+      = bootstrap_form_for notification, url: user_notifications_path(user_id: @user.id), as: :notification,
+                                         method: :post do |f|
+        = render 'users/notifications/form', f: f
+
+        .d-flex.justify-content-end
+          = link_to 'Cancel', user_path(@user), class: 'btn btn-link mr-2'
+          = f.primary 'Send Notification'
 

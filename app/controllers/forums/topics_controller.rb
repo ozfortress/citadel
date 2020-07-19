@@ -102,7 +102,7 @@ module Forums
 
     def topic_params
       params.require(:forums_topic).permit(:parent_id, :name, :locked, :pinned,
-                                           :hidden, :default_locked, :default_hidden)
+                                           :hidden, :default_locked, :default_hidden, :description)
     end
 
     def require_can_manage_parent

@@ -26,7 +26,7 @@ module Forums
         url = forums_thread_path(thread, page: Post.page_of(post), anchor: "post_#{post.id}")
 
         users.each do |user|
-          Users::NotificationService.call(user, message, url)
+          Users::NotificationService.call(user, message: message, link: url)
         end
       end
     end

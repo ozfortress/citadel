@@ -5,8 +5,16 @@ Rails:
 Rails/ApplicationRecord:
   Exclude:
     - 'lib/**/*'
+Rails/HelperInstanceVariable:
+  # Sometimes useful
+  Enabled: false
+Bundler/OrderedGems:
+  TreatCommentsAsGroupSeparators: true
 Layout/LineLength:
   Max: 120
+Layout/HashAlignment:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
 Metrics/AbcSize:
   Max: 30
 Metrics/ClassLength:
@@ -17,6 +25,8 @@ Metrics/CyclomaticComplexity:
   Max: 8
 Metrics/BlockLength:
   Enabled: false
+Metrics/MethodLength:
+  Max: 16
 Style/Documentation:
   Enabled: false
 Style/ModuleFunction:
@@ -57,10 +67,6 @@ Rails/SkipsModelValidations:
 Style/GuardClause:
   Enabled: false
 
-# It makes much more sense to group them according to purpose than alphabetically
-Bundler/OrderedGems:
-  Enabled: false
-
 # This doesn't always make sense
 Rails/InverseOf:
   Enabled: false
@@ -78,54 +84,6 @@ AllCops:
   DisplayCopNames: true
   TargetRubyVersion: 2.5
   TargetRailsVersion: 5.2
+  # Enable new cops by default
+  NewCops: enable
 
-# TODO: Remove once rubocop fixes some bugs
-Rails/HasManyOrHasOneDependent:
-  Enabled: false
-
-# TODO: Remove once rubocop fixes some bugs
-Layout/HashAlignment:
-  Enabled: false
-
-# TODO: Fix
-Rails/LinkToBlank:
-  Enabled: false
-Rails/HelperInstanceVariable:
-  Enabled: false
-
-# New
-Layout/EmptyLinesAroundAttributeAccessor:
-  Enabled: false
-Layout/SpaceAroundMethodCallOperator:
-  Enabled: false
-Lint/DeprecatedOpenSSLConstant:
-  Enabled: false
-Lint/RaiseException:
-  Enabled: false
-Lint/StructNewOverride:
-  Enabled: false
-Style/ExponentialNotation:
-  Enabled: false
-Style/HashEachMethods:
-  Enabled: false
-Style/HashTransformKeys:
-  Enabled: false
-Style/HashTransformValues:
-  Enabled: false
-Style/SlicingWithRange:
-  Enabled: false
-
-Lint/MixedRegexpCaptureTypes:
-  Enabled: true
-Style/AccessorGrouping:
-  Enabled: true
-Style/BisectedAttrAccessor:
-  Enabled: true
-Style/RedundantAssignment:
-  Enabled: true
-Style/RedundantFetchBlock:
-  Enabled: true
-Style/RedundantRegexpCharacterClass:
-  Enabled: true
-Style/RedundantRegexpEscape:
-  Enabled: true

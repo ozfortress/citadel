@@ -6,7 +6,7 @@ class Team < ApplicationRecord
   has_many :invites, dependent: :destroy
   has_many :players,   -> { order(created_at: :asc) }, dependent: :destroy
   has_many :transfers, -> { order(created_at: :desc) }, dependent: :destroy
-  has_many :rosters, class_name: 'League::Roster', inverse_of: :team
+  has_many :rosters, class_name: 'League::Roster', inverse_of: :team, dependent: :restrict_with_exception
   has_many :users, through: :players
 
   has_many :home_team_matches, through: :rosters, class_name: 'League::Match',

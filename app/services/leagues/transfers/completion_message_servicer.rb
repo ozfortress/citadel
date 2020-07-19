@@ -7,7 +7,7 @@ module Leagues
         msg  = message user_transfer_msg(request, roster)
         link = team_path(roster.team)
 
-        Users::NotificationService.call(user, msg, link)
+        Users::NotificationService.call(user, message: msg, link: link)
       end
 
       def user_transfer_msg(request, roster)
@@ -23,7 +23,7 @@ module Leagues
         link = team_path(roster.team)
 
         User.which_can(:edit, roster.team).each do |captain|
-          Users::NotificationService.call(captain, msg, link)
+          Users::NotificationService.call(captain, message: msg, link: link)
         end
       end
 

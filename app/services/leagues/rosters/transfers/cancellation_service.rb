@@ -29,7 +29,7 @@ module Leagues
                 "#{roster.name} for #{roster.league.name} has been cancelled"
           link = team_path(roster.team)
 
-          Users::NotificationService.call(user, msg, link)
+          Users::NotificationService.call(user, message: msg, link: link)
         end
       end
     end

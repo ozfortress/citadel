@@ -6,7 +6,7 @@ describe Users::NotificationService do
   before { ActionMailer::Base.deliveries.clear }
 
   it 'notifies a user' do
-    subject.call(user, 'msg', 'link')
+    subject.call(user, message: 'msg', link: 'link')
 
     expect(user.notifications.size).to eq(1)
     notification = user.notifications.first
@@ -18,7 +18,7 @@ describe Users::NotificationService do
   it 'sends an email for confirmed user emails' do
     user.update!(email: 'foo@bar.com', confirmed_at: Time.current)
 
-    subject.call(user, 'msg', 'link')
+    subject.call(user, message: 'msg', link: 'link')
 
     expect(ActionMailer::Base.deliveries.size).to eq(1)
     mail = ActionMailer::Base.deliveries.first
@@ -28,7 +28,7 @@ describe Users::NotificationService do
   it "doesn't send an email for unconfirmed user emails" do
     user.update!(email: 'foo@bar.com')
 
-    subject.call(user, 'msg', 'link')
+    subject.call(user, message: 'msg', link: 'link')
 
     expect(ActionMailer::Base.deliveries).to be_empty
   end
