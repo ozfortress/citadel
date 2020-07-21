@@ -22,7 +22,7 @@
 
     = f.number_field :round_number, label: 'Round Number (Used for ordering)'
     = f.text_field :round_name, label: 'Round Name (Display Name)'
-    = f.markdown_editor :notice, id: dom_id(div), rows: 6
+    = f.markdown_editor :notice, id: dom_id(div), rows: 6, no_escape: true
 
 .card.mb-3
   .card-header

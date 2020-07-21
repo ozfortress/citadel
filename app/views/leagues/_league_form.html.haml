@@ -3,7 +3,7 @@
   .card-body
     = f.select :format_id, format_options
     = f.text_field :name
-    = f.markdown_editor :description, rows: 10
+    = f.markdown_editor :description, rows: 10, no_escape: true
     = f.text_field :category
 
 .card.mb-3
