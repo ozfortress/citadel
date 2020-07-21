@@ -20,6 +20,10 @@ class UserPresenter < BasePresenter
     user.created_at.strftime('%c')
   end
 
+  def created_at_date
+    user.created_at.strftime('%a %b %e %Y')
+  end
+
   def steam_profile_url
     "http://steamcommunity.com/profiles/#{user.steam_64}"
   end
