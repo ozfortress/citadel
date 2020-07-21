@@ -56,7 +56,7 @@
     .card-header.bg-warning Notice
     .card-body.markdown= user_p.notice
 
-.nav.nav-tabs#tabs{ role: 'tablist' }
+.nav.nav-tabs{ role: 'tablist' }
   %a.nav-item.nav-link.active#info-tab{ href: '#info', role: 'tab', data: { toggle: 'tab' },
                                         aria: { controls: 'info', selected: 'true' } }
     Info
@@ -68,7 +68,7 @@
                                    aria: { controls: 'forums', selected: 'false' } }
     Forums
 
-.tab-content.mt-3#tab-content
+.tab-content.mt-3
   .tab-pane.show.active#info{ role: 'tabpanel', aria: { labelledby: 'info-tab' } }
     = render 'users/show_info', user: @user, user_p: user_p, matches: @matches,
                                 teams: @teams, team_transfers: @team_transfers
