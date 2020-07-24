@@ -2,7 +2,7 @@ class Format < ApplicationRecord
   include MarkdownRenderCaching
 
   belongs_to :game
-  has_many   :leagues, dependent: :restrict_with_exception
+  has_many :leagues, dependent: :restrict_with_error
 
   validates :name, presence: true, uniqueness: true, length: { in: 1..128 }
   validates :description, presence: true

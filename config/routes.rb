@@ -25,9 +25,9 @@ Rails.application.routes.draw do
   post 'markdown_preview', to: 'markdown#markdown_preview'
 
   namespace :meta do
-    resources :games, except: [:destroy]
-    resources :formats, except: [:destroy]
-    resources :maps, except: [:destroy]
+    resources :games
+    resources :formats
+    resources :maps
   end
 
   resources :leagues do

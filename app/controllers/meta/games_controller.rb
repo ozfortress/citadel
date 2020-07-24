@@ -37,7 +37,13 @@ module Meta
       end
     end
 
-    # TODO: Delete
+    def destroy
+      if @game.destroy
+        redirect_to meta_games_path
+      else
+        render :edit
+      end
+    end
 
     private
 

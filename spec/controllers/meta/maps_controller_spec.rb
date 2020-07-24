@@ -126,5 +126,29 @@ describe Meta::MapsController do
         expect(response).to redirect_to(root_path)
       end
     end
+
+    describe 'DELETE #destroy' do
+      it 'succeeds for authorized user' do
+        sign_in @admin
+
+        delete :destroy, params: { id: map.id }
+
+        expect(Map.all).to be_empty
+      end
+
+      it 'fails for unauthorized user' do
+        sign_in @user
+
+        delete :destroy, params: { id: map.id }
+
+        expect(Map.all).to_not be_empty
+      end
+
+      it 'fails for unauthenticated user' do
+        delete :destroy, params: { id: map.id }
+
+        expect(Map.all).to_not be_empty
+      end
+    end
   end
 end
