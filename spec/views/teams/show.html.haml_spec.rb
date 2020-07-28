@@ -18,9 +18,10 @@ describe 'teams/show' do
     @active_rosters << build_stubbed(:league_roster, disbanded: true)
 
     past_div = build_stubbed(:league_division, league: completed_league)
-    @past_rosters = []
-    @past_rosters << build_stubbed(:league_roster, division: past_div)
-    @past_rosters << build_stubbed(:league_roster, division: past_div, disbanded: true)
+    @past_rosters = [
+      build_stubbed(:league_roster, division: past_div),
+      build_stubbed(:league_roster, division: past_div, disbanded: true),
+    ]
 
     roster = @active_rosters.first
     @matches = []
@@ -48,14 +49,23 @@ describe 'teams/show' do
     roster_users = (@active_rosters + @past_rosters).map(&:players).reduce([], :+)
     @users = (players + transfers_in + transfers_out + roster_users).map(&:user).index_by(&:id)
 
+    @active_roster_matches = {
+      @active_rosters[0] => @matches,
+      @active_rosters[2] => @matches,
+    }
+
+    @past_roster_matches = {
+      @past_rosters[1] => @matches,
+    }
+
     assign(:team, team)
     assign(:invite, invite)
     assign(:players, players)
     assign(:transfers, transfers_in + transfers_out)
     assign(:active_rosters, @active_rosters)
-    assign(:active_roster_matches, @active_rosters.map { |key| [key, @matches] }.to_h)
+    assign(:active_roster_matches, @active_roster_matches)
     assign(:past_rosters, @past_rosters)
-    assign(:past_roster_matches, @past_rosters.map { |key| [key, @matches] }.to_h)
+    assign(:past_roster_matches, @past_roster_matches)
     assign(:upcoming_matches, @matches)
     assign(:users, @users)
   end
