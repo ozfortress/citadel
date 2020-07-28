@@ -2,7 +2,7 @@
   %h5 Active Rosters
   - active_rosters.each do |roster|
     - roster_p = present(roster)
-    - matches = active_roster_matches[roster]
+    - matches = active_roster_matches[roster] || []
 
     - if roster_p.notice != ''
       .alert.alert-warning.mb-3
@@ -16,6 +16,6 @@
 
   - past_rosters.each do |roster|
     - roster_p = present(roster)
-    - matches = past_roster_matches[roster]
+    - matches = past_roster_matches[roster] || []
 
     = render 'teams/show_roster', team: team, roster: roster, roster_p: roster_p, users: users, matches: matches
