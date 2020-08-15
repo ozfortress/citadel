@@ -32,9 +32,11 @@ module BootstrapForm
 
     def tab_content(id, field, options)
       # Input tab
-      html_options = { class: 'wmd-input form-control', id: "wmd-input-#{id}" }
+      html_options = { class: ['wmd-input form-control'], id: "wmd-input-#{id}" }
+      html_options[:class] << 'is-invalid' if error? field
 
       input_text_area = text_area_without_bootstrap(field, options.merge(html_options))
+      input_text_area.concat generate_error(field)
 
       input = content_tag(:div, input_text_area, id: "wmd-button-bar-#{id}")
 
