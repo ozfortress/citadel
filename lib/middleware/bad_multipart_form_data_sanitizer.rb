@@ -3,8 +3,9 @@ class BadMultipartFormDataSanitizer
     @app = app
   end
 
+  # :reek:FeatureEnvy
   def call(env)
-    if env['CONTENT_TYPE'] =~ /multipart\/form-data/
+    if env['CONTENT_TYPE'] =~ %r{multipart/form-data}
       begin
         Rack::Multipart.parse_multipart(env)
       rescue EOFError
