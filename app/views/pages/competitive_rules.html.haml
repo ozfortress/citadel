@@ -1,0 +1,5 @@
+- content_for(:title) { 'Competitive Rules' }
+
+-# rubocop:disable Rails/OutputSafety
+= raw File.read(Rails.root.join('public', 'competitive_rules.html.txt'))
+-# rubocop:enable Rails/OutputSafety

@@ -1,0 +1,5 @@
+- content_for(:title) { 'Guides' }
+
+-# rubocop:disable Rails/OutputSafety
+= raw File.read(Rails.root.join('public', 'guides.html.txt'))
+-# rubocop:enable Rails/OutputSafety
