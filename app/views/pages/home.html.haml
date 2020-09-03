@@ -4,10 +4,9 @@
   - @threads.each do |thread|
     - post = @news_posts[thread]
 
-    %hr
-
-    .mb-4
-      = render 'forums/posts/news_post', post: post
+    .news
+      .mb-4
+        = render 'forums/posts/news_post', post: post
 
   - if @more_threads
     .row.justify-content-center.my-5
@@ -16,6 +15,6 @@
   .jumbotron
     %h1 Welcome to Citadel
 
-    %p.lead ESports League Framework
+    %p.lead Uh oh, you shouldn't be seeing this!
     %hr
-    %p View the source on #{link_to 'Github', 'https://github.com/ozfortress/citadel'}
+    %p Please report this to an administrator via our Discord ;~)

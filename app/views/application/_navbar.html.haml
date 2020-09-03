@@ -1,17 +1,41 @@
 %li.nav-item{ class: navbar_class(:home) }
   = link_to('Home', :pages_home, class: 'nav-link')
 
-%li.nav-item{ class: navbar_class(:users) }
-  = link_to('Users', :users, class: 'nav-link')
+%li.nav-item.dropdown
+  %a.nav-link.dropdown-toggle{ role: :button, data: { toggle: :dropdown } }
+    League
+    %span.caret
 
-%li.nav-item{ class: navbar_class(:teams) }
-  = link_to('Teams', :teams, class: 'nav-link')
+  .dropdown-menu.dropdown-menu-animated
+    = link_to('Seasons', :leagues, class: 'dropdown-item')
+    = link_to('Teams', :teams, class: 'dropdown-item')
+    = link_to('Users', :users, class: 'dropdown-item')
 
-%li.nav-item{ class: navbar_class(:forums) }
-  = link_to('Forums', :forums, class: 'nav-link')
+%li.nav-item.dropdown
+  %a.nav-link.dropdown-toggle{ role: :button, data: { toggle: :dropdown } }
+    Community
+    %span.caret
 
-%li.nav-item{ class: navbar_class(:leagues) }
-  = link_to('Leagues', :leagues, class: 'nav-link')
+  .dropdown-menu.dropdown-menu-animated
+    = link_to('Guidelines', :community_guidelines, class: 'dropdown-item')
+    = link_to('Discord', 'https://discord.rsl.tf', target: :_blank, rel: :noopener, class: 'dropdown-item')
+    = link_to('Steam Group', 'https://steam.rsl.tf', target: :_blank, rel: :noopener, class: 'dropdown-item')
+    = link_to('Twitter', 'https://twitter.rsl.tf', target: :_blank, rel: :noopener, class: 'dropdown-item')
+
+%li.nav-item.dropdown
+  %a.nav-link.dropdown-toggle{ role: :button, data: { toggle: :dropdown } }
+    Help
+    %span.caret
+
+  .dropdown-menu.dropdown-menu-animated
+    = link_to('Competitive Rules', :competitive_rules, class: 'dropdown-item')
+    = link_to('Guides', :guides, class: 'dropdown-item')
+    = link_to('Infractions', :infractions, class: 'dropdown-item')
+    = link_to('Staff', :staff, class: 'dropdown-item')
+
+- if user_signed_in? && current_user.admin?
+  %li.nav-item{ class: navbar_class(:forums) }
+    = link_to('Forums', :forums, class: 'nav-link')
 
 - if user_signed_in? && current_user.admin?
   %li.nav-item{ class: navbar_class(:admin) }

@@ -19,18 +19,23 @@
 @import 'pagedown_bootstrap'
 @import 'font-awesome'
 
+// Font import
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap')
+
 // Project styles
 @import 'navbar'
 @import 'users'
 @import 'forums'
 @import 'leagues'
 @import 'markdown'
+@import 'news'
 
 html
   font-size: 14px
 
 body
   padding-top: $navbar-height
+  font-family: 'Lato', sans-serif
 
 h1, h2, h3, h4, h5
   word-break: break-all
@@ -140,3 +145,47 @@ ul.list-group.list-dynamic-add
 // Workaround for webkit having shit flexbox support
 .webkit-min-height-fit-content
   min-height: fit-content
+
+//
+// Custom CSS
+//
+
+body
+  background-color: #12171c
+  color: #f0f0f0
+
+#content
+  padding-top: 14px
+
+h1
+  text-transform: uppercase
+  font-weight: 800
+
+h2
+  text-transform: uppercase
+  font-weight: 600
+
+h3
+  text-transform: uppercase
+  font-weight: 500
+
+h4
+  text-transform: uppercase
+
+a
+  color: #699ff5
+
+pre
+  padding: 10px
+  background-color: #2e2e2e
+  color: #f0f0f0
+
+blockquote
+  background-color: rgba(18,18,18,0.3)
+  border-color: rgba(18,18,18,0.7)
+  border-right: none
+  border-top: none
+  border-bottom: none
+
+#twitter-card
+  background: none

@@ -18,6 +18,11 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   get 'pages/home'
+  get 'competitive_rules', to: 'pages#competitive_rules'
+  get 'staff', to: 'pages#staff'
+  get 'guides', to: 'pages#guides'
+  get 'infractions', to: 'pages#infractions'
+  get 'community_guidelines', to: 'pages#community_guidelines'
 
   get 'admin', to: 'admin#index'
   get 'statistics',  to: 'admin#statistics', as: 'admin_statistics'
