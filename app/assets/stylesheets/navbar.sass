@@ -27,6 +27,10 @@ $notification-hover-background-color: #eeeeee
 #notifications-dropdown-menu
   @extend .dropdown-menu-animated
   width: 500px
+  color: #fff
+
+.black
+  background-color: #000
 
   @include media-breakpoint-down(sm)
     position: fixed
@@ -61,6 +65,18 @@ $notification-hover-background-color: #eeeeee
 
 // Misc -------------------- //
 
+.dropdown-menu
+  background-color: #000
+  border-radius: 0
+  color: #fff
+
+  .dropdown-item
+    color: rgba(255, 255, 255, 0.5)
+
+  .dropdown-item:hover
+    background: none
+    color: rgba(255, 255, 255, 0.8)
+
 .dropdown-menu-animated
   display: block
   visibility: hidden
@@ -74,7 +90,7 @@ $notification-hover-background-color: #eeeeee
     transform: translateY(0)
 
 .navbar-dark
-  background-color: #292F33
+  background-color: #000
 
 .nav-item
   text-transform: uppercase
