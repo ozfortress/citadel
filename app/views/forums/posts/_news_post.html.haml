@@ -5,15 +5,14 @@
   .card
     %div{ id: "post_#{post.id}" }
 
-    .row.card-header
+    .row.news-header
       .col
-        %span.small.text-muted.ml-1= post_p.created_at
-        %span.text-muted
-          &nbsp; -
-        %span.small.text-muted.ml-1 #{post_p.created_at_in_words} ago
-
         %h2.mb-3
           = link_to post.thread.title, forums_thread_path(post.thread)
+        %span.text-muted.ml-1= post_p.created_at
+        %span.text-muted
+          &nbsp; -
+        %span.text-muted.ml-1 #{post_p.created_at_in_words} ago
 
     .card-body.markdown
       = post_p.content

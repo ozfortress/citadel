@@ -20,7 +20,7 @@
 @import 'font-awesome'
 
 // Font import
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap')
 
 // Project styles
 @import 'navbar'
@@ -35,7 +35,7 @@ html
 
 body
   padding-top: $navbar-height
-  font-family: 'Lato', sans-serif
+  font-family: 'Roboto Condensed', sans-serif
 
 h1, h2, h3, h4, h5
   word-break: break-all
@@ -142,6 +142,15 @@ ul.list-group.list-dynamic-add
       input, select
         flex: 1
 
+ul.list-group
+  border-radius: 0
+  color: #fff
+
+li.list-group-item
+  border-radius: 0
+  background-color: rgba(18,18,18,0.7)
+  color: #fff
+
 // Workaround for webkit having shit flexbox support
 .webkit-min-height-fit-content
   min-height: fit-content
@@ -175,6 +184,9 @@ h4
 a
   color: #699ff5
 
+a:hover
+  text-decoration: none
+
 pre
   padding: 10px
   background-color: #2e2e2e
@@ -189,3 +201,50 @@ blockquote
 
 #twitter-card
   background: none
+  border-radius: 0
+
+.wmd-input
+  background-color: rgba(18,18,18,0.7)
+
+.form-control
+  background-color: rgba(18,18,18,0.7)
+  border: none
+  border-left: 3px #699ff5
+  border-radius: 0
+  color: #fff
+
+  svg
+    color: #fff
+
+hr
+  color: #rgba(255,255,255,0.3)
+
+.card
+  background-color: rgba(18,18,18,0.3)
+  border-radius: 0
+
+.card-header
+  background-color: rgba(18,18,18,0.7)
+  border-radius: 0
+
+.alert
+  background-color: rgba(18,18,18,0.3)
+
+i
+  color: #fff
+
+.custom-file
+  background-color: rgba(18,18,18,0.3)
+
+.btn
+  border-radius: 0
+  font-weight: 700
+  font-size: 1rem
+
+.nav-tabs
+  border-radius: 0
+  background-color: rgba(18,18,18,0.7)
+
+.nav-tabs .active
+  border-radius: 0
+  background-color: rgba(18,18,18,0.7)

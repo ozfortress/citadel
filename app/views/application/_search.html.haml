@@ -7,7 +7,7 @@
 
   .input-group
     = yield
-    = text_field_tag(:q, params[:q], placeholder: 'Search', class: 'form-control border-right-0 border')
+    = text_field_tag(:q, params[:q], placeholder: 'Search', class: 'form-control')
     %span.input-group-append
-      = button_tag(type: 'submit', class: 'btn btn-outline-light border-left-0 border') do
+      = button_tag(type: 'submit', class: 'btn form-control') do
         = inline_svg_tag 'open_iconic/magnifying-glass.svg', class: 'icon'

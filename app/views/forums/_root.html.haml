@@ -17,7 +17,7 @@
 - unless topics.empty?
   %ul.list-group.mb-3
     - topics.each do |topic|
-      %li.list-group-item.bg-light
+      %li.list-group-item
         = render 'forums/topics/listing', topic: topic
 
 

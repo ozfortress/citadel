@@ -7,10 +7,10 @@
         %small.row.text-muted
           Topic
 
-        .row.text-dark
+        .row
           %b= topic_p.to_s
 
-    .col-auto.text-dark
+    .col-auto.text-muted
       = pluralize(topic.visible_threads_count, 'Thread')
 
     .col-auto.pl-0

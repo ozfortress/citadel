@@ -2,7 +2,7 @@
 
 = render 'forums/head', object: @thread, subheading: 'Editing thread'
 
-.card.bg-light.mb-3
+.card.mb-3
   .card-body
     = bootstrap_form_for @thread do |f|
       = render 'form', f: f, post: @post
