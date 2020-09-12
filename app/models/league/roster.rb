@@ -46,8 +46,8 @@ class League
       completed = League.statuses[:completed]
       includes(division: :league).where(leagues: { status: completed })
     }
-    scope :ordered, -> { order(placement: :asc) }
-    scope :seeded, -> { order(seeding: :asc) }
+    scope :ordered, -> { order(placement: :asc, id: :asc) }
+    scope :seeded, -> { order(seeding: :asc, id: :asc) }
 
     # rubocop:disable Rails/SkipsModelValidations
     after_create { League.increment_counter(:rosters_count, league.id) }
