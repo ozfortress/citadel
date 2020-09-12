@@ -28,7 +28,8 @@ class League
                 h 'Left '
               end
         out += roster.link
-        out + " in #{transfer.division.name} on #{transfer.created_at.strftime('%c')}"
+        out += " in #{transfer.division.name}" if roster.approved?
+        out + " on #{transfer.created_at.strftime('%c')}"
       end
     end
   end
