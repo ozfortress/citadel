@@ -4,8 +4,10 @@ class AddPlacementsToLeagueRosters < ActiveRecord::Migration[5.2]
 
     reversible do |dir|
       dir.up do
-        League::Roster.find_each do |roster|
-          roster.update_match_counters!
+        League.find_each do |league|
+          league.divisions.each do |division|
+            Leagues::Rosters::ScoreUpdatingService.call(league, division)
+          end
         end
       end
     end
