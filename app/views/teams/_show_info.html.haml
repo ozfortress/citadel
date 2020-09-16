@@ -13,12 +13,14 @@
 - unless active_rosters.empty?
   %h5 Active Rosters
   %ul.list-group.list-group-flush.mb-3
-    - present_collection(active_rosters).each do |roster|
+    - active_rosters.each do |roster|
+      - roster_p = present(roster)
+
       %li.list-group-item
-        = roster.team_listing
+        = roster_p.team_listing
 
         - if user_can_manage_transfers?(roster)
-          = link_to edit_roster_path(roster.id), class: 'btn btn-secondary pull-right' do
+          = link_to edit_roster_path(roster_p.id), class: 'btn btn-secondary pull-right' do
             Manage
             = inline_svg_tag 'open_iconic/cog.svg', class: 'icon ml-1'
 
