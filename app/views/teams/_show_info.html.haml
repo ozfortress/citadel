@@ -17,8 +17,9 @@
       %li.list-group-item
         = roster.team_listing
 
-        = link_to edit_roster_path(roster.id), class: 'btn btn-secondary pull-right' do
-          Manage
-          = inline_svg_tag 'open_iconic/cog.svg', class: 'icon ml-1'
+        - if user_can_manage_transfers?(roster)
+          = link_to edit_roster_path(roster.id), class: 'btn btn-secondary pull-right' do
+            Manage
+            = inline_svg_tag 'open_iconic/cog.svg', class: 'icon ml-1'
 
 
