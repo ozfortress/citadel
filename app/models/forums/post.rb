@@ -9,7 +9,7 @@ module Forums
 
     has_many :edits, class_name: 'PostEdit', inverse_of: :post, dependent: :delete_all
 
-    validates :content, presence: true, length: { in: 10..10_000 }
+    validates :content, presence: true, length: { in: 10..50_000 }
     caches_markdown_render_for :content
 
     scope :publicly_viewable, -> { includes(:thread).where(forums_threads: { hidden: false }) }
