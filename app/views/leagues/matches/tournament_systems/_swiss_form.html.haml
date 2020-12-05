@@ -8,6 +8,12 @@
                     checked: swiss_tournament[:pair_options][:allow_duplicates]
     Allow Duplicates
 
+.checkbox
+  %label
+    = check_box_tag 'swiss_tournament[allow_unconfirmed_matches]',
+                    checked: swiss_tournament[:allow_unconfirmed_matches]
+    Allow Unconfirmed Matches
+
 .form-group
   %label.control-label Push BYE Matches to Side
   = select_tag 'swiss_tournament[pair_options][push_byes_to]', swiss_push_byes_to_select, class: 'form-control'

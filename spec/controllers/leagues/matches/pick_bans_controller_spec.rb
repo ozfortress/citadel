@@ -11,20 +11,30 @@ describe Leagues::Matches::PickBansController do
       user.grant(:edit, pick_ban.league)
       sign_in user
 
+      away_captain = create(:user)
+      away_captain.grant(:edit, match.away_team.team)
+
       patch :submit, params: { id: pick_ban.id, pick_ban: { map_id: map.id } }
 
       expect(match.reload.rounds.length).to eq(1)
       expect(response).to redirect_to(match_path(match))
+      expect(away_captain.notifications.first.message).to include('picked')
+      expect(away_captain.notifications.first.message).to include(match.home_team.name)
     end
 
     it 'succeeds for authorized captain on home_team' do
       user.grant(:edit, match.home_team.team)
       sign_in user
 
+      away_captain = create(:user)
+      away_captain.grant(:edit, match.away_team.team)
+
       patch :submit, params: { id: pick_ban.id, pick_ban: { map_id: map.id } }
 
       expect(match.reload.rounds.length).to eq(1)
       expect(response).to redirect_to(match_path(match))
+      expect(away_captain.notifications.first.message).to include('picked')
+      expect(away_captain.notifications.first.message).to include(match.home_team.name)
     end
 
     it 'redirects for authorized captain on away_team' do
@@ -59,6 +69,9 @@ describe Leagues::Matches::PickBansController do
       user.grant(:edit, pick_ban.league)
       sign_in user
 
+      away_captain = create(:user)
+      away_captain.grant(:edit, match.away_team.team)
+
       patch :defer, params: { id: pick_ban.id }
 
       match.reload
@@ -68,12 +81,18 @@ describe Leagues::Matches::PickBansController do
       expect(match.pick_bans[1].away_team?).to be(true)
       expect(match.rounds).to be_empty
       expect(response).to redirect_to(match_path(match))
+      expect(away_captain.notifications).to_not be_empty
+      expect(away_captain.notifications.first.message).to include('pick')
+      expect(away_captain.notifications.first.message).to include(match.home_team.name)
     end
 
     it 'succeeds for authorized captain on home_team' do
       user.grant(:edit, match.home_team.team)
       sign_in user
 
+      away_captain = create(:user)
+      away_captain.grant(:edit, match.away_team.team)
+
       patch :defer, params: { id: pick_ban.id }
 
       match.reload
@@ -83,6 +102,8 @@ describe Leagues::Matches::PickBansController do
       expect(match.pick_bans[1].away_team?).to be(true)
       expect(match.rounds).to be_empty
       expect(response).to redirect_to(match_path(match))
+      expect(away_captain.notifications.first.message).to include('pick')
+      expect(away_captain.notifications.first.message).to include(match.home_team.name)
     end
 
     it 'redirects for authorized captain on away_team' do
