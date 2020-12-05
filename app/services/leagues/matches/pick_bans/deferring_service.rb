@@ -5,21 +5,22 @@ module Leagues
         include BaseService
 
         def call(pick_ban, user)
-          old_pick_ban = pick_ban.dup
+          kind = pick_ban.kind
+
           pick_ban.transaction do
             pick_ban.defer!(user)
 
-            notify_captains!(old_pick_ban)
+            notify_captains!(pick_ban, kind)
           end
         end
 
         private
 
-        def notify_captains!(pick_ban)
-          msg = "#{pick_ban.other_roster.name} deferred their map #{pick_ban.kind}"
+        def notify_captains!(pick_ban, kind)
+          msg = "#{pick_ban.roster.name} deferred their map #{kind}"
           link = match_path(pick_ban.match)
 
-          User.which_can(:edit, pick_ban.roster.team).each do |captain|
+          User.which_can(:edit, pick_ban.other_roster.team).each do |captain|
             Users::NotificationService.call(captain, message: msg, link: link)
           end
         end
