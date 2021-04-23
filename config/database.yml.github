@@ -1,0 +1,7 @@
+test:
+  adapter: postgresql
+  encoding: utf-8
+  pool: 5
+  username: citadel
+  password: citadel
+  database: citadel_test<%= ENV['TEST_ENV_NUMBER'] %>

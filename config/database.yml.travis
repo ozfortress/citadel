@@ -1,5 +1,0 @@
-test: &default
-  adapter: postgresql
-  encoding: utf-8
-  pool: 5
-  database: travis_ci_test<%= ENV['TEST_ENV_NUMBER'] %>

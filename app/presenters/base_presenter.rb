@@ -18,6 +18,7 @@ class BasePresenter
 
   private
 
+  # rubocop:disable Lint/MissingSuper
   def respond_to_missing?(method, _include_private = false)
     view_context.respond_to?(method)
   end
@@ -29,4 +30,5 @@ class BasePresenter
       super
     end
   end
+  # rubocop:enable Lint/MissingSuper
 end

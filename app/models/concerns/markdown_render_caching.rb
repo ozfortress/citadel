@@ -8,9 +8,7 @@ module MarkdownRenderCaching
       render_cached_attributes[attribute] = transform_render_cache_options(attribute, options)
 
       before_validation do
-        if send(attribute)
-          reset_render_cache(attribute) if changed_attributes[attribute.to_s] || new_record?
-        end
+        reset_render_cache(attribute) if send(attribute) && (changed_attributes[attribute.to_s] || new_record?)
       end
     end
 
@@ -37,7 +35,7 @@ module MarkdownRenderCaching
     options = self.class.render_cached_attributes[attribute]
 
     source = send(attribute)
-    render = MarkdownRenderer.render(source, options[:escaped])
+    render = MarkdownRenderer.render(source, escaped: options[:escaped])
 
     cache_attribute = options[:cache_attribute]
     send("#{cache_attribute}=", render)

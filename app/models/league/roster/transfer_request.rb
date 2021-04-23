@@ -97,8 +97,8 @@ class League
 
       def approval_checks
         validate
-        roster_size_limits_check(false)
-        leaving_roster_size_limits_check(false)
+        roster_size_limits_check(tentative: false)
+        leaving_roster_size_limits_check(tentative: false)
 
         errors.empty?
       end
@@ -158,17 +158,17 @@ class League
         errors.add(:base, 'User is banned from leagues') unless user.can?(:use, :leagues)
       end
 
-      def roster_size_limits_check(tentative = true)
+      def roster_size_limits_check(tentative: true)
         return unless user.present? && roster.present?
 
         if is_joining?
-          roster_size_limits_when_joining_check(tentative)
+          roster_size_limits_when_joining_check(tentative: tentative)
         else
-          roster_size_limits_when_leaving_check(tentative)
+          roster_size_limits_when_leaving_check(tentative: tentative)
         end
       end
 
-      def roster_size_limits_when_joining_check(tentative = true)
+      def roster_size_limits_when_joining_check(tentative: true)
         max_players = league.max_players
 
         if roster_size(roster, 1, tentative) > max_players && max_players.positive?
@@ -176,13 +176,13 @@ class League
         end
       end
 
-      def roster_size_limits_when_leaving_check(tentative = true)
+      def roster_size_limits_when_leaving_check(tentative: true)
         if roster_size(roster, -1, tentative) < league.min_players
           errors.add(:base, 'Would result in too few players on roster')
         end
       end
 
-      def leaving_roster_size_limits_check(tentative = true)
+      def leaving_roster_size_limits_check(tentative: true)
         return unless user.present? && roster.present? && leaving_roster.present?
         return if leaving_roster.disbanded?
 

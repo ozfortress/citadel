@@ -5,7 +5,7 @@ class MarkdownController < ApplicationController
     data = request.body.read
 
     # rubocop:disable Rails/OutputSafety
-    render html: MarkdownRenderer.render(data, escape).html_safe, layout: false
+    render html: MarkdownRenderer.render(data, escaped: escape).html_safe, layout: false
     # rubocop:enable Rails/OutputSafety
   end
 end

@@ -23,7 +23,7 @@ class BadgeUploader < CarrierWave::Uploader::Base
     %w[jpg jpeg png]
   end
 
-  def content_type_whitelist
+  def content_type_allowlist
     %r{image/}
   end
 end
