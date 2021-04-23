@@ -40,6 +40,7 @@ jobs:
         PGHOST: localhost
       run: |
         cp config/database.yml.github config/database.yml
+        cp config/secrets.local.yml.example secrets.local.yml
         rake "parallel:setup[2]"
     - name: Run tests
       env:
