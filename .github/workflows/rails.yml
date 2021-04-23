@@ -48,5 +48,7 @@ jobs:
       run: rake test
     - name: Upload coverage
       env:
+        RAILS_ENV: test
+        PGHOST: localhost
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       run: rake codecov:upload
