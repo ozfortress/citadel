@@ -3,7 +3,6 @@
 [![Build Status](https://github.com/ozfortress/citadel/actions/workflows/rails.yml/badge.svg)](https://github.com/ozfortress/citadel/actions)
 [![codecov](https://codecov.io/gh/ozfortress/citadel/branch/master/graph/badge.svg?token=G6BlC2h9Vf)](https://codecov.io/gh/ozfortress/citadel)
 [![Code Climate](https://codeclimate.com/github/ozfortress/citadel/badges/gpa.svg)](https://codeclimate.com/github/ozfortress/citadel)
-[![Dependency Status](https://gemnasium.com/ozfortress/citadel.svg)](https://gemnasium.com/ozfortress/citadel)
 
 Open Source, Web-based league system designed for games such as Team Fortress 2.
 
