@@ -37,12 +37,14 @@ jobs:
     - name: Setup database
       env:
         RAILS_ENV: test
+        PGHOST: localhost
       run: |
         cp config/database.yml.github config/database.yml
         rake "parallel:setup[2]"
     - name: Run tests
       env:
         RAILS_ENV: test
+        PGHOST: localhost
       run: rake test
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
