@@ -1,0 +1,40 @@
+name: Rails
+on: push
+
+jobs:
+  verify:
+    name: Build
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:9.5
+        env:
+          POSTGRES_USER: citadel
+          POSTGRES_PASSWORD: citadel
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.5.1
+    - name: Install dependencies
+      run: |
+        sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev
+        gem install bundler
+        bundle install --jobs 4 --retry 3 --without development
+    - name: Setup database
+      env:
+        RAILS_ENV: test
+      run: |
+        cp config/database.yml.github config/database.yml
+        rake "parallel:setup[2]"
+    - name: Run tests
+      env:
+        RAILS_ENV: test
+      run: rake test
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
