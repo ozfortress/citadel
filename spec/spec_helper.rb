@@ -1,9 +1,13 @@
 require 'simplecov'
+require 'codecov'
 
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new [
-  SimpleCov::Formatter::HTMLFormatter,
-  SimpleCov::Formatter::Codecov,
-]
+if ENV['CI'] == 'true'
+  require 'codecov'
+  SimpleCov.formatter = SimpleCov::Formatter::Codecov
+else
+  SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
+end
+
 SimpleCov.start 'rails' do
   add_filter 'migration_helper'
   add_group 'Presenters',  'app/presenters'
