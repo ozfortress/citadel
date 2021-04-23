@@ -46,7 +46,7 @@ jobs:
         RAILS_ENV: test
         PGHOST: localhost
       run: rake test
-    - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2
+    - name: Upload coverage
       env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: rake codecov:upload

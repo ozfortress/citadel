@@ -1,9 +1,8 @@
 require 'simplecov'
-require 'coveralls'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new [
   SimpleCov::Formatter::HTMLFormatter,
-  Coveralls::SimpleCov::Formatter,
+  SimpleCov::Formatter::Codecov,
 ]
 SimpleCov.start 'rails' do
   add_filter 'migration_helper'
