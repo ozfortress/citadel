@@ -2,6 +2,7 @@ require 'tournament_system'
 
 class TournamentDriver < TournamentSystem::Driver
   def initialize(division, match_options = {}, options = {})
+    super()
     @division = division
     @match_options = match_options
 

@@ -21,9 +21,7 @@ class Team
     private
 
     def user_not_in_team
-      if team.present? && user.present?
-        errors.add(:user, 'User is already in the team') if team.on_roster?(user)
-      end
+      errors.add(:user, 'User is already in the team') if team.present? && user.present? && team.on_roster?(user)
     end
   end
 end

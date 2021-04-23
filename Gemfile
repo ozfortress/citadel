@@ -29,8 +29,9 @@ gem 'cocoon'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Steam Login
-gem 'omniauth-steam'
+gem 'omniauth', '~> 1'
 gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-steam'
 # Authentication
 gem 'devise'
 # Use hamlit for ~fast templating

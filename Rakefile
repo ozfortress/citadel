@@ -35,5 +35,5 @@ rescue LoadError
 end
 
 task :log do
-  ActiveRecord::Base.logger = Logger.new(STDOUT)
+  ActiveRecord::Base.logger = Logger.new($stdout)
 end
