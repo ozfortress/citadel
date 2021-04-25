@@ -13,6 +13,8 @@ describe API::V1::RostersController, type: :request do
       json = response.parsed_body
       roster_h = json['roster']
       expect(roster_h).to_not be_nil
+      expect(roster_h['id']).to eq(roster.id)
+      expect(roster_h['team_id']).to eq(roster.team_id)
       expect(roster_h['name']).to eq(roster.name)
       expect(roster_h['division']).to eq(roster.division.name)
       expect(roster_h['players']).to_not be_empty
