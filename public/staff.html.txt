@@ -1,58 +1,58 @@
-<div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true" style="position: relative;"><h1 id="Staff">Staff</h1><h3 id="Head-Administrator">Head Administrator</h3><p><a href="https://ozfortress.com/users/96" target="_blank" rel="noopener">catfish</a> - <a href="mailto:catfishtf2@gmail.com" target="_blank" rel="noopener">catfishtf2@gmail.com</a></p><h3 id="League-Administrators">League Administrators</h3><p><a href="https://ozfortress.com/users/96" target="_blank" rel="noopener">catfish</a><br>
-<a href="https://ozfortress.com/users/491" target="_blank" rel="noopener">Connor</a><br>
-<a href="https://ozfortress.com/users/233" target="_blank" rel="noopener">Hawk</a><br>
-<a href="https://ozfortress.com/users/205" target="_blank" rel="noopener">samson</a><br>
-<a href="https://ozfortress.com/users/154" target="_blank" rel="noopener">skaz</a><br>
-<a href="https://ozfortress.com/users/157" target="_blank" rel="noopener">Thermite</a></p><h3 id="Advisors">Advisors</h3><p><a href="https://ozfortress.com/users/713" target="_blank" rel="noopener">arnold</a><br>
-<a href="https://ozfortress.com/users/15" target="_blank" rel="noopener">Fozzlm</a><br>
-<a href="https://ozfortress.com/users/3" target="_blank" rel="noopener">obla</a><br>
-<a href="https://ozfortress.com/users/71" target="_blank" rel="noopener">wiggin</a></p><h3 id="Media">Media</h3><p><a href="https://ozfortress.com/users/15" target="_blank" rel="noopener">Fozzlm</a></p><h3 id="Anti-Cheat-Staff">Anti-Cheat Staff</h3><p><a href="https://ozfortress.com/users/3" target="_blank" rel="noopener">obla</a></p><h3 id="Server-Administrators">Server Administrators</h3><p><a href="https://ozfortress.com/users/3" target="_blank" rel="noopener">obla</a><br>
-<a href="https://ozfortress.com/users/2" target="_blank" rel="noopener">/dev/zero</a><br>
-<a href="https://ozfortress.com/users/96" target="_blank" rel="noopener">catfish</a></p><h3 id="Developer">Developer</h3><p><a href="https://ozfortress.com/users/2" target="_blank" rel="noopener">/dev/zero</a></p><h3 id="Graphics-Artist">Graphics Artist</h3><p><a href="https://ozfortress.com/users/77" target="_blank" rel="noopener">jen</a></p><h3 id="Staff-Hall-of-Fame">Staff Hall of Fame</h3><p>/dev/zero<br>
-amd<br>
-Aragon<br>
-arnold<br>
-baf<br>
-bladez - Livelogs and ozfortress booker<br>
-blitzen<br>
-Brodogs<br>
-catfish<br>
-Cole<br>
-ferelah<br>
-fozzlm<br>
-gabbo<br>
-hatchet<br>
-Hawk<br>
-hcaz<br>
-Ishanu<br>
-Jump!<br>
-Kenneth<br>
-kam<br>
-kocka<br>
-lammy<br>
-mercury - Co-Founder<br>
-micko<br>
-munz<br>
-No Mercy<br>
-nsk<br>
-obla<br>
-OnionS<br>
-Psyfox<br>
-ravelizard<br>
-RynoCerus<br>
-Seraphim<br>
-sage<br>
-shrak<br>
-Solus<br>
-stv!<br>
-tempest - Co-Founder<br>
-Thermite<br>
-TomSawyer<br>
-tonberry<br>
-ToyotaMan<br>
-Varris<br>
-warbot<br>
-wiggin<br>
-wm<br>
-wolfeh<br>
-yauch</p></div>
+<div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true"><h1 id="Staff" data-id="Staff"><span>Staff</span></h1><h3 id="Head-Administrator" data-id="Head-Administrator"><span>Head Administrator</span></h3><p><a href="https://ozfortress.com/users/96" target="_blank" rel="noopener"><span>catfish</span></a><span> - </span><a href="mailto:catfishtf2@gmail.com" target="_blank" rel="noopener"><span>catfishtf2@gmail.com</span></a></p><h3 id="League-Administrators" data-id="League-Administrators"><span>League Administrators</span></h3><p><a href="https://ozfortress.com/users/96" target="_blank" rel="noopener"><span>catfish</span></a><br>
+<a href="https://ozfortress.com/users/491" target="_blank" rel="noopener"><span>core</span></a><br>
+<a href="https://ozfortress.com/users/233" target="_blank" rel="noopener"><span>Hawk</span></a><br>
+<a href="https://ozfortress.com/users/205" target="_blank" rel="noopener"><span>samson</span></a><br>
+<a href="https://ozfortress.com/users/154" target="_blank" rel="noopener"><span>skaz</span></a><br>
+<a href="https://ozfortress.com/users/157" target="_blank" rel="noopener"><span>Thermite</span></a></p><h3 id="Advisors" data-id="Advisors"><span>Advisors</span></h3><p><a href="https://ozfortress.com/users/713" target="_blank" rel="noopener"><span>arnold</span></a><br>
+<a href="https://ozfortress.com/users/15" target="_blank" rel="noopener"><span>Fozzlm</span></a><br>
+<a href="https://ozfortress.com/users/3" target="_blank" rel="noopener"><span>obla</span></a><br>
+<a href="https://ozfortress.com/users/71" target="_blank" rel="noopener"><span>wiggin</span></a></p><h3 id="Media" data-id="Media"><span>Media</span></h3><p><a href="https://ozfortress.com/users/96" target="_blank" rel="noopener"><span>catfish</span></a></p><h3 id="Anti-Cheat-Staff" data-id="Anti-Cheat-Staff"><span>Anti-Cheat Staff</span></h3><p><a href="https://ozfortress.com/users/3" target="_blank" rel="noopener"><span>obla</span></a></p><h3 id="Server-Administrators" data-id="Server-Administrators"><span>Server Administrators</span></h3><p><a href="https://ozfortress.com/users/3" target="_blank" rel="noopener"><span>obla</span></a><br>
+<a href="https://ozfortress.com/users/2" target="_blank" rel="noopener"><span>/dev/zero</span></a><br>
+<a href="https://ozfortress.com/users/96" target="_blank" rel="noopener"><span>catfish</span></a></p><h3 id="Developer" data-id="Developer"><span>Developer</span></h3><p><a href="https://ozfortress.com/users/2" target="_blank" rel="noopener"><span>/dev/zero</span></a></p><h3 id="Graphics-Artist" data-id="Graphics-Artist"><span>Graphics Artist</span></h3><p><a href="https://ozfortress.com/users/77" target="_blank" rel="noopener"><span>jen</span></a></p><h3 id="Staff-Hall-of-Fame" data-id="Staff-Hall-of-Fame"><span>Staff Hall of Fame</span></h3><p><span>/dev/zero</span><br>
+<span>amd</span><br>
+<span>Aragon</span><br>
+<span>arnold</span><br>
+<span>baf</span><br>
+<span>bladez - Livelogs and ozfortress booker</span><br>
+<span>blitzen</span><br>
+<span>Brodogs</span><br>
+<span>catfish</span><br>
+<span>Cole</span><br>
+<span>ferelah</span><br>
+<span>fozzlm</span><br>
+<span>gabbo</span><br>
+<span>hatchet</span><br>
+<span>Hawk</span><br>
+<span>hcaz</span><br>
+<span>Ishanu</span><br>
+<span>Jump!</span><br>
+<span>Kenneth</span><br>
+<span>kam</span><br>
+<span>kocka</span><br>
+<span>lammy</span><br>
+<span>mercury - Co-Founder</span><br>
+<span>micko</span><br>
+<span>munz</span><br>
+<span>No Mercy</span><br>
+<span>nsk</span><br>
+<span>obla</span><br>
+<span>OnionS</span><br>
+<span>Psyfox</span><br>
+<span>ravelizard</span><br>
+<span>RynoCerus</span><br>
+<span>Seraphim</span><br>
+<span>sage</span><br>
+<span>shrak</span><br>
+<span>Solus</span><br>
+<span>stv!</span><br>
+<span>tempest - Co-Founder</span><br>
+<span>Thermite</span><br>
+<span>TomSawyer</span><br>
+<span>tonberry</span><br>
+<span>ToyotaMan</span><br>
+<span>Varris</span><br>
+<span>warbot</span><br>
+<span>wiggin</span><br>
+<span>wm</span><br>
+<span>wolfeh</span><br>
+<span>yauch</span></p></div>
