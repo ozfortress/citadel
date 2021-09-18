@@ -187,7 +187,8 @@ module Leagues
     end
 
     def swiss_tournament_params
-      params.require(:swiss_tournament).permit(:pairer, pair_options: [:allow_duplicates, :push_byes_to])
+      params.require(:swiss_tournament).permit(:pairer, :allow_unconfirmed_matches,
+                                               pair_options: [:allow_duplicates, :push_byes_to])
     end
 
     def round_robin_tournament_params

@@ -11,7 +11,7 @@ module MarkdownRenderer
     no_intra_emphasis: true,
   }.freeze
 
-  def self.render(source, escaped = true)
+  def self.render(source, escaped: true)
     if escaped
       render_escaped(source)
     else

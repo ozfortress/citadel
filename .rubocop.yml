@@ -43,6 +43,8 @@ Style/FormatString:
   Enabled: false
 Style/FormatStringToken:
   EnforcedStyle: template
+Style/StringConcatenation:
+  Enabled: false
 Style/MixinUsage:
   Exclude:
     - 'bin/setup'
@@ -67,6 +69,12 @@ Rails/SkipsModelValidations:
 Style/GuardClause:
   Enabled: false
 
+# Doesn't understand algorithms
+Style/CombinableLoops:
+  Enabled: false
+Lint/UnreachableLoop:
+  Enabled: false
+
 # This doesn't always make sense
 Rails/InverseOf:
   Enabled: false
@@ -86,4 +94,3 @@ AllCops:
   TargetRailsVersion: 5.2
   # Enable new cops by default
   NewCops: enable
-

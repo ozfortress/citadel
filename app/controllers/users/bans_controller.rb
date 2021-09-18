@@ -27,7 +27,7 @@ module Users
         redirect_to user_bans_path(@user)
       else
         index
-        @new_bans.map! { |ban| ban.class == @model ? @ban : ban }
+        @new_bans.map! { |ban| ban.instance_of?(@model) ? @ban : ban }
         render :index
       end
     end

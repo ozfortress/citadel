@@ -8,7 +8,7 @@ module Paths
   class_methods do
     attr_reader :paths_class
 
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength, Lint/MissingSuper
     def paths(&block)
       @paths_class = Class.new do
         include Rails.application.routes.url_helpers
@@ -40,6 +40,6 @@ module Paths
 
       @paths_class.class_eval(&block)
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength, Lint/MissingSuper
   end
 end

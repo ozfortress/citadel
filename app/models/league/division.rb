@@ -32,7 +32,9 @@ class League
     end
 
     def generate_swiss(match_options, options)
-      raise GenerationError, 'Not all matches in division confirmed' unless matches.where.not(status: :confirmed).empty?
+      unless matches.where.not(status: :confirmed).empty? || options[:allow_unconfirmed_matches]
+        raise GenerationError, 'Not all matches in division confirmed'
+      end
 
       pairer = options[:pairer].to_sym
 

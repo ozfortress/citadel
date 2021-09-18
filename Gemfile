@@ -29,7 +29,8 @@ gem 'cocoon'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Steam Login
-# TODO: Remove git dependency once upstream is updated.
+gem 'omniauth', '~> 1'
+gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-steam'
 # Authentication
 gem 'devise'
@@ -79,8 +80,7 @@ group :test do
   gem 'rubocop', '~> 0.58', require: false
   gem 'rubocop-rails', '~> 2.2.1', require: false
 
-  # Coveralls
-  gem 'coveralls_reborn', '~> 0.16.0', require: false
+  gem 'codecov', require: false
 end
 
 group :development do

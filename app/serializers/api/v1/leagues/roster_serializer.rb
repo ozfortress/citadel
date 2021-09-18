@@ -4,7 +4,7 @@ module API
       class RosterSerializer < ActiveModel::Serializer
         type :roster
 
-        attributes :id, :name, :description, :disbanded
+        attributes :id, :team_id, :name, :description, :disbanded
         attribute(:division) { object.division.name }
 
         has_many :users, key: :players, serializer: UserSerializer
