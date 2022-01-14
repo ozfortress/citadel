@@ -1,18 +1,18 @@
-<div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true" style="position: relative;"><h1 id="Staff">Staff</h1><h3 id="Head-Administrator">Head Administrator</h3><p><a href="https://ozfortress.com/users/491" target="_blank" rel="noopener">core</a> - <a href="mailto:itscoretf@gmail.com" target="_blank" rel="noopener">itscoretf@gmail.com</a></p><h3 id="League-Administrators">League Administrators</h3><p>
+<div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true" style="position: relative;"><h1 id="Staff">Staff</h1><h3 id="Head-Administrator">Head Administrator</h3><p><a href="https://ozfortress.com/users/491" target="_blank" rel="noopener">core</a> - <a href="mailto:itscoretf@gmail.com" target="_blank" rel="noopener">itscoretf@gmail.com</a></p><h3 id="Administrators">Administrators</h3><p>
 <a href="https://ozfortress.com/users/1561" target="_blank" rel="noopener">a team of ants in their prime</a><br>
 <a href="https://ozfortress.com/users/2244" target="_blank" rel="noopener">Chimes</a><br>
 <a href="https://ozfortress.com/users/491" target="_blank" rel="noopener">core</a><br>
 <a href="https://ozfortress.com/users/13" target="_blank" rel="noopener">fez</a><br>
 <a href="https://ozfortress.com/users/233" target="_blank" rel="noopener">Hawk</a><br>
-<a href="https://ozfortress.com/users/205" target="_blank" rel="noopener">samson</a><br>
-<a href="https://ozfortress.com/users/154" target="_blank" rel="noopener">skaz</a>
+<a href="https://ozfortress.com/users/205" target="_blank" rel="noopener">samson</a>
 </p><h3 id="Administrators">Administrators</h3><p>
 <a href="https://ozfortress.com/users/96" target="_blank" rel="noopener">catfish</a><br>
 <a href="https://ozfortress.com/users/3" target="_blank" rel="noopener">obla</a><br>
 <a href="https://ozfortress.com/users/157" target="_blank" rel="noopener">Thermite</a><br>
-<a href="https://ozfortress.com/users/71" target="_blank" rel="noopener">wiggin</a></p><h3 id="Anti-Cheat-Staff">Anti-Cheat Staff</h3><a href="https://ozfortress.com/users/96" target="_blank" rel="noopener">catfish</a><br><a href="https://ozfortress.com/users/3" target="_blank" rel="noopener">obla</a><h3 id="Infraction-Staff">Infraction Staff</h3><a href="https://ozfortress.com/users/205" target="_blank" rel="noopener">samson</a><br><a href="https://ozfortress.com/users/233" target="_blank" rel="noopener">Hawk</a><h3 id="Server-Administrators">Server Administrators</h3><p><a href="https://ozfortress.com/users/3" target="_blank" rel="noopener">obla</a><br>
+<a href="https://ozfortress.com/users/71" target="_blank" rel="noopener">wiggin</a></p><h3 id="Anti-Cheat-Staff">Anti-Cheat Staff</h3><p><a href="https://ozfortress.com/users/96" target="_blank" rel="noopener">catfish</a><br><a href="https://ozfortress.com/users/3" target="_blank" rel="noopener">obla</a></p><h3 id="Infraction-Staff">Infraction Staff</h3><p><a href="https://ozfortress.com/users/205" target="_blank" rel="noopener">samson</a><br><a href="https://ozfortress.com/users/233" target="_blank" rel="noopener">Hawk</a></p><h3 id="Server-Administrators">Server Administrators</h3><p><a href="https://ozfortress.com/users/3" target="_blank" rel="noopener">obla</a><br>
 <a href="https://ozfortress.com/users/2" target="_blank" rel="noopener">/dev/zero</a><br>
-<a href="https://ozfortress.com/users/96" target="_blank" rel="noopener">catfish</a></p><h3 id="Developer">Developer</h3><p><a href="https://ozfortress.com/users/2" target="_blank" rel="noopener">/dev/zero</a></p><h3 id="Graphics-Artist">Graphics Artist</h3><p><a href="https://ozfortress.com/users/77" target="_blank" rel="noopener">jen</a></p><h3 id="Staff-Hall-of-Fame">Staff Hall of Fame</h3><p>/dev/zero<br>
+<a href="https://ozfortress.com/users/96" target="_blank" rel="noopener">catfish</a><br>
+<a href="https://ozfortress.com/users/491" target="_blank" rel="noopener">core</a></p><h3 id="Developer">Developer</h3><p><a href="https://ozfortress.com/users/2" target="_blank" rel="noopener">/dev/zero</a></p><h3 id="Art-Team">Art Team</h3><p><a href="https://ozfortress.com/users/77" target="_blank" rel="noopener">jen</a><br /><a href="https://ozfortress.com/users/3783" target="_blank" rel="noopener">jupy</a><br /><a href="https://ozfortress.com/users/3780" target="_blank" rel="noopener">kirsty</a></p><h3 id="Media-Team">Media Team</h3><p><a href="https://ozfortress.com/users/3071" target="_blank" rel="noopener">Avo</a><br /><a href="https://ozfortress.com/users/982" target="_blank" rel="noopener">frydog</a><br /><a href="https://ozfortress.com/users/441" target="_blank" rel="noopener">Michael</a><br /><a href="https://ozfortress.com/users/618" target="_blank" rel="noopener">Sperkle</a></p><h3 id="Staff-Hall-of-Fame">Staff Hall of Fame</h3><p>/dev/zero<br>
 amd<br>
 Aragon<br>
 arnold<br>
@@ -47,6 +47,7 @@ RynoCerus<br>
 Seraphim<br>
 sage<br>
 shrak<br>
+skaz<br>
 Solus<br>
 stv!<br>
 tempest - Co-Founder<br>

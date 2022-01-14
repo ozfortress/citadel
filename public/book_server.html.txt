@@ -1,15 +1,14 @@
 ﻿<div id="doc" class="markdown-body container-fluid" style="position: relative;"><h1 id="Booking-a-Server">Booking a Server</h1><p>Bookings are done in the official ozfortress Discord.</p><p>Simply join the <a href="https://discord.gg/5vs4C5C" target="_blank">#bookings</a> channel and say “/book” and server details will be automatically provided to you. See the full list of commands below.</p><p><a href="https://discord.gg/5vs4C5C" target="_blank">Click here to join #bookings!</a></p><h3 id="Commands">Commands</h3><pre><code>/book                  -  Book a new server.
 /unbook                -  Return a server.
-/demos &lt;user&gt;          -  Get STV demo link (user optional).
-/servers	        -  List the status of all servers.
+/demos         		     -  Link to the demos.tf uploads page for ozfortress servers.
+/servers	       -  List the status of all servers.
 /help                  -  List of commands.
-</code></pre><p>Commands can be sent in both the #bookings channel or via PM to the bot.</p><h3 id="Additional-Information">Additional Information</h3><ul>
+</code></pre><p>Bot related commands can be sent in both the #bookings channel or via PM to the bot.</p><h3 id="Additional-Information">Additional Information</h3><ul>
 <li>Servers are booked under your Discord ID. All non-alphaneumeric characters are dropped. Please use a name that reflects your ozfortress alias.</li>
 <li>Your Discord name must have <strong>at least one alphabetical character</strong> for the booker to accept commands. If your name does not have at least one alphabetical character, please add one to use the booker.</li>
 <li>If you forget the server details provided, simply type “/book” again.</li>
 <li>When you are finished with the server, please type “/unbook” to free up the server for the rest of the community!</li>
-<li>Demos can be retrieved using both the alias (i.e. obla) or DiscordID (obla3745).</li>
 <li>Logs are provided at <a href="http://logs.tf/" target="_blank">logs.tf</a>.</li>
+<li>STV Demos are provided at <a href="http://demos.tf/" target="_blank">demos.tf</a>, simply either log in or search your name / steamID.</li>
 <li>Servers will automatically reset after a period of inactivity.</li>
-<li>Demos will be stored for up to 6 months. <strong>Please download all your demos before they expire</strong>.</li>
 </ul><p>Discord booker created by smeso and /dev/zero.</p><div class="resize-sensor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div class="resize-sensor-expand" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; transition: 0s; width: 100000px; height: 100000px;"></div></div><div class="resize-sensor-shrink" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div></div></div></div>
