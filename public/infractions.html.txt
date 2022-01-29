@@ -18,6 +18,7 @@
 </ul><h4 id="Tier-3-Offences---30-points-2-year-expiry">Tier 3 Offences - 30 points (2 year expiry)</h4><ul>
 <li>Serious or repeated abuse of any kind</li>
 <li>Sharing of sensitive or personal information without permission</li>
+<li>Threats of violence/harm
 <li>Attempting to impersonate or imply affiliation with members of the ozfortress anti-cheat panel</li>
 <li>Attempting to deceive community members by impersonating a member of ozfortress staff</li>
 </ul><h3 id="Cheating-Bans"><strong>Cheating Bans</strong></h3><p>Cheating bans do not follow the infraction point system and are given out independently. All bans are accompanied by permanent probation. Cheating bans are given by ozfortress league administrators as well as the ozfortress anti–cheat panel. The bans and punishments are as follows:</p><ul>
