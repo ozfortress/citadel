@@ -23,6 +23,6 @@ User.order(:id).find_in_batches(batch_size: 10) do |users|
   bans = get_bans(steam_ids)
   bans.each do |steam_id|
     user = User.find_by(steam_id: steam_id)
-    puts("#{user.name}: https://warzone.ozfortress.com/users/#{user.id}")
+    puts("#{user.name}: https://ozfortress.com/users/#{user.id}")
   end
 end
