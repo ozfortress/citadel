@@ -34,6 +34,21 @@
       = link_to image_tag('logs.tf-logo.png', height: '30px'), "http://logs.tf/profile/#{@user.steam_id}",
                 title: 'logs.tf profile', target: :_blank, rel: :noopener
 
+      - if user_can_edit_user?
+        %br
+        %span.steam-link
+        = link_to "ETF2L", 'http://etf2l.org/search/' + @user.steam_id.to_s, class: 'steam_link'
+        %span='·'
+        = link_to "RGL", 'https://rgl.gg/public/PlayerProfile.aspx?p=' + @user.steam_id.to_s, class: 'steam_link'
+        %span='·'
+        = link_to "MATCH.TF", 'https://match.tf/users/steam_id/' + @user.steam_id.to_s, class: 'steam_link'
+        %span='·'
+        = link_to "RSL.TF", 'https://rsl.tf/users/steam_id/' + @user.steam_id.to_s, class: 'steam_link'
+        %span='·'
+        = link_to "FBTF", 'https://fbtf.tf/users/steam_id/' + @user.steam_id.to_s, class: 'steam_link'
+        %span='·'
+        = link_to "UGC", 'http://www.ugcleague.com/players_page.cfm?player_id=' + @user.steam_id.to_s, class: 'steam_link'
+
 .row.mb-3
   != present_collection(@titles).map(&:icon).join(' ')
 
