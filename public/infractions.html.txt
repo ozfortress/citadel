@@ -2,11 +2,7 @@
 <li>40 points = 3 round match ban</li>
 <li>60 points = 1 year Community and Competitive Ban</li>
 <li>90 points = 2 year Community and Competitive Ban</li>
-</ul><p>The 3 round match ban carries across from the offseason, so if it is received during the offseason, it will begin at the start of the next regular season for rounds one, two &amp; three.</p><p>Each <em>specific</em> infraction will be multiplied by the number of times committed.<br>
-Example:<br>
-First offence (tier 1) = 10 points<br>
-Second repeated offence (tier 1) = 20 points<br>
-Third repeated offence (tier 1) = 30 points</p><p>Infraction points do <strong>not</strong> expire after a user is banned. If a user receives a one year ban involving a Tier 3 infraction, the infraction will still remain for the remainder of the two year expiry after the player’s one year ban has been served.</p><h3 id="Infractions1"><strong>Infractions</strong></h3><h4 id="Tier-1-Offences---10-points-6-months-expiry">Tier 1 Offences - 10 points (6 months expiry)</h4><ul>
+</ul><p>The 3 round match ban carries across from the offseason, so if it is received during the offseason, it will begin at the start of the next regular season for rounds one, two &amp; three.</p><br><p>Infraction points do <strong>not</strong> expire after a user is banned. If a user receives a one year ban involving a Tier 3 infraction, the infraction will still remain for the remainder of the two year expiry after the player’s one year ban has been served.</p><h3 id="Infractions1"><strong>Infractions</strong></h3><h4 id="Tier-1-Offences---10-points-6-months-expiry">Tier 1 Offences - 10 points (6 months expiry)</h4><ul>
 <li>Repeated delays in match organisation</li>
 <li>Inappropriate or unrelated posting in match threads</li>
 <li>Excessive trash talk (beyond that which can reasonably be considered banter)</li>
@@ -18,9 +14,11 @@ Third repeated offence (tier 1) = 30 points</p><p>Infraction points do <strong>n
 <li>Interference with an ozfortress match</li>
 <li>Discrimination of any kind (Sexism, Racism etc.)</li>
 <li>General bigotry/use of derogatory slurs</li>
+<li>Disbanding an in-season active roster</li>
 </ul><h4 id="Tier-3-Offences---30-points-2-year-expiry">Tier 3 Offences - 30 points (2 year expiry)</h4><ul>
 <li>Serious or repeated abuse of any kind</li>
 <li>Sharing of sensitive or personal information without permission</li>
+<li>Threats of violence/harm
 <li>Attempting to impersonate or imply affiliation with members of the ozfortress anti-cheat panel</li>
 <li>Attempting to deceive community members by impersonating a member of ozfortress staff</li>
 </ul><h3 id="Cheating-Bans"><strong>Cheating Bans</strong></h3><p>Cheating bans do not follow the infraction point system and are given out independently. All bans are accompanied by permanent probation. Cheating bans are given by ozfortress league administrators as well as the ozfortress anti–cheat panel. The bans and punishments are as follows:</p><ul>
