@@ -1,5 +1,5 @@
 <div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true">
-	<object data="https://imconnor.xyz/downloads/OZF_Server_Configs.pdf" type="application/pdf"  width="100%" height="100%">
-		<embed src="https://imconnor.xyz/downloads/OZF_Server_Configs.pdf" type="application/pdf" width="100%" height="100%" />
+	<object data="https://imconnor.xyz/downloads/OZF_Server_Configs.pdf" type="application/pdf"  width="100%" height="700">
+		<embed src="https://imconnor.xyz/downloads/OZF_Server_Configs.pdf" type="application/pdf" width="100%" height="700" />
 	</object>
 </div>
