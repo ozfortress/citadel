@@ -1,29 +1,5 @@
-<div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true" style="position: relative;"><h1 id="Infractions">Infractions</h1><p>ozfortress enforces a set of <a href="/community_rules" target="_blank" rel="noopener">Community Rules</a> and <a href="/rules" target="_blank" rel="noopener">Competitive Rules</a> by a system of infraction points. You are issued infraction points which correspond to specific rule breaches, and carry different points and expiration times. Each player starts with 0 infraction points.</p><p>Bans will be issued at different point levels, and carry different ban lengths and game bans depending on how many points you have accrued. All bans are accompanied by permanent probation.</p><p>Additionally, we list the infractions that can be issued and their corresponding rule.</p><p>A community ban restricts the player’s usage of all official ozfortress mediums including the ozfortress Discord and forums. A competitive ban prevents the player from participating in any ozfortress leagues and competitions. Players will be blacklisted from all ozfortress servers and have their Warzone accounts suspended for the duration of the ban.</p><p>The Infraction team reserves the right to infract or ban players based on the offence, including offences committed whilst that player is already serving an infraction and/or ban.</p><h3 id="Ban-Levels"><strong>Ban Levels</strong></h3><ul>
-<li>40 points = 3 round match ban</li>
-<li>60 points = 1 year Community and Competitive Ban</li>
-<li>90 points = 2 year Community and Competitive Ban</li>
-</ul><p>The 3 round match ban carries across from the offseason, so if it is received during the offseason, it will begin at the start of the next regular season for rounds one, two &amp; three.</p><br><p>Infraction points do <strong>not</strong> expire after a user is banned. If a user receives a one year ban involving a Tier 3 infraction, the infraction will still remain for the remainder of the two year expiry after the player’s one year ban has been served.</p><h3 id="Infractions1"><strong>Infractions</strong></h3><h4 id="Tier-1-Offences---10-points-6-months-expiry">Tier 1 Offences - 10 points (6 months expiry)</h4><ul>
-<li>Repeated delays in match organisation</li>
-<li>Inappropriate or unrelated posting in match threads</li>
-<li>Excessive trash talk (beyond that which can reasonably be considered banter)</li>
-<li>Public allegations of cheating - <a href="https://ozfortress.com/forums/topics/16" target="_blank" rel="noopener">see here on how to report someone</a></li>
-</ul><h4 id="Tier-2-Offences---20-points-1-year-expiry">Tier 2 Offences - 20 points (1 year expiry)</h4><ul>
-<li>Any attempt to deceive or mislead administrators</li>
-<li>Any attempt to deceive or mislead players or captains</li>
-<li>Impersonating ozfortress players without permission</li>
-<li>Interference with an ozfortress match</li>
-<li>Discrimination of any kind (Sexism, Racism etc.)</li>
-<li>General bigotry/use of derogatory slurs</li>
-<li>Disbanding an in-season active roster</li>
-</ul><h4 id="Tier-3-Offences---30-points-2-year-expiry">Tier 3 Offences - 30 points (2 year expiry)</h4><ul>
-<li>Serious or repeated abuse of any kind</li>
-<li>Sharing of sensitive or personal information without permission</li>
-<li>Threats of violence/harm
-<li>Attempting to impersonate or imply affiliation with members of the ozfortress anti-cheat panel</li>
-<li>Attempting to deceive community members by impersonating a member of ozfortress staff</li>
-</ul><h3 id="Cheating-Bans"><strong>Cheating Bans</strong></h3><p>Cheating bans do not follow the infraction point system and are given out independently. All bans are accompanied by permanent probation. Cheating bans are given by ozfortress league administrators as well as the ozfortress anti–cheat panel. The bans and punishments are as follows:</p><ul>
-<li>VAC = 1 year Community and Competitive Ban</li>
-<li>Match Fixing = 1 year Community and Competitive Ban</li>
-<li>Evidence from Anti-Cheat team = 2 year Community and Competitive Ban</li>
-<li>Any second offence = Permanent Ban</li>
-</ul></div>
+<div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true">
+	<object data="https://imconnor.xyz/downloads/OZF_Infractions.pdf" type="application/pdf"  width="100%" height="100%">
+		<embed src="https://imconnor.xyz/downloads/OZF_Infractions.pdf" type="application/pdf" width="100%" height="100%" />
+	</object>
+</div>
