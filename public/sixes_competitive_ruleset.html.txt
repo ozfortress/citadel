@@ -1,0 +1,5 @@
+<div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true">
+	<object data="https://imconnor.xyz/downloads/OZF_Sixes_Competitive_Ruleset.pdf" type="application/pdf"  width="100%" height="700">
+		<embed src="https://imconnor.xyz/downloads/OZF_Sixes_Competitive_Ruleset.pdf" type="application/pdf" width="100%" height="700" />
+	</object>
+</div>

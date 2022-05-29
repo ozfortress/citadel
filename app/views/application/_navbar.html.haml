@@ -19,12 +19,12 @@
     %span.caret
 
   .dropdown-menu
-    = link_to('Rules', :rules, class: 'dropdown-item')
+    = link_to('Sixes Competitive Ruleset', :sixes_competitive_ruleset, class: 'dropdown-item')
+    = link_to('Highlander Competitive Ruleset', :highlander_competitive_ruleset, class: 'dropdown-item')
     = link_to('Community Rules', :community_rules, class: 'dropdown-item')
     = link_to('Infractions', :infractions, class: 'dropdown-item')
     = link_to('Staff', :staff, class: 'dropdown-item')
     = link_to('Bans', :bans, class: 'dropdown-item')
-    = link_to('Anti-Cheat and You', :anticheat_and_you, class: 'dropdown-item')
 
 %li.nav-item.dropdown
   %a.nav-link.dropdown-toggle{ role: :button, data: { toggle: :dropdown } }
@@ -35,6 +35,7 @@
     = link_to('Server Configs', :server_configs, class: 'dropdown-item')
     = link_to('Book a Server', :book_server, class: 'dropdown-item')
     = link_to('Newbie Guide', :newbie_guide, class: 'dropdown-item')
+    = link_to('Anti-Cheat and You', :anticheat_and_you, class: 'dropdown-item')
     = link_to('Transfers', :transfers, class: 'dropdown-item')
     = link_to('Verify Rosters', 'https://verify.ozfortress.com', target: :_blank, rel: :noopener,
                                                                  class: 'dropdown-item')
