@@ -18,51 +18,68 @@
     Rules
     %span.caret
 
-  .dropdown-menu
-    = link_to('Sixes Competitive Ruleset', 'https://docs.ozfortress.com/rulesets/sixes/', target: :_blank, rel: :noopener, class: 'dropdown-item')
-    = link_to('Highlander Competitive Ruleset', 'https://docs.ozfortress.com/rulesets/highlander/', target: :_blank, rel: :noopener, class: 'dropdown-item')
-    = link_to('Community Guidelines', 'https://docs.ozfortress.com/community_guidelines/', target: :_blank, rel: :noopener, class: 'dropdown-item')
-    = link_to('Infractions', 'https://docs.ozfortress.com/rulesets/infractions/', target: :_blank, rel: :noopener, class: 'dropdown-item')
+  .dropdown-menu.dropdown-menu-animated#rules-dropdown-menu
+    .dropdown-header
+      Competitive Rulesets
+
+    = link_to('Sixes Rules', 'https://docs.ozfortress.com/rules/sixes/', class: 'dropdown-item')
+    = link_to('Highlander Rules', 'https://docs.ozfortress.com/rules/highlander/', class: 'dropdown-item')
+
+    .dropdown-divider
+
+    .dropdown-header
+      Community
+
+    = link_to('Community Guidelines', 'https://docs.ozfortress.com/community_guidelines/', class: 'dropdown-item')
+    = link_to('Infractions', 'https://docs.ozfortress.com/rules/infractions/', class: 'dropdown-item')
+
+    :javascript
+      // Prevent inside clicks from dismissing dropdown
+      $("#rules-dropdown-menu").click(function(e) {
+        e.stopPropagation()
+      })
+
 
 %li.nav-item.dropdown
   %a.nav-link.dropdown-toggle{ role: :button, data: { toggle: :dropdown } }
     Help
     %span.caret
 
-  .dropdown-menu
+  .dropdown-menu.dropdown-menu-animated#help-dropdown-menu
     .dropdown-header
-    Info
+      General Info
 
-    = link_to('Staff', 'https://docs.ozfortress.com/help/staff/', target: :_blank, rel: :noopener, class: 'dropdown-item')
-    = link_to('Bans', 'https://docs.ozfortress.com/help/bans/', target: :_blank, rel: :noopener, class: 'dropdown-item')
-    = link_to('Appeal a Ban', 'https://docs.ozfortress.com/help/bans/', target: :_blank, rel: :noopener, class: 'dropdown-item')
-    = link_to('Anti-Cheat and You', 'https://docs.ozfortress.com/help/anticheat_and_you/', target: :_blank, rel: :noopener, class: 'dropdown-item')
+    = link_to('Staff', 'https://docs.ozfortress.com/help/staff/', class: 'dropdown-item')
+    = link_to('Bans', 'https://docs.ozfortress.com/help/bans/', class: 'dropdown-item')
+    = link_to('Appeal a Ban', 'https://docs.ozfortress.com/help/bans/', class: 'dropdown-item')
+    = link_to('Anti-Cheat and You', 'https://docs.ozfortress.com/help/anticheat_and_you/', class: 'dropdown-item')
 
     .dropdown-divider
 
     .dropdown-header
-    Guides
+      Guides
 
-    = link_to('Server Configs', 'https://docs.ozfortress.com/help/server_configs/', target: :_blank, rel: :noopener, class: 'dropdown-item')
-    = link_to('Book a Server', 'https://docs.ozfortress.com/guides/book_a_server/', target: :_blank, rel: :noopener, class: 'dropdown-item')
-    = link_to('Newbie Guide', 'https://docs.ozfortress.com/guides/newbie_guide/', target: :_blank, rel: :noopener, class: 'dropdown-item')
-    = link_to('Transfers', 'https://docs.ozfortress.com/help/transfers/', target: :_blank, rel: :noopener, class: 'dropdown-item')
+    = link_to('Server Configs', 'https://docs.ozfortress.com/help/server_configs/', class: 'dropdown-item')
+    = link_to('Book a Server', 'https://docs.ozfortress.com/guides/book_a_server/', class: 'dropdown-item')
+    = link_to('Newbie Guide', 'https://docs.ozfortress.com/guides/newbie_guide/', class: 'dropdown-item')
+    = link_to('Transfers', 'https://docs.ozfortress.com/help/transfers/', class: 'dropdown-item')
 
     .dropdown-divider
 
     .dropdown-header
-    Other
+      Other
 
     = link_to('Verify Rosters tool', 'https://verify.ozfortress.com', target: :_blank, rel: :noopener, class: 'dropdown-item')
     = link_to('STV Demos', 'https://demos.tf/uploads/76561198049618390', target: :_blank, rel: :noopener, class: 'dropdown-item')
 
     :javascript
       // Prevent inside clicks from dismissing dropdown
-      $("#user-dropdown-menu").click(function(e) {
+      $("#help-dropdown-menu").click(function(e) {
         e.stopPropagation()
       })
 
-= link_to('Docs', 'https://docs.ozfortress.com/', target: :_blank, rel: :noopener, class: 'dropdown-item')
+%li.nav-item
+  = link_to('Docs', 'https://docs.ozfortress.com/', target: :_blank, rel: :noopener, class: 'nav-link')
 
 - if user_signed_in? && current_user.admin?
   %li.nav-item{ class: navbar_class(:admin) }
