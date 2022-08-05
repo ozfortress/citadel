@@ -52,7 +52,7 @@
 
 
   .card.mb-3
-    .card-header Results #{match_p.status}
+    .card-header Picks/Bans #{match_p.status}
 
     - can_view_scores = !@match.confirmed? && user_can_either_teams? && @league.matches_submittable?
     - if can_view_scores || user_can_edit_league?
