@@ -18,17 +18,6 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   get 'pages/home'
-  get 'sixes_competitive_ruleset', to: 'pages#sixes_competitive_ruleset'
-  get 'highlander_competitive_ruleset', to: 'pages#highlander_competitive_ruleset'
-  get 'staff', to: 'pages#staff'
-  get 'bans', to: 'pages#bans'
-  get 'anticheat_and_you', to: 'pages#anticheat_and_you'
-  get 'server_configs', to: 'pages#server_configs'
-  get 'book_server', to: 'pages#book_server'
-  get 'transfers', to: 'pages#transfers'
-  get 'newbie_guide', to: 'pages#newbie_guide'
-  get 'community_rules', to: 'pages#community_rules'
-  get 'infractions', to: 'pages#infractions'
 
   get 'admin', to: 'admin#index'
   get 'statistics',  to: 'admin#statistics', as: 'admin_statistics'
