@@ -7,13 +7,34 @@
 %hr
 
 .card.mb-3
-  .card-header Change Name
+  .card-header Change your ozfortress.com name
   .card-body
     = bootstrap_form_for @name_change, url: name_user_path(@user),
                          method: :post, as: :name_change do |f|
       = f.text_field :name, hide_label: true
 
       = f.primary 'Request Name Change'
+
+  .card-header Name Change Request Guidelines
+  .card-body
+    %p
+      Your name
+      %b can not
+      contain the following:
+    %ul
+      %li Emojis or special characters.
+      %li Blank characters or characters to otherwise break the name field.
+      %li Links/URLs.
+      %li Anything that violates our Community Guidelines.
+    %br/
+    %p
+      The following
+      %b may
+      result in your Name Change Request being denied:
+    %ul
+      %li Inappropriate or Not Safe for Work memes/meme names.
+      %li Non-emoji faces without a name next to them.
+      %li Obscured or otherwise "sneaky" references to anything that breaks our Community Guidelines.
 
 .card.mb-3
   .card-header General
@@ -24,6 +45,18 @@
       .d-flex.justify-content-end
         = link_to 'Cancel', user_path(@user), class: 'btn btn-link mr-2'
         = f.primary 'Save'
+
+  .card-header Profile Content Guidelines
+  .card-body
+    %p
+      Your profile (avatar and description)
+      %b can not
+      contain the following:
+    %ul
+      %li Nudity or Sexual Content.
+      %li Inappropriate or Not Safe for Work memes.
+      %li Blank characters or characters to otherwise break the description field.
+      %li Anything that violates our Community Guidelines.
 
 - if user_can_edit_users?
   .card.border-danger.mb-3

@@ -19,6 +19,20 @@
 
         = f.primary 'Save'
 
+  .card-header Team Content Guidelines
+  .card-body
+    %p
+      Your team page (name, avatar/logo and description)
+      %b can not
+      contain the following:
+    %ul
+      %li Emojis or special characters. (Name only)
+      %li Blank characters or characters to otherwise break the name/description fields.
+      %li Links/URLs. (Name only)
+      %li Nudity or Sexual Content.
+      %li Inappropriate or Not Safe for Work memes.
+      %li Blank characters or characters to otherwise break the description field.
+      %li Anything that violates our Community Guidelines.
 
 - unless @team.rosters.exists?
   .alert.alert-danger.mb-3
