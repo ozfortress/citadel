@@ -15,30 +15,72 @@
 
 %li.nav-item.dropdown
   %a.nav-link.dropdown-toggle{ role: :button, data: { toggle: :dropdown } }
-    About
+    Rules
     %span.caret
 
-  .dropdown-menu
-    = link_to('Rules', :rules, class: 'dropdown-item')
-    = link_to('Community Rules', :community_rules, class: 'dropdown-item')
-    = link_to('Infractions', :infractions, class: 'dropdown-item')
-    = link_to('Staff', :staff, class: 'dropdown-item')
-    = link_to('Bans', :bans, class: 'dropdown-item')
-    = link_to('Anti-Cheat and You', :anticheat_and_you, class: 'dropdown-item')
+  .dropdown-menu.dropdown-menu-animated#rules-dropdown-menu
+    .dropdown-header
+      Competitive Rulesets
+
+    = link_to('Global Ruleset', 'https://docs.ozfortress.com/rules/global/index', class: 'dropdown-item')
+    = link_to('Sixes Ruleset', 'https://docs.ozfortress.com/rules/sixes/index', class: 'dropdown-item')
+    = link_to('Highlander Ruleset', 'https://docs.ozfortress.com/rules/highlander/index', class: 'dropdown-item')
+
+    .dropdown-divider
+
+    .dropdown-header
+      Community
+
+    = link_to('Community Guidelines', 'https://docs.ozfortress.com/rules/community_guidelines/index', class: 'dropdown-item')
+    = link_to('Infractions', 'https://docs.ozfortress.com/rules/infractions/index', class: 'dropdown-item')
+
+    :javascript
+      // Prevent inside clicks from dismissing dropdown
+      $("#rules-dropdown-menu").click(function(e) {
+        e.stopPropagation()
+      })
+
 
 %li.nav-item.dropdown
   %a.nav-link.dropdown-toggle{ role: :button, data: { toggle: :dropdown } }
     Help
     %span.caret
 
-  .dropdown-menu
-    = link_to('Server Configs', :server_configs, class: 'dropdown-item')
-    = link_to('Book a Server', :book_server, class: 'dropdown-item')
-    = link_to('Newbie Guide', :newbie_guide, class: 'dropdown-item')
-    = link_to('Transfers', :transfers, class: 'dropdown-item')
-    = link_to('Verify Rosters', 'https://verify.ozfortress.com', target: :_blank, rel: :noopener,
-                                                                 class: 'dropdown-item')
-    = link_to('Demos', 'https://demos.tf/uploads/76561198049618390', target: :_blank, rel: :noopener, class: 'dropdown-item')
+  .dropdown-menu.dropdown-menu-animated#help-dropdown-menu
+    .dropdown-header
+      General Info
+
+    = link_to('Staff', 'https://docs.ozfortress.com/info/staff/index', class: 'dropdown-item')
+    = link_to('Map History', 'https://docs.ozfortress.com/info/map_history/index', class: 'dropdown-item')
+    = link_to('Anti-Cheat and You', 'https://docs.ozfortress.com/info/anticheat_and_you/index', class: 'dropdown-item')
+
+    .dropdown-divider
+
+    .dropdown-header
+      Guides
+
+    = link_to('Book a Server', 'https://docs.ozfortress.com/guides/book_a_server/index', class: 'dropdown-item')
+    = link_to('Newbie Guide', 'https://docs.ozfortress.com/guides/newbie_guide/index', class: 'dropdown-item')
+
+    .dropdown-divider
+
+    .dropdown-header
+      Other
+
+    = link_to('Verify Rosters tool', 'https://verify.ozfortress.com', target: :_blank, rel: :noopener, class: 'dropdown-item')
+    = link_to('STV Demos', 'https://demos.tf/uploads/76561198049618390', target: :_blank, rel: :noopener, class: 'dropdown-item')
+
+    :javascript
+      // Prevent inside clicks from dismissing dropdown
+      $("#help-dropdown-menu").click(function(e) {
+        e.stopPropagation()
+      })
+
+%li.nav-item
+  = link_to('Support & Reporting', 'https://docs.ozfortress.com/support/landing/index', target: :_blank, rel: :noopener, class: 'nav-link')
+
+%li.nav-item
+  = link_to('Docs', 'https://docs.ozfortress.com/index', target: :_blank, rel: :noopener, class: 'nav-link')
 
 - if user_signed_in? && current_user.admin?
   %li.nav-item{ class: navbar_class(:admin) }

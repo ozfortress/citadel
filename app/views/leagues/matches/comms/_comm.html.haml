@@ -19,8 +19,7 @@
           - if user_can_edit_comm?(comm)
             = link_to 'Edit', comm.paths.edit, class: 'dropdown-item'
 
-          - if user_can_edit_comm?(comm) && comm.edits.size > 1
-            = link_to 'History', comm.paths.edits, class: 'dropdown-item'
+          = link_to 'History', comm.paths.edits, class: 'dropdown-item'
 
   .card-body
     .markdown.pb-3

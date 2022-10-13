@@ -53,6 +53,17 @@
           = link_to 'Cancel', team_path(@roster.team), class: 'btn btn-link mr-2'
           = f.primary 'Update'
 
+  .card-header Roster Content Guidelines
+  .card-body
+    %p
+      Your roster name
+      %b can not
+      contain the following:
+    %ul
+      %li Emojis or special characters.
+      %li Blank characters or characters to otherwise break the name field.
+      %li Links/URLs.
+      %li Anything that violates our Community Guidelines.
 
 = render 'leagues/rosters/transfers/index',
          league: @league, roster: @roster, new_transfer_request: @transfer_request,
