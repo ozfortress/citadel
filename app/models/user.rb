@@ -34,11 +34,16 @@ class User < ApplicationRecord
 
   has_many :logs, class_name: 'User::Log', dependent: :destroy
 
-  devise :rememberable, :omniauthable, omniauth_providers: [:steam]
+  devise :rememberable, :omniauthable, omniauth_providers: [
+    :steam,
+    *(Rails.configuration.features.discord_integration ? :discord : []),
+  ]
 
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
   validates :steam_id, presence: true, uniqueness: true,
                        numericality: { greater_than: 0 }
+  validates :discord_id, allow_nil: true, uniqueness: true, numericality: { greater_than: 0 }
+
   validates :description, presence: true, allow_blank: true, length: { in: 0..1_000 }
   caches_markdown_render_for :description
   validates :email, allow_blank: true, format: { with: /@/ } # How you actually validate emails
@@ -106,11 +111,11 @@ class User < ApplicationRecord
   end
 
   def steam_32
-    SteamId.to_32(steam_id)
+    SteamId.from_64_to_32(steam_id)
   end
 
   def steam_id3
-    SteamId.to_id3(steam_id)
+    SteamId.from_64_to_id3(steam_id)
   end
 
   def admin?

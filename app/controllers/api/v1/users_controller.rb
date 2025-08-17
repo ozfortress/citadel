@@ -12,6 +12,11 @@ module API
 
         render json: @user, serializer: UserSerializer
       end
+
+      def discord_id
+        @user = User.find_by!(discord_id: params[:id])
+        render json: @user, serializer: UserSerializer
+      end
     end
   end
 end

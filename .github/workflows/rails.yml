@@ -1,6 +1,7 @@
 name: Rails
 on:
   - push
+  - pull_request
   - workflow_dispatch
 
 jobs:
@@ -12,6 +13,8 @@ jobs:
       BUNDLE_WITHOUT: development
       SECRET_KEY_BASE: ad4d97aef89588c346638cfe689f667f06bc29d2c40724107558e5d4defe723e42cfb294cdb25d7e3241195cfb7cc952e8a2c1680460bea4904bd79d21784307
       STEAM_API_KEY: abcd1234
+      DISCORD_CLIENT_ID: 123
+      DISCORD_CLIENT_SECRET: abcd1234
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
     services:

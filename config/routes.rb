@@ -10,6 +10,10 @@ Rails.application.routes.draw do
       end
 
       get 'users/steam_id/:id', to: 'users#steam_id'
+      if Rails.configuration.features.discord_integration
+        get 'users/discord_id/:id', to: 'users#discord_id'
+      end
+
       resources :users, only: [:show]
       resources :teams, only: [:show]
     end
@@ -108,6 +112,9 @@ Rails.application.routes.draw do
   patch 'users/:user_id/name/:id', to: 'users#handle_name_change',  as: 'handle_user_name'
   resources :users, except: [:destroy] do
     post 'name',  on: :member, to: 'users#request_name_change'
+    if Rails.configuration.features.discord_integration
+      patch 'unlink_discord', on: :member
+    end
 
     resources :comments, controller: 'users/comments', only: [:create, :edit, :update, :destroy] do
       get :edits, on: :member, as: 'edits_for'

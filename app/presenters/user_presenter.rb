@@ -40,6 +40,22 @@ class UserPresenter < BasePresenter
     end
   end
 
+  def discord_profile_url
+    "https://discord.com/users/#{user.discord_id}"
+  end
+
+  def discord_id_link
+    link_to(discord_profile_url, target: '_blank', rel: 'noopener') do
+      user.discord_id.to_s
+    end
+  end
+
+  def discord_icon_link(options = { size: 16 })
+    link_to(discord_profile_url, target: '_blank', rel: 'noopener') do
+      inline_svg_tag('discord-logo.svg', size: "#{options[:size]}px")
+    end
+  end
+
   def titles(options = {})
     team = options[:team]
     has_captain_label = team && user.can?(:edit, team) && user.can?(:use, :teams)

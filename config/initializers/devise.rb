@@ -241,6 +241,7 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   config.omniauth :steam, Rails.application.credentials.steam_api_key
+  config.omniauth :discord, Rails.application.credentials.discord_client_id, Rails.application.credentials.discord_client_secret
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

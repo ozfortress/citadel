@@ -360,4 +360,45 @@ describe UsersController do
       expect(session['devise']).to be_nil
     end
   end
+
+  describe 'PATCH #unlink_discord' do
+    let(:user) { create(:user_with_discord) }
+    before do
+      sign_in user
+    end
+
+    context 'with Discord integration enabled' do
+      before do
+        allow(Rails.configuration.features).to receive(:discord_integration).and_return(true)
+        Rails.application.reload_routes!
+        sign_in user
+      end
+
+      it 'allows users to unlink a Discord account' do
+        expect(user.discord_id).to_not be_nil
+        patch :unlink_discord, params: { id: user.id }
+        user.reload
+        expect(user.discord_id).to be_nil
+      end
+
+      it 'fails for unauthorized user' do
+        sign_out user
+        expect(user.discord_id).to_not be_nil
+        patch :unlink_discord, params: { id: user.id }
+        user.reload
+        expect(user.discord_id).to_not be_nil
+      end
+    end
+
+    context 'with Discord integration disabled' do
+      before do
+        allow(Rails.configuration.features).to receive(:discord_integration).and_return(false)
+        Rails.application.reload_routes!
+      end
+
+      it 'is not routable' do
+        expect(patch: "/users/#{user.id}/unlink_discord").to_not be_routable
+      end
+    end
+  end
 end

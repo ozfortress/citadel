@@ -9,4 +9,8 @@ FactoryBot.define do
       user.update_column(:avatar, 'spec/support/avatar.png')
     end
   end
+
+  factory :user_with_discord, class: User, parent: :user do
+    sequence(:discord_id) { |n| n }
+  end
 end

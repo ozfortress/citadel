@@ -2,19 +2,30 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_19_142550) do
-
+ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
+
+  create_table "action_user_edit_competition", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "competition_id"
+    t.index ["competition_id"], name: "index_action_user_edit_competition_on_competition_id"
+    t.index ["user_id"], name: "index_action_user_edit_competition_on_user_id"
+  end
+
+  create_table "action_user_edit_competitions", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_action_user_edit_competitions_on_user_id"
+  end
 
   create_table "action_user_edit_games", id: :serial, force: :cascade do |t|
     t.integer "user_id"
@@ -72,6 +83,18 @@ ActiveRecord::Schema.define(version: 2020_07_19_142550) do
     t.integer "forums_topic_id"
     t.index ["forums_topic_id"], name: "index_action_user_manage_forums_topic_on_forums_topic_id"
     t.index ["user_id"], name: "index_action_user_manage_forums_topic_on_user_id"
+  end
+
+  create_table "action_user_manage_rosters_competition", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "competition_id"
+    t.index ["competition_id"], name: "index_action_user_manage_rosters_competition_on_competition_id"
+    t.index ["user_id"], name: "index_action_user_manage_rosters_competition_on_user_id"
+  end
+
+  create_table "action_user_manage_rosters_competitions", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_action_user_manage_rosters_competitions_on_user_id"
   end
 
   create_table "action_user_manage_rosters_league", id: :serial, force: :cascade do |t|
@@ -153,6 +176,93 @@ ActiveRecord::Schema.define(version: 2020_07_19_142550) do
     t.index ["key"], name: "index_api_keys_on_key"
     t.index ["name"], name: "index_api_keys_on_name"
     t.index ["user_id"], name: "index_api_keys_on_user_id"
+  end
+
+  create_table "competition_match_comms", id: :serial, force: :cascade do |t|
+    t.integer "competition_match_id"
+    t.integer "user_id"
+    t.text "content", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["competition_match_id"], name: "index_competition_match_comms_on_competition_match_id"
+    t.index ["user_id"], name: "index_competition_match_comms_on_user_id"
+  end
+
+  create_table "competition_matches", id: :serial, force: :cascade do |t|
+    t.integer "home_team_id"
+    t.integer "away_team_id"
+    t.integer "status", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.integer "forfeit_by", default: 0, null: false
+    t.index ["away_team_id"], name: "index_competition_matches_on_away_team_id"
+    t.index ["home_team_id"], name: "index_competition_matches_on_home_team_id"
+  end
+
+  create_table "competition_rosters", id: :serial, force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.integer "division_id", null: false
+    t.boolean "approved", default: false, null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "name", null: false
+    t.text "description", null: false
+    t.boolean "disbanded", default: false, null: false
+    t.index ["division_id"], name: "index_competition_rosters_on_division_id"
+    t.index ["team_id"], name: "index_competition_rosters_on_team_id"
+  end
+
+  create_table "competition_sets", id: :serial, force: :cascade do |t|
+    t.integer "competition_match_id"
+    t.integer "map_id"
+    t.integer "home_team_score", null: false
+    t.integer "away_team_score", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["competition_match_id"], name: "index_competition_sets_on_competition_match_id"
+    t.index ["map_id"], name: "index_competition_sets_on_map_id"
+  end
+
+  create_table "competition_transfers", id: :serial, force: :cascade do |t|
+    t.integer "competition_roster_id", null: false
+    t.integer "user_id", null: false
+    t.boolean "is_joining", null: false
+    t.boolean "approved", default: false, null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["competition_roster_id"], name: "index_competition_transfers_on_competition_roster_id"
+    t.index ["user_id"], name: "index_competition_transfers_on_user_id"
+  end
+
+  create_table "competitions", id: :serial, force: :cascade do |t|
+    t.integer "format_id"
+    t.string "name", null: false
+    t.text "description", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.boolean "private", null: false
+    t.boolean "signuppable", default: false, null: false
+    t.boolean "roster_locked", default: false, null: false
+    t.integer "min_players", default: 6, null: false
+    t.integer "max_players", default: 0, null: false
+    t.boolean "matches_submittable", default: false, null: false
+    t.boolean "transfers_require_approval", default: true, null: false
+    t.integer "points_per_set_won", default: 2, null: false
+    t.integer "points_per_set_drawn", default: 1, null: false
+    t.integer "points_per_set_lost", default: 0, null: false
+    t.integer "points_per_match_forfeit_loss", default: 1, null: false
+    t.integer "points_per_match_forfeit_win", default: 1, null: false
+    t.boolean "allow_set_draws", default: true, null: false
+    t.boolean "allow_disbanding", default: false, null: false
+    t.index ["format_id"], name: "index_competitions_on_format_id"
+  end
+
+  create_table "divisions", id: :serial, force: :cascade do |t|
+    t.integer "competition_id"
+    t.string "name", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["competition_id"], name: "index_divisions_on_competition_id"
   end
 
   create_table "formats", id: :serial, force: :cascade do |t|
@@ -501,6 +611,16 @@ ActiveRecord::Schema.define(version: 2020_07_19_142550) do
     t.index ["game_id"], name: "index_maps_on_game_id"
   end
 
+  create_table "notifications", id: :serial, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.boolean "read", default: false, null: false
+    t.string "message", null: false
+    t.string "link", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "team_invites", id: :serial, force: :cascade do |t|
     t.integer "team_id"
     t.integer "user_id"
@@ -543,6 +663,29 @@ ActiveRecord::Schema.define(version: 2020_07_19_142550) do
     t.string "avatar_token"
     t.index ["name"], name: "index_teams_on_name", unique: true
     t.index ["query_name_cache"], name: "index_teams_on_query_name_cache", opclass: :gist_trgm_ops, using: :gist
+  end
+
+  create_table "titles", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "competition_id"
+    t.integer "competition_roster_id"
+    t.string "name", null: false
+    t.string "badge"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.index ["competition_id"], name: "index_titles_on_competition_id"
+    t.index ["competition_roster_id"], name: "index_titles_on_competition_roster_id"
+    t.index ["user_id"], name: "index_titles_on_user_id"
+  end
+
+  create_table "transfers", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "team_id"
+    t.boolean "is_joining", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["team_id"], name: "index_transfers_on_team_id"
+    t.index ["user_id"], name: "index_transfers_on_user_id"
   end
 
   create_table "user_comment_edits", id: :serial, force: :cascade do |t|
@@ -635,12 +778,15 @@ ActiveRecord::Schema.define(version: 2020_07_19_142550) do
     t.string "avatar_token"
     t.integer "forums_posts_count", default: 0, null: false
     t.integer "public_forums_posts_count", default: 0, null: false
+    t.bigint "discord_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["discord_id"], name: "index_users_on_discord_id", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["query_name_cache"], name: "index_users_on_query_name_cache", opclass: :gist_trgm_ops, using: :gist
     t.index ["steam_id"], name: "index_users_on_steam_id", unique: true
   end
 
+  add_foreign_key "action_user_edit_competition", "competitions"
   add_foreign_key "action_user_edit_games", "users"
   add_foreign_key "action_user_edit_league", "leagues"
   add_foreign_key "action_user_edit_league", "users"
@@ -655,6 +801,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_142550) do
   add_foreign_key "action_user_manage_forums_thread", "users"
   add_foreign_key "action_user_manage_forums_topic", "forums_topics"
   add_foreign_key "action_user_manage_forums_topic", "users"
+  add_foreign_key "action_user_manage_rosters_competition", "competitions"
   add_foreign_key "action_user_manage_rosters_league", "leagues"
   add_foreign_key "action_user_manage_rosters_league", "users"
   add_foreign_key "action_user_manage_rosters_leagues", "users"
@@ -666,6 +813,13 @@ ActiveRecord::Schema.define(version: 2020_07_19_142550) do
   add_foreign_key "action_user_use_leagues_bans", "users"
   add_foreign_key "action_user_use_teams_bans", "users"
   add_foreign_key "action_user_use_users_bans", "users"
+  add_foreign_key "competition_match_comms", "competition_matches"
+  add_foreign_key "competition_matches", "competition_rosters", column: "away_team_id"
+  add_foreign_key "competition_matches", "competition_rosters", column: "home_team_id"
+  add_foreign_key "competition_rosters", "divisions"
+  add_foreign_key "competition_sets", "competition_matches"
+  add_foreign_key "competition_transfers", "competition_rosters"
+  add_foreign_key "divisions", "competitions"
   add_foreign_key "formats", "games"
   add_foreign_key "forums_post_edits", "forums_posts", column: "post_id"
   add_foreign_key "forums_post_edits", "users", column: "created_by_id"
@@ -723,6 +877,8 @@ ActiveRecord::Schema.define(version: 2020_07_19_142550) do
   add_foreign_key "team_players", "users"
   add_foreign_key "team_transfers", "teams"
   add_foreign_key "team_transfers", "users"
+  add_foreign_key "titles", "competition_rosters"
+  add_foreign_key "titles", "competitions"
   add_foreign_key "user_comment_edits", "user_comments", column: "comment_id"
   add_foreign_key "user_comment_edits", "users", column: "created_by_id"
   add_foreign_key "user_comments", "users"

@@ -29,12 +29,13 @@ gem 'cocoon'
 gem 'jquery-rails'
 # Steam Login
 gem 'omniauth', '~> 1'
+gem 'omniauth-discord'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-steam'
 # Authentication
 gem 'devise'
-# Use haml for templating
-gem 'haml', '~> 6'
+# Use hamlit for ~fast templating
+gem 'hamlit'
 # Forum Pages
 gem 'will_paginate', '~> 3.3.0'
 gem 'will_paginate-bootstrap4'
@@ -83,8 +84,6 @@ group :test do
   gem 'reek', '~> 6', require: false
   gem 'rubocop', '~> 1.64.1', require: false
   gem 'rubocop-rails', '~> 2.25.0', require: false
-  # 1.14 is broken. Required by reek
-  gem 'dry-schema', '~> 1.13.0', require: false
 
   gem 'codecov', require: false
 end
@@ -108,7 +107,4 @@ group :development do
   gem 'capistrano-passenger', require: false
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
-  # Needed to make capistrano function
-  gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0', require: false
-  gem 'ed25519', '>= 1.2', '< 2.0', require: false
 end

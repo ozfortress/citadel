@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   include UsersPermissions
 
-  before_action only: [:show, :edit, :update, :request_name_change] do
+  before_action only: [:show, :edit, :update, :request_name_change, :unlink_discord] do
     @user = User.find(params[:id])
   end
 
@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   end
 
   before_action :require_login, only: [:profile, :logout]
-  before_action :require_user_permission, only: [:edit, :update, :request_name_change]
+  before_action :require_user_permission, only: [:edit, :update, :request_name_change, :unlink_discord]
   before_action :require_users_permission, only: [:names, :handle_name_change]
   before_action :require_user_confirmation_token, only: :confirm_email
   before_action :require_user_confirmation_not_timed_out, only: :confirm_email
@@ -89,6 +89,12 @@ class UsersController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def unlink_discord
+    @user.update!(discord_id: nil)
+    flash[:notice] = 'Discord account unlinked!'
+    redirect_to edit_user_path(@user)
   end
 
   def handle_name_change

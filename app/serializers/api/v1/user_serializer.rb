@@ -4,7 +4,7 @@ module API
       type :user
 
       attributes :id, :name, :description, :created_at
-      attributes :steam_32, :steam_64, :steam_id3
+      attributes :steam_32, :steam_64, :steam_id3, :discord_id
       attribute(:steam_64_str) { object.steam_64.to_s } # For dumb json implementations
       attribute(:profile_url) { object.avatar.thumb.url }
 

@@ -1,0 +1,3 @@
+shared:
+  # Toggle Discord integration (allow users to link Discord account, and show accounts on profile)
+  discord_integration: true
