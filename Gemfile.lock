@@ -242,10 +242,6 @@ GEM
       rainbow
       rubocop (>= 1.0)
       sysexits (~> 1.1)
-    hamlit (3.0.3)
-      temple (>= 0.8.2)
-      thor
-      tilt
     hashie (5.0.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
@@ -579,8 +575,8 @@ DEPENDENCIES
   ed25519 (>= 1.2, < 2.0)
   factory_bot_rails (~> 6)
   font-awesome-rails
+  haml (~> 6)
   haml_lint
-  hamlit
   inline_svg
   jquery-rails
   letter_opener

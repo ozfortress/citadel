@@ -34,8 +34,8 @@ gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-steam'
 # Authentication
 gem 'devise'
-# Use hamlit for ~fast templating
-gem 'hamlit'
+# Use haml for templating
+gem 'haml', '~> 6'
 # Forum Pages
 gem 'will_paginate', '~> 3.3.0'
 gem 'will_paginate-bootstrap4'
