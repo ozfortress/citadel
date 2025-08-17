@@ -35,7 +35,9 @@
         - else
           .flex-fill
             Account Not Linked
-          = link_to 'Link Discord', user_discord_omniauth_authorize_path, method: :post, class: 'btn btn-primary'
+          / Only allow the user to link, no one else
+          - if current_user == @user
+            = link_to 'Link Discord', user_discord_omniauth_authorize_path, method: :post, class: 'btn btn-primary'
 
 .card.mb-3
   .card-header
