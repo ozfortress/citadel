@@ -62,6 +62,10 @@
 
   .pull-right= render 'users/bans/list', user: @user
 
+- if user_can_edit_users?
+  %hr
+  = render 'users/show_admin_comments', user: @user, comments: @comments, comment: @comment
+
 - if current_user? && !@team_invites.empty?
   - @team_invites.each do |invite|
     - team = invite.team
@@ -109,7 +113,3 @@
       = render 'users/show_leagues', user: @user, roster_transfers: @roster_transfers
   .tab-pane#forums{ role: 'tabpanel', aria: { labelledby: 'forums-tab' } }
     = render 'users/show_forums', user: @user, forums_posts: @forums_posts
-
-- if user_can_edit_users?
-  %hr
-  = render 'users/show_admin_comments', user: @user, comments: @comments, comment: @comment
