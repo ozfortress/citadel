@@ -24,15 +24,6 @@
     points have been awarded.
 
 - else
-  - if user_signed_in?
-    .pull-right
-      %h5
-        = link_to verify_rosters_link(@match), target: :blank_, class: 'badge badge-warning',
-                  data: { toggle: :tooltip, placement: :bottom },
-                  title: 'Verify the other team is who they say they are.' do
-          verify.ozfortress.com
-          = inline_svg_tag 'open_iconic/check.svg', class: 'icon ml-1'
-
   %table.table.mb-2
     %thead
       %tr
