@@ -10,22 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
+ActiveRecord::Schema[7.1].define(version: 2026_08_28_011046) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
-
-  create_table "action_user_edit_competition", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "competition_id"
-    t.index ["competition_id"], name: "index_action_user_edit_competition_on_competition_id"
-    t.index ["user_id"], name: "index_action_user_edit_competition_on_user_id"
-  end
-
-  create_table "action_user_edit_competitions", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.index ["user_id"], name: "index_action_user_edit_competitions_on_user_id"
-  end
 
   create_table "action_user_edit_games", id: :serial, force: :cascade do |t|
     t.integer "user_id"
@@ -85,18 +73,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.index ["user_id"], name: "index_action_user_manage_forums_topic_on_user_id"
   end
 
-  create_table "action_user_manage_rosters_competition", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "competition_id"
-    t.index ["competition_id"], name: "index_action_user_manage_rosters_competition_on_competition_id"
-    t.index ["user_id"], name: "index_action_user_manage_rosters_competition_on_user_id"
-  end
-
-  create_table "action_user_manage_rosters_competitions", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.index ["user_id"], name: "index_action_user_manage_rosters_competitions_on_user_id"
-  end
-
   create_table "action_user_manage_rosters_league", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "league_id"
@@ -112,9 +88,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
   create_table "action_user_use_forums_bans", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.string "reason", default: "", null: false
-    t.datetime "terminated_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "terminated_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_action_user_use_forums_bans_on_user_id"
   end
 
@@ -122,9 +98,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "user_id"
     t.integer "forums_thread_id"
     t.string "reason", default: "", null: false
-    t.datetime "terminated_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "terminated_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["forums_thread_id"], name: "index_action_user_use_forums_thread_bans_on_forums_thread_id"
     t.index ["user_id"], name: "index_action_user_use_forums_thread_bans_on_user_id"
   end
@@ -133,9 +109,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "user_id"
     t.integer "forums_topic_id"
     t.string "reason", default: "", null: false
-    t.datetime "terminated_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "terminated_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["forums_topic_id"], name: "index_action_user_use_forums_topic_bans_on_forums_topic_id"
     t.index ["user_id"], name: "index_action_user_use_forums_topic_bans_on_user_id"
   end
@@ -143,27 +119,27 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
   create_table "action_user_use_leagues_bans", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.string "reason", default: "", null: false
-    t.datetime "terminated_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "terminated_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_action_user_use_leagues_bans_on_user_id"
   end
 
   create_table "action_user_use_teams_bans", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.string "reason", default: "", null: false
-    t.datetime "terminated_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "terminated_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_action_user_use_teams_bans_on_user_id"
   end
 
   create_table "action_user_use_users_bans", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.string "reason", default: "", null: false
-    t.datetime "terminated_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "terminated_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_action_user_use_users_bans_on_user_id"
   end
 
@@ -171,98 +147,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.string "name"
     t.string "key", null: false
     t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["key"], name: "index_api_keys_on_key"
     t.index ["name"], name: "index_api_keys_on_name"
     t.index ["user_id"], name: "index_api_keys_on_user_id"
-  end
-
-  create_table "competition_match_comms", id: :serial, force: :cascade do |t|
-    t.integer "competition_match_id"
-    t.integer "user_id"
-    t.text "content", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["competition_match_id"], name: "index_competition_match_comms_on_competition_match_id"
-    t.index ["user_id"], name: "index_competition_match_comms_on_user_id"
-  end
-
-  create_table "competition_matches", id: :serial, force: :cascade do |t|
-    t.integer "home_team_id"
-    t.integer "away_team_id"
-    t.integer "status", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.integer "forfeit_by", default: 0, null: false
-    t.index ["away_team_id"], name: "index_competition_matches_on_away_team_id"
-    t.index ["home_team_id"], name: "index_competition_matches_on_home_team_id"
-  end
-
-  create_table "competition_rosters", id: :serial, force: :cascade do |t|
-    t.integer "team_id", null: false
-    t.integer "division_id", null: false
-    t.boolean "approved", default: false, null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.string "name", null: false
-    t.text "description", null: false
-    t.boolean "disbanded", default: false, null: false
-    t.index ["division_id"], name: "index_competition_rosters_on_division_id"
-    t.index ["team_id"], name: "index_competition_rosters_on_team_id"
-  end
-
-  create_table "competition_sets", id: :serial, force: :cascade do |t|
-    t.integer "competition_match_id"
-    t.integer "map_id"
-    t.integer "home_team_score", null: false
-    t.integer "away_team_score", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["competition_match_id"], name: "index_competition_sets_on_competition_match_id"
-    t.index ["map_id"], name: "index_competition_sets_on_map_id"
-  end
-
-  create_table "competition_transfers", id: :serial, force: :cascade do |t|
-    t.integer "competition_roster_id", null: false
-    t.integer "user_id", null: false
-    t.boolean "is_joining", null: false
-    t.boolean "approved", default: false, null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["competition_roster_id"], name: "index_competition_transfers_on_competition_roster_id"
-    t.index ["user_id"], name: "index_competition_transfers_on_user_id"
-  end
-
-  create_table "competitions", id: :serial, force: :cascade do |t|
-    t.integer "format_id"
-    t.string "name", null: false
-    t.text "description", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.boolean "private", null: false
-    t.boolean "signuppable", default: false, null: false
-    t.boolean "roster_locked", default: false, null: false
-    t.integer "min_players", default: 6, null: false
-    t.integer "max_players", default: 0, null: false
-    t.boolean "matches_submittable", default: false, null: false
-    t.boolean "transfers_require_approval", default: true, null: false
-    t.integer "points_per_set_won", default: 2, null: false
-    t.integer "points_per_set_drawn", default: 1, null: false
-    t.integer "points_per_set_lost", default: 0, null: false
-    t.integer "points_per_match_forfeit_loss", default: 1, null: false
-    t.integer "points_per_match_forfeit_win", default: 1, null: false
-    t.boolean "allow_set_draws", default: true, null: false
-    t.boolean "allow_disbanding", default: false, null: false
-    t.index ["format_id"], name: "index_competitions_on_format_id"
-  end
-
-  create_table "divisions", id: :serial, force: :cascade do |t|
-    t.integer "competition_id"
-    t.string "name", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["competition_id"], name: "index_divisions_on_competition_id"
   end
 
   create_table "formats", id: :serial, force: :cascade do |t|
@@ -270,8 +159,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.string "name", null: false
     t.text "description", null: false
     t.integer "player_count", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "description_render_cache", default: "", null: false
     t.index ["game_id"], name: "index_formats_on_game_id"
     t.index ["name"], name: "index_formats_on_name", unique: true
@@ -281,8 +170,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "post_id", null: false
     t.integer "created_by_id", null: false
     t.string "content", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "content_render_cache", default: "", null: false
     t.index ["created_by_id"], name: "index_forums_post_edits_on_created_by_id"
     t.index ["post_id"], name: "index_forums_post_edits_on_post_id"
@@ -292,8 +181,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "thread_id", null: false
     t.integer "created_by_id", null: false
     t.string "content", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "edits_count", default: 0, null: false
     t.text "content_render_cache", default: "", null: false
     t.index ["created_by_id"], name: "index_forums_posts_on_created_by_id"
@@ -304,8 +193,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "user_id", null: false
     t.integer "topic_id"
     t.integer "thread_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["thread_id"], name: "index_forums_subscriptions_on_thread_id"
     t.index ["topic_id"], name: "index_forums_subscriptions_on_topic_id"
     t.index ["user_id"], name: "index_forums_subscriptions_on_user_id"
@@ -315,8 +204,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "topic_id"
     t.integer "created_by_id", null: false
     t.string "title", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "locked"
     t.boolean "pinned"
     t.boolean "hidden"
@@ -329,8 +218,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
   create_table "forums_topics", id: :serial, force: :cascade do |t|
     t.integer "created_by_id", null: false
     t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "locked"
     t.boolean "pinned"
     t.boolean "hidden"
@@ -349,16 +238,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
 
   create_table "games", id: :serial, force: :cascade do |t|
     t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["name"], name: "index_games_on_name", unique: true
   end
 
   create_table "league_divisions", id: :serial, force: :cascade do |t|
     t.integer "league_id"
     t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["league_id"], name: "index_league_divisions_on_league_id"
   end
 
@@ -366,8 +255,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "created_by_id", null: false
     t.integer "comm_id", null: false
     t.text "content", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "content_render_cache", default: "", null: false
     t.index ["comm_id"], name: "index_league_match_comm_edits_on_comm_id"
     t.index ["created_by_id"], name: "index_league_match_comm_edits_on_created_by_id"
@@ -377,11 +266,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "match_id"
     t.integer "created_by_id"
     t.text "content", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "content_render_cache", default: "", null: false
     t.integer "edits_count", default: 0, null: false
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.integer "deleted_by_id"
     t.index ["created_by_id"], name: "index_league_match_comms_on_created_by_id"
     t.index ["match_id"], name: "index_league_match_comms_on_match_id"
@@ -392,8 +281,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "picked_by_id"
     t.integer "kind", limit: 2, null: false
     t.integer "team", limit: 2, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "map_id"
     t.boolean "deferrable", default: false, null: false
     t.integer "order_number", default: 0
@@ -406,8 +295,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "map_id"
     t.integer "home_team_score", default: 0, null: false
     t.integer "away_team_score", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "loser_id"
     t.integer "winner_id"
     t.boolean "has_outcome", default: false, null: false
@@ -422,8 +311,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "home_team_id"
     t.integer "away_team_id"
     t.integer "status", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "forfeit_by", default: 0, null: false
     t.integer "round_number", default: 1, null: false
     t.string "notice", default: "", null: false
@@ -449,8 +338,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
   create_table "league_pooled_maps", id: :serial, force: :cascade do |t|
     t.integer "league_id"
     t.integer "map_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["league_id"], name: "index_league_pooled_maps_on_league_id"
     t.index ["map_id"], name: "index_league_pooled_maps_on_map_id"
   end
@@ -460,8 +349,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "created_by_id", null: false
     t.string "content", null: false
     t.text "content_render_cache", default: "", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["comment_id"], name: "index_league_roster_comment_edits_on_comment_id"
     t.index ["created_by_id"], name: "index_league_roster_comment_edits_on_created_by_id"
   end
@@ -470,10 +359,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "roster_id", null: false
     t.integer "created_by_id"
     t.text "content", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "content_render_cache", default: "", null: false
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.integer "deleted_by_id"
     t.index ["created_by_id"], name: "index_league_roster_comments_on_created_by_id"
     t.index ["roster_id"], name: "index_league_roster_comments_on_roster_id"
@@ -482,8 +371,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
   create_table "league_roster_players", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "roster_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["roster_id"], name: "index_league_roster_players_on_roster_id"
     t.index ["user_id"], name: "index_league_roster_players_on_user_id"
   end
@@ -492,8 +381,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "user_id"
     t.integer "roster_id"
     t.boolean "is_joining", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "created_by_id"
     t.integer "approved_by_id"
     t.integer "denied_by_id"
@@ -508,8 +397,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "user_id", null: false
     t.boolean "is_joining", null: false
     t.boolean "approved", default: true, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["roster_id"], name: "index_league_roster_transfers_on_roster_id"
     t.index ["user_id"], name: "index_league_roster_transfers_on_user_id"
   end
@@ -518,8 +407,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "team_id", null: false
     t.integer "division_id", null: false
     t.boolean "approved", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "name", null: false
     t.text "description", null: false
     t.boolean "disbanded", default: false, null: false
@@ -570,8 +459,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "format_id"
     t.string "name", null: false
     t.text "description", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "signuppable", default: false, null: false
     t.boolean "roster_locked", default: false, null: false
     t.integer "min_players", default: 6, null: false
@@ -605,27 +494,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "game_id"
     t.string "name", null: false
     t.text "description", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "description_render_cache", default: "", null: false
-    t.index ["game_id"], name: "index_maps_on_game_id"
-  end
-
-  create_table "notifications", id: :serial, force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.boolean "read", default: false, null: false
-    t.string "message", null: false
-    t.string "link", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.index ["user_id"], name: "index_notifications_on_user_id"
+    t.text "description_render_cache", default: "", null: false
+    t.index ["game_id"], name: "index_maps_on_game_id"
   end
 
   create_table "team_invites", id: :serial, force: :cascade do |t|
     t.integer "team_id"
     t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["team_id"], name: "index_team_invites_on_team_id"
     t.index ["user_id"], name: "index_team_invites_on_user_id"
   end
@@ -633,8 +512,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
   create_table "team_players", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "team_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["team_id"], name: "index_team_players_on_team_id"
     t.index ["user_id"], name: "index_team_players_on_user_id"
   end
@@ -643,8 +522,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "user_id"
     t.integer "team_id"
     t.boolean "is_joining", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["team_id"], name: "index_team_transfers_on_team_id"
     t.index ["user_id"], name: "index_team_transfers_on_user_id"
   end
@@ -652,8 +531,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
   create_table "teams", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.text "description", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "avatar"
     t.integer "players_count", default: 0, null: false
     t.string "query_name_cache", default: "", null: false
@@ -661,31 +540,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.text "notice", default: "", null: false
     t.text "notice_render_cache", default: "", null: false
     t.string "avatar_token"
+    t.integer "created_by_id"
+    t.index ["created_by_id"], name: "index_teams_on_created_by_id"
     t.index ["name"], name: "index_teams_on_name", unique: true
     t.index ["query_name_cache"], name: "index_teams_on_query_name_cache", opclass: :gist_trgm_ops, using: :gist
-  end
-
-  create_table "titles", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "competition_id"
-    t.integer "competition_roster_id"
-    t.string "name", null: false
-    t.string "badge"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-    t.index ["competition_id"], name: "index_titles_on_competition_id"
-    t.index ["competition_roster_id"], name: "index_titles_on_competition_roster_id"
-    t.index ["user_id"], name: "index_titles_on_user_id"
-  end
-
-  create_table "transfers", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "team_id"
-    t.boolean "is_joining", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["team_id"], name: "index_transfers_on_team_id"
-    t.index ["user_id"], name: "index_transfers_on_user_id"
   end
 
   create_table "user_comment_edits", id: :serial, force: :cascade do |t|
@@ -693,8 +551,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "created_by_id", null: false
     t.string "content", null: false
     t.text "content_render_cache", default: "", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["comment_id"], name: "index_user_comment_edits_on_comment_id"
     t.index ["created_by_id"], name: "index_user_comment_edits_on_created_by_id"
   end
@@ -704,9 +562,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "created_by_id", null: false
     t.text "content", null: false
     t.text "content_render_cache", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.integer "deleted_by_id"
     t.index ["user_id"], name: "index_user_comments_on_user_id"
   end
@@ -714,8 +572,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
   create_table "user_logs", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.inet "ip", null: false
-    t.datetime "first_seen_at", null: false
-    t.datetime "last_seen_at", null: false
+    t.datetime "first_seen_at", precision: nil, null: false
+    t.datetime "last_seen_at", precision: nil, null: false
     t.index ["ip"], name: "index_user_logs_on_ip"
     t.index ["user_id", "ip"], name: "index_user_logs_on_user_id_and_ip", unique: true
     t.index ["user_id"], name: "index_user_logs_on_user_id"
@@ -726,8 +584,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "approved_by_id"
     t.integer "denied_by_id"
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["approved_by_id"], name: "index_user_name_changes_on_approved_by_id"
     t.index ["denied_by_id"], name: "index_user_name_changes_on_denied_by_id"
     t.index ["user_id"], name: "index_user_name_changes_on_user_id"
@@ -738,8 +596,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.boolean "read", default: false, null: false
     t.string "message", null: false
     t.string "link", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_user_notifications_on_user_id"
   end
 
@@ -749,8 +607,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.integer "roster_id"
     t.string "name", null: false
     t.string "badge"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["league_id"], name: "index_user_titles_on_league_id"
     t.index ["roster_id"], name: "index_user_titles_on_roster_id"
     t.index ["user_id"], name: "index_user_titles_on_user_id"
@@ -759,16 +617,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.bigint "steam_id", null: false
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "remember_created_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "description", default: "", null: false
     t.string "remember_token"
     t.string "avatar"
     t.string "email"
-    t.datetime "confirmed_at"
+    t.datetime "confirmed_at", precision: nil
     t.string "confirmation_token"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmation_sent_at", precision: nil
     t.string "query_name_cache", default: "", null: false
     t.text "description_render_cache", default: "", null: false
     t.string "badge_name", default: "", null: false
@@ -786,7 +644,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
     t.index ["steam_id"], name: "index_users_on_steam_id", unique: true
   end
 
-  add_foreign_key "action_user_edit_competition", "competitions"
   add_foreign_key "action_user_edit_games", "users"
   add_foreign_key "action_user_edit_league", "leagues"
   add_foreign_key "action_user_edit_league", "users"
@@ -801,7 +658,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
   add_foreign_key "action_user_manage_forums_thread", "users"
   add_foreign_key "action_user_manage_forums_topic", "forums_topics"
   add_foreign_key "action_user_manage_forums_topic", "users"
-  add_foreign_key "action_user_manage_rosters_competition", "competitions"
   add_foreign_key "action_user_manage_rosters_league", "leagues"
   add_foreign_key "action_user_manage_rosters_league", "users"
   add_foreign_key "action_user_manage_rosters_leagues", "users"
@@ -813,13 +669,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
   add_foreign_key "action_user_use_leagues_bans", "users"
   add_foreign_key "action_user_use_teams_bans", "users"
   add_foreign_key "action_user_use_users_bans", "users"
-  add_foreign_key "competition_match_comms", "competition_matches"
-  add_foreign_key "competition_matches", "competition_rosters", column: "away_team_id"
-  add_foreign_key "competition_matches", "competition_rosters", column: "home_team_id"
-  add_foreign_key "competition_rosters", "divisions"
-  add_foreign_key "competition_sets", "competition_matches"
-  add_foreign_key "competition_transfers", "competition_rosters"
-  add_foreign_key "divisions", "competitions"
   add_foreign_key "formats", "games"
   add_foreign_key "forums_post_edits", "forums_posts", column: "post_id"
   add_foreign_key "forums_post_edits", "users", column: "created_by_id"
@@ -877,8 +726,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_23_113545) do
   add_foreign_key "team_players", "users"
   add_foreign_key "team_transfers", "teams"
   add_foreign_key "team_transfers", "users"
-  add_foreign_key "titles", "competition_rosters"
-  add_foreign_key "titles", "competitions"
+  add_foreign_key "teams", "users", column: "created_by_id"
   add_foreign_key "user_comment_edits", "user_comments", column: "comment_id"
   add_foreign_key "user_comment_edits", "users", column: "created_by_id"
   add_foreign_key "user_comments", "users"

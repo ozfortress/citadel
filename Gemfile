@@ -53,6 +53,10 @@ gem 'tournament-system', '~> 2.0'
 # Backwards compatibility with ruby 2
 gem 'scanf'
 
+group :production do
+  gem 'puma', '~> 6.0'
+end
+
 group :test do
   # Use rspec for tests
   gem 'rspec-rails', '~> 6'

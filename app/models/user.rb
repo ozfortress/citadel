@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_many :teams, through: :team_players
   has_many :team_invites, class_name: 'Team::Invite', dependent: :destroy
   has_many :team_transfers, -> { order(created_at: :desc) }, class_name: 'Team::Transfer', dependent: :destroy
+  has_many :created_teams, class_name: 'Team', foreign_key: 'created_by_id', dependent: :destroy
 
   has_many :roster_players, class_name: 'League::Roster::Player', dependent: :restrict_with_exception
   private :roster_players, :roster_players=

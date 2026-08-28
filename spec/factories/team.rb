@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :team do
+    created_by { create(:user) }
     sequence(:name) { |n| "Immunity #{n}" }
     description { 'We beat everyone' }
   end

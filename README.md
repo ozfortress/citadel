@@ -28,6 +28,28 @@ You will also need for testing:
 To configure secrets (ie. steam API key) for development, run `rails
 credentials:edit`.
 
+## Docker
+
+To run Citadel with Docker Compose:
+
+```bash
+docker compose up
+```
+
+This will start the Rails application on `http://localhost:3000`. PostgreSQL runs in a separate container and is only accessible within the Docker network for security reasons—the web container communicates with it through the internal Docker network.
+
+### Production Image
+
+The production Docker image uses Puma as the application server. Puma's behavior and logging can be controlled through environment variables:
+
+* `RAILS_MAX_THREADS` - The minimum and maximum number of threads in the thread pool (default: 5)
+* `WEB_CONCURRENCY` - The number of Puma worker processes to fork in clustered mode (default: 2)
+* `RAILS_LOG_LEVEL` - The log level for Rails logging (default: info). Valid values are: `debug`, `info`, `warn`, `error`, `fatal`
+
+By default, the application is only accessible on localhost (127.0.0.1). To expose the application to external network interfaces, remove the `127.0.0.1` binding from the port configuration in `docker-compose.yml`.
+
+If you're running Citadel in HTTP mode behind a reverse proxy that handles TLS, set `config.force_ssl = false` in `config/environments/production.rb`.
+
 ## Installing
 
 Here are some specific install instructions for operating systems/distributions.

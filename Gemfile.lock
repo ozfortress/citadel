@@ -358,6 +358,8 @@ GEM
       date
       stringio
     public_suffix (6.0.2)
+    puma (6.4.3)
+      nio4r (~> 2.0)
     racc (1.8.1)
     rack (2.2.13)
     rack-openid (1.4.2)
@@ -588,6 +590,7 @@ DEPENDENCIES
   pagedown-bootstrap-rails
   parallel_tests
   pg (~> 1.0)
+  puma (~> 6.0)
   rails (~> 7.1.0)
   rails-controller-testing
   rails_best_practices

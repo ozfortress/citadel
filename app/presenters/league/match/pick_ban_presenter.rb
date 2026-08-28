@@ -15,6 +15,10 @@ class League
         @picked_by ||= present(pick_ban.picked_by)
       end
 
+      def updated_at
+        pick_ban.updated_at.strftime('%c')
+      end
+
       def map
         @map ||= present(pick_ban.map)
       end

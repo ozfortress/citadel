@@ -1,0 +1,5 @@
+.git
+node_modules/
+coverage/
+config/master.key
+config/credentials.yml.enc

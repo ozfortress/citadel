@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      DATABASE_URL: postgresql://citadel:citadel@postgres:5432/citadel
+      RAILS_ENV: production
+      RAILS_LOG_TO_STDOUT: "true"
+    volumes:
+      - ./config/environments/production.rb:/citadel/config/environments/production.rb:ro
+      - ./config/credentials.yml.enc:/citadel/config/credentials.yml.enc:ro
+      - ./config/master.key:/citadel/config/master.key:ro
+      - ./public/uploads:/citadel/public/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: citadel
+      POSTGRES_PASSWORD: citadel
+      POSTGRES_DB: citadel
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U citadel"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
