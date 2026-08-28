@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def require_login
-    redirect_back(fallback_location: root_path) unless user_signed_in?
+    redirect_back_or_to(root_path) unless user_signed_in?
   end
 
   def track_user

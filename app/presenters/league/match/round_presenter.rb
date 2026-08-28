@@ -48,8 +48,8 @@ class League
       def highlight_winner
         home_score = round.home_team_score
         away_score = round.away_team_score
-        home_div = content_tag(:div, home_score, class: "score #{home_score > away_score ? 'won' : ''}")
-        away_div = content_tag(:div, away_score, class: "score #{home_score < away_score ? 'won' : ''}")
+        home_div = content_tag(:div, home_score, class: "score #{'won' if home_score > away_score}")
+        away_div = content_tag(:div, away_score, class: "score #{'won' if home_score < away_score}")
         sep_div = content_tag(:div, ':', class: 'separator')
         content_tag(:div, home_div + sep_div + away_div, class: 'round')
       end

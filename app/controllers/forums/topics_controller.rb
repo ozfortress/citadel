@@ -106,23 +106,23 @@ module Forums
     end
 
     def require_can_manage_parent
-      redirect_back(fallback_location: forums_path) unless user_can_manage_topic?(@parent_topic)
+      redirect_back_or_to(forums_path) unless user_can_manage_topic?(@parent_topic)
     end
 
     def require_can_view
-      redirect_back(fallback_location: forums_path) unless user_can_view_topic?
+      redirect_back_or_to(forums_path) unless user_can_view_topic?
     end
 
     def require_not_isolated
-      redirect_back(fallback_location: forums_path) if @topic.isolated?
+      redirect_back_or_to(forums_path) if @topic.isolated?
     end
 
     def require_isolated
-      redirect_back(fallback_location: forums_path) unless @topic.isolated?
+      redirect_back_or_to(forums_path) unless @topic.isolated?
     end
 
     def require_can_manage
-      redirect_back(fallback_location: forums_path) unless user_can_manage_topic?
+      redirect_back_or_to(forums_path) unless user_can_manage_topic?
     end
   end
 end

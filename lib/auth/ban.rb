@@ -2,6 +2,7 @@ require 'auth/action_state'
 
 module Auth
   class Ban < ActiveRecord::Base
+    self.abstract_class = true
     include ActionState
 
     validates :reason, presence: true, allow_blank: true

@@ -170,7 +170,7 @@ module Leagues
     end
 
     def require_roster_pending
-      redirect_back(fallback_location: league_rosters_path(@league)) if @roster.approved?
+      redirect_back_or_to(league_rosters_path(@league)) if @roster.approved?
     end
 
     def require_roster_permission

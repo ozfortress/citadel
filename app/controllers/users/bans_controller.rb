@@ -56,7 +56,7 @@ module Users
     end
 
     def require_user_permissions
-      redirect_back(fallback_location: user_path(@user)) unless user_can_edit_users?
+      redirect_back_or_to(user_path(@user)) unless user_can_edit_users?
     end
   end
 end

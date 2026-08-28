@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 7.1.0'
+gem 'rails', '~> 8.1.1'
 gem 'rake', '~> 12.0'
 gem 'sprockets-rails'
 # Use postgres
@@ -8,7 +8,7 @@ gem 'pg', '~> 1.0'
 # Fast loading
 # gem 'bootsnap', '~> 1.3'
 # Active Record extensions
-gem 'active_record_union', '~> 1.3'
+gem 'active_record_union', '~> 1.4'
 gem 'ancestry'
 # SASS for stylesheets
 gem 'sass-rails', '~> 6'
@@ -30,7 +30,7 @@ gem 'cocoon'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Steam Login
-gem 'omniauth', '~> 1'
+gem 'omniauth', '~> 2'
 gem 'omniauth-discord'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-steam'
@@ -54,6 +54,9 @@ gem 'counter_culture', '~> 2.0'
 gem 'tournament-system', '~> 2.0'
 # Backwards compatibility with ruby 2
 gem 'scanf'
+# Ruby 4.0 compatibility - gems removed from stdlib
+gem 'cgi'
+gem 'ostruct'
 
 group :production do
   gem 'puma', '~> 6.0'
@@ -88,8 +91,8 @@ group :test do
   gem 'haml_lint', require: false
   gem 'rails_best_practices', require: false
   gem 'reek', '~> 6', require: false
-  gem 'rubocop', '~> 1.64.1', require: false
-  gem 'rubocop-rails', '~> 2.25.0', require: false
+  gem 'rubocop', '~> 1.82', require: false
+  gem 'rubocop-rails', '~> 2.34', require: false
 
   gem 'codecov', require: false
 end

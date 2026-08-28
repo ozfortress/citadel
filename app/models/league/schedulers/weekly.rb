@@ -3,7 +3,7 @@ class League
     class Weekly < ApplicationRecord
       belongs_to :league
 
-      enum start_of_week: Date::DAYNAMES
+      enum :start_of_week, Date::DAYNAMES
 
       validates :minimum_selected, presence: true, numericality: { greater_than_or_equal_to: 0 }
       validates :days,             presence: true

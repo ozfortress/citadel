@@ -14,6 +14,8 @@ module API
       end
 
       def discord_id
+        return head :not_found unless Rails.configuration.features.discord_integration
+
         @user = User.find_by!(discord_id: params[:id])
         render json: @user, serializer: UserSerializer
       end

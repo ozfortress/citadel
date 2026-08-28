@@ -3,7 +3,6 @@ class League
     class TransferRequestPresenter < BasePresenter
       presents :transfer_request
 
-      # rubocop:disable Rails/OutputSafety
       PENDING_MESSAGE = '%{created_by} requested %{user} be transferred %{direction} ' \
                         '%{roster}%{leaving_message}'.html_safe
 
@@ -14,8 +13,6 @@ class League
                        '%{roster}%{leaving_message} (requested by %{created_by})'.html_safe
 
       LEAVING_MESSAGE = ', out of %{leaving_roster} in %{division}'.html_safe
-      # rubocop:enable Rails/OutputSafety
-
       def user
         @user ||= present(transfer_request.user)
       end

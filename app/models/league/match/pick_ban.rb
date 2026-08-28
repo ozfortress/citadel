@@ -7,8 +7,8 @@ class League
       belongs_to :picked_by, class_name: 'User', optional: true
       belongs_to :map,       class_name: 'Map',  optional: true
 
-      enum kind: { pick: 0, ban: 1, deferred: 2 }, _prefix: :kind
-      enum team: { home_team: 0, away_team: 1 }
+      enum :kind, { pick: 0, ban: 1, deferred: 2 }, prefix: :kind
+      enum :team, { home_team: 0, away_team: 1 }
 
       validates :deferrable, inclusion: { in: [true, false] }
 

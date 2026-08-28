@@ -2,8 +2,8 @@ class League
   class Tiebreaker < ApplicationRecord
     belongs_to :league, inverse_of: :tiebreakers
 
-    enum kind: { round_wins: 0, round_score_sum: 1, round_wins_against_tied_rosters: 2,
-normalized_round_score: 3, round_score_difference: 4, buchholz: 5, median_buchholz: 6 }
+    enum :kind, { round_wins: 0, round_score_sum: 1, round_wins_against_tied_rosters: 2,
+                  normalized_round_score: 3, round_score_difference: 4, buchholz: 5, median_buchholz: 6 }
 
     def value_for(roster)
       send("#{kind}_value_for", roster)

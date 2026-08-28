@@ -16,7 +16,7 @@ Open Source, Web-based league system designed for games such as Team Fortress 2.
 
 You will need for running:
 
-* Ruby 2.5
+* Ruby 4.0
 * Bundler
 * Postgres 9.5 (configured in `config/database.yml`)
 * ImageMagick
@@ -56,7 +56,7 @@ Here are some specific install instructions for operating systems/distributions.
 
 ### Ubuntu
 
-Use either [RVM](https://rvm.io/) or [rbenv](https://github.com/rbenv/rbenv) to install Ruby `2.3.3`.
+Use either [RVM](https://rvm.io/) or [rbenv](https://github.com/rbenv/rbenv) to install Ruby `4.0.0`.
 
 Install postgres with:
 

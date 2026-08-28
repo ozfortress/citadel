@@ -15,7 +15,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    "#{model.id}-#{token}.#{file.extension}" if original_filename.present?
+    "#{model.id}-#{token}.#{file.extension}"
   end
 
   process resize_to_fit: [200, 200]

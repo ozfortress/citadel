@@ -7,7 +7,7 @@ module SteamId
   UNIVERSE_0_TYPE_PUBLIC = 76_561_197_960_265_728
 
   def valid_32?(string)
-    string =~ /^STEAM_0:[0-9]+:[0-9]+$/
+    string.is_a?(String) && string =~ /^STEAM_0:[0-9]+:[0-9]+$/
   end
 
   def valid_64?(string)
@@ -17,7 +17,7 @@ module SteamId
   end
 
   def valid_id3?(string)
-    string =~ /^U:1:[0-9]+$/
+    string.is_a?(String) && string =~ /^U:1:[0-9]+$/
   end
 
   def to_32(value)

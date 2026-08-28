@@ -1,4 +1,4 @@
-FROM ruby:3.1.7-slim
+FROM ruby:4.0.0-slim
 
 ENV RAILS_ENV=production \
     RAILS_LOG_TO_STDOUT=1 \

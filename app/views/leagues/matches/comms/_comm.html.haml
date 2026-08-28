@@ -1,6 +1,6 @@
 - comm_p = present(comm)
 
-.comm{ class: "#{local_assigns[:class]} #{comm.created_by.admin? ? 'comm-admin' : ''}" }
+.comm{ class: [local_assigns[:class], ('comm-admin' if comm.created_by.admin?)].compact.join(' ') }
   %div{ id: comm.paths.dom_id }
 
   .card-header

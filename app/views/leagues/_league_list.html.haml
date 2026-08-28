@@ -9,7 +9,7 @@
 .row
   .league-categories.tab-content.col-12.col-sm-10.order-2.order-sm-1
     - (['All'] + categories.keys).each_with_index do |category, index|
-      - klass = "tab-pane #{index.zero? ? 'show active' : ''} "
+      - klass = ['tab-pane', ('show active' if index.zero?)].compact.join(' ')
       - categorised = index.zero? ? leagues : categories[category]
 
       .league-category{ id: category_id.call(category), class: klass }

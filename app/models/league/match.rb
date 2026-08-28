@@ -20,14 +20,14 @@ class League
 
     validates :rounds, associated: true # Make *really* sure all rounds are valid
 
-    enum status: { pending: 0, submitted_by_home_team: 1, submitted_by_away_team: 2, confirmed: 3 }
+    enum :status, { pending: 0, submitted_by_home_team: 1, submitted_by_away_team: 2, confirmed: 3 }
     validates :status, presence: true
 
     validates :has_winner,        inclusion: { in: [true, false] }
     validates :allow_round_draws, inclusion: { in: [true, false] }
 
-    enum forfeit_by: { no_forfeit: 0, home_team_forfeit: 1, away_team_forfeit: 2, mutual_forfeit: 3,
-technical_forfeit: 4 }
+    enum :forfeit_by, { no_forfeit: 0, home_team_forfeit: 1, away_team_forfeit: 2, mutual_forfeit: 3,
+                        technical_forfeit: 4 }
     validates :forfeit_by, presence: true
     validates :round_name, presence: true, allow_blank: true
     validates :round_number, presence: true, numericality: { greater_than_or_equal_to: 0 }

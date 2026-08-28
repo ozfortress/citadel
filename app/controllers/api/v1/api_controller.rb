@@ -3,7 +3,7 @@ module API
     class APIController < ActionController::API
       def api_key
         key = request.headers['X-Api-Key']
-        @api_key ||= APIKey.find_by(key:)
+        @api_key ||= APIKey.find_by(key:) # rubocop:disable Rails/FindByOrAssignmentMemoization
       end
 
       before_action :authenticate

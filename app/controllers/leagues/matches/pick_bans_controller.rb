@@ -32,7 +32,7 @@ module Leagues
       private
 
       def redirect_to_match
-        redirect_back(fallback_location: match_path(@match))
+        redirect_back_or_to(match_path(@match))
       end
 
       def require_can_pick_ban

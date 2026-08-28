@@ -370,8 +370,6 @@ describe UsersController do
     context 'with Discord integration enabled' do
       before do
         allow(Rails.configuration.features).to receive(:discord_integration).and_return(true)
-        Rails.application.reload_routes!
-        sign_in user
       end
 
       it 'allows users to unlink a Discord account' do
@@ -393,11 +391,14 @@ describe UsersController do
     context 'with Discord integration disabled' do
       before do
         allow(Rails.configuration.features).to receive(:discord_integration).and_return(false)
-        Rails.application.reload_routes!
       end
 
-      it 'is not routable' do
-        expect(patch: "/users/#{user.id}/unlink_discord").to_not be_routable
+      it 'returns 404' do
+        expect(user.discord_id).to_not be_nil
+        patch :unlink_discord, params: { id: user.id }
+        expect(response).to be_not_found
+        user.reload
+        expect(user.discord_id).to_not be_nil
       end
     end
   end

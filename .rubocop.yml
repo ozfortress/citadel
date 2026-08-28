@@ -1,4 +1,5 @@
-require: rubocop-rails
+plugins:
+  - rubocop-rails
 
 Rails:
   Enabled: true
@@ -72,6 +73,9 @@ Naming/MethodParameterName:
     - _
 Naming/VariableNumber:
   Enabled: false
+# Too many false positives - flags action methods like approve, deny, cancel
+Naming/PredicateMethod:
+  Enabled: false
 
 # 'old' style
 Style/EmptyMethod:
@@ -90,9 +94,15 @@ Style/CombinableLoops:
   Enabled: false
 Lint/UnreachableLoop:
   Enabled: false
+# Private Structs are intentional
+Lint/UselessConstantScoping:
+  Enabled: false
 
 # This doesn't always make sense
 Rails/InverseOf:
+  Enabled: false
+# params.expect has stricter behavior than require.permit - breaks existing code
+Rails/StrongParametersExpect:
   Enabled: false
 
 Rails/HttpPositionalArguments:
@@ -110,7 +120,8 @@ AllCops:
     - 'config/**/*'
     - 'vendor/**/*'
   DisplayCopNames: true
-  TargetRubyVersion: 3.1
-  TargetRailsVersion: 7.1
+  TargetRubyVersion: 4.0
+  TargetRailsVersion: 8.1
   # Enable new cops by default
   NewCops: enable
+  SuggestExtensions: false

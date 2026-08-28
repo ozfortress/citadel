@@ -1,4 +1,4 @@
-raise 'Wrong number of arguments' unless ARGV.length >= 2 && ARGV.length <= 3
+raise 'Wrong number of arguments' unless ARGV.length.between?(2, 3)
 
 steam_id = SteamId.to_64(ARGV[0])
 raise 'Invalid steam id' unless steam_id

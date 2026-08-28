@@ -79,23 +79,23 @@ module Forums
     end
 
     def require_can_view_thread
-      redirect_back(fallback_location: forums_path) unless user_can_view_thread?(@thread)
+      redirect_back_or_to(forums_path) unless user_can_view_thread?(@thread)
     end
 
     def require_can_manage_thread
-      redirect_back(fallback_location: forums_path) unless user_can_manage_thread?(@thread)
+      redirect_back_or_to(forums_path) unless user_can_manage_thread?(@thread)
     end
 
     def require_can_create_post
-      redirect_back(fallback_location: forums_path) unless user_can_create_post?
+      redirect_back_or_to(forums_path) unless user_can_create_post?
     end
 
     def require_can_edit_post
-      redirect_back(fallback_location: forums_path) unless user_can_edit_post?
+      redirect_back_or_to(forums_path) unless user_can_edit_post?
     end
 
     def require_not_first_post
-      redirect_back(fallback_location: forums_path) if @post.first_post?
+      redirect_back_or_to(forums_path) if @post.first_post?
     end
   end
 end

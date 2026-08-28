@@ -21,7 +21,7 @@
 
 .games.tab-content
   - @games.each_with_index do |game, index|
-    - klass = "tab-pane fade #{index.zero? ? 'show active' : ''} "
+    - klass = ['tab-pane fade', ('show active' if index.zero?)].compact.join(' ')
     - leagues = @leagues[game]
 
     .game{ id: game.name.parameterize, class: klass }

@@ -62,14 +62,14 @@ class TeamsController < ApplicationController
   def leave
     Teams::LeavingService.call(current_user, @team)
 
-    redirect_back(fallback_location: team_path(@team))
+    redirect_back_or_to(team_path(@team))
   end
 
   def kick
     @user = User.find(params[:user_id])
     Teams::KickingService.call(@user, @team)
 
-    redirect_back(fallback_location: team_path(@team))
+    redirect_back_or_to(team_path(@team))
   end
 
   def destroy
