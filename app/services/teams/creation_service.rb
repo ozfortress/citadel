@@ -4,6 +4,7 @@ module Teams
 
     def call(user, params)
       team = Team.new(params)
+      team.created_by = user
 
       team.transaction do
         team.save || rollback!

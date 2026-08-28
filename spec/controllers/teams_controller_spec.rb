@@ -42,6 +42,7 @@ describe TeamsController do
       expect(team.description).to eq('B')
       expect(team.on_roster?(user)).to be(true)
       expect(user.can?(:edit, team)).to be(true)
+      expect(team.created_by).to eq(user)
     end
 
     it 'handles duplicate teams' do

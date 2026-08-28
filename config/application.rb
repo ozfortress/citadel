@@ -33,7 +33,7 @@ module Ozfortress
 
     # News config file
     config.news = config_for(:news).with_indifferent_access
-    
+
     # Features config file
     config.features = config_for(:features)
 

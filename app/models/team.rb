@@ -3,6 +3,8 @@ require 'search'
 class Team < ApplicationRecord
   include MarkdownRenderCaching
 
+  LIMIT_PER_USER = 128
+
   has_many :invites, dependent: :destroy
   has_many :players,   -> { order(created_at: :asc) }, dependent: :destroy
   has_many :transfers, -> { order(created_at: :desc) }, dependent: :destroy
@@ -14,11 +16,15 @@ class Team < ApplicationRecord
   has_many :away_team_matches, through: :rosters, class_name: 'League::Match',
                                foreign_key: 'away_team_id'
 
+  belongs_to :created_by, class_name: 'User'
+
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
   validates :description, presence: true, allow_blank: true, length: { in: 0..1_000 }
   caches_markdown_render_for :description
   validates :notice, presence: true, allow_blank: true
   caches_markdown_render_for :notice
+
+  validate :teams_limit, on: :create
 
   mount_uploader :avatar, AvatarUploader
 
@@ -83,6 +89,12 @@ class Team < ApplicationRecord
       errors.add(:id, 'Can only destroy teams without any rosters')
 
       throw(:abort)
+    end
+  end
+
+  def teams_limit
+    if created_by.present? && Team.where(created_by_id:).length >= Team::LIMIT_PER_USER
+      errors.add(:created_by, 'You have made too many teams')
     end
   end
 end

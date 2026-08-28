@@ -13,6 +13,7 @@ describe User do
   it { should have_many(:teams).through(:team_players) }
   it { should have_many(:team_invites).class_name('Team::Invite') }
   it { should have_many(:team_transfers).class_name('Team::Transfer') }
+  it { should have_many(:created_teams).class_name('Team') }
 
   it { should have_many(:roster_players).class_name('League::Roster::Player') }
   it { should have_many(:rosters).through(:roster_players).class_name('League::Roster') }

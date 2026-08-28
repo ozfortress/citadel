@@ -8,6 +8,7 @@ describe Team do
   it { should have_many(:transfers) }
   it { should have_many(:rosters).class_name('League::Roster') }
   it { should have_many(:users).through(:players) }
+  it { should belong_to(:created_by).class_name('User') }
 
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }
@@ -39,6 +40,16 @@ describe Team do
       expect(team.users).to include(user1)
       expect(team.users).to include(user2)
       expect(team.users).to_not include(user3)
+    end
+
+    it 'validates team creation limit' do
+      user = create(:user)
+      Team::LIMIT_PER_USER.times do
+        create(:team, created_by: user)
+      end
+
+      expect(build(:team)).to be_valid
+      expect(build(:team, created_by: user)).to be_invalid
     end
   end
 
