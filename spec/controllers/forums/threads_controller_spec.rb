@@ -54,7 +54,8 @@ describe Forums::ThreadsController do
       expect(topic.threads).to be_empty
     end
 
-    it 'succeeds for any user' do
+    it 'succeeds for user who has played' do
+      create(:league_roster_transfer, user:)
       sign_in user
 
       post :create, params: {
@@ -75,6 +76,18 @@ describe Forums::ThreadsController do
       expect(post.content).to eq(content)
       expect(post.created_by).to eq(user)
       expect(response).to redirect_to(forums_thread_path(thread))
+    end
+
+    it 'fails for any user' do
+      sign_in user
+
+      post :create, params: {
+        topic:         topic.id,
+        forums_thread: { title: 'Foo', locked: true, pinned: true, hidden: true, forums_post: { content: } },
+      }
+
+      topic.reload
+      expect(topic.threads).to be_empty
     end
 
     it 'redirects for banned user' do
@@ -143,7 +156,8 @@ describe Forums::ThreadsController do
         topic.update!(default_hidden: true)
       end
 
-      it 'creates hidden threads for any user' do
+      it 'creates hidden threads for any user who has played' do
+        create(:league_roster_transfer, user:)
         subscriber = create(:user)
         topic.subscriptions.create!(user: subscriber)
         sign_in user
@@ -228,7 +242,8 @@ describe Forums::ThreadsController do
         topic.update!(isolated: true)
       end
 
-      it 'succeeds for any user' do
+      it 'succeeds for any user who has played' do
+        create(:league_roster_transfer, user:)
         user.grant(:manage, :forums)
         sign_in user
 
