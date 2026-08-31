@@ -94,7 +94,7 @@ class Team < ApplicationRecord
 
   def teams_limit
     if created_by.present? && Team.where(created_by_id:).length >= Team::LIMIT_PER_USER
-      errors.add(:created_by, 'You have made too many teams')
+      errors.add(:name, 'You have made too many teams')
     end
   end
 end
