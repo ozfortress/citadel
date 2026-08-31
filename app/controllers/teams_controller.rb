@@ -5,6 +5,7 @@ class TeamsController < ApplicationController
 
   before_action :require_team_create_permission, only: [:new, :create]
   before_action :require_team_edit_permission, only: [:edit, :update, :recruit, :invite, :kick, :destroy]
+  before_action :team_rate_limit, only: [:create]
   before_action :require_login, only: :leave
   before_action :require_on_team, only: :leave
   before_action :validate_cloudflare_turnstile, only: :create
@@ -155,5 +156,14 @@ class TeamsController < ApplicationController
 
   def require_on_team
     redirect_to team_path(@team) unless @team.on_roster?(current_user)
+  end
+
+  def team_rate_limit
+    return if user_can_edit_teams?
+
+    if current_user.created_teams.where(created_at: 1.day.ago..).count >= 2
+      flash[:error] = 'You have already made 2 teams today'
+      redirect_to teams_path
+    end
   end
 end

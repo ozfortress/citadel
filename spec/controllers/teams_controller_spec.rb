@@ -54,6 +54,16 @@ describe TeamsController do
       expect(Team.count).to eq(1)
     end
 
+    it 'limits to two per day' do
+      2.times { create(:team, created_by: user) }
+      sign_in user
+
+      post :create, params: { team: { name: 'A', description: 'B' } }
+
+      expect(Team.count).to eq(2)
+      expect(user.created_teams.count).to eq(2)
+    end
+
     it 'redirects for banned users' do
       user.ban(:use, :teams)
       sign_in user
