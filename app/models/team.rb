@@ -3,7 +3,7 @@ require 'search'
 class Team < ApplicationRecord
   include MarkdownRenderCaching
 
-  LIMIT_PER_USER = 128
+  LIMIT_PER_USER = 16
 
   has_many :invites, dependent: :destroy
   has_many :players,   -> { order(created_at: :asc) }, dependent: :destroy
