@@ -204,6 +204,21 @@ describe TeamsController do
         expect(user.notifications).to be_empty
       end
 
+      it 'fails for too many invites' do
+        user.grant(:edit, team)
+        sign_in user
+
+        16.times do
+          create(:team_invite, team:)
+        end
+
+        patch :invite, params: { id: team.id, user_id: invited.id }
+
+        expect(invited.team_invites).to be_empty
+        expect(invited.notifications).to be_empty
+        expect(team.invites.count).to eq(16)
+      end
+
       it 'redirects for banned user' do
         user.grant(:edit, team)
         user.ban(:use, :teams)
