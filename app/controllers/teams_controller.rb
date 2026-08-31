@@ -55,7 +55,8 @@ class TeamsController < ApplicationController
 
   def invite
     user = User.find(params[:user_id])
-    Teams::InvitationService.call(@team, user) unless @team.invited?(user) || @team.on_roster?(user)
+    invite = Teams::InvitationService.call(@team, user) unless @team.invited?(user) || @team.on_roster?(user)
+    flash[:error] = invite.errors.full_messages.to_sentence unless invite.errors.empty?
 
     redirect_to team_path(@team)
   end
