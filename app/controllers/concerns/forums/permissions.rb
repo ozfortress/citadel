@@ -33,7 +33,8 @@ module Forums
       topic ||= @topic
 
       user_can_manage_topic?(topic) ||
-        (user_signed_in? && topic && user_can_use_topic?(topic) && !topic.locked? && !topic.hidden?)
+        (user_signed_in? && topic && user_can_use_topic?(topic) && current_user.played? && !topic.locked? &&
+          !topic.hidden?)
     end
 
     def user_can_manage_thread?(thread = nil)
@@ -70,7 +71,7 @@ module Forums
       thread ||= @thread
 
       user_can_edit_thread?(thread) ||
-        (user_signed_in? && !thread.locked? && user_can_use_thread?(thread) &&
+        (user_signed_in? && !thread.locked? && user_can_use_thread?(thread) && current_user.played? &&
          (!thread.hidden? || thread.created_by == current_user))
     end
 

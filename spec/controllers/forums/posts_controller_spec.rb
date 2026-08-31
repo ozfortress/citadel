@@ -45,7 +45,8 @@ describe Forums::PostsController do
       expect(post.created_by).to eq(user)
     end
 
-    it 'succeeds for any user' do
+    it 'succeeds for user who has played' do
+      create(:league_roster_transfer, user:)
       sign_in user
 
       post :create, params: { thread_id: thread.id, forums_post: { content: } }
@@ -55,6 +56,15 @@ describe Forums::PostsController do
       post = thread.posts.first
       expect(post.content).to eq(content)
       expect(post.created_by).to eq(user)
+    end
+
+    it 'fails for any user' do
+      sign_in user
+
+      post :create, params: { thread_id: thread.id, forums_post: { content: } }
+
+      thread.reload
+      expect(thread.posts).to be_empty
     end
 
     it 'fails with invalid data' do

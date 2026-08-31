@@ -149,6 +149,10 @@ class User < ApplicationRecord
     !confirmed_at.nil? && email.present?
   end
 
+  def played?
+    roster_transfers.exists?
+  end
+
   # Always remember using devise rememberable
   def remember_me
     true
