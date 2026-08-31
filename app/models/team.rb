@@ -3,7 +3,7 @@ require 'search'
 class Team < ApplicationRecord
   include MarkdownRenderCaching
 
-  LIMIT_PER_USER = 128
+  LIMIT_PER_USER = 16
 
   has_many :invites, dependent: :destroy
   has_many :players,   -> { order(created_at: :asc) }, dependent: :destroy
@@ -94,7 +94,7 @@ class Team < ApplicationRecord
 
   def teams_limit
     if created_by.present? && Team.where(created_by_id:).length >= Team::LIMIT_PER_USER
-      errors.add(:created_by, 'You have made too many teams')
+      errors.add(:name, 'You have made too many teams')
     end
   end
 end

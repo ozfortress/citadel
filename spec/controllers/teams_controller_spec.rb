@@ -54,6 +54,16 @@ describe TeamsController do
       expect(Team.count).to eq(1)
     end
 
+    it 'limits to two per day' do
+      2.times { create(:team, created_by: user) }
+      sign_in user
+
+      post :create, params: { team: { name: 'A', description: 'B' } }
+
+      expect(Team.count).to eq(2)
+      expect(user.created_teams.count).to eq(2)
+    end
+
     it 'redirects for banned users' do
       user.ban(:use, :teams)
       sign_in user
@@ -202,6 +212,21 @@ describe TeamsController do
         expect(team.invited?(invited)).to be(true)
         expect(invited.notifications).to_not be_empty
         expect(user.notifications).to be_empty
+      end
+
+      it 'fails for too many invites' do
+        user.grant(:edit, team)
+        sign_in user
+
+        16.times do
+          create(:team_invite, team:)
+        end
+
+        patch :invite, params: { id: team.id, user_id: invited.id }
+
+        expect(invited.team_invites).to be_empty
+        expect(invited.notifications).to be_empty
+        expect(team.invites.count).to eq(16)
       end
 
       it 'redirects for banned user' do

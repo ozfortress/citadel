@@ -1,7 +1,11 @@
+- content_for(:head) { cloudflare_turnstile_script_tag }
+
 - content_for(:title) { 'Create Team' }
 
 = bootstrap_form_for @team, method: :post do |f|
   = render('team_form', f:)
+
+  = cloudflare_turnstile
 
   .d-flex.justify-content-end
     = link_to 'Cancel', teams_path, class: 'btn btn-link mr-2'

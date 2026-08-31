@@ -1,6 +1,9 @@
-- content_for(:title) { 'Register' }
+:ruby
+  content_for(:head) { cloudflare_turnstile_script_tag }
 
-- user_p = present(@user)
+  content_for(:title) { 'Register' }
+
+  user_p = present(@user)
 
 %h1 Register with [#{@user.steam_id3}]
 
@@ -15,6 +18,8 @@
     = bootstrap_form_for @user, method: :new do |f|
       = f.text_field :name
       = render('form', f:, user: @user, user_p:)
+
+      = cloudflare_turnstile
 
       .d-flex.justify-content-end
         = link_to 'Cancel', :back, class: 'btn btn-link mr-2'

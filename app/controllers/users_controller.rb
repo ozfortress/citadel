@@ -14,6 +14,7 @@ class UsersController < ApplicationController
   before_action :require_users_permission, only: [:names, :handle_name_change]
   before_action :require_user_confirmation_token, only: :confirm_email
   before_action :require_user_confirmation_not_timed_out, only: :confirm_email
+  before_action :validate_cloudflare_turnstile, only: :create
 
   def index
     @users = User.search(params[:q])

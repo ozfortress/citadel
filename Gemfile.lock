@@ -405,6 +405,9 @@ GEM
       json
       require_all (~> 3.0)
       ruby-progressbar
+    rails_cloudflare_turnstile (0.4.4)
+      faraday (>= 1.0, < 3.0)
+      rails (>= 6.0, < 8.2)
     railties (7.1.5.1)
       actionpack (= 7.1.5.1)
       activesupport (= 7.1.5.1)
@@ -594,6 +597,7 @@ DEPENDENCIES
   rails (~> 7.1.0)
   rails-controller-testing
   rails_best_practices
+  rails_cloudflare_turnstile
   rake (~> 12.0)
   redcarpet
   reek (~> 6)

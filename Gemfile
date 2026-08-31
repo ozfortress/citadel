@@ -52,6 +52,8 @@ gem 'counter_culture', '~> 2.0'
 gem 'tournament-system', '~> 2.0'
 # Backwards compatibility with ruby 2
 gem 'scanf'
+# Captcha
+gem 'rails_cloudflare_turnstile'
 
 group :production do
   gem 'puma', '~> 6.0'
