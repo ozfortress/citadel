@@ -7,6 +7,7 @@ class TeamsController < ApplicationController
   before_action :require_team_edit_permission, only: [:edit, :update, :recruit, :invite, :kick, :destroy]
   before_action :require_login, only: :leave
   before_action :require_on_team, only: :leave
+  before_action :validate_cloudflare_turnstile, only: :create
 
   def index
     @teams = Team.search(params[:q])
