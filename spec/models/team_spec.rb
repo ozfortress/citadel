@@ -8,7 +8,7 @@ describe Team do
   it { should have_many(:transfers) }
   it { should have_many(:rosters).class_name('League::Roster') }
   it { should have_many(:users).through(:players) }
-  it { should belong_to(:created_by).class_name('User') }
+  it { should belong_to(:created_by).class_name('User').optional(true) }
 
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }
