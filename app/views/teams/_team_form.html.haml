@@ -3,7 +3,7 @@
 = f.text_field :name
 
 = f.file_field :avatar, accept: 'image/png,image/jpeg'
-= f.hidden_field :avatar_cache
+
 - if team.avatar.file
   = f.form_group :remove_avatar, help: 'Check this to remove your custom avatar.' do
     = f.check_box :remove_avatar, label_class: 'ml-1'

@@ -16,7 +16,7 @@ class Team < ApplicationRecord
   has_many :away_team_matches, through: :rosters, class_name: 'League::Match',
                                foreign_key: 'away_team_id'
 
-  belongs_to :created_by, class_name: 'User'
+  belongs_to :created_by, class_name: 'User', optional: true
 
   validates :name, presence: true, uniqueness: true, length: { in: 1..64 }
   validates :description, presence: true, allow_blank: true, length: { in: 0..1_000 }
