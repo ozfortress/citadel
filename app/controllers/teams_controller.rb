@@ -4,7 +4,7 @@ class TeamsController < ApplicationController
   before_action(except: [:index, :new, :create]) { @team = Team.find(params[:id]) }
 
   before_action :require_team_create_permission, only: [:new, :create]
-  before_action :require_team_edit_permission, only: [:edit, :update, :recruit, :invite, :kick, :destroy]
+  before_action :require_team_edit_permission, only: [:edit, :update, :recruit, :invite, :revoke, :kick, :destroy]
   before_action :team_rate_limit, only: [:create]
   before_action :require_login, only: :leave
   before_action :require_on_team, only: :leave
@@ -32,6 +32,7 @@ class TeamsController < ApplicationController
 
   def show
     @invite = @team.invite_for(current_user) if user_signed_in?
+    @invites = @team.invites.includes(:user).order(created_at: :asc)
 
     teams_show_fetch_teams
     teams_show_fetch_users
@@ -60,6 +61,13 @@ class TeamsController < ApplicationController
     flash[:error] = invite.errors.full_messages.to_sentence unless invite.errors.empty?
 
     redirect_to team_path(@team)
+  end
+
+  def revoke
+    user = User.find(params[:user_id])
+    @team.invite_for(user)&.destroy
+
+    redirect_back(fallback_location: team_path(@team))
   end
 
   def leave

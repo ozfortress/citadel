@@ -91,6 +91,7 @@ Rails.application.routes.draw do
     member do
       get   'recruit'
       patch 'invite'
+      delete 'revoke'
       patch 'leave'
       patch 'kick'
     end

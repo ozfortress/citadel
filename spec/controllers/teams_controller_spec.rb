@@ -260,6 +260,67 @@ describe TeamsController do
       end
     end
 
+    describe 'DELETE #revoke' do
+      let(:invited) { create(:user) } # The user who is being invite
+      before do
+        create(:team_invite, team: team, user: invited)
+      end
+      it 'revokes a player\'s pending invite to a team' do
+        user.grant(:edit, team)
+        sign_in user
+
+        delete :revoke, params: { id: team.id, user_id: invited.id }
+
+        expect(invited.team_invites).to be_empty
+        expect(invited.notifications).to be_empty
+        expect(team.invites.count).to eq(0)
+        expect(response).to redirect_to(team_path(team))
+      end
+
+      it 'fails for non-existent invite' do
+        user.grant(:edit, team)
+        sign_in user
+
+        delete :revoke, params: { id: team.id, user_id: create(:user).id }
+
+        expect(team.invites.count).to eq(1)
+        expect(response).to redirect_to(team_path(team))
+      end
+
+      it 'silently fails for banned user' do
+        user.grant(:edit, team)
+        user.ban(:use, :teams)
+        sign_in user
+
+        delete :revoke, params: { id: team.id, user_id: invited.id }
+
+        expect(invited.team_invites).to_not be_empty
+        expect(invited.notifications).to be_empty
+        expect(team.invites.count).to eq(1)
+        expect(response).to redirect_to(team_path(team))
+      end
+
+      it 'fails for unauthorized user' do
+        sign_in user
+
+        delete :revoke, params: { id: team.id, user_id: invited.id }
+
+        expect(invited.team_invites).to_not be_empty
+        expect(invited.notifications).to be_empty
+        expect(team.invites.count).to eq(1)
+        expect(response).to redirect_to(team_path(team))
+      end
+
+      it 'fails for unauthenticated user' do
+        delete :revoke, params: { id: team.id, user_id: invited.id }
+
+        expect(invited.team_invites).to_not be_empty
+        expect(invited.notifications).to be_empty
+        expect(team.invites.count).to eq(1)
+        expect(response).to redirect_to(team_path(team))
+      end
+    end
+
     context 'player on team' do
       let(:player) { create(:user) }
 
