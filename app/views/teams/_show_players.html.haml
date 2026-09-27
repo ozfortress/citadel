@@ -41,7 +41,7 @@
                       method: :delete, class: 'btn btn-warning ml-2',
                       data: { confirm: "Are you sure you want to revoke this invite for #{invited_user.name}?" } do
             Revoke
-        = render('users/listing', user: invited_user, team: team, invited: true)
+        = render('users/listing', user: invited_user, team:, invited: true)
 
 - unless transfers.empty?
   %h5 Transfer History
