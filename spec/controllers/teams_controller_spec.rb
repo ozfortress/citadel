@@ -261,7 +261,7 @@ describe TeamsController do
     end
 
     describe 'DELETE #revoke' do
-      let(:invited) { create(:user) } # The user who is being invite
+      let(:invited) { create(:user) } 
       before do
         create(:team_invite, team: team, user: invited)
       end

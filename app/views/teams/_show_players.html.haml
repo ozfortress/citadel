@@ -38,9 +38,8 @@
       %li.list-group-item
         .button-group.pull-right
           = button_to revoke_team_path(team, user_id: invited_user.id),
-                      method: :delete, class: 'btn btn-danger',
-                      data: { confirm: "Are you sure you want to revoke this invite for #{invited_user.name}?" }, 
-                      class: 'btn btn-warning ml-2' do
+                      method: :delete, class: 'btn btn-warning ml-2',
+                      data: { confirm: "Are you sure you want to revoke this invite for #{invited_user.name}?" } do
             Revoke
         = render('users/listing', user: invited_user, team: team, invited: true)
 
