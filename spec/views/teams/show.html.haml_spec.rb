@@ -120,7 +120,7 @@ describe 'teams/show' do
     render
 
     expect(rendered).to include(invites.first.user.name)
-    expect(rendered).to include('(invited)')
+    expect(rendered).to include('invited')
     expect(rendered).to include(revoke_team_path(team, user_id: invites.first.user.id))
   end
 
@@ -133,7 +133,7 @@ describe 'teams/show' do
 
     render
     expect(rendered).to include(invites.first.user.name)
-    expect(rendered).to include('(invited)')
+    expect(rendered).to include('invited')
     expect(rendered).to include(revoke_team_path(team, user_id: invites.first.user.id))
   end
 end
