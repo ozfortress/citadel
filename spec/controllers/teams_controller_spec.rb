@@ -261,9 +261,9 @@ describe TeamsController do
     end
 
     describe 'DELETE #revoke' do
-      let(:invited) { create(:user) } 
+      let(:invited) { create(:user) }
       before do
-        create(:team_invite, team: team, user: invited)
+        create(:team_invite, team:, user: invited)
       end
       it 'revokes a player\'s pending invite to a team' do
         user.grant(:edit, team)
