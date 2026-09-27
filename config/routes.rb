@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   end
 
   resources :leagues do
+    get 'medals', to: 'leagues#medals'
     patch 'modify', on: :member
 
     resources :transfers, controller: 'leagues/transfers', only: [:index, :destroy, :update]
