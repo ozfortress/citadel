@@ -7,11 +7,12 @@ describe Teams::InviteController do
 
   before do
     captain.grant(:edit, team)
+    allow(Rails.configuration.features).to receive(:team_invite_expiry_days).and_return(7)
   end
 
   describe 'POST #accept' do
-    it 'accepts an invite' do
-      team.invite(user)
+    it 'accepts an invite that has not expired' do
+      create(:team_invite, team:, user:, created_at: 1.day.ago)
       sign_in user
 
       post :accept, params: { team_id: team.id }
@@ -22,11 +23,36 @@ describe Teams::InviteController do
       expect(captain.notifications).to_not be_empty
       expect(response).to redirect_to(team_path(team))
     end
+
+    it 'does not accept an expired invite' do
+      create(:team_invite, team:, user:, created_at: 10.days.ago)
+      sign_in user
+
+      post :accept, params: { team_id: team.id }
+
+      expect(team.invited?(user)).to be(false)
+      expect(team.on_roster?(user)).to be(false)
+      expect(user.notifications).to be_empty
+      expect(captain.notifications).to be_empty
+      expect(response).to redirect_to(root_path)
+    end
+
+    it 'does nothing if there is no invite' do
+      sign_in user
+
+      post :accept, params: { team_id: team.id }
+
+      expect(team.invited?(user)).to be(false)
+      expect(team.on_roster?(user)).to be(false)
+      expect(user.notifications).to be_empty
+      expect(captain.notifications).to be_empty
+      expect(response).to redirect_to(root_path)
+    end
   end
 
   describe 'DELETE #decline' do
     it 'declines an invite' do
-      team.invite(user)
+      create(:team_invite, team:, user:, created_at: 1.day.ago)
       sign_in user
 
       delete :decline, params: { team_id: team.id }
