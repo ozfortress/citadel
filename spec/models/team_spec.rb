@@ -53,6 +53,55 @@ describe Team do
     end
   end
 
+  describe 'invites' do
+    let(:team) { create(:team) }
+    let(:user) { create(:user) }
+
+    before do
+      allow(Rails.configuration.features).to receive(:team_invite_expiry_days).and_return(7)
+    end
+
+    it 'treats a fresh invite as pending' do
+      team.invite(user)
+
+      expect(team.invited?(user)).to be(true)
+      expect(team.invite_for(user)).to be_present
+    end
+
+    it 'ignores expired invites' do
+      create(:team_invite, team:, user:, created_at: 10.days.ago)
+
+      expect(team.invited?(user)).to be(false)
+      expect(team.invite_for(user)).to be_nil
+    end
+
+    it 'allows re-inviting a user after expiry' do
+      create(:team_invite, team:, user:, created_at: 10.days.ago)
+
+      expect(team.invite(user)).to be_persisted
+    end
+
+    it 'does not count expired invites toward the per-team invite limit' do
+      create_list(:team_invite, Team::Invite::LIMIT_PER_TEAM, team:, created_at: 10.days.ago)
+
+      expect(team.invite(user)).to be_persisted
+    end
+
+    it 'still enforces the limit for pending invites' do
+      create_list(:team_invite, Team::Invite::LIMIT_PER_TEAM, team:)
+
+      expect(team.invite(user)).to_not be_persisted
+    end
+
+    it 'treats old invites as pending when expiry is disabled' do
+      allow(Rails.configuration.features).to receive(:team_invite_expiry_days).and_return(0)
+      create(:team_invite, team:, user:, created_at: 10.days.ago)
+
+      expect(team.invited?(user)).to be(true)
+      expect(team.invite_for(user)).to be_present
+    end
+  end
+
   describe '#destroy' do
     let(:team) { create(:team) }
 

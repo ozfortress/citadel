@@ -20,7 +20,7 @@ module Teams
     private
 
     def require_invited
-      redirect_to :root unless user_signed_in?
+      redirect_to :root unless user_signed_in? && @invite.present?
     end
 
     def redirect_back
