@@ -3,6 +3,7 @@ require 'rails_helper'
 describe Teams::InvitationService do
   let(:team) { create(:team) }
   let(:user) { create(:user) }
+
   before do
     allow(Rails.configuration.features).to receive(:team_invite_expiry_days).and_return(7)
   end
