@@ -105,9 +105,10 @@ describe 'teams/show' do
     @users.each_value do |user|
       expect(rendered).to include(user.name)
     end
-
-    expect(rendered).to_not include('(invited)')
-    expect(rendered).to_not include(revoke_team_path(team, user_id: invites.first.user.id))
+    @invites.each do |invite|
+      expect(rendered).to_not include(invite.user.name)
+      expect(rendered).to_not include(revoke_team_path(team, user_id: invite.user.id))
+    end
   end
 
   it 'shows for captain' do
@@ -119,9 +120,10 @@ describe 'teams/show' do
 
     render
 
-    expect(rendered).to include(invites.first.user.name)
-    expect(rendered).to include('invited')
-    expect(rendered).to include(revoke_team_path(team, user_id: invites.first.user.id))
+    @invites.each do |invite|
+      expect(rendered).to include(invite.user.name)
+      expect(rendered).to_not include(revoke_team_path(team, user_id: invite.user.id))
+    end
   end
 
   it 'shows for league admin' do
@@ -132,8 +134,9 @@ describe 'teams/show' do
     allow(view).to receive(:user_can_edit_teams?).and_return(true)
 
     render
-    expect(rendered).to include(invites.first.user.name)
-    expect(rendered).to include('invited')
-    expect(rendered).to include(revoke_team_path(team, user_id: invites.first.user.id))
+    @invites.each do |invite|
+      expect(rendered).to include(invite.user.name)
+      expect(rendered).to include(revoke_team_path(team, user_id: invite.user.id))
+    end
   end
 end

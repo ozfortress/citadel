@@ -265,8 +265,9 @@ describe TeamsController do
       before do
         create(:team_invite, team:, user: invited)
       end
+
       it 'revokes a player\'s pending invite to a team' do
-        user.grant(:edit, team)
+        user.grant(:edit, :teams) # Admins only
         sign_in user
 
         delete :revoke, params: { id: team.id, user_id: invited.id }
@@ -274,29 +275,6 @@ describe TeamsController do
         expect(invited.team_invites).to be_empty
         expect(invited.notifications).to be_empty
         expect(team.invites.count).to eq(0)
-        expect(response).to redirect_to(team_path(team))
-      end
-
-      it 'fails for non-existent invite' do
-        user.grant(:edit, team)
-        sign_in user
-
-        delete :revoke, params: { id: team.id, user_id: create(:user).id }
-
-        expect(team.invites.count).to eq(1)
-        expect(response).to redirect_to(team_path(team))
-      end
-
-      it 'silently fails for banned user' do
-        user.grant(:edit, team)
-        user.ban(:use, :teams)
-        sign_in user
-
-        delete :revoke, params: { id: team.id, user_id: invited.id }
-
-        expect(invited.team_invites).to_not be_empty
-        expect(invited.notifications).to be_empty
-        expect(team.invites.count).to eq(1)
         expect(response).to redirect_to(team_path(team))
       end
 
@@ -313,6 +291,45 @@ describe TeamsController do
 
       it 'fails for unauthenticated user' do
         delete :revoke, params: { id: team.id, user_id: invited.id }
+
+        expect(invited.team_invites).to_not be_empty
+        expect(invited.notifications).to be_empty
+        expect(team.invites.count).to eq(1)
+        expect(response).to redirect_to(team_path(team))
+      end
+
+      it 'fails for captains who are not admin' do
+        team.add_player!(user)
+        user.grant(:edit, team)
+        sign_in user
+
+        delete :revoke, params: { id: team.id, user_id: invited.id }
+
+        expect(invited.team_invites).to_not be_empty
+        expect(invited.notifications).to be_empty
+        expect(team.invites.count).to eq(1)
+        expect(response).to redirect_to(team_path(team))
+      end
+
+      it 'fails for non-existent user' do
+        user.grant(:edit, :teams)
+        sign_in user
+
+        delete :revoke, params: { id: team.id, user_id: 0 } # Non-existent user ID
+
+        expect(invited.team_invites).to_not be_empty
+        expect(invited.notifications).to be_empty
+        expect(team.invites.count).to eq(1)
+        expect(response).to redirect_to(team_path(team))
+      end
+
+      it 'fails to revoke an invite for a real user who was not invited' do
+        user.grant(:edit, :teams)
+        sign_in user
+
+        non_invited = create(:user)
+
+        delete :revoke, params: { id: team.id, user_id: non_invited.id }
 
         expect(invited.team_invites).to_not be_empty
         expect(invited.notifications).to be_empty

@@ -4,7 +4,8 @@ class TeamsController < ApplicationController
   before_action(except: [:index, :new, :create]) { @team = Team.find(params[:id]) }
 
   before_action :require_team_create_permission, only: [:new, :create]
-  before_action :require_team_edit_permission, only: [:edit, :update, :recruit, :invite, :revoke, :kick, :destroy]
+  before_action :require_team_edit_permission, only: [:edit, :update, :recruit, :invite, :kick, :destroy]
+  before_action :require_team_admin_permission, only: :revoke
   before_action :team_rate_limit, only: [:create]
   before_action :require_login, only: :leave
   before_action :require_on_team, only: :leave
@@ -64,8 +65,7 @@ class TeamsController < ApplicationController
   end
 
   def revoke
-    user = User.find(params[:user_id])
-    @team.invite_for(user)&.destroy
+    @team.invites.find_by(user_id: params[:user_id])&.destroy
 
     redirect_back(fallback_location: team_path(@team))
   end
@@ -164,6 +164,10 @@ class TeamsController < ApplicationController
 
   def require_on_team
     redirect_to team_path(@team) unless @team.on_roster?(current_user)
+  end
+
+  def require_team_admin_permission
+    redirect_to team_path(@team) unless user_can_edit_teams?
   end
 
   def team_rate_limit
