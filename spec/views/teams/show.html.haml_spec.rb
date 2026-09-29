@@ -105,7 +105,7 @@ describe 'teams/show' do
     @users.each_value do |user|
       expect(rendered).to include(user.name)
     end
-    @invites.each do |invite|
+    invites.each do |invite|
       expect(rendered).to_not include(invite.user.name)
       expect(rendered).to_not include(revoke_team_path(team, user_id: invite.user.id))
     end
@@ -120,7 +120,7 @@ describe 'teams/show' do
 
     render
 
-    @invites.each do |invite|
+    invites.each do |invite|
       expect(rendered).to include(invite.user.name)
       expect(rendered).to_not include(revoke_team_path(team, user_id: invite.user.id))
     end
@@ -134,7 +134,7 @@ describe 'teams/show' do
     allow(view).to receive(:user_can_edit_teams?).and_return(true)
 
     render
-    @invites.each do |invite|
+    invites.each do |invite|
       expect(rendered).to include(invite.user.name)
       expect(rendered).to include(revoke_team_path(team, user_id: invite.user.id))
     end
