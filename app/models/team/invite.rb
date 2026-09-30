@@ -1,6 +1,6 @@
 class Team
   class Invite < ApplicationRecord
-    DEFAULT_EXPIRY = 1.week
+    DEFAULT_EXPIRY = 7.days
     LIMIT_PER_TEAM = 16
 
     belongs_to :user
