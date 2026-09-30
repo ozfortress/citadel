@@ -107,7 +107,7 @@ describe 'teams/show' do
     end
     invites.each do |invite|
       expect(rendered).to_not include(invite.user.name)
-      expect(rendered).to_not include(revoke_team_path(team, user_id: invite.user.id))
+      expect(rendered).to_not include(revoke_team_invite_path(team, user_id: invite.user.id))
     end
   end
 
@@ -122,7 +122,7 @@ describe 'teams/show' do
 
     invites.each do |invite|
       expect(rendered).to include(invite.user.name)
-      expect(rendered).to_not include(revoke_team_path(team, user_id: invite.user.id))
+      expect(rendered).to_not include(revoke_team_invite_path(team, user_id: invite.user.id))
     end
   end
 
@@ -136,7 +136,7 @@ describe 'teams/show' do
     render
     invites.each do |invite|
       expect(rendered).to include(invite.user.name)
-      expect(rendered).to include(revoke_team_path(team, user_id: invite.user.id))
+      expect(rendered).to include(revoke_team_invite_path(team, user_id: invite.user.id))
     end
   end
 end
