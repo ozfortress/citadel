@@ -64,4 +64,59 @@ describe Teams::InviteController do
       expect(response).to redirect_to(team_path(team))
     end
   end
+
+  describe 'DELETE #revoke' do
+    let(:invited) { create(:user) }
+
+    before do
+      create(:team_invite, team:, user: invited)
+    end
+
+    it 'revokes a pending invite for an admin' do
+      user.grant(:edit, :teams)
+      sign_in user
+
+      delete :revoke, params: { team_id: team.id, user_id: invited.id }
+
+      expect(team.invites.count).to eq(0)
+      expect(response).to redirect_to(team_path(team))
+    end
+
+    it 'fails for a captain who is not an admin' do
+      team.add_player!(user)
+      user.grant(:edit, team)
+      sign_in user
+
+      delete :revoke, params: { team_id: team.id, user_id: invited.id }
+
+      expect(team.invites.count).to eq(1)
+      expect(response).to redirect_to(team_path(team))
+    end
+
+    it 'fails for unauthorized user' do
+      sign_in user
+
+      delete :revoke, params: { team_id: team.id, user_id: invited.id }
+
+      expect(team.invites.count).to eq(1)
+      expect(response).to redirect_to(team_path(team))
+    end
+
+    it 'fails for unauthenticated user' do
+      delete :revoke, params: { team_id: team.id, user_id: invited.id }
+
+      expect(team.invites.count).to eq(1)
+      expect(response).to redirect_to(team_path(team))
+    end
+
+    it 'does nothing when the invite does not exist' do
+      user.grant(:edit, :teams)
+      sign_in user
+
+      delete :revoke, params: { team_id: team.id, user_id: 0 }
+
+      expect(team.invites.count).to eq(1)
+      expect(response).to redirect_to(team_path(team))
+    end
+  end
 end

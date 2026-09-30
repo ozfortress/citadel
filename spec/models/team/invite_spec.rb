@@ -54,6 +54,25 @@ describe Team::Invite do
     end
   end
 
+  describe '.expired' do
+    it 'includes invites that are older than the expiry period' do
+      expect(Team::Invite.expired).to include(expired_invite)
+    end
+
+    it 'excludes invites that are within the expiry period' do
+      expect(Team::Invite.expired).not_to include(invite)
+    end
+    context 'when expiry is zero or negative' do
+      before do
+        allow(Rails.configuration.features).to receive(:team_invite_expiry_days).and_return(0)
+      end
+
+      it 'includes no invites as expired' do
+        expect(Team::Invite.expired).to be_empty
+      end
+    end
+  end
+
   describe '#expired?' do
     it 'returns false when expiry is zero or negative' do
       allow(Rails.configuration.features).to receive(:team_invite_expiry_days).and_return(0)
