@@ -10,7 +10,8 @@ class Team
     validate :user_not_in_team
     validate :invite_limit
 
-    scope :active, -> { expiry ? where(created_at: Team::Invite.expiry.ago..) : all }
+    scope :active, -> { expiry ? where(created_at: expiry.ago..) : all }
+    scope :expired, -> { expiry ? where(created_at: ...expiry.ago) : none }
 
     def self.expiry
       days = Rails.configuration.features.team_invite_expiry_days
@@ -22,7 +23,7 @@ class Team
 
     def expired?
       expiry = self.class.expiry
-      expiry ? created_at < expiry.ago : false
+      !!expiry && created_at < expiry.ago
     end
 
     def accept

@@ -32,17 +32,22 @@
         .button-group.pull-right= player_p.kick_button
 
       = render('users/listing', user:, team:)
-  - if user_can_edit_team?
-    - invites.each do |invite|
-      - invited_user = invite.user
-      %li.list-group-item
-        - if user_can_edit_teams?
-          .button-group.pull-right
-            = button_to revoke_team_path(team, user_id: invited_user.id),
-                        method: :delete, class: 'btn btn-warning ml-2',
-                        data: { confirm: "Are you sure you want to revoke this invite for #{invited_user.name}?" } do
-              Revoke
-        = render('users/listing', user: invited_user, team:, invited: true)
+
+- if user_can_edit_team?
+  - unless invites.empty?
+    %h5 Pending Invites
+
+    %ul.list-group.list-group-flush.mb-3
+      - invites.each do |invite|
+        - invite.user
+        %li.list-group-item
+          - if user_can_edit_teams?
+            .button-group.pull-right
+              = button_to revoke_team_invite_path(team, user_id: invite.user.id),
+                          method: :delete, class: 'btn btn-warning ml-2',
+                          data: { confirm: "Are you sure you want to revoke this invite for #{invite.user.name}?" } do
+                Revoke
+          = render('users/listing', user: invite.user, team:)
 
 - unless transfers.empty?
   %h5 Transfer History

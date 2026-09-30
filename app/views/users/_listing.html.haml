@@ -14,10 +14,7 @@
     .d-flex.flex-column.flex-sm-row
       .d-flex.flex-column
         %b.p-0
-          %span.name
-            = user_p.link
-            - if local_assigns.fetch(:invited, false)
-              %span.badge.badge-warning.ml-1 invited
+          %span.name= user_p.link
           %span.titles= user_p.titles(team:)
 
         - if show_team_name && team.present?

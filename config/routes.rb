@@ -91,7 +91,6 @@ Rails.application.routes.draw do
     member do
       get   'recruit'
       patch 'invite'
-      delete 'revoke'
       patch 'leave'
       patch 'kick'
     end
@@ -99,6 +98,7 @@ Rails.application.routes.draw do
     resource :invite, controller: 'teams/invite', only: [] do
       post 'accept', on: :member
       delete 'decline', on: :member
+      delete 'revoke', on: :member
     end
   end
 
