@@ -49,11 +49,11 @@ class Team < ApplicationRecord
   end
 
   def invite_for(user)
-    invites.find_by(user:)
+    invites.active.find_by(user:)
   end
 
   def invited?(user)
-    invites.exists?(user:)
+    invites.active.exists?(user:)
   end
 
   def add_player!(user)

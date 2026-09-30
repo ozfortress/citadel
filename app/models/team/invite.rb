@@ -1,13 +1,30 @@
 class Team
   class Invite < ApplicationRecord
+    DEFAULT_EXPIRY = 7.days
     LIMIT_PER_TEAM = 16
 
     belongs_to :user
     belongs_to :team
 
-    validates :user, uniqueness: { scope: :team }
+    validates :user, uniqueness: { scope: :team, conditions: -> { active } }
     validate :user_not_in_team
     validate :invite_limit
+
+    scope :active, -> { expiry ? where(created_at: expiry.ago..) : all }
+    scope :expired, -> { expiry ? where(created_at: ...expiry.ago) : none }
+
+    def self.expiry
+      days = Rails.configuration.features.team_invite_expiry_days
+      return DEFAULT_EXPIRY if days.nil?
+
+      days = days.to_i
+      days.positive? ? days.days : nil
+    end
+
+    def expired?
+      expiry = self.class.expiry
+      !!expiry && created_at < expiry.ago
+    end
 
     def accept
       transaction do
@@ -28,7 +45,7 @@ class Team
     end
 
     def invite_limit
-      errors.add(:user, 'Too many invites') if team.present? && team.invites.count >= Invite::LIMIT_PER_TEAM
+      errors.add(:user, 'Too many invites') if team.present? && team.invites.active.count >= Invite::LIMIT_PER_TEAM
     end
   end
 end

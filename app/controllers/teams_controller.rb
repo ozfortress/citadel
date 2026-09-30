@@ -32,6 +32,7 @@ class TeamsController < ApplicationController
 
   def show
     @invite = @team.invite_for(current_user) if user_signed_in?
+    @invites = @team.invites.active.includes(:user).order(created_at: :asc) if user_can_edit_team?
 
     teams_show_fetch_teams
     teams_show_fetch_users

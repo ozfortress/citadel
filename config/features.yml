@@ -1,3 +1,6 @@
 shared:
   # Toggle Discord integration (allow users to link Discord account, and show accounts on profile)
   discord_integration: true
+  # Number of days a pending team invite stays valid before it expires
+  # Zero or less means no expiration
+  team_invite_expiry_days: 7
