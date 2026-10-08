@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'teams/show' do
   let(:team) { build_stubbed(:team) }
   let(:invite) { build_stubbed(:team_invite) }
+  let(:invites) { build_stubbed_list(:team_invite, 2, team:) }
   let(:players) { build_stubbed_list(:team_player, 6) }
   let(:transfers_in) { build_stubbed_list(:team_transfer, 5, team:, is_joining: true) }
   let(:transfers_out) { build_stubbed_list(:team_transfer, 5, team:, is_joining: false) }
@@ -61,6 +62,7 @@ describe 'teams/show' do
     assign(:team, team)
     assign(:invite, invite)
     assign(:players, players)
+    assign(:invites, invites)
     assign(:transfers, transfers_in + transfers_out)
     assign(:active_rosters, @active_rosters)
     assign(:active_roster_matches, @active_roster_matches)
@@ -103,6 +105,10 @@ describe 'teams/show' do
     @users.each_value do |user|
       expect(rendered).to include(user.name)
     end
+    invites.each do |invite|
+      expect(rendered).to_not include(invite.user.name)
+      expect(rendered).to_not include(revoke_team_invite_path(team, user_id: invite.user.id))
+    end
   end
 
   it 'shows for captain' do
@@ -113,6 +119,11 @@ describe 'teams/show' do
     allow(view).to receive(:user_can_edit_team?).and_return(true)
 
     render
+
+    invites.each do |invite|
+      expect(rendered).to include(invite.user.name)
+      expect(rendered).to_not include(revoke_team_invite_path(team, user_id: invite.user.id))
+    end
   end
 
   it 'shows for league admin' do
@@ -123,5 +134,9 @@ describe 'teams/show' do
     allow(view).to receive(:user_can_edit_teams?).and_return(true)
 
     render
+    invites.each do |invite|
+      expect(rendered).to include(invite.user.name)
+      expect(rendered).to include(revoke_team_invite_path(team, user_id: invite.user.id))
+    end
   end
 end
