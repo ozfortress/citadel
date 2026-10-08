@@ -18,12 +18,12 @@ module Teams
 
     def invite_message(team)
       msg = "You have been invited to join the team: #{team.name}."
-      msg += " #{expiry_message}" if Team::Invite.expiry
+      msg += " #{expiry_message}"
       msg
     end
 
     def expiry_message
-      days = Team::Invite.expiry.in_days.to_i
+      days = Team::Invite::DEFAULT_EXPIRY.in_days.to_i
       "This invite will expire in #{days} #{'day'.pluralize(days)}."
     end
   end
