@@ -38,7 +38,6 @@
 
   %ul.list-group.list-group-flush.mb-3
     - invites.each do |invite|
-      - invite.user
       %li.list-group-item
         - if user_can_edit_teams?
           .button-group.pull-right
