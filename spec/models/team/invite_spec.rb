@@ -10,11 +10,8 @@ describe Team::Invite do
   it { should belong_to(:team) }
 
   describe '.expired' do
-    it 'includes invites that are older than the expiry period' do
+    it 'only includes expired invites' do
       expect(Team::Invite.expired).to include(expired_invite)
-    end
-
-    it 'excludes invites that are within the expiry period' do
       expect(Team::Invite.expired).not_to include(invite)
     end
   end

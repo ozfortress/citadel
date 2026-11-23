@@ -15,17 +15,7 @@ describe Teams::Invites::RevocationService do
 
     expect(invite).to be_destroyed
     expect(team.invites).to be_empty
-  end
-
-  it 'notifies the captains' do
-    subject.call(invite)
-
     expect(captain.notifications).to_not be_empty
-  end
-
-  it 'notifies the invited user' do
-    subject.call(invite)
-
     expect(invited.notifications).to_not be_empty
   end
 end

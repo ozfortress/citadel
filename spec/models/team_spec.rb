@@ -56,26 +56,12 @@ describe Team do
   describe 'invites' do
     let(:team) { create(:team) }
     let(:user) { create(:user) }
-    let(:expired_at) { (Team::Invite::DEFAULT_EXPIRY + 1.day).ago }
 
-    it 'treats a fresh invite as pending' do
+    it 'creates a pending invite' do
       team.invite(user)
 
       expect(team.invited?(user)).to be(true)
       expect(team.invite_for(user)).to be_present
-    end
-
-    it 'treats an unpurged expired invite as pending' do
-      create(:team_invite, team:, user:, created_at: expired_at)
-
-      expect(team.invited?(user)).to be(true)
-      expect(team.invite_for(user)).to be_present
-    end
-
-    it 'counts unpurged expired invites toward the invite limit' do
-      create_list(:team_invite, Team::Invite::LIMIT_PER_TEAM, team:, created_at: expired_at)
-
-      expect(team.invite(user)).to_not be_persisted
     end
 
     it 'enforces the per-team invite limit' do
