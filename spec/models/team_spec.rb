@@ -53,6 +53,24 @@ describe Team do
     end
   end
 
+  describe 'invites' do
+    let(:team) { create(:team) }
+    let(:user) { create(:user) }
+
+    it 'creates a pending invite' do
+      team.invite(user)
+
+      expect(team.invited?(user)).to be(true)
+      expect(team.invite_for(user)).to be_present
+    end
+
+    it 'enforces the per-team invite limit' do
+      create_list(:team_invite, Team::Invite::LIMIT_PER_TEAM, team:)
+
+      expect(team.invite(user)).to_not be_persisted
+    end
+  end
+
   describe '#destroy' do
     let(:team) { create(:team) }
 

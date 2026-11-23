@@ -44,4 +44,5 @@
                                      past_rosters: @past_rosters, past_roster_matches: @past_roster_matches
 
   .tab-pane#players{ role: 'tabpanel', aria: { kabekkedby: 'players-tab' } }
-    = render 'teams/show_players', invite: @invite, team: @team, transfers: @transfers, players: @players, users: @users
+    = render 'teams/show_players', invite: @invite, team: @team, transfers: @transfers,
+                                   players: @players, users: @users, invites: @invites
